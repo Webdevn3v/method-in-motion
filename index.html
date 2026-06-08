@@ -3,1400 +3,1297 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Method in Motion — Code. Create. Move.</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Syne:wght@700;800&display=swap" rel="stylesheet">
+<title>Method in Motion — Create, Don't Consume.</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-  :root {
-    --navy: #0d0f1e;
-    --navy2: #111428;
-    --navy3: #161a35;
-    --pink: #ff6baa;
-    --purple: #c66bff;
-    --blue: #6bb5ff;
-    --cyan: #00e0ff;
-    --green: #a7f432;
-    --yellow: #ffe066;
-    --orange: #ff7a00;
-    --white: #f0f2ff;
-    --muted: #6b7280;
-    --grad: linear-gradient(135deg, var(--pink), var(--purple), var(--blue));
-    --grad2: linear-gradient(135deg, var(--cyan), var(--purple), var(--pink));
-  }
-
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-
-  html { scroll-behavior: smooth; }
-
-  body {
-    background: var(--navy);
-    color: var(--white);
-    font-family: 'DM Sans', sans-serif;
-    overflow-x: hidden;
-  }
-
-  /* ── NOISE OVERLAY ── */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
-    pointer-events: none;
-    z-index: 999;
-    opacity: 0.4;
-  }
-
-  /* ── NAV ── */
-  nav {
-    position: fixed;
-    top: 0; left: 0; right: 0;
-    z-index: 100;
-    padding: 18px 48px;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: rgba(13,15,30,0.85);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255,107,170,0.12);
-  }
-
-  .nav-logo {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    text-decoration: none;
-  }
-
-  .nav-logo-mark {
-    width: 36px;
-    height: 36px;
-    background: var(--grad);
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: 'Orbitron', monospace;
-    font-weight: 900;
-    font-size: 16px;
-    color: white;
-  }
-
-  .nav-logo-text {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 15px;
-    color: var(--white);
-    letter-spacing: 0.02em;
-  }
-
-  .nav-logo-text span {
-    background: var(--grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .nav-links {
-    display: flex;
-    align-items: center;
-    gap: 36px;
-    list-style: none;
-  }
-
-  .nav-links a {
-    color: rgba(240,242,255,0.6);
-    text-decoration: none;
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    text-transform: uppercase;
-    transition: color 0.2s;
-  }
-
-  .nav-links a:hover { color: var(--pink); }
-
-  .nav-cta {
-    background: var(--grad);
-    color: white !important;
-    padding: 8px 20px;
-    border-radius: 100px;
-    font-weight: 600 !important;
-    transition: opacity 0.2s !important;
-  }
-
-  .nav-cta:hover { opacity: 0.85; color: white !important; }
-
-  /* ── HERO ── */
-  .hero {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-    padding: 120px 24px 80px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .hero-bg {
-    position: absolute;
-    inset: 0;
-    background:
-      radial-gradient(ellipse 80% 60% at 50% 0%, rgba(198,107,255,0.15) 0%, transparent 60%),
-      radial-gradient(ellipse 60% 40% at 20% 80%, rgba(255,107,170,0.1) 0%, transparent 50%),
-      radial-gradient(ellipse 60% 40% at 80% 60%, rgba(0,224,255,0.08) 0%, transparent 50%);
-  }
-
-  .hero-grid {
-    position: absolute;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(255,107,170,0.04) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(255,107,170,0.04) 1px, transparent 1px);
-    background-size: 60px 60px;
-    mask-image: radial-gradient(ellipse at center, black 30%, transparent 80%);
-  }
-
-  .hero-eyebrow {
-    font-family: 'Orbitron', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 20px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.2s forwards;
-  }
-
-  .hero-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(52px, 8vw, 100px);
-    line-height: 0.95;
-    letter-spacing: -0.02em;
-    margin-bottom: 12px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.4s forwards;
-  }
-
-  .hero-title .grad-text {
-    background: var(--grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .hero-sub {
-    font-family: 'Orbitron', monospace;
-    font-size: clamp(12px, 2vw, 16px);
-    font-weight: 400;
-    letter-spacing: 0.3em;
-    color: rgba(240,242,255,0.45);
-    text-transform: uppercase;
-    margin-bottom: 32px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.6s forwards;
-  }
-
-  .hero-desc {
-    font-size: 18px;
-    font-weight: 300;
-    color: rgba(240,242,255,0.65);
-    max-width: 520px;
-    line-height: 1.7;
-    margin-bottom: 44px;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.7s forwards;
-  }
-
-  .hero-btns {
-    display: flex;
-    gap: 16px;
-    justify-content: center;
-    flex-wrap: wrap;
-    opacity: 0;
-    animation: fadeUp 0.8s 0.9s forwards;
-  }
-
-  .btn-primary {
-    background: var(--grad);
-    color: white;
-    padding: 14px 32px;
-    border-radius: 100px;
-    font-weight: 600;
-    font-size: 15px;
-    text-decoration: none;
-    transition: transform 0.2s, box-shadow 0.2s;
-    box-shadow: 0 0 30px rgba(198,107,255,0.3);
-  }
-
-  .btn-primary:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 50px rgba(198,107,255,0.5);
-  }
-
-  .btn-outline {
-    background: transparent;
-    color: var(--white);
-    padding: 14px 32px;
-    border-radius: 100px;
-    font-weight: 500;
-    font-size: 15px;
-    text-decoration: none;
-    border: 1px solid rgba(240,242,255,0.2);
-    transition: border-color 0.2s, background 0.2s;
-  }
-
-  .btn-outline:hover {
-    border-color: var(--pink);
-    background: rgba(255,107,170,0.08);
-  }
-
-  .hero-scroll {
-    position: absolute;
-    bottom: 32px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 8px;
-    opacity: 0;
-    animation: fadeUp 0.8s 1.2s forwards;
-  }
-
-  .hero-scroll span {
-    font-size: 10px;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: rgba(240,242,255,0.3);
-  }
-
-  .scroll-line {
-    width: 1px;
-    height: 40px;
-    background: linear-gradient(to bottom, var(--pink), transparent);
-    animation: scrollPulse 2s infinite;
-  }
-
-  @keyframes scrollPulse {
-    0%, 100% { opacity: 0.3; transform: scaleY(1); }
-    50% { opacity: 1; transform: scaleY(1.2); }
-  }
-
-  /* ── SECTION BASE ── */
-  section {
-    padding: 100px 48px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .section-label {
-    font-family: 'Orbitron', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.3em;
-    text-transform: uppercase;
-    color: var(--pink);
-    margin-bottom: 12px;
-  }
-
-  .section-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(32px, 4vw, 52px);
-    line-height: 1.05;
-    letter-spacing: -0.02em;
-    margin-bottom: 16px;
-  }
-
-  .section-desc {
-    font-size: 16px;
-    font-weight: 300;
-    color: rgba(240,242,255,0.55);
-    max-width: 560px;
-    line-height: 1.7;
-    margin-bottom: 56px;
-  }
-
-  /* ── CREW SECTION ── */
-  .crew-section {
-    padding: 100px 0;
-    overflow: hidden;
-    background: linear-gradient(to bottom, var(--navy), var(--navy2), var(--navy));
-  }
-
-  .crew-inner {
-    max-width: 1400px;
-    margin: 0 auto;
-    padding: 0 48px;
-  }
-
-  .crew-grid {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 16px;
-    margin-top: 56px;
-  }
-
-  .crew-card {
-    position: relative;
-    border-radius: 20px;
-    overflow: hidden;
-    cursor: pointer;
-    background: var(--navy3);
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: transform 0.3s, border-color 0.3s;
-    aspect-ratio: 3/4;
-  }
-
-  .crew-card:hover {
-    transform: translateY(-8px) scale(1.02);
-    border-color: var(--card-color, var(--pink));
-    box-shadow: 0 20px 60px rgba(0,0,0,0.5), 0 0 30px var(--card-glow, rgba(255,107,170,0.2));
-  }
-
-  .crew-card video {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.4s;
-  }
-
-  .crew-card:hover video { opacity: 1; }
-
-  .crew-card-bg {
-    position: absolute;
-    inset: 0;
-    background: var(--card-bg, linear-gradient(180deg, rgba(255,107,170,0.1) 0%, transparent 60%));
-    transition: opacity 0.3s;
-  }
-
-  .crew-card:hover .crew-card-bg { opacity: 0; }
-
-  .crew-card-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px 16px 16px;
-    background: linear-gradient(to top, rgba(13,15,30,0.98) 0%, transparent 100%);
-    z-index: 2;
-  }
-
-  .crew-card-name {
-    font-family: 'Orbitron', monospace;
-    font-weight: 900;
-    font-size: 18px;
-    letter-spacing: 0.05em;
-    color: var(--card-color, var(--pink));
-    display: block;
-  }
-
-  .crew-card-role {
-    font-size: 11px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: rgba(240,242,255,0.45);
-    margin-top: 2px;
-    display: block;
-  }
-
-  .crew-card-age {
-    display: inline-block;
-    margin-top: 8px;
-    padding: 3px 10px;
-    border-radius: 100px;
-    font-size: 10px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    background: rgba(255,255,255,0.07);
-    color: rgba(240,242,255,0.5);
-  }
-
-  .crew-card-play {
-    position: absolute;
-    top: 12px;
-    right: 12px;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    background: rgba(255,255,255,0.1);
-    backdrop-filter: blur(8px);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 11px;
-    z-index: 3;
-    opacity: 0;
-    transition: opacity 0.3s;
-  }
-
-  .crew-card:hover .crew-card-play { opacity: 1; }
-
-  /* ── ZEN = pink/purple ── */
-  .card-zen { --card-color: #ff6baa; --card-glow: rgba(255,107,170,0.25); --card-bg: linear-gradient(180deg,rgba(255,107,170,0.12) 0%,transparent 60%); }
-  .card-byte { --card-color: #c66bff; --card-glow: rgba(198,107,255,0.25); --card-bg: linear-gradient(180deg,rgba(198,107,255,0.12) 0%,transparent 60%); }
-  .card-nova { --card-color: #ffe066; --card-glow: rgba(255,224,102,0.2); --card-bg: linear-gradient(180deg,rgba(255,224,102,0.1) 0%,transparent 60%); }
-  .card-loop { --card-color: #6bb5ff; --card-glow: rgba(107,181,255,0.25); --card-bg: linear-gradient(180deg,rgba(107,181,255,0.12) 0%,transparent 60%); }
-  .card-bug { --card-color: #a7f432; --card-glow: rgba(167,244,50,0.2); --card-bg: linear-gradient(180deg,rgba(167,244,50,0.1) 0%,transparent 60%); }
-  .card-echo { --card-color: #00e0ff; --card-glow: rgba(0,224,255,0.25); --card-bg: linear-gradient(180deg,rgba(0,224,255,0.1) 0%,transparent 60%); }
-
-  /* ── TIERS SECTION ── */
-  .tiers-wrap {
-    background: var(--navy2);
-    border-top: 1px solid rgba(255,255,255,0.04);
-    border-bottom: 1px solid rgba(255,255,255,0.04);
-  }
-
-  .tiers-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 56px;
-  }
-
-  .tier-card {
-    border-radius: 20px;
-    padding: 36px 28px;
-    border: 1px solid rgba(255,255,255,0.07);
-    background: var(--navy);
-    position: relative;
-    overflow: hidden;
-    transition: transform 0.3s, border-color 0.3s;
-  }
-
-  .tier-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: 0; right: 0;
-    height: 3px;
-    background: var(--tier-grad);
-  }
-
-  .tier-card:hover {
-    transform: translateY(-4px);
-    border-color: rgba(255,255,255,0.14);
-  }
-
-  .tier-num {
-    font-family: 'Orbitron', monospace;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    color: var(--tier-color);
-    margin-bottom: 16px;
-    text-transform: uppercase;
-  }
-
-  .tier-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 28px;
-    margin-bottom: 6px;
-  }
-
-  .tier-ages {
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(240,242,255,0.4);
-    margin-bottom: 20px;
-    letter-spacing: 0.05em;
-  }
-
-  .tier-desc {
-    font-size: 14px;
-    font-weight: 300;
-    color: rgba(240,242,255,0.6);
-    line-height: 1.7;
-    margin-bottom: 24px;
-  }
-
-  .tier-chars {
-    display: flex;
-    gap: 8px;
-    flex-wrap: wrap;
-  }
-
-  .tier-char-tag {
-    padding: 5px 12px;
-    border-radius: 100px;
-    font-size: 11px;
-    font-weight: 600;
-    letter-spacing: 0.06em;
-    background: rgba(255,255,255,0.06);
-    color: var(--tier-color);
-    border: 1px solid var(--tier-color);
-    border-opacity: 0.3;
-  }
-
-  .tier-sparks { --tier-color: #ff6baa; --tier-grad: linear-gradient(90deg, #ff6baa, #c66bff); }
-  .tier-builders { --tier-color: #ffe066; --tier-grad: linear-gradient(90deg, #ffe066, #6bb5ff); }
-  .tier-coders { --tier-color: #a7f432; --tier-grad: linear-gradient(90deg, #a7f432, #00e0ff); }
-
-  /* ── SHOP SECTION ── */
-  .shop-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 56px;
-  }
-
-  .shop-card {
-    border-radius: 20px;
-    overflow: hidden;
-    background: var(--navy3);
-    border: 1px solid rgba(255,255,255,0.06);
-    transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    display: block;
-  }
-
-  .shop-card:hover {
-    transform: translateY(-6px);
-    border-color: rgba(198,107,255,0.3);
-    box-shadow: 0 20px 50px rgba(0,0,0,0.4);
-  }
-
-  .shop-card-img {
-    width: 100%;
-    aspect-ratio: 1;
-    object-fit: cover;
-    display: block;
-    transition: transform 0.4s;
-  }
-
-  .shop-card:hover .shop-card-img { transform: scale(1.03); }
-
-  .shop-card-body {
-    padding: 20px;
-  }
-
-  .shop-card-tag {
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.2em;
-    text-transform: uppercase;
-    color: var(--purple);
-    margin-bottom: 8px;
-    display: block;
-  }
-
-  .shop-card-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 18px;
-    margin-bottom: 6px;
-  }
-
-  .shop-card-sub {
-    font-size: 13px;
-    color: rgba(240,242,255,0.45);
-    margin-bottom: 16px;
-    line-height: 1.5;
-  }
-
-  .shop-card-footer {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-  }
-
-  .shop-price {
-    font-family: 'Orbitron', monospace;
-    font-weight: 700;
-    font-size: 16px;
-    color: var(--cyan);
-  }
-
-  .shop-btn {
-    background: rgba(198,107,255,0.15);
-    color: var(--purple);
-    border: 1px solid rgba(198,107,255,0.3);
-    padding: 7px 16px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.05em;
-    cursor: pointer;
-    transition: background 0.2s;
-  }
-
-  .shop-btn:hover { background: rgba(198,107,255,0.3); }
-
-  /* ── SUBSCRIPTION ── */
-  .sub-section {
-    background: var(--navy2);
-    border-top: 1px solid rgba(255,255,255,0.04);
-  }
-
-  .sub-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 24px;
-    margin-top: 56px;
-  }
-
-  .sub-card {
-    border-radius: 24px;
-    padding: 40px 32px;
-    border: 1px solid rgba(255,255,255,0.07);
-    background: var(--navy);
-    position: relative;
-    transition: transform 0.3s;
-  }
-
-  .sub-card.featured {
-    border-color: rgba(198,107,255,0.4);
-    background: linear-gradient(145deg, rgba(198,107,255,0.06), var(--navy));
-  }
-
-  .sub-card.featured::after {
-    content: 'MOST POPULAR';
-    position: absolute;
-    top: -12px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--grad);
-    padding: 4px 16px;
-    border-radius: 100px;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.15em;
-    white-space: nowrap;
-  }
-
-  .sub-card:hover { transform: translateY(-4px); }
-
-  .sub-tier {
-    font-family: 'Orbitron', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    color: var(--cyan);
-    text-transform: uppercase;
-    margin-bottom: 12px;
-  }
-
-  .sub-name {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: 26px;
-    margin-bottom: 8px;
-  }
-
-  .sub-price {
-    display: flex;
-    align-items: baseline;
-    gap: 4px;
-    margin-bottom: 24px;
-  }
-
-  .sub-price-num {
-    font-family: 'Orbitron', monospace;
-    font-weight: 900;
-    font-size: 42px;
-    background: var(--grad2);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
-
-  .sub-price-mo {
-    font-size: 14px;
-    color: rgba(240,242,255,0.4);
-  }
-
-  .sub-features {
-    list-style: none;
-    margin-bottom: 32px;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-  }
-
-  .sub-features li {
-    font-size: 14px;
-    color: rgba(240,242,255,0.65);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-  }
-
-  .sub-features li::before {
-    content: '✦';
-    color: var(--pink);
-    font-size: 10px;
-    flex-shrink: 0;
-  }
-
-  .sub-cta {
-    display: block;
-    text-align: center;
-    padding: 14px;
-    border-radius: 100px;
-    font-weight: 600;
-    font-size: 14px;
-    text-decoration: none;
-    transition: all 0.2s;
-    cursor: pointer;
-    border: none;
-    width: 100%;
-  }
-
-  .sub-card.featured .sub-cta {
-    background: var(--grad);
-    color: white;
-    box-shadow: 0 0 30px rgba(198,107,255,0.3);
-  }
-
-  .sub-card:not(.featured) .sub-cta {
-    background: rgba(255,255,255,0.06);
-    color: var(--white);
-    border: 1px solid rgba(255,255,255,0.12);
-  }
-
-  .sub-cta:hover { opacity: 0.85; transform: translateY(-1px); }
-
-  /* ── GAMES TEASER ── */
-  .games-teaser {
-    text-align: center;
-    padding: 100px 48px;
-    position: relative;
-    overflow: hidden;
-  }
-
-  .games-teaser::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(ellipse 70% 50% at 50% 50%, rgba(0,224,255,0.07) 0%, transparent 70%);
-  }
-
-  .games-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
-    background: rgba(0,224,255,0.08);
-    border: 1px solid rgba(0,224,255,0.2);
-    padding: 8px 20px;
-    border-radius: 100px;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--cyan);
-    margin-bottom: 24px;
-  }
-
-  .games-badge span { width: 6px; height: 6px; border-radius: 50%; background: var(--cyan); animation: pulse 1.5s infinite; }
-
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.8); }
-  }
-
-  .games-title {
-    font-family: 'Syne', sans-serif;
-    font-weight: 800;
-    font-size: clamp(36px, 5vw, 64px);
-    line-height: 1.05;
-    margin-bottom: 20px;
-  }
-
-  .games-desc {
-    font-size: 17px;
-    font-weight: 300;
-    color: rgba(240,242,255,0.55);
-    max-width: 480px;
-    margin: 0 auto 40px;
-    line-height: 1.7;
-  }
-
-  .games-preview {
-    display: flex;
-    justify-content: center;
-    gap: 16px;
-    flex-wrap: wrap;
-    margin-top: 48px;
-  }
-
-  .game-chip {
-    background: var(--navy3);
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 16px;
-    padding: 16px 24px;
-    font-size: 13px;
-    font-weight: 500;
-    color: rgba(240,242,255,0.6);
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: border-color 0.2s, color 0.2s;
-    cursor: pointer;
-  }
-
-  .game-chip:hover {
-    border-color: rgba(198,107,255,0.4);
-    color: var(--white);
-  }
-
-  .game-chip .chip-icon {
-    font-size: 20px;
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    border-top: 1px solid rgba(255,255,255,0.06);
-    padding: 60px 48px 40px;
-    max-width: 1400px;
-    margin: 0 auto;
-  }
-
-  .footer-top {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    margin-bottom: 48px;
-    gap: 40px;
-    flex-wrap: wrap;
-  }
-
-  .footer-brand p {
-    font-size: 14px;
-    font-weight: 300;
-    color: rgba(240,242,255,0.4);
-    max-width: 260px;
-    line-height: 1.7;
-    margin-top: 12px;
-  }
-
-  .footer-col h4 {
-    font-family: 'Orbitron', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    text-transform: uppercase;
-    color: rgba(240,242,255,0.3);
-    margin-bottom: 16px;
-  }
-
-  .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-
-  .footer-col ul a {
-    color: rgba(240,242,255,0.55);
-    text-decoration: none;
-    font-size: 14px;
-    transition: color 0.2s;
-  }
-
-  .footer-col ul a:hover { color: var(--pink); }
-
-  .footer-bottom {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: 28px;
-    border-top: 1px solid rgba(255,255,255,0.05);
-    flex-wrap: wrap;
-    gap: 16px;
-  }
-
-  .footer-bottom p {
-    font-size: 12px;
-    color: rgba(240,242,255,0.25);
-  }
-
-  .footer-tagline {
-    font-family: 'Orbitron', monospace;
-    font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.25em;
-    background: var(--grad);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-transform: uppercase;
-  }
-
-  /* ── ANIMATIONS ── */
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(24px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .reveal {
-    opacity: 0;
-    transform: translateY(32px);
-    transition: opacity 0.7s, transform 0.7s;
-  }
-
-  .reveal.visible {
-    opacity: 1;
-    transform: translateY(0);
-  }
-
-  /* ── DIVIDER ── */
-  .divider {
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(90deg, transparent, rgba(198,107,255,0.2), transparent);
-    margin: 0;
-  }
-
-  /* ── RESPONSIVE ── */
-  @media (max-width: 1100px) {
-    .crew-grid { grid-template-columns: repeat(3, 1fr); }
-  }
-
-  @media (max-width: 768px) {
-    nav { padding: 16px 20px; }
-    .nav-links { display: none; }
-    section { padding: 72px 20px; }
-    .crew-grid { grid-template-columns: repeat(2, 1fr); }
-    .tiers-grid, .shop-grid, .sub-grid { grid-template-columns: 1fr; }
-    .hero-title { font-size: 48px; }
-    footer { padding: 48px 20px 32px; }
-    .footer-top { flex-direction: column; }
-  }
+:root {
+  --void: #050508;
+  --deep: #080b14;
+  --navy: #0d1020;
+  --card: #0f1525;
+  --border: rgba(255,255,255,.06);
+  --border-md: rgba(255,255,255,.12);
+  --white: #ffffff;
+  --off: #c8cce0;
+  --muted: #5a6080;
+  --pink: #ff6baa;
+  --purple: #c66bff;
+  --cyan: #00e8ff;
+  --grad: linear-gradient(135deg, #ff6baa, #c66bff, #00e8ff);
+  --grad2: linear-gradient(135deg, #c66bff, #00e8ff);
+  --display: 'Orbitron', monospace;
+  --heading: 'Syne', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{
+  background:var(--void);color:var(--white);
+  font-family:var(--body);font-weight:300;
+  overflow-x:hidden;line-height:1.7;
+  cursor:none;
+}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* ── CUSTOM CURSOR ── */
+.cursor{
+  position:fixed;width:12px;height:12px;
+  border-radius:50%;background:var(--pink);
+  pointer-events:none;z-index:9999;
+  transform:translate(-50%,-50%);
+  transition:transform .1s,width .2s,height .2s,background .2s;
+  mix-blend-mode:screen;
+}
+.cursor-ring{
+  position:fixed;width:36px;height:36px;
+  border-radius:50%;border:1px solid rgba(198,107,255,.5);
+  pointer-events:none;z-index:9998;
+  transform:translate(-50%,-50%);
+  transition:transform .15s,width .3s,height .3s;
+}
+
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  padding:20px 48px;
+  display:flex;align-items:center;justify-content:space-between;
+  transition:background .4s,padding .3s;
+}
+nav.scrolled{
+  background:rgba(5,5,8,.9);
+  backdrop-filter:blur(16px);
+  padding:14px 48px;
+  border-bottom:1px solid var(--border);
+}
+.nav-logo{
+  display:flex;align-items:center;gap:10px;
+  font-family:var(--display);font-size:.8rem;
+  letter-spacing:.12em;color:var(--white);
+}
+.nav-logo-mark{
+  width:32px;height:32px;
+  background:var(--grad);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  font-size:.75rem;font-weight:700;color:#000;
+}
+.nav-links{display:flex;gap:32px;list-style:none}
+.nav-links a{
+  font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;
+  color:rgba(255,255,255,.45);transition:color .3s;
+}
+.nav-links a:hover{color:var(--white)}
+.nav-cta{
+  font-family:var(--display);font-size:.65rem;letter-spacing:.14em;
+  text-transform:uppercase;padding:10px 22px;
+  border:1px solid rgba(198,107,255,.4);color:var(--purple);
+  border-radius:100px;transition:all .3s;
+}
+.nav-cta:hover{background:rgba(198,107,255,.15);border-color:var(--purple)}
+@media(max-width:768px){.nav-links{display:none}.nav{padding:16px 24px}}
+
+/* ── HERO TUNNEL ── */
+.hero{
+  position:relative;width:100%;height:100vh;
+  overflow:hidden;display:flex;align-items:center;
+  justify-content:center;background:var(--void);
+}
+#tunnelCanvas{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+}
+.hero-content{
+  position:relative;z-index:10;
+  text-align:center;
+  pointer-events:none;
+}
+.hero-eyebrow{
+  font-family:var(--display);font-size:.6rem;
+  letter-spacing:.32em;text-transform:uppercase;
+  color:var(--cyan);opacity:.7;margin-bottom:16px;
+  animation:fadeUp .8s .2s both;
+}
+.hero-title{
+  font-family:var(--display);
+  font-size:clamp(2.4rem,7vw,6rem);
+  font-weight:900;line-height:1;
+  letter-spacing:.06em;
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:6px;
+  animation:fadeUp 1s .35s both;
+}
+.hero-sub{
+  font-family:var(--display);font-size:.7rem;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:rgba(255,255,255,.35);margin-bottom:48px;
+  animation:fadeUp .9s .5s both;
+}
+.hero-actions{
+  display:flex;gap:16px;justify-content:center;flex-wrap:wrap;
+  animation:fadeUp .9s .65s both;
+  pointer-events:all;
+}
+.btn-primary{
+  font-family:var(--display);font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;padding:14px 32px;
+  background:var(--grad);color:#000;font-weight:700;
+  border-radius:100px;border:none;cursor:none;
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(198,107,255,.4)}
+.btn-outline{
+  font-family:var(--display);font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;padding:14px 32px;
+  border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);
+  border-radius:100px;transition:all .3s;
+}
+.btn-outline:hover{border-color:var(--white);color:var(--white)}
+
+/* floating characters in hero */
+.hero-chars{
+  position:absolute;inset:0;pointer-events:none;z-index:5;
+}
+.hchar{
+  position:absolute;
+  animation:float 6s ease-in-out infinite;
+  opacity:0;
+  transition:opacity .5s;
+}
+.hchar.visible{opacity:.7}
+.hchar:hover{opacity:1;z-index:6}
+.hchar img{width:var(--sz,80px);filter:drop-shadow(0 0 20px var(--glow,rgba(198,107,255,.5)))}
+@keyframes float{
+  0%,100%{transform:translateY(0) rotate(var(--rot,0deg))}
+  50%{transform:translateY(-18px) rotate(calc(var(--rot,0deg) + 3deg))}
+}
+
+/* scroll indicator */
+.hero-scroll{
+  position:absolute;bottom:32px;left:50%;transform:translateX(-50%);
+  z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;
+  font-family:var(--display);font-size:.55rem;letter-spacing:.22em;
+  text-transform:uppercase;color:rgba(255,255,255,.2);
+}
+.scroll-line{
+  width:1px;height:48px;
+  background:linear-gradient(to bottom,var(--cyan),transparent);
+  animation:scrollPulse 2s ease-in-out infinite;
+}
+@keyframes scrollPulse{
+  0%{transform:scaleY(0);transform-origin:top;opacity:0}
+  40%{opacity:1}60%{transform:scaleY(1);transform-origin:top}
+  60.01%{transform-origin:bottom}
+  100%{transform:scaleY(0);transform-origin:bottom;opacity:0}
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* ── BRAND MISSION ── */
+.mission{
+  background:var(--deep);padding:100px 48px;text-align:center;
+  position:relative;overflow:hidden;
+}
+.mission::before{
+  content:'';position:absolute;top:50%;left:50%;
+  width:600px;height:600px;border-radius:50%;
+  background:radial-gradient(circle,rgba(198,107,255,.06),transparent 70%);
+  transform:translate(-50%,-50%);pointer-events:none;
+}
+.mission-label{
+  font-family:var(--display);font-size:.6rem;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:16px;
+}
+.mission-title{
+  font-family:var(--heading);
+  font-size:clamp(2rem,5vw,4rem);
+  font-weight:800;line-height:1.1;
+  color:var(--white);margin-bottom:20px;
+}
+.mission-title span{
+  background:var(--grad);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.mission-body{
+  font-size:1.05rem;color:var(--off);
+  max-width:560px;margin:0 auto 40px;line-height:1.9;
+}
+.mission-pills{
+  display:flex;gap:12px;justify-content:center;flex-wrap:wrap;
+}
+.mission-pill{
+  padding:8px 20px;border:1px solid var(--border-md);
+  border-radius:100px;font-family:var(--display);
+  font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--off);
+}
+
+/* ── CREW UNIVERSE ── */
+.crew-universe{background:var(--void);padding:120px 0 0}
+.crew-header{text-align:center;padding:0 48px;margin-bottom:80px}
+.section-label{
+  font-family:var(--display);font-size:.6rem;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:14px;display:block;
+}
+.section-title{
+  font-family:var(--heading);font-size:clamp(2rem,5vw,3.8rem);
+  font-weight:800;line-height:1.1;color:var(--white);margin-bottom:16px;
+}
+.section-desc{
+  font-size:.95rem;color:var(--muted);max-width:480px;margin:0 auto;
+}
+
+/* character world sections */
+.char-world{
+  position:relative;min-height:100vh;
+  display:flex;align-items:center;
+  overflow:hidden;padding:100px 0;
+}
+.char-world__bg{
+  position:absolute;inset:0;
+  background:radial-gradient(ellipse 60% 80% at var(--gx,80%) 50%,var(--gc,rgba(198,107,255,.08)),transparent);
+  pointer-events:none;
+}
+.char-world__inner{
+  max-width:1100px;margin:0 auto;padding:0 48px;
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:80px;align-items:center;
+  position:relative;z-index:2;
+}
+.char-world.reverse .char-world__inner{direction:rtl}
+.char-world.reverse .char-world__text{direction:ltr}
+.char-world.reverse .char-world__visual{direction:ltr}
+@media(max-width:860px){
+  .char-world__inner{grid-template-columns:1fr;gap:48px;direction:ltr!important}
+  .char-world{padding:80px 0}
+}
+.char-world__visual{
+  position:relative;display:flex;
+  align-items:center;justify-content:center;
+}
+.char-img{
+  width:min(320px,80vw);
+  animation:charFloat 5s ease-in-out infinite;
+  filter:drop-shadow(0 0 40px var(--char-glow,rgba(198,107,255,.4)));
+  position:relative;z-index:2;
+}
+@keyframes charFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-20px)}
+}
+.char-ring{
+  position:absolute;width:360px;height:360px;
+  border-radius:50%;
+  border:1px solid rgba(255,255,255,.04);
+  animation:spinRing 20s linear infinite;
+}
+.char-ring:nth-child(2){
+  width:280px;height:280px;
+  animation-duration:14s;animation-direction:reverse;
+  border-color:rgba(255,255,255,.06);
+}
+.char-ring::before{
+  content:'';position:absolute;
+  top:-4px;left:50%;
+  width:8px;height:8px;border-radius:50%;
+  background:var(--char-glow,rgba(198,107,255,.6));
+  transform:translateX(-50%);
+  box-shadow:0 0 12px var(--char-glow,rgba(198,107,255,.6));
+}
+@keyframes spinRing{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.char-world__text{}
+.char-name{
+  font-family:var(--display);font-size:.65rem;
+  letter-spacing:.28em;text-transform:uppercase;
+  color:var(--char-color,var(--pink));margin-bottom:12px;
+}
+.char-title{
+  font-family:var(--heading);font-size:clamp(2rem,4vw,3rem);
+  font-weight:800;line-height:1.1;color:var(--white);
+  margin-bottom:8px;
+}
+.char-tagline{
+  font-family:var(--display);font-size:.72rem;
+  letter-spacing:.14em;color:var(--char-color,var(--pink));
+  opacity:.7;margin-bottom:20px;
+}
+.char-desc{
+  font-size:.95rem;color:var(--off);line-height:1.9;
+  margin-bottom:28px;max-width:440px;
+}
+.char-topics{
+  display:flex;flex-wrap:wrap;gap:8px;margin-bottom:32px;
+}
+.char-topic{
+  padding:6px 14px;border-radius:100px;
+  font-family:var(--display);font-size:.58rem;
+  letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid var(--char-color,var(--pink));
+  color:var(--char-color,var(--pink));
+  background:rgba(255,107,170,.05);
+}
+
+/* curriculum levels */
+.char-levels{display:flex;flex-direction:column;gap:12px}
+.level{
+  display:flex;align-items:center;gap:16px;
+  padding:14px 18px;background:rgba(255,255,255,.03);
+  border-radius:8px;border:1px solid var(--border);
+  transition:all .3s;cursor:default;
+}
+.level:hover{
+  background:rgba(255,255,255,.06);
+  border-color:var(--char-color,var(--pink));
+}
+.level-num{
+  font-family:var(--display);font-size:.65rem;
+  color:var(--char-color,var(--pink));
+  opacity:.6;min-width:28px;
+}
+.level-info{}
+.level-title{
+  font-size:.88rem;font-weight:500;color:var(--white);margin-bottom:2px;
+}
+.level-desc{font-size:.78rem;color:var(--muted)}
+.level-badge{
+  margin-left:auto;font-family:var(--display);
+  font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;
+  padding:4px 10px;border-radius:100px;
+  background:var(--char-color,var(--pink));
+  color:#000;font-weight:700;white-space:nowrap;
+  opacity:.85;
+}
+
+/* ── WORKBOOKS ── */
+.workbooks{
+  background:var(--navy);padding:120px 0;
+}
+.workbooks__inner{max-width:1100px;margin:0 auto;padding:0 48px}
+.workbooks__header{text-align:center;margin-bottom:72px}
+.workbooks__grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:24px;
+}
+@media(max-width:860px){.workbooks__grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.workbooks__grid{grid-template-columns:1fr}}
+.wb-card{
+  background:var(--card);border-radius:12px;
+  overflow:hidden;border:1px solid var(--border);
+  transition:all .35s;position:relative;
+}
+.wb-card:hover{
+  transform:translateY(-6px);
+  border-color:var(--wb-color,var(--pink));
+  box-shadow:0 20px 60px rgba(0,0,0,.4);
+}
+.wb-cover{
+  width:100%;aspect-ratio:3/4;
+  background:var(--wb-bg,linear-gradient(135deg,#1a0a2e,#0d0f1e));
+  display:flex;align-items:center;justify-content:center;
+  overflow:hidden;position:relative;
+}
+.wb-cover img{
+  width:100%;height:100%;object-fit:cover;
+  transition:transform .5s;
+}
+.wb-card:hover .wb-cover img{transform:scale(1.04)}
+.wb-cover-placeholder{
+  display:flex;flex-direction:column;align-items:center;gap:12px;
+  opacity:.4;
+}
+.wb-cover-placeholder img{width:80px;filter:drop-shadow(0 0 20px var(--wb-color,var(--pink)))}
+.wb-body{padding:20px}
+.wb-char{
+  font-family:var(--display);font-size:.55rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--wb-color,var(--pink));margin-bottom:6px;
+}
+.wb-title{
+  font-family:var(--heading);font-size:1rem;
+  font-weight:700;color:var(--white);margin-bottom:6px;
+}
+.wb-desc{font-size:.8rem;color:var(--muted);line-height:1.7;margin-bottom:16px}
+.wb-footer{
+  display:flex;align-items:center;justify-content:space-between;
+}
+.wb-price{
+  font-family:var(--display);font-size:.9rem;
+  font-weight:700;color:var(--white);
+}
+.wb-btn{
+  font-family:var(--display);font-size:.58rem;
+  letter-spacing:.12em;text-transform:uppercase;
+  padding:8px 16px;border-radius:100px;
+  border:1px solid var(--wb-color,var(--pink));
+  color:var(--wb-color,var(--pink));
+  transition:all .2s;
+}
+.wb-btn:hover{
+  background:var(--wb-color,var(--pink));color:#000;
+}
+
+/* ── GAMES ── */
+.games{background:var(--void);padding:120px 0}
+.games__inner{max-width:1100px;margin:0 auto;padding:0 48px}
+.games__header{text-align:center;margin-bottom:72px}
+.games__grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:3px;border-radius:16px;overflow:hidden;
+}
+@media(max-width:768px){.games__grid{grid-template-columns:1fr}}
+.game-card{
+  background:var(--card);padding:40px 32px;
+  position:relative;overflow:hidden;
+  transition:background .3s;
+}
+.game-card:hover{background:rgba(255,255,255,.04)}
+.game-card::before{
+  content:'';position:absolute;
+  top:0;left:0;right:0;height:2px;
+  background:var(--gc2,var(--grad));
+  transform:scaleX(0);transform-origin:left;
+  transition:transform .4s;
+}
+.game-card:hover::before{transform:scaleX(1)}
+.game-icon{
+  width:56px;height:56px;border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border-md);
+  display:flex;align-items:center;justify-content:center;
+  margin-bottom:20px;
+  font-size:1.6rem;
+}
+.game-char{
+  font-family:var(--display);font-size:.55rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--gc3,var(--pink));margin-bottom:8px;
+}
+.game-title{
+  font-family:var(--heading);font-size:1.1rem;
+  font-weight:700;color:var(--white);margin-bottom:10px;
+}
+.game-desc{font-size:.83rem;color:var(--muted);line-height:1.8;margin-bottom:20px}
+.game-status{
+  display:inline-flex;align-items:center;gap:6px;
+  font-family:var(--display);font-size:.55rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gc3,var(--pink));
+}
+.game-status-dot{
+  width:6px;height:6px;border-radius:50%;
+  background:var(--gc3,var(--pink));
+  animation:pulse 2s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+
+/* ── MEMBERSHIP ── */
+.membership{background:var(--deep);padding:120px 0}
+.membership__inner{max-width:1100px;margin:0 auto;padding:0 48px}
+.membership__header{text-align:center;margin-bottom:72px}
+.membership__grid{
+  display:grid;grid-template-columns:repeat(3,1fr);
+  gap:20px;
+}
+@media(max-width:768px){.membership__grid{grid-template-columns:1fr}}
+.mem-card{
+  background:var(--card);border-radius:16px;
+  border:1px solid var(--border);padding:40px 32px;
+  position:relative;transition:all .35s;
+}
+.mem-card.featured{
+  border-color:rgba(198,107,255,.4);
+  background:linear-gradient(145deg,rgba(198,107,255,.06),var(--card));
+}
+.mem-card:hover{transform:translateY(-4px);box-shadow:0 20px 60px rgba(0,0,0,.3)}
+.mem-badge{
+  font-family:var(--display);font-size:.55rem;
+  letter-spacing:.16em;text-transform:uppercase;
+  padding:5px 14px;border-radius:100px;
+  margin-bottom:24px;display:inline-block;
+}
+.mem-card:not(.featured) .mem-badge{
+  border:1px solid var(--border-md);color:var(--muted);
+}
+.mem-card.featured .mem-badge{
+  background:var(--grad);color:#000;font-weight:700;
+}
+.mem-name{
+  font-family:var(--heading);font-size:1.4rem;
+  font-weight:800;color:var(--white);margin-bottom:8px;
+}
+.mem-price{margin-bottom:28px}
+.mem-price-num{
+  font-family:var(--display);font-size:2.8rem;
+  font-weight:900;color:var(--white);line-height:1;
+}
+.mem-price-mo{
+  font-size:.8rem;color:var(--muted);margin-left:4px;
+}
+.mem-features{list-style:none;display:flex;flex-direction:column;gap:10px;margin-bottom:32px}
+.mem-features li{
+  display:flex;align-items:center;gap:10px;
+  font-size:.85rem;color:var(--off);
+}
+.mem-features li::before{
+  content:'✦';font-size:.6rem;
+  color:var(--purple);flex-shrink:0;
+}
+.mem-cta{
+  display:block;text-align:center;
+  font-family:var(--display);font-size:.65rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  padding:14px;border-radius:100px;
+  font-weight:700;transition:all .25s;
+}
+.mem-card:not(.featured) .mem-cta{
+  border:1px solid var(--border-md);color:var(--off);
+}
+.mem-card:not(.featured) .mem-cta:hover{border-color:var(--purple);color:var(--purple)}
+.mem-card.featured .mem-cta{
+  background:var(--grad);color:#000;
+}
+.mem-card.featured .mem-cta:hover{opacity:.9;transform:translateY(-1px)}
+
+/* ── FOOTER ── */
+footer{
+  background:var(--void);
+  border-top:1px solid var(--border);
+  padding:64px 48px 32px;
+}
+.footer-inner{
+  max-width:1100px;margin:0 auto;
+  display:grid;grid-template-columns:1.5fr 1fr 1fr;
+  gap:48px;margin-bottom:48px;
+}
+@media(max-width:768px){.footer-inner{grid-template-columns:1fr;gap:32px}}
+.footer-brand-logo{
+  display:flex;align-items:center;gap:10px;margin-bottom:14px;
+  font-family:var(--display);font-size:.8rem;letter-spacing:.12em;
+}
+.footer-brand-logo-mark{
+  width:32px;height:32px;background:var(--grad);
+  border-radius:8px;display:flex;align-items:center;
+  justify-content:center;font-size:.75rem;font-weight:700;color:#000;
+}
+.footer-brand p{font-size:.85rem;color:var(--muted);max-width:260px;line-height:1.8}
+.footer-col h4{
+  font-family:var(--display);font-size:.6rem;
+  letter-spacing:.2em;text-transform:uppercase;
+  color:var(--off);margin-bottom:18px;
+}
+.footer-col ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+.footer-col ul a{
+  font-size:.85rem;color:var(--muted);
+  transition:color .25s;
+}
+.footer-col ul a:hover{color:var(--white)}
+.footer-bottom{
+  max-width:1100px;margin:0 auto;
+  padding-top:24px;border-top:1px solid var(--border);
+  display:flex;justify-content:space-between;align-items:center;
+  flex-wrap:wrap;gap:12px;
+}
+.footer-copy{font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+.footer-tagline{
+  font-family:var(--display);font-size:.65rem;
+  letter-spacing:.18em;text-transform:uppercase;
+  background:var(--grad);-webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ── ECHO SOUND TOGGLE ── */
+.sound-toggle{
+  position:fixed;bottom:32px;right:32px;z-index:200;
+  width:48px;height:48px;border-radius:50%;
+  background:rgba(0,232,255,.1);
+  border:1px solid rgba(0,232,255,.3);
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;transition:all .3s;
+}
+.sound-toggle:hover{background:rgba(0,232,255,.2);border-color:var(--cyan)}
+.sound-toggle svg{width:20px;height:20px;stroke:var(--cyan);fill:none;stroke-width:1.5;stroke-linecap:round}
+
+/* ── REVEAL ANIMATIONS ── */
+.reveal{opacity:0;transform:translateY(32px);transition:opacity .7s,transform .7s}
+.reveal.visible{opacity:1;transform:none}
+.reveal.rl{transform:translateX(-32px)}
+.reveal.rr{transform:translateX(32px)}
+.reveal.rl.visible,.reveal.rr.visible{transform:none}
+.d1{transition-delay:.1s}.d2{transition-delay:.2s}.d3{transition-delay:.3s}.d4{transition-delay:.4s}
+
+/* divider */
+.divider{
+  max-width:300px;margin:0 auto;
+  display:flex;align-items:center;gap:16px;padding:60px 0;
+}
+.divider::before,.divider::after{
+  content:'';flex:1;height:1px;
+  background:linear-gradient(to right,transparent,rgba(255,255,255,.08),transparent);
+}
+.divider-icon{
+  font-family:var(--display);font-size:.7rem;
+  color:rgba(255,255,255,.15);letter-spacing:.1em;
+}
 </style>
 </head>
 <body>
 
+<!-- CURSOR -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<!-- SOUND TOGGLE -->
+<div class="sound-toggle" id="soundToggle" title="Toggle ambient sound">
+  <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" id="soundWaves"/></svg>
+</div>
+
 <!-- NAV -->
-<nav>
+<nav id="nav">
   <a href="#hero" class="nav-logo">
     <div class="nav-logo-mark">&gt;</div>
-    <div class="nav-logo-text">method <span>in motion</span></div>
+    method in motion
   </a>
   <ul class="nav-links">
     <li><a href="#crew">The Crew</a></li>
-    <li><a href="#learn">Learn</a></li>
-    <li><a href="#shop">Shop</a></li>
+    <li><a href="#workbooks">Workbooks</a></li>
     <li><a href="#games">Games</a></li>
-    <li><a href="#subscribe" class="nav-cta">Subscribe</a></li>
+    <li><a href="#membership">Membership</a></li>
   </ul>
+  <a href="#membership" class="nav-cta">Join the Crew</a>
 </nav>
 
 <!-- HERO -->
-<div class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-grid"></div>
-  <p class="hero-eyebrow">Method in Motion</p>
-  <h1 class="hero-title">
-    Coding With<br><span class="grad-text">Zen</span>
-  </h1>
-  <p class="hero-sub">Code &nbsp;·&nbsp; Create &nbsp;·&nbsp; Move</p>
-  <p class="hero-desc">A character universe built for kids who create — not just consume. Learn to code through stories, games, and printables with Zen and the whole Method Crew.</p>
-  <div class="hero-btns">
-    <a href="#crew" class="btn-primary">Meet the Crew</a>
-    <a href="#shop" class="btn-outline">Browse Workbooks</a>
+<section class="hero" id="hero">
+  <canvas id="tunnelCanvas"></canvas>
+
+  <div class="hero-chars" id="heroChars">
+    <div class="hchar" style="--sz:90px;--rot:-8deg;--glow:rgba(255,107,170,.6);top:15%;left:8%;animation-delay:0s;animation-duration:5.5s">
+      <img src="zen.png" alt="Zen">
+    </div>
+    <div class="hchar" style="--sz:80px;--rot:6deg;--glow:rgba(0,232,255,.6);top:12%;right:10%;animation-delay:1s;animation-duration:6.5s">
+      <img src="echo.png" alt="Echo">
+    </div>
+    <div class="hchar" style="--sz:75px;--rot:-5deg;--glow:rgba(198,107,255,.6);bottom:20%;left:6%;animation-delay:2s;animation-duration:7s">
+      <img src="byte.png" alt="Byte">
+    </div>
+    <div class="hchar" style="--sz:85px;--rot:10deg;--glow:rgba(0,232,255,.5);bottom:18%;right:8%;animation-delay:0.5s;animation-duration:5s">
+      <img src="loop.png" alt="Loop">
+    </div>
+    <div class="hchar" style="--sz:70px;--rot:-12deg;--glow:rgba(162,255,50,.5);top:40%;left:3%;animation-delay:1.5s;animation-duration:6s">
+      <img src="bug.png" alt="Bug">
+    </div>
+    <div class="hchar" style="--sz:78px;--rot:8deg;--glow:rgba(255,200,50,.5);top:38%;right:4%;animation-delay:3s;animation-duration:7.5s">
+      <img src="nova.png" alt="Nova">
+    </div>
   </div>
+
+  <div class="hero-content">
+    <div class="hero-eyebrow">Coding · Creativity · Confidence</div>
+    <div class="hero-title">METHOD<br>IN MOTION</div>
+    <div class="hero-sub">Create, Don't Consume.</div>
+    <div class="hero-actions">
+      <a href="#crew" class="btn-primary">Meet the Crew</a>
+      <a href="#workbooks" class="btn-outline">Explore Workbooks</a>
+    </div>
+  </div>
+
   <div class="hero-scroll">
+    <span>enter the universe</span>
     <div class="scroll-line"></div>
-    <span>Scroll</span>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- CREW -->
-<div class="crew-section" id="crew">
-  <div class="crew-inner">
-    <p class="section-label reveal">The Method Crew</p>
-    <h2 class="section-title reveal">Six characters.<br>One universe.</h2>
-    <p class="section-desc reveal">Each crew member teaches a different skill — hover to see them in action.</p>
-
-    <div class="crew-grid">
-
-      <!-- ZEN -->
-      <div class="crew-card card-zen reveal">
-        <div class="crew-card-bg"></div>
-        <video autoplay muted loop playsinline
-          src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.mp4">
-        </video>
-        <div class="crew-card-play">▶</div>
-        <div class="crew-card-info">
-          <span class="crew-card-name">ZEN</span>
-          <span class="crew-card-role">The Creative Coder</span>
-          <span class="crew-card-age">Ages 4–12 · All Tiers</span>
-        </div>
-      </div>
-
-      <!-- BYTE -->
-      <div class="crew-card card-byte reveal">
-        <div class="crew-card-bg"></div>
-        <video autoplay muted loop playsinline
-          src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-motion.mp4">
-        </video>
-        <div class="crew-card-play">▶</div>
-        <div class="crew-card-info">
-          <span class="crew-card-name">BYTE</span>
-          <span class="crew-card-role">The Glitch Cat</span>
-          <span class="crew-card-age">Ages 4–6 · Sparks</span>
-        </div>
-      </div>
-
-      <!-- NOVA -->
-      <div class="crew-card card-nova reveal">
-        <div class="crew-card-bg"></div>
-        <video autoplay muted loop playsinline
-          src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-motion.mp4">
-        </video>
-        <div class="crew-card-play">▶</div>
-        <div class="crew-card-info">
-          <span class="crew-card-name">NOVA</span>
-          <span class="crew-card-role">The Builder</span>
-          <span class="crew-card-age">Ages 7–9 · Builders</span>
-        </div>
-      </div>
-
-      <!-- LOOP -->
-      <div class="crew-card card-loop reveal">
-        <div class="crew-card-bg"></div>
-        <video autoplay muted loop playsinline
-          src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.mp4">
-        </video>
-        <div class="crew-card-play">▶</div>
-        <div class="crew-card-info">
-          <span class="crew-card-name">LOOP</span>
-          <span class="crew-card-role">Logic & Flow</span>
-          <span class="crew-card-age">Ages 7–9 · Builders</span>
-        </div>
-      </div>
-
-      <!-- BUG -->
-      <div class="crew-card card-bug reveal">
-        <div class="crew-card-bg"></div>
-        <video autoplay muted loop playsinline
-          src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-motion.mp4">
-        </video>
-        <div class="crew-card-play">▶</div>
-        <div class="crew-card-info">
-          <span class="crew-card-name">BUG</span>
-          <span class="crew-card-role">The Debug Gremlin</span>
-          <span class="crew-card-age">Ages 10–12 · Coders</span>
-        </div>
-      </div>
-
-      <!-- ECHO -->
-      <div class="crew-card card-echo reveal">
-        <div class="crew-card-bg"></div>
-        <video autoplay muted loop playsinline
-          src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-motion.mp4">
-        </video>
-        <div class="crew-card-play">▶</div>
-        <div class="crew-card-info">
-          <span class="crew-card-name">ECHO</span>
-          <span class="crew-card-role">The Signal DJ</span>
-          <span class="crew-card-age">Ages 10–12 · Coders</span>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="divider"></div>
-
-<!-- LEARN / TIERS -->
-<div class="tiers-wrap" id="learn">
-  <section>
-    <p class="section-label reveal">Curriculum Tiers</p>
-    <h2 class="section-title reveal">Progressive learning<br>from 4 to 12.</h2>
-    <p class="section-desc reveal">Every child starts as a Spark and grows into a Coder — building real skills at every stage.</p>
-
-    <div class="tiers-grid">
-      <div class="tier-card tier-sparks reveal">
-        <div class="tier-num">Tier 01 &nbsp;·&nbsp; Sparks</div>
-        <div class="tier-name">Sparks</div>
-        <div class="tier-ages">Ages 4–6</div>
-        <div class="tier-desc">Patterns, sequences, and creative logic — no screen required. Tracing, sorting, matching, and hands-on discovery to build a coder's mindset early.</div>
-        <div class="tier-chars">
-          <span class="tier-char-tag">ZEN</span>
-          <span class="tier-char-tag">BYTE</span>
-        </div>
-      </div>
-      <div class="tier-card tier-builders reveal">
-        <div class="tier-num">Tier 02 &nbsp;·&nbsp; Builders</div>
-        <div class="tier-name">Builders</div>
-        <div class="tier-ages">Ages 7–9</div>
-        <div class="tier-desc">Functions, loops, cause and effect — building real things step by step. Drag-and-drop activities, simple conditionals, and website fundamentals.</div>
-        <div class="tier-chars">
-          <span class="tier-char-tag">NOVA</span>
-          <span class="tier-char-tag">LOOP</span>
-        </div>
-      </div>
-      <div class="tier-card tier-coders reveal">
-        <div class="tier-num">Tier 03 &nbsp;·&nbsp; Coders</div>
-        <div class="tier-name">Coders</div>
-        <div class="tier-ages">Ages 10–12</div>
-        <div class="tier-desc">Debugging, events, sound and interaction — real intro to HTML/CSS concepts and event-driven thinking. Break things on purpose and fix them better.</div>
-        <div class="tier-chars">
-          <span class="tier-char-tag">BUG</span>
-          <span class="tier-char-tag">ECHO</span>
-        </div>
-      </div>
-    </div>
-  </section>
-</div>
-
-<div class="divider"></div>
-
-<!-- SHOP -->
-<section id="shop">
-  <p class="section-label reveal">The Shop</p>
-  <h2 class="section-title reveal">Workbooks &amp;<br>Printables</h2>
-  <p class="section-desc reveal">Beautifully designed PDFs — ready to download, print, and create with. Each workbook is a complete adventure with its character.</p>
-
-  <div class="shop-grid">
-    <a class="shop-card reveal" href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener"
-      <img class="shop-card-img"
-        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_S_CREATIVE_CIRCUITS.png"
-        alt="Zen's Creative Circuits"
-        onerror="this.style.background='#1a1d3a';this.style.minHeight='320px'">
-      <div class="shop-card-body">
-        <span class="shop-card-tag">Printable PDF · Ages 4–12</span>
-        <div class="shop-card-title">Zen's Creative Circuits</div>
-        <div class="shop-card-sub">Build &amp; think like a coder with Zen. Patterns, logic, and creative code.</div>
-        <div class="shop-card-footer">
-          <span class="shop-price">$7.99</span>
-          <button class="shop-btn">Add to Cart</button>
-        </div>
-      </div>
-    </a>
-
-    <a class="shop-card reveal" href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener"
-      <img class="shop-card-img"
-        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_s_DEBUG_LAB.png"
-        alt="Byte's Debug Lab"
-        onerror="this.style.background='#1a1d3a';this.style.minHeight='320px'">
-      <div class="shop-card-body">
-        <span class="shop-card-tag">Printable PDF · Ages 4–6</span>
-        <div class="shop-card-title">Byte's Debug Lab</div>
-        <div class="shop-card-sub">Every bug is just a clue. Debug missions with Byte the glitch cat.</div>
-        <div class="shop-card-footer">
-          <span class="shop-price">$6.99</span>
-          <button class="shop-btn">Add to Cart</button>
-        </div>
-      </div>
-    </a>
-
-    <a class="shop-card reveal" href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener"
-      <img class="shop-card-img"
-        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_BUILDS_A_WEBSITE.png"
-        alt="Nova Builds a Website"
-        onerror="this.style.background='#1a1d3a';this.style.minHeight='320px'">
-      <div class="shop-card-body">
-        <span class="shop-card-tag">Printable PDF · Ages 7–9</span>
-        <div class="shop-card-title">Nova Builds a Website</div>
-        <div class="shop-card-sub">Ideas + parts = possibilities. Build with Nova one component at a time.</div>
-        <div class="shop-card-footer">
-          <span class="shop-price">$7.99</span>
-          <button class="shop-btn">Add to Cart</button>
-        </div>
-      </div>
-    </a>
-
-    <a class="shop-card reveal" href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener"
-      <img class="shop-card-img"
-        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_S_LOGIC_QUEST_Cover.png"
-        alt="Loop's Logic Quest"
-        onerror="this.style.background='#1a1d3a';this.style.minHeight='320px'">
-      <div class="shop-card-body">
-        <span class="shop-card-tag">Printable PDF · Ages 7–9</span>
-        <div class="shop-card-title">Loop's Logic Quest</div>
-        <div class="shop-card-sub">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div>
-        <div class="shop-card-footer">
-          <span class="shop-price">$7.99</span>
-          <button class="shop-btn">Add to Cart</button>
-        </div>
-      </div>
-    </a>
-
-    <a class="shop-card reveal" href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener"
-      <img class="shop-card-img"
-        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_S_GLITCH_QUEST.png"
-        alt="Bug's Glitch Quest"
-        onerror="this.style.background='#1a1d3a';this.style.minHeight='320px'">
-      <div class="shop-card-body">
-        <span class="shop-card-tag">Printable PDF · Ages 10–12</span>
-        <div class="shop-card-title">Bug's Glitch Quest</div>
-        <div class="shop-card-sub">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div>
-        <div class="shop-card-footer">
-          <span class="shop-price">$7.99</span>
-          <button class="shop-btn">Add to Cart</button>
-        </div>
-      </div>
-    </a>
-
-    <a class="shop-card reveal" href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener"
-      <img class="shop-card-img"
-        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_S_SOUND_SYSTEMS.png"
-        alt="Echo's Sound Systems"
-        onerror="this.style.background='#1a1d3a';this.style.minHeight='320px'">
-      <div class="shop-card-body">
-        <span class="shop-card-tag">Printable PDF · Ages 10–12</span>
-        <div class="shop-card-title">Echo's Sound Systems</div>
-        <div class="shop-card-sub">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking with Echo.</div>
-        <div class="shop-card-footer">
-          <span class="shop-price">$7.99</span>
-          <button class="shop-btn">Add to Cart</button>
-        </div>
-      </div>
-    </a>
   </div>
 </section>
 
-<div class="divider"></div>
+<!-- MISSION -->
+<section class="mission">
+  <div class="mission-label reveal">Our Philosophy</div>
+  <h2 class="mission-title reveal">Technology is a <span>creative tool.</span><br>Not a distraction.</h2>
+  <p class="mission-body reveal">Method in Motion is a universe built for kids who are ready to build, think, debug, and create. Six characters. Six worlds. One mission — to make every child feel like they belong in the future of tech.</p>
+  <div class="mission-pills reveal">
+    <div class="mission-pill">No Ages. Just Levels.</div>
+    <div class="mission-pill">Learn by Doing</div>
+    <div class="mission-pill">Every Character Has a World</div>
+    <div class="mission-pill">Progressive Curriculum</div>
+  </div>
+</section>
 
-<!-- GAMES -->
-<div class="games-teaser" id="games">
-  <div class="games-badge"><span></span>Interactive Games — Coming Soon</div>
-  <h2 class="games-title reveal">Play your way<br><span style="background:var(--grad2);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">into code.</span></h2>
-  <p class="games-desc reveal">Browser-based games built with every character. Drag-and-drop, logic puzzles, rhythm coding, and more — free to play, forever.</p>
-  <a href="#subscribe" class="btn-primary reveal">Get Early Access</a>
+<!-- CREW UNIVERSE -->
+<div class="crew-universe" id="crew">
+  <div class="crew-header">
+    <span class="section-label reveal">The Method Crew</span>
+    <h2 class="section-title reveal">Six characters.<br>One universe.</h2>
+    <p class="section-desc reveal">Every character owns a topic. Start anywhere. Grow everywhere. The only level that matters is the one you're on.</p>
+  </div>
 
-  <div class="games-preview">
-    <div class="game-chip reveal"><span class="chip-icon">🏗️</span> Nova's Build Lab — Drag & Drop</div>
-    <div class="game-chip reveal"><span class="chip-icon">🐛</span> Bug's Glitch Hunt — Debug Game</div>
-    <div class="game-chip reveal"><span class="chip-icon">🎵</span> Echo's Beat Machine — Sound Coding</div>
-    <div class="game-chip reveal"><span class="chip-icon">🔁</span> Loop's Pattern Quest — Logic Puzzles</div>
-    <div class="game-chip reveal"><span class="chip-icon">⭐</span> Zen's Code Studio — Creative Mode</div>
+  <!-- ZEN -->
+  <div class="char-world" style="--char-glow:rgba(255,107,170,.35);--char-color:#ff6baa;--gc:rgba(255,107,170,.08);--gx:20%">
+    <div class="char-world__bg"></div>
+    <div class="char-world__inner">
+      <div class="char-world__visual reveal rl">
+        <div class="char-ring" style="--char-glow:rgba(255,107,170,.4)"></div>
+        <div class="char-ring"></div>
+        <img class="char-img" src="zen.png" alt="Zen" style="--char-glow:rgba(255,107,170,.5)">
+      </div>
+      <div class="char-world__text reveal rr">
+        <div class="char-name">Character 01 — Zen</div>
+        <h2 class="char-title">Creative Coder</h2>
+        <div class="char-tagline">Think it. Design it. Build it.</div>
+        <p class="char-desc">Zen is calm, creative, and always thinking three steps ahead. She believes that the best code is made when you slow down and think clearly. Her world is where logic meets imagination.</p>
+        <div class="char-topics">
+          <span class="char-topic" style="--char-color:#ff6baa">Creative Thinking</span>
+          <span class="char-topic" style="--char-color:#ff6baa">Digital Design</span>
+          <span class="char-topic" style="--char-color:#ff6baa">Coding Basics</span>
+          <span class="char-topic" style="--char-color:#ff6baa">Problem Solving</span>
+        </div>
+        <div class="char-levels">
+          <div class="level"><div class="level-num" style="color:#ff6baa">L1</div><div class="level-info"><div class="level-title">Spark — What is Code?</div><div class="level-desc">Patterns, sequences, and thinking like a computer</div></div><div class="level-badge" style="background:#ff6baa">Start Here</div></div>
+          <div class="level"><div class="level-num" style="color:#ff6baa">L2</div><div class="level-info"><div class="level-title">Builder — Design Your World</div><div class="level-desc">Colors, layouts, and making things look intentional</div></div></div>
+          <div class="level"><div class="level-num" style="color:#ff6baa">L3</div><div class="level-info"><div class="level-title">Coder — Zen's Creative Circuits</div><div class="level-desc">Logic gates, conditionals, and creative code projects</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BYTE -->
+  <div class="char-world reverse" style="--char-glow:rgba(198,107,255,.35);--char-color:#c66bff;--gc:rgba(198,107,255,.08);--gx:80%">
+    <div class="char-world__bg"></div>
+    <div class="char-world__inner">
+      <div class="char-world__visual reveal rr">
+        <div class="char-ring" style="--char-glow:rgba(198,107,255,.4)"></div>
+        <div class="char-ring"></div>
+        <img class="char-img" src="byte.png" alt="Byte" style="--char-glow:rgba(198,107,255,.5)">
+      </div>
+      <div class="char-world__text reveal rl">
+        <div class="char-name">Character 02 — Byte</div>
+        <h2 class="char-title">Glitch Cat</h2>
+        <div class="char-tagline" style="color:#c66bff">Every glitch is a clue.</div>
+        <p class="char-desc">Byte is the curious little cat who lives between the pixels. She's always finding the errors that everyone else missed — and turning them into discoveries. Her world is soft, minimal, and full of tiny mysteries.</p>
+        <div class="char-topics">
+          <span class="char-topic" style="--char-color:#c66bff">Debugging</span>
+          <span class="char-topic" style="--char-color:#c66bff">Error Thinking</span>
+          <span class="char-topic" style="--char-color:#c66bff">Observation</span>
+          <span class="char-topic" style="--char-color:#c66bff">Logic Tracing</span>
+        </div>
+        <div class="char-levels">
+          <div class="level"><div class="level-num" style="color:#c66bff">L1</div><div class="level-info"><div class="level-title">Spot the Glitch</div><div class="level-desc">Finding what's wrong and why it matters</div></div><div class="level-badge" style="background:#c66bff">Start Here</div></div>
+          <div class="level"><div class="level-num" style="color:#c66bff">L2</div><div class="level-info"><div class="level-title">Byte's Debug Lab</div><div class="level-desc">Step-by-step debugging missions with Byte</div></div></div>
+          <div class="level"><div class="level-num" style="color:#c66bff">L3</div><div class="level-info"><div class="level-title">Trace the Error</div><div class="level-desc">Reading code, finding bugs, writing fixes</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- LOOP -->
+  <div class="char-world" style="--char-glow:rgba(0,232,255,.35);--char-color:#00e8ff;--gc:rgba(0,232,255,.08);--gx:20%">
+    <div class="char-world__bg"></div>
+    <div class="char-world__inner">
+      <div class="char-world__visual reveal rl">
+        <div class="char-ring" style="--char-glow:rgba(0,232,255,.4)"></div>
+        <div class="char-ring"></div>
+        <img class="char-img" src="loop.png" alt="Loop" style="--char-glow:rgba(0,232,255,.5)">
+      </div>
+      <div class="char-world__text reveal rr">
+        <div class="char-name">Character 03 — Loop</div>
+        <h2 class="char-title">Pattern Master</h2>
+        <div class="char-tagline" style="color:#00e8ff">Plan. Repeat. Perfect.</div>
+        <p class="char-desc">Loop sees the world as a sequence of steps. She knows that almost everything — from a dance routine to a cooking recipe — is really just code in disguise. Her world is where patterns come alive.</p>
+        <div class="char-topics">
+          <span class="char-topic" style="--char-color:#00e8ff">Patterns & Sequences</span>
+          <span class="char-topic" style="--char-color:#00e8ff">Loops & Repetition</span>
+          <span class="char-topic" style="--char-color:#00e8ff">Algorithms</span>
+          <span class="char-topic" style="--char-color:#00e8ff">Flow Thinking</span>
+        </div>
+        <div class="char-levels">
+          <div class="level"><div class="level-num" style="color:#00e8ff">L1</div><div class="level-info"><div class="level-title">See the Pattern</div><div class="level-desc">Recognizing sequences in everyday life</div></div><div class="level-badge" style="background:#00e8ff;color:#000">Start Here</div></div>
+          <div class="level"><div class="level-num" style="color:#00e8ff">L2</div><div class="level-info"><div class="level-title">Loop's Logic Quest</div><div class="level-desc">Building loops, planning steps, writing algorithms</div></div></div>
+          <div class="level"><div class="level-num" style="color:#00e8ff">L3</div><div class="level-info"><div class="level-title">The Infinite Loop</div><div class="level-desc">Complex sequences, nested patterns, and optimization</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOVA -->
+  <div class="char-world reverse" style="--char-glow:rgba(255,220,80,.35);--char-color:#ffe066;--gc:rgba(255,220,80,.06);--gx:80%">
+    <div class="char-world__bg"></div>
+    <div class="char-world__inner">
+      <div class="char-world__visual reveal rr">
+        <div class="char-ring" style="--char-glow:rgba(255,220,80,.4)"></div>
+        <div class="char-ring"></div>
+        <img class="char-img" src="nova.png" alt="Nova" style="--char-glow:rgba(255,220,80,.5)">
+      </div>
+      <div class="char-world__text reveal rl">
+        <div class="char-name">Character 04 — Nova</div>
+        <h2 class="char-title">The Builder</h2>
+        <div class="char-tagline" style="color:#ffe066">Ideas + Parts = Possibilities.</div>
+        <p class="char-desc">Nova is the engineer of the crew. She builds things, breaks them, and builds them better. Her world is about taking ideas and turning them into something real — one component at a time.</p>
+        <div class="char-topics">
+          <span class="char-topic" style="--char-color:#ffe066">Web Building</span>
+          <span class="char-topic" style="--char-color:#ffe066">Components</span>
+          <span class="char-topic" style="--char-color:#ffe066">HTML Basics</span>
+          <span class="char-topic" style="--char-color:#ffe066">Prototyping</span>
+        </div>
+        <div class="char-levels">
+          <div class="level"><div class="level-num" style="color:#ffe066">L1</div><div class="level-info"><div class="level-title">Build Your First Thing</div><div class="level-desc">What is a webpage? What are its parts?</div></div><div class="level-badge" style="background:#ffe066;color:#000">Start Here</div></div>
+          <div class="level"><div class="level-num" style="color:#ffe066">L2</div><div class="level-info"><div class="level-title">Nova Builds a Website</div><div class="level-desc">Structure, content, and putting it all together</div></div></div>
+          <div class="level"><div class="level-num" style="color:#ffe066">L3</div><div class="level-info"><div class="level-title">Design Systems</div><div class="level-desc">Making things that look good and work right</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BUG -->
+  <div class="char-world" style="--char-glow:rgba(162,255,50,.35);--char-color:#a2ff32;--gc:rgba(162,255,50,.06);--gx:20%">
+    <div class="char-world__bg"></div>
+    <div class="char-world__inner">
+      <div class="char-world__visual reveal rl">
+        <div class="char-ring" style="--char-glow:rgba(162,255,50,.4)"></div>
+        <div class="char-ring"></div>
+        <img class="char-img" src="bug.png" alt="Bug" style="--char-glow:rgba(162,255,50,.5)">
+      </div>
+      <div class="char-world__text reveal rr">
+        <div class="char-name">Character 05 — Bug</div>
+        <h2 class="char-title">The Chaotic Fixer</h2>
+        <div class="char-tagline" style="color:#a2ff32">Break it. Fix it. Level up.</div>
+        <p class="char-desc">Bug is the one who charges in, makes a mess, and somehow solves everything in the process. He's the problem-solver who doesn't follow the manual — because sometimes the best discoveries happen when things go wrong.</p>
+        <div class="char-topics">
+          <span class="char-topic" style="--char-color:#a2ff32">Problem Solving</span>
+          <span class="char-topic" style="--char-color:#a2ff32">Critical Thinking</span>
+          <span class="char-topic" style="--char-color:#a2ff32">Trial & Error</span>
+          <span class="char-topic" style="--char-color:#a2ff32">Systems Thinking</span>
+        </div>
+        <div class="char-levels">
+          <div class="level"><div class="level-num" style="color:#a2ff32">L1</div><div class="level-info"><div class="level-title">What Went Wrong?</div><div class="level-desc">Understanding problems before jumping to solutions</div></div><div class="level-badge" style="background:#a2ff32;color:#000">Start Here</div></div>
+          <div class="level"><div class="level-num" style="color:#a2ff32">L2</div><div class="level-info"><div class="level-title">Bug's Glitch Quest</div><div class="level-desc">Solving puzzles, testing ideas, thinking systematically</div></div></div>
+          <div class="level"><div class="level-num" style="color:#a2ff32">L3</div><div class="level-info"><div class="level-title">The Fix It Files</div><div class="level-desc">Complex multi-step problem solving challenges</div></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ECHO -->
+  <div class="char-world reverse" style="--char-glow:rgba(0,232,255,.35);--char-color:#00e8ff;--gc:rgba(0,232,255,.06);--gx:80%" id="echo-world">
+    <div class="char-world__bg"></div>
+    <div class="char-world__inner">
+      <div class="char-world__visual reveal rr">
+        <div class="char-ring" style="--char-glow:rgba(0,232,255,.4)"></div>
+        <div class="char-ring"></div>
+        <img class="char-img" src="echo.png" alt="Echo" style="--char-glow:rgba(0,232,255,.6)" id="echoImg">
+      </div>
+      <div class="char-world__text reveal rl">
+        <div class="char-name">Character 06 — Echo</div>
+        <h2 class="char-title">Sound Coder</h2>
+        <div class="char-tagline" style="color:#00e8ff">Feel it. Code it. Play it.</div>
+        <p class="char-desc">Echo lives in the frequency between music and code. She hears patterns in everything — and she'll show you how sound, rhythm, and events are the same thing, just speaking different languages.</p>
+        <p style="font-size:.78rem;color:rgba(0,232,255,.5);margin-bottom:16px;font-family:var(--display);letter-spacing:.08em">✦ Hover Echo to hear her world</p>
+        <div class="char-topics">
+          <span class="char-topic" style="--char-color:#00e8ff">Sound & Rhythm</span>
+          <span class="char-topic" style="--char-color:#00e8ff">Event Thinking</span>
+          <span class="char-topic" style="--char-color:#00e8ff">Cause & Effect</span>
+          <span class="char-topic" style="--char-color:#00e8ff">Audio Coding</span>
+        </div>
+        <div class="char-levels">
+          <div class="level"><div class="level-num" style="color:#00e8ff">L1</div><div class="level-info"><div class="level-title">Listen to the Pattern</div><div class="level-desc">Sound, rhythm, and how events trigger actions</div></div><div class="level-badge" style="background:#00e8ff;color:#000">Start Here</div></div>
+          <div class="level"><div class="level-num" style="color:#00e8ff">L2</div><div class="level-info"><div class="level-title">Echo's Sound Systems</div><div class="level-desc">Building sound sequences and event-driven thinking</div></div></div>
+          <div class="level"><div class="level-num" style="color:#00e8ff">L3</div><div class="level-info"><div class="level-title">The Beat Machine</div><div class="level-desc">Programming rhythm, timing, and interactive audio</div></div></div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 
-<div class="divider"></div>
+<!-- WORKBOOKS -->
+<section class="workbooks" id="workbooks">
+  <div class="workbooks__inner">
+    <div class="workbooks__header">
+      <span class="section-label reveal">Printables & Workbooks</span>
+      <h2 class="section-title reveal">Take the universe<br>off-screen.</h2>
+      <p class="section-desc reveal">Beautiful PDFs built around each character's world. Download, print, and create. Every page is an adventure.</p>
+    </div>
+    <div class="workbooks__grid">
 
-<!-- SUBSCRIPTION -->
-<div class="sub-section" id="subscribe">
-  <section>
-    <p class="section-label reveal">Membership</p>
-    <h2 class="section-title reveal">Everything. Every month.</h2>
-    <p class="section-desc reveal">New printables, games, and curriculum drops every month. Cancel anytime.</p>
-
-    <div class="sub-grid">
-      <div class="sub-card reveal">
-        <div class="sub-tier">Spark Plan</div>
-        <div class="sub-name">Explorer</div>
-        <div class="sub-price">
-          <span class="sub-price-num">$5</span>
-          <span class="sub-price-mo">/month</span>
+      <div class="wb-card reveal d1" style="--wb-color:#ff6baa;--wb-bg:linear-gradient(135deg,#2a0a1e,#0d0f1e)">
+        <div class="wb-cover">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_S_CREATIVE_CIRCUITS.png" alt="Zen's Creative Circuits" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=zen.png><span style=font-size:.7rem;color:#ff6baa;font-family:var(--display);letter-spacing:.1em>ZEN</span></div>'">
         </div>
-        <ul class="sub-features">
+        <div class="wb-body">
+          <div class="wb-char">Zen · Creative Coding</div>
+          <div class="wb-title">Zen's Creative Circuits</div>
+          <div class="wb-desc">Logic, patterns, and creative code with Zen as your guide.</div>
+          <div class="wb-footer">
+            <div class="wb-price">$7.99</div>
+            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#ff6baa">Get It →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-card reveal d2" style="--wb-color:#c66bff;--wb-bg:linear-gradient(135deg,#1a0a2e,#0d0f1e)">
+        <div class="wb-cover">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_s_DEBUG_LAB.png" alt="Byte's Debug Lab" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=byte.png><span style=font-size:.7rem;color:#c66bff;font-family:var(--display);letter-spacing:.1em>BYTE</span></div>'">
+        </div>
+        <div class="wb-body">
+          <div class="wb-char">Byte · Debugging</div>
+          <div class="wb-title">Byte's Debug Lab</div>
+          <div class="wb-desc">Every bug is a clue. Debug missions with Byte the glitch cat.</div>
+          <div class="wb-footer">
+            <div class="wb-price">$6.99</div>
+            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#c66bff">Get It →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-card reveal d3" style="--wb-color:#00e8ff;--wb-bg:linear-gradient(135deg,#001a2e,#0d0f1e)">
+        <div class="wb-cover">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_S_LOGIC_QUEST_Cover.png" alt="Loop's Logic Quest" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=loop.png><span style=font-size:.7rem;color:#00e8ff;font-family:var(--display);letter-spacing:.1em>LOOP</span></div>'">
+        </div>
+        <div class="wb-body">
+          <div class="wb-char">Loop · Patterns</div>
+          <div class="wb-title">Loop's Logic Quest</div>
+          <div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div>
+          <div class="wb-footer">
+            <div class="wb-price">$7.99</div>
+            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#00e8ff">Get It →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-card reveal d1" style="--wb-color:#ffe066;--wb-bg:linear-gradient(135deg,#1a1500,#0d0f1e)">
+        <div class="wb-cover">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_BUILDS_A_WEBSITE.png" alt="Nova Builds a Website" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=nova.png><span style=font-size:.7rem;color:#ffe066;font-family:var(--display);letter-spacing:.1em>NOVA</span></div>'">
+        </div>
+        <div class="wb-body">
+          <div class="wb-char">Nova · Building</div>
+          <div class="wb-title">Nova Builds a Website</div>
+          <div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div>
+          <div class="wb-footer">
+            <div class="wb-price">$7.99</div>
+            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#ffe066">Get It →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-card reveal d2" style="--wb-color:#a2ff32;--wb-bg:linear-gradient(135deg,#0a1a00,#0d0f1e)">
+        <div class="wb-cover">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_S_GLITCH_QUEST.png" alt="Bug's Glitch Quest" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=bug.png><span style=font-size:.7rem;color:#a2ff32;font-family:var(--display);letter-spacing:.1em>BUG</span></div>'">
+        </div>
+        <div class="wb-body">
+          <div class="wb-char">Bug · Problem Solving</div>
+          <div class="wb-title">Bug's Glitch Quest</div>
+          <div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div>
+          <div class="wb-footer">
+            <div class="wb-price">$7.99</div>
+            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#a2ff32">Get It →</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="wb-card reveal d3" style="--wb-color:#00e8ff;--wb-bg:linear-gradient(135deg,#001a2a,#0d0f1e)">
+        <div class="wb-cover">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_S_SOUND_SYSTEMS.png" alt="Echo's Sound Systems" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=echo.png><span style=font-size:.7rem;color:#00e8ff;font-family:var(--display);letter-spacing:.1em>ECHO</span></div>'">
+        </div>
+        <div class="wb-body">
+          <div class="wb-char">Echo · Sound Coding</div>
+          <div class="wb-title">Echo's Sound Systems</div>
+          <div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div>
+          <div class="wb-footer">
+            <div class="wb-price">$7.99</div>
+            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#00e8ff">Get It →</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- GAMES -->
+<section class="games" id="games">
+  <div class="games__inner">
+    <div class="games__header">
+      <span class="section-label reveal">Interactive Games</span>
+      <h2 class="section-title reveal">Play your way<br>into code.</h2>
+      <p class="section-desc reveal">Browser-based games built with each character. Free to play. Always expanding.</p>
+    </div>
+    <div class="games__grid">
+
+      <div class="game-card reveal d1" style="--gc2:linear-gradient(90deg,#ffe066,#ff6baa);--gc3:#ffe066">
+        <div class="game-icon">🏗️</div>
+        <div class="game-char">Nova · Building</div>
+        <div class="game-title">Nova's Build Lab</div>
+        <div class="game-desc">Drag and drop components to build a webpage. Learn what goes where and why every part matters.</div>
+        <div class="game-status"><div class="game-status-dot" style="background:#ffe066"></div>Coming Soon</div>
+      </div>
+
+      <div class="game-card reveal d2" style="--gc2:linear-gradient(90deg,#a2ff32,#00e8ff);--gc3:#a2ff32">
+        <div class="game-icon">🔧</div>
+        <div class="game-char">Bug · Problem Solving</div>
+        <div class="game-title">Bug's Glitch Hunt</div>
+        <div class="game-desc">Find the bug hiding in the code. Each level gets harder. How fast can you fix it?</div>
+        <div class="game-status"><div class="game-status-dot" style="background:#a2ff32"></div>Coming Soon</div>
+      </div>
+
+      <div class="game-card reveal d3" style="--gc2:linear-gradient(90deg,#00e8ff,#c66bff);--gc3:#00e8ff">
+        <div class="game-icon">🎵</div>
+        <div class="game-char">Echo · Sound Coding</div>
+        <div class="game-title">Echo's Beat Machine</div>
+        <div class="game-desc">Build a beat by placing sounds on a grid. Learn events, timing, and what it means to program with rhythm.</div>
+        <div class="game-status"><div class="game-status-dot" style="background:#00e8ff"></div>Coming Soon</div>
+      </div>
+
+      <div class="game-card reveal d1" style="--gc2:linear-gradient(90deg,#00e8ff,#6bb5ff);--gc3:#00e8ff">
+        <div class="game-icon">↺</div>
+        <div class="game-char">Loop · Patterns</div>
+        <div class="game-title">Loop's Pattern Quest</div>
+        <div class="game-desc">Complete the sequence. Each puzzle teaches you to think in loops — one of the most powerful ideas in all of coding.</div>
+        <div class="game-status"><div class="game-status-dot" style="background:#00e8ff"></div>Coming Soon</div>
+      </div>
+
+      <div class="game-card reveal d2" style="--gc2:linear-gradient(90deg,#ff6baa,#c66bff);--gc3:#ff6baa">
+        <div class="game-icon">✦</div>
+        <div class="game-char">Zen · Creative Coding</div>
+        <div class="game-title">Zen's Code Studio</div>
+        <div class="game-desc">Open-ended creative mode. Design, arrange, and build anything. No wrong answers in Zen's world.</div>
+        <div class="game-status"><div class="game-status-dot" style="background:#ff6baa"></div>Coming Soon</div>
+      </div>
+
+      <div class="game-card reveal d3" style="--gc2:linear-gradient(90deg,#c66bff,#ff6baa);--gc3:#c66bff">
+        <div class="game-icon">◈</div>
+        <div class="game-char">Byte · Debugging</div>
+        <div class="game-title">Byte's Pixel Rescue</div>
+        <div class="game-desc">Help Byte find the missing pixels. A logic puzzle game built around careful observation and systematic thinking.</div>
+        <div class="game-status"><div class="game-status-dot" style="background:#c66bff"></div>Coming Soon</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MEMBERSHIP -->
+<section class="membership" id="membership">
+  <div class="membership__inner">
+    <div class="membership__header">
+      <span class="section-label reveal">Membership</span>
+      <h2 class="section-title reveal">Everything. Every month.</h2>
+      <p class="section-desc reveal">New printables, games, and curriculum every month. All six characters. Cancel anytime.</p>
+    </div>
+    <div class="membership__grid">
+
+      <div class="mem-card reveal d1">
+        <div class="mem-badge">Spark Plan</div>
+        <div class="mem-name">Explorer</div>
+        <div class="mem-price">
+          <span class="mem-price-num">$5</span>
+          <span class="mem-price-mo">/month</span>
+        </div>
+        <ul class="mem-features">
           <li>2 new printables per month</li>
-          <li>Access to free games</li>
+          <li>Free games access</li>
           <li>Zen + Byte content</li>
           <li>Community access</li>
         </ul>
-        <a href="https://webdevn3v.gumroad.com/" target="_blank" rel="noopener" class="sub-cta">Get Started →</a>
+        <a href="https://webdevn3v.gumroad.com/" target="_blank" rel="noopener" class="mem-cta">Get Started →</a>
       </div>
 
-      <div class="sub-card featured reveal">
-        <div class="sub-tier">Creator Plan</div>
-        <div class="sub-name">Creator</div>
-        <div class="sub-price">
-          <span class="sub-price-num">$9</span>
-          <span class="sub-price-mo">/month</span>
+      <div class="mem-card featured reveal d2">
+        <div class="mem-badge">Most Popular</div>
+        <div class="mem-name">Creator</div>
+        <div class="mem-price">
+          <span class="mem-price-num">$9</span>
+          <span class="mem-price-mo">/month</span>
         </div>
-        <ul class="sub-features">
+        <ul class="mem-features">
           <li>All 6 new printables per month</li>
-          <li>Full game library access</li>
+          <li>Full game library</li>
           <li>All 6 crew characters</li>
           <li>Progressive curriculum packs</li>
           <li>Early access to new drops</li>
         </ul>
-        <a href="https://webdevn3v.gumroad.com/" target="_blank" rel="noopener" class="sub-cta">Get Started →</a>
+        <a href="https://webdevn3v.gumroad.com/" target="_blank" rel="noopener" class="mem-cta">Get Started →</a>
       </div>
 
-      <div class="sub-card reveal">
-        <div class="sub-tier">Coder Plan</div>
-        <div class="sub-name">Full Stack</div>
-        <div class="sub-price">
-          <span class="sub-price-num">$15</span>
-          <span class="sub-price-mo">/month</span>
+      <div class="mem-card reveal d3">
+        <div class="mem-badge">Full Stack Plan</div>
+        <div class="mem-name">Full Stack</div>
+        <div class="mem-price">
+          <span class="mem-price-num">$15</span>
+          <span class="mem-price-mo">/month</span>
         </div>
-        <ul class="sub-features">
+        <ul class="mem-features">
           <li>Everything in Creator</li>
           <li>Full curriculum library</li>
           <li>Printable lesson plans</li>
           <li>Interactive coding projects</li>
           <li>Priority support</li>
         </ul>
-        <a href="https://webdevn3v.gumroad.com/" target="_blank" rel="noopener" class="sub-cta">Get Started →</a>
+        <a href="https://webdevn3v.gumroad.com/" target="_blank" rel="noopener" class="mem-cta">Get Started →</a>
       </div>
+
     </div>
-  </section>
-</div>
+  </div>
+</section>
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-top">
+  <div class="footer-inner">
     <div class="footer-brand">
-      <a href="#hero" class="nav-logo" style="text-decoration:none;">
-        <div class="nav-logo-mark">&gt;</div>
-        <div class="nav-logo-text">method <span>in motion</span></div>
-      </a>
-      <p>Coding. Creativity. Confidence. Content that connects.</p>
+      <div class="footer-brand-logo">
+        <div class="footer-brand-logo-mark">&gt;</div>
+        method in motion
+      </div>
+      <p>Coding. Creativity. Confidence. A universe built for the next generation of creators and thinkers.</p>
     </div>
     <div class="footer-col">
       <h4>Explore</h4>
       <ul>
         <li><a href="#crew">The Crew</a></li>
-        <li><a href="#learn">Curriculum</a></li>
+        <li><a href="#workbooks">Workbooks</a></li>
         <li><a href="#games">Games</a></li>
-        <li><a href="#shop">Shop</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Shop</h4>
-      <ul>
-        <li><a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener">Printables</a></li>
-        <li><a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener">Curriculum Packs</a></li>
-        <li><a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener">Bundles</a></li>
-        <li><a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener">Etsy Shop</a></li>
+        <li><a href="#membership">Membership</a></li>
       </ul>
     </div>
     <div class="footer-col">
       <h4>Connect</h4>
       <ul>
         <li><a href="https://www.tiktok.com/@methodinmotion" target="_blank" rel="noopener">TikTok</a></li>
+        <li><a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener">Etsy Shop</a></li>
         <li><a href="https://webdevn3v.gumroad.com/" target="_blank" rel="noopener">Gumroad</a></li>
         <li><a href="mailto:hello@methodinmotion.com">Contact</a></li>
       </ul>
     </div>
   </div>
   <div class="footer-bottom">
-    <p>© 2026 Method in Motion. All rights reserved.</p>
-    <span class="footer-tagline">Create, Don't Consume.</span>
+    <div class="footer-copy">© 2026 Method in Motion. All rights reserved.</div>
+    <div class="footer-tagline">Create, Don't Consume.</div>
   </div>
 </footer>
 
 <script>
-  // Scroll reveal
-  const reveals = document.querySelectorAll('.reveal');
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
-      if (entry.isIntersecting) {
-        setTimeout(() => entry.target.classList.add('visible'), i * 60);
-        observer.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.1 });
-  reveals.forEach(el => observer.observe(el));
+// ── CUSTOM CURSOR
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px'});
+function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing)}
+animRing();
+document.querySelectorAll('a,button,.wb-card,.game-card,.level,.mem-card').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{cursor.style.width='20px';cursor.style.height='20px';ring.style.width='56px';ring.style.height='56px'});
+  el.addEventListener('mouseleave',()=>{cursor.style.width='12px';cursor.style.height='12px';ring.style.width='36px';ring.style.height='36px'});
+});
 
-  // Crew card video hover
-  document.querySelectorAll('.crew-card').forEach(card => {
-    const video = card.querySelector('video');
-    if (!video) return;
-    card.addEventListener('mouseenter', () => video.play().catch(() => {}));
-    card.addEventListener('mouseleave', () => { video.pause(); video.currentTime = 0; });
+// ── NAV SCROLL
+const nav = document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60));
+
+// ── TUNNEL CANVAS
+const canvas = document.getElementById('tunnelCanvas');
+const ctx = canvas.getContext('2d');
+let W,H,tick=0;
+function resize(){W=canvas.width=window.innerWidth;H=canvas.height=window.innerHeight}
+resize();window.addEventListener('resize',resize);
+
+const stars=Array.from({length:200},()=>({
+  x:(Math.random()-.5)*2,y:(Math.random()-.5)*2,
+  z:Math.random(),spd:.003+Math.random()*.004,
+  size:Math.random()*2,
+  hue:Math.random()<.3?200:Math.random()<.5?280:340
+}));
+
+function drawTunnel(){
+  ctx.fillStyle='rgba(5,5,8,.18)';
+  ctx.fillRect(0,0,W,H);
+  const cx=W/2,cy=H/2;
+  // rings
+  for(let i=0;i<8;i++){
+    const d=(tick*.4+i*40)%320;
+    const r=d*1.8;
+    const alpha=Math.max(0,(1-d/320)*.15);
+    ctx.beginPath();
+    ctx.arc(cx,cy,r,0,Math.PI*2);
+    ctx.strokeStyle=`hsla(${260+i*10},80%,70%,${alpha})`;
+    ctx.lineWidth=1;
+    ctx.stroke();
+  }
+  // stars
+  stars.forEach(s=>{
+    s.z-=s.spd;
+    if(s.z<=0)s.z=1;
+    const px=cx+(s.x/s.z)*cx*1.2;
+    const py=cy+(s.y/s.z)*cy*1.2;
+    const sz=s.size*(1-s.z)*2.5;
+    const alpha=(1-s.z)*.8;
+    ctx.beginPath();
+    ctx.arc(px,py,Math.max(.3,sz),0,Math.PI*2);
+    ctx.fillStyle=`hsla(${s.hue},90%,80%,${alpha})`;
+    ctx.fill();
   });
+  // center glow
+  const grd=ctx.createRadialGradient(cx,cy,0,cx,cy,200);
+  grd.addColorStop(0,'rgba(198,107,255,.04)');
+  grd.addColorStop(1,'transparent');
+  ctx.fillStyle=grd;ctx.fillRect(0,0,W,H);
+  tick++;requestAnimationFrame(drawTunnel);
+}
+drawTunnel();
+
+// ── SHOW HERO CHARS AFTER LOAD
+setTimeout(()=>{
+  document.querySelectorAll('.hchar').forEach((c,i)=>{
+    setTimeout(()=>c.classList.add('visible'),i*200);
+  });
+},800);
+
+// ── SCROLL REVEAL
+const revealObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){e.target.classList.add('visible');revealObs.unobserve(e.target)}
+  });
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
+
+// ── ECHO SOUND (Web Audio API — triggered on hover, no autoplay)
+let audioCtx=null;
+const echoImg=document.getElementById('echoImg');
+if(echoImg){
+  echoImg.addEventListener('mouseenter',()=>{
+    if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const freqs=[261.6,329.6,392,523.2,659.3];
+    freqs.forEach((f,i)=>{
+      const osc=audioCtx.createOscillator();
+      const gain=audioCtx.createGain();
+      osc.connect(gain);gain.connect(audioCtx.destination);
+      osc.type='sine';osc.frequency.value=f;
+      gain.gain.setValueAtTime(0,audioCtx.currentTime+i*.15);
+      gain.gain.linearRampToValueAtTime(.08,audioCtx.currentTime+i*.15+.05);
+      gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+i*.15+.8);
+      osc.start(audioCtx.currentTime+i*.15);
+      osc.stop(audioCtx.currentTime+i*.15+.8);
+    });
+  });
+}
+
+// ── AMBIENT SOUND TOGGLE
+let ambientOn=false;let ambientNodes=[];
+document.getElementById('soundToggle').addEventListener('click',()=>{
+  if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioConfig)();
+  ambientOn=!ambientOn;
+  document.getElementById('soundWaves').style.opacity=ambientOn?'1':'.3';
+  if(ambientOn){
+    [60,90,120].forEach(f=>{
+      const osc=audioCtx.createOscillator();
+      const gain=audioCtx.createGain();
+      osc.connect(gain);gain.connect(audioCtx.destination);
+      osc.type='sine';osc.frequency.value=f;
+      gain.gain.value=.015;
+      osc.start();ambientNodes.push({osc,gain});
+    });
+  } else {
+    ambientNodes.forEach(({osc,gain})=>{
+      gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+1);
+      osc.stop(audioCtx.currentTime+1);
+    });
+    ambientNodes=[];
+  }
+});
 </script>
 </body>
 </html>
