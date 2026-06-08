@@ -253,11 +253,20 @@ nav.scrolled{
   overflow:hidden;
   background:var(--deep);
 }
-.crew-card__media img,
+.crew-card__media img{
+  position:absolute;inset:0;
+  width:100%;height:100%;
+  object-fit:contain;
+  object-position:center bottom;
+  padding:16px 16px 0;
+  mix-blend-mode:multiply;
+  filter:drop-shadow(0 0 24px var(--cc,rgba(198,107,255,.4)));
+}
 .crew-card__media video{
   position:absolute;inset:0;
   width:100%;height:100%;
-  object-fit:cover;
+  object-fit:contain;
+  object-position:center bottom;
 }
 .crew-card__media img{
   transition:opacity .4s;
@@ -336,14 +345,18 @@ nav.scrolled{
 .wb-cover{
   width:100%;aspect-ratio:3/4;
   background:var(--wb-bg,linear-gradient(135deg,#1a0a2e,#0d0f1e));
-  display:flex;align-items:center;justify-content:center;
+  display:flex;align-items:flex-end;justify-content:center;
   overflow:hidden;position:relative;
 }
 .wb-cover img{
-  width:100%;height:100%;object-fit:cover;
+  width:100%;height:100%;object-fit:contain;
+  object-position:center bottom;
   transition:transform .5s;
+  mix-blend-mode:multiply;
+  filter:drop-shadow(0 0 28px var(--wb-color,var(--pink)));
+  padding:20px 20px 0;
 }
-.wb-card:hover .wb-cover img{transform:scale(1.04)}
+.wb-card:hover .wb-cover img{transform:scale(1.05)}
 .wb-cover-placeholder{
   display:flex;flex-direction:column;align-items:center;gap:12px;
   opacity:.4;
@@ -515,6 +528,82 @@ footer{
   letter-spacing:.18em;text-transform:uppercase;
   background:var(--grad);-webkit-background-clip:text;
   -webkit-text-fill-color:transparent;background-clip:text;
+}
+
+/* ── CART MODAL ── */
+.cart-overlay{
+  position:fixed;inset:0;z-index:500;
+  background:rgba(5,5,8,.85);backdrop-filter:blur(12px);
+  display:flex;align-items:center;justify-content:center;
+  opacity:0;pointer-events:none;transition:opacity .3s;
+}
+.cart-overlay.open{opacity:1;pointer-events:all}
+.cart-modal{
+  background:var(--navy);border:1px solid var(--border-md);
+  border-radius:20px;padding:40px;width:min(480px,90vw);
+  position:relative;transform:translateY(20px);transition:transform .3s;
+}
+.cart-overlay.open .cart-modal{transform:none}
+.cart-modal__close{
+  position:absolute;top:16px;right:16px;
+  width:32px;height:32px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:none;
+  color:var(--muted);font-size:1.1rem;
+  display:flex;align-items:center;justify-content:center;
+  cursor:none;transition:all .2s;
+}
+.cart-modal__close:hover{background:rgba(255,255,255,.12);color:var(--white)}
+.cart-modal__product{
+  display:flex;gap:20px;align-items:center;margin-bottom:28px;
+  padding-bottom:28px;border-bottom:1px solid var(--border);
+}
+.cart-modal__img{
+  width:80px;height:80px;border-radius:12px;
+  overflow:hidden;background:var(--deep);flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.cart-modal__img img{
+  width:100%;height:100%;object-fit:contain;
+  mix-blend-mode:multiply;
+  filter:drop-shadow(0 0 8px var(--cc-modal,#ff6baa));
+}
+.cart-modal__info{}
+.cart-modal__name{
+  font-family:var(--heading);font-size:1.05rem;
+  font-weight:700;color:var(--white);margin-bottom:4px;
+}
+.cart-modal__price{
+  font-family:var(--display);font-size:1.4rem;
+  font-weight:900;color:var(--white);
+}
+.cart-modal__note{
+  font-size:.82rem;color:var(--muted);margin-bottom:24px;line-height:1.7;
+}
+.cart-modal__email-label{
+  font-family:var(--display);font-size:.56rem;
+  letter-spacing:.16em;text-transform:uppercase;
+  color:var(--off);margin-bottom:8px;display:block;
+}
+.cart-modal__email{
+  width:100%;padding:12px 16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid var(--border-md);border-radius:10px;
+  color:var(--white);font-family:var(--body);font-size:.9rem;
+  outline:none;transition:border-color .2s;margin-bottom:16px;
+}
+.cart-modal__email:focus{border-color:var(--purple)}
+.cart-modal__buy{
+  display:block;width:100%;padding:14px;
+  font-family:var(--display);font-size:.68rem;
+  letter-spacing:.14em;text-transform:uppercase;
+  font-weight:700;border:none;border-radius:100px;
+  background:var(--grad);color:#000;
+  cursor:none;transition:opacity .2s,transform .2s;
+}
+.cart-modal__buy:hover{opacity:.9;transform:translateY(-1px)}
+.cart-modal__secure{
+  display:flex;align-items:center;justify-content:center;gap:6px;
+  margin-top:12px;font-size:.72rem;color:var(--muted);
 }
 
 /* SOUND TOGGLE */
@@ -752,7 +841,7 @@ footer{
 
       <div class="wb-card reveal d1" style="--wb-color:#ff6baa;--wb-bg:linear-gradient(135deg,#1a0020,#0d0f1e)">
         <div class="wb-cover">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_S_CREATIVE_CIRCUITS.png" alt="Zen's Creative Circuits Vol. 1" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=zen.png></div>'">
+          <img src="zen.png" alt="Zen's Creative Circuits Vol. 1">
         </div>
         <div class="wb-body">
           <div class="wb-char">Zen · Creative Coding</div>
@@ -760,14 +849,14 @@ footer{
           <div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div>
           <div class="wb-footer">
             <div class="wb-price">$7.99</div>
-            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#ff6baa">Get It →</a>
+            <button onclick="openCart('Zen\'s Creative Circuits Vol. 1','7.99','zen.png','#ff6baa')" class="wb-btn" style="--wb-color:#ff6baa">Get It →</button>
           </div>
         </div>
       </div>
 
       <div class="wb-card reveal d2" style="--wb-color:#c66bff;--wb-bg:linear-gradient(135deg,#0d0020,#0d0f1e)">
         <div class="wb-cover">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_S_DEBUG_LAB.png" alt="Byte's Debug Lab" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=byte.png></div>'">
+          <img src="byte.png" alt="Byte's Debug Lab">
         </div>
         <div class="wb-body">
           <div class="wb-char">Byte · Debugging</div>
@@ -775,14 +864,14 @@ footer{
           <div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div>
           <div class="wb-footer">
             <div class="wb-price">$7.99</div>
-            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#c66bff">Get It →</a>
+            <button onclick="openCart('Byte\'s Debug Lab','7.99','byte.png','#c66bff')" class="wb-btn" style="--wb-color:#c66bff">Get It →</button>
           </div>
         </div>
       </div>
 
       <div class="wb-card reveal d3" style="--wb-color:#00e8ff;--wb-bg:linear-gradient(135deg,#001520,#0d0f1e)">
         <div class="wb-cover">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_S_LOGIC_QUEST.png" alt="Loop's Logic Quest" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=loop.png></div>'">
+          <img src="loop.png" alt="Loop's Logic Quest">
         </div>
         <div class="wb-body">
           <div class="wb-char">Loop · Patterns</div>
@@ -790,14 +879,14 @@ footer{
           <div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div>
           <div class="wb-footer">
             <div class="wb-price">$7.99</div>
-            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#00e8ff">Get It →</a>
+            <button onclick="openCart('Loop\'s Logic Quest','7.99','loop.png','#00e8ff')" class="wb-btn" style="--wb-color:#00e8ff">Get It →</button>
           </div>
         </div>
       </div>
 
       <div class="wb-card reveal d1" style="--wb-color:#ffe066;--wb-bg:linear-gradient(135deg,#1a1500,#0d0f1e)">
         <div class="wb-cover">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_BUILDS_A_WEBSITE.png" alt="Nova Builds a Website" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=nova.png></div>'">
+          <img src="nova.png" alt="Nova Builds a Website">
         </div>
         <div class="wb-body">
           <div class="wb-char">Nova · Building</div>
@@ -805,14 +894,14 @@ footer{
           <div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div>
           <div class="wb-footer">
             <div class="wb-price">$7.99</div>
-            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#ffe066">Get It →</a>
+            <button onclick="openCart('Nova Builds a Website','7.99','nova.png','#ffe066')" class="wb-btn" style="--wb-color:#ffe066">Get It →</button>
           </div>
         </div>
       </div>
 
       <div class="wb-card reveal d2" style="--wb-color:#a2ff32;--wb-bg:linear-gradient(135deg,#0a1a00,#0d0f1e)">
         <div class="wb-cover">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_S_GLITCH_QUEST.png" alt="Bug's Glitch Quest" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=bug.png></div>'">
+          <img src="bug.png" alt="Bug's Glitch Quest">
         </div>
         <div class="wb-body">
           <div class="wb-char">Bug · Problem Solving</div>
@@ -820,14 +909,14 @@ footer{
           <div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div>
           <div class="wb-footer">
             <div class="wb-price">$7.99</div>
-            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#a2ff32">Get It →</a>
+            <button onclick="openCart('Bug\'s Glitch Quest','7.99','bug.png','#a2ff32')" class="wb-btn" style="--wb-color:#a2ff32">Get It →</button>
           </div>
         </div>
       </div>
 
       <div class="wb-card reveal d3" style="--wb-color:#00e8ff;--wb-bg:linear-gradient(135deg,#001a2a,#0d0f1e)">
         <div class="wb-cover">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_S_SOUND_SYSTEMS.png" alt="Echo's Sound Systems" onerror="this.parentElement.innerHTML='<div class=wb-cover-placeholder><img src=echo.png></div>'">
+          <img src="echo.png" alt="Echo's Sound Systems">
         </div>
         <div class="wb-body">
           <div class="wb-char">Echo · Sound Coding</div>
@@ -835,7 +924,7 @@ footer{
           <div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div>
           <div class="wb-footer">
             <div class="wb-price">$7.99</div>
-            <a href="https://www.etsy.com/shop/MethodinMotion" target="_blank" rel="noopener" class="wb-btn" style="--wb-color:#00e8ff">Get It →</a>
+            <button onclick="openCart('Echo\'s Sound Systems','7.99','echo.png','#00e8ff')" class="wb-btn" style="--wb-color:#00e8ff">Get It →</button>
           </div>
         </div>
       </div>
@@ -987,6 +1076,27 @@ footer{
   </div>
 </footer>
 
+<!-- CART MODAL -->
+<div class="cart-overlay" id="cartOverlay">
+  <div class="cart-modal">
+    <button class="cart-modal__close" onclick="closeCart()">✕</button>
+    <div class="cart-modal__product">
+      <div class="cart-modal__img" id="cartImg">
+        <img id="cartImgSrc" src="" alt="">
+      </div>
+      <div class="cart-modal__info">
+        <div class="cart-modal__name" id="cartName"></div>
+        <div class="cart-modal__price" id="cartPrice"></div>
+      </div>
+    </div>
+    <p class="cart-modal__note">You'll receive a download link instantly after purchase. Printable PDF — print as many times as you need.</p>
+    <label class="cart-modal__email-label">Your email address</label>
+    <input class="cart-modal__email" id="cartEmail" type="email" placeholder="you@email.com">
+    <button class="cart-modal__buy" id="cartBuy" onclick="handlePurchase()">Complete Purchase →</button>
+    <div class="cart-modal__secure">🔒 Secure checkout · Instant download</div>
+  </div>
+</div>
+
 <script>
 // CURSOR
 const cursor = document.getElementById('cursor');
@@ -1045,16 +1155,44 @@ const revealObs=new IntersectionObserver(entries=>{
 },{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>revealObs.observe(el));
 
-// CHARACTER SOUNDS — each character gets a unique signature tone
+// CART MODAL
+function openCart(name, price, img, color) {
+  document.getElementById('cartName').textContent = name;
+  document.getElementById('cartPrice').textContent = '$' + price;
+  document.getElementById('cartImgSrc').src = img;
+  document.getElementById('cartImgSrc').alt = name;
+  document.getElementById('cartImg').style.setProperty('--cc-modal', color);
+  document.getElementById('cartEmail').value = '';
+  document.getElementById('cartBuy').textContent = 'Complete Purchase →';
+  document.getElementById('cartOverlay').classList.add('open');
+}
+function closeCart() {
+  document.getElementById('cartOverlay').classList.remove('open');
+}
+document.getElementById('cartOverlay').addEventListener('click', e => {
+  if(e.target === document.getElementById('cartOverlay')) closeCart();
+});
+function handlePurchase() {
+  const email = document.getElementById('cartEmail').value.trim();
+  if(!email || !email.includes('@')) {
+    document.getElementById('cartEmail').style.borderColor = '#ff6baa';
+    document.getElementById('cartEmail').focus();
+    return;
+  }
+  // TODO: connect to Stripe — for now shows confirmation
+  document.getElementById('cartBuy').textContent = '✓ Check your email for your download!';
+  document.getElementById('cartBuy').style.background = 'linear-gradient(135deg,#00e8ff,#c66bff)';
+  setTimeout(closeCart, 3000);
+}
+
+// CHARACTER SOUNDS
 let audioCtx = null;
 function getAudio(){
   if(!audioCtx) audioCtx = new(window.AudioContext||window.webkitAudioContext)();
   return audioCtx;
 }
-
 const charSounds = {
   zen: () => {
-    // Calm, melodic — soft ascending chord
     const ac = getAudio();
     [261.6, 329.6, 392].forEach((f,i) => {
       const o=ac.createOscillator(), g=ac.createGain();
@@ -1067,7 +1205,6 @@ const charSounds = {
     });
   },
   byte: () => {
-    // Glitchy — short static bursts
     const ac = getAudio();
     [880, 440, 1320, 220].forEach((f,i) => {
       const o=ac.createOscillator(), g=ac.createGain();
@@ -1080,7 +1217,6 @@ const charSounds = {
     });
   },
   loop: () => {
-    // Rhythmic loop — repeating synth blip
     const ac = getAudio();
     [523.2, 523.2, 659.3, 523.2].forEach((f,i) => {
       const o=ac.createOscillator(), g=ac.createGain();
@@ -1093,7 +1229,6 @@ const charSounds = {
     });
   },
   nova: () => {
-    // Bright, building — ascending chime
     const ac = getAudio();
     [440, 554, 659, 880].forEach((f,i) => {
       const o=ac.createOscillator(), g=ac.createGain();
@@ -1106,7 +1241,6 @@ const charSounds = {
     });
   },
   bug: () => {
-    // Buzzy, electric — glitchy zaps
     const ac = getAudio();
     [110, 220, 55, 165].forEach((f,i) => {
       const o=ac.createOscillator(), g=ac.createGain();
@@ -1119,7 +1253,6 @@ const charSounds = {
     });
   },
   echo: () => {
-    // Musical, reverberant — sound wave cascade
     const ac = getAudio();
     [261.6, 329.6, 392, 523.2, 659.3].forEach((f,i) => {
       const o=ac.createOscillator(), g=ac.createGain();
@@ -1132,7 +1265,6 @@ const charSounds = {
     });
   }
 };
-
 let lastSoundTime = {};
 function playCharSound(name) {
   const now = Date.now();
