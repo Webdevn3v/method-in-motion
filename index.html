@@ -260,7 +260,6 @@ nav.scrolled{
   object-position:center center;
   padding:8px;
   filter:drop-shadow(0 0 24px var(--cc,rgba(198,107,255,.4)));
-  mix-blend-mode:screen;
   transition:opacity .4s;
   z-index:1;
 }
@@ -406,11 +405,13 @@ nav.scrolled{
 }
 .game-card:hover::before{transform:scaleX(1)}
 .game-icon{
-  width:52px;height:52px;border-radius:12px;
-  background:rgba(255,255,255,.04);
-  border:1px solid var(--border-md);
+  width:90px;height:90px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
-  margin-bottom:18px;font-size:1.5rem;
+  margin-bottom:18px;
+}
+.game-icon img{
+  width:100%;height:100%;object-fit:contain;
+  filter:drop-shadow(0 0 16px var(--gc3,var(--pink)));
 }
 .game-char{
   font-family:var(--display);font-size:.52rem;
@@ -695,14 +696,14 @@ footer{
            onmouseenter="playCharSound('zen');this.querySelector('video').play()"
            onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
         <div class="crew-card__media">
-          <img src="zen.png" alt="Zen">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" alt="Zen">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.mp4" muted playsinline loop></video>
           <div class="crew-card__glow"></div>
         </div>
         <div class="crew-card__body">
           <div class="crew-card__id">Character 01</div>
           <div class="crew-card__name">Zen</div>
-          <div class="crew-card__role">Creative Coder · She/Her</div>
+          <div class="crew-card__role">Creative Coder</div>
           <div class="crew-card__topics">
             <span class="crew-card__topic">Creative Thinking</span>
             <span class="crew-card__topic">Digital Design</span>
@@ -717,14 +718,14 @@ footer{
            onmouseenter="playCharSound('byte');this.querySelector('video').play()"
            onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
         <div class="crew-card__media">
-          <img src="byte.png" alt="Byte">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-motion.gif" alt="Byte">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-motion.mp4" muted playsinline loop></video>
           <div class="crew-card__glow"></div>
         </div>
         <div class="crew-card__body">
           <div class="crew-card__id">Character 02</div>
           <div class="crew-card__name">Byte</div>
-          <div class="crew-card__role">Glitch Cat · She/Her</div>
+          <div class="crew-card__role">Glitch Cat</div>
           <div class="crew-card__topics">
             <span class="crew-card__topic">Debugging</span>
             <span class="crew-card__topic">Error Thinking</span>
@@ -739,14 +740,14 @@ footer{
            onmouseenter="playCharSound('loop');this.querySelector('video').play()"
            onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
         <div class="crew-card__media">
-          <img src="loop.png" alt="Loop">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.gif" alt="Loop">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.mp4" muted playsinline loop></video>
           <div class="crew-card__glow"></div>
         </div>
         <div class="crew-card__body">
           <div class="crew-card__id">Character 03</div>
           <div class="crew-card__name">Loop</div>
-          <div class="crew-card__role">Pattern Master · She/Her</div>
+          <div class="crew-card__role">Pattern Master</div>
           <div class="crew-card__topics">
             <span class="crew-card__topic">Patterns</span>
             <span class="crew-card__topic">Sequences</span>
@@ -761,14 +762,14 @@ footer{
            onmouseenter="playCharSound('nova');this.querySelector('video').play()"
            onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
         <div class="crew-card__media">
-          <img src="nova.png" alt="Nova">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-motion.gif" alt="Nova">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-motion.mp4" muted playsinline loop></video>
           <div class="crew-card__glow"></div>
         </div>
         <div class="crew-card__body">
           <div class="crew-card__id">Character 04</div>
           <div class="crew-card__name">Nova</div>
-          <div class="crew-card__role">Builder Bot · She/Her</div>
+          <div class="crew-card__role">Builder Bot</div>
           <div class="crew-card__topics">
             <span class="crew-card__topic">Web Building</span>
             <span class="crew-card__topic">Structure</span>
@@ -783,14 +784,14 @@ footer{
            onmouseenter="playCharSound('bug');this.querySelector('video').play()"
            onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
         <div class="crew-card__media">
-          <img src="bug.png" alt="Bug">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-motion.gif" alt="Bug">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-motion.mp4" muted playsinline loop></video>
           <div class="crew-card__glow"></div>
         </div>
         <div class="crew-card__body">
           <div class="crew-card__id">Character 05</div>
           <div class="crew-card__name">Bug</div>
-          <div class="crew-card__role">Glitch Hunter · He/Him</div>
+          <div class="crew-card__role">Glitch Hunter</div>
           <div class="crew-card__topics">
             <span class="crew-card__topic">Debugging</span>
             <span class="crew-card__topic">Problem Solving</span>
@@ -805,14 +806,14 @@ footer{
            onmouseenter="playCharSound('echo');this.querySelector('video').play()"
            onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
         <div class="crew-card__media">
-          <img src="echo.png" alt="Echo">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-motion.gif" alt="Echo">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-motion.mp4" muted playsinline loop></video>
           <div class="crew-card__glow"></div>
         </div>
         <div class="crew-card__body">
           <div class="crew-card__id">Character 06</div>
           <div class="crew-card__name">Echo</div>
-          <div class="crew-card__role">Sound Coder · He/Him</div>
+          <div class="crew-card__role">Sound Coder</div>
           <div class="crew-card__topics">
             <span class="crew-card__topic">Sound Coding</span>
             <span class="crew-card__topic">Rhythm & Events</span>
@@ -838,7 +839,7 @@ footer{
 
       <div class="wb-card reveal d1" style="--wb-color:#ff6baa;--wb-bg:linear-gradient(135deg,#1a0020,#0d0f1e)">
         <div class="wb-cover">
-          <img src="zen.png" alt="Zen's Creative Circuits Vol. 1">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/3.png" alt="Zen's Creative Circuits Vol. 1">
         </div>
         <div class="wb-body">
           <div class="wb-char">Zen · Creative Coding</div>
@@ -853,7 +854,7 @@ footer{
 
       <div class="wb-card reveal d2" style="--wb-color:#c66bff;--wb-bg:linear-gradient(135deg,#0d0020,#0d0f1e)">
         <div class="wb-cover">
-          <img src="byte.png" alt="Byte's Debug Lab">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/6.png" alt="Byte's Debug Lab">
         </div>
         <div class="wb-body">
           <div class="wb-char">Byte · Debugging</div>
@@ -868,7 +869,7 @@ footer{
 
       <div class="wb-card reveal d3" style="--wb-color:#00e8ff;--wb-bg:linear-gradient(135deg,#001520,#0d0f1e)">
         <div class="wb-cover">
-          <img src="loop.png" alt="Loop's Logic Quest">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/7.png" alt="Loop's Logic Quest">
         </div>
         <div class="wb-body">
           <div class="wb-char">Loop · Patterns</div>
@@ -883,7 +884,7 @@ footer{
 
       <div class="wb-card reveal d1" style="--wb-color:#ffe066;--wb-bg:linear-gradient(135deg,#1a1500,#0d0f1e)">
         <div class="wb-cover">
-          <img src="nova.png" alt="Nova Builds a Website">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/5.png" alt="Nova Builds a Website">
         </div>
         <div class="wb-body">
           <div class="wb-char">Nova · Building</div>
@@ -898,7 +899,7 @@ footer{
 
       <div class="wb-card reveal d2" style="--wb-color:#a2ff32;--wb-bg:linear-gradient(135deg,#0a1a00,#0d0f1e)">
         <div class="wb-cover">
-          <img src="bug.png" alt="Bug's Glitch Quest">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/8.png" alt="Bug's Glitch Quest">
         </div>
         <div class="wb-body">
           <div class="wb-char">Bug · Problem Solving</div>
@@ -913,7 +914,7 @@ footer{
 
       <div class="wb-card reveal d3" style="--wb-color:#00e8ff;--wb-bg:linear-gradient(135deg,#001a2a,#0d0f1e)">
         <div class="wb-cover">
-          <img src="echo.png" alt="Echo's Sound Systems">
+          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/4.png" alt="Echo's Sound Systems">
         </div>
         <div class="wb-body">
           <div class="wb-char">Echo · Sound Coding</div>
@@ -940,42 +941,42 @@ footer{
     </div>
     <div class="games__grid">
       <div class="game-card reveal d1" style="--gc2:linear-gradient(90deg,#ffe066,#ff6baa);--gc3:#ffe066">
-        <div class="game-icon">🏗️</div>
+        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-pose-2.png" alt="Nova"></div>
         <div class="game-char">Nova · Building</div>
         <div class="game-title">Nova's Build Lab</div>
         <div class="game-desc">Drag and drop components to build a webpage. Learn what goes where and why every part matters.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#ffe066"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d2" style="--gc2:linear-gradient(90deg,#a2ff32,#00e8ff);--gc3:#a2ff32">
-        <div class="game-icon">🔧</div>
+        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-pose-4.png" alt="Bug"></div>
         <div class="game-char">Bug · Problem Solving</div>
         <div class="game-title">Bug's Glitch Hunt</div>
         <div class="game-desc">Find the bug hiding in the code. Each level gets harder. How fast can you fix it?</div>
         <div class="game-status"><div class="game-status-dot" style="background:#a2ff32"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d3" style="--gc2:linear-gradient(90deg,#00e8ff,#c66bff);--gc3:#00e8ff">
-        <div class="game-icon">🎵</div>
+        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-pose-4.png" alt="Echo"></div>
         <div class="game-char">Echo · Sound Coding</div>
         <div class="game-title">Echo's Beat Machine</div>
         <div class="game-desc">Build a beat by placing sounds on a grid. Learn events, timing, and what it means to program with rhythm.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#00e8ff"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d1" style="--gc2:linear-gradient(90deg,#00e8ff,#6bb5ff);--gc3:#00e8ff">
-        <div class="game-icon">↺</div>
+        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-pose-2.png" alt="Loop"></div>
         <div class="game-char">Loop · Patterns</div>
         <div class="game-title">Loop's Pattern Quest</div>
         <div class="game-desc">Complete the sequence. Each puzzle teaches you to think in loops — one of the most powerful ideas in all of coding.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#00e8ff"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d2" style="--gc2:linear-gradient(90deg,#ff6baa,#c66bff);--gc3:#ff6baa">
-        <div class="game-icon">✦</div>
+        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-pose-2.png" alt="Zen"></div>
         <div class="game-char">Zen · Creative Coding</div>
         <div class="game-title">Zen's Code Studio</div>
         <div class="game-desc">Open-ended creative mode. Design, arrange, and build anything. No wrong answers in Zen's world.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#ff6baa"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d3" style="--gc2:linear-gradient(90deg,#c66bff,#ff6baa);--gc3:#c66bff">
-        <div class="game-icon">◈</div>
+        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-pose-3.png" alt="Byte"></div>
         <div class="game-char">Byte · Debugging</div>
         <div class="game-title">Byte's Pixel Rescue</div>
         <div class="game-desc">Help Byte find the missing pixels. A logic puzzle game built around careful observation and systematic thinking.</div>
@@ -1059,7 +1060,6 @@ footer{
       <div class="footer-col">
         <h4>Connect</h4>
         <ul>
-          <li><a href="https://www.tiktok.com/@methodinmotion" target="_blank" rel="noopener">TikTok</a></li>
           <li><a href="#workbooks">Shop</a></li>
           <li><a href="#membership">Membership</a></li>
           <li><a href="mailto:hello@methodinmotion.com">Contact</a></li>
