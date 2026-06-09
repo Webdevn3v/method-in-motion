@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova's World — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--void:#050508;--deep:#080b14;--navy:#0d1020;--card:#0f1525;--border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);--white:#ffffff;--off:#c8cce0;--muted:#5a6080;--char:#ffe066;--char2:#ff9f45;--grad:linear-gradient(135deg,#ffe066,#ff9f45);--display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em}
+.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
+.nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-back:hover{color:var(--char)}
+.nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(255,224,102,.4);color:var(--char);border-radius:100px}
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 60% 40%,rgba(255,224,102,.07) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(255,159,69,.04) 0%,transparent 45%)}
+/* floating components */
+.comp-block{position:absolute;border:1px solid rgba(255,224,102,.15);border-radius:6px;background:rgba(255,224,102,.04);font-family:var(--display);font-size:.5rem;color:rgba(255,224,102,.25);padding:6px 10px;animation:compFloat ease-in-out infinite;pointer-events:none}
+@keyframes compFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--char);opacity:.8;margin-bottom:14px}
+.hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
+.hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.hero-tag{padding:5px 14px;border:1px solid rgba(255,224,102,.3);border-radius:100px;font-family:var(--display);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--char)}
+.hero-start{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s,box-shadow .2s}
+.hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,224,102,.25)}
+.hero-char img{width:100%;max-width:360px;filter:drop-shadow(0 0 60px rgba(255,224,102,.3));animation:novaFloat 4s ease-in-out infinite}
+@keyframes novaFloat{0%,100%{transform:translateY(0) rotate(0deg)}33%{transform:translateY(-12px) rotate(1deg)}66%{transform:translateY(-6px) rotate(-1deg)}}
+.progress-bar{background:var(--deep);border-bottom:1px solid var(--border);padding:20px 48px;position:sticky;top:65px;z-index:50}
+.progress-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center}
+.prog-step{display:flex;align-items:center;flex:1}
+.prog-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.48rem;color:var(--muted);transition:all .3s;flex-shrink:0}
+.prog-dot.active{border-color:var(--char);background:rgba(255,224,102,.12);color:var(--char)}
+.prog-line{flex:1;height:1px;background:var(--border);margin:0 8px}
+.prog-label{font-family:var(--display);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.prog-label.active{color:var(--char)}
+.lessons{max-width:800px;margin:0 auto;padding:80px 48px}
+.lesson-header{margin-bottom:48px}
+.lesson-num{font-family:var(--display);font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--char);opacity:.7;margin-bottom:10px}
+.lesson-title{font-family:var(--heading);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:12px}
+.lesson-desc{font-size:.95rem;color:var(--off);line-height:1.9}
+.content-block{margin-bottom:40px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.block-header{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.block-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,224,102,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.block-label{font-family:var(--display);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char)}
+.block-body{padding:28px}
+.block-body p{font-size:.95rem;color:var(--off);line-height:1.9;margin-bottom:14px}
+.block-body p:last-child{margin-bottom:0}
+.nova-quote{font-family:var(--heading);font-size:1.1rem;font-weight:700;color:var(--white);border-left:3px solid var(--char);padding-left:18px;margin:20px 0;line-height:1.6}
+
+/* DRAG AND BUILD */
+.build-area{background:var(--void);border-radius:12px;border:2px dashed rgba(255,224,102,.2);min-height:200px;padding:20px;margin-bottom:16px;transition:border-color .2s}
+.build-area.drag-over{border-color:rgba(255,224,102,.5);background:rgba(255,224,102,.03)}
+.build-area-label{font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,224,102,.3);text-align:center;margin-bottom:16px}
+.build-component{padding:12px 16px;border-radius:8px;margin-bottom:8px;font-family:var(--display);font-size:.62rem;letter-spacing:.06em;display:flex;align-items:center;gap:10px;animation:snapIn .3s ease}
+@keyframes snapIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+.build-component.nav-comp{background:rgba(255,224,102,.12);border:1px solid rgba(255,224,102,.3);color:var(--char)}
+.build-component.hero-comp{background:rgba(0,232,255,.08);border:1px solid rgba(0,232,255,.2);color:#00e8ff}
+.build-component.content-comp{background:rgba(198,107,255,.08);border:1px solid rgba(198,107,255,.2);color:#c66bff}
+.build-component.footer-comp{background:rgba(255,107,170,.08);border:1px solid rgba(255,107,170,.2);color:#ff6baa}
+.parts-shelf{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:20px}
+.part-chip{padding:12px 16px;background:rgba(255,224,102,.06);border:1px solid rgba(255,224,102,.2);border-radius:8px;font-family:var(--display);font-size:.6rem;letter-spacing:.06em;color:var(--off);cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:8px;user-select:none}
+.part-chip:hover{border-color:var(--char);background:rgba(255,224,102,.1);color:var(--char)}
+.part-chip.placed{opacity:.3;pointer-events:none}
+.build-check{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:var(--grad);color:#000;font-weight:700;border:none;border-radius:100px;cursor:pointer;transition:transform .2s}
+.build-check:hover{transform:translateY(-1px)}
+.build-result{margin-top:14px;padding:14px;border-radius:10px;font-size:.88rem;display:none;line-height:1.7}
+.build-result.show{display:block}
+.build-result.correct{background:rgba(255,224,102,.06);border:1px solid rgba(255,224,102,.2);color:var(--char)}
+.build-result.partial{background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);color:#00e8ff}
+
+.reflect-prompt{font-size:.95rem;color:var(--off);margin-bottom:16px;line-height:1.8}
+.reflect-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);border-radius:10px;color:var(--white);font-family:var(--body);font-size:.9rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s}
+.reflect-input:focus{border-color:var(--char)}
+.reflect-submit{margin-top:12px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(255,224,102,.1);border:1px solid rgba(255,224,102,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
+.reflect-submit:hover{background:rgba(255,224,102,.2)}
+.reflect-response{margin-top:14px;padding:16px;background:rgba(255,159,69,.06);border:1px solid rgba(255,159,69,.2);border-radius:10px;font-size:.88rem;color:var(--char2);display:none;line-height:1.7}
+.reflect-response.show{display:block}
+.lesson-complete{text-align:center;padding:48px 28px;background:linear-gradient(135deg,rgba(255,224,102,.06),rgba(255,159,69,.06));border:1px solid rgba(255,224,102,.2);border-radius:16px;margin-bottom:40px}
+.complete-icon{font-size:2.5rem;margin-bottom:16px}
+.complete-title{font-family:var(--heading);font-size:1.6rem;font-weight:800;margin-bottom:8px}
+.complete-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.complete-desc{font-size:.9rem;color:var(--off);margin-bottom:24px}
+.next-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;cursor:pointer;border:none;transition:transform .2s}
+.next-btn:hover{transform:translateY(-2px)}
+.locked-section{margin-top:80px;border-top:1px solid var(--border);padding-top:60px}
+.locked-label{font-family:var(--display);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.locked-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.locked-cards{display:flex;flex-direction:column;gap:12px}
+.locked-card{padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;opacity:.5;position:relative}
+.locked-card::after{content:'🔒';position:absolute;right:20px;top:50%;transform:translateY(-50%)}
+.locked-card-num{font-family:var(--display);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.locked-card-title{font-family:var(--heading);font-size:.95rem;font-weight:700;color:var(--white)}
+.locked-card-desc{font-size:.78rem;color:var(--muted)}
+.join-prompt{margin-top:32px;text-align:center;padding:36px;background:linear-gradient(135deg,rgba(255,224,102,.04),rgba(255,159,69,.04));border:1px solid rgba(255,224,102,.15);border-radius:16px}
+.join-prompt p{font-size:.9rem;color:var(--off);margin-bottom:18px;line-height:1.8}
+.join-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s}
+.join-btn:hover{transform:translateY(-2px)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:none}
+@media(max-width:768px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.lessons{padding:60px 24px}nav{padding:14px 24px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← Back to Universe</a>
+  <a href="../index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
+  <div class="nav-char">Nova · Builder Bot</div>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="comp-block" style="top:22%;left:12%;animation-duration:4s">&lt;nav&gt;</div>
+  <div class="comp-block" style="top:55%;left:75%;animation-duration:5s;animation-delay:1s">&lt;footer&gt;</div>
+  <div class="comp-block" style="top:38%;left:50%;animation-duration:6s;animation-delay:2s">&lt;section&gt;</div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Character 04 · Ages 8–10</div>
+      <h1 class="hero-title">Welcome to<br><span>Nova's Workshop.</span></h1>
+      <p class="hero-desc">Every website is just parts put together. Nova will teach you what those parts are, how they fit, and how to build something that actually works.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Web Structure</span>
+        <span class="hero-tag">Components</span>
+        <span class="hero-tag">Problem Solving</span>
+      </div>
+      <a href="#lesson-1" class="hero-start">Start Lesson 1 — Free ↓</a>
+    </div>
+    <div class="hero-char">
+      <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-pose-2.png" alt="Nova">
+    </div>
+  </div>
+</section>
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="prog-step"><div class="prog-dot active">1</div><div class="prog-label active">Parts of a Page</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Build the Layout</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Add Interactivity</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Nova's Full Build</div></div>
+  </div>
+</div>
+<div class="lessons">
+  <div class="lesson" id="lesson-1">
+    <div class="lesson-header reveal">
+      <div class="lesson-num">Lesson 01 · Free</div>
+      <h2 class="lesson-title">Parts of a Page</h2>
+      <p class="lesson-desc">Nova never builds without a plan. Before you write a line of code, you need to know what you're building and what pieces you need.</p>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
+      <div class="block-body">
+        <p class="nova-quote">"Hi! I'm Nova. I build things. Robots, websites, apps — if it has parts that fit together, I'm interested. And websites? They always have the same parts."</p>
+        <p>Every website you've ever visited has the same basic structure — like how every house has walls, a roof, and a door. The pieces might look different, but they're always there.</p>
+        <p>The four main parts are: a <strong style="color:var(--char)">Navigation</strong> (how you get around), a <strong style="color:#00e8ff">Hero</strong> (the big first thing you see), <strong style="color:#c66bff">Content</strong> (the actual stuff — text, images, cards), and a <strong style="color:#ff6baa">Footer</strong> (the bottom with links and info).</p>
+        <p>Nova's rule: <strong style="color:var(--char)">understand the parts before you build.</strong> You wouldn't build a robot without knowing what every piece does.</p>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">⬡</div><div class="block-label">Build It · Click to Assemble</div></div>
+      <div class="block-body">
+        <p style="font-size:.88rem;color:var(--off);margin-bottom:20px">Nova's website needs its parts. Click each component to add it to the page — in the right order!</p>
+        <div class="build-area" id="buildArea">
+          <div class="build-area-label" id="buildLabel">Click the parts below to build Nova's page ↓</div>
+        </div>
+        <div class="parts-shelf" id="partsShelf">
+          <div class="part-chip" id="chip-footer" onclick="addPart('footer')">🔻 Footer</div>
+          <div class="part-chip" id="chip-nav" onclick="addPart('nav')">⬡ Navigation</div>
+          <div class="part-chip" id="chip-content" onclick="addPart('content')">◈ Content Section</div>
+          <div class="part-chip" id="chip-hero" onclick="addPart('hero')">✦ Hero Section</div>
+        </div>
+        <button class="build-check" onclick="checkBuild()">Check My Build →</button>
+        <div class="build-result" id="buildResult"></div>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Nova Wants to Know</div></div>
+      <div class="block-body">
+        <p class="reflect-prompt">Think of your favorite website or app. What's the first thing you see when you open it? What makes you want to stay on it?</p>
+        <textarea class="reflect-input" id="reflectInput" placeholder="My favorite website is..."></textarea>
+        <button class="reflect-submit" onclick="submitReflect()">Tell Nova →</button>
+        <div class="reflect-response" id="reflectResponse"></div>
+      </div>
+    </div>
+
+    <div class="lesson-complete reveal" id="lessonComplete" style="display:none">
+      <div class="complete-icon">⬡</div>
+      <h3 class="complete-title">Lesson 1 <span>Complete!</span></h3>
+      <p class="complete-desc">You know the four parts of every webpage. Nova builds every project starting from exactly this knowledge.</p>
+      <button class="next-btn" onclick="document.querySelector('.locked-section').scrollIntoView({behavior:'smooth'})">See What's Next →</button>
+    </div>
+  </div>
+
+  <div class="locked-section reveal">
+    <div class="locked-label">Members Only — Unlock All Lessons</div>
+    <div class="locked-cards">
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 02</div><div class="locked-card-title">Build Your Layout</div><div class="locked-card-desc">Use HTML and CSS to create a real page layout with all four sections.</div></div></div>
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 03</div><div class="locked-card-title">Add a Button That Does Something</div><div class="locked-card-desc">Make your page interactive. Nova's favorite part — when it actually works.</div></div></div>
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 04</div><div class="locked-card-title">Nova's Full Build Challenge</div><div class="locked-card-desc">Build a complete mini-website from scratch. All parts. All skills. One page.</div></div></div>
+    </div>
+    <div class="join-prompt">
+      <p>Nova has full build challenges, layout puzzles, and a final project that results in a real working page. Join the crew to unlock everything.</p>
+      <a href="../index.html#membership" class="join-btn">Join the Crew →</a>
+    </div>
+  </div>
+</div>
+
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const correctOrder=['nav','hero','content','footer'];
+let placed=[];
+function addPart(type){
+  placed.push(type);
+  document.getElementById('chip-'+type).classList.add('placed');
+  const area=document.getElementById('buildArea');
+  const label=document.getElementById('buildLabel');
+  if(label) label.remove();
+  const colors={nav:'nav-comp',hero:'hero-comp',content:'content-comp',footer:'footer-comp'};
+  const labels={nav:'⬡ Navigation — helps users find their way','hero:'✦ Hero Section — the big first impression','content':'◈ Content — the meat of your page','footer':'🔻 Footer — links, credits, contact'};
+  const div=document.createElement('div');
+  div.className='build-component '+colors[type];
+  div.textContent=labels[type];
+  area.appendChild(div);
+}
+function checkBuild(){
+  const res=document.getElementById('buildResult');
+  if(placed.length<4){
+    res.className='build-result show partial';
+    res.textContent='Not done yet — make sure you add all four parts!';
+    return;
+  }
+  const isCorrect=JSON.stringify(placed)===JSON.stringify(correctOrder);
+  if(isCorrect){
+    res.className='build-result show correct';
+    res.innerHTML='⬡ Perfect build! Navigation first, then the hero, then your content, then the footer. That\'s how every professional builds a page.';
+    checkComplete();
+  } else {
+    res.className='build-result show partial';
+    res.innerHTML='You have all the parts — but check the order. Think about what a visitor sees first when they land on a site.';
+  }
+}
+function submitReflect(){
+  const val=document.getElementById('reflectInput').value.trim();
+  if(!val) return;
+  document.getElementById('reflectResponse').className='reflect-response show';
+  document.getElementById('reflectResponse').innerHTML=`⬡ <strong style="color:var(--char)">"${val}"</strong><br><br>Nova just bookmarked that for research. Great builders always start by studying what already works — then they figure out how to make it better.`;
+  checkComplete();
+}
+function checkComplete(){
+  const c=document.getElementById('lessonComplete');
+  c.style.display='block';
+  setTimeout(()=>c.classList.add('visible'),100);
+}
+</script>
+</body>
+</html>

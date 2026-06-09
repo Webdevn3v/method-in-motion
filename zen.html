@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Zen's World — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void: #050508;
+  --deep: #080b14;
+  --navy: #0d1020;
+  --card: #0f1525;
+  --border: rgba(255,255,255,.06);
+  --border-md: rgba(255,255,255,.12);
+  --white: #ffffff;
+  --off: #c8cce0;
+  --muted: #5a6080;
+  --pink: #ff6baa;
+  --purple: #c66bff;
+  --cyan: #00e8ff;
+  --char: #ff6baa;
+  --char2: #c66bff;
+  --grad: linear-gradient(135deg, #ff6baa, #c66bff);
+  --display: 'Orbitron', monospace;
+  --heading: 'Syne', sans-serif;
+  --body: 'DM Sans', sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em;color:var(--white)}
+.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
+.nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;transition:color .2s}
+.nav-back:hover{color:var(--char)}
+.nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(255,107,170,.4);color:var(--char);border-radius:100px}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:0}
+.hero-bg-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%, rgba(255,107,170,.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, rgba(198,107,255,.06) 0%, transparent 50%)}
+/* animated code lines in bg */
+.code-line{position:absolute;font-family:var(--display);font-size:.6rem;color:rgba(255,107,170,.12);white-space:nowrap;animation:codeDrift linear infinite}
+@keyframes codeDrift{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--char);opacity:.8;margin-bottom:14px}
+.hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
+.hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.hero-tag{padding:5px 14px;border:1px solid rgba(255,107,170,.3);border-radius:100px;font-family:var(--display);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--char)}
+.hero-start{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s,box-shadow .2s}
+.hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,107,170,.3)}
+.hero-char{position:relative;display:flex;align-items:center;justify-content:center}
+.hero-char img{width:100%;max-width:380px;filter:drop-shadow(0 0 60px rgba(255,107,170,.35));animation:charFloat 4s ease-in-out infinite}
+@keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+.hero-char-ring{position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,107,170,.12);animation:ringPulse 3s ease-in-out infinite}
+.hero-char-ring:nth-child(2){width:380px;height:380px;animation-delay:.5s;border-color:rgba(198,107,255,.08)}
+@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.04);opacity:1}}
+
+/* PROGRESS */
+.progress-bar{background:var(--deep);border-bottom:1px solid var(--border);padding:20px 48px;position:sticky;top:65px;z-index:50}
+.progress-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;gap:0}
+.prog-step{display:flex;align-items:center;gap:0;flex:1}
+.prog-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.48rem;color:var(--muted);transition:all .3s;flex-shrink:0}
+.prog-dot.active{border-color:var(--char);background:rgba(255,107,170,.15);color:var(--char)}
+.prog-dot.done{border-color:var(--char);background:var(--char);color:#000}
+.prog-label{font-family:var(--display);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:8px;transition:color .3s}
+.prog-label.active{color:var(--char)}
+.prog-line{flex:1;height:1px;background:var(--border);margin:0 8px}
+.prog-line.done{background:var(--char)}
+
+/* LESSONS */
+.lessons{max-width:800px;margin:0 auto;padding:80px 48px}
+
+/* LESSON BLOCK */
+.lesson{margin-bottom:120px}
+.lesson-header{margin-bottom:48px}
+.lesson-num{font-family:var(--display);font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--char);opacity:.7;margin-bottom:10px}
+.lesson-title{font-family:var(--heading);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:12px}
+.lesson-desc{font-size:.95rem;color:var(--off);line-height:1.9}
+
+/* CONTENT BLOCKS */
+.content-block{margin-bottom:40px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.block-header{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.block-icon{width:32px;height:32px;border-radius:8px;background:rgba(255,107,170,.12);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.block-label{font-family:var(--display);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char)}
+.block-body{padding:28px}
+.block-body p{font-size:.95rem;color:var(--off);line-height:1.9;margin-bottom:14px}
+.block-body p:last-child{margin-bottom:0}
+.zen-quote{font-family:var(--heading);font-size:1.1rem;font-weight:700;color:var(--white);border-left:3px solid var(--char);padding-left:18px;margin:20px 0;line-height:1.6}
+
+/* CODE ANIMATION */
+.code-demo{background:var(--void);border-radius:12px;padding:24px;font-family:var(--display);font-size:.75rem;line-height:2;overflow:hidden;position:relative}
+.code-demo .line{display:flex;gap:12px;opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .5s}
+.code-demo .line.visible{opacity:1;transform:none}
+.code-kw{color:#c66bff}.code-str{color:#ff6baa}.code-tag{color:#00e8ff}.code-val{color:#ffe066}.code-comment{color:rgba(255,255,255,.25)}
+.run-btn{margin-top:16px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(255,107,170,.12);border:1px solid rgba(255,107,170,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
+.run-btn:hover{background:rgba(255,107,170,.2)}
+.code-output{margin-top:16px;padding:16px;background:rgba(0,232,255,.04);border:1px solid rgba(0,232,255,.1);border-radius:8px;font-size:.85rem;color:var(--cyan);display:none}
+.code-output.show{display:block}
+
+/* DRAG ACTIVITY */
+.drag-activity{user-select:none}
+.drag-prompt{font-size:.88rem;color:var(--off);margin-bottom:20px;line-height:1.7}
+.drag-blocks{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
+.drag-item{padding:14px 18px;background:rgba(255,107,170,.06);border:1px solid rgba(255,107,170,.2);border-radius:10px;cursor:grab;display:flex;align-items:center;gap:12px;transition:all .2s;font-size:.88rem;color:var(--off)}
+.drag-item:hover{background:rgba(255,107,170,.1);border-color:rgba(255,107,170,.4);transform:translateX(4px)}
+.drag-item.dragging{opacity:.4;cursor:grabbing}
+.drag-handle{color:rgba(255,107,170,.4);font-size:.7rem;flex-shrink:0}
+.drag-num{width:22px;height:22px;border-radius:50%;background:rgba(255,107,170,.15);border:1px solid rgba(255,107,170,.3);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.45rem;color:var(--char);flex-shrink:0}
+.check-btn{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 24px;background:var(--grad);color:#000;font-weight:700;border:none;border-radius:100px;cursor:pointer;transition:transform .2s}
+.check-btn:hover{transform:translateY(-1px)}
+.activity-result{margin-top:16px;padding:16px;border-radius:10px;font-size:.88rem;display:none}
+.activity-result.show{display:block}
+.activity-result.correct{background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);color:var(--cyan)}
+.activity-result.wrong{background:rgba(255,107,170,.06);border:1px solid rgba(255,107,170,.2);color:var(--pink)}
+
+/* REFLECT */
+.reflect-prompt{font-size:.95rem;color:var(--off);margin-bottom:16px;line-height:1.8}
+.reflect-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);border-radius:10px;color:var(--white);font-family:var(--body);font-size:.9rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s}
+.reflect-input:focus{border-color:var(--char)}
+.reflect-submit{margin-top:12px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(255,107,170,.12);border:1px solid rgba(255,107,170,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
+.reflect-submit:hover{background:rgba(255,107,170,.2)}
+.reflect-response{margin-top:14px;padding:16px;background:rgba(198,107,255,.06);border:1px solid rgba(198,107,255,.2);border-radius:10px;font-size:.88rem;color:var(--purple);display:none;line-height:1.7}
+.reflect-response.show{display:block}
+
+/* COMPLETE */
+.lesson-complete{text-align:center;padding:48px 28px;background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(198,107,255,.06));border:1px solid rgba(255,107,170,.2);border-radius:16px;margin-bottom:40px}
+.complete-icon{font-size:2.5rem;margin-bottom:16px}
+.complete-title{font-family:var(--heading);font-size:1.6rem;font-weight:800;margin-bottom:8px}
+.complete-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.complete-desc{font-size:.9rem;color:var(--off);margin-bottom:24px}
+.next-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;cursor:pointer;border:none;transition:transform .2s}
+.next-btn:hover{transform:translateY(-2px)}
+
+/* LOCKED LESSONS */
+.locked-section{margin-top:80px;border-top:1px solid var(--border);padding-top:60px}
+.locked-label{font-family:var(--display);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.locked-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.locked-cards{display:flex;flex-direction:column;gap:12px}
+.locked-card{padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:20px;opacity:.5;position:relative;overflow:hidden}
+.locked-card::after{content:'🔒';position:absolute;right:20px;font-size:.9rem}
+.locked-card-num{font-family:var(--display);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.locked-card-title{font-family:var(--heading);font-size:.95rem;font-weight:700;color:var(--white)}
+.locked-card-desc{font-size:.78rem;color:var(--muted)}
+.join-prompt{margin-top:32px;text-align:center;padding:36px;background:linear-gradient(135deg,rgba(255,107,170,.04),rgba(198,107,255,.04));border:1px solid rgba(255,107,170,.15);border-radius:16px}
+.join-prompt p{font-size:.9rem;color:var(--off);margin-bottom:18px;line-height:1.8}
+.join-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s}
+.join-btn:hover{transform:translateY(-2px)}
+
+/* REVEAL */
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:none}
+
+@media(max-width:768px){
+  .hero-inner{grid-template-columns:1fr}
+  .hero-char{display:none}
+  .lessons{padding:60px 24px}
+  nav{padding:14px 24px}
+  .progress-bar{padding:16px 24px}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="../index.html" class="nav-back">← Back to Universe</a>
+  <a href="../index.html" class="nav-logo">
+    <div class="nav-logo-mark">&gt;</div>
+    method in motion
+  </a>
+  <div class="nav-char" style="color:var(--char);border-color:rgba(255,107,170,.4)">Zen · Creative Coder</div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="hero-bg-gradient"></div>
+    <div class="code-line" style="top:20%;animation-duration:18s;animation-delay:0s">&lt;div class="dream"&gt; code it. build it. &lt;/div&gt;</div>
+    <div class="code-line" style="top:45%;animation-duration:24s;animation-delay:4s">const create = () =&gt; imagination + code;</div>
+    <div class="code-line" style="top:70%;animation-duration:20s;animation-delay:8s">.zen { color: #ff6baa; creativity: infinite; }</div>
+  </div>
+  <div class="hero-inner">
+    <div class="hero-content">
+      <div class="hero-eyebrow">Character 01 · Ages 8–10</div>
+      <h1 class="hero-title">Welcome to<br><span>Zen's World.</span></h1>
+      <p class="hero-desc">Code is just instructions — and you already know how to give instructions. Zen will show you how to turn your ideas into real things on a screen.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Creative Thinking</span>
+        <span class="hero-tag">Digital Design</span>
+        <span class="hero-tag">Coding Basics</span>
+      </div>
+      <a href="#lesson-1" class="hero-start">Start Lesson 1 — Free ↓</a>
+    </div>
+    <div class="hero-char">
+      <div class="hero-char-ring"></div>
+      <div class="hero-char-ring"></div>
+      <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-pose-2.png" alt="Zen">
+    </div>
+  </div>
+</section>
+
+<!-- PROGRESS -->
+<div class="progress-bar" id="progressBar">
+  <div class="progress-inner">
+    <div class="prog-step">
+      <div class="prog-dot active" id="dot1">1</div>
+      <div class="prog-label active">What is Code?</div>
+      <div class="prog-line" id="line1"></div>
+    </div>
+    <div class="prog-step">
+      <div class="prog-dot" id="dot2">🔒</div>
+      <div class="prog-label">Your First Tag</div>
+      <div class="prog-line"></div>
+    </div>
+    <div class="prog-step">
+      <div class="prog-dot" id="dot3">🔒</div>
+      <div class="prog-label">Colors & Style</div>
+      <div class="prog-line"></div>
+    </div>
+    <div class="prog-step">
+      <div class="prog-dot" id="dot4">🔒</div>
+      <div class="prog-label">Build Your Page</div>
+    </div>
+  </div>
+</div>
+
+<!-- LESSONS -->
+<div class="lessons">
+
+  <!-- LESSON 1 -->
+  <div class="lesson" id="lesson-1">
+    <div class="lesson-header reveal">
+      <div class="lesson-num">Lesson 01 · Free</div>
+      <h2 class="lesson-title">What is Code?</h2>
+      <p class="lesson-desc">Before you can build anything, you need to understand what you're actually doing. Spoiler: it's simpler than you think.</p>
+    </div>
+
+    <!-- READ -->
+    <div class="content-block reveal">
+      <div class="block-header">
+        <div class="block-icon">📖</div>
+        <div class="block-label">Read · 2 min</div>
+      </div>
+      <div class="block-body">
+        <p class="zen-quote">"Hey, I'm Zen. I build things with code — websites, animations, digital art. Before I learned how, I had one question: what even IS this stuff?"</p>
+        <p>Code is just a set of instructions. That's it. When you tell your little sibling to make a sandwich — get bread, add peanut butter, put it together — that's basically code. You're giving step-by-step instructions to make something happen.</p>
+        <p>Computers are the same. They just follow instructions really, really fast. The language we use to write those instructions for websites is called <strong style="color:var(--cyan)">HTML</strong> — and it's made of something called <strong style="color:var(--pink)">tags</strong>.</p>
+        <p>Tags are like labels. You wrap them around things to tell the browser what they are. A heading. A paragraph. An image. Once the browser knows what something is, it knows how to show it.</p>
+      </div>
+    </div>
+
+    <!-- WATCH / ANIMATE -->
+    <div class="content-block reveal">
+      <div class="block-header">
+        <div class="block-icon">⚡</div>
+        <div class="block-label">See It Live · Interactive</div>
+      </div>
+      <div class="block-body">
+        <p>Watch how a tag turns plain text into a real webpage element. Hit Run when you're ready.</p>
+        <div class="code-demo" id="codeDemo">
+          <div class="line" id="cl1"><span class="code-comment">/* This is HTML — it tells the browser what things are */</span></div>
+          <div class="line" id="cl2"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Hello, I'm Zen.</span><span class="code-tag">&lt;/h1&gt;</span></div>
+          <div class="line" id="cl3"><span class="code-tag">&lt;p&gt;</span><span class="code-str">I build things with code.</span><span class="code-tag">&lt;/p&gt;</span></div>
+          <div class="line" id="cl4"><span class="code-tag">&lt;p&gt;</span><span class="code-str">What will YOU build?</span><span class="code-tag">&lt;/p&gt;</span></div>
+        </div>
+        <button class="run-btn" onclick="runCode()">▶ Run the Code</button>
+        <div class="code-output" id="codeOutput">
+          <strong style="font-size:1.1rem;display:block;margin-bottom:6px">Hello, I'm Zen.</strong>
+          I build things with code.<br>
+          What will YOU build?
+        </div>
+      </div>
+    </div>
+
+    <!-- ACTIVITY -->
+    <div class="content-block reveal">
+      <div class="block-header">
+        <div class="block-icon">🎯</div>
+        <div class="block-label">Try It · Drag to Sort</div>
+      </div>
+      <div class="block-body">
+        <div class="drag-activity">
+          <p class="drag-prompt">Zen is building her first webpage. Put these steps in the right order — from first to last. Drag them into place!</p>
+          <div class="drag-blocks" id="dragList">
+            <div class="drag-item" draggable="true" data-order="3">
+              <span class="drag-handle">⠿</span>
+              <span class="drag-num">?</span>
+              Add tags to tell the browser what each part is
+            </div>
+            <div class="drag-item" draggable="true" data-order="1">
+              <span class="drag-handle">⠿</span>
+              <span class="drag-num">?</span>
+              Have an idea for what to build
+            </div>
+            <div class="drag-item" draggable="true" data-order="4">
+              <span class="drag-handle">⠿</span>
+              <span class="drag-num">?</span>
+              Open your browser and see it appear
+            </div>
+            <div class="drag-item" draggable="true" data-order="2">
+              <span class="drag-handle">⠿</span>
+              <span class="drag-num">?</span>
+              Write your content — words, titles, sentences
+            </div>
+          </div>
+          <button class="check-btn" onclick="checkOrder()">Check My Answer →</button>
+          <div class="activity-result" id="dragResult"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REFLECT -->
+    <div class="content-block reveal">
+      <div class="block-header">
+        <div class="block-icon">✦</div>
+        <div class="block-label">Reflect · Your Turn</div>
+      </div>
+      <div class="block-body">
+        <p class="reflect-prompt">Zen always starts with a vision. If you could build one thing on the internet — anything at all — what would it be? Don't worry about how. Just dream it.</p>
+        <textarea class="reflect-input" id="reflectInput" placeholder="I would build..."></textarea>
+        <button class="reflect-submit" onclick="submitReflect()">Save My Idea →</button>
+        <div class="reflect-response" id="reflectResponse"></div>
+      </div>
+    </div>
+
+    <!-- COMPLETE -->
+    <div class="lesson-complete reveal" id="lessonComplete" style="display:none">
+      <div class="complete-icon">✦</div>
+      <h3 class="complete-title">Lesson 1 <span>Complete!</span></h3>
+      <p class="complete-desc">You just learned what code is, saw it in action, and put it in the right order. That's the foundation everything else is built on.</p>
+      <button class="next-btn" onclick="scrollToLocked()">See What's Next →</button>
+    </div>
+
+  </div>
+
+  <!-- LOCKED LESSONS -->
+  <div class="locked-section reveal">
+    <div class="locked-label">Members Only — Unlock All Lessons</div>
+    <div class="locked-cards">
+      <div class="locked-card">
+        <div>
+          <div class="locked-card-num">Lesson 02</div>
+          <div class="locked-card-title">Your First HTML Tag</div>
+          <div class="locked-card-desc">Write real HTML. Make a heading, a paragraph, and a link — and see them appear live.</div>
+        </div>
+      </div>
+      <div class="locked-card">
+        <div>
+          <div class="locked-card-num">Lesson 03</div>
+          <div class="locked-card-title">Colors & Style with CSS</div>
+          <div class="locked-card-desc">Change colors, fonts, and sizes. Make your page look exactly how you imagine it.</div>
+        </div>
+      </div>
+      <div class="locked-card">
+        <div>
+          <div class="locked-card-num">Lesson 04</div>
+          <div class="locked-card-title">Build Your Own Page</div>
+          <div class="locked-card-desc">Put it all together. Build a real webpage about something you love — from scratch.</div>
+        </div>
+      </div>
+    </div>
+    <div class="join-prompt">
+      <p>Zen has 4 full lessons, project challenges, and a bonus creative lab waiting for you. Join the crew to unlock everything.</p>
+      <a href="../index.html#membership" class="join-btn">Join the Crew →</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// SCROLL REVEAL
+const obs = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
+},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// CODE ANIMATION
+function runCode(){
+  const lines = ['cl1','cl2','cl3','cl4'];
+  lines.forEach((id,i)=>{
+    setTimeout(()=>{
+      document.getElementById(id).classList.add('visible');
+    }, i*300);
+  });
+  setTimeout(()=>{
+    document.getElementById('codeOutput').classList.add('show');
+  }, lines.length*300 + 200);
+}
+
+// DRAG AND DROP
+let dragSrc = null;
+const list = document.getElementById('dragList');
+list.querySelectorAll('.drag-item').forEach(item=>{
+  item.addEventListener('dragstart',e=>{dragSrc=item;item.classList.add('dragging')});
+  item.addEventListener('dragend',e=>{item.classList.remove('dragging')});
+  item.addEventListener('dragover',e=>{e.preventDefault()});
+  item.addEventListener('drop',e=>{
+    e.preventDefault();
+    if(dragSrc!==item){
+      const items=[...list.querySelectorAll('.drag-item')];
+      const srcIdx=items.indexOf(dragSrc);
+      const tgtIdx=items.indexOf(item);
+      if(srcIdx<tgtIdx) item.after(dragSrc); else item.before(dragSrc);
+    }
+  });
+});
+
+function checkOrder(){
+  const items=[...list.querySelectorAll('.drag-item')];
+  const orders=items.map(i=>parseInt(i.dataset.order));
+  const correct=orders.every((v,i)=>v===i+1);
+  items.forEach((item,i)=>{
+    item.querySelector('.drag-num').textContent=i+1;
+  });
+  const res=document.getElementById('dragResult');
+  res.className='activity-result show '+(correct?'correct':'wrong');
+  res.innerHTML=correct
+    ? '✦ Perfect order! That\'s exactly how Zen thinks about building. Idea → Content → Tags → See it live.'
+    : 'Not quite — try again! Hint: you need an idea before you can write anything.';
+  if(correct) checkLessonComplete();
+}
+
+// REFLECT
+function submitReflect(){
+  const val=document.getElementById('reflectInput').value.trim();
+  if(!val) return;
+  const res=document.getElementById('reflectResponse');
+  res.className='reflect-response show';
+  res.innerHTML=`✦ <strong style="color:var(--char)">"${val}"</strong><br><br>That's a real idea. Zen started the same way — with a vision before she had any skills. Keep this in mind as you build.`;
+  checkLessonComplete();
+}
+
+let codeRan=false, orderCorrect=false, reflectDone=false;
+function checkLessonComplete(){
+  const complete=document.getElementById('lessonComplete');
+  complete.style.display='block';
+  setTimeout(()=>complete.classList.add('visible'),100);
+}
+function scrollToLocked(){
+  document.querySelector('.locked-section').scrollIntoView({behavior:'smooth'});
+}
+</script>
+</body>
+</html>

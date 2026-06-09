@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bug's World — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--void:#050508;--deep:#080b14;--navy:#0d1020;--card:#0f1525;--border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);--white:#ffffff;--off:#c8cce0;--muted:#5a6080;--char:#a2ff32;--char2:#ff9f45;--grad:linear-gradient(135deg,#a2ff32,#ff9f45);--display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em}
+.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
+.nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-back:hover{color:var(--char)}
+.nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(162,255,50,.4);color:var(--char);border-radius:100px}
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(162,255,50,.06) 0%,transparent 55%),radial-gradient(ellipse at 75% 25%,rgba(255,159,69,.04) 0%,transparent 45%)}
+/* glitch lines */
+.glitch-line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(162,255,50,.15),transparent);animation:glitch linear infinite;pointer-events:none}
+@keyframes glitch{0%{transform:translateX(-100%)}100%{transform:translateX(200%)}}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--char);opacity:.8;margin-bottom:14px}
+.hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
+.hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.hero-tag{padding:5px 14px;border:1px solid rgba(162,255,50,.3);border-radius:100px;font-family:var(--display);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--char)}
+.hero-start{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s,box-shadow .2s}
+.hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(162,255,50,.2)}
+.hero-char img{width:100%;max-width:380px;filter:drop-shadow(0 0 60px rgba(162,255,50,.3));animation:bugShake 0.5s ease-in-out infinite alternate}
+@keyframes bugShake{0%{transform:rotate(-1deg) translateY(0)}100%{transform:rotate(1deg) translateY(-8px)}}
+.progress-bar{background:var(--deep);border-bottom:1px solid var(--border);padding:20px 48px;position:sticky;top:65px;z-index:50}
+.progress-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center}
+.prog-step{display:flex;align-items:center;flex:1}
+.prog-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.48rem;color:var(--muted);transition:all .3s;flex-shrink:0}
+.prog-dot.active{border-color:var(--char);background:rgba(162,255,50,.1);color:var(--char)}
+.prog-line{flex:1;height:1px;background:var(--border);margin:0 8px}
+.prog-label{font-family:var(--display);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.prog-label.active{color:var(--char)}
+.lessons{max-width:800px;margin:0 auto;padding:80px 48px}
+.lesson-header{margin-bottom:48px}
+.lesson-num{font-family:var(--display);font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--char);opacity:.7;margin-bottom:10px}
+.lesson-title{font-family:var(--heading);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:12px}
+.lesson-desc{font-size:.95rem;color:var(--off);line-height:1.9}
+.content-block{margin-bottom:40px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.block-header{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.block-icon{width:32px;height:32px;border-radius:8px;background:rgba(162,255,50,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.block-label{font-family:var(--display);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char)}
+.block-body{padding:28px}
+.block-body p{font-size:.95rem;color:var(--off);line-height:1.9;margin-bottom:14px}
+.block-body p:last-child{margin-bottom:0}
+.bug-quote{font-family:var(--heading);font-size:1.1rem;font-weight:700;color:var(--white);border-left:3px solid var(--char);padding-left:18px;margin:20px 0;line-height:1.6}
+
+/* SYSTEMS THINKING */
+.system-map{display:flex;flex-direction:column;gap:8px;margin-bottom:20px}
+.system-row{display:flex;align-items:center;gap:8px}
+.sys-box{padding:12px 16px;border-radius:8px;font-family:var(--display);font-size:.6rem;letter-spacing:.06em;flex:1;text-align:center;border:1px solid;transition:all .3s;cursor:pointer}
+.sys-box.input{background:rgba(162,255,50,.08);border-color:rgba(162,255,50,.25);color:var(--char)}
+.sys-box.process{background:rgba(0,232,255,.08);border-color:rgba(0,232,255,.25);color:#00e8ff}
+.sys-box.output{background:rgba(255,107,170,.08);border-color:rgba(255,107,170,.25);color:#ff6baa}
+.sys-box:hover{transform:scale(1.02)}
+.sys-box.selected{box-shadow:0 0 16px currentColor;transform:scale(1.04)}
+.sys-arrow{color:var(--muted);font-size:.8rem;flex-shrink:0}
+.sys-check{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(162,255,50,.1);border:1px solid rgba(162,255,50,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s;margin-top:12px}
+.sys-check:hover{background:rgba(162,255,50,.18)}
+.sys-result{margin-top:14px;padding:14px;border-radius:10px;font-size:.88rem;display:none;line-height:1.7}
+.sys-result.show{display:block}
+.sys-result.correct{background:rgba(162,255,50,.06);border:1px solid rgba(162,255,50,.2);color:var(--char)}
+.sys-result.wrong{background:rgba(255,107,170,.06);border:1px solid rgba(255,107,170,.2);color:#ff6baa}
+
+/* BREAK IT GAME */
+.break-scenario{background:var(--void);border-radius:12px;padding:20px;margin-bottom:16px}
+.break-title{font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--char);margin-bottom:10px}
+.break-desc{font-size:.88rem;color:var(--off);line-height:1.7;margin-bottom:16px}
+.break-options{display:flex;flex-direction:column;gap:8px}
+.break-option{padding:12px 16px;background:rgba(255,255,255,.02);border:1px solid var(--border);border-radius:8px;font-size:.85rem;color:var(--off);cursor:pointer;transition:all .2s;text-align:left}
+.break-option:hover{border-color:rgba(162,255,50,.3);background:rgba(162,255,50,.04)}
+.break-option.correct{border-color:var(--char);background:rgba(162,255,50,.08);color:var(--char);pointer-events:none}
+.break-option.wrong{border-color:rgba(255,107,170,.4);background:rgba(255,107,170,.06);color:#ff6baa;pointer-events:none}
+
+.reflect-prompt{font-size:.95rem;color:var(--off);margin-bottom:16px;line-height:1.8}
+.reflect-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);border-radius:10px;color:var(--white);font-family:var(--body);font-size:.9rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s}
+.reflect-input:focus{border-color:var(--char)}
+.reflect-submit{margin-top:12px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(162,255,50,.1);border:1px solid rgba(162,255,50,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
+.reflect-response{margin-top:14px;padding:16px;background:rgba(255,159,69,.06);border:1px solid rgba(255,159,69,.2);border-radius:10px;font-size:.88rem;color:var(--char2);display:none;line-height:1.7}
+.reflect-response.show{display:block}
+.lesson-complete{text-align:center;padding:48px 28px;background:linear-gradient(135deg,rgba(162,255,50,.06),rgba(255,159,69,.06));border:1px solid rgba(162,255,50,.2);border-radius:16px;margin-bottom:40px}
+.complete-icon{font-size:2.5rem;margin-bottom:16px}
+.complete-title{font-family:var(--heading);font-size:1.6rem;font-weight:800;margin-bottom:8px}
+.complete-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.complete-desc{font-size:.9rem;color:var(--off);margin-bottom:24px}
+.next-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;cursor:pointer;border:none;transition:transform .2s}
+.locked-section{margin-top:80px;border-top:1px solid var(--border);padding-top:60px}
+.locked-label{font-family:var(--display);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.locked-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.locked-cards{display:flex;flex-direction:column;gap:12px}
+.locked-card{padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;opacity:.5;position:relative}
+.locked-card::after{content:'🔒';position:absolute;right:20px;top:50%;transform:translateY(-50%)}
+.locked-card-num{font-family:var(--display);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.locked-card-title{font-family:var(--heading);font-size:.95rem;font-weight:700;color:var(--white)}
+.locked-card-desc{font-size:.78rem;color:var(--muted)}
+.join-prompt{margin-top:32px;text-align:center;padding:36px;background:linear-gradient(135deg,rgba(162,255,50,.04),rgba(255,159,69,.04));border:1px solid rgba(162,255,50,.15);border-radius:16px}
+.join-prompt p{font-size:.9rem;color:var(--off);margin-bottom:18px;line-height:1.8}
+.join-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s}
+.join-btn:hover{transform:translateY(-2px)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:none}
+@media(max-width:768px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.lessons{padding:60px 24px}nav{padding:14px 24px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← Back to Universe</a>
+  <a href="../index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
+  <div class="nav-char">Bug · Debug Gremlin</div>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="glitch-line" style="top:25%;width:40%;animation-duration:3s"></div>
+  <div class="glitch-line" style="top:60%;width:60%;animation-duration:5s;animation-delay:1s"></div>
+  <div class="glitch-line" style="top:42%;width:30%;animation-duration:4s;animation-delay:2s;left:30%"></div>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Character 05 · Ages 10–12</div>
+      <h1 class="hero-title">Welcome to<br><span>Bug's Zone.</span></h1>
+      <p class="hero-desc">Break things. Figure out why. Fix them better than before. Bug teaches systems thinking — the most powerful skill in all of coding.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Systems Thinking</span>
+        <span class="hero-tag">Problem Solving</span>
+        <span class="hero-tag">Logic</span>
+      </div>
+      <a href="#lesson-1" class="hero-start">Start Lesson 1 — Free ↓</a>
+    </div>
+    <div class="hero-char">
+      <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-pose-4.png" alt="Bug">
+    </div>
+  </div>
+</section>
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="prog-step"><div class="prog-dot active">1</div><div class="prog-label active">Think in Systems</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Break It Down</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Trace the Problem</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Bug's Final Glitch</div></div>
+  </div>
+</div>
+<div class="lessons">
+  <div class="lesson" id="lesson-1">
+    <div class="lesson-header reveal">
+      <div class="lesson-num">Lesson 01 · Free</div>
+      <h2 class="lesson-title">Think in Systems</h2>
+      <p class="lesson-desc">Bug doesn't just fix problems. Bug understands WHY they happen. That starts with thinking in systems.</p>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
+      <div class="block-body">
+        <p class="bug-quote">"Yo. I'm Bug. I break things on purpose — because the only way to really understand something is to see what happens when it fails."</p>
+        <p>A <strong style="color:var(--char)">system</strong> is anything where parts work together to do something. Your body is a system. A game is a system. An app is a system. When something breaks, it's always because one part stopped doing its job.</p>
+        <p>Systems thinking means you stop asking "what broke?" and start asking <strong style="color:#00e8ff">"what was supposed to happen, and where did it go wrong?"</strong> That one shift in thinking makes you 10x better at solving problems.</p>
+        <p>Bug's method: <strong style="color:var(--char)">Input → Process → Output.</strong> Every system takes something in, does something to it, and puts something out. If the output is wrong, the problem is in one of those three places. Always.</p>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">Map the System · Click to Identify</div></div>
+      <div class="block-body">
+        <p style="font-size:.88rem;color:var(--off);margin-bottom:20px">Look at this system: <strong style="color:var(--char)">A calculator app.</strong> Click each box to label it as Input, Process, or Output.</p>
+        <div class="system-map">
+          <div class="system-row">
+            <div class="sys-box" id="sys1" onclick="labelBox('sys1','input')">You press the numbers and + button</div>
+            <div class="sys-arrow">→</div>
+            <div class="sys-box" id="sys2" onclick="labelBox('sys2','process')">The app does the math</div>
+            <div class="sys-arrow">→</div>
+            <div class="sys-box" id="sys3" onclick="labelBox('sys3','output')">The answer appears on screen</div>
+          </div>
+        </div>
+        <div class="sys-result" id="sysResult"></div>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">Where's the Glitch? · Bug Hunt</div></div>
+      <div class="block-body">
+        <div class="break-scenario">
+          <div class="break-title">The Scenario</div>
+          <div class="break-desc">You type 2 + 2 into the calculator and it shows 5. Something is wrong. Using Bug's system thinking — Input → Process → Output — where is the problem most likely hiding?</div>
+          <div class="break-options">
+            <div class="break-option" onclick="checkBreak(this, false)">The Input — you pressed the wrong buttons</div>
+            <div class="break-option" onclick="checkBreak(this, true)">The Process — the math logic in the app is broken</div>
+            <div class="break-option" onclick="checkBreak(this, false)">The Output — the screen is displaying the wrong number</div>
+          </div>
+        </div>
+        <div class="sys-result" id="breakResult"></div>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">Reflect · Bug Wants Your Brain</div></div>
+      <div class="block-body">
+        <p class="reflect-prompt">Think of something that "broke" recently — a game glitched, an app crashed, something didn't work the way you expected. Using input/process/output, where do you think the problem was?</p>
+        <textarea class="reflect-input" id="reflectInput" placeholder="Something that broke was..."></textarea>
+        <button class="reflect-submit" onclick="submitReflect()">Tell Bug →</button>
+        <div class="reflect-response" id="reflectResponse"></div>
+      </div>
+    </div>
+
+    <div class="lesson-complete reveal" id="lessonComplete" style="display:none">
+      <div class="complete-icon">⚡</div>
+      <h3 class="complete-title">Lesson 1 <span>Complete!</span></h3>
+      <p class="complete-desc">You mapped a system, found a glitch, and thought like a real engineer. Bug officially respects you.</p>
+      <button class="next-btn" onclick="document.querySelector('.locked-section').scrollIntoView({behavior:'smooth'})">See What's Next →</button>
+    </div>
+  </div>
+
+  <div class="locked-section reveal">
+    <div class="locked-label">Members Only — Unlock All Lessons</div>
+    <div class="locked-cards">
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 02</div><div class="locked-card-title">Break It Down</div><div class="locked-card-desc">Take any big problem and split it into pieces small enough to actually solve.</div></div></div>
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 03</div><div class="locked-card-title">Trace the Problem</div><div class="locked-card-desc">Follow a bug from symptom to source. The real issue is never where it looks like it is.</div></div></div>
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 04</div><div class="locked-card-title">Bug's Final Glitch Challenge</div><div class="locked-card-desc">A fully broken system with 4 interconnected problems. Can you find them all?</div></div></div>
+    </div>
+    <div class="join-prompt">
+      <p>Bug has logic puzzles, system maps, and a final challenge that'll break your brain in the best way. Join the crew to unlock everything.</p>
+      <a href="../index.html#membership" class="join-btn">Join the Crew →</a>
+    </div>
+  </div>
+</div>
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+const correctLabels={sys1:'input',sys2:'process',sys3:'output'};
+let labeled={};
+function labelBox(id, type){
+  const correct=correctLabels[id]===type;
+  const el=document.getElementById(id);
+  el.classList.remove('input','process','output');
+  el.classList.add(type);
+  el.style.pointerEvents='none';
+  labeled[id]=correct;
+  if(Object.keys(labeled).length===3){
+    const allCorrect=Object.values(labeled).every(v=>v);
+    const res=document.getElementById('sysResult');
+    res.className='sys-result show '+(allCorrect?'correct':'wrong');
+    res.innerHTML=allCorrect
+      ?'⚡ Correct system map! Input → Process → Output. Every system, every time. Bug uses this to find problems in 30 seconds.'
+      :'Not quite — think about what the user controls (input), what the app does internally (process), and what you see (output).';
+    if(allCorrect) checkComplete();
+  }
+}
+function checkBreak(btn, correct){
+  document.querySelectorAll('.break-option').forEach(b=>b.style.pointerEvents='none');
+  btn.classList.add(correct?'correct':'wrong');
+  const res=document.getElementById('breakResult');
+  res.className='sys-result show '+(correct?'correct':'wrong');
+  res.innerHTML=correct
+    ?'⚡ Exactly right. You pressed 2+2 correctly — that\'s not the input. And it showed SOMETHING — that\'s not the output either. The math logic is broken. That\'s the process. Classic Bug find.'
+    :'Almost — think it through. You know you pressed the right buttons. And the screen DID show a number. So which part did its job wrong?';
+  if(correct) checkComplete();
+}
+function submitReflect(){
+  const val=document.getElementById('reflectInput').value.trim();
+  if(!val) return;
+  document.getElementById('reflectResponse').className='reflect-response show';
+  document.getElementById('reflectResponse').innerHTML=`⚡ <strong style="color:var(--char)">"${val}"</strong><br><br>Bug is taking notes. You just did real systems analysis on something from your actual life. That's the skill. It works on code, on games, on everything.`;
+  checkComplete();
+}
+function checkComplete(){
+  const c=document.getElementById('lessonComplete');
+  c.style.display='block';
+  setTimeout(()=>c.classList.add('visible'),100);
+}
+</script>
+</body>
+</html>

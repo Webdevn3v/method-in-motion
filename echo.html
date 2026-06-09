@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Echo's World — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{--void:#050508;--deep:#080b14;--navy:#0d1020;--card:#0f1525;--border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);--white:#ffffff;--off:#c8cce0;--muted:#5a6080;--char:#00e8ff;--char2:#6bb5ff;--char3:#c66bff;--grad:linear-gradient(135deg,#00e8ff,#c66bff);--display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7}
+a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em}
+.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
+.nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:color .2s}
+.nav-back:hover{color:var(--char)}
+.nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(0,232,255,.4);color:var(--char);border-radius:100px}
+.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
+.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 35% 50%,rgba(0,232,255,.07) 0%,transparent 50%),radial-gradient(ellipse at 75% 30%,rgba(198,107,255,.06) 0%,transparent 45%)}
+/* sound wave bars */
+.wave-bar{position:absolute;bottom:0;width:3px;border-radius:2px 2px 0 0;background:linear-gradient(to top,rgba(0,232,255,.06),rgba(198,107,255,.06));animation:wavePulse ease-in-out infinite alternate;pointer-events:none}
+@keyframes wavePulse{from{transform:scaleY(.2)}to{transform:scaleY(1)}}
+.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
+.hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--char);opacity:.8;margin-bottom:14px}
+.hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
+.hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
+.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
+.hero-tag{padding:5px 14px;border:1px solid rgba(0,232,255,.3);border-radius:100px;font-family:var(--display);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--char)}
+.hero-start{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s,box-shadow .2s}
+.hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,232,255,.25)}
+.hero-char img{width:100%;max-width:380px;filter:drop-shadow(0 0 60px rgba(0,232,255,.35));animation:echoFloat 4s ease-in-out infinite}
+@keyframes echoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+.progress-bar{background:var(--deep);border-bottom:1px solid var(--border);padding:20px 48px;position:sticky;top:65px;z-index:50}
+.progress-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center}
+.prog-step{display:flex;align-items:center;flex:1}
+.prog-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.48rem;color:var(--muted);transition:all .3s;flex-shrink:0}
+.prog-dot.active{border-color:var(--char);background:rgba(0,232,255,.1);color:var(--char)}
+.prog-line{flex:1;height:1px;background:var(--border);margin:0 8px}
+.prog-label{font-family:var(--display);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:8px}
+.prog-label.active{color:var(--char)}
+.lessons{max-width:800px;margin:0 auto;padding:80px 48px}
+.lesson-header{margin-bottom:48px}
+.lesson-num{font-family:var(--display);font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--char);opacity:.7;margin-bottom:10px}
+.lesson-title{font-family:var(--heading);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:12px}
+.lesson-desc{font-size:.95rem;color:var(--off);line-height:1.9}
+.content-block{margin-bottom:40px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.block-header{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.block-icon{width:32px;height:32px;border-radius:8px;background:rgba(0,232,255,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem}
+.block-label{font-family:var(--display);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char)}
+.block-body{padding:28px}
+.block-body p{font-size:.95rem;color:var(--off);line-height:1.9;margin-bottom:14px}
+.block-body p:last-child{margin-bottom:0}
+.echo-quote{font-family:var(--heading);font-size:1.1rem;font-weight:700;color:var(--white);border-left:3px solid var(--char);padding-left:18px;margin:20px 0;line-height:1.6}
+
+/* BEAT MACHINE */
+.beat-grid{display:grid;grid-template-rows:repeat(3,1fr);gap:8px;margin-bottom:20px}
+.beat-row{display:flex;align-items:center;gap:8px}
+.beat-label{font-family:var(--display);font-size:.5rem;letter-spacing:.1em;color:var(--muted);width:50px;flex-shrink:0;text-align:right}
+.beat-cells{display:flex;gap:4px;flex:1}
+.beat-cell{width:100%;aspect-ratio:1;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,.02);cursor:pointer;transition:all .15s}
+.beat-cell.active{background:var(--char);border-color:var(--char);box-shadow:0 0 10px rgba(0,232,255,.4)}
+.beat-cell.active.purple{background:var(--char3);border-color:var(--char3);box-shadow:0 0 10px rgba(198,107,255,.4)}
+.beat-cell.active.pink{background:#ff6baa;border-color:#ff6baa;box-shadow:0 0 10px rgba(255,107,170,.4)}
+.beat-cell:hover:not(.active){background:rgba(0,232,255,.08);border-color:rgba(0,232,255,.2)}
+.beat-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
+.beat-play{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:var(--grad);color:#000;font-weight:700;border:none;border-radius:100px;cursor:pointer;transition:transform .2s}
+.beat-play:hover{transform:translateY(-1px)}
+.beat-clear{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);color:var(--muted);border-radius:100px;cursor:pointer;transition:all .2s}
+.beat-clear:hover{border-color:var(--white);color:var(--white)}
+.beat-indicator{width:8px;height:8px;border-radius:50%;background:var(--char);opacity:0;transition:opacity .1s;box-shadow:0 0 8px var(--char)}
+.beat-indicator.on{opacity:1}
+.beat-result{margin-top:14px;padding:14px;border-radius:10px;font-size:.88rem;line-height:1.7;background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);color:var(--char);display:none}
+.beat-result.show{display:block}
+
+/* EVENT MATCHING */
+.event-items{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.event-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(0,232,255,.04);border:1px solid rgba(0,232,255,.15);border-radius:10px}
+.event-trigger{font-family:var(--display);font-size:.58rem;letter-spacing:.08em;color:var(--char);flex:1}
+.event-arrow{color:var(--muted);flex-shrink:0}
+.event-select{background:rgba(5,5,8,.8);border:1px solid var(--border-md);color:var(--off);padding:8px 12px;border-radius:8px;font-family:var(--display);font-size:.52rem;letter-spacing:.06em;cursor:pointer;flex:1;outline:none}
+.event-select:focus{border-color:var(--char)}
+.event-check{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(0,232,255,.1);border:1px solid rgba(0,232,255,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
+.event-result{margin-top:14px;padding:14px;border-radius:10px;font-size:.88rem;display:none;line-height:1.7}
+.event-result.show{display:block}
+.event-result.correct{background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);color:var(--char)}
+.event-result.wrong{background:rgba(255,107,170,.06);border:1px solid rgba(255,107,170,.2);color:#ff6baa}
+
+.reflect-prompt{font-size:.95rem;color:var(--off);margin-bottom:16px;line-height:1.8}
+.reflect-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);border-radius:10px;color:var(--white);font-family:var(--body);font-size:.9rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s}
+.reflect-input:focus{border-color:var(--char)}
+.reflect-submit{margin-top:12px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(0,232,255,.1);border:1px solid rgba(0,232,255,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
+.reflect-response{margin-top:14px;padding:16px;background:rgba(198,107,255,.06);border:1px solid rgba(198,107,255,.2);border-radius:10px;font-size:.88rem;color:var(--char3);display:none;line-height:1.7}
+.reflect-response.show{display:block}
+.lesson-complete{text-align:center;padding:48px 28px;background:linear-gradient(135deg,rgba(0,232,255,.06),rgba(198,107,255,.06));border:1px solid rgba(0,232,255,.2);border-radius:16px;margin-bottom:40px}
+.complete-icon{font-size:2.5rem;margin-bottom:16px}
+.complete-title{font-family:var(--heading);font-size:1.6rem;font-weight:800;margin-bottom:8px}
+.complete-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.complete-desc{font-size:.9rem;color:var(--off);margin-bottom:24px}
+.next-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;cursor:pointer;border:none;transition:transform .2s}
+.locked-section{margin-top:80px;border-top:1px solid var(--border);padding-top:60px}
+.locked-label{font-family:var(--display);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:flex;align-items:center;gap:10px}
+.locked-label::after{content:'';flex:1;height:1px;background:var(--border)}
+.locked-cards{display:flex;flex-direction:column;gap:12px}
+.locked-card{padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;opacity:.5;position:relative}
+.locked-card::after{content:'🔒';position:absolute;right:20px;top:50%;transform:translateY(-50%)}
+.locked-card-num{font-family:var(--display);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
+.locked-card-title{font-family:var(--heading);font-size:.95rem;font-weight:700;color:var(--white)}
+.locked-card-desc{font-size:.78rem;color:var(--muted)}
+.join-prompt{margin-top:32px;text-align:center;padding:36px;background:linear-gradient(135deg,rgba(0,232,255,.04),rgba(198,107,255,.04));border:1px solid rgba(0,232,255,.15);border-radius:16px}
+.join-prompt p{font-size:.9rem;color:var(--off);margin-bottom:18px;line-height:1.8}
+.join-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s}
+.join-btn:hover{transform:translateY(-2px)}
+.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
+.reveal.visible{opacity:1;transform:none}
+@media(max-width:768px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.lessons{padding:60px 24px}nav{padding:14px 24px}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nav-back">← Back to Universe</a>
+  <a href="../index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
+  <div class="nav-char">Echo · Signal DJ</div>
+</nav>
+<section class="hero">
+  <div class="hero-bg"></div>
+  <script>
+    for(let i=0;i<20;i++){
+      document.write(`<div class="wave-bar" style="left:${i*5+2}%;height:${40+Math.random()*40}%;animation-duration:${0.4+Math.random()*0.6}s;animation-delay:${Math.random()*0.5}s"></div>`);
+    }
+  </script>
+  <div class="hero-inner">
+    <div>
+      <div class="hero-eyebrow">Character 06 · Ages 10–12</div>
+      <h1 class="hero-title">Welcome to<br><span>Echo's Studio.</span></h1>
+      <p class="hero-desc">Code is rhythm. Events are triggers. Echo teaches you how programs listen, respond, and flow — and how music and code are more alike than you think.</p>
+      <div class="hero-tags">
+        <span class="hero-tag">Event-Driven Code</span>
+        <span class="hero-tag">Sound & Rhythm</span>
+        <span class="hero-tag">Audio Logic</span>
+      </div>
+      <a href="#lesson-1" class="hero-start">Start Lesson 1 — Free ↓</a>
+    </div>
+    <div class="hero-char">
+      <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-pose-4.png" alt="Echo">
+    </div>
+  </div>
+</section>
+<div class="progress-bar">
+  <div class="progress-inner">
+    <div class="prog-step"><div class="prog-dot active">1</div><div class="prog-label active">Events & Triggers</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Write an Event</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Chain Reactions</div><div class="prog-line"></div></div>
+    <div class="prog-step"><div class="prog-dot">🔒</div><div class="prog-label">Echo's Full Mix</div></div>
+  </div>
+</div>
+<div class="lessons">
+  <div class="lesson" id="lesson-1">
+    <div class="lesson-header reveal">
+      <div class="lesson-num">Lesson 01 · Free</div>
+      <h2 class="lesson-title">Events & Triggers</h2>
+      <p class="lesson-desc">Most code doesn't just run — it waits. It waits for something to happen. A click, a keypress, a moment in time. Echo calls these triggers.</p>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
+      <div class="block-body">
+        <p class="echo-quote">"Yo. I'm Echo. I'm a DJ — which means I don't just play music, I respond to the crowd. When the energy drops, I change the beat. That's event-driven thinking."</p>
+        <p>In music, a DJ listens for signals and responds in real time. In code, we do the same thing — we write instructions that say <strong style="color:var(--char)">when something happens, do this.</strong></p>
+        <p>This is called <strong style="color:var(--char3)">event-driven programming</strong>. Almost every app you've ever used is built this way. When you tap a button → the app responds. When you scroll down → something animates. When a timer hits zero → an alert appears.</p>
+        <p>Echo's rule: <strong style="color:var(--char)">Every event has a trigger and a response.</strong> Learn to hear both.</p>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">♪</div><div class="block-label">Build a Beat · Interactive Grid</div></div>
+      <div class="block-body">
+        <p style="font-size:.88rem;color:var(--off);margin-bottom:20px">This is Echo's beat machine. Click the cells to turn them on — each one is an event that fires when the playhead hits it. Hit Play to hear your pattern.</p>
+        <div class="beat-grid" id="beatGrid">
+          <div class="beat-row">
+            <div class="beat-label">Kick</div>
+            <div class="beat-cells" id="row0"></div>
+          </div>
+          <div class="beat-row">
+            <div class="beat-label">Snare</div>
+            <div class="beat-cells" id="row1"></div>
+          </div>
+          <div class="beat-row">
+            <div class="beat-label">Hi-Hat</div>
+            <div class="beat-cells" id="row2"></div>
+          </div>
+        </div>
+        <div class="beat-controls">
+          <button class="beat-play" id="beatBtn" onclick="toggleBeat()">▶ Play Beat</button>
+          <button class="beat-clear" onclick="clearBeat()">Clear</button>
+          <div class="beat-indicator" id="beatIndicator"></div>
+          <span style="font-family:var(--display);font-size:.5rem;color:var(--muted);letter-spacing:.1em">STEP</span>
+        </div>
+        <div class="beat-result" id="beatResult"></div>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">♪</div><div class="block-label">Match the Event · Trigger → Response</div></div>
+      <div class="block-body">
+        <p style="font-size:.88rem;color:var(--off);margin-bottom:20px">Match each trigger to what should happen. This is what event-driven code looks like in real apps.</p>
+        <div class="event-items">
+          <div class="event-item">
+            <div class="event-trigger">User clicks Play button</div>
+            <div class="event-arrow">→</div>
+            <select class="event-select" id="ev1">
+              <option value="">Choose response...</option>
+              <option value="a">Music starts playing</option>
+              <option value="b">Page reloads</option>
+              <option value="c">Volume goes to zero</option>
+            </select>
+          </div>
+          <div class="event-item">
+            <div class="event-trigger">Timer reaches 0:00</div>
+            <div class="event-arrow">→</div>
+            <select class="event-select" id="ev2">
+              <option value="">Choose response...</option>
+              <option value="a">Alert sounds and time is up message shows</option>
+              <option value="b">Nothing happens</option>
+              <option value="c">Timer resets to 10:00</option>
+            </select>
+          </div>
+          <div class="event-item">
+            <div class="event-trigger">User scrolls to bottom of page</div>
+            <div class="event-arrow">→</div>
+            <select class="event-select" id="ev3">
+              <option value="">Choose response...</option>
+              <option value="a">Page goes back to top</option>
+              <option value="b">New content loads automatically</option>
+              <option value="c">All text disappears</option>
+            </select>
+          </div>
+        </div>
+        <button class="event-check" onclick="checkEvents()">Check My Answers →</button>
+        <div class="event-result" id="eventResult"></div>
+      </div>
+    </div>
+
+    <div class="content-block reveal">
+      <div class="block-header"><div class="block-icon">♪</div><div class="block-label">Reflect · Echo's Question</div></div>
+      <div class="block-body">
+        <p class="reflect-prompt">Think about an app or game you use all the time. What are three things that happen when you do something — three "when X happens, Y happens" moments?</p>
+        <textarea class="reflect-input" id="reflectInput" placeholder="When I..., then..."></textarea>
+        <button class="reflect-submit" onclick="submitReflect()">Tell Echo →</button>
+        <div class="reflect-response" id="reflectResponse"></div>
+      </div>
+    </div>
+
+    <div class="lesson-complete reveal" id="lessonComplete" style="display:none">
+      <div class="complete-icon">♪</div>
+      <h3 class="complete-title">Lesson 1 <span>Complete!</span></h3>
+      <p class="complete-desc">You built a beat, matched events to responses, and started hearing the triggers in everything. Echo is locked in.</p>
+      <button class="next-btn" onclick="document.querySelector('.locked-section').scrollIntoView({behavior:'smooth'})">See What's Next →</button>
+    </div>
+  </div>
+
+  <div class="locked-section reveal">
+    <div class="locked-label">Members Only — Unlock All Lessons</div>
+    <div class="locked-cards">
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 02</div><div class="locked-card-title">Write Your First Event Listener</div><div class="locked-card-desc">Turn a button click into real code. Make something happen when a user interacts.</div></div></div>
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 03</div><div class="locked-card-title">Chain Reactions</div><div class="locked-card-desc">One event triggers another. Build a sequence of responses that flow like a track.</div></div></div>
+      <div class="locked-card"><div><div class="locked-card-num">Lesson 04</div><div class="locked-card-title">Echo's Full Mix</div><div class="locked-card-desc">Build a fully interactive mini-app that responds to clicks, keys, and timers all at once.</div></div></div>
+    </div>
+    <div class="join-prompt">
+      <p>Echo has a full interactive beat builder, event coding challenges, and a final project that's genuinely fun to play with. Join the crew to unlock everything.</p>
+      <a href="../index.html#membership" class="join-btn">Join the Crew →</a>
+    </div>
+  </div>
+</div>
+<script>
+const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}})},{threshold:.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+
+// BEAT MACHINE
+const colors=['','purple','pink'];
+const steps=8;
+const grid=[[],[],[]];
+// build grid
+[0,1,2].forEach(r=>{
+  const row=document.getElementById('row'+r);
+  for(let c=0;c<steps;c++){
+    const cell=document.createElement('div');
+    cell.className='beat-cell';
+    cell.onclick=()=>{
+      cell.classList.toggle('active');
+      if(cell.classList.contains('active')&&colors[r]) cell.classList.add(colors[r]);
+      else cell.classList.remove(colors[r]);
+      grid[r][c]=cell.classList.contains('active');
+      checkBeatResult();
+    };
+    row.appendChild(cell);
+    grid[r].push(false);
+  }
+});
+
+let playing=false,step=0,interval=null;
+function toggleBeat(){
+  playing=!playing;
+  document.getElementById('beatBtn').textContent=playing?'⏹ Stop':'▶ Play Beat';
+  if(playing){
+    interval=setInterval(()=>{
+      // visual step indicator
+      [0,1,2].forEach(r=>{
+        document.getElementById('row'+r).querySelectorAll('.beat-cell').forEach((c,i)=>{
+          c.style.outline=i===step?'2px solid rgba(0,232,255,.6)':'none';
+        });
+      });
+      // play sounds
+      [0,1,2].forEach(r=>{
+        if(grid[r][step]) playTone(r);
+      });
+      document.getElementById('beatIndicator').classList.toggle('on');
+      step=(step+1)%steps;
+    },200);
+  } else {
+    clearInterval(interval);
+    step=0;
+    [0,1,2].forEach(r=>{
+      document.getElementById('row'+r).querySelectorAll('.beat-cell').forEach(c=>c.style.outline='none');
+    });
+    document.getElementById('beatIndicator').classList.remove('on');
+  }
+}
+
+let audioCtx=null;
+function playTone(row){
+  try{
+    if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    const freqs=[80,200,800];
+    const types=['sine','square','triangle'];
+    const osc=audioCtx.createOscillator();
+    const gain=audioCtx.createGain();
+    osc.connect(gain);gain.connect(audioCtx.destination);
+    osc.type=types[row];osc.frequency.value=freqs[row];
+    gain.gain.setValueAtTime(.08,audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.15);
+    osc.start(audioCtx.currentTime);osc.stop(audioCtx.currentTime+.15);
+  }catch(e){}
+}
+
+function clearBeat(){
+  if(playing) toggleBeat();
+  [0,1,2].forEach(r=>{
+    document.getElementById('row'+r).querySelectorAll('.beat-cell').forEach((c,i)=>{
+      c.classList.remove('active','purple','pink');grid[r][i]=false;
+    });
+  });
+}
+
+function checkBeatResult(){
+  const hasAny=grid.some(r=>r.some(v=>v));
+  const res=document.getElementById('beatResult');
+  if(hasAny){
+    res.className='beat-result show';
+    res.innerHTML='♪ You\'re programming events — each active cell is a trigger that fires when the playhead hits it. That\'s event-driven code, in music form.';
+    checkComplete();
+  }
+}
+
+function checkEvents(){
+  const answers={ev1:'a',ev2:'a',ev3:'b'};
+  let correct=0;
+  Object.entries(answers).forEach(([id,ans])=>{
+    if(document.getElementById(id).value===ans) correct++;
+  });
+  const res=document.getElementById('eventResult');
+  if(correct===3){
+    res.className='event-result show correct';
+    res.innerHTML='♪ Perfect! Every app works this way. Trigger → Response. Once you see it, you can\'t unsee it.';
+    checkComplete();
+  } else {
+    res.className='event-result show wrong';
+    res.innerHTML=`${correct}/3 correct. Think about what makes sense — what would a user actually expect to happen?`;
+  }
+}
+
+function submitReflect(){
+  const val=document.getElementById('reflectInput').value.trim();
+  if(!val) return;
+  document.getElementById('reflectResponse').className='reflect-response show';
+  document.getElementById('reflectResponse').innerHTML=`♪ <strong style="color:var(--char)">"${val}"</strong><br><br>Those are real event listeners. Every one of those "when X happens" moments is code running in response to a trigger. You already think in events — now you just need the syntax.`;
+  checkComplete();
+}
+
+function checkComplete(){
+  const c=document.getElementById('lessonComplete');
+  c.style.display='block';
+  setTimeout(()=>c.classList.add('visible'),100);
+}
+</script>
+</body>
+</html>
