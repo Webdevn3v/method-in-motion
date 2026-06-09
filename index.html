@@ -239,19 +239,24 @@ nav.scrolled{
   border:1px solid var(--border);
   overflow:hidden;
   position:relative;
-  transition:border-color .3s, transform .3s, box-shadow .3s;
+  transition:border-color .4s, transform .3s, box-shadow .4s, background .4s;
   cursor:none;
 }
 .crew-card:hover{
   transform:translateY(-6px);
   border-color:var(--cc,rgba(198,107,255,.5));
-  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  box-shadow:0 20px 60px rgba(0,0,0,.5), 0 0 40px color-mix(in srgb, var(--cc, #c66bff) 20%, transparent);
+  background:color-mix(in srgb, var(--cc, #c66bff) 8%, var(--card));
 }
 .crew-card__media{
   position:relative;
   aspect-ratio:3/4;
   overflow:hidden;
-  background:var(--void);
+  background:transparent;
+  transition:background .4s;
+}
+.crew-card:hover .crew-card__media{
+  background:color-mix(in srgb, var(--cc, #c66bff) 6%, var(--void));
 }
 .crew-card__media img{
   position:absolute;inset:0;
@@ -260,26 +265,23 @@ nav.scrolled{
   object-position:center center;
   padding:8px;
   filter:drop-shadow(0 0 24px var(--cc,rgba(198,107,255,.4)));
-  transition:opacity .4s;
+  transition:transform .4s cubic-bezier(.34,1.56,.64,1), filter .4s;
   z-index:1;
 }
-.crew-card__media video{
-  position:absolute;inset:0;
-  width:100%;height:100%;
-  object-fit:contain;
-  object-position:center center;
-  mix-blend-mode:screen;
-  z-index:2;
-  opacity:0;
-  transition:opacity .4s;
+.crew-card:hover .crew-card__media img{
+  transform:scale(1.08);
+  filter:drop-shadow(0 0 40px var(--cc,rgba(198,107,255,.7)));
 }
-.crew-card:hover .crew-card__media video{opacity:1}
-.crew-card:hover .crew-card__media img{opacity:0}
+.crew-card__media video{
+  display:none;
+}
 .crew-card__glow{
   position:absolute;inset:0;z-index:3;
   background:linear-gradient(to top,var(--card) 0%,transparent 45%);
   pointer-events:none;
+  transition:opacity .4s;
 }
+.crew-card:hover .crew-card__glow{opacity:0}
 .crew-card__body{
   padding:20px 20px 22px;
   position:relative;z-index:4;
@@ -339,18 +341,15 @@ nav.scrolled{
   box-shadow:0 20px 60px rgba(0,0,0,.4);
 }
 .wb-cover{
-  width:100%;aspect-ratio:3/4;
+  width:100%;aspect-ratio:1/1;
   background:var(--wb-bg,linear-gradient(135deg,#1a0a2e,#0d0f1e));
-  display:flex;align-items:flex-end;justify-content:center;
+  display:flex;align-items:center;justify-content:center;
   overflow:hidden;position:relative;
 }
 .wb-cover img{
-  width:100%;height:100%;object-fit:contain;
-  object-position:center bottom;
+  width:100%;height:100%;object-fit:cover;
+  object-position:center center;
   transition:transform .5s;
-  mix-blend-mode:screen;
-  filter:drop-shadow(0 0 28px var(--wb-color,var(--pink)));
-  padding:20px 20px 0;
 }
 .wb-card:hover .wb-cover img{transform:scale(1.05)}
 .wb-cover-placeholder{
@@ -394,6 +393,7 @@ nav.scrolled{
   background:var(--card);padding:36px 28px;
   position:relative;overflow:hidden;
   transition:background .3s;
+  min-height:280px;
 }
 .game-card:hover{background:rgba(255,255,255,.04)}
 .game-card::before{
@@ -404,6 +404,38 @@ nav.scrolled{
   transition:transform .4s;
 }
 .game-card:hover::before{transform:scaleX(1)}
+/* big symbol sits in background */
+.game-symbol{
+  position:absolute;
+  bottom:-10px;right:-10px;
+  font-size:9rem;line-height:1;
+  color:var(--gc3,var(--pink));
+  opacity:.07;
+  pointer-events:none;
+  transition:opacity .4s, transform .4s;
+  z-index:0;
+  user-select:none;
+}
+.game-card:hover .game-symbol{
+  opacity:.12;
+  transform:scale(1.1) rotate(-5deg);
+}
+/* character image fades in on hover */
+.game-char-img{
+  position:absolute;
+  bottom:0;right:0;
+  width:140px;
+  opacity:0;
+  transition:opacity .4s, transform .4s;
+  transform:translateY(12px);
+  pointer-events:none;
+  z-index:1;
+  filter:drop-shadow(0 0 20px var(--gc3,var(--pink)));
+}
+.game-card:hover .game-char-img{
+  opacity:1;
+  transform:translateY(0);
+}
 .game-icon{
   width:90px;height:90px;border-radius:12px;
   display:flex;align-items:center;justify-content:center;
@@ -413,21 +445,24 @@ nav.scrolled{
   width:100%;height:100%;object-fit:contain;
   filter:drop-shadow(0 0 16px var(--gc3,var(--pink)));
 }
-.game-char{
+.game-char-label{
   font-family:var(--display);font-size:.52rem;
   letter-spacing:.2em;text-transform:uppercase;
   color:var(--gc3,var(--pink));margin-bottom:7px;
+  position:relative;z-index:2;
 }
 .game-title{
   font-family:var(--heading);font-size:1.05rem;
   font-weight:700;color:var(--white);margin-bottom:8px;
+  position:relative;z-index:2;
 }
-.game-desc{font-size:.82rem;color:var(--muted);line-height:1.8;margin-bottom:18px}
+.game-desc{font-size:.82rem;color:var(--muted);line-height:1.8;margin-bottom:18px;position:relative;z-index:2;}
 .game-status{
   display:inline-flex;align-items:center;gap:6px;
   font-family:var(--display);font-size:.52rem;
   letter-spacing:.14em;text-transform:uppercase;
   color:var(--gc3,var(--pink));
+  position:relative;z-index:2;
 }
 .game-status-dot{
   width:6px;height:6px;border-radius:50%;
@@ -692,9 +727,8 @@ footer{
 
       <!-- ZEN -->
       <div class="crew-card zen-card reveal d1" style="--cc:#ff6baa"
-           data-sound="zen"
-           onmouseenter="playCharSound('zen');this.querySelector('video').play()"
-           onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
+           onmouseenter="playCharSound('zen')"
+           onmouseleave="">
         <div class="crew-card__media">
           <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" alt="Zen">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.mp4" muted playsinline loop></video>
@@ -715,8 +749,8 @@ footer{
 
       <!-- BYTE -->
       <div class="crew-card reveal d2" style="--cc:#c66bff"
-           onmouseenter="playCharSound('byte');this.querySelector('video').play()"
-           onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
+           onmouseenter="playCharSound('byte')"
+           >
         <div class="crew-card__media">
           <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-motion.gif" alt="Byte">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-motion.mp4" muted playsinline loop></video>
@@ -737,8 +771,8 @@ footer{
 
       <!-- LOOP -->
       <div class="crew-card reveal d3" style="--cc:#00e8ff"
-           onmouseenter="playCharSound('loop');this.querySelector('video').play()"
-           onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
+           onmouseenter="playCharSound('loop')"
+           >
         <div class="crew-card__media">
           <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.gif" alt="Loop">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.mp4" muted playsinline loop></video>
@@ -759,8 +793,8 @@ footer{
 
       <!-- NOVA -->
       <div class="crew-card reveal d1" style="--cc:#ffe066"
-           onmouseenter="playCharSound('nova');this.querySelector('video').play()"
-           onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
+           onmouseenter="playCharSound('nova')"
+           >
         <div class="crew-card__media">
           <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-motion.gif" alt="Nova">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-motion.mp4" muted playsinline loop></video>
@@ -781,8 +815,8 @@ footer{
 
       <!-- BUG -->
       <div class="crew-card reveal d2" style="--cc:#a2ff32"
-           onmouseenter="playCharSound('bug');this.querySelector('video').play()"
-           onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
+           onmouseenter="playCharSound('bug')"
+           >
         <div class="crew-card__media">
           <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-motion.gif" alt="Bug">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-motion.mp4" muted playsinline loop></video>
@@ -803,8 +837,8 @@ footer{
 
       <!-- ECHO -->
       <div class="crew-card reveal d3" style="--cc:#00e8ff"
-           onmouseenter="playCharSound('echo');this.querySelector('video').play()"
-           onmouseleave="this.querySelector('video').pause();this.querySelector('video').currentTime=0">
+           onmouseenter="playCharSound('echo')"
+           >
         <div class="crew-card__media">
           <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-motion.gif" alt="Echo">
           <video src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-motion.mp4" muted playsinline loop></video>
@@ -941,43 +975,49 @@ footer{
     </div>
     <div class="games__grid">
       <div class="game-card reveal d1" style="--gc2:linear-gradient(90deg,#ffe066,#ff6baa);--gc3:#ffe066">
-        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-pose-2.png" alt="Nova"></div>
-        <div class="game-char">Nova · Building</div>
+        <div class="game-symbol">⬡</div>
+        <img class="game-char-img" src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-game.png" alt="Nova">
+        <div class="game-char-label">Nova · Building</div>
         <div class="game-title">Nova's Build Lab</div>
         <div class="game-desc">Drag and drop components to build a webpage. Learn what goes where and why every part matters.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#ffe066"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d2" style="--gc2:linear-gradient(90deg,#a2ff32,#00e8ff);--gc3:#a2ff32">
-        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-pose-4.png" alt="Bug"></div>
-        <div class="game-char">Bug · Problem Solving</div>
+        <div class="game-symbol">⚡</div>
+        <img class="game-char-img" src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-game.png" alt="Bug">
+        <div class="game-char-label">Bug · Problem Solving</div>
         <div class="game-title">Bug's Glitch Hunt</div>
         <div class="game-desc">Find the bug hiding in the code. Each level gets harder. How fast can you fix it?</div>
         <div class="game-status"><div class="game-status-dot" style="background:#a2ff32"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d3" style="--gc2:linear-gradient(90deg,#00e8ff,#c66bff);--gc3:#00e8ff">
-        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-pose-4.png" alt="Echo"></div>
-        <div class="game-char">Echo · Sound Coding</div>
+        <div class="game-symbol">♪</div>
+        <img class="game-char-img" src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-game.png" alt="Echo">
+        <div class="game-char-label">Echo · Sound Coding</div>
         <div class="game-title">Echo's Beat Machine</div>
         <div class="game-desc">Build a beat by placing sounds on a grid. Learn events, timing, and what it means to program with rhythm.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#00e8ff"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d1" style="--gc2:linear-gradient(90deg,#00e8ff,#6bb5ff);--gc3:#00e8ff">
-        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-pose-2.png" alt="Loop"></div>
-        <div class="game-char">Loop · Patterns</div>
+        <div class="game-symbol">↻</div>
+        <img class="game-char-img" src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-game.png" alt="Loop">
+        <div class="game-char-label">Loop · Patterns</div>
         <div class="game-title">Loop's Pattern Quest</div>
         <div class="game-desc">Complete the sequence. Each puzzle teaches you to think in loops — one of the most powerful ideas in all of coding.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#00e8ff"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d2" style="--gc2:linear-gradient(90deg,#ff6baa,#c66bff);--gc3:#ff6baa">
-        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-pose-2.png" alt="Zen"></div>
-        <div class="game-char">Zen · Creative Coding</div>
+        <div class="game-symbol">✦</div>
+        <img class="game-char-img" src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-game.png" alt="Zen">
+        <div class="game-char-label">Zen · Creative Coding</div>
         <div class="game-title">Zen's Code Studio</div>
         <div class="game-desc">Open-ended creative mode. Design, arrange, and build anything. No wrong answers in Zen's world.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#ff6baa"></div>Coming Soon</div>
       </div>
       <div class="game-card reveal d3" style="--gc2:linear-gradient(90deg,#c66bff,#ff6baa);--gc3:#c66bff">
-        <div class="game-icon"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-pose-3.png" alt="Byte"></div>
-        <div class="game-char">Byte · Debugging</div>
+        <div class="game-symbol">◈</div>
+        <img class="game-char-img" src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-game.png" alt="Byte">
+        <div class="game-char-label">Byte · Debugging</div>
         <div class="game-title">Byte's Pixel Rescue</div>
         <div class="game-desc">Help Byte find the missing pixels. A logic puzzle game built around careful observation and systematic thinking.</div>
         <div class="game-status"><div class="game-status-dot" style="background:#c66bff"></div>Coming Soon</div>
