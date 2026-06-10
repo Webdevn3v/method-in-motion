@@ -411,5 +411,277 @@ function checkComplete(){
   setTimeout(()=>complete.classList.add('visible'),100);
 }
 </script>
+ <!-- METHOD IN MOTION — Auth Modal -->
+<!-- Paste this block just before </body> on every page that needs login -->
+
+<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true" aria-label="Sign in or create account">
+  <div class="auth-modal-box">
+
+    <!-- Close -->
+    <button class="auth-close" id="auth-close-btn" aria-label="Close">&times;</button>
+
+    <!-- Header -->
+    <div class="auth-modal-header">
+      <div class="auth-logo-mark">MiM</div>
+      <p class="auth-tagline">Create. Don't Consume.</p>
+    </div>
+
+    <!-- Tabs -->
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Log In</button>
+      <button class="auth-tab" data-tab="signup">Join the Crew</button>
+    </div>
+
+    <!-- Login Form -->
+    <div id="login-form" class="auth-form active">
+      <div class="auth-field">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <p class="auth-error" id="login-error"></p>
+      <button class="auth-submit" id="login-submit-btn">Log In</button>
+      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
+    </div>
+
+    <!-- Signup Form -->
+    <div id="signup-form" class="auth-form">
+      <div class="auth-field">
+        <label for="signup-name">Display Name</label>
+        <input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname" />
+      </div>
+      <div class="auth-field">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password" />
+      </div>
+      <p class="auth-error" id="signup-error"></p>
+      <button class="auth-submit" id="signup-submit-btn">Create Account</button>
+      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
+    </div>
+
+  </div>
+</div>
+
+<style>
+/* ── Auth Modal ───────────────────────────────────────── */
+.auth-modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(0, 0, 16, 0.85);
+  backdrop-filter: blur(6px);
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.auth-modal-overlay.active {
+  display: flex;
+}
+
+.auth-modal-box {
+  background: #0a0a1a;
+  border: 1px solid rgba(0, 240, 255, 0.2);
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  width: 100%;
+  max-width: 420px;
+  position: relative;
+  box-shadow: 0 0 60px rgba(0, 240, 255, 0.08), 0 0 0 1px rgba(255,255,255,0.04);
+}
+
+/* Close */
+.auth-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.25rem;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-size: 1.5rem;
+  cursor: pointer;
+  line-height: 1;
+  transition: color 0.2s;
+}
+.auth-close:hover { color: #fff; }
+
+/* Header */
+.auth-modal-header {
+  text-align: center;
+  margin-bottom: 1.75rem;
+}
+
+.auth-logo-mark {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 900;
+  letter-spacing: 0.15em;
+  background: linear-gradient(135deg, #00f0ff, #ff6ec7);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 0.25rem;
+}
+
+.auth-tagline {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+}
+
+/* Tabs */
+.auth-tabs {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+  margin-bottom: 1.75rem;
+}
+
+.auth-tab {
+  flex: 1;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.4);
+  font-family: 'Syne', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.75rem 0;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.auth-tab.active {
+  color: #00f0ff;
+  border-bottom-color: #00f0ff;
+}
+
+.auth-tab:hover:not(.active) {
+  color: rgba(255,255,255,0.7);
+}
+
+/* Forms */
+.auth-form { display: none; }
+.auth-form.active { display: block; }
+
+.auth-field {
+  margin-bottom: 1.1rem;
+}
+
+.auth-field label {
+  display: block;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 0.4rem;
+}
+
+.auth-field input {
+  width: 100%;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  color: #fff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  box-sizing: border-box;
+}
+
+.auth-field input:focus {
+  border-color: rgba(0, 240, 255, 0.5);
+  background: rgba(0, 240, 255, 0.04);
+}
+
+.auth-field input::placeholder {
+  color: rgba(255,255,255,0.2);
+}
+
+/* Error */
+.auth-error {
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  color: #ff6ec7;
+  min-height: 1.2em;
+  margin: 0.25rem 0 0.75rem;
+}
+
+/* Submit */
+.auth-submit {
+  width: 100%;
+  background: linear-gradient(135deg, #00f0ff, #7b61ff);
+  border: none;
+  border-radius: 8px;
+  padding: 0.85rem;
+  color: #000;
+  font-family: 'Orbitron', sans-serif;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.15s;
+  margin-bottom: 1rem;
+}
+
+.auth-submit:hover {
+  opacity: 0.9;
+  transform: translateY(-1px);
+}
+
+.auth-submit:active {
+  transform: translateY(0);
+}
+
+/* Switch link */
+.auth-switch {
+  text-align: center;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.35);
+  margin: 0;
+}
+
+.auth-link {
+  background: none;
+  border: none;
+  color: #00f0ff;
+  font-family: 'Syne', sans-serif;
+  font-size: 0.78rem;
+  cursor: pointer;
+  padding: 0;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.auth-link:hover { color: #fff; }
+
+/* Mobile */
+@media (max-width: 480px) {
+  .auth-modal-box {
+    padding: 2rem 1.25rem;
+  }
+}
+</style>
+   <script type="module" src="auth-init.js"></script>
 </body>
 </html>
