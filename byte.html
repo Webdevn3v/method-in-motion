@@ -33,6 +33,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 @keyframes pixelFloat{0%,100%{transform:translateY(0) rotate(0deg)}50%{transform:translateY(-20px) rotate(45deg)}}
 .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
 .hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--char);opacity:.8;margin-bottom:14px}
+/* GLITCH EFFECT */
+.glitch-wrap{margin-bottom:14px;height:20px;display:flex;align-items:center}
+.glitch-text{font-family:var(--display);font-size:.58rem;letter-spacing:.22em;text-transform:uppercase;color:var(--char);position:relative;display:inline-block}
+.glitch-text::before,.glitch-text::after{content:attr(data-text);position:absolute;top:0;left:0;width:100%;height:100%}
+.glitch-text::before{color:#ff6baa;animation:glitchTop .4s infinite linear alternate-reverse;clip-path:polygon(0 0,100% 0,100% 33%,0 33%)}
+.glitch-text::after{color:#00e8ff;animation:glitchBot .3s infinite linear alternate-reverse;clip-path:polygon(0 67%,100% 67%,100% 100%,0 100%)}
+@keyframes glitchTop{0%{transform:translate(-2px,-1px)}50%{transform:translate(2px,1px)}100%{transform:translate(0,0)}}
+@keyframes glitchBot{0%{transform:translate(2px,1px)}50%{transform:translate(-2px,-1px)}100%{transform:translate(1px,0)}}
 .hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
 .hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
@@ -142,7 +150,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   <div class="pixel" style="width:6px;height:6px;top:75%;left:30%;animation-duration:3.5s;animation-delay:.5s"></div>
   <div class="hero-inner">
     <div>
-      <div class="hero-eyebrow">Character 02 · Ages 6–8</div>
+      <div class="glitch-wrap">
+        <span class="glitch-text" id="glitchEl" data-text="BYTE · GLITCH CAT · DEBUGGER">BYTE · GLITCH CAT · DEBUGGER</span>
+      </div>
       <h1 class="hero-title">Welcome to<br><span>Byte's Lab.</span></h1>
       <p class="hero-desc">Every bug is just a clue. Byte will teach you how to find what's broken, fix it, and feel like a genius when it works.</p>
       <div class="hero-tags">
@@ -311,13 +321,35 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
     </div>
     <div class="join-prompt">
       <p>Byte has puzzles, bug hunts, and a final challenge that'll make you feel like a real debugger. Join the crew to unlock everything.</p>
-      <a href="../index.html#membership" class="join-btn">Join the Crew →</a>
+      <a href="index.html#membership" class="join-btn">Join the Crew →</a>
     </div>
   </div>
 </div>
 
 <script>
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});},{threshold:.1});
+// GLITCH SCRAMBLE
+const glitchEl = document.getElementById('glitchEl');
+const glitchPhrases = ['BYTE · GLITCH CAT · DEBUGGER','ERROR_404 · BUG_FOUND · FIXED','◈ EVERY BUG IS A CLUE ◈','BYTE.EXE · LOADING... · DONE'];
+let gIdx = 0;
+const glitchChars = '!<>-_\\/[]{}—=+*^?#@$%&';
+function scramble(target, callback){
+  let iteration = 0;
+  const interval = setInterval(()=>{
+    glitchEl.textContent = target.split('').map((char,i)=>{
+      if(i < iteration) return target[i];
+      if(char === ' ' || char === '·') return char;
+      return glitchChars[Math.floor(Math.random()*glitchChars.length)];
+    }).join('');
+    glitchEl.dataset.text = glitchEl.textContent;
+    iteration += 1.5;
+    if(iteration >= target.length){ clearInterval(interval); glitchEl.textContent = target; glitchEl.dataset.text = target; if(callback) callback(); }
+  }, 40);
+}
+setInterval(()=>{
+  gIdx = (gIdx+1) % glitchPhrases.length;
+  scramble(glitchPhrases[gIdx]);
+}, 3000);
+(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
 function checkBug(btn, isRight){
