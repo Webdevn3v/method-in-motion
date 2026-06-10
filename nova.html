@@ -23,6 +23,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 @keyframes compFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
 .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
 .hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--char);opacity:.8;margin-bottom:14px}
+/* SNAP BLOCKS */
+.snap-wrap{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:14px;min-height:20px;align-items:center}
+.snap-block{font-family:var(--display);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 8px;border:1px solid rgba(255,224,102,.35);border-radius:4px;color:var(--char);opacity:0;transform:translateY(8px) scale(.9);transition:all .3s}
 .hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
 .hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
@@ -120,7 +123,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   <div class="comp-block" style="top:38%;left:50%;animation-duration:6s;animation-delay:2s">&lt;section&gt;</div>
   <div class="hero-inner">
     <div>
-      <div class="hero-eyebrow">Character 04 · Ages 8–10</div>
+      <div class="snap-wrap" id="snapWrap">
+        <div class="snap-block">NOVA</div>
+        <div class="snap-block">·</div>
+        <div class="snap-block">BUILDER BOT</div>
+        <div class="snap-block">·</div>
+        <div class="snap-block">AGES 8–10</div>
+      </div>
       <h1 class="hero-title">Welcome to<br><span>Nova's Workshop.</span></h1>
       <p class="hero-desc">Every website is just parts put together. Nova will teach you what those parts are, how they fit, and how to build something that actually works.</p>
       <div class="hero-tags">
@@ -206,12 +215,24 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
     </div>
     <div class="join-prompt">
       <p>Nova has full build challenges, layout puzzles, and a final project that results in a real working page. Join the crew to unlock everything.</p>
-      <a href="../index.html#membership" class="join-btn">Join the Crew →</a>
+      <a href="index.html#membership" class="join-btn">Join the Crew →</a>
     </div>
   </div>
 </div>
 
 <script>
+// SNAP BLOCKS
+const snapBlocks = document.querySelectorAll('.snap-block');
+function snapIn(){
+  snapBlocks.forEach((b,i)=>{
+    setTimeout(()=>{b.style.opacity='1';b.style.transform='translateY(0) scale(1)';},i*120);
+  });
+}
+snapIn();
+setInterval(()=>{
+  snapBlocks.forEach(b=>{b.style.opacity='0';b.style.transform='translateY(8px) scale(.9)'});
+  setTimeout(snapIn,600);
+},4000);
 const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}})},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 
