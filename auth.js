@@ -53,7 +53,8 @@ export async function signUp(email, password, displayName) {
       createdAt: new Date().toISOString(),
     });
     closeAuthModal();
-    updateNavAuth(result.user);
+    // Use the typed display name directly
+    setNavUser(displayName);
   } catch (err) {
     showError("signup-form", friendlyError(err.code));
   }
@@ -62,9 +63,12 @@ export async function signUp(email, password, displayName) {
 export async function signIn(email, password) {
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
+    // Load display name from Firestore
+    const snap = await getDoc(doc(db, "users", result.user.uid));
+    const displayName = snap.exists() ? snap.data().displayName : result.user.email.split("@")[0];
     closeAuthModal();
-    updateNavAuth(result.user);
-    const tier = await getUserTier(result.user.uid);
+    setNavUser(displayName);
+    const tier = snap.exists() ? snap.data().tier : "free";
     unlockContent(tier);
   } catch (err) {
     showError("login-form", friendlyError(err.code));
@@ -73,7 +77,7 @@ export async function signIn(email, password) {
 
 export async function logOut() {
   await signOut(auth);
-  updateNavAuth(null);
+  setNavUser(null);
 }
 
 export async function getUserTier(uid) {
@@ -86,23 +90,28 @@ export async function getUserTier(uid) {
 
 export function initAuth() {
   onAuthStateChanged(auth, async (user) => {
-    updateNavAuth(user);
     if (user) {
-      const tier = await getUserTier(user.uid);
+      const snap = await getDoc(doc(db, "users", user.uid));
+      const displayName = snap.exists() ? snap.data().displayName : user.email.split("@")[0];
+      const tier = snap.exists() ? snap.data().tier : "free";
+      setNavUser(displayName);
       unlockContent(tier);
+    } else {
+      setNavUser(null);
     }
   });
 }
 
-function updateNavAuth(user) {
+function setNavUser(displayName) {
+  const isLoggedIn = !!displayName;
   document.querySelectorAll("[data-auth='login'], [data-auth='signup']").forEach(btn => {
-    btn.style.display = user ? "none" : "";
+    btn.style.display = isLoggedIn ? "none" : "";
   });
   const userMenu = document.getElementById("nav-user-menu");
   const userName = document.getElementById("nav-user-name");
   const logoutBtn = document.getElementById("nav-logout-btn");
-  if (userMenu) userMenu.style.display = user ? "flex" : "none";
-  if (userName && user) userName.textContent = user.displayName || user.email.split("@")[0];
+  if (userMenu) userMenu.style.display = isLoggedIn ? "flex" : "none";
+  if (userName) userName.textContent = displayName || "";
   if (logoutBtn) logoutBtn.onclick = () => logOut();
 }
 
