@@ -49,6 +49,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 @keyframes codeDrift{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
 .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
 .hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--char);opacity:.8;margin-bottom:14px}
+/* TYPING EFFECT */
+.typing-wrap{display:flex;align-items:center;gap:6px;margin-bottom:14px;height:20px}
+.typing-label{font-family:var(--display);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,107,170,.5)}
+.typing-text{font-family:var(--display);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--char);border-right:2px solid var(--char);padding-right:3px;animation:cursorBlink .7s step-end infinite;white-space:nowrap;overflow:hidden}
+@keyframes cursorBlink{0%,100%{border-color:var(--char)}50%{border-color:transparent}}
 .hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
 .hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
 .hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
@@ -188,7 +193,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   </div>
   <div class="hero-inner">
     <div class="hero-content">
-      <div class="hero-eyebrow">Character 01 · Ages 8–10</div>
+      <div class="typing-wrap">
+        <span class="typing-label">ZEN IS →</span>
+        <span class="typing-text" id="typingText"></span>
+      </div>
       <h1 class="hero-title">Welcome to<br><span>Zen's World.</span></h1>
       <p class="hero-desc">Code is just instructions — and you already know how to give instructions. Zen will show you how to turn your ideas into real things on a screen.</p>
       <div class="hero-tags">
@@ -368,14 +376,32 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
     </div>
     <div class="join-prompt">
       <p>Zen has 4 full lessons, project challenges, and a bonus creative lab waiting for you. Join the crew to unlock everything.</p>
-      <a href="../index.html#membership" class="join-btn">Join the Crew →</a>
+      <a href="index.html#membership" class="join-btn">Join the Crew →</a>
     </div>
   </div>
 
 </div>
 
 <script>
-// SCROLL REVEAL
+// TYPING EFFECT
+const words = ['A CREATIVE CODER','A DIGITAL ARTIST','A BUILDER','A DREAMER','YOUR GUIDE'];
+let wIdx=0, cIdx=0, deleting=false;
+function type(){
+  const el = document.getElementById('typingText');
+  const word = words[wIdx];
+  if(!deleting){
+    el.textContent = word.slice(0,cIdx+1);
+    cIdx++;
+    if(cIdx===word.length){ setTimeout(()=>{deleting=true;type()},1800); return; }
+  } else {
+    el.textContent = word.slice(0,cIdx-1);
+    cIdx--;
+    if(cIdx===0){ deleting=false; wIdx=(wIdx+1)%words.length; }
+  }
+  setTimeout(type, deleting?60:110);
+}
+type();
+
 const obs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
 },{threshold:.1});
