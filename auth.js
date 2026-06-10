@@ -13,7 +13,6 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// --- Auth Modal Open/Close ---
 export function openAuthModal(mode = "login") {
   const modal = document.getElementById("auth-modal");
   if (!modal) return;
@@ -46,15 +45,11 @@ function showError(formId, message) {
   if (el) el.textContent = message;
 }
 
-// --- Sign Up ---
 export async function signUp(email, password, displayName) {
   try {
     const result = await createUserWithEmailAndPassword(auth, email, password);
-    // Create user record in Firestore
     await setDoc(doc(db, "users", result.user.uid), {
-      email,
-      displayName,
-      tier: "free",
+      email, displayName, tier: "free",
       createdAt: new Date().toISOString(),
     });
     closeAuthModal();
@@ -64,31 +59,31 @@ export async function signUp(email, password, displayName) {
   }
 }
 
-// --- Sign In ---
 export async function signIn(email, password) {
   try {
     const result = await signInWithEmailAndPassword(auth, email, password);
     closeAuthModal();
     updateNavAuth(result.user);
+    const tier = await getUserTier(result.user.uid);
+    unlockContent(tier);
   } catch (err) {
     showError("login-form", friendlyError(err.code));
   }
 }
 
-// --- Sign Out ---
 export async function logOut() {
   await signOut(auth);
   updateNavAuth(null);
 }
 
-// --- Get user tier from Firestore ---
 export async function getUserTier(uid) {
-  const snap = await getDoc(doc(db, "users", uid));
-  if (snap.exists()) return snap.data().tier;
+  try {
+    const snap = await getDoc(doc(db, "users", uid));
+    if (snap.exists()) return snap.data().tier;
+  } catch(e) {}
   return "free";
 }
 
-// --- Auth state listener ---
 export function initAuth() {
   onAuthStateChanged(auth, async (user) => {
     updateNavAuth(user);
@@ -99,28 +94,21 @@ export function initAuth() {
   });
 }
 
-// --- Update nav based on auth state ---
 function updateNavAuth(user) {
-  const loginBtn = document.getElementById("nav-login-btn");
+  document.querySelectorAll("[data-auth='login'], [data-auth='signup']").forEach(btn => {
+    btn.style.display = user ? "none" : "";
+  });
+  const userMenu = document.getElementById("nav-user-menu");
+  const userName = document.getElementById("nav-user-name");
   const logoutBtn = document.getElementById("nav-logout-btn");
-  const userDisplay = document.getElementById("nav-user-display");
-
-  if (user) {
-    if (loginBtn) loginBtn.style.display = "none";
-    if (logoutBtn) logoutBtn.style.display = "inline-flex";
-    if (userDisplay) userDisplay.textContent = user.email.split("@")[0];
-  } else {
-    if (loginBtn) loginBtn.style.display = "inline-flex";
-    if (logoutBtn) logoutBtn.style.display = "none";
-    if (userDisplay) userDisplay.textContent = "";
-  }
+  if (userMenu) userMenu.style.display = user ? "flex" : "none";
+  if (userName && user) userName.textContent = user.displayName || user.email.split("@")[0];
+  if (logoutBtn) logoutBtn.onclick = () => logOut();
 }
 
-// --- Unlock lesson content based on tier ---
 export function unlockContent(tier) {
   const tiers = { free: 0, sparks: 1, builders: 2, coders: 3 };
   const userLevel = tiers[tier] || 0;
-
   document.querySelectorAll(".locked-lesson").forEach(el => {
     const required = tiers[el.dataset.tier] || 1;
     if (userLevel >= required) {
@@ -132,7 +120,6 @@ export function unlockContent(tier) {
   });
 }
 
-// --- Human-readable Firebase errors ---
 function friendlyError(code) {
   const errors = {
     "auth/email-already-in-use": "An account with this email already exists.",
