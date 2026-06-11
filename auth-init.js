@@ -1,68 +1,59 @@
-// Method in Motion — Auth Modal Init
-// Add this as a <script type="module"> at the bottom of each page
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-import { initAuth, openAuthModal, closeAuthModal, signIn, signUp, logOut } from "./auth.js";
+const firebaseConfig = {
+  apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
+  authDomain: "method-in-motion.firebaseapp.com",
+  projectId: "method-in-motion",
+  storageBucket: "method-in-motion.firebasestorage.app",
+  messagingSenderId: "1067937974009",
+  appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
+};
 
-// Boot auth state listener
-initAuth();
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-// Close button
-document.getElementById("auth-close-btn")?.addEventListener("click", closeAuthModal);
+const TIER_LEVELS = { sparks: 1, builders: 2, coders: 3 };
 
-// Close on overlay click
-document.getElementById("auth-modal")?.addEventListener("click", (e) => {
-  if (e.target.id === "auth-modal") closeAuthModal();
-});
+onAuthStateChanged(auth, async (user) => {
+  const nameEl = document.getElementById("nav-user-name");
+  const logoutBtn = document.getElementById("nav-logout");
+  const loginBtn = document.getElementById("nav-login");
 
-// Tab switching
-document.querySelectorAll(".auth-tab, .auth-link").forEach(btn => {
-  btn.addEventListener("click", () => {
-    const tab = btn.dataset.tab;
-    if (!tab) return;
-    document.querySelectorAll(".auth-tab").forEach(t => t.classList.remove("active"));
-    document.querySelectorAll(".auth-form").forEach(f => f.classList.remove("active"));
-    document.querySelector(`.auth-tab[data-tab="${tab}"]`)?.classList.add("active");
-    document.getElementById(`${tab}-form`)?.classList.add("active");
-    document.querySelectorAll(".auth-error").forEach(el => el.textContent = "");
-  });
-});
+  if (user) {
+    const userDoc = await getDoc(doc(db, "users", user.uid));
+    const userData = userDoc.exists() ? userDoc.data() : {};
+    const userTier = userData.tier || "none";
 
-// Login submit
-document.getElementById("login-submit-btn")?.addEventListener("click", () => {
-  const email = document.getElementById("login-email").value.trim();
-  const password = document.getElementById("login-password").value;
-  if (!email || !password) {
-    document.getElementById("login-error").textContent = "Please fill in all fields.";
-    return;
+    if (nameEl) nameEl.textContent = userData.displayName || user.email;
+    if (logoutBtn) logoutBtn.style.display = "inline-block";
+    if (loginBtn) loginBtn.style.display = "none";
+
+    document.querySelectorAll(".locked-section").forEach((section) => {
+      const requiredTier = section.getAttribute("data-tier");
+      const userLevel = TIER_LEVELS[userTier] || 0;
+      const requiredLevel = TIER_LEVELS[requiredTier] || 999;
+
+      if (userLevel >= requiredLevel) {
+        section.classList.add("unlocked");
+        const lockedCards = section.querySelector(".locked-cards");
+        const lockedLabel = section.querySelector(".locked-label");
+        const joinPrompt = section.querySelector(".join-prompt");
+        if (lockedCards) lockedCards.style.display = "none";
+        if (lockedLabel) lockedLabel.style.display = "none";
+        if (joinPrompt) joinPrompt.style.display = "none";
+      }
+    });
+
+  } else {
+    if (nameEl) nameEl.textContent = "";
+    if (logoutBtn) logoutBtn.style.display = "none";
+    if (loginBtn) loginBtn.style.display = "inline-block";
   }
-  signIn(email, password);
 });
 
-// Signup submit
-document.getElementById("signup-submit-btn")?.addEventListener("click", () => {
-  const name = document.getElementById("signup-name").value.trim();
-  const email = document.getElementById("signup-email").value.trim();
-  const password = document.getElementById("signup-password").value;
-  if (!name || !email || !password) {
-    document.getElementById("signup-error").textContent = "Please fill in all fields.";
-    return;
-  }
-  signUp(email, password, name);
-});
-
-// Logout button (nav)
-document.getElementById("nav-logout-btn")?.addEventListener("click", logOut);
-
-// Any "Join the Crew" / "Log In" buttons on the page
-document.querySelectorAll("[data-auth='login']").forEach(btn => {
-  btn.addEventListener("click", () => openAuthModal("login"));
-});
-
-document.querySelectorAll("[data-auth='signup']").forEach(btn => {
-  btn.addEventListener("click", () => openAuthModal("signup"));
-});
-
-// Keyboard close
-document.addEventListener("keydown", (e) => {
-  if (e.key === "Escape") closeAuthModal();
+document.getElementById("nav-logout")?.addEventListener("click", () => {
+  signOut(auth);
 });
