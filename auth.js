@@ -121,8 +121,8 @@ export function unlockContent(tier) {
   document.querySelectorAll(".locked-section").forEach(el => {
     const required = tiers[el.dataset.tier] || 1;
     if (userLevel >= required) {
-      el.classList.remove("locked-lesson");
-      el.classList.add("unlocked-lesson");
+     el.classList.remove("locked-section");
+el.classList.add("unlocked-section");
       const lock = el.querySelector(".lock-overlay");
       if (lock) lock.remove();
     }
