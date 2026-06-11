@@ -118,7 +118,7 @@ function setNavUser(displayName) {
 export function unlockContent(tier) {
   const tiers = { free: 0, sparks: 1, builders: 2, coders: 3 };
   const userLevel = tiers[tier] || 0;
-  document.querySelectorAll(".locked-lesson").forEach(el => {
+  document.querySelectorAll(".locked-section").forEach(el => {
     const required = tiers[el.dataset.tier] || 1;
     if (userLevel >= required) {
       el.classList.remove("locked-lesson");
