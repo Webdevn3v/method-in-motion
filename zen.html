@@ -38,18 +38,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
 .nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;transition:color .2s}
 .nav-back:hover{color:var(--char)}
+.nav-right{display:flex;align-items:center;gap:10px}
 .nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(255,107,170,.4);color:var(--char);border-radius:100px}
+#nav-user-menu{display:none;align-items:center;gap:12px}
+#nav-user-name{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.7)}
+#nav-logout-btn{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:20px;cursor:pointer;transition:border-color .2s,color .2s}
+#nav-logout-btn:hover{border-color:rgba(255,107,170,.5);color:var(--char)}
+#nav-login{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,107,170,.4);color:var(--char);padding:6px 14px;border-radius:20px;cursor:pointer;transition:background .2s}
+#nav-login:hover{background:rgba(255,107,170,.1)}
 
 /* HERO */
 .hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
 .hero-bg{position:absolute;inset:0;z-index:0}
 .hero-bg-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%, rgba(255,107,170,.08) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, rgba(198,107,255,.06) 0%, transparent 50%)}
-/* animated code lines in bg */
 .code-line{position:absolute;font-family:var(--display);font-size:.6rem;color:rgba(255,107,170,.12);white-space:nowrap;animation:codeDrift linear infinite}
 @keyframes codeDrift{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
 .hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
 .hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--char);opacity:.8;margin-bottom:14px}
-/* TYPING EFFECT */
 .typing-wrap{display:flex;align-items:center;gap:6px;margin-bottom:14px;height:20px}
 .typing-label{font-family:var(--display);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,107,170,.5)}
 .typing-text{font-family:var(--display);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--char);border-right:2px solid var(--char);padding-right:3px;animation:cursorBlink .7s step-end infinite;white-space:nowrap;overflow:hidden}
@@ -149,17 +154,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .locked-label{font-family:var(--display);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:flex;align-items:center;gap:10px}
 .locked-label::after{content:'';flex:1;height:1px;background:var(--border)}
 .locked-cards{display:flex;flex-direction:column;gap:12px}
-.locked-card{padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:20px;opacity:.5;position:relative;overflow:hidden}
-.locked-card::after{content:'🔒';position:absolute;right:20px;font-size:.9rem}
+.locked-card{padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;display:flex;align-items:center;justify-content:space-between;gap:20px;opacity:.5;position:relative;overflow:hidden;transition:opacity .4s,border-color .4s}
+.locked-card::after{content:'🔒';position:absolute;right:20px;font-size:.9rem;transition:opacity .4s}
+.locked-card.unlocked{opacity:1;border-color:rgba(255,107,170,.3)}
+.locked-card.unlocked::after{content:'✦';color:var(--char)}
 .locked-card-num{font-family:var(--display);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
 .locked-card-title{font-family:var(--heading);font-size:.95rem;font-weight:700;color:var(--white)}
 .locked-card-desc{font-size:.78rem;color:var(--muted)}
-.join-prompt{margin-top:32px;text-align:center;padding:36px;background:linear-gradient(135deg,rgba(255,107,170,.04),rgba(198,107,255,.04));border:1px solid rgba(255,107,170,.15);border-radius:16px}
+.lesson-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--char);margin-top:8px;opacity:0;transition:opacity .4s;pointer-events:none}
+.locked-card.unlocked .lesson-link{opacity:1;pointer-events:auto}
+.join-prompt{margin-top:32px;text-align:center;padding:36px;background:linear-gradient(135deg,rgba(255,107,170,.04),rgba(198,107,255,.04));border:1px solid rgba(255,107,170,.15);border-radius:16px;transition:opacity .4s}
 .join-prompt p{font-size:.9rem;color:var(--off);margin-bottom:18px;line-height:1.8}
-.join-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s}
+.join-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s}
 .join-btn:hover{transform:translateY(-2px)}
 
-/* REVEAL */
+/* UNLOCKED MEMBER BANNER */
+.member-banner{display:none;margin-top:32px;text-align:center;padding:28px 36px;background:linear-gradient(135deg,rgba(255,107,170,.08),rgba(198,107,255,.08));border:1px solid rgba(255,107,170,.3);border-radius:16px}
+.member-banner p{font-size:.9rem;color:var(--off);line-height:1.8}
+.member-banner strong{color:var(--char)}
+
 .reveal{opacity:1;transform:none;transition:opacity .6s,transform .6s}
 .reveal.visible{opacity:1;transform:none}
 
@@ -169,6 +182,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   .lessons{padding:60px 24px}
   nav{padding:14px 24px}
   .progress-bar{padding:16px 24px}
+  .nav-char{display:none}
 }
 </style>
 </head>
@@ -180,12 +194,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
     <div class="nav-logo-mark">&gt;</div>
     method in motion
   </a>
-  <div class="nav-char" style="color:var(--char);border-color:rgba(255,107,170,.4)">Zen · Creative Coder</div>
-<div id="nav-user-menu" style="display:none;align-items:center;gap:12px">
-  <span id="nav-user-name" style="font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.7)"></span>
-  <button id="nav-logout-btn" style="font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:20px;cursor:pointer">LOG OUT</button>
-</div>
-<button id="nav-login" onclick="document.getElementById('auth-modal').style.display='flex'" style="font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,107,170,.4);color:var(--char);padding:6px 14px;border-radius:20px;cursor:pointer">JOIN / LOG IN</button></nav>
+  <div class="nav-right">
+    <div class="nav-char">Zen · Creative Coder</div>
+    <div id="nav-user-menu">
+      <span id="nav-user-name"></span>
+      <button id="nav-logout-btn">LOG OUT</button>
+    </div>
+    <button id="nav-login" onclick="document.getElementById('auth-modal').style.display='flex'">JOIN / LOG IN</button>
+  </div>
+</nav>
 
 <!-- HERO -->
 <section class="hero">
@@ -353,37 +370,124 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   </div>
 
   <!-- LOCKED LESSONS -->
-  <div class="locked-section reveal" data-tier="sparks">
-    <div class="locked-label">Members Only — Unlock All Lessons</div>
+  <div class="locked-section reveal" id="locked-section">
+    <div class="locked-label" id="locked-label">Members Only — Unlock All Lessons</div>
     <div class="locked-cards">
-      <div class="locked-card">
+      <div class="locked-card" id="locked-card-2">
         <div>
           <div class="locked-card-num">Lesson 02</div>
           <div class="locked-card-title">Your First HTML Tag</div>
           <div class="locked-card-desc">Write real HTML. Make a heading, a paragraph, and a link — and see them appear live.</div>
+          <span class="lesson-link">Start Lesson 2 →</span>
         </div>
       </div>
-      <div class="locked-card">
+      <div class="locked-card" id="locked-card-3">
         <div>
           <div class="locked-card-num">Lesson 03</div>
           <div class="locked-card-title">Colors & Style with CSS</div>
           <div class="locked-card-desc">Change colors, fonts, and sizes. Make your page look exactly how you imagine it.</div>
+          <span class="lesson-link">Start Lesson 3 →</span>
         </div>
       </div>
-      <div class="locked-card">
+      <div class="locked-card" id="locked-card-4">
         <div>
           <div class="locked-card-num">Lesson 04</div>
           <div class="locked-card-title">Build Your Own Page</div>
           <div class="locked-card-desc">Put it all together. Build a real webpage about something you love — from scratch.</div>
+          <span class="lesson-link">Start Lesson 4 →</span>
         </div>
       </div>
     </div>
-    <div class="join-prompt">
+
+    <!-- shown when NOT a member -->
+    <div class="join-prompt" id="join-prompt">
       <p>Zen has 4 full lessons, project challenges, and a bonus creative lab waiting for you. Join the crew to unlock everything.</p>
-      <button class="join-btn" data-auth="signup">Join the Crew →</button>
+      <button class="join-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Join the Crew →</button>
+    </div>
+
+    <!-- shown when IS a member -->
+    <div class="member-banner" id="member-banner">
+      <p>You're in the crew. <strong>All of Zen's lessons are unlocked</strong> — keep building.</p>
+    </div>
+
   </div>
 
 </div>
+
+<!-- AUTH MODAL -->
+<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true" aria-label="Sign in or create account">
+  <div class="auth-modal-box">
+    <button class="auth-close" id="auth-close-btn" aria-label="Close">&times;</button>
+    <div class="auth-modal-header">
+      <div class="auth-logo-mark">MiM</div>
+      <p class="auth-tagline">Create. Don't Consume.</p>
+    </div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Log In</button>
+      <button class="auth-tab" data-tab="signup">Join the Crew</button>
+    </div>
+    <div id="login-form" class="auth-form active">
+      <div class="auth-field">
+        <label for="login-email">Email</label>
+        <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <label for="login-password">Password</label>
+        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
+      </div>
+      <p class="auth-error" id="login-error"></p>
+      <button class="auth-submit" id="login-submit-btn">Log In</button>
+      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
+    </div>
+    <div id="signup-form" class="auth-form">
+      <div class="auth-field">
+        <label for="signup-name">Display Name</label>
+        <input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname" />
+      </div>
+      <div class="auth-field">
+        <label for="signup-email">Email</label>
+        <input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email" />
+      </div>
+      <div class="auth-field">
+        <label for="signup-password">Password</label>
+        <input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password" />
+      </div>
+      <p class="auth-error" id="signup-error"></p>
+      <button class="auth-submit" id="signup-submit-btn">Create Account</button>
+      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
+    </div>
+  </div>
+</div>
+
+<style>
+.auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
+.auth-modal-overlay.active{display:flex}
+.auth-modal-box{background:#0a0a1a;border:1px solid rgba(0,240,255,.2);border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:420px;position:relative;box-shadow:0 0 60px rgba(0,240,255,.08),0 0 0 1px rgba(255,255,255,.04)}
+.auth-close{position:absolute;top:1rem;right:1.25rem;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.5rem;cursor:pointer;line-height:1;transition:color .2s}
+.auth-close:hover{color:#fff}
+.auth-modal-header{text-align:center;margin-bottom:1.75rem}
+.auth-logo-mark{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(135deg,#00f0ff,#ff6ec7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.25rem}
+.auth-tagline{font-family:'Syne',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin:0}
+.auth-tabs{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.75rem}
+.auth-tab{flex:1;background:none;border:none;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 0;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
+.auth-tab.active{color:#00f0ff;border-bottom-color:#00f0ff}
+.auth-tab:hover:not(.active){color:rgba(255,255,255,.7)}
+.auth-form{display:none}
+.auth-form.active{display:block}
+.auth-field{margin-bottom:1.1rem}
+.auth-field label{display:block;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.4rem}
+.auth-field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.7rem .9rem;color:#fff;font-family:'Syne',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box}
+.auth-field input:focus{border-color:rgba(0,240,255,.5);background:rgba(0,240,255,.04)}
+.auth-field input::placeholder{color:rgba(255,255,255,.2)}
+.auth-error{font-family:'Syne',sans-serif;font-size:.78rem;color:#ff6ec7;min-height:1.2em;margin:.25rem 0 .75rem}
+.auth-submit{width:100%;background:linear-gradient(135deg,#00f0ff,#7b61ff);border:none;border-radius:8px;padding:.85rem;color:#000;font-family:'Orbitron',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:opacity .2s,transform .15s;margin-bottom:1rem}
+.auth-submit:hover{opacity:.9;transform:translateY(-1px)}
+.auth-submit:active{transform:translateY(0)}
+.auth-switch{text-align:center;font-family:'Syne',sans-serif;font-size:.78rem;color:rgba(255,255,255,.35);margin:0}
+.auth-link{background:none;border:none;color:#00f0ff;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
+.auth-link:hover{color:#fff}
+@media(max-width:480px){.auth-modal-box{padding:2rem 1.25rem}}
+</style>
 
 <script>
 // TYPING EFFECT
@@ -414,13 +518,9 @@ document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
 function runCode(){
   const lines = ['cl1','cl2','cl3','cl4'];
   lines.forEach((id,i)=>{
-    setTimeout(()=>{
-      document.getElementById(id).classList.add('visible');
-    }, i*300);
+    setTimeout(()=>{ document.getElementById(id).classList.add('visible'); }, i*300);
   });
-  setTimeout(()=>{
-    document.getElementById('codeOutput').classList.add('show');
-  }, lines.length*300 + 200);
+  setTimeout(()=>{ document.getElementById('codeOutput').classList.add('show'); }, lines.length*300 + 200);
 }
 
 // DRAG AND DROP
@@ -445,308 +545,87 @@ function checkOrder(){
   const items=[...list.querySelectorAll('.drag-item')];
   const orders=items.map(i=>parseInt(i.dataset.order));
   const correct=orders.every((v,i)=>v===i+1);
-  items.forEach((item,i)=>{
-    item.querySelector('.drag-num').textContent=i+1;
-  });
+  items.forEach((item,i)=>{ item.querySelector('.drag-num').textContent=i+1; });
   const res=document.getElementById('dragResult');
   res.className='activity-result show '+(correct?'correct':'wrong');
   res.innerHTML=correct
-    ? '✦ Perfect order! That\'s exactly how Zen thinks about building. Idea → Content → Tags → See it live.'
+    ? '✦ Perfect order! That\'s exactly how Zen thinks about building.'
     : 'Not quite — try again! Hint: you need an idea before you can write anything.';
   if(correct) checkLessonComplete();
 }
 
-// REFLECT
 function submitReflect(){
   const val=document.getElementById('reflectInput').value.trim();
   if(!val) return;
   const res=document.getElementById('reflectResponse');
   res.className='reflect-response show';
-  res.innerHTML=`✦ <strong style="color:var(--char)">"${val}"</strong><br><br>That's a real idea. Zen started the same way — with a vision before she had any skills. Keep this in mind as you build.`;
+  res.innerHTML=`✦ <strong style="color:var(--char)">"${val}"</strong><br><br>That's a real idea. Zen started the same way — with a vision before she had any skills.`;
   checkLessonComplete();
 }
 
-let codeRan=false, orderCorrect=false, reflectDone=false;
 function checkLessonComplete(){
   const complete=document.getElementById('lessonComplete');
   complete.style.display='block';
   setTimeout(()=>complete.classList.add('visible'),100);
 }
+
 function scrollToLocked(){
-  document.querySelector('.locked-section').scrollIntoView({behavior:'smooth'});
-}
-</script>
-<!-- METHOD IN MOTION — Auth Modal -->
-<!-- Paste this block just before </body> on every page that needs login -->
-
-<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true" aria-label="Sign in or create account">
-  <div class="auth-modal-box">
-
-    <!-- Close -->
-    <button class="auth-close" id="auth-close-btn" aria-label="Close">&times;</button>
-
-    <!-- Header -->
-    <div class="auth-modal-header">
-      <div class="auth-logo-mark">MiM</div>
-      <p class="auth-tagline">Create. Don't Consume.</p>
-    </div>
-
-    <!-- Tabs -->
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="login">Log In</button>
-      <button class="auth-tab" data-tab="signup">Join the Crew</button>
-    </div>
-
-    <!-- Login Form -->
-    <div id="login-form" class="auth-form active">
-      <div class="auth-field">
-        <label for="login-email">Email</label>
-        <input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" />
-      </div>
-      <div class="auth-field">
-        <label for="login-password">Password</label>
-        <input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" />
-      </div>
-      <p class="auth-error" id="login-error"></p>
-      <button class="auth-submit" id="login-submit-btn">Log In</button>
-      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
-    </div>
-
-    <!-- Signup Form -->
-    <div id="signup-form" class="auth-form">
-      <div class="auth-field">
-        <label for="signup-name">Display Name</label>
-        <input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname" />
-      </div>
-      <div class="auth-field">
-        <label for="signup-email">Email</label>
-        <input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email" />
-      </div>
-      <div class="auth-field">
-        <label for="signup-password">Password</label>
-        <input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password" />
-      </div>
-      <p class="auth-error" id="signup-error"></p>
-      <button class="auth-submit" id="signup-submit-btn">Create Account</button>
-      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
-    </div>
-
-  </div>
-</div>
-
-<style>
-/* ── Auth Modal ───────────────────────────────────────── */
-.auth-modal-overlay {
-  display: none;
-  position: fixed;
-  inset: 0;
-  z-index: 9999;
-  background: rgba(0, 0, 16, 0.85);
-  backdrop-filter: blur(6px);
-  align-items: center;
-  justify-content: center;
-  padding: 1rem;
+  document.getElementById('locked-section').scrollIntoView({behavior:'smooth'});
 }
 
-.auth-modal-overlay.active {
-  display: flex;
-}
+// AUTH TABS
+document.querySelectorAll('.auth-tab').forEach(tab=>{
+  tab.addEventListener('click',()=>{
+    const t=tab.dataset.tab;
+    document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));
+    tab.classList.add('active');
+    document.getElementById(t+'-form').classList.add('active');
+  });
+});
+document.querySelectorAll('.auth-link').forEach(link=>{
+  link.addEventListener('click',()=>{
+    const t=link.dataset.tab;
+    document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));
+    document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));
+    document.querySelector(`.auth-tab[data-tab="${t}"]`).classList.add('active');
+    document.getElementById(t+'-form').classList.add('active');
+  });
+});
 
-.auth-modal-box {
-  background: #0a0a1a;
-  border: 1px solid rgba(0, 240, 255, 0.2);
-  border-radius: 16px;
-  padding: 2.5rem 2rem;
-  width: 100%;
-  max-width: 420px;
-  position: relative;
-  box-shadow: 0 0 60px rgba(0, 240, 255, 0.08), 0 0 0 1px rgba(255,255,255,0.04);
-}
+// CLOSE MODAL
+document.getElementById('auth-close-btn').addEventListener('click',()=>{
+  document.getElementById('auth-modal').style.display='none';
+});
+document.getElementById('auth-modal').addEventListener('click',e=>{
+  if(e.target===document.getElementById('auth-modal'))
+    document.getElementById('auth-modal').style.display='none';
+});
 
-/* Close */
-.auth-close {
-  position: absolute;
-  top: 1rem;
-  right: 1.25rem;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.4);
-  font-size: 1.5rem;
-  cursor: pointer;
-  line-height: 1;
-  transition: color 0.2s;
-}
-.auth-close:hover { color: #fff; }
-
-/* Header */
-.auth-modal-header {
-  text-align: center;
-  margin-bottom: 1.75rem;
-}
-
-.auth-logo-mark {
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
-  font-weight: 900;
-  letter-spacing: 0.15em;
-  background: linear-gradient(135deg, #00f0ff, #ff6ec7);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  margin-bottom: 0.25rem;
-}
-
-.auth-tagline {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.7rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.35);
-  margin: 0;
-}
-
-/* Tabs */
-.auth-tabs {
-  display: flex;
-  gap: 0;
-  border-bottom: 1px solid rgba(255,255,255,0.08);
-  margin-bottom: 1.75rem;
-}
-
-.auth-tab {
-  flex: 1;
-  background: none;
-  border: none;
-  color: rgba(255,255,255,0.4);
-  font-family: 'Syne', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.75rem 0;
-  cursor: pointer;
-  border-bottom: 2px solid transparent;
-  margin-bottom: -1px;
-  transition: color 0.2s, border-color 0.2s;
-}
-
-.auth-tab.active {
-  color: #00f0ff;
-  border-bottom-color: #00f0ff;
-}
-
-.auth-tab:hover:not(.active) {
-  color: rgba(255,255,255,0.7);
-}
-
-/* Forms */
-.auth-form { display: none; }
-.auth-form.active { display: block; }
-
-.auth-field {
-  margin-bottom: 1.1rem;
-}
-
-.auth-field label {
-  display: block;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.5);
-  margin-bottom: 0.4rem;
-}
-
-.auth-field input {
-  width: 100%;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
-  border-radius: 8px;
-  padding: 0.7rem 0.9rem;
-  color: #fff;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.9rem;
-  outline: none;
-  transition: border-color 0.2s, background 0.2s;
-  box-sizing: border-box;
-}
-
-.auth-field input:focus {
-  border-color: rgba(0, 240, 255, 0.5);
-  background: rgba(0, 240, 255, 0.04);
-}
-
-.auth-field input::placeholder {
-  color: rgba(255,255,255,0.2);
-}
-
-/* Error */
-.auth-error {
-  font-family: 'Syne', sans-serif;
-  font-size: 0.78rem;
-  color: #ff6ec7;
-  min-height: 1.2em;
-  margin: 0.25rem 0 0.75rem;
-}
-
-/* Submit */
-.auth-submit {
-  width: 100%;
-  background: linear-gradient(135deg, #00f0ff, #7b61ff);
-  border: none;
-  border-radius: 8px;
-  padding: 0.85rem;
-  color: #000;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 0.8rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: opacity 0.2s, transform 0.15s;
-  margin-bottom: 1rem;
-}
-
-.auth-submit:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-}
-
-.auth-submit:active {
-  transform: translateY(0);
-}
-
-/* Switch link */
-.auth-switch {
-  text-align: center;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.78rem;
-  color: rgba(255,255,255,0.35);
-  margin: 0;
-}
-
-.auth-link {
-  background: none;
-  border: none;
-  color: #00f0ff;
-  font-family: 'Syne', sans-serif;
-  font-size: 0.78rem;
-  cursor: pointer;
-  padding: 0;
-  text-decoration: underline;
-  text-underline-offset: 2px;
-}
-
-.auth-link:hover { color: #fff; }
-
-/* Mobile */
-@media (max-width: 480px) {
-  .auth-modal-box {
-    padding: 2rem 1.25rem;
+// TIER UNLOCK — called by auth-init.js after login
+// auth-init.js should call window.handleTierUnlock(tier) once it gets the user's tier from Firestore
+window.handleTierUnlock = function(tier) {
+  const hasTier = tier && ['sparks','builders','coders'].includes(tier.toLowerCase());
+  if (hasTier) {
+    // Unlock cards
+    ['locked-card-2','locked-card-3','locked-card-4'].forEach(id=>{
+      document.getElementById(id).classList.add('unlocked');
+    });
+    // Swap join prompt for member banner
+    document.getElementById('join-prompt').style.display='none';
+    document.getElementById('member-banner').style.display='block';
+    // Update progress dots
+    ['dot2','dot3','dot4'].forEach(id=>{
+      const dot = document.getElementById(id);
+      dot.textContent = '✦';
+      dot.classList.add('active');
+    });
+    // Update locked label
+    document.getElementById('locked-label').textContent = 'Your Lessons — Keep Building';
   }
-}
-</style>
- <script type="module" src="auth-init.js"></script>
+};
+</script>
+
+<script type="module" src="auth-init.js"></script>
 </body>
 </html>
