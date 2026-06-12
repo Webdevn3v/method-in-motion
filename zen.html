@@ -66,11 +66,92 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .hero-tag{padding:5px 14px;border:1px solid rgba(255,107,170,.3);border-radius:100px;font-family:var(--display);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--char)}
 .hero-start{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s,box-shadow .2s}
 .hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,107,170,.3)}
+
+/* CHARACTER ENTRANCE + IDLE */
 .hero-char{position:relative;display:flex;align-items:center;justify-content:center}
-.hero-char img{width:100%;max-width:380px;filter:drop-shadow(0 0 60px rgba(255,107,170,.35));animation:charFloat 4s ease-in-out infinite}
+
+/* entrance: drop from above + fade in, then hand off to idle float */
+.hero-char img{
+  width:100%;
+  max-width:380px;
+  filter:drop-shadow(0 0 60px rgba(255,107,170,.35));
+  opacity:0;
+  transform:translateY(-80px) scale(.92);
+  animation:
+    zenEntrance 1.1s cubic-bezier(.22,1,.36,1) .3s forwards,
+    charFloat 4s ease-in-out 1.6s infinite;
+}
+
+@keyframes zenEntrance{
+  0%{
+    opacity:0;
+    transform:translateY(-80px) scale(.92);
+    filter:drop-shadow(0 0 80px rgba(255,107,170,.8)) brightness(1.6);
+  }
+  60%{
+    opacity:1;
+    transform:translateY(8px) scale(1.02);
+    filter:drop-shadow(0 0 60px rgba(255,107,170,.5)) brightness(1.2);
+  }
+  80%{
+    transform:translateY(-4px) scale(.99);
+    filter:drop-shadow(0 0 60px rgba(255,107,170,.4));
+  }
+  100%{
+    opacity:1;
+    transform:translateY(0) scale(1);
+    filter:drop-shadow(0 0 60px rgba(255,107,170,.35));
+  }
+}
+
+/* soft burst when she lands */
+.hero-char::after{
+  content:'';
+  position:absolute;
+  bottom:10%;
+  left:50%;
+  transform:translateX(-50%) scale(0);
+  width:180px;
+  height:30px;
+  border-radius:50%;
+  background:radial-gradient(ellipse, rgba(255,107,170,.45) 0%, transparent 70%);
+  animation:landBurst 0.5s cubic-bezier(.22,1,.36,1) 1.25s forwards;
+}
+@keyframes landBurst{
+  0%{transform:translateX(-50%) scale(0);opacity:1}
+  100%{transform:translateX(-50%) scale(1);opacity:0}
+}
+
+/* pink particles scattered on landing */
+.hero-char .particle{
+  position:absolute;
+  width:4px;height:4px;
+  border-radius:50%;
+  background:var(--char);
+  opacity:0;
+  animation:particlePop .7s ease-out var(--delay) forwards;
+}
+@keyframes particlePop{
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}
+}
+
 @keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
-.hero-char-ring{position:absolute;width:300px;height:300px;border-radius:50%;border:1px solid rgba(255,107,170,.12);animation:ringPulse 3s ease-in-out infinite}
-.hero-char-ring:nth-child(2){width:380px;height:380px;animation-delay:.5s;border-color:rgba(198,107,255,.08)}
+
+.hero-char-ring{
+  position:absolute;
+  width:300px;height:300px;
+  border-radius:50%;
+  border:1px solid rgba(255,107,170,.12);
+  opacity:0;
+  animation:ringFadeIn .8s ease-out 1.4s forwards, ringPulse 3s ease-in-out 2.2s infinite;
+}
+.hero-char-ring:nth-child(2){
+  width:380px;height:380px;
+  animation-delay:1.6s, 2.4s;
+  border-color:rgba(198,107,255,.08);
+}
+@keyframes ringFadeIn{from{opacity:0}to{opacity:1}}
 @keyframes ringPulse{0%,100%{transform:scale(1);opacity:.6}50%{transform:scale(1.04);opacity:1}}
 
 /* PROGRESS */
@@ -184,6 +265,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   .progress-bar{padding:16px 24px}
   .nav-char{display:none}
 }
+
+@media(prefers-reduced-motion:reduce){
+  .hero-char img{animation:none;opacity:1;transform:none}
+  .hero-char::after{display:none}
+  .hero-char-ring{animation:none;opacity:.6}
+}
 </style>
 </head>
 <body>
@@ -227,9 +314,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
       </div>
       <a href="#lesson-1" class="hero-start">Start Lesson 1 — Free ↓</a>
     </div>
-    <div class="hero-char">
+    <div class="hero-char" id="heroChar">
       <div class="hero-char-ring"></div>
       <div class="hero-char-ring"></div>
+      <!-- particles injected by JS on landing -->
       <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-pose-2.png" alt="Zen">
     </div>
   </div>
@@ -509,6 +597,28 @@ function type(){
 }
 type();
 
+// SPAWN PARTICLES on landing (fires at ~1.25s when she touches down)
+setTimeout(()=>{
+  const container = document.getElementById('heroChar');
+  const configs = [
+    {tx:'-60px',ty:'-40px',delay:'0s'},
+    {tx:'55px', ty:'-50px',delay:'.05s'},
+    {tx:'-80px',ty:'10px', delay:'.08s'},
+    {tx:'75px', ty:'5px',  delay:'.03s'},
+    {tx:'-30px',ty:'50px', delay:'.1s'},
+    {tx:'40px', ty:'55px', delay:'.06s'},
+    {tx:'10px', ty:'-70px',delay:'.02s'},
+    {tx:'-50px',ty:'-15px',delay:'.09s'},
+  ];
+  configs.forEach(cfg=>{
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `--tx:${cfg.tx};--ty:${cfg.ty};--delay:${cfg.delay};left:50%;top:60%`;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(), 800);
+  });
+}, 1250);
+
 const obs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});
 },{threshold:.1});
@@ -602,25 +712,20 @@ document.getElementById('auth-modal').addEventListener('click',e=>{
     document.getElementById('auth-modal').style.display='none';
 });
 
-// TIER UNLOCK — called by auth-init.js after login
-// auth-init.js should call window.handleTierUnlock(tier) once it gets the user's tier from Firestore
+// TIER UNLOCK
 window.handleTierUnlock = function(tier) {
   const hasTier = tier && ['sparks','builders','coders'].includes(tier.toLowerCase());
   if (hasTier) {
-    // Unlock cards
     ['locked-card-2','locked-card-3','locked-card-4'].forEach(id=>{
       document.getElementById(id).classList.add('unlocked');
     });
-    // Swap join prompt for member banner
     document.getElementById('join-prompt').style.display='none';
     document.getElementById('member-banner').style.display='block';
-    // Update progress dots
     ['dot2','dot3','dot4'].forEach(id=>{
       const dot = document.getElementById(id);
       dot.textContent = '✦';
       dot.classList.add('active');
     });
-    // Update locked label
     document.getElementById('locked-label').textContent = 'Your Lessons — Keep Building';
   }
 };
