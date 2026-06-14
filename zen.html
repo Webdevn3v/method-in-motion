@@ -500,7 +500,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
       <div class="gate-badge">Sparks · Builders · Coders</div>
       <div class="gate-title">This lesson is for members</div>
       <div class="gate-desc">Join the crew to unlock Lesson 2 and everything that comes after it. No experience needed — just bring your ideas.</div>
-      <button class="gate-btn" onclick="openModal('signup')">Join the Crew →</button>
+      <button class="gate-btn" onclick="goUpgrade()">Join the Crew →</button>
     </div>
 
     <div id="lesson2-content" style="display:none">
@@ -679,7 +679,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
       <div class="gate-badge">Builders · Coders</div>
       <div class="gate-title">This lesson is for Builders and up</div>
       <div class="gate-desc">Upgrade your membership to unlock Lesson 3 — where your pages start to actually look like something.</div>
-      <button class="gate-btn" onclick="openModal('signup')">Upgrade →</button>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade →</button>
     </div>
 
     <div id="lesson3-content" style="display:none">
@@ -861,7 +861,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
       <div class="gate-badge">Coders</div>
       <div class="gate-title">This lesson is for Coders</div>
       <div class="gate-desc">The final lesson is reserved for Coders — our most dedicated members. Upgrade to build your own real webpage from scratch.</div>
-      <button class="gate-btn" onclick="openModal('signup')">Upgrade to Coders →</button>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade to Coders →</button>
     </div>
 
     <div id="lesson4-content" style="display:none">
@@ -1268,6 +1268,17 @@ function downloadCheat(num){
   a.href=url;a.download=`zen-cheatsheet-lesson${num}.txt`;
   document.body.appendChild(a);a.click();
   document.body.removeChild(a);URL.revokeObjectURL(url);
+}
+
+// UPGRADE REDIRECT -- if logged in go to membership, otherwise open signup modal
+function goUpgrade(){
+  const userMenu = document.getElementById('nav-user-menu');
+  const isLoggedIn = userMenu && userMenu.style.display !== 'none';
+  if(isLoggedIn){
+    window.location.href = 'membership.html';
+  } else {
+    openModal('signup');
+  }
 }
 
 // TIER UNLOCK
