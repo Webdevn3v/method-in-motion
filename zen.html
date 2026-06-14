@@ -221,6 +221,25 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
 .reveal.visible{opacity:1;transform:none}
 
+
+/* TRIAL UPSELL */
+.trial-upsell{margin-top:32px;animation:fadeIn .6s ease}
+.trial-upsell-inner{background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(198,107,255,.08));border:1px solid rgba(198,107,255,.3);border-radius:20px;padding:40px 36px;text-align:center}
+.trial-icon{font-size:2rem;margin-bottom:12px}
+.trial-title{font-family:var(--heading);font-size:1.6rem;font-weight:800;margin-bottom:10px;color:var(--white)}
+.trial-desc{font-size:.92rem;color:var(--off);line-height:1.8;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
+.trial-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
+@media(max-width:600px){.trial-tiers{grid-template-columns:1fr}}
+.trial-tier{display:block;background:var(--card);border:1px solid var(--border-md);border-radius:14px;padding:20px 16px;text-decoration:none;transition:all .3s;position:relative}
+.trial-tier:hover{border-color:rgba(255,107,170,.5);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
+.trial-tier.featured{border-color:rgba(198,107,255,.4);background:linear-gradient(145deg,rgba(198,107,255,.08),var(--card))}
+.trial-tier-badge{font-family:var(--display);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;background:var(--grad);color:#000;font-weight:700;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:10px}
+.trial-tier-name{font-family:var(--display);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--char);margin-bottom:6px}
+.trial-tier-price{font-family:var(--display);font-size:1.8rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:8px}
+.trial-tier-price span{font-size:.75rem;color:var(--muted);font-weight:300}
+.trial-tier-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
+.trial-fine{font-size:.72rem;color:var(--muted);margin-top:4px}
+
 @media(max-width:768px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.lessons{padding:60px 24px}nav{padding:14px 24px}.progress-bar{padding:16px 24px}.nav-char{display:none}}
 @media(prefers-reduced-motion:reduce){.char-img{animation:none}.hero-char-ring{animation:none;opacity:.6}.sparkle{animation:none;opacity:.4}}
 </style>
@@ -258,7 +277,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
         <span class="hero-tag">Digital Design</span>
         <span class="hero-tag">Coding Basics</span>
       </div>
-      <a href="#lesson-1" class="hero-start">Start Lesson 1 — Free ↓</a>
+      <button class="hero-start" onclick="openModal('signup')">Start Lesson 1 — Free →</button>
     </div>
     <div class="hero-char">
       <div class="hero-char-ring"></div>
@@ -294,6 +313,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
       <h2 class="lesson-title">What is Code?</h2>
       <p class="lesson-desc">Before you build anything, you need to understand what you're actually doing. Spoiler: it's simpler than you think.</p>
     </div>
+
+    <div id="lesson1-gate" class="lesson-gate reveal">
+      <div class="gate-lock">✦</div>
+      <div class="gate-badge">Free Account</div>
+      <div class="gate-title">Create a free account to start</div>
+      <div class="gate-desc">Lesson 1 is completely free. No card needed. Just create an account and start building.</div>
+      <button class="gate-btn" onclick="openModal('signup')">Create Free Account →</button>
+      <p style="margin-top:14px;font-size:.75rem;color:var(--muted)">Already have an account? <button onclick="openModal('login')" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Log in</button></p>
+    </div>
+
+    <div id="lesson1-content" style="display:none">
 
     <!-- READ -->
     <div class="content-block reveal">
@@ -425,6 +455,36 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
         </div>
       </div>
     </div>
+
+    <!-- TRIAL UPSELL -->
+    <div class="trial-upsell" id="trialUpsell" style="display:none">
+      <div class="trial-upsell-inner">
+        <div class="trial-icon">🚀</div>
+        <h3 class="trial-title">Ready for Lesson 2?</h3>
+        <p class="trial-desc">Start your <strong>3-day free trial</strong> and unlock all of Zen's lessons — plus every character world on the platform. Cancel anytime before day 3 and you won't be charged.</p>
+        <div class="trial-tiers">
+          <a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="trial-tier">
+            <div class="trial-tier-name">Sparks</div>
+            <div class="trial-tier-price">$5<span>/mo</span></div>
+            <div class="trial-tier-desc">Lessons 1 & 2 for all 6 characters</div>
+          </a>
+          <a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="trial-tier featured">
+            <div class="trial-tier-badge">Most Popular</div>
+            <div class="trial-tier-name">Builders</div>
+            <div class="trial-tier-price">$9<span>/mo</span></div>
+            <div class="trial-tier-desc">Lessons 1–3 for all 6 characters</div>
+          </a>
+          <a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="trial-tier">
+            <div class="trial-tier-name">Coders</div>
+            <div class="trial-tier-price">$15<span>/mo</span></div>
+            <div class="trial-tier-desc">All 4 lessons + all 6 workbooks</div>
+          </a>
+        </div>
+        <p class="trial-fine">3-day free trial. Card required. Cancel anytime.</p>
+      </div>
+    </div>
+
+    </div><!-- end lesson1-content -->
   </div>
 
   <!-- ============ LESSON 2 ============ -->
@@ -1185,6 +1245,11 @@ function submitReflect(inputId,responseId,completeId){
     if(cheat)cheat.classList.add('unlocked');
     // Update progress
     updateProgress(parseInt(num));
+    // Show trial upsell after lesson 1
+    if(num==='1'){
+      const upsell=document.getElementById('trialUpsell');
+      if(upsell){upsell.style.display='block';setTimeout(()=>upsell.scrollIntoView({behavior:'smooth',block:'center'}),400);}
+    }
   },600);
 }
 
@@ -1207,7 +1272,21 @@ function downloadCheat(num){
 
 // TIER UNLOCK
 window.handleTierUnlock=function(tier){
+  // Always show lesson 1 for any logged-in user
+  const gate1=document.getElementById('lesson1-gate');
+  const content1=document.getElementById('lesson1-content');
+  if(gate1)gate1.style.display='none';
+  if(content1)content1.style.display='block';
   const t=(tier||'').toLowerCase();
+  // Free account (tier = none or empty) still gets lesson 1
+  const noTier = !t || t === 'none';
+  if(noTier){
+    const gate1=document.getElementById('lesson1-gate');
+    const content1=document.getElementById('lesson1-content');
+    if(gate1)gate1.style.display='none';
+    if(content1)content1.style.display='block';
+    return;
+  }
   const sparksPlus=['sparks','builders','coders'].includes(t);
   const buildersPlus=['builders','coders'].includes(t);
   const codersOnly=t==='coders';
