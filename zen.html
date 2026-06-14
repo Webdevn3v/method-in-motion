@@ -50,39 +50,43 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .hero-tag{padding:5px 14px;border:1px solid rgba(255,107,170,.3);border-radius:100px;font-family:var(--display);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--char)}
 .hero-start{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s,box-shadow .2s}
 .hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(255,107,170,.3)}
-.hero-char{position:relative;display:flex;align-items:center;justify-content:center;min-height:540px;}
+
+/* CHARACTER */
+.hero-char{position:relative;display:flex;align-items:center;justify-content:center;min-height:580px;}
 .hero-char-ring{position:absolute;border-radius:50%;border:1px solid rgba(255,107,170,.15);animation:ringPulse 3s ease-in-out infinite;pointer-events:none;}
-.hero-char-ring:nth-child(1){width:380px;height:380px;}
-.hero-char-ring:nth-child(2){width:480px;height:480px;animation-delay:.5s;border-color:rgba(198,107,255,.08);}
-.hero-char-ring:nth-child(3){width:560px;height:560px;animation-delay:1s;border-color:rgba(255,107,170,.04);}
+.hero-char-ring:nth-child(1){width:420px;height:420px;}
+.hero-char-ring:nth-child(2){width:520px;height:520px;animation-delay:.5s;border-color:rgba(198,107,255,.08);}
+.hero-char-ring:nth-child(3){width:610px;height:610px;animation-delay:1s;border-color:rgba(255,107,170,.04);}
 @keyframes ringPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.03);opacity:1}}
-.char-floor-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:300px;height:50px;border-radius:50%;background:radial-gradient(ellipse, rgba(255,107,170,.4) 0%, transparent 70%);filter:blur(10px);animation:floorPulse 3s ease-in-out infinite;pointer-events:none;}
-@keyframes floorPulse{0%,100%{opacity:.6;transform:translateX(-50%) scaleX(1)}50%{opacity:1;transform:translateX(-50%) scaleX(1.12)}}
-.sparkle{position:absolute;border-radius:50%;background:var(--char);pointer-events:none;animation:sparklePop 2.5s ease-in-out infinite;}
-.sparkle:nth-child(4){width:6px;height:6px;top:15%;left:12%;animation-delay:0s;background:var(--pink)}
-.sparkle:nth-child(5){width:4px;height:4px;top:8%;right:18%;animation-delay:.6s;background:var(--purple)}
-.sparkle:nth-child(6){width:5px;height:5px;bottom:28%;left:8%;animation-delay:1.2s;background:var(--cyan)}
-.sparkle:nth-child(7){width:3px;height:3px;bottom:32%;right:10%;animation-delay:.9s;background:var(--pink)}
-.sparkle:nth-child(8){width:4px;height:4px;top:38%;right:6%;animation-delay:1.8s;background:var(--purple)}
-.sparkle:nth-child(9){width:5px;height:5px;top:55%;left:5%;animation-delay:2.2s;background:var(--cyan)}
+.char-floor-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:340px;height:55px;border-radius:50%;background:radial-gradient(ellipse, rgba(255,107,170,.45) 0%, transparent 70%);filter:blur(12px);animation:floorPulse 3s ease-in-out infinite;pointer-events:none;}
+@keyframes floorPulse{0%,100%{opacity:.6;transform:translateX(-50%) scaleX(1)}50%{opacity:1;transform:translateX(-50%) scaleX(1.15)}}
+
+/* Sparkles -- more of them, varied sizes */
+.sparkle{position:absolute;border-radius:50%;pointer-events:none;animation:sparklePop 2.5s ease-in-out infinite;}
+.sparkle:nth-child(4){width:7px;height:7px;top:12%;left:10%;animation-delay:0s;background:var(--pink)}
+.sparkle:nth-child(5){width:4px;height:4px;top:6%;right:16%;animation-delay:.6s;background:var(--purple)}
+.sparkle:nth-child(6){width:6px;height:6px;bottom:26%;left:6%;animation-delay:1.2s;background:var(--cyan)}
+.sparkle:nth-child(7){width:3px;height:3px;bottom:30%;right:8%;animation-delay:.9s;background:var(--pink)}
+.sparkle:nth-child(8){width:5px;height:5px;top:36%;right:5%;animation-delay:1.8s;background:var(--purple)}
+.sparkle:nth-child(9){width:6px;height:6px;top:52%;left:4%;animation-delay:2.2s;background:var(--cyan)}
+.sparkle:nth-child(10){width:4px;height:4px;top:22%;right:22%;animation-delay:.3s;background:var(--pink)}
+.sparkle:nth-child(11){width:5px;height:5px;bottom:15%;left:18%;animation-delay:1.5s;background:var(--purple)}
+.sparkle:nth-child(12){width:3px;height:3px;top:70%;right:20%;animation-delay:2.8s;background:var(--cyan)}
+.sparkle:nth-child(13){width:6px;height:6px;top:80%;left:25%;animation-delay:.7s;background:var(--pink)}
 @keyframes sparklePop{0%,100%{opacity:0;transform:scale(0)}20%{opacity:1;transform:scale(1)}80%{opacity:1;transform:scale(1)}}
 
-/* CHARACTER IMAGE -- static by default, gif on hover */
 .char-img{
-  position:relative;
-  z-index:2;
-  width:100%;
-  max-width:480px;
+  position:relative;z-index:2;
+  width:100%;max-width:520px;
   mix-blend-mode:screen;
-  filter:drop-shadow(0 0 32px rgba(255,107,170,.65)) drop-shadow(0 0 80px rgba(255,107,170,.28)) drop-shadow(0 0 120px rgba(198,107,255,.18));
+  filter:drop-shadow(0 0 36px rgba(255,107,170,.7)) drop-shadow(0 0 90px rgba(255,107,170,.3)) drop-shadow(0 0 140px rgba(198,107,255,.2));
   animation:charFloat 4s ease-in-out infinite;
-  cursor:pointer;
-  transition:filter .3s;
+  cursor:pointer;transition:filter .3s;
 }
 .char-img:hover{
-  filter:drop-shadow(0 0 44px rgba(255,107,170,.95)) drop-shadow(0 0 110px rgba(255,107,170,.45)) drop-shadow(0 0 150px rgba(198,107,255,.35));
+  filter:drop-shadow(0 0 50px rgba(255,107,170,1)) drop-shadow(0 0 120px rgba(255,107,170,.5)) drop-shadow(0 0 180px rgba(198,107,255,.4));
 }
-@keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-16px)}}
+@keyframes charFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-18px)}}
 
 .progress-bar{background:var(--deep);border-bottom:1px solid var(--border);padding:20px 48px;position:sticky;top:65px;z-index:50}
 .progress-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;}
@@ -214,13 +218,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
       <div class="sparkle"></div>
       <div class="sparkle"></div>
       <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
+      <div class="sparkle"></div>
       <div class="char-floor-glow"></div>
-      <img
-        id="zenChar"
-        class="char-img"
-        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-pose-3.png"
-        alt="Zen"
-      >
+      <img id="zenChar" class="char-img"
+        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-entrance.gif"
+        alt="Zen">
     </div>
   </div>
 </section>
@@ -373,27 +378,50 @@ let wIdx=0,cIdx=0,deleting=false;
 function type(){const el=document.getElementById('typingText');const word=words[wIdx];if(!deleting){el.textContent=word.slice(0,cIdx+1);cIdx++;if(cIdx===word.length){setTimeout(()=>{deleting=true;type()},1800);return;}}else{el.textContent=word.slice(0,cIdx-1);cIdx--;if(cIdx===0){deleting=false;wIdx=(wIdx+1)%words.length;}}setTimeout(type,deleting?60:110);}
 type();
 
-// STATIC/GIF SWAP -- idle PNG, animate on hover
-const zenChar = document.getElementById('zenChar');
+// IMAGE SOURCES
 const IDLE = 'https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-pose-3.png';
 const ANIM = 'https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-entrance.gif';
+const GIF_DURATION = 5600; // 5.6 seconds in ms
 
-// Preload the GIF so it's ready instantly on hover
-const preload = new Image();
-preload.src = ANIM;
+const zenChar = document.getElementById('zenChar');
 
+// Preload idle image
+const preloadIdle = new Image();
+preloadIdle.src = IDLE;
+
+// Preload GIF
+const preloadGif = new Image();
+preloadGif.src = ANIM;
+
+// On page load: play GIF once, then switch to idle
+let entranceDone = false;
 let hoverTimeout;
+
+// GIF starts on load (already set as src)
+setTimeout(() => {
+  entranceDone = true;
+  zenChar.src = IDLE;
+  playZenSound();
+}, GIF_DURATION);
+
+// On hover: play GIF again, switch back to idle on mouse leave
 if(zenChar){
   zenChar.addEventListener('mouseenter', () => {
+    if(!entranceDone) return; // don't interrupt entrance
     clearTimeout(hoverTimeout);
     zenChar.src = ANIM;
     playZenSound();
-  });
-  zenChar.addEventListener('mouseleave', () => {
-    // Small delay before switching back so the animation can finish gracefully
+    // Switch back after GIF plays once
     hoverTimeout = setTimeout(() => {
       zenChar.src = IDLE;
-    }, 300);
+    }, GIF_DURATION);
+  });
+  zenChar.addEventListener('mouseleave', () => {
+    // If they leave early, wait a beat then go to idle
+    clearTimeout(hoverTimeout);
+    hoverTimeout = setTimeout(() => {
+      zenChar.src = IDLE;
+    }, 500);
   });
 }
 
@@ -405,23 +433,25 @@ function playZenSound(){
   const now=Date.now();
   if(now-lastPlay<2000) return;
   lastPlay=now;
-  const ac=getAudio();
-  [261.6,329.6,392,523.2,659.3].forEach((freq,i)=>{
-    const osc=ac.createOscillator(),gain=ac.createGain();
-    osc.connect(gain);gain.connect(ac.destination);
-    osc.type='sine';osc.frequency.value=freq;
-    const t=ac.currentTime+i*0.14;
-    gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(0.07,t+0.06);gain.gain.exponentialRampToValueAtTime(0.001,t+1.2);
-    osc.start(t);osc.stop(t+1.2);
-  });
-  [1046,1318,1568].forEach((freq,i)=>{
-    const osc=ac.createOscillator(),gain=ac.createGain();
-    osc.connect(gain);gain.connect(ac.destination);
-    osc.type='sine';osc.frequency.value=freq;
-    const t=ac.currentTime+0.3+i*0.1;
-    gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(0.03,t+0.04);gain.gain.exponentialRampToValueAtTime(0.001,t+0.6);
-    osc.start(t);osc.stop(t+0.6);
-  });
+  try{
+    const ac=getAudio();
+    [261.6,329.6,392,523.2,659.3].forEach((freq,i)=>{
+      const osc=ac.createOscillator(),gain=ac.createGain();
+      osc.connect(gain);gain.connect(ac.destination);
+      osc.type='sine';osc.frequency.value=freq;
+      const t=ac.currentTime+i*0.14;
+      gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(0.07,t+0.06);gain.gain.exponentialRampToValueAtTime(0.001,t+1.2);
+      osc.start(t);osc.stop(t+1.2);
+    });
+    [1046,1318,1568].forEach((freq,i)=>{
+      const osc=ac.createOscillator(),gain=ac.createGain();
+      osc.connect(gain);gain.connect(ac.destination);
+      osc.type='sine';osc.frequency.value=freq;
+      const t=ac.currentTime+0.3+i*0.1;
+      gain.gain.setValueAtTime(0,t);gain.gain.linearRampToValueAtTime(0.03,t+0.04);gain.gain.exponentialRampToValueAtTime(0.001,t+0.6);
+      osc.start(t);osc.stop(t+0.6);
+    });
+  }catch(e){}
 }
 
 // REVEAL
