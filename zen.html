@@ -224,7 +224,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
       <div class="sparkle"></div>
       <div class="char-floor-glow"></div>
       <img id="zenChar" class="char-img"
-        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-entrance.gif"
+        src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-pose-3.png"
         alt="Zen">
     </div>
   </div>
@@ -377,53 +377,6 @@ const words=['A CREATIVE CODER','A DIGITAL ARTIST','A BUILDER','A DREAMER','YOUR
 let wIdx=0,cIdx=0,deleting=false;
 function type(){const el=document.getElementById('typingText');const word=words[wIdx];if(!deleting){el.textContent=word.slice(0,cIdx+1);cIdx++;if(cIdx===word.length){setTimeout(()=>{deleting=true;type()},1800);return;}}else{el.textContent=word.slice(0,cIdx-1);cIdx--;if(cIdx===0){deleting=false;wIdx=(wIdx+1)%words.length;}}setTimeout(type,deleting?60:110);}
 type();
-
-// IMAGE SOURCES
-const IDLE = 'https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-pose-3.png';
-const ANIM = 'https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-entrance.gif';
-const GIF_DURATION = 5600; // 5.6 seconds in ms
-
-const zenChar = document.getElementById('zenChar');
-
-// Preload idle image
-const preloadIdle = new Image();
-preloadIdle.src = IDLE;
-
-// Preload GIF
-const preloadGif = new Image();
-preloadGif.src = ANIM;
-
-// On page load: play GIF once, then switch to idle
-let entranceDone = false;
-let hoverTimeout;
-
-// GIF starts on load (already set as src)
-setTimeout(() => {
-  entranceDone = true;
-  zenChar.src = IDLE;
-  playZenSound();
-}, GIF_DURATION);
-
-// On hover: play GIF again, switch back to idle on mouse leave
-if(zenChar){
-  zenChar.addEventListener('mouseenter', () => {
-    if(!entranceDone) return; // don't interrupt entrance
-    clearTimeout(hoverTimeout);
-    zenChar.src = ANIM;
-    playZenSound();
-    // Switch back after GIF plays once
-    hoverTimeout = setTimeout(() => {
-      zenChar.src = IDLE;
-    }, GIF_DURATION);
-  });
-  zenChar.addEventListener('mouseleave', () => {
-    // If they leave early, wait a beat then go to idle
-    clearTimeout(hoverTimeout);
-    hoverTimeout = setTimeout(() => {
-      zenChar.src = IDLE;
-    }, 500);
-  });
-}
 
 // ZEN SOUND
 let audioCtx=null;
