@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Loop's Logic Quest — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070f;
+  --surface:#0f0f1a;
+  --card:#131324;
+  --border:#1e1e35;
+  --text:#e8e8f5;
+  --muted:#5a5a80;
+  --cyan:#00f5d4;
+  --purple:#a855f7;
+  --yellow:#fbbf24;
+  --green:#4ade80;
+  --red:#f87171;
+  --blue:#38bdf8;
+}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--surface);}
+.nav-left{display:flex;align-items:center;gap:16px;}
+.nav-back{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-back:hover{color:var(--cyan);}
+.nav-title{font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.15em;color:var(--cyan);}
+.nav-tier{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);border:1px solid var(--purple);padding:3px 10px;border-radius:4px;opacity:0.8;}
+
+.game-shell{max-width:960px;margin:0 auto;padding:28px 24px;}
+
+/* LOOP QUOTE */
+.loop-quote{background:linear-gradient(135deg,rgba(0,245,212,0.06),rgba(56,189,248,0.04));border:1px solid rgba(0,245,212,0.15);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.loop-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--blue));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;font-weight:900;color:#000;}
+.loop-text{font-size:0.82rem;color:var(--muted);line-height:1.6;font-style:italic;}
+.loop-text strong{color:var(--cyan);font-style:normal;}
+
+/* LEVEL HEADER */
+.level-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.level-badge{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--cyan);border:1px solid rgba(0,245,212,0.3);padding:5px 14px;border-radius:4px;}
+.level-title{font-size:1.1rem;font-weight:800;}
+.level-desc{font-size:0.8rem;color:var(--muted);margin-top:2px;}
+.score-bar{display:flex;align-items:center;gap:20px;}
+.score-item{text-align:center;}
+.score-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--cyan);}
+.score-label{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+#timer-val.warning{color:var(--yellow);}
+#timer-val.danger{color:var(--red);animation:pulse 0.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+
+.progress-dots{display:flex;gap:8px;align-items:center;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.3s;}
+.dot.active{background:var(--cyan);}
+.dot.done{background:var(--green);}
+
+/* GAME AREA */
+.game-area{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+
+/* BLOCK POOL */
+.pool-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.panel-header{padding:12px 18px;border-bottom:1px solid var(--border);}
+.panel-label{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.panel-label span{color:var(--cyan);}
+.block-pool{padding:14px;display:flex;flex-direction:column;gap:8px;min-height:280px;}
+
+/* SEQUENCE ZONE */
+.sequence-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.sequence-zone{padding:14px;display:flex;flex-direction:column;gap:8px;min-height:280px;position:relative;}
+.sequence-zone.drag-over{background:rgba(0,245,212,0.04);border-color:var(--cyan);}
+.drop-placeholder{border:2px dashed rgba(0,245,212,0.2);border-radius:8px;height:44px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:rgba(0,245,212,0.3);letter-spacing:0.1em;text-transform:uppercase;}
+
+/* CODE BLOCKS */
+.code-block{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text);cursor:grab;transition:all 0.15s;display:flex;align-items:center;gap:10px;user-select:none;position:relative;}
+.code-block:hover{border-color:var(--cyan);transform:translateX(2px);}
+.code-block.dragging{opacity:0.4;cursor:grabbing;}
+.code-block.in-sequence{cursor:grab;border-color:rgba(0,245,212,0.2);}
+.code-block.in-sequence:hover{border-color:var(--cyan);}
+.code-block.correct-pos{border-color:var(--green);background:rgba(74,222,128,0.06);}
+.code-block.wrong-pos{border-color:var(--red);background:rgba(248,113,113,0.06);}
+.block-handle{color:var(--muted);font-size:0.8rem;cursor:grab;flex-shrink:0;}
+.block-num{font-family:'Orbitron',monospace;font-size:0.55rem;color:var(--muted);min-width:18px;flex-shrink:0;}
+.block-code{flex:1;white-space:pre;}
+.block-remove{background:none;border:none;color:var(--muted);cursor:pointer;padding:2px 6px;border-radius:4px;font-size:0.9rem;transition:color 0.2s;flex-shrink:0;}
+.block-remove:hover{color:var(--red);}
+
+/* OUTPUT PANEL */
+.output-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.output-body{padding:16px;font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--green);min-height:80px;line-height:1.8;white-space:pre-wrap;}
+.output-body.error{color:var(--red);}
+.output-body.empty{color:var(--muted);font-style:italic;}
+
+/* ACTION ROW */
+.action-row{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center;}
+.action-left{font-size:0.78rem;color:var(--muted);}
+.action-right{display:flex;gap:10px;}
+.btn{font-family:'Orbitron',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-primary{background:var(--cyan);color:#000;font-weight:700;}
+.btn-primary:hover{opacity:0.85;transform:translateY(-1px);}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn-secondary:hover{border-color:var(--cyan);color:var(--cyan);}
+.btn-next{background:var(--green);color:#000;font-weight:700;display:none;}
+.btn-next:hover{opacity:0.85;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 24px;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;opacity:0;transition:opacity 0.3s;z-index:50;pointer-events:none;}
+.toast.show{opacity:1;}
+.toast.good{border-color:var(--green);color:var(--green);}
+.toast.bad{border-color:var(--red);color:var(--red);}
+.toast.info{border-color:var(--cyan);color:var(--cyan);}
+
+/* RESULT */
+.result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;}
+.result-overlay.show{display:flex;}
+.result-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:480px;width:90%;text-align:center;}
+.result-icon{font-size:3rem;margin-bottom:16px;}
+.result-title{font-family:'Orbitron',monospace;font-size:1.1rem;letter-spacing:0.1em;margin-bottom:8px;}
+.result-title.win{color:var(--green);}
+.result-title.fail{color:var(--red);}
+.result-score{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--cyan);margin-bottom:12px;}
+.result-msg{font-size:0.88rem;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.result-actions{display:flex;gap:12px;justify-content:center;}
+
+/* SYNTAX */
+.kw{color:#c678dd;}
+.fn{color:#61afef;}
+.str{color:#98c379;}
+.num{color:#d19a66;}
+.cm{color:#5c6370;font-style:italic;}
+
+@media(max-width:700px){.game-area{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="loop.html" class="nav-back">← Loop's World</a>
+    <span class="nav-title">Logic Quest</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="progress-dots" id="progress-dots">
+      <div class="dot active" id="dot-0"></div>
+      <div class="dot" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+    </div>
+    <span class="nav-tier">Coders</span>
+  </div>
+</nav>
+
+<div class="game-shell">
+  <div class="loop-quote">
+    <div class="loop-avatar">↻</div>
+    <div class="loop-text" id="loop-text">Loading challenge...</div>
+  </div>
+
+  <div class="level-header">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="level-badge" id="level-badge">LEVEL 1</div>
+      <div>
+        <div class="level-title" id="level-title">Loading...</div>
+        <div class="level-desc" id="level-desc"></div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-item"><div class="score-val" id="timer-val" style="color:var(--cyan)">120</div><div class="score-label">Seconds</div></div>
+      <div class="score-item"><div class="score-val" id="score-val">0</div><div class="score-label">Score</div></div>
+    </div>
+  </div>
+
+  <div class="game-area">
+    <div class="pool-panel">
+      <div class="panel-header"><div class="panel-label"><span>BLOCKS</span> — Drag into sequence</div></div>
+      <div class="block-pool" id="block-pool">
+        <div class="drop-placeholder">Drag blocks from here →</div>
+      </div>
+    </div>
+
+    <div class="sequence-panel">
+      <div class="panel-header"><div class="panel-label"><span>SEQUENCE</span> — Build the logic here</div></div>
+      <div class="sequence-zone" id="sequence-zone">
+        <div class="drop-placeholder" id="drop-placeholder">← Drop blocks here in order</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="output-panel">
+    <div class="panel-header"><div class="panel-label"><span>OUTPUT</span> — What your code produces</div></div>
+    <div class="output-body empty" id="output-body">Run your sequence to see the output...</div>
+  </div>
+
+  <div class="action-row">
+    <div class="action-left" id="action-msg">Drag blocks from the left panel into the correct order on the right.</div>
+    <div class="action-right">
+      <button class="btn btn-secondary" onclick="resetLevel()">Reset</button>
+      <button class="btn btn-primary" onclick="runSequence()">▶ Run Code</button>
+      <button class="btn btn-next" id="btn-next" onclick="nextLevel()">Next Level →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-box">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+
+<script>
+// ─── LEVELS ───────────────────────────────────────────────────────────────────
+const LEVELS = [
+  {
+    title: 'Count to Five',
+    desc: 'Arrange the blocks to build a loop that counts from 1 to 5',
+    quote: '<strong>Loop says:</strong> Every loop has three parts — a start, a condition, and a step. Get them in order and the pattern flows.',
+    time: 120,
+    points: 350,
+    blocks: [
+      { id: 'a', code: 'for (let i = 1; i <= 5; i++) {' },
+      { id: 'b', code: '  console.log(i);' },
+      { id: 'c', code: '}' },
+    ],
+    correctOrder: ['a', 'b', 'c'],
+    expectedOutput: '1\n2\n3\n4\n5',
+    runFn: () => { let out = []; for(let i=1;i<=5;i++) out.push(i); return out.join('\n'); }
+  },
+  {
+    title: 'Sum the Array',
+    desc: 'Build a loop that adds up all numbers in an array and prints the total',
+    quote: '<strong>Loop says:</strong> Loops and arrays are best friends. Use i as your index to move through each item one by one.',
+    time: 140,
+    points: 450,
+    blocks: [
+      { id: 'a', code: 'let numbers = [3, 7, 2, 9, 4];' },
+      { id: 'b', code: 'let total = 0;' },
+      { id: 'c', code: 'for (let i = 0; i < numbers.length; i++) {' },
+      { id: 'd', code: '  total = total + numbers[i];' },
+      { id: 'e', code: '}' },
+      { id: 'f', code: 'console.log("Total: " + total);' },
+    ],
+    correctOrder: ['a', 'b', 'c', 'd', 'e', 'f'],
+    expectedOutput: 'Total: 25',
+    runFn: () => { let numbers=[3,7,2,9,4]; let total=0; for(let i=0;i<numbers.length;i++) total+=numbers[i]; return 'Total: '+total; }
+  },
+  {
+    title: 'FizzBuzz',
+    desc: 'The classic challenge — print 1 to 15, but Fizz for multiples of 3, Buzz for 5, FizzBuzz for both',
+    quote: '<strong>Loop says:</strong> FizzBuzz is the most famous coding challenge in the world. Think through the order of your conditions carefully.',
+    time: 160,
+    points: 600,
+    blocks: [
+      { id: 'a', code: 'for (let i = 1; i <= 15; i++) {' },
+      { id: 'b', code: '  if (i % 3 === 0 && i % 5 === 0) {' },
+      { id: 'c', code: '    console.log("FizzBuzz");' },
+      { id: 'd', code: '  } else if (i % 3 === 0) {' },
+      { id: 'e', code: '    console.log("Fizz");' },
+      { id: 'f', code: '  } else if (i % 5 === 0) {' },
+      { id: 'g', code: '    console.log("Buzz");' },
+      { id: 'h', code: '  } else {' },
+      { id: 'i', code: '    console.log(i);' },
+      { id: 'j', code: '  }' },
+      { id: 'k', code: '}' },
+    ],
+    correctOrder: ['a','b','c','d','e','f','g','h','i','j','k'],
+    expectedOutput: '1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz',
+    runFn: () => { let out=[]; for(let i=1;i<=15;i++){ if(i%3===0&&i%5===0) out.push('FizzBuzz'); else if(i%3===0) out.push('Fizz'); else if(i%5===0) out.push('Buzz'); else out.push(i); } return out.join('\n'); }
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentLevel = 0;
+let score = 0;
+let timer = null;
+let timeLeft = 0;
+let poolBlocks = [];
+let sequenceBlocks = [];
+let dragSrc = null;
+let dragFrom = null; // 'pool' | 'sequence'
+let levelDone = false;
+let attempts = 0;
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function initLevel(idx) {
+  const lvl = LEVELS[idx];
+  levelDone = false;
+  attempts = 0;
+
+  document.getElementById('level-badge').textContent = `LEVEL ${idx + 1}`;
+  document.getElementById('level-title').textContent = lvl.title;
+  document.getElementById('level-desc').textContent = lvl.desc;
+  document.getElementById('loop-text').innerHTML = lvl.quote;
+
+  LEVELS.forEach((_, i) => {
+    const dot = document.getElementById(`dot-${i}`);
+    if(dot) dot.className = 'dot' + (i < idx ? ' done' : i === idx ? ' active' : '');
+  });
+
+  // Shuffle blocks for pool
+  poolBlocks = [...lvl.blocks].sort(() => Math.random() - 0.5);
+  sequenceBlocks = [];
+
+  document.getElementById('output-body').textContent = 'Run your sequence to see the output...';
+  document.getElementById('output-body').className = 'output-body empty';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('action-msg').textContent = 'Drag blocks from the left panel into the correct order on the right.';
+
+  renderPool();
+  renderSequence();
+
+  clearInterval(timer);
+  timeLeft = lvl.time;
+  updateTimer();
+  timer = setInterval(tick, 1000);
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderPool() {
+  const pool = document.getElementById('block-pool');
+  if (poolBlocks.length === 0) {
+    pool.innerHTML = '<div class="drop-placeholder" style="opacity:0.4">All blocks placed →</div>';
+    return;
+  }
+  pool.innerHTML = poolBlocks.map((b, i) =>
+    `<div class="code-block" draggable="true" data-id="${b.id}" data-from="pool" data-idx="${i}"
+      ondragstart="dragStart(event,'pool',${i})"
+      ondragend="dragEnd(event)">
+      <span class="block-handle">⠿</span>
+      <span class="block-code">${syntaxHL(escapeHTML(b.code))}</span>
+    </div>`
+  ).join('');
+}
+
+function renderSequence() {
+  const zone = document.getElementById('sequence-zone');
+  if (sequenceBlocks.length === 0) {
+    zone.innerHTML = '<div class="drop-placeholder" id="drop-placeholder">← Drop blocks here in order</div>';
+  } else {
+    zone.innerHTML = sequenceBlocks.map((b, i) =>
+      `<div class="code-block in-sequence" draggable="true" data-id="${b.id}" data-from="sequence" data-idx="${i}"
+        ondragstart="dragStart(event,'sequence',${i})"
+        ondragend="dragEnd(event)">
+        <span class="block-handle">⠿</span>
+        <span class="block-num">${i+1}</span>
+        <span class="block-code">${syntaxHL(escapeHTML(b.code))}</span>
+        <button class="block-remove" onclick="removeFromSequence(${i})">✕</button>
+      </div>`
+    ).join('');
+    // Add drop zone at bottom
+    zone.innerHTML += `<div class="drop-placeholder" style="opacity:0.3;height:36px" 
+      ondragover="allowDrop(event)" ondrop="dropOnSequence(event,${sequenceBlocks.length})">+ drop here</div>`;
+  }
+
+  // Attach drop events to zone
+  zone.ondragover = allowDrop;
+  zone.ondrop = (e) => dropOnSequence(e, sequenceBlocks.length);
+}
+
+// ─── DRAG ─────────────────────────────────────────────────────────────────────
+function dragStart(e, from, idx) {
+  dragSrc = from === 'pool' ? poolBlocks[idx] : sequenceBlocks[idx];
+  dragFrom = from;
+  dragFromIdx = idx;
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', idx);
+  setTimeout(() => { if(e.target) e.target.classList.add('dragging'); }, 0);
+}
+
+function dragEnd(e) {
+  document.querySelectorAll('.dragging').forEach(el => el.classList.remove('dragging'));
+}
+
+function allowDrop(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+}
+
+function dropOnSequence(e, targetIdx) {
+  e.preventDefault();
+  if (!dragSrc) return;
+
+  if (dragFrom === 'pool') {
+    // Move from pool to sequence
+    poolBlocks = poolBlocks.filter(b => b.id !== dragSrc.id);
+    sequenceBlocks.splice(targetIdx, 0, dragSrc);
+  } else if (dragFrom === 'sequence') {
+    // Reorder within sequence
+    sequenceBlocks.splice(dragFromIdx, 1);
+    const insertAt = dragFromIdx < targetIdx ? targetIdx - 1 : targetIdx;
+    sequenceBlocks.splice(Math.max(0, insertAt), 0, dragSrc);
+  }
+
+  dragSrc = null;
+  dragFrom = null;
+  renderPool();
+  renderSequence();
+}
+
+function removeFromSequence(idx) {
+  const block = sequenceBlocks.splice(idx, 1)[0];
+  poolBlocks.push(block);
+  renderPool();
+  renderSequence();
+}
+
+// ─── RUN ──────────────────────────────────────────────────────────────────────
+function runSequence() {
+  const lvl = LEVELS[currentLevel];
+  if (sequenceBlocks.length === 0) {
+    showToast('Add some blocks first!', 'info');
+    return;
+  }
+
+  attempts++;
+  const userOrder = sequenceBlocks.map(b => b.id);
+  const correct = lvl.correctOrder;
+
+  if (userOrder.length !== correct.length) {
+    document.getElementById('output-body').textContent = `Error: You have ${userOrder.length} blocks but need ${correct.length}.`;
+    document.getElementById('output-body').className = 'output-body error';
+    showToast('Wrong number of blocks', 'bad');
+    return;
+  }
+
+  const isCorrect = userOrder.every((id, i) => id === correct[i]);
+
+  if (isCorrect) {
+    const output = lvl.runFn();
+    document.getElementById('output-body').textContent = output;
+    document.getElementById('output-body').className = 'output-body';
+    clearInterval(timer);
+    levelDone = true;
+    const timeBonus = Math.floor(timeLeft * 2);
+    const attemptPenalty = Math.max(0, (attempts - 1) * 40);
+    const pts = Math.max(50, lvl.points + timeBonus - attemptPenalty);
+    score += pts;
+    document.getElementById('score-val').textContent = score;
+    document.getElementById('btn-next').style.display = 'block';
+    document.getElementById('action-msg').textContent = `Correct! +${pts} pts (time bonus: +${timeBonus})`;
+    showToast('Perfect sequence!', 'good');
+
+    if (currentLevel === LEVELS.length - 1) {
+      setTimeout(() => showResult(true), 1200);
+    }
+  } else {
+    // Show partial output with error
+    document.getElementById('output-body').textContent = `Logic error — the sequence isn't right yet.\nAttempt ${attempts} — keep rearranging.`;
+    document.getElementById('output-body').className = 'output-body error';
+    score = Math.max(0, score - 20);
+    document.getElementById('score-val').textContent = score;
+    showToast(`Not quite — try a different order (−20pts)`, 'bad');
+  }
+}
+
+// ─── SYNTAX ───────────────────────────────────────────────────────────────────
+function escapeHTML(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+function syntaxHL(code) {
+  return code
+    .replace(/\b(for|let|const|var|if|else|while|return)\b/g, '<span class="kw">$1</span>')
+    .replace(/\b(console\.log|length|push)\b/g, '<span class="fn">$1</span>')
+    .replace(/"([^"]*)"/g, '<span class="str">"$1"</span>')
+    .replace(/\b(\d+)\b/g, '<span class="num">$1</span>');
+}
+
+// ─── TIMER ────────────────────────────────────────────────────────────────────
+function tick() {
+  timeLeft--;
+  updateTimer();
+  if (timeLeft <= 0) { clearInterval(timer); if (!levelDone) showResult(false); }
+}
+function updateTimer() {
+  const el = document.getElementById('timer-val');
+  el.textContent = timeLeft;
+  el.className = timeLeft <= 10 ? 'danger' : timeLeft <= 25 ? 'warning' : '';
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2000);
+}
+
+function resetLevel() { initLevel(currentLevel); }
+
+function nextLevel() {
+  if (currentLevel < LEVELS.length - 1) {
+    currentLevel++;
+    initLevel(currentLevel);
+  } else {
+    showResult(true);
+  }
+}
+
+function showResult(win) {
+  clearInterval(timer);
+  const overlay = document.getElementById('result-overlay');
+  document.getElementById('result-icon').textContent = win ? '↻' : '⏱';
+  document.getElementById('result-title').textContent = win ? 'QUEST COMPLETE' : 'TIME\'S UP';
+  document.getElementById('result-title').className = `result-title ${win ? 'win' : 'fail'}`;
+  document.getElementById('result-score').textContent = score + ' pts';
+  document.getElementById('result-msg').textContent = win
+    ? `You sequenced all three logic challenges correctly! Loops are the engine of every program — and now you know how to build them.`
+    : `Time ran out. Sequencing logic takes patience — every developer rearranges code constantly. Try again!`;
+  document.getElementById('result-actions').innerHTML = `
+    <button class="btn btn-secondary" onclick="restartGame()">Play Again</button>
+    <button class="btn btn-primary" onclick="window.location.href='loop.html'">Back to Loop</button>
+  `;
+  overlay.classList.add('show');
+}
+
+function restartGame() {
+  score = 0; currentLevel = 0;
+  document.getElementById('score-val').textContent = '0';
+  document.getElementById('result-overlay').classList.remove('show');
+  initLevel(0);
+}
+
+let dragFromIdx = 0;
+initLevel(0);
+</script>
+</body>
+</html>
