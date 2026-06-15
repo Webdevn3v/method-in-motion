@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Bug's Chaos Code — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070f;
+  --surface:#0f0f1a;
+  --card:#131324;
+  --border:#1e1e35;
+  --text:#e8e8f5;
+  --muted:#5a5a80;
+  --lime:#84cc16;
+  --orange:#fb923c;
+  --cyan:#00f5d4;
+  --purple:#a855f7;
+  --green:#4ade80;
+  --red:#f87171;
+  --yellow:#fbbf24;
+}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--surface);}
+.nav-left{display:flex;align-items:center;gap:16px;}
+.nav-back{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-back:hover{color:var(--lime);}
+.nav-title{font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.15em;color:var(--lime);}
+.nav-tier{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);border:1px solid var(--purple);padding:3px 10px;border-radius:4px;opacity:0.8;}
+
+.game-shell{max-width:900px;margin:0 auto;padding:28px 24px;}
+
+/* BUG QUOTE */
+.bug-quote{background:linear-gradient(135deg,rgba(132,204,22,0.07),rgba(251,146,60,0.04));border:1px solid rgba(132,204,22,0.18);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.bug-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--lime),var(--orange));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.bug-text{font-size:0.82rem;color:var(--muted);line-height:1.6;font-style:italic;}
+.bug-text strong{color:var(--lime);font-style:normal;}
+
+/* LEVEL HEADER */
+.level-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;flex-wrap:wrap;gap:12px;}
+.level-badge{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--lime);border:1px solid rgba(132,204,22,0.3);padding:5px 14px;border-radius:4px;}
+.level-title{font-size:1.1rem;font-weight:800;}
+.level-desc{font-size:0.8rem;color:var(--muted);margin-top:2px;}
+.score-bar{display:flex;align-items:center;gap:20px;}
+.score-item{text-align:center;}
+.score-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--lime);}
+.score-label{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+
+.progress-dots{display:flex;gap:8px;align-items:center;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.3s;}
+.dot.active{background:var(--lime);}
+.dot.done{background:var(--green);}
+
+/* STABILITY BAR */
+.stability-wrap{margin-bottom:16px;}
+.stability-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:6px;}
+.stability-label{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);}
+.stability-pct{font-family:'Orbitron',monospace;font-size:0.75rem;font-weight:700;}
+.stability-track{height:10px;background:var(--border);border-radius:5px;overflow:hidden;}
+.stability-fill{height:100%;border-radius:5px;transition:width 0.4s,background 0.4s;}
+
+/* CHAOS STATUS */
+.chaos-status{display:flex;align-items:center;gap:16px;margin-bottom:16px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
+.chaos-label{font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);}
+.chaos-val{font-family:'Orbitron',monospace;font-size:0.8rem;color:var(--orange);font-weight:700;}
+.chaos-val.low{color:var(--green);}
+.chaos-val.mid{color:var(--yellow);}
+.chaos-val.high{color:var(--red);animation:pulse 0.6s infinite;}
+.timer-display{font-family:'Orbitron',monospace;font-size:1.2rem;font-weight:900;color:var(--lime);margin-left:auto;}
+.timer-display.warning{color:var(--yellow);}
+.timer-display.danger{color:var(--red);animation:pulse 0.4s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.4;}}
+
+/* CODE PANEL */
+.code-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:16px;position:relative;}
+.code-panel.glitching{border-color:var(--red);box-shadow:0 0 20px rgba(248,113,113,0.15);}
+.code-header{padding:10px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.code-label{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.code-label span{color:var(--lime);}
+.crash-warning{font-size:0.65rem;color:var(--red);letter-spacing:0.08em;text-transform:uppercase;animation:pulse 0.5s infinite;}
+
+.code-lines{padding:0;}
+.code-line{display:flex;align-items:center;border-left:3px solid transparent;transition:all 0.2s;cursor:pointer;position:relative;}
+.code-line:hover{background:rgba(132,204,22,0.05);}
+.code-line.corrupted{background:rgba(248,113,113,0.07);border-left-color:var(--red);animation:glitch-line 0.3s infinite;}
+.code-line.stabilized{background:rgba(74,222,128,0.06);border-left-color:var(--green);cursor:default;}
+.code-line.selected-line{background:rgba(132,204,22,0.1);border-left-color:var(--lime);}
+@keyframes glitch-line{
+  0%{transform:translateX(0);}
+  25%{transform:translateX(-2px);}
+  75%{transform:translateX(2px);}
+  100%{transform:translateX(0);}
+}
+.line-num{font-family:'DM Mono',monospace;font-size:0.72rem;color:var(--muted);padding:8px 12px;min-width:40px;text-align:right;border-right:1px solid var(--border);flex-shrink:0;user-select:none;}
+.line-code{font-family:'DM Mono',monospace;font-size:0.78rem;padding:8px 14px;flex:1;line-height:1.5;white-space:pre;}
+.line-indicator{padding:8px 10px;font-size:0.7rem;font-weight:700;flex-shrink:0;}
+.ind-corrupt{color:var(--red);}
+.ind-stable{color:var(--green);}
+
+/* FIX PANEL */
+.fix-panel{display:none;background:rgba(132,204,22,0.05);border:1px solid rgba(132,204,22,0.2);border-radius:10px;padding:16px;margin-bottom:14px;}
+.fix-panel.show{display:block;}
+.fix-title{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--lime);margin-bottom:10px;}
+.fix-options{display:flex;flex-direction:column;gap:8px;}
+.fix-option{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:0.76rem;cursor:pointer;transition:all 0.15s;color:var(--text);}
+.fix-option:hover{border-color:var(--lime);background:rgba(132,204,22,0.06);}
+.fix-option.correct-fix{border-color:var(--green);background:rgba(74,222,128,0.08);color:var(--green);}
+.fix-option.wrong-fix{border-color:var(--red);background:rgba(248,113,113,0.08);color:var(--red);}
+
+/* ACTION ROW */
+.action-row{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center;}
+.action-left{font-size:0.78rem;color:var(--muted);}
+.action-right{display:flex;gap:10px;}
+.btn{font-family:'Orbitron',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-primary{background:var(--lime);color:#000;font-weight:700;}
+.btn-primary:hover{opacity:0.85;transform:translateY(-1px);}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn-secondary:hover{border-color:var(--lime);color:var(--lime);}
+.btn-next{background:var(--green);color:#000;font-weight:700;display:none;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 24px;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;opacity:0;transition:opacity 0.3s;z-index:50;pointer-events:none;}
+.toast.show{opacity:1;}
+.toast.good{border-color:var(--green);color:var(--green);}
+.toast.bad{border-color:var(--red);color:var(--red);}
+.toast.info{border-color:var(--lime);color:var(--lime);}
+
+/* RESULT */
+.result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:100;align-items:center;justify-content:center;}
+.result-overlay.show{display:flex;}
+.result-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:480px;width:90%;text-align:center;}
+.result-icon{font-size:3rem;margin-bottom:16px;}
+.result-title{font-family:'Orbitron',monospace;font-size:1.1rem;letter-spacing:0.1em;margin-bottom:8px;}
+.result-title.win{color:var(--green);}
+.result-title.fail{color:var(--red);}
+.result-score{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--lime);margin-bottom:12px;}
+.result-msg{font-size:0.88rem;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.result-actions{display:flex;gap:12px;justify-content:center;}
+
+.kw{color:#c678dd;}.fn{color:#61afef;}.str{color:#98c379;}.num{color:#d19a66;}.cm{color:#5c6370;font-style:italic;}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="bug.html" class="nav-back">← Bug's World</a>
+    <span class="nav-title">Chaos Code</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="progress-dots" id="progress-dots">
+      <div class="dot active" id="dot-0"></div>
+      <div class="dot" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+    </div>
+    <span class="nav-tier">Coders</span>
+  </div>
+</nav>
+
+<div class="game-shell">
+  <div class="bug-quote">
+    <div class="bug-avatar">🐛</div>
+    <div class="bug-text" id="bug-text">Loading chaos...</div>
+  </div>
+
+  <div class="level-header">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="level-badge" id="level-badge">LEVEL 1</div>
+      <div>
+        <div class="level-title" id="level-title"></div>
+        <div class="level-desc" id="level-desc"></div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-item"><div class="score-val" id="score-val">0</div><div class="score-label">Score</div></div>
+    </div>
+  </div>
+
+  <div class="stability-wrap">
+    <div class="stability-header">
+      <span class="stability-label">System Stability</span>
+      <span class="stability-pct" id="stability-pct" style="color:var(--green)">100%</span>
+    </div>
+    <div class="stability-track">
+      <div class="stability-fill" id="stability-fill" style="width:100%;background:var(--green)"></div>
+    </div>
+  </div>
+
+  <div class="chaos-status">
+    <span class="chaos-label">Chaos Level</span>
+    <span class="chaos-val low" id="chaos-val">LOW</span>
+    <span class="chaos-label" style="margin-left:12px;">Corrupted Lines</span>
+    <span class="chaos-val" id="corrupted-count" style="color:var(--orange)">0</span>
+    <div class="timer-display" id="timer-val">60</div>
+  </div>
+
+  <div class="code-panel" id="code-panel">
+    <div class="code-header">
+      <div class="code-label"><span>LIVE CODE</span> — Stabilize corrupted lines</div>
+      <div class="crash-warning" id="crash-warning" style="display:none">⚠ SYSTEM CRITICAL</div>
+    </div>
+    <div class="code-lines" id="code-lines"></div>
+  </div>
+
+  <div class="fix-panel" id="fix-panel">
+    <div class="fix-title" id="fix-title">Choose the correct fix:</div>
+    <div class="fix-options" id="fix-options"></div>
+  </div>
+
+  <div class="action-row">
+    <div class="action-left" id="action-msg">Click a corrupted line (red) to stabilize it before the system crashes.</div>
+    <div class="action-right">
+      <button class="btn btn-secondary" onclick="resetLevel()">Reset</button>
+      <button class="btn btn-next" id="btn-next" onclick="nextLevel()">Next Level →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-box">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+
+<script>
+const LEVELS = [
+  {
+    title: 'The Glitching Calculator',
+    desc: 'The calculator function is corrupting. Stabilize 4 broken lines before system collapse.',
+    quote: '<strong>Bug says:</strong> HAHAHA the code is breaking!! Quick — click the red lines and pick the right fix before everything explodes!!',
+    time: 60,
+    corruptRate: 8000,
+    points: 350,
+    lines: [
+      { code: 'function calculate(a, b, op) {',    correct: 'function calculate(a, b, op) {' },
+      { code: '  if (op === "+") {',               correct: '  if (op === "+") {' },
+      { code: '    return a + b;',                 correct: '    return a + b;',
+        corruptions: ['    return a - b;', '    return a * b;', '    return a + b + 1;'] },
+      { code: '  } else if (op === "-") {',        correct: '  } else if (op === "-") {' },
+      { code: '    return a - b;',                 correct: '    return a - b;',
+        corruptions: ['    return a + b;', '    return b - a;', '    return a - b - 1;'] },
+      { code: '  } else if (op === "*") {',        correct: '  } else if (op === "*") {' },
+      { code: '    return a * b;',                 correct: '    return a * b;',
+        corruptions: ['    return a + b;', '    return a / b;', '    return a * b * 0;'] },
+      { code: '  } else {',                        correct: '  } else {' },
+      { code: '    return 0;',                     correct: '    return 0;',
+        corruptions: ['    return null;', '    return -1;', '    return undefined;'] },
+      { code: '  }',                               correct: '  }' },
+      { code: '}',                                 correct: '}' },
+    ]
+  },
+  {
+    title: 'The Unstable Sorter',
+    desc: 'A bubble sort algorithm is falling apart. 5 lines can corrupt. Keep them stable.',
+    quote: '<strong>Bug says:</strong> Sorting algorithms are SO fragile!! One wrong comparison and everything\'s backwards!! GO GO GO!!',
+    time: 75,
+    corruptRate: 6000,
+    points: 450,
+    lines: [
+      { code: 'function bubbleSort(arr) {',        correct: 'function bubbleSort(arr) {' },
+      { code: '  let len = arr.length;',           correct: '  let len = arr.length;',
+        corruptions: ['  let len = arr.length - 1;', '  let len = arr.size;', '  let len = 0;'] },
+      { code: '  for (let i = 0; i < len; i++) {',correct: '  for (let i = 0; i < len; i++) {',
+        corruptions: ['  for (let i = 1; i < len; i++) {', '  for (let i = 0; i <= len; i++) {', '  for (let i = 0; i > len; i++) {'] },
+      { code: '    for (let j = 0; j < len - i - 1; j++) {', correct: '    for (let j = 0; j < len - i - 1; j++) {' },
+      { code: '      if (arr[j] > arr[j + 1]) {', correct: '      if (arr[j] > arr[j + 1]) {',
+        corruptions: ['      if (arr[j] < arr[j + 1]) {', '      if (arr[j] >= arr[j + 1]) {', '      if (arr[j] === arr[j + 1]) {'] },
+      { code: '        let temp = arr[j];',        correct: '        let temp = arr[j];',
+        corruptions: ['        let temp = arr[j + 1];', '        let temp = 0;', '        let temp = arr[j - 1];'] },
+      { code: '        arr[j] = arr[j + 1];',     correct: '        arr[j] = arr[j + 1];',
+        corruptions: ['        arr[j] = arr[j];', '        arr[j] = temp;', '        arr[j] = arr[j - 1];'] },
+      { code: '        arr[j + 1] = temp;',       correct: '        arr[j + 1] = temp;',
+        corruptions: ['        arr[j + 1] = arr[j];', '        arr[j + 1] = 0;', '        arr[j + 1] = arr[j + 1];'] },
+      { code: '      }',                           correct: '      }' },
+      { code: '    }',                             correct: '    }' },
+      { code: '  }',                               correct: '  }' },
+      { code: '  return arr;',                     correct: '  return arr;',
+        corruptions: ['  return arr.reverse();', '  return [];', '  return arr[0];'] },
+      { code: '}',                                 correct: '}' },
+    ]
+  },
+  {
+    title: 'The Collapsing API',
+    desc: 'An async fetch function is imploding. 6 corruptible lines. Maximum chaos.',
+    quote: '<strong>Bug says:</strong> ASYNC CODE IS THE MOST CHAOTIC KIND!! Promises breaking everywhere!! You\'ve got 90 seconds — DON\'T PANIC!! (panic a little)',
+    time: 90,
+    corruptRate: 5000,
+    points: 600,
+    lines: [
+      { code: 'async function fetchData(url) {',   correct: 'async function fetchData(url) {' },
+      { code: '  try {',                           correct: '  try {' },
+      { code: '    const response = await fetch(url);', correct: '    const response = await fetch(url);',
+        corruptions: ['    const response = fetch(url);', '    const response = await fetch();', '    const response = await post(url);'] },
+      { code: '    if (!response.ok) {',           correct: '    if (!response.ok) {',
+        corruptions: ['    if (response.ok) {', '    if (response === null) {', '    if (!response) {'] },
+      { code: '      throw new Error("Failed");',  correct: '      throw new Error("Failed");',
+        corruptions: ['      return new Error("Failed");', '      console.log("Failed");', '      throw "Failed";'] },
+      { code: '    }',                             correct: '    }' },
+      { code: '    const data = await response.json();', correct: '    const data = await response.json();',
+        corruptions: ['    const data = response.json();', '    const data = await response.text();', '    const data = await response.data();'] },
+      { code: '    return data;',                  correct: '    return data;',
+        corruptions: ['    return response;', '    return null;', '    return data.json();'] },
+      { code: '  } catch (error) {',              correct: '  } catch (error) {' },
+      { code: '    console.error(error);',         correct: '    console.error(error);',
+        corruptions: ['    console.log(error);', '    throw error;', '    return error;'] },
+      { code: '    return null;',                  correct: '    return null;',
+        corruptions: ['    return undefined;', '    return false;', '    return 0;'] },
+      { code: '  }',                               correct: '  }' },
+      { code: '}',                                 correct: '}' },
+    ]
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentLevel = 0;
+let score = 0;
+let timer = null;
+let chaosTimer = null;
+let timeLeft = 0;
+let stability = 100;
+let lineStates = []; // 'normal' | 'corrupted' | 'stabilized'
+let corruptedLines = new Set();
+let stabilizedLines = new Set();
+let selectedLine = null;
+let levelDone = false;
+let wrongFixes = 0;
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function initLevel(idx) {
+  const lvl = LEVELS[idx];
+  levelDone = false;
+  stability = 100;
+  corruptedLines = new Set();
+  stabilizedLines = new Set();
+  selectedLine = null;
+  wrongFixes = 0;
+
+  document.getElementById('level-badge').textContent = `LEVEL ${idx + 1}`;
+  document.getElementById('level-title').textContent = lvl.title;
+  document.getElementById('level-desc').textContent = lvl.desc;
+  document.getElementById('bug-text').innerHTML = lvl.quote;
+
+  LEVELS.forEach((_, i) => {
+    const dot = document.getElementById(`dot-${i}`);
+    if(dot) dot.className = 'dot' + (i < idx ? ' done' : i === idx ? ' active' : '');
+  });
+
+  lineStates = lvl.lines.map(() => 'normal');
+  currentCorruptions = {};
+
+  document.getElementById('fix-panel').classList.remove('show');
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('crash-warning').style.display = 'none';
+  document.getElementById('action-msg').textContent = 'Click a corrupted line (red) to stabilize it before the system crashes.';
+
+  updateStability(100);
+  updateChaosStatus();
+  renderCode();
+
+  clearInterval(timer);
+  clearInterval(chaosTimer);
+
+  timeLeft = lvl.time;
+  updateTimer();
+  timer = setInterval(tick, 1000);
+
+  // Start chaos after 3 second grace period
+  setTimeout(() => {
+    if (!levelDone) {
+      chaosTimer = setInterval(() => corruptRandomLine(), lvl.corruptRate);
+    }
+  }, 3000);
+}
+
+let currentCorruptions = {};
+
+// ─── CHAOS ENGINE ─────────────────────────────────────────────────────────────
+function corruptRandomLine() {
+  if (levelDone) return;
+  const lvl = LEVELS[currentLevel];
+  const corruptible = lvl.lines
+    .map((l, i) => ({ l, i }))
+    .filter(({ l, i }) => l.corruptions && lineStates[i] !== 'corrupted' && lineStates[i] !== 'stabilized');
+
+  if (corruptible.length === 0) return;
+
+  const { l, i } = corruptible[Math.floor(Math.random() * corruptible.length)];
+  const corruption = l.corruptions[Math.floor(Math.random() * l.corruptions.length)];
+
+  lineStates[i] = 'corrupted';
+  currentCorruptions[i] = corruption;
+  corruptedLines.add(i);
+  stability = Math.max(0, stability - 18);
+  updateStability(stability);
+  updateChaosStatus();
+  renderCode();
+
+  if (stability <= 0) {
+    showResult(false, 'crashed');
+  }
+}
+
+// ─── RENDER ───────────────────────────────────────────────────────────────────
+function renderCode() {
+  const lvl = LEVELS[currentLevel];
+  const panel = document.getElementById('code-panel');
+  panel.className = 'code-panel' + (corruptedLines.size > 2 ? ' glitching' : '');
+
+  document.getElementById('code-lines').innerHTML = lvl.lines.map((line, i) => {
+    const state = lineStates[i];
+    const displayCode = state === 'corrupted' ? (currentCorruptions[i] || line.code) : line.code;
+    const isSelected = selectedLine === i;
+    let indicator = '';
+    if (state === 'corrupted') indicator = '<span class="line-indicator ind-corrupt">⚡ CORRUPT</span>';
+    else if (state === 'stabilized') indicator = '<span class="line-indicator ind-stable">✓</span>';
+
+    return `<div class="code-line ${state} ${isSelected ? 'selected-line' : ''}" 
+      id="line-${i}" onclick="selectLine(${i})">
+      <div class="line-num">${i + 1}</div>
+      <div class="line-code">${syntaxHL(escapeHTML(displayCode))}</div>
+      ${indicator}
+    </div>`;
+  }).join('');
+
+  document.getElementById('corrupted-count').textContent = corruptedLines.size;
+}
+
+// ─── SELECT LINE ──────────────────────────────────────────────────────────────
+function selectLine(i) {
+  if (levelDone) return;
+  if (lineStates[i] !== 'corrupted') {
+    if (lineStates[i] === 'stabilized') showToast('Already stabilized ✓', 'info');
+    else showToast('This line is clean — find the red ones', 'info');
+    return;
+  }
+
+  selectedLine = i;
+  renderCode();
+  showFixOptions(i);
+}
+
+function showFixOptions(lineIdx) {
+  const lvl = LEVELS[currentLevel];
+  const line = lvl.lines[lineIdx];
+  const panel = document.getElementById('fix-panel');
+  document.getElementById('fix-title').textContent = `Line ${lineIdx + 1} is corrupted — pick the correct fix:`;
+
+  // Build options: correct + 2 wrong (the other corruptions)
+  const correctCode = line.correct;
+  const wrongOptions = (line.corruptions || []).filter(c => c !== currentCorruptions[lineIdx]).slice(0, 2);
+  const options = shuffle([correctCode, currentCorruptions[lineIdx], ...wrongOptions.slice(0, 1)]);
+
+  document.getElementById('fix-options').innerHTML = options.map(opt =>
+    `<div class="fix-option" onclick="submitFix(${lineIdx}, '${opt.replace(/'/g,"\\'")}', '${correctCode.replace(/'/g,"\\'")}')">
+      ${escapeHTML(opt)}
+    </div>`
+  ).join('');
+
+  panel.classList.add('show');
+}
+
+function submitFix(lineIdx, chosen, correct) {
+  if (chosen === correct) {
+    lineStates[lineIdx] = 'stabilized';
+    corruptedLines.delete(lineIdx);
+    stabilizedLines.add(lineIdx);
+    stability = Math.min(100, stability + 12);
+    updateStability(stability);
+    score += 80;
+    document.getElementById('score-val').textContent = score;
+    showToast('Stabilized! +80pts', 'good');
+    document.getElementById('fix-panel').classList.remove('show');
+    selectedLine = null;
+    updateChaosStatus();
+    renderCode();
+
+    // Check win - all corruptible lines stabilized
+    const corruptible = LEVELS[currentLevel].lines.filter(l => l.corruptions);
+    const allStabilized = corruptible.every((l, idx) => {
+      const realIdx = LEVELS[currentLevel].lines.indexOf(l);
+      return lineStates[realIdx] === 'stabilized';
+    });
+
+    // Win when all currently corrupted are fixed AND stability is good
+    if (corruptedLines.size === 0 && stability >= 60) {
+      const timeBonus = Math.floor(timeLeft * 2);
+      score += timeBonus;
+      document.getElementById('score-val').textContent = score;
+      clearInterval(chaosTimer);
+      clearInterval(timer);
+      levelDone = true;
+      document.getElementById('btn-next').style.display = 'block';
+      document.getElementById('action-msg').textContent = `System stable! +${timeBonus} time bonus`;
+      showToast('System stabilized!', 'good');
+      if (currentLevel === LEVELS.length - 1) setTimeout(() => showResult(true), 1200);
+    }
+  } else {
+    wrongFixes++;
+    stability = Math.max(0, stability - 10);
+    updateStability(stability);
+    score = Math.max(0, score - 30);
+    document.getElementById('score-val').textContent = score;
+    // Flash wrong
+    document.querySelectorAll('.fix-option').forEach(el => {
+      if (el.textContent.trim() === chosen.trim()) {
+        el.classList.add('wrong-fix');
+        setTimeout(() => el.classList.remove('wrong-fix'), 600);
+      }
+      if (el.textContent.trim() === correct.trim()) {
+        el.classList.add('correct-fix');
+      }
+    });
+    showToast('Wrong fix! −30pts', 'bad');
+    if (stability <= 0) showResult(false, 'crashed');
+  }
+}
+
+// ─── STABILITY ────────────────────────────────────────────────────────────────
+function updateStability(val) {
+  stability = val;
+  const fill = document.getElementById('stability-fill');
+  const pct = document.getElementById('stability-pct');
+  fill.style.width = val + '%';
+  fill.style.background = val > 60 ? 'var(--green)' : val > 30 ? 'var(--yellow)' : 'var(--red)';
+  pct.textContent = Math.round(val) + '%';
+  pct.style.color = val > 60 ? 'var(--green)' : val > 30 ? 'var(--yellow)' : 'var(--red)';
+  document.getElementById('crash-warning').style.display = val < 30 ? 'block' : 'none';
+}
+
+function updateChaosStatus() {
+  const n = corruptedLines.size;
+  const el = document.getElementById('chaos-val');
+  el.textContent = n === 0 ? 'NONE' : n <= 1 ? 'LOW' : n <= 3 ? 'MEDIUM' : 'HIGH';
+  el.className = 'chaos-val ' + (n === 0 ? 'low' : n <= 1 ? 'low' : n <= 3 ? 'mid' : 'high');
+}
+
+// ─── TIMER ────────────────────────────────────────────────────────────────────
+function tick() {
+  timeLeft--;
+  updateTimer();
+  if (timeLeft <= 0) { clearInterval(timer); clearInterval(chaosTimer); if (!levelDone) showResult(false, 'timeout'); }
+}
+function updateTimer() {
+  const el = document.getElementById('timer-val');
+  el.textContent = timeLeft;
+  el.className = 'timer-display' + (timeLeft <= 10 ? ' danger' : timeLeft <= 20 ? ' warning' : '');
+}
+
+// ─── UTILS ────────────────────────────────────────────────────────────────────
+function shuffle(arr) { return [...arr].sort(() => Math.random() - 0.5); }
+function escapeHTML(str) { return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function syntaxHL(code) {
+  return code
+    .replace(/\b(async|function|let|const|var|if|else|return|try|catch|throw|await|new)\b/g,'<span class="kw">$1</span>')
+    .replace(/\b(console\.log|console\.error|fetch|Error|JSON)\b/g,'<span class="fn">$1</span>')
+    .replace(/"([^"]*)"/g,'<span class="str">"$1"</span>')
+    .replace(/\b(\d+)\b/g,'<span class="num">$1</span>');
+}
+
+let toastTimer = null;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.className = `toast show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2000);
+}
+
+function resetLevel() { clearInterval(timer); clearInterval(chaosTimer); initLevel(currentLevel); }
+
+function nextLevel() {
+  if (currentLevel < LEVELS.length - 1) { currentLevel++; initLevel(currentLevel); }
+  else showResult(true);
+}
+
+function showResult(win, reason) {
+  clearInterval(timer); clearInterval(chaosTimer);
+  const icon = win ? '🐛' : reason === 'crashed' ? '💥' : '⏱';
+  const title = win ? 'SYSTEM STABLE' : reason === 'crashed' ? 'SYSTEM CRASHED' : 'TIME\'S UP';
+  document.getElementById('result-icon').textContent = icon;
+  document.getElementById('result-title').textContent = title;
+  document.getElementById('result-title').className = `result-title ${win ? 'win' : 'fail'}`;
+  document.getElementById('result-score').textContent = score + ' pts';
+  document.getElementById('result-msg').textContent = win
+    ? `You stabilized all three chaos challenges! Bug is... actually impressed. That's rare. You've got real debugging reflexes now.`
+    : reason === 'crashed'
+    ? `The system crashed! Stability hit zero before you could fix the corruptions. Bug is cackling. Try again — you'll be faster next time.`
+    : `Time ran out while the chaos was still running. Debugging under pressure is a real skill — keep practicing!`;
+  document.getElementById('result-actions').innerHTML = `
+    <button class="btn btn-secondary" onclick="restartGame()">Play Again</button>
+    <button class="btn btn-primary" onclick="window.location.href='bug.html'">Back to Bug</button>
+  `;
+  document.getElementById('result-overlay').classList.add('show');
+}
+
+function restartGame() {
+  score = 0; currentLevel = 0;
+  document.getElementById('score-val').textContent = '0';
+  document.getElementById('result-overlay').classList.remove('show');
+  initLevel(0);
+}
+
+initLevel(0);
+</script>
+</body>
+</html>
