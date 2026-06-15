@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Nova's Build Lab — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070f;
+  --surface:#0f0f1a;
+  --card:#131324;
+  --border:#1e1e35;
+  --text:#e8e8f5;
+  --muted:#5a5a80;
+  --yellow:#fbbf24;
+  --pink:#f472b6;
+  --cyan:#00f5d4;
+  --purple:#a855f7;
+  --green:#4ade80;
+  --red:#f87171;
+  --orange:#fb923c;
+}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--surface);}
+.nav-left{display:flex;align-items:center;gap:16px;}
+.nav-back{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-back:hover{color:var(--yellow);}
+.nav-title{font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.15em;color:var(--yellow);}
+.nav-tier{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);border:1px solid var(--purple);padding:3px 10px;border-radius:4px;opacity:0.8;}
+
+.game-shell{max-width:1100px;margin:0 auto;padding:28px 24px;}
+
+.nova-quote{background:linear-gradient(135deg,rgba(251,191,36,0.07),rgba(244,114,182,0.04));border:1px solid rgba(251,191,36,0.18);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.nova-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--yellow),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;}
+.nova-text{font-size:0.82rem;color:var(--muted);line-height:1.6;font-style:italic;}
+.nova-text strong{color:var(--yellow);font-style:normal;}
+
+.level-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.level-badge{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--yellow);border:1px solid rgba(251,191,36,0.3);padding:5px 14px;border-radius:4px;}
+.level-title{font-size:1.1rem;font-weight:800;}
+.level-desc{font-size:0.8rem;color:var(--muted);margin-top:2px;}
+.score-bar{display:flex;align-items:center;gap:20px;}
+.score-item{text-align:center;}
+.score-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--yellow);}
+.score-label{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+#timer-val.warning{color:var(--orange);}
+#timer-val.danger{color:var(--red);animation:pulse 0.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+
+.progress-dots{display:flex;gap:8px;align-items:center;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.3s;}
+.dot.active{background:var(--yellow);}
+.dot.done{background:var(--green);}
+
+/* SPEC CARD */
+.spec-card{background:var(--surface);border:1px solid rgba(251,191,36,0.2);border-radius:12px;padding:18px 22px;margin-bottom:20px;}
+.spec-header{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--yellow);margin-bottom:10px;}
+.spec-title{font-size:1rem;font-weight:800;margin-bottom:6px;}
+.spec-list{display:flex;flex-direction:column;gap:5px;}
+.spec-item{font-size:0.8rem;color:var(--muted);display:flex;align-items:center;gap:8px;}
+.spec-item::before{content:'//';color:var(--yellow);font-size:0.65rem;font-family:'DM Mono',monospace;}
+
+/* MAIN GAME AREA */
+.game-area{display:grid;grid-template-columns:280px 1fr;gap:20px;margin-bottom:20px;}
+
+/* PARTS PANEL */
+.parts-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.panel-header{padding:12px 18px;border-bottom:1px solid var(--border);}
+.panel-label{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.panel-label span{color:var(--yellow);}
+.parts-list{padding:12px;display:flex;flex-direction:column;gap:8px;}
+
+.part-chip{background:var(--card);border:1px solid var(--border);border-radius:7px;padding:8px 12px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:8px;}
+.part-chip:hover{border-color:var(--yellow);transform:translateX(2px);}
+.part-chip.used{opacity:0.35;cursor:default;pointer-events:none;}
+.part-chip.used:hover{transform:none;border-color:var(--border);}
+.part-type{font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;padding:2px 7px;border-radius:3px;flex-shrink:0;}
+.type-html{background:rgba(251,146,60,0.15);color:var(--orange);}
+.type-css{background:rgba(56,189,248,0.15);color:#38bdf8;}
+.type-js{background:rgba(251,191,36,0.15);color:var(--yellow);}
+.part-label{font-size:0.75rem;color:var(--text);}
+
+/* BUILD ZONE */
+.build-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.slots-area{padding:16px;display:flex;flex-direction:column;gap:12px;}
+
+.slot{border:2px dashed var(--border);border-radius:10px;padding:14px 16px;min-height:58px;transition:all 0.2s;position:relative;cursor:pointer;}
+.slot:hover{border-color:rgba(251,191,36,0.3);background:rgba(251,191,36,0.02);}
+.slot.filled{border-style:solid;cursor:default;}
+.slot.filled.correct{border-color:var(--green);background:rgba(74,222,128,0.06);}
+.slot.filled.wrong{border-color:var(--red);background:rgba(248,113,113,0.06);}
+.slot.filled.unchecked{border-color:rgba(251,191,36,0.3);background:rgba(251,191,36,0.04);}
+.slot.active-target{border-color:var(--yellow);background:rgba(251,191,36,0.06);}
+.slot-label{font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.slot-content{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text);line-height:1.5;}
+.slot-empty-hint{font-size:0.75rem;color:rgba(255,255,255,0.15);font-style:italic;}
+.slot-remove{position:absolute;top:10px;right:10px;background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.85rem;padding:2px 6px;border-radius:4px;transition:color 0.2s;}
+.slot-remove:hover{color:var(--red);}
+.slot-status{position:absolute;bottom:10px;right:10px;font-size:0.7rem;font-weight:700;}
+.status-correct{color:var(--green);}
+.status-wrong{color:var(--red);}
+
+/* PREVIEW */
+.preview-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.preview-frame{width:100%;height:200px;border:none;background:#fff;border-radius:0 0 12px 12px;}
+
+/* SELECTED PART INDICATOR */
+.selected-part-bar{background:rgba(251,191,36,0.08);border:1px solid rgba(251,191,36,0.2);border-radius:8px;padding:10px 16px;margin-bottom:12px;display:none;align-items:center;gap:12px;font-size:0.8rem;}
+.selected-part-bar.show{display:flex;}
+.selected-part-bar strong{color:var(--yellow);}
+
+/* ACTION ROW */
+.action-row{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center;}
+.action-left{font-size:0.78rem;color:var(--muted);}
+.action-right{display:flex;gap:10px;}
+.btn{font-family:'Orbitron',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-primary{background:var(--yellow);color:#000;font-weight:700;}
+.btn-primary:hover{opacity:0.85;transform:translateY(-1px);}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn-secondary:hover{border-color:var(--yellow);color:var(--yellow);}
+.btn-next{background:var(--green);color:#000;font-weight:700;display:none;}
+.btn-next:hover{opacity:0.85;}
+
+/* TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 24px;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;opacity:0;transition:opacity 0.3s;z-index:50;pointer-events:none;}
+.toast.show{opacity:1;}
+.toast.good{border-color:var(--green);color:var(--green);}
+.toast.bad{border-color:var(--red);color:var(--red);}
+.toast.info{border-color:var(--yellow);color:var(--yellow);}
+
+/* RESULT */
+.result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;}
+.result-overlay.show{display:flex;}
+.result-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:480px;width:90%;text-align:center;}
+.result-icon{font-size:3rem;margin-bottom:16px;}
+.result-title{font-family:'Orbitron',monospace;font-size:1.1rem;letter-spacing:0.1em;margin-bottom:8px;}
+.result-title.win{color:var(--green);}
+.result-title.fail{color:var(--red);}
+.result-score{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--yellow);margin-bottom:12px;}
+.result-msg{font-size:0.88rem;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.result-actions{display:flex;gap:12px;justify-content:center;}
+
+@media(max-width:700px){.game-area{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="nova.html" class="nav-back">← Nova's World</a>
+    <span class="nav-title">Build Lab</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="progress-dots" id="progress-dots">
+      <div class="dot active" id="dot-0"></div>
+      <div class="dot" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+    </div>
+    <span class="nav-tier">Coders</span>
+  </div>
+</nav>
+
+<div class="game-shell">
+  <div class="nova-quote">
+    <div class="nova-avatar">⚡</div>
+    <div class="nova-text" id="nova-text">Loading challenge...</div>
+  </div>
+
+  <div class="level-header">
+    <div style="display:flex;align-items:center;gap:16px;">
+      <div class="level-badge" id="level-badge">LEVEL 1</div>
+      <div>
+        <div class="level-title" id="level-title">Loading...</div>
+        <div class="level-desc" id="level-desc"></div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-item"><div class="score-val" id="timer-val" style="color:var(--yellow)">120</div><div class="score-label">Seconds</div></div>
+      <div class="score-item"><div class="score-val" id="score-val">0</div><div class="score-label">Score</div></div>
+    </div>
+  </div>
+
+  <div class="spec-card">
+    <div class="spec-header">// Build Spec</div>
+    <div class="spec-title" id="spec-title"></div>
+    <div class="spec-list" id="spec-list"></div>
+  </div>
+
+  <div class="selected-part-bar" id="selected-bar">
+    <strong id="selected-label"></strong>
+    <span style="color:var(--muted);font-size:0.78rem;">selected — now click a slot to place it</span>
+    <button onclick="clearSelected()" style="margin-left:auto;background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.8rem;">✕ Cancel</button>
+  </div>
+
+  <div class="game-area">
+    <div class="parts-panel">
+      <div class="panel-header"><div class="panel-label"><span>PARTS</span> — Click to select</div></div>
+      <div class="parts-list" id="parts-list"></div>
+    </div>
+
+    <div class="build-panel">
+      <div class="panel-header"><div class="panel-label"><span>BUILD ZONE</span> — Click slots to place parts</div></div>
+      <div class="slots-area" id="slots-area"></div>
+    </div>
+  </div>
+
+  <div class="preview-panel">
+    <div class="panel-header"><div class="panel-label"><span>LIVE PREVIEW</span> — See your build</div></div>
+    <iframe class="preview-frame" id="preview-frame" sandbox="allow-scripts"></iframe>
+  </div>
+
+  <div class="action-row">
+    <div class="action-left" id="action-msg">Select a part, then click a slot to place it.</div>
+    <div class="action-right">
+      <button class="btn btn-secondary" onclick="resetLevel()">Reset</button>
+      <button class="btn btn-primary" onclick="checkBuild()">Check Build</button>
+      <button class="btn btn-next" id="btn-next" onclick="nextLevel()">Next Level →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-box">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+
+<script>
+// ─── LEVELS ───────────────────────────────────────────────────────────────────
+const LEVELS = [
+  {
+    title: 'Color Changer Button',
+    desc: 'Place HTML, CSS, and JS parts to build a button that changes background color when clicked',
+    quote: '<strong>Nova says:</strong> Every app starts with three ingredients — structure, style, and behavior. HTML builds it, CSS styles it, JS makes it move.',
+    time: 120,
+    points: 350,
+    spec: {
+      title: 'Color Changer App',
+      requirements: [
+        'A button that says "Change Color"',
+        'Button is styled with padding, color, and border-radius',
+        'Clicking the button changes the page background to a random color',
+      ]
+    },
+    parts: [
+      { id: 'html1', type: 'html', label: 'Page heading',       code: '<h1>Color Changer</h1>' },
+      { id: 'html2', type: 'html', label: 'Change Color button', code: '<button onclick="changeColor()">Change Color</button>' },
+      { id: 'html3', type: 'html', label: 'Paragraph text',     code: '<p>Welcome to my app.</p>' },
+      { id: 'css1',  type: 'css',  label: 'Button style',       code: 'button { background: #fbbf24; color: #000; padding: 12px 24px; border: none; border-radius: 8px; font-size: 16px; cursor: pointer; }' },
+      { id: 'css2',  type: 'css',  label: 'Body background',    code: 'body { background: #ffffff; display: flex; flex-direction: column; align-items: center; padding: 40px; font-family: sans-serif; }' },
+      { id: 'js1',   type: 'js',   label: 'Random color function', code: 'function changeColor() { document.body.style.background = "#" + Math.floor(Math.random()*16777215).toString(16); }' },
+      { id: 'js2',   type: 'js',   label: 'Alert on click',     code: 'function changeColor() { alert("Clicked!"); }' },
+    ],
+    slots: [
+      { id: 's1', label: 'HTML — Heading',         correctPart: 'html1' },
+      { id: 's2', label: 'HTML — Main Button',     correctPart: 'html2' },
+      { id: 's3', label: 'CSS — Button Style',     correctPart: 'css1'  },
+      { id: 's4', label: 'CSS — Body Layout',      correctPart: 'css2'  },
+      { id: 's5', label: 'JS — Click Function',    correctPart: 'js1'   },
+    ],
+    buildPreview: (slotMap) => {
+      const h = slotMap['s1'] || ''; const btn = slotMap['s2'] || '';
+      const css1 = slotMap['s3'] || ''; const css2 = slotMap['s4'] || '';
+      const js = slotMap['s5'] || '';
+      return `<style>${css2} ${css1}</style>${h}${btn}<script>${js}<\/script>`;
+    }
+  },
+  {
+    title: 'Score Counter',
+    desc: 'Build an app that tracks a score — increment, decrement, and reset buttons',
+    quote: '<strong>Nova says:</strong> Variables hold data. Functions change it. The UI shows it. That\'s the full loop of every interactive app ever built.',
+    time: 150,
+    points: 450,
+    spec: {
+      title: 'Score Counter App',
+      requirements: [
+        'Display showing current score starting at 0',
+        '+ button adds 1, − button subtracts 1, Reset sets it to 0',
+        'Score display is large and centered',
+        'JS tracks score in a variable and updates the display',
+      ]
+    },
+    parts: [
+      { id: 'html1', type: 'html', label: 'Score display element', code: '<h1 id="score">0</h1>' },
+      { id: 'html2', type: 'html', label: 'Control buttons',       code: '<div><button onclick="add()">+</button><button onclick="reset()">Reset</button><button onclick="sub()">−</button></div>' },
+      { id: 'html3', type: 'html', label: 'Score as paragraph',    code: '<p id="score">0</p>' },
+      { id: 'css1',  type: 'css',  label: 'Score display style',   code: '#score { font-size: 80px; font-weight: 900; color: #fbbf24; margin: 20px 0; }' },
+      { id: 'css2',  type: 'css',  label: 'Body layout',           code: 'body { background: #07070f; color: white; display: flex; flex-direction: column; align-items: center; padding: 40px; font-family: sans-serif; } button { background: #1e1e35; color: white; border: 1px solid #333; padding: 12px 24px; margin: 4px; border-radius: 8px; font-size: 18px; cursor: pointer; }' },
+      { id: 'js1',   type: 'js',   label: 'Score tracking logic',  code: 'let score = 0; function add(){ score++; document.getElementById("score").textContent = score; } function sub(){ score--; document.getElementById("score").textContent = score; } function reset(){ score = 0; document.getElementById("score").textContent = score; }' },
+      { id: 'js2',   type: 'js',   label: 'Alert on each click',   code: 'function add(){ alert("Added!"); } function sub(){ alert("Subtracted!"); } function reset(){ alert("Reset!"); }' },
+    ],
+    slots: [
+      { id: 's1', label: 'HTML — Score Display',    correctPart: 'html1' },
+      { id: 's2', label: 'HTML — Buttons',          correctPart: 'html2' },
+      { id: 's3', label: 'CSS — Score Style',       correctPart: 'css1'  },
+      { id: 's4', label: 'CSS — Body & Buttons',    correctPart: 'css2'  },
+      { id: 's5', label: 'JS — Score Logic',        correctPart: 'js1'   },
+    ],
+    buildPreview: (slotMap) => {
+      const score = slotMap['s1'] || ''; const btns = slotMap['s2'] || '';
+      const css1 = slotMap['s3'] || ''; const css2 = slotMap['s4'] || '';
+      const js = slotMap['s5'] || '';
+      return `<style>${css2} ${css1}</style>${score}${btns}<script>${js}<\/script>`;
+    }
+  },
+  {
+    title: 'To-Do List',
+    desc: 'Build a working to-do list app — type a task, add it, check it off',
+    quote: '<strong>Nova says:</strong> A to-do list is the classic starter app. It uses everything: input, button, list rendering, event listeners, and DOM manipulation. This is the real thing.',
+    time: 180,
+    points: 600,
+    spec: {
+      title: 'To-Do List App',
+      requirements: [
+        'Text input for typing new tasks',
+        'Add button that appends task to the list',
+        'Clicking a task strikes it through (marks complete)',
+        'Input clears after adding a task',
+        'Styled with dark background and clean layout',
+      ]
+    },
+    parts: [
+      { id: 'html1', type: 'html', label: 'App title',            code: '<h1>My To-Do List</h1>' },
+      { id: 'html2', type: 'html', label: 'Input + Add button',   code: '<div class="input-row"><input type="text" id="task-input" placeholder="Add a task..."/><button onclick="addTask()">Add</button></div>' },
+      { id: 'html3', type: 'html', label: 'Task list container',  code: '<ul id="task-list"></ul>' },
+      { id: 'html4', type: 'html', label: 'Div container only',   code: '<div id="task-list"></div>' },
+      { id: 'css1',  type: 'css',  label: 'Body & app layout',    code: 'body{background:#07070f;color:#e8e8f5;font-family:sans-serif;display:flex;flex-direction:column;align-items:center;padding:40px;} h1{color:#fbbf24;margin-bottom:20px;} .input-row{display:flex;gap:8px;margin-bottom:20px;} input{background:#131324;border:1px solid #1e1e35;color:#e8e8f5;padding:10px 14px;border-radius:8px;font-size:14px;width:260px;} button{background:#fbbf24;color:#000;border:none;padding:10px 18px;border-radius:8px;cursor:pointer;font-weight:700;} #task-list{list-style:none;width:320px;} #task-list li{padding:12px 16px;border:1px solid #1e1e35;border-radius:8px;margin-bottom:8px;cursor:pointer;transition:all 0.2s;} #task-list li.done{text-decoration:line-through;opacity:0.4;}' },
+      { id: 'css2',  type: 'css',  label: 'Minimal light style',  code: 'body{font-family:sans-serif;padding:20px;} button{background:blue;color:white;padding:8px;}' },
+      { id: 'js1',   type: 'js',   label: 'Full to-do logic',     code: 'function addTask(){ const input = document.getElementById("task-input"); const text = input.value.trim(); if(!text) return; const li = document.createElement("li"); li.textContent = text; li.onclick = function(){ this.classList.toggle("done"); }; document.getElementById("task-list").appendChild(li); input.value = ""; }' },
+      { id: 'js2',   type: 'js',   label: 'Basic alert function', code: 'function addTask(){ alert("Task added!"); }' },
+    ],
+    slots: [
+      { id: 's1', label: 'HTML — App Title',         correctPart: 'html1' },
+      { id: 's2', label: 'HTML — Input & Button',    correctPart: 'html2' },
+      { id: 's3', label: 'HTML — Task List',         correctPart: 'html3' },
+      { id: 's4', label: 'CSS — Full Styling',       correctPart: 'css1'  },
+      { id: 's5', label: 'JS — To-Do Logic',         correctPart: 'js1'   },
+    ],
+    buildPreview: (slotMap) => {
+      const title = slotMap['s1'] || ''; const input = slotMap['s2'] || '';
+      const list = slotMap['s3'] || ''; const css = slotMap['s4'] || '';
+      const js = slotMap['s5'] || '';
+      return `<style>${css}</style>${title}${input}${list}<script>${js}<\/script>`;
+    }
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentLevel = 0;
+let score = 0;
+let timer = null;
+let timeLeft = 0;
+let selectedPart = null;
+let slotMap = {}; // slotId -> partId
+let levelDone = false;
+let checks = 0;
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function initLevel(idx) {
+  const lvl = LEVELS[idx];
+  levelDone = false;
+  selectedPart = null;
+  slotMap = {};
+  checks = 0;
+
+  document.getElementById('level-badge').textContent = `LEVEL ${idx + 1}`;
+  document.getElementById('level-title').textContent = lvl.title;
+  document.getElementById('level-desc').textContent = lvl.desc;
+  document.getElementById('nova-text').innerHTML = lvl.quote;
+  document.getElementById('spec-title').textContent = lvl.spec.title;
+  document.getElementById('spec-list').innerHTML = lvl.spec.requirements.map(r => `<div class="spec-item">${r}</div>`).join('');
+
+  LEVELS.forEach((_, i) => {
+    const dot = document.getElementById(`dot-${i}`);
+    if(dot) dot.className = 'dot' + (i < idx ? ' done' : i === idx ? ' active' : '');
+  });
+
+  clearSelected();
+  renderParts();
+  renderSlots();
+  updatePreview();
+
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('action-msg').textContent = 'Select a part, then click a slot to place it.';
+
+  clearInterval(timer);
+  timeLeft = lvl.time;
+  updateTimer();
+  timer = setInterval(tick, 1000);
+}
+
+// ─── RENDER PARTS ─────────────────────────────────────────────────────────────
+function renderParts() {
+  const lvl = LEVELS[currentLevel];
+  const usedParts = Object.values(slotMap);
+  document.getElementById('parts-list').innerHTML = lvl.parts.map(p =>
+    `<div class="part-chip ${usedParts.includes(p.id) ? 'used' : ''}" onclick="selectPart('${p.id}')">
+      <span class="part-type type-${p.type}">${p.type.toUpperCase()}</span>
+      <span class="part-label">${p.label}</span>
+    </div>`
+  ).join('');
+}
+
+// ─── RENDER SLOTS ─────────────────────────────────────────────────────────────
+function renderSlots() {
+  const lvl = LEVELS[currentLevel];
+  document.getElementById('slots-area').innerHTML = lvl.slots.map(slot => {
+    const placedId = slotMap[slot.id];
+    const part = placedId ? lvl.parts.find(p => p.id === placedId) : null;
+    const stateClass = part ? 'filled unchecked' : '';
+    return `<div class="slot ${stateClass}" id="slot-${slot.id}" onclick="placeInSlot('${slot.id}')">
+      <div class="slot-label">${slot.label}</div>
+      ${part
+        ? `<div class="slot-content">${escapeHTML(part.code.length > 80 ? part.code.substring(0,80)+'…' : part.code)}</div>
+           <button class="slot-remove" onclick="event.stopPropagation();removeFromSlot('${slot.id}')">✕</button>`
+        : `<div class="slot-empty-hint">Click to place selected part here</div>`
+      }
+    </div>`;
+  }).join('');
+}
+
+// ─── SELECT PART ──────────────────────────────────────────────────────────────
+function selectPart(id) {
+  const lvl = LEVELS[currentLevel];
+  const usedParts = Object.values(slotMap);
+  if (usedParts.includes(id)) return;
+  selectedPart = id;
+  const part = lvl.parts.find(p => p.id === id);
+  document.getElementById('selected-label').textContent = `${part.type.toUpperCase()} — ${part.label}`;
+  document.getElementById('selected-bar').classList.add('show');
+  document.querySelectorAll('.slot:not(.filled)').forEach(el => el.classList.add('active-target'));
+}
+
+function clearSelected() {
+  selectedPart = null;
+  document.getElementById('selected-bar').classList.remove('show');
+  document.querySelectorAll('.slot').forEach(el => el.classList.remove('active-target'));
+}
+
+// ─── PLACE IN SLOT ────────────────────────────────────────────────────────────
+function placeInSlot(slotId) {
+  if (!selectedPart) { showToast('Select a part first', 'info'); return; }
+  slotMap[slotId] = selectedPart;
+  clearSelected();
+  renderParts();
+  renderSlots();
+  updatePreview();
+}
+
+function removeFromSlot(slotId) {
+  delete slotMap[slotId];
+  clearSelected();
+  renderParts();
+  renderSlots();
+  updatePreview();
+}
+
+// ─── PREVIEW ──────────────────────────────────────────────────────────────────
+function updatePreview() {
+  const lvl = LEVELS[currentLevel];
+  const partContents = {};
+  Object.entries(slotMap).forEach(([slotId, partId]) => {
+    const part = lvl.parts.find(p => p.id === partId);
+    if(part) partContents[slotId] = part.code;
+  });
+  const html = lvl.buildPreview(partContents);
+  const frame = document.getElementById('preview-frame');
+  frame.srcdoc = html;
+}
+
+// ─── CHECK BUILD ──────────────────────────────────────────────────────────────
+function checkBuild() {
+  const lvl = LEVELS[currentLevel];
+  checks++;
+  let correct = 0;
+  let total = lvl.slots.length;
+
+  lvl.slots.forEach(slot => {
+    const el = document.getElementById(`slot-${slot.id}`);
+    if (!el) return;
+    const placed = slotMap[slot.id];
+    if (!placed) return;
+    el.classList.remove('unchecked', 'correct', 'wrong');
+    if (placed === slot.correctPart) {
+      el.classList.add('correct');
+      correct++;
+      // Add status
+      let statusEl = el.querySelector('.slot-status');
+      if (!statusEl) { statusEl = document.createElement('span'); statusEl.className = 'slot-status'; el.appendChild(statusEl); }
+      statusEl.textContent = '✓ Correct';
+      statusEl.className = 'slot-status status-correct';
+    } else {
+      el.classList.add('wrong');
+      let statusEl = el.querySelector('.slot-status');
+      if (!statusEl) { statusEl = document.createElement('span'); statusEl.className = 'slot-status'; el.appendChild(statusEl); }
+      statusEl.textContent = '✗ Wrong part';
+      statusEl.className = 'slot-status status-wrong';
+    }
+  });
+
+  const filled = Object.keys(slotMap).length;
+
+  if (correct === total) {
+    clearInterval(timer);
+    levelDone = true;
+    const timeBonus = Math.floor(timeLeft * 2);
+    const checkPenalty = Math.max(0, (checks - 1) * 30);
+    const pts = Math.max(50, lvl.points + timeBonus - checkPenalty);
+    score += pts;
+    document.getElementById('score-val').textContent = score;
+    document.getElementById('btn-next').style.display = 'block';
+    document.getElementById('action-msg').textContent = `Build complete! +${pts} pts`;
+    showToast('Perfect build!', 'good');
+    if (currentLevel === LEVELS.length - 1) setTimeout(() => showResult(true), 1200);
+  } else {
+    score = Math.max(0, score - 25);
+    document.getElementById('score-val').textContent = score;
+    document.getElementById('action-msg').textContent = `${correct}/${total} slots correct — keep adjusting`;
+    showToast(`${correct} of ${total} correct (−25pts)`, 'bad');
+  }
+}
+
+// ─── TIMER ────────────────────────────────────────────────────────────────────
+function tick() {
+  timeLeft--;
+  updateTimer();
+  if (timeLeft <= 0) { clearInterval(timer); if (!levelDone) showResult(false); }
+}
+function updateTimer() {
+  const el = document.getElementById('timer-val');
+  el.textContent = timeLeft;
+  el.className = timeLeft <= 10 ? 'danger' : timeLeft <= 25 ? 'warning' : '';
+}
+
+function escapeHTML(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+let toastTimer = null;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2000);
+}
+
+function resetLevel() { initLevel(currentLevel); }
+
+function nextLevel() {
+  if (currentLevel < LEVELS.length - 1) { currentLevel++; initLevel(currentLevel); }
+  else showResult(true);
+}
+
+function showResult(win) {
+  clearInterval(timer);
+  document.getElementById('result-icon').textContent = win ? '⚡' : '🔧';
+  document.getElementById('result-title').textContent = win ? 'BUILD COMPLETE' : 'TIME\'S UP';
+  document.getElementById('result-title').className = `result-title ${win ? 'win' : 'fail'}`;
+  document.getElementById('result-score').textContent = score + ' pts';
+  document.getElementById('result-msg').textContent = win
+    ? `You built all three working apps from scratch! You now know how HTML, CSS, and JavaScript work together. Nova is impressed.`
+    : `Time ran out — but you were building something real. Every app starts with the same three ingredients. Try again and go faster!`;
+  document.getElementById('result-actions').innerHTML = `
+    <button class="btn btn-secondary" onclick="restartGame()">Play Again</button>
+    <button class="btn btn-primary" onclick="window.location.href='nova.html'">Back to Nova</button>
+  `;
+  document.getElementById('result-overlay').classList.add('show');
+}
+
+function restartGame() {
+  score = 0; currentLevel = 0;
+  document.getElementById('score-val').textContent = '0';
+  document.getElementById('result-overlay').classList.remove('show');
+  initLevel(0);
+}
+
+initLevel(0);
+</script>
+</body>
+</html>
