@@ -18,276 +18,76 @@
     --yellow:#fbbf24;
     --lime:#84cc16;
     --orange:#fb923c;
+    --blue:#38bdf8;
   }
-  body{
-    background:var(--bg);
-    color:var(--text);
-    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
-    min-height:100vh;
-  }
+  body{background:var(--bg);color:var(--text);font-family:'Segoe UI',system-ui,-apple-system,sans-serif;min-height:100vh;}
 
-  /* NAV */
-  nav{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    padding:18px 32px;
-    border-bottom:1px solid var(--border);
-    background:var(--surface);
-  }
-  .nav-logo{
-    font-size:1rem;
-    font-weight:700;
-    letter-spacing:0.12em;
-    text-transform:uppercase;
-    color:var(--cyan);
-    text-decoration:none;
-  }
+  nav{display:flex;align-items:center;justify-content:space-between;padding:18px 32px;border-bottom:1px solid var(--border);background:var(--surface);}
+  .nav-logo{font-size:1rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);text-decoration:none;}
   .nav-logo span{color:var(--text);opacity:0.4;margin:0 6px;}
-  #logout-btn{
-    background:transparent;
-    border:1px solid var(--border);
-    color:var(--muted);
-    padding:8px 18px;
-    border-radius:6px;
-    font-size:0.8rem;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    cursor:pointer;
-    transition:all 0.2s;
-  }
+  #logout-btn{background:transparent;border:1px solid var(--border);color:var(--muted);padding:8px 18px;border-radius:6px;font-size:0.8rem;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;transition:all 0.2s;}
   #logout-btn:hover{border-color:var(--pink);color:var(--pink);}
 
-  /* LOADING */
-  #loading{
-    display:flex;
-    flex-direction:column;
-    align-items:center;
-    justify-content:center;
-    min-height:60vh;
-    gap:16px;
-    color:var(--muted);
-    font-size:0.85rem;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-  }
-  .spinner{
-    width:32px;height:32px;
-    border:2px solid var(--border);
-    border-top-color:var(--cyan);
-    border-radius:50%;
-    animation:spin 0.8s linear infinite;
-  }
+  #loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:60vh;gap:16px;color:var(--muted);font-size:0.85rem;letter-spacing:0.1em;text-transform:uppercase;}
+  .spinner{width:32px;height:32px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;}
   @keyframes spin{to{transform:rotate(360deg);}}
 
-  /* MAIN */
   #dashboard{display:none;}
   main{max-width:960px;margin:0 auto;padding:48px 24px;}
 
-  /* HERO CARD */
-  .hero-card{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:14px;
-    padding:32px;
-    margin-bottom:40px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:24px;
-    flex-wrap:wrap;
-  }
-  .hero-left h1{
-    font-size:1.6rem;
-    font-weight:700;
-    margin-bottom:6px;
-  }
+  .hero-card{background:var(--surface);border:1px solid var(--border);border-radius:14px;padding:32px;margin-bottom:40px;display:flex;align-items:center;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .hero-left h1{font-size:1.6rem;font-weight:700;margin-bottom:6px;}
   .hero-left h1 span{color:var(--cyan);}
   .hero-left p{color:var(--muted);font-size:0.9rem;}
-  .tier-badge{
-    display:inline-flex;
-    align-items:center;
-    gap:8px;
-    padding:10px 20px;
-    border-radius:999px;
-    font-size:0.8rem;
-    font-weight:700;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    border:1px solid;
-    margin-top:16px;
-  }
+  .tier-badge{display:inline-flex;align-items:center;gap:8px;padding:10px 20px;border-radius:999px;font-size:0.8rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;border:1px solid;margin-top:16px;}
   .tier-badge.sparks{background:rgba(251,191,36,0.08);border-color:var(--yellow);color:var(--yellow);}
   .tier-badge.builders{background:rgba(168,85,247,0.08);border-color:var(--purple);color:var(--purple);}
   .tier-badge.coders{background:rgba(0,245,212,0.08);border-color:var(--cyan);color:var(--cyan);}
   .tier-badge.free{background:rgba(107,107,128,0.08);border-color:var(--muted);color:var(--muted);}
 
-  .tier-perks{
-    background:rgba(0,245,212,0.04);
-    border:1px solid rgba(0,245,212,0.1);
-    border-radius:10px;
-    padding:20px 24px;
-    font-size:0.82rem;
-    color:var(--muted);
-    min-width:220px;
-  }
+  .tier-perks{background:rgba(0,245,212,0.04);border:1px solid rgba(0,245,212,0.1);border-radius:10px;padding:20px 24px;font-size:0.82rem;color:var(--muted);min-width:220px;}
   .tier-perks strong{display:block;color:var(--text);margin-bottom:10px;font-size:0.85rem;letter-spacing:0.06em;}
   .tier-perks li{list-style:none;padding:4px 0;display:flex;align-items:center;gap:8px;}
   .tier-perks li::before{content:'//';color:var(--cyan);font-size:0.7rem;font-weight:700;}
 
-  /* UPGRADE CTA */
-  .upgrade-bar{
-    background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(0,245,212,0.06));
-    border:1px solid rgba(168,85,247,0.25);
-    border-radius:10px;
-    padding:16px 24px;
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:16px;
-    margin-bottom:40px;
-    flex-wrap:wrap;
-  }
+  .upgrade-bar{background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(0,245,212,0.06));border:1px solid rgba(168,85,247,0.25);border-radius:10px;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:40px;flex-wrap:wrap;}
   .upgrade-bar p{font-size:0.85rem;color:var(--muted);}
   .upgrade-bar p strong{color:var(--text);}
-  .upgrade-bar a{
-    background:var(--purple);
-    color:#fff;
-    text-decoration:none;
-    padding:10px 22px;
-    border-radius:7px;
-    font-size:0.8rem;
-    font-weight:700;
-    letter-spacing:0.08em;
-    text-transform:uppercase;
-    white-space:nowrap;
-    transition:opacity 0.2s;
-  }
+  .upgrade-bar a{background:var(--purple);color:#fff;text-decoration:none;padding:10px 22px;border-radius:7px;font-size:0.8rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;white-space:nowrap;transition:opacity 0.2s;}
   .upgrade-bar a:hover{opacity:0.85;}
 
-  /* SECTION LABEL */
-  .section-label{
-    font-size:0.7rem;
-    font-weight:700;
-    letter-spacing:0.2em;
-    text-transform:uppercase;
-    color:var(--muted);
-    margin-bottom:16px;
-    display:flex;
-    align-items:center;
-    gap:12px;
-  }
+  .section-label{font-size:0.7rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--muted);margin-bottom:16px;display:flex;align-items:center;gap:12px;}
   .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-  /* CHARACTER GRID */
-  .character-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
-    gap:16px;
-    margin-bottom:48px;
-  }
-  .char-card{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:12px;
-    padding:22px;
-    display:flex;
-    align-items:center;
-    gap:16px;
-    text-decoration:none;
-    color:var(--text);
-    transition:all 0.2s;
-    position:relative;
-    overflow:hidden;
-  }
-  .char-card::before{
-    content:'';
-    position:absolute;
-    inset:0;
-    opacity:0;
-    transition:opacity 0.2s;
-  }
-  .char-card:hover::before{opacity:1;}
+  .character-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:16px;margin-bottom:48px;}
+  .char-card{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:22px;display:flex;align-items:center;gap:16px;text-decoration:none;color:var(--text);transition:all 0.2s;position:relative;overflow:hidden;}
   .char-card:hover{transform:translateY(-2px);}
 
-  /* per-character accent colors */
   .char-zen{--accent:#f472b6;}
   .char-byte{--accent:#a855f7;}
   .char-loop{--accent:#00f5d4;}
   .char-nova{--accent:#fbbf24;}
   .char-bug{--accent:#84cc16;}
   .char-echo{--accent:#38bdf8;}
-
-  .char-card::before{background:linear-gradient(135deg,transparent,rgba(var(--accent-rgb),0.04));}
   .char-card:hover{border-color:var(--accent);}
 
-  .char-icon{
-    width:44px;height:44px;
-    border-radius:10px;
-    display:flex;align-items:center;justify-content:center;
-    font-size:1.4rem;
-    border:1px solid;
-    border-color:var(--accent);
-    background:rgba(0,0,0,0.3);
-    flex-shrink:0;
-  }
+  .char-icon{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;border:1px solid var(--accent);background:rgba(0,0,0,0.3);flex-shrink:0;}
+  .char-icon svg{width:22px;height:22px;}
   .char-info{flex:1;}
   .char-info h3{font-size:0.95rem;font-weight:700;margin-bottom:3px;}
   .char-info p{font-size:0.75rem;color:var(--muted);}
-  .char-access{
-    font-size:0.65rem;
-    font-weight:700;
-    letter-spacing:0.1em;
-    text-transform:uppercase;
-    padding:4px 9px;
-    border-radius:4px;
-    border:1px solid;
-    flex-shrink:0;
-  }
+  .char-access{font-size:0.65rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;padding:4px 9px;border-radius:4px;border:1px solid;flex-shrink:0;}
   .access-free{border-color:var(--muted);color:var(--muted);}
   .access-unlocked{border-color:var(--cyan);color:var(--cyan);}
 
-  .char-card.locked{opacity:0.45;pointer-events:none;cursor:default;}
-
-  /* WORKBOOKS */
-  .workbook-grid{
-    display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
-    gap:14px;
-    margin-bottom:48px;
-  }
-  .wb-card{
-    background:var(--surface);
-    border:1px solid var(--border);
-    border-radius:10px;
-    padding:18px;
-    text-align:center;
-    text-decoration:none;
-    color:var(--text);
-    transition:all 0.2s;
-  }
-  .wb-card:hover{border-color:var(--purple);transform:translateY(-2px);}
-  .wb-card .wb-emoji{font-size:1.5rem;margin-bottom:10px;}
+  .workbook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px;margin-bottom:48px;}
+  .wb-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:24px 18px;text-align:center;color:var(--text);}
+  .wb-card .wb-initial{font-size:1.8rem;font-weight:900;margin-bottom:10px;line-height:1;}
   .wb-card h4{font-size:0.8rem;font-weight:700;margin-bottom:4px;}
   .wb-card p{font-size:0.7rem;color:var(--muted);}
-  .wb-price{
-    display:inline-block;
-    margin-top:10px;
-    font-size:0.7rem;
-    font-weight:700;
-    color:var(--purple);
-    letter-spacing:0.06em;
-  }
+  .wb-soon{display:inline-block;margin-top:10px;font-size:0.65rem;font-weight:700;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;border:1px solid var(--border);padding:3px 8px;border-radius:4px;}
 
-  /* FOOTER */
-  footer{
-    text-align:center;
-    padding:32px 24px;
-    border-top:1px solid var(--border);
-    color:var(--muted);
-    font-size:0.75rem;
-    letter-spacing:0.06em;
-  }
+  footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:0.75rem;letter-spacing:0.06em;}
   footer a{color:var(--cyan);text-decoration:none;}
 
   @media(max-width:600px){
@@ -313,7 +113,6 @@
 <div id="dashboard">
 <main>
 
-  <!-- HERO CARD -->
   <div class="hero-card">
     <div class="hero-left">
       <h1>Hey, <span id="user-name">Coder</span>.</h1>
@@ -326,111 +125,90 @@
     </div>
   </div>
 
-  <!-- UPGRADE BAR (hidden for Coders) -->
   <div class="upgrade-bar" id="upgrade-bar">
     <p><strong>Unlock more worlds.</strong> Upgrade your plan to access all character lessons.</p>
-    <a href="membership.html" id="upgrade-link">Upgrade Plan</a>
+    <a href="membership.html">Upgrade Plan</a>
   </div>
 
-  <!-- CHARACTER WORLDS -->
   <div class="section-label">Character Worlds</div>
-  <div class="character-grid" id="char-grid">
+  <div class="character-grid">
 
-    <a href="zen.html" class="char-card char-zen" id="card-zen">
-      <div class="char-icon">🌸</div>
+    <a href="zen.html" class="char-card char-zen">
+      <div class="char-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#f472b6" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M2 12h3M19 12h3"/><path d="M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M5.6 18.4l2.1-2.1M16.3 7.7l2.1-2.1"/></svg>
+      </div>
       <div class="char-info">
         <h3>Zen</h3>
-        <p>Creative Coder · Ages 8–10</p>
+        <p>Creative Coder</p>
       </div>
-      <span class="char-access access-free">Free</span>
+      <span class="char-access access-unlocked" id="access-zen">Unlocked</span>
     </a>
 
-    <a href="byte.html" class="char-card char-byte" id="card-byte">
-      <div class="char-icon">🐱</div>
+    <a href="byte.html" class="char-card char-byte">
+      <div class="char-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#a855f7" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M9 9h.01M15 9h.01M9 15h6"/></svg>
+      </div>
       <div class="char-info">
         <h3>Byte</h3>
-        <p>Glitch Cat · Ages 6–8</p>
+        <p>Glitch Cat</p>
       </div>
       <span class="char-access access-free" id="access-byte">Free</span>
     </a>
 
-    <a href="loop.html" class="char-card char-loop" id="card-loop">
-      <div class="char-icon">↻</div>
+    <a href="loop.html" class="char-card char-loop">
+      <div class="char-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#00f5d4" stroke-width="2"><path d="M17 2l4 4-4 4"/><path d="M3 11V9a4 4 0 014-4h14"/><path d="M7 22l-4-4 4-4"/><path d="M21 13v2a4 4 0 01-4 4H3"/></svg>
+      </div>
       <div class="char-info">
         <h3>Loop</h3>
-        <p>Flow Guide · Ages 9–11</p>
+        <p>Flow Guide</p>
       </div>
       <span class="char-access access-free" id="access-loop">Free</span>
     </a>
 
-    <a href="nova.html" class="char-card char-nova" id="card-nova">
-      <div class="char-icon">⚡</div>
+    <a href="nova.html" class="char-card char-nova">
+      <div class="char-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#fbbf24" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+      </div>
       <div class="char-info">
         <h3>Nova</h3>
-        <p>Builder Bot · Ages 8–10</p>
+        <p>Builder Bot</p>
       </div>
       <span class="char-access access-free" id="access-nova">Free</span>
     </a>
 
-    <a href="bug.html" class="char-card char-bug" id="card-bug">
-      <div class="char-icon">🐛</div>
+    <a href="bug.html" class="char-card char-bug">
+      <div class="char-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#84cc16" stroke-width="2"><path d="M8 2l1.5 1.5M16 2l-1.5 1.5M12 8v8M9 9H5M19 9h-4M5 14h4M15 14h4M8 20l1-2h6l1 2"/><ellipse cx="12" cy="13" rx="4" ry="5"/></svg>
+      </div>
       <div class="char-info">
         <h3>Bug</h3>
-        <p>Debug Gremlin · Ages 10–12</p>
+        <p>Debug Gremlin</p>
       </div>
       <span class="char-access access-free" id="access-bug">Free</span>
     </a>
 
-    <a href="echo.html" class="char-card char-echo" id="card-echo">
-      <div class="char-icon">🎵</div>
+    <a href="echo.html" class="char-card char-echo">
+      <div class="char-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#38bdf8" stroke-width="2"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></svg>
+      </div>
       <div class="char-info">
         <h3>Echo</h3>
-        <p>Signal DJ · Ages 10–12</p>
+        <p>Signal DJ</p>
       </div>
       <span class="char-access access-free" id="access-echo">Free</span>
     </a>
 
   </div>
 
-  <!-- WORKBOOKS -->
   <div class="section-label">Workbooks</div>
   <div class="workbook-grid">
-    <a href="https://buy.stripe.com/ZEN_STRIPE_LINK" class="wb-card" target="_blank">
-      <div class="wb-emoji">🌸</div>
-      <h4>Zen's Creative Circuits</h4>
-      <p>Vol. 1 · HTML & CSS</p>
-      <span class="wb-price">$7.99</span>
-    </a>
-    <a href="https://buy.stripe.com/BYTE_STRIPE_LINK" class="wb-card" target="_blank">
-      <div class="wb-emoji">🐱</div>
-      <h4>Byte's Debug Lab</h4>
-      <p>Vol. 1 · Debugging</p>
-      <span class="wb-price">$7.99</span>
-    </a>
-    <a href="https://buy.stripe.com/LOOP_STRIPE_LINK" class="wb-card" target="_blank">
-      <div class="wb-emoji">↻</div>
-      <h4>Loop's Logic Quest</h4>
-      <p>Vol. 1 · Loops & Logic</p>
-      <span class="wb-price">$7.99</span>
-    </a>
-    <a href="https://buy.stripe.com/NOVA_STRIPE_LINK" class="wb-card" target="_blank">
-      <div class="wb-emoji">⚡</div>
-      <h4>Nova's Build Lab</h4>
-      <p>Vol. 1 · Projects</p>
-      <span class="wb-price">$7.99</span>
-    </a>
-    <a href="https://buy.stripe.com/BUG_STRIPE_LINK" class="wb-card" target="_blank">
-      <div class="wb-emoji">🐛</div>
-      <h4>Bug's Chaos Code</h4>
-      <p>Vol. 1 · Problem Solving</p>
-      <span class="wb-price">$7.99</span>
-    </a>
-    <a href="https://buy.stripe.com/ECHO_STRIPE_LINK" class="wb-card" target="_blank">
-      <div class="wb-emoji">🎵</div>
-      <h4>Echo's Signal Lab</h4>
-      <p>Vol. 1 · Events & Timing</p>
-      <span class="wb-price">$7.99</span>
-    </a>
+    <div class="wb-card"><div class="wb-initial" style="color:#f472b6">Z</div><h4>Zen's Creative Circuits</h4><p>Vol. 1 · HTML & CSS</p><span class="wb-soon">Coming Soon</span></div>
+    <div class="wb-card"><div class="wb-initial" style="color:#a855f7">B</div><h4>Byte's Debug Lab</h4><p>Vol. 1 · Debugging</p><span class="wb-soon">Coming Soon</span></div>
+    <div class="wb-card"><div class="wb-initial" style="color:#00f5d4">L</div><h4>Loop's Logic Quest</h4><p>Vol. 1 · Loops & Logic</p><span class="wb-soon">Coming Soon</span></div>
+    <div class="wb-card"><div class="wb-initial" style="color:#fbbf24">N</div><h4>Nova's Build Lab</h4><p>Vol. 1 · Projects</p><span class="wb-soon">Coming Soon</span></div>
+    <div class="wb-card"><div class="wb-initial" style="color:#84cc16">B</div><h4>Bug's Chaos Code</h4><p>Vol. 1 · Problem Solving</p><span class="wb-soon">Coming Soon</span></div>
+    <div class="wb-card"><div class="wb-initial" style="color:#38bdf8">E</div><h4>Echo's Signal Lab</h4><p>Vol. 1 · Events & Timing</p><span class="wb-soon">Coming Soon</span></div>
   </div>
 
 </main>
@@ -439,7 +217,6 @@
 </footer>
 </div>
 
-<!-- Firebase -->
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
 import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
@@ -469,77 +246,58 @@ const TIER_DATA = {
     label: 'Sparks — $5/mo',
     cls: 'sparks',
     perks: ['Lessons 1 & 2 on all 6 worlds', 'Printable cheat sheets', 'Early access to new content'],
-    unlocks: ['byte','loop','nova','bug','echo']
+    unlocks: ['zen','byte','loop','nova','bug','echo']
   },
   builders: {
     label: 'Builders — $9/mo',
     cls: 'builders',
     perks: ['Lessons 1–3 on all 6 worlds', 'Everything in Sparks', 'Project challenges unlocked'],
-    unlocks: ['byte','loop','nova','bug','echo']
+    unlocks: ['zen','byte','loop','nova','bug','echo']
   },
   coders: {
     label: 'Coders — $15/mo',
     cls: 'coders',
     perks: ['All 4 lessons on every world', 'Full capstone projects', 'Everything in Builders'],
-    unlocks: ['byte','loop','nova','bug','echo']
+    unlocks: ['zen','byte','loop','nova','bug','echo']
   }
 };
 
 onAuthStateChanged(auth, async (user) => {
-  if (!user) {
-    window.location.href = 'index.html';
-    return;
-  }
+  if (!user) { window.location.href = 'index.html'; return; }
 
-  // Get tier from Firestore
   let tier = 'free';
   try {
     const snap = await getDoc(doc(db, 'users', user.uid));
-    if (snap.exists() && snap.data().tier) {
-      tier = snap.data().tier.toLowerCase();
-    }
-  } catch(e) {
-    console.error('Firestore error:', e);
-  }
+    if (snap.exists() && snap.data().tier) tier = snap.data().tier.toLowerCase();
+  } catch(e) { console.error(e); }
 
   const data = TIER_DATA[tier] || TIER_DATA.free;
-
-  // Name
   const displayName = user.displayName || user.email.split('@')[0];
+
   document.getElementById('user-name').textContent = displayName;
 
-  // Tier badge
   const badge = document.getElementById('tier-badge');
   badge.textContent = data.label;
   badge.className = 'tier-badge ' + data.cls;
 
-  // Perks list
   const perksList = document.getElementById('perks-list');
   perksList.innerHTML = data.perks.map(p => `<li>${p}</li>`).join('');
 
-  // Upgrade bar
-  if (tier === 'coders') {
-    document.getElementById('upgrade-bar').style.display = 'none';
-  }
+  if (tier === 'coders') document.getElementById('upgrade-bar').style.display = 'none';
 
-  // Character card access badges
-  const chars = ['byte','loop','nova','bug','echo'];
+  const chars = ['zen','byte','loop','nova','bug','echo'];
   chars.forEach(c => {
-    const accessEl = document.getElementById('access-' + c);
-    if (accessEl && data.unlocks.includes(c)) {
-      accessEl.textContent = 'Unlocked';
-      accessEl.className = 'char-access access-unlocked';
+    const el = document.getElementById('access-' + c);
+    if (el && data.unlocks.includes(c)) {
+      el.textContent = 'Unlocked';
+      el.className = 'char-access access-unlocked';
     }
   });
-  // Zen is always free/accessible
-  // All cards are always clickable — locking happens on the character page itself
 
-  // Show dashboard
   document.getElementById('loading').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
 });
 
-// Logout
 document.getElementById('logout-btn').addEventListener('click', () => {
   signOut(auth).then(() => { window.location.href = 'index.html'; });
 });
