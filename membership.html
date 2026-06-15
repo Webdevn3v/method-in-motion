@@ -41,8 +41,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .tier-card.featured{border-color:rgba(255,107,170,.4);background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(198,107,255,.04))}
 .featured-badge{position:absolute;top:-12px;left:50%;transform:translateX(-50%);font-family:var(--display);font-size:.44rem;letter-spacing:.14em;text-transform:uppercase;background:var(--grad);color:#000;padding:5px 14px;border-radius:100px;white-space:nowrap;font-weight:700}
 .tier-name{font-family:var(--display);font-size:.55rem;letter-spacing:.2em;text-transform:uppercase;color:var(--muted);margin-bottom:8px}
-.tier-title{font-family:var(--heading);font-size:1.3rem;font-weight:800;margin-bottom:4px}
-.tier-age{font-family:var(--display);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:20px}
+.tier-title{font-family:var(--heading);font-size:1.3rem;font-weight:800;margin-bottom:20px}
 .tier-price{display:flex;align-items:baseline;gap:4px;margin-bottom:6px}
 .tier-amount{font-family:var(--display);font-size:2.2rem;font-weight:900;color:var(--white)}
 .tier-period{font-family:var(--display);font-size:.52rem;letter-spacing:.1em;color:var(--muted)}
@@ -92,7 +91,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   <div class="hero-bg"></div>
   <div class="page-eyebrow">Membership</div>
   <h1 class="page-title">Join <span>the Crew.</span></h1>
-  <p class="page-desc">Start free — no card needed. Create your account and get Lesson 1 for all 6 characters right away. Upgrade anytime to unlock everything.</p>
+  <p class="page-desc">Start free — no card needed. Create your account and get Lesson 1 for Zen and Byte right away. Upgrade anytime to unlock all 6 characters and every lesson.</p>
   <div class="page-free-note">✦ Free account · No credit card required · Upgrade anytime</div>
   <div class="member-status" id="member-status">
     <p>You're already in the crew — <strong id="member-tier-label">Sparks member</strong>. All your lessons are unlocked.</p>
@@ -104,13 +103,12 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   <div class="tier-card free-tier">
     <div class="tier-name">Free</div>
     <div class="tier-title">Explorer</div>
-    <div class="tier-age">All ages</div>
     <div class="tier-price"><span class="tier-amount">$0</span><span class="tier-period">/ forever</span></div>
     <div class="tier-trial free-label">No credit card needed</div>
     <div class="tier-divider"></div>
     <div class="tier-features">
       <div class="tier-feature"><div class="feature-dot">✦</div>Free account — always</div>
-      <div class="tier-feature"><div class="feature-dot">✦</div>Lesson 1 for all 6 characters</div>
+      <div class="tier-feature"><div class="feature-dot">✦</div>Lesson 1 for Zen &amp; Byte</div>
       <div class="tier-feature"><div class="feature-dot">✦</div>Interactive activities included</div>
       <div class="tier-feature"><div class="feature-dot">✦</div>No expiration, no catch</div>
     </div>
@@ -120,60 +118,57 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   <div class="tier-card sparks">
     <div class="tier-name">Tier 01</div>
     <div class="tier-title">Sparks</div>
-    <div class="tier-age">Ages 4–6</div>
     <div class="tier-price"><span class="tier-amount">$5</span><span class="tier-period">/ month</span></div>
-    <div class="tier-trial paid-label">3-day free trial</div>
+    <div class="tier-trial paid-label">3-day free trial · cancel anytime</div>
     <div class="tier-divider"></div>
     <div class="tier-features">
-      <div class="tier-feature"><div class="feature-dot">✦</div>Everything in Explorer</div>
-      <div class="tier-feature"><div class="feature-dot">✦</div>All 4 lessons per character</div>
-      <div class="tier-feature"><div class="feature-dot">✦</div>Interactive activities and reflections</div>
+      <div class="tier-feature"><div class="feature-dot">✦</div>Lesson 1 on all 6 characters</div>
+      <div class="tier-feature"><div class="feature-dot">✦</div>Interactive activities &amp; reflections</div>
+      <div class="tier-feature"><div class="feature-dot">✦</div>Printable cheat sheets</div>
       <div class="tier-feature"><div class="feature-dot">✦</div>New content added monthly</div>
     </div>
-    <button class="tier-cta secondary" onclick="handleJoin('https://buy.stripe.com/fZu7sL7BkcpAa0O8Gia3u08')">Get Sparks →</button>
+    <button class="tier-cta secondary" onclick="handleJoin('https://buy.stripe.com/fZu7sL7BkcpAa0O8Gia3u08')">Try Sparks Free →</button>
   </div>
 
   <div class="tier-card builders featured">
     <div class="featured-badge">Most Popular</div>
     <div class="tier-name">Tier 02</div>
     <div class="tier-title">Builders</div>
-    <div class="tier-age">Ages 7–9</div>
     <div class="tier-price"><span class="tier-amount">$9</span><span class="tier-period">/ month</span></div>
-    <div class="tier-trial paid-label">3-day free trial</div>
+    <div class="tier-trial paid-label">3-day free trial · cancel anytime</div>
     <div class="tier-divider"></div>
     <div class="tier-features">
+      <div class="tier-feature"><div class="feature-dot">✦</div>Lessons 1 &amp; 2 on all 6 characters</div>
       <div class="tier-feature"><div class="feature-dot">✦</div>Everything in Sparks</div>
       <div class="tier-feature"><div class="feature-dot">✦</div>Project challenges per character</div>
       <div class="tier-feature"><div class="feature-dot">✦</div>Bonus creative labs</div>
-      <div class="tier-feature"><div class="feature-dot">✦</div>Priority access to new drops</div>
     </div>
-    <button class="tier-cta primary" onclick="handleJoin('https://buy.stripe.com/28EaEXbRA75gb4SbSua3u07')">Get Builders →</button>
+    <button class="tier-cta primary" onclick="handleJoin('https://buy.stripe.com/28EaEXbRA75gb4SbSua3u07')">Try Builders Free →</button>
   </div>
 
   <div class="tier-card coders">
     <div class="tier-name">Tier 03</div>
     <div class="tier-title">Coders</div>
-    <div class="tier-age">Ages 10–12</div>
     <div class="tier-price"><span class="tier-amount">$15</span><span class="tier-period">/ month</span></div>
-    <div class="tier-trial paid-label">3-day free trial</div>
+    <div class="tier-trial paid-label">3-day free trial · cancel anytime</div>
     <div class="tier-divider"></div>
     <div class="tier-features">
+      <div class="tier-feature"><div class="feature-dot">✦</div>All 4 lessons on all 6 characters</div>
       <div class="tier-feature"><div class="feature-dot">✦</div>Everything in Builders</div>
-      <div class="tier-feature"><div class="feature-dot">✦</div>Advanced coding challenges</div>
-      <div class="tier-feature"><div class="feature-dot">✦</div>Full build projects from scratch</div>
+      <div class="tier-feature"><div class="feature-dot">✦</div>Full capstone build projects</div>
       <div class="tier-feature"><div class="feature-dot">✦</div>Early access to new characters</div>
     </div>
-    <button class="tier-cta secondary" onclick="handleJoin('https://buy.stripe.com/5kQaEX2h075g0qe7Cea3u06')">Get Coders →</button>
+    <button class="tier-cta secondary" onclick="handleJoin('https://buy.stripe.com/5kQaEX2h075g0qe7Cea3u06')">Try Coders Free →</button>
   </div>
 </div>
 
 <div class="faq">
   <h2 class="faq-title">Questions</h2>
-  <div class="faq-item"><div class="faq-q">Is the free tier actually free?</div><div class="faq-a">Yes — no credit card, no trial period, no catch. Create an account and Lesson 1 for all 6 characters is yours forever.</div></div>
-  <div class="faq-item"><div class="faq-q">What do the paid tiers unlock?</div><div class="faq-a">Lessons 2–4 for every character, plus project challenges and bonus content depending on your tier. The free tier only includes Lesson 1 per character.</div></div>
-  <div class="faq-item"><div class="faq-q">Can I cancel anytime?</div><div class="faq-a">Yes — cancel anytime from your account, no questions asked. Your access stays active through the end of your billing period. Your free account stays forever.</div></div>
-  <div class="faq-item"><div class="faq-q">Which paid tier is right for my kid?</div><div class="faq-a">Use the age ranges as a guide — Sparks for 4–6, Builders for 7–9, Coders for 10–12. Every kid is different though, so pick what feels right. You can always switch.</div></div>
-  <div class="faq-item"><div class="faq-q">What about the workbooks?</div><div class="faq-a">Workbooks are separate one-time purchases at $7.99 each. A membership gives you the on-site lessons — workbooks are printable extras you keep forever.</div></div>
+  <div class="faq-item"><div class="faq-q">Is the free tier actually free?</div><div class="faq-a">Yes — no credit card, no trial period, no catch. Create an account and Lesson 1 for Zen and Byte is yours forever.</div></div>
+  <div class="faq-item"><div class="faq-q">What does each paid tier unlock?</div><div class="faq-a">Sparks opens Lesson 1 for all 6 characters. Builders unlocks Lessons 1 and 2 on every character. Coders unlocks all 4 lessons including full capstone projects.</div></div>
+  <div class="faq-item"><div class="faq-q">How does the free trial work?</div><div class="faq-a">Every paid tier includes a 3-day free trial. You'll need a card to start, but you won't be charged until day 4. Cancel anytime before that and you pay nothing.</div></div>
+  <div class="faq-item"><div class="faq-q">Can I cancel anytime?</div><div class="faq-a">Yes — cancel anytime, no questions asked. Your access stays active through the end of your billing period. Your free account stays forever.</div></div>
+  <div class="faq-item"><div class="faq-q">What about the workbooks?</div><div class="faq-a">Workbooks are separate one-time purchases at $7.99 each. A membership gives you the on-site interactive lessons — workbooks are printable extras you keep forever.</div></div>
 </div>
 
 <div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true" aria-label="Sign in or create account">
