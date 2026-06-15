@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Byte's Debug Lab — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg:#07070f;
+  --surface:#0f0f1a;
+  --card:#131324;
+  --border:#1e1e35;
+  --text:#e8e8f5;
+  --muted:#5a5a80;
+  --pink:#f472b6;
+  --cyan:#00f5d4;
+  --purple:#a855f7;
+  --yellow:#fbbf24;
+  --green:#4ade80;
+  --red:#f87171;
+  --orange:#fb923c;
+}
+body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
+
+nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--surface);}
+.nav-left{display:flex;align-items:center;gap:16px;}
+.nav-back{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nav-back:hover{color:var(--purple);}
+.nav-title{font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.15em;color:var(--purple);}
+.nav-tier{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);border:1px solid var(--purple);padding:3px 10px;border-radius:4px;opacity:0.8;}
+
+.game-shell{max-width:900px;margin:0 auto;padding:28px 24px;}
+
+/* BYTE QUOTE */
+.byte-quote{background:linear-gradient(135deg,rgba(168,85,247,0.08),rgba(244,114,182,0.06));border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
+.byte-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--purple),var(--pink));display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0;}
+.byte-text{font-size:0.82rem;color:var(--muted);line-height:1.6;font-style:italic;}
+.byte-text strong{color:var(--purple);font-style:normal;}
+
+/* LEVEL HEADER */
+.level-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
+.level-info{display:flex;align-items:center;gap:16px;}
+.level-badge{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--purple);border:1px solid rgba(168,85,247,0.3);padding:5px 14px;border-radius:4px;}
+.level-title{font-size:1.1rem;font-weight:800;}
+.level-desc{font-size:0.8rem;color:var(--muted);margin-top:2px;}
+.score-bar{display:flex;align-items:center;gap:20px;}
+.score-item{text-align:center;}
+.score-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--purple);}
+.score-label{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+#timer-val{color:var(--cyan);}
+#timer-val.warning{color:var(--yellow);}
+#timer-val.danger{color:var(--red);animation:pulse 0.5s infinite;}
+@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+
+/* PROGRESS */
+.progress-dots{display:flex;gap:8px;align-items:center;}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.3s;}
+.dot.active{background:var(--purple);}
+.dot.done{background:var(--green);}
+
+/* BUG COUNTER */
+.bug-counter{display:flex;align-items:center;gap:10px;margin-bottom:16px;padding:10px 16px;background:var(--surface);border:1px solid var(--border);border-radius:8px;}
+.bug-counter-label{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);}
+.bug-icons{display:flex;gap:6px;}
+.bug-icon{font-size:1rem;opacity:0.25;transition:all 0.3s;}
+.bug-icon.found{opacity:1;filter:drop-shadow(0 0 6px var(--green));}
+.bug-icon.missed{opacity:1;filter:drop-shadow(0 0 6px var(--red));}
+.bugs-remaining{font-family:'Orbitron',monospace;font-size:0.75rem;color:var(--purple);margin-left:auto;}
+
+/* CODE PANEL */
+.code-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
+.code-header{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.code-label{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
+.code-label span{color:var(--purple);}
+.code-instructions{font-size:0.72rem;color:var(--muted);}
+
+.code-body{padding:0;}
+.code-line{display:flex;align-items:stretch;cursor:pointer;transition:background 0.15s;position:relative;border-left:3px solid transparent;}
+.code-line:hover{background:rgba(168,85,247,0.06);}
+.code-line.selected{background:rgba(168,85,247,0.12);border-left-color:var(--purple);}
+.code-line.correct{background:rgba(74,222,128,0.08);border-left-color:var(--green);cursor:default;}
+.code-line.wrong{background:rgba(248,113,113,0.08);border-left-color:var(--red);}
+.code-line.revealed-bug{background:rgba(251,146,60,0.08);border-left-color:var(--orange);}
+
+.line-num{font-family:'DM Mono',monospace;font-size:0.75rem;color:var(--muted);padding:8px 14px;min-width:44px;text-align:right;border-right:1px solid var(--border);user-select:none;flex-shrink:0;}
+.line-code{font-family:'DM Mono',monospace;font-size:0.8rem;padding:8px 16px;white-space:pre;flex:1;line-height:1.5;}
+.line-badge{padding:8px 12px;display:flex;align-items:center;font-size:0.7rem;font-weight:700;flex-shrink:0;}
+.badge-found{color:var(--green);}
+.badge-wrong{color:var(--red);}
+.badge-bug{color:var(--orange);}
+
+/* FIX INPUT */
+.fix-panel{display:none;background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);border-radius:10px;padding:18px;margin-bottom:16px;}
+.fix-panel.show{display:block;}
+.fix-label{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;}
+.fix-input-row{display:flex;gap:10px;align-items:center;}
+.fix-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--text);outline:none;transition:border-color 0.2s;}
+.fix-input:focus{border-color:var(--purple);}
+.fix-submit{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--purple);color:#fff;border:none;padding:10px 18px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;}
+.fix-submit:hover{opacity:0.85;}
+.fix-hint{font-size:0.75rem;color:var(--muted);margin-top:8px;}
+
+/* ACTION ROW */
+.action-row{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center;}
+.action-left{font-size:0.78rem;color:var(--muted);}
+.action-right{display:flex;gap:10px;}
+.btn{font-family:'Orbitron',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;border:none;transition:all 0.2s;}
+.btn-primary{background:var(--purple);color:#fff;font-weight:700;}
+.btn-primary:hover{opacity:0.85;transform:translateY(-1px);}
+.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--muted);}
+.btn-secondary:hover{border-color:var(--purple);color:var(--purple);}
+.btn-next{background:var(--cyan);color:#000;font-weight:700;display:none;}
+.btn-next:hover{opacity:0.85;}
+
+/* FEEDBACK TOAST */
+.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 24px;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;opacity:0;transition:opacity 0.3s;z-index:50;pointer-events:none;}
+.toast.show{opacity:1;}
+.toast.good{border-color:var(--green);color:var(--green);}
+.toast.bad{border-color:var(--red);color:var(--red);}
+.toast.info{border-color:var(--purple);color:var(--purple);}
+
+/* RESULT */
+.result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;}
+.result-overlay.show{display:flex;}
+.result-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:480px;width:90%;text-align:center;}
+.result-icon{font-size:3rem;margin-bottom:16px;}
+.result-title{font-family:'Orbitron',monospace;font-size:1.1rem;letter-spacing:0.1em;margin-bottom:8px;}
+.result-title.win{color:var(--green);}
+.result-title.fail{color:var(--red);}
+.result-score{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--purple);margin-bottom:12px;}
+.result-msg{font-size:0.88rem;color:var(--muted);line-height:1.7;margin-bottom:24px;}
+.result-actions{display:flex;gap:12px;justify-content:center;}
+
+/* SYNTAX COLORS */
+.kw{color:#c678dd;}
+.fn{color:#61afef;}
+.str{color:#98c379;}
+.num{color:#d19a66;}
+.cm{color:#5c6370;font-style:italic;}
+.op{color:#56b6c2;}
+.bug-highlight{color:var(--red);text-decoration:underline wavy var(--red);}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-left">
+    <a href="byte.html" class="nav-back">← Byte's World</a>
+    <span class="nav-title">Debug Lab</span>
+  </div>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="progress-dots" id="progress-dots">
+      <div class="dot active" id="dot-0"></div>
+      <div class="dot" id="dot-1"></div>
+      <div class="dot" id="dot-2"></div>
+    </div>
+    <span class="nav-tier">Coders</span>
+  </div>
+</nav>
+
+<div class="game-shell">
+  <div class="byte-quote">
+    <div class="byte-avatar">🐱</div>
+    <div class="byte-text" id="byte-text">Loading challenge...</div>
+  </div>
+
+  <div class="level-header">
+    <div class="level-info">
+      <div class="level-badge" id="level-badge">LEVEL 1</div>
+      <div>
+        <div class="level-title" id="level-title">Loading...</div>
+        <div class="level-desc" id="level-desc"></div>
+      </div>
+    </div>
+    <div class="score-bar">
+      <div class="score-item"><div class="score-val" id="timer-val">120</div><div class="score-label">Seconds</div></div>
+      <div class="score-item"><div class="score-val" id="score-val">0</div><div class="score-label">Score</div></div>
+    </div>
+  </div>
+
+  <div class="bug-counter">
+    <span class="bug-counter-label">Bugs Found</span>
+    <div class="bug-icons" id="bug-icons"></div>
+    <span class="bugs-remaining" id="bugs-remaining"></span>
+  </div>
+
+  <div class="code-panel">
+    <div class="code-header">
+      <div class="code-label"><span>BUGGY CODE</span> — Click a line to flag it</div>
+      <div class="code-instructions">Click buggy lines → type the fix</div>
+    </div>
+    <div class="code-body" id="code-body"></div>
+  </div>
+
+  <div class="fix-panel" id="fix-panel">
+    <div class="fix-label">Fix line <span id="fix-line-num"></span> — type the corrected code:</div>
+    <div class="fix-input-row">
+      <input type="text" class="fix-input" id="fix-input" placeholder="Type the corrected line..." spellcheck="false"/>
+      <button class="fix-submit" onclick="submitFix()">Submit Fix</button>
+    </div>
+    <div class="fix-hint" id="fix-hint"></div>
+  </div>
+
+  <div class="action-row">
+    <div class="action-left" id="action-msg">Click on any line you think contains a bug.</div>
+    <div class="action-right">
+      <button class="btn btn-secondary" onclick="resetLevel()">Reset</button>
+      <button class="btn btn-primary" onclick="revealBugs()">Reveal Bugs (−100pts)</button>
+      <button class="btn btn-next" id="btn-next" onclick="nextLevel()">Next Level →</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<div class="result-overlay" id="result-overlay">
+  <div class="result-box">
+    <div class="result-icon" id="result-icon"></div>
+    <div class="result-title" id="result-title"></div>
+    <div class="result-score" id="result-score"></div>
+    <div class="result-msg" id="result-msg"></div>
+    <div class="result-actions" id="result-actions"></div>
+  </div>
+</div>
+
+<script>
+// ─── LEVELS ───────────────────────────────────────────────────────────────────
+const LEVELS = [
+  {
+    title: 'The Greeting Machine',
+    desc: 'A simple greeting function — but something is broken. Find the bugs!',
+    quote: '<strong>Byte says:</strong> Every bug is just a clue. Read the code slowly and ask: "What should this line actually say?"',
+    time: 120,
+    points: 400,
+    lines: [
+      { code: 'function greetUser(name) {',        isBug: false },
+      { code: '  let message = "Hello, " + name;', isBug: false },
+      { code: '  let count = "5";',                isBug: true,  fix: 'let count = 5;',                 hint: 'count should be a number, not a string', fixCheck: s => s.includes('count') && s.includes('5') && !s.includes('"5"') },
+      { code: '  console.log(mesage);',            isBug: true,  fix: 'console.log(message);',           hint: 'Check the variable name spelling', fixCheck: s => s.includes('console.log') && s.includes('message') },
+      { code: '  return message',                  isBug: true,  fix: 'return message;',                 hint: 'JavaScript statements need something at the end', fixCheck: s => s.trim().startsWith('return message') && s.trim().endsWith(';') },
+      { code: '}',                                 isBug: false },
+      { code: '',                                  isBug: false },
+      { code: 'greetUser("Byte")',                 isBug: true,  fix: 'greetUser("Byte");',              hint: 'Same issue as line 5 — every statement needs this', fixCheck: s => s.includes('greetUser') && s.trim().endsWith(';') },
+    ]
+  },
+  {
+    title: 'The Loop That Broke',
+    desc: 'This loop is supposed to print numbers 1 to 5. It has 4 bugs inside.',
+    quote: '<strong>Byte says:</strong> Loops are powerful but picky. One wrong symbol and the whole thing explodes. Or worse — runs forever.',
+    time: 140,
+    points: 500,
+    lines: [
+      { code: 'let total = 0;',                    isBug: false },
+      { code: '',                                  isBug: false },
+      { code: 'for (let i = 0; i <= 5; i++) {',   isBug: true,  fix: 'for (let i = 1; i <= 5; i++) {', hint: 'The loop should start at 1, not 0', fixCheck: s => s.includes('i = 1') },
+      { code: '  total == total + i;',             isBug: true,  fix: '  total = total + i;',            hint: '== checks equality, it does not assign a value', fixCheck: s => s.includes('total = total + i') && !s.includes('==') },
+      { code: '  console.log("Total: " + totl);', isBug: true,  fix: '  console.log("Total: " + total);', hint: 'Check the variable name inside console.log', fixCheck: s => s.includes('total') && !s.includes('totl') },
+      { code: '}',                                 isBug: false },
+      { code: '',                                  isBug: false },
+      { code: 'console.log("Done!" + total}',      isBug: true,  fix: 'console.log("Done!" + total);',  hint: 'Look at the very end of this line — two problems', fixCheck: s => s.includes('console.log') && s.trim().endsWith(');') },
+    ]
+  },
+  {
+    title: 'The Broken Array',
+    desc: 'This code should build an array of scores and find the highest. 5 bugs hidden.',
+    quote: '<strong>Byte says:</strong> Arrays are like lists. But if you confuse indexes, miss brackets, or misspell methods — everything falls apart.',
+    time: 160,
+    points: 600,
+    lines: [
+      { code: 'let scores = [88, 95, 72, 100, 61]',  isBug: true,  fix: 'let scores = [88, 95, 72, 100, 61];', hint: 'Missing something at the end of this statement', fixCheck: s => s.trim().endsWith('];') },
+      { code: 'let highest = scores[0];',             isBug: false },
+      { code: '',                                     isBug: false },
+      { code: 'for (let i = 1; i < scores.length; i++)',  isBug: true,  fix: 'for (let i = 1; i < scores.length; i++) {', hint: 'A for loop body needs to open with something', fixCheck: s => s.trim().endsWith('{') },
+      { code: '  if (scores[i] > highest {',          isBug: true,  fix: '  if (scores[i] > highest) {',  hint: 'The if condition is missing its closing symbol', fixCheck: s => s.includes('highest)') },
+      { code: '    highest == scores[i];',            isBug: true,  fix: '    highest = scores[i];',       hint: 'Assignment vs comparison — same bug as before', fixCheck: s => s.includes('highest = scores') && !s.includes('==') },
+      { code: '  }',                                  isBug: false },
+      { code: '}',                                    isBug: false },
+      { code: '',                                     isBug: false },
+      { code: 'console.log("High score: " + Highest);', isBug: true, fix: 'console.log("High score: " + highest);', hint: 'JavaScript variable names are case-sensitive', fixCheck: s => s.includes('+ highest') },
+    ]
+  }
+];
+
+// ─── STATE ────────────────────────────────────────────────────────────────────
+let currentLevel = 0;
+let score = 0;
+let timer = null;
+let timeLeft = 0;
+let selectedLine = null;
+let lineStates = []; // 'normal' | 'flagged' | 'correct' | 'wrong'
+let bugsFound = 0;
+let wrongGuesses = 0;
+let revealUsed = false;
+let levelDone = false;
+
+// ─── INIT ─────────────────────────────────────────────────────────────────────
+function initLevel(idx) {
+  const lvl = LEVELS[idx];
+  levelDone = false;
+  selectedLine = null;
+  bugsFound = 0;
+  wrongGuesses = 0;
+  revealUsed = false;
+
+  document.getElementById('level-badge').textContent = `LEVEL ${idx + 1}`;
+  document.getElementById('level-title').textContent = lvl.title;
+  document.getElementById('level-desc').textContent = lvl.desc;
+  document.getElementById('byte-text').innerHTML = lvl.quote;
+
+  // Dots
+  LEVELS.forEach((_, i) => {
+    const dot = document.getElementById(`dot-${i}`);
+    if(dot) dot.className = 'dot' + (i < idx ? ' done' : i === idx ? ' active' : '');
+  });
+
+  // Bug icons
+  const bugCount = lvl.lines.filter(l => l.isBug).length;
+  const bugIconsEl = document.getElementById('bug-icons');
+  bugIconsEl.innerHTML = Array(bugCount).fill('<span class="bug-icon">🐛</span>').join('');
+  document.getElementById('bugs-remaining').textContent = `0 / ${bugCount}`;
+
+  // Line states
+  lineStates = lvl.lines.map(() => 'normal');
+
+  renderCode();
+
+  // Fix panel
+  document.getElementById('fix-panel').classList.remove('show');
+  document.getElementById('fix-input').value = '';
+  document.getElementById('btn-next').style.display = 'none';
+  document.getElementById('action-msg').textContent = 'Click on any line you think contains a bug.';
+
+  // Timer
+  clearInterval(timer);
+  timeLeft = lvl.time;
+  updateTimer();
+  timer = setInterval(tick, 1000);
+}
+
+// ─── RENDER CODE ──────────────────────────────────────────────────────────────
+function renderCode() {
+  const lvl = LEVELS[currentLevel];
+  const body = document.getElementById('code-body');
+  body.innerHTML = lvl.lines.map((line, i) => {
+    const state = lineStates[i];
+    let badgeHTML = '';
+    if (state === 'correct') badgeHTML = '<span class="line-badge badge-found">✓ Fixed!</span>';
+    else if (state === 'wrong') badgeHTML = '<span class="line-badge badge-wrong">✗</span>';
+    else if (state === 'revealed') badgeHTML = '<span class="line-badge badge-bug">🐛 Bug</span>';
+
+    const codeDisplay = line.code === '' ? '&nbsp;' : syntaxHL(escapeHTML(line.code));
+
+    return `<div class="code-line ${state === 'correct' ? 'correct' : state === 'wrong' ? 'wrong' : state === 'revealed' ? 'revealed-bug' : state === 'flagged' ? 'selected' : ''}" 
+      id="line-${i}" 
+      onclick="selectLine(${i})"
+      ${!line.isBug && state !== 'correct' ? '' : ''}>
+      <div class="line-num">${i + 1}</div>
+      <div class="line-code">${codeDisplay}</div>
+      ${badgeHTML}
+    </div>`;
+  }).join('');
+}
+
+function escapeHTML(str) {
+  return str.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function syntaxHL(code) {
+  return code
+    .replace(/\b(function|let|const|var|for|if|else|return|new)\b/g, '<span class="kw">$1</span>')
+    .replace(/\b(console\.log|push|length|toString)\b/g, '<span class="fn">$1</span>')
+    .replace(/"([^"]*)"/g, '<span class="str">"$1"</span>')
+    .replace(/\b(\d+)\b/g, '<span class="num">$1</span>')
+    .replace(/(\/\/.*$)/gm, '<span class="cm">$1</span>');
+}
+
+// ─── SELECT LINE ──────────────────────────────────────────────────────────────
+function selectLine(i) {
+  const lvl = LEVELS[currentLevel];
+  if (levelDone) return;
+  if (lineStates[i] === 'correct' || lineStates[i] === 'revealed') return;
+  if (lvl.lines[i].code === '') return;
+
+  selectedLine = i;
+  lineStates = lineStates.map((s, idx) => s === 'flagged' ? 'normal' : s);
+  lineStates[i] = 'flagged';
+  renderCode();
+
+  // Show fix panel
+  const fixPanel = document.getElementById('fix-panel');
+  fixPanel.classList.add('show');
+  document.getElementById('fix-line-num').textContent = i + 1;
+  document.getElementById('fix-input').value = lvl.lines[i].code;
+  document.getElementById('fix-hint').textContent = '';
+  document.getElementById('fix-input').focus();
+}
+
+// ─── SUBMIT FIX ───────────────────────────────────────────────────────────────
+function submitFix() {
+  if (selectedLine === null) return;
+  const lvl = LEVELS[currentLevel];
+  const line = lvl.lines[selectedLine];
+  const input = document.getElementById('fix-input').value.trim();
+
+  if (!line.isBug) {
+    // Wrong line
+    wrongGuesses++;
+    lineStates[selectedLine] = 'wrong';
+    setTimeout(() => { lineStates[selectedLine] = 'normal'; renderCode(); }, 1200);
+    score = Math.max(0, score - 30);
+    document.getElementById('score-val').textContent = score;
+    showToast('That line is fine! −30 pts', 'bad');
+    document.getElementById('fix-panel').classList.remove('show');
+    selectedLine = null;
+    renderCode();
+    return;
+  }
+
+  // Is bug — check fix
+  if (line.fixCheck(input)) {
+    lineStates[selectedLine] = 'correct';
+    bugsFound++;
+    const pts = 80;
+    score += pts;
+    document.getElementById('score-val').textContent = score;
+    updateBugIcons();
+    showToast(`Bug squashed! +${pts} pts`, 'good');
+    document.getElementById('fix-panel').classList.remove('show');
+    selectedLine = null;
+    renderCode();
+
+    const totalBugs = lvl.lines.filter(l => l.isBug).length;
+    if (bugsFound === totalBugs) {
+      levelComplete();
+    }
+  } else {
+    score = Math.max(0, score - 20);
+    document.getElementById('score-val').textContent = score;
+    document.getElementById('fix-hint').textContent = `Hint: ${line.hint}`;
+    document.getElementById('fix-hint').style.color = 'var(--yellow)';
+    showToast('Not quite — check the hint below', 'bad');
+  }
+}
+
+document.getElementById('fix-input').addEventListener('keydown', e => {
+  if (e.key === 'Enter') submitFix();
+});
+
+// ─── BUG ICONS ────────────────────────────────────────────────────────────────
+function updateBugIcons() {
+  const lvl = LEVELS[currentLevel];
+  const total = lvl.lines.filter(l => l.isBug).length;
+  const icons = document.querySelectorAll('.bug-icon');
+  icons.forEach((icon, i) => {
+    if (i < bugsFound) icon.classList.add('found');
+  });
+  document.getElementById('bugs-remaining').textContent = `${bugsFound} / ${total}`;
+}
+
+// ─── REVEAL ───────────────────────────────────────────────────────────────────
+function revealBugs() {
+  if (revealUsed) return;
+  revealUsed = true;
+  score = Math.max(0, score - 100);
+  document.getElementById('score-val').textContent = score;
+  const lvl = LEVELS[currentLevel];
+  lvl.lines.forEach((line, i) => {
+    if (line.isBug && lineStates[i] !== 'correct') {
+      lineStates[i] = 'revealed';
+    }
+  });
+  renderCode();
+  document.getElementById('fix-panel').classList.remove('show');
+  showToast('Bugs revealed — −100 pts', 'info');
+}
+
+// ─── LEVEL COMPLETE ───────────────────────────────────────────────────────────
+function levelComplete() {
+  clearInterval(timer);
+  levelDone = true;
+  const timeBonus = Math.floor(timeLeft * 1.5);
+  score += timeBonus;
+  document.getElementById('score-val').textContent = score;
+  document.getElementById('action-msg').textContent = `All bugs found! +${timeBonus} time bonus`;
+  document.getElementById('btn-next').style.display = 'block';
+  showToast('All bugs squashed!', 'good');
+
+  if (currentLevel === LEVELS.length - 1) {
+    setTimeout(() => showResult(true), 1200);
+  }
+}
+
+// ─── TIMER ────────────────────────────────────────────────────────────────────
+function tick() {
+  timeLeft--;
+  updateTimer();
+  if (timeLeft <= 0) { clearInterval(timer); if (!levelDone) showResult(false); }
+}
+
+function updateTimer() {
+  const el = document.getElementById('timer-val');
+  el.textContent = timeLeft;
+  el.className = timeLeft <= 10 ? 'danger' : timeLeft <= 25 ? 'warning' : '';
+}
+
+// ─── TOAST ────────────────────────────────────────────────────────────────────
+let toastTimer = null;
+function showToast(msg, type) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = `toast show ${type}`;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2000);
+}
+
+// ─── RESET ────────────────────────────────────────────────────────────────────
+function resetLevel() { initLevel(currentLevel); }
+
+// ─── NEXT ─────────────────────────────────────────────────────────────────────
+function nextLevel() {
+  if (currentLevel < LEVELS.length - 1) {
+    currentLevel++;
+    initLevel(currentLevel);
+  } else {
+    showResult(true);
+  }
+}
+
+// ─── RESULT ───────────────────────────────────────────────────────────────────
+function showResult(win) {
+  clearInterval(timer);
+  const overlay = document.getElementById('result-overlay');
+  document.getElementById('result-icon').textContent = win ? '🐱' : '🐛';
+  document.getElementById('result-title').textContent = win ? 'DEBUG COMPLETE' : 'TIME\'S UP';
+  document.getElementById('result-title').className = `result-title ${win ? 'win' : 'fail'}`;
+  document.getElementById('result-score').textContent = score + ' pts';
+  document.getElementById('result-msg').textContent = win
+    ? `You squashed every bug across all 3 challenges! Real developers debug code like this every single day. Byte is proud.`
+    : `Time ran out before all bugs were found. Debugging takes practice — every pro has been stuck on a bug for hours. Try again!`;
+  document.getElementById('result-actions').innerHTML = `
+    <button class="btn btn-secondary" onclick="restartGame()">Play Again</button>
+    <button class="btn btn-primary" onclick="window.location.href='byte.html'">Back to Byte</button>
+  `;
+  overlay.classList.add('show');
+}
+
+function restartGame() {
+  score = 0;
+  currentLevel = 0;
+  document.getElementById('score-val').textContent = '0';
+  document.getElementById('result-overlay').classList.remove('show');
+  initLevel(0);
+}
+
+initLevel(0);
+</script>
+</body>
+</html>
