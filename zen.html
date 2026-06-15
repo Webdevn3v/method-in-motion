@@ -222,6 +222,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .reveal.visible{opacity:1;transform:none}
 
 
+
+/* LESSON TEASER */
+.lesson-teaser{position:relative;overflow:hidden;border-radius:16px;margin-bottom:0;pointer-events:none;user-select:none}
+.teaser-content{filter:blur(3px);opacity:.45;transform:scale(.99)}
+.teaser-fade{position:absolute;bottom:0;left:0;right:0;height:140px;background:linear-gradient(to bottom,transparent,var(--void));pointer-events:none}
+.lesson-teaser .content-block{margin-bottom:0;border-bottom-left-radius:0;border-bottom-right-radius:0}
+
 /* TRIAL UPSELL */
 .trial-upsell{margin-top:32px;animation:fadeIn .6s ease}
 .trial-upsell-inner{background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(198,107,255,.08));border:1px solid rgba(198,107,255,.3);border-radius:20px;padding:40px 36px;text-align:center}
@@ -312,6 +319,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
       <div class="lesson-num">Lesson 01 · Free</div>
       <h2 class="lesson-title">What is Code?</h2>
       <p class="lesson-desc">Before you build anything, you need to understand what you're actually doing. Spoiler: it's simpler than you think.</p>
+    </div>
+
+    <!-- TEASER PREVIEW -- blurred glimpse of lesson content -->
+    <div class="lesson-teaser" id="lesson1-teaser">
+      <div class="teaser-content">
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
+          <div class="block-body">
+            <p class="zen-quote">"Hey, I'm Zen. I build things with code — websites, animations, digital art. Before I learned how, I had one question: what even IS this stuff?"</p>
+            <p>Code is just a set of instructions. That's it. When you tell your little sibling how to make a sandwich — get bread, add peanut butter, put it together — that's basically code...</p>
+          </div>
+        </div>
+      </div>
+      <div class="teaser-fade"></div>
     </div>
 
     <div id="lesson1-gate" class="lesson-gate reveal">
@@ -1288,6 +1309,8 @@ window.handleTierUnlock=function(tier){
   const content1=document.getElementById('lesson1-content');
   if(gate1)gate1.style.display='none';
   if(content1)content1.style.display='block';
+  const teaser1=document.getElementById('lesson1-teaser');
+  if(teaser1)teaser1.style.display='none';
   const t=(tier||'').toLowerCase();
   // Free account (tier = none or empty) still gets lesson 1
   const noTier = !t || t === 'none';
