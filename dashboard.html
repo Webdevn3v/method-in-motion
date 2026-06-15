@@ -1,381 +1,548 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
 <title>My Dashboard — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --navy:#0a0e1a;
-  --navy2:#0f1628;
-  --navy3:#131c35;
-  --cyan:#00e5ff;
-  --purple:#b06aff;
-  --pink:#ff6eb4;
-  --yellow:#ffe566;
-  --orange:#ff8c42;
-  --text:#c8d0e0;
-  --text-dim:#7a8499;
-  --border:#1e2a45;
-}
-body{background:var(--navy);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;}
+  *{margin:0;padding:0;box-sizing:border-box;}
+  :root{
+    --bg:#0a0a0f;
+    --surface:#12121a;
+    --border:#1e1e2e;
+    --text:#e8e8f0;
+    --muted:#6b6b80;
+    --cyan:#00f5d4;
+    --purple:#a855f7;
+    --pink:#f472b6;
+    --yellow:#fbbf24;
+    --lime:#84cc16;
+    --orange:#fb923c;
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Segoe UI',system-ui,-apple-system,sans-serif;
+    min-height:100vh;
+  }
 
-/* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 2rem;border-bottom:1px solid var(--border);position:sticky;top:0;background:rgba(10,14,26,0.97);backdrop-filter:blur(12px);z-index:100;}
-.nav-logo{font-family:'Orbitron',sans-serif;font-weight:900;font-size:1rem;color:#fff;text-decoration:none;letter-spacing:.05em;}
-.nav-logo span{color:var(--cyan);}
-.nav-right{display:flex;align-items:center;gap:1rem;}
-.nav-home{font-size:.85rem;color:var(--text-dim);text-decoration:none;transition:color .2s;}
-.nav-home:hover{color:var(--cyan);}
-.nav-logout{font-size:.8rem;color:var(--text-dim);background:none;border:1px solid var(--border);padding:.4rem 1rem;border-radius:4px;cursor:pointer;font-family:'Syne',sans-serif;transition:all .2s;}
-.nav-logout:hover{color:var(--pink);border-color:var(--pink);}
+  /* NAV */
+  nav{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:18px 32px;
+    border-bottom:1px solid var(--border);
+    background:var(--surface);
+  }
+  .nav-logo{
+    font-size:1rem;
+    font-weight:700;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--cyan);
+    text-decoration:none;
+  }
+  .nav-logo span{color:var(--text);opacity:0.4;margin:0 6px;}
+  #logout-btn{
+    background:transparent;
+    border:1px solid var(--border);
+    color:var(--muted);
+    padding:8px 18px;
+    border-radius:6px;
+    font-size:0.8rem;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition:all 0.2s;
+  }
+  #logout-btn:hover{border-color:var(--pink);color:var(--pink);}
 
-/* LOADING STATE */
-#loading-state{display:flex;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:1rem;}
-.loader{width:40px;height:40px;border:2px solid var(--border);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
+  /* LOADING */
+  #loading{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    min-height:60vh;
+    gap:16px;
+    color:var(--muted);
+    font-size:0.85rem;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+  }
+  .spinner{
+    width:32px;height:32px;
+    border:2px solid var(--border);
+    border-top-color:var(--cyan);
+    border-radius:50%;
+    animation:spin 0.8s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
 
-/* MAIN DASHBOARD - hidden until loaded */
-#dashboard-content{display:none;max-width:1100px;margin:0 auto;padding:2rem 2rem 6rem;}
+  /* MAIN */
+  #dashboard{display:none;}
+  main{max-width:960px;margin:0 auto;padding:48px 24px;}
 
-/* HERO GREETING */
-.dash-hero{padding:2.5rem 0 2rem;border-bottom:1px solid var(--border);margin-bottom:2.5rem;display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;}
-.dash-greeting{font-family:'Orbitron',sans-serif;font-size:clamp(.7rem,2vw,.85rem);letter-spacing:.2em;color:var(--cyan);text-transform:uppercase;margin-bottom:.5rem;}
-.dash-name{font-family:'Orbitron',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:900;color:#fff;line-height:1.1;}
-.dash-sub{color:var(--text-dim);font-size:.9rem;margin-top:.5rem;}
+  /* HERO CARD */
+  .hero-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:14px;
+    padding:32px;
+    margin-bottom:40px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:24px;
+    flex-wrap:wrap;
+  }
+  .hero-left h1{
+    font-size:1.6rem;
+    font-weight:700;
+    margin-bottom:6px;
+  }
+  .hero-left h1 span{color:var(--cyan);}
+  .hero-left p{color:var(--muted);font-size:0.9rem;}
+  .tier-badge{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    padding:10px 20px;
+    border-radius:999px;
+    font-size:0.8rem;
+    font-weight:700;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    border:1px solid;
+    margin-top:16px;
+  }
+  .tier-badge.sparks{background:rgba(251,191,36,0.08);border-color:var(--yellow);color:var(--yellow);}
+  .tier-badge.builders{background:rgba(168,85,247,0.08);border-color:var(--purple);color:var(--purple);}
+  .tier-badge.coders{background:rgba(0,245,212,0.08);border-color:var(--cyan);color:var(--cyan);}
+  .tier-badge.free{background:rgba(107,107,128,0.08);border-color:var(--muted);color:var(--muted);}
 
-/* TIER BADGE */
-.tier-badge{display:inline-flex;align-items:center;gap:.5rem;padding:.5rem 1.25rem;border-radius:100px;font-family:'Orbitron',sans-serif;font-size:.7rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;}
-.tier-free{background:rgba(122,132,153,.15);border:1px solid var(--border);color:var(--text-dim);}
-.tier-sparks{background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.3);color:var(--cyan);}
-.tier-builders{background:rgba(176,106,255,.1);border:1px solid rgba(176,106,255,.3);color:var(--purple);}
-.tier-coders{background:rgba(255,110,180,.1);border:1px solid rgba(255,110,180,.3);color:var(--pink);}
-.tier-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+  .tier-perks{
+    background:rgba(0,245,212,0.04);
+    border:1px solid rgba(0,245,212,0.1);
+    border-radius:10px;
+    padding:20px 24px;
+    font-size:0.82rem;
+    color:var(--muted);
+    min-width:220px;
+  }
+  .tier-perks strong{display:block;color:var(--text);margin-bottom:10px;font-size:0.85rem;letter-spacing:0.06em;}
+  .tier-perks li{list-style:none;padding:4px 0;display:flex;align-items:center;gap:8px;}
+  .tier-perks li::before{content:'//';color:var(--cyan);font-size:0.7rem;font-weight:700;}
 
-/* STATS ROW */
-.stats-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:1rem;margin-bottom:2.5rem;}
-.stat-card{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;}
-.stat-num{font-family:'Orbitron',sans-serif;font-size:1.6rem;font-weight:900;color:var(--cyan);display:block;}
-.stat-label{font-size:.75rem;color:var(--text-dim);margin-top:.25rem;}
+  /* UPGRADE CTA */
+  .upgrade-bar{
+    background:linear-gradient(135deg,rgba(168,85,247,0.12),rgba(0,245,212,0.06));
+    border:1px solid rgba(168,85,247,0.25);
+    border-radius:10px;
+    padding:16px 24px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    margin-bottom:40px;
+    flex-wrap:wrap;
+  }
+  .upgrade-bar p{font-size:0.85rem;color:var(--muted);}
+  .upgrade-bar p strong{color:var(--text);}
+  .upgrade-bar a{
+    background:var(--purple);
+    color:#fff;
+    text-decoration:none;
+    padding:10px 22px;
+    border-radius:7px;
+    font-size:0.8rem;
+    font-weight:700;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    white-space:nowrap;
+    transition:opacity 0.2s;
+  }
+  .upgrade-bar a:hover{opacity:0.85;}
 
-/* SECTION HEADERS */
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;}
-.section-eyebrow{font-family:'Orbitron',sans-serif;font-size:.65rem;letter-spacing:.2em;color:var(--purple);text-transform:uppercase;}
+  /* SECTION LABEL */
+  .section-label{
+    font-size:0.7rem;
+    font-weight:700;
+    letter-spacing:0.2em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-bottom:16px;
+    display:flex;
+    align-items:center;
+    gap:12px;
+  }
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
 
-/* CHARACTER GRID */
-.char-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:1rem;margin-bottom:3rem;}
-.char-card{background:var(--navy2);border:1px solid var(--border);border-radius:10px;padding:1.5rem;transition:all .25s;position:relative;overflow:hidden;text-decoration:none;display:block;}
-.char-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--char-color);opacity:.6;transition:opacity .25s;}
-.char-card:hover{border-color:var(--char-color);transform:translateY(-2px);}
-.char-card:hover::before{opacity:1;}
-.char-card-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:1rem;}
-.char-info{}
-.char-name{font-family:'Orbitron',sans-serif;font-size:.9rem;font-weight:700;color:#fff;margin-bottom:.2rem;}
-.char-role{font-size:.75rem;color:var(--text-dim);}
-.char-status{font-size:.7rem;font-family:'Orbitron',sans-serif;letter-spacing:.05em;padding:.3rem .75rem;border-radius:100px;}
-.status-locked{background:rgba(122,132,153,.1);border:1px solid var(--border);color:var(--text-dim);}
-.status-available{background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2);color:var(--cyan);}
-.status-started{background:rgba(176,106,255,.1);border:1px solid rgba(176,106,255,.2);color:var(--purple);}
-.status-complete{background:rgba(255,110,180,.1);border:1px solid rgba(255,110,180,.2);color:var(--pink);}
+  /* CHARACTER GRID */
+  .character-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    gap:16px;
+    margin-bottom:48px;
+  }
+  .char-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:12px;
+    padding:22px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    text-decoration:none;
+    color:var(--text);
+    transition:all 0.2s;
+    position:relative;
+    overflow:hidden;
+  }
+  .char-card::before{
+    content:'';
+    position:absolute;
+    inset:0;
+    opacity:0;
+    transition:opacity 0.2s;
+  }
+  .char-card:hover::before{opacity:1;}
+  .char-card:hover{transform:translateY(-2px);}
 
-/* PROGRESS BAR */
-.progress-wrap{margin-bottom:.75rem;}
-.progress-label{display:flex;justify-content:space-between;font-size:.75rem;color:var(--text-dim);margin-bottom:.4rem;}
-.progress-bar{height:4px;background:var(--border);border-radius:2px;overflow:hidden;}
-.progress-fill{height:100%;background:var(--char-color);border-radius:2px;transition:width .6s ease;}
+  /* per-character accent colors */
+  .char-zen{--accent:#f472b6;}
+  .char-byte{--accent:#a855f7;}
+  .char-loop{--accent:#00f5d4;}
+  .char-nova{--accent:#fbbf24;}
+  .char-bug{--accent:#84cc16;}
+  .char-echo{--accent:#38bdf8;}
 
-.char-subject{font-size:.8rem;color:var(--text-dim);}
-.char-cta{display:inline-block;margin-top:1rem;font-size:.75rem;font-family:'Orbitron',sans-serif;color:var(--char-color);letter-spacing:.05em;}
+  .char-card::before{background:linear-gradient(135deg,transparent,rgba(var(--accent-rgb),0.04));}
+  .char-card:hover{border-color:var(--accent);}
 
-/* WORKBOOKS SECTION */
-.workbooks-section{margin-bottom:3rem;}
-.workbook-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:1rem;}
-.workbook-card{background:var(--navy2);border:1px solid var(--border);border-radius:8px;padding:1.25rem;text-align:center;transition:all .2s;}
-.workbook-card:hover{border-color:var(--cyan);}
-.workbook-thumb{width:100%;aspect-ratio:1;object-fit:cover;border-radius:4px;margin-bottom:.75rem;background:var(--navy3);}
-.workbook-name{font-size:.8rem;font-weight:600;color:#fff;margin-bottom:.5rem;}
-.workbook-btn{display:block;padding:.5rem;background:rgba(0,229,255,.1);border:1px solid rgba(0,229,255,.2);border-radius:4px;color:var(--cyan);font-size:.7rem;font-family:'Orbitron',sans-serif;letter-spacing:.05em;text-decoration:none;transition:all .2s;}
-.workbook-btn:hover{background:rgba(0,229,255,.2);}
-.workbook-locked{display:block;padding:.5rem;background:var(--border);border-radius:4px;color:var(--text-dim);font-size:.7rem;font-family:'Orbitron',sans-serif;letter-spacing:.05em;cursor:not-allowed;}
+  .char-icon{
+    width:44px;height:44px;
+    border-radius:10px;
+    display:flex;align-items:center;justify-content:center;
+    font-size:1.4rem;
+    border:1px solid;
+    border-color:var(--accent);
+    background:rgba(0,0,0,0.3);
+    flex-shrink:0;
+  }
+  .char-info{flex:1;}
+  .char-info h3{font-size:0.95rem;font-weight:700;margin-bottom:3px;}
+  .char-info p{font-size:0.75rem;color:var(--muted);}
+  .char-access{
+    font-size:0.65rem;
+    font-weight:700;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    padding:4px 9px;
+    border-radius:4px;
+    border:1px solid;
+    flex-shrink:0;
+  }
+  .access-free{border-color:var(--muted);color:var(--muted);}
+  .access-unlocked{border-color:var(--cyan);color:var(--cyan);}
 
-/* UPGRADE BANNER */
-.upgrade-banner{background:var(--navy2);border:1px solid var(--border);border-radius:12px;padding:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1.5rem;margin-bottom:3rem;}
-.upgrade-text h3{font-family:'Orbitron',sans-serif;font-size:1rem;font-weight:700;color:#fff;margin-bottom:.4rem;}
-.upgrade-text p{font-size:.85rem;color:var(--text-dim);max-width:500px;}
-.upgrade-btn{background:linear-gradient(135deg,var(--cyan),var(--purple));color:var(--navy);font-family:'Orbitron',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;padding:.85rem 2rem;border-radius:4px;text-decoration:none;white-space:nowrap;transition:opacity .2s;}
-.upgrade-btn:hover{opacity:.85;}
+  .char-card.locked{opacity:0.45;pointer-events:none;cursor:default;}
 
-/* NOT LOGGED IN STATE */
-#logged-out-state{display:none;align-items:center;justify-content:center;min-height:60vh;flex-direction:column;gap:1.5rem;text-align:center;padding:2rem;}
-#logged-out-state h2{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:900;color:#fff;}
-#logged-out-state p{color:var(--text-dim);max-width:400px;}
-.login-btn{background:var(--cyan);color:var(--navy);font-family:'Orbitron',sans-serif;font-size:.75rem;font-weight:700;letter-spacing:.1em;padding:.85rem 2rem;border-radius:4px;border:none;cursor:pointer;transition:opacity .2s;}
-.login-btn:hover{opacity:.85;}
+  /* WORKBOOKS */
+  .workbook-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(200px,1fr));
+    gap:14px;
+    margin-bottom:48px;
+  }
+  .wb-card{
+    background:var(--surface);
+    border:1px solid var(--border);
+    border-radius:10px;
+    padding:18px;
+    text-align:center;
+    text-decoration:none;
+    color:var(--text);
+    transition:all 0.2s;
+  }
+  .wb-card:hover{border-color:var(--purple);transform:translateY(-2px);}
+  .wb-card .wb-emoji{font-size:1.5rem;margin-bottom:10px;}
+  .wb-card h4{font-size:0.8rem;font-weight:700;margin-bottom:4px;}
+  .wb-card p{font-size:0.7rem;color:var(--muted);}
+  .wb-price{
+    display:inline-block;
+    margin-top:10px;
+    font-size:0.7rem;
+    font-weight:700;
+    color:var(--purple);
+    letter-spacing:0.06em;
+  }
 
-a{color:inherit;text-decoration:none;}
+  /* FOOTER */
+  footer{
+    text-align:center;
+    padding:32px 24px;
+    border-top:1px solid var(--border);
+    color:var(--muted);
+    font-size:0.75rem;
+    letter-spacing:0.06em;
+  }
+  footer a{color:var(--cyan);text-decoration:none;}
+
+  @media(max-width:600px){
+    nav{padding:14px 18px;}
+    main{padding:28px 16px;}
+    .hero-card{flex-direction:column;}
+    .tier-perks{width:100%;}
+  }
 </style>
 </head>
 <body>
 
 <nav>
-  <a href="index.html" class="nav-logo">Method<span>.</span>in<span>.</span>Motion</a>
-  <div class="nav-right">
-    <a href="index.html" class="nav-home">Home</a>
-    <button class="nav-logout" id="logout-btn">Sign Out</button>
-  </div>
+  <a class="nav-logo" href="index.html">Method<span>//</span>in Motion</a>
+  <button id="logout-btn">Log Out</button>
 </nav>
 
-<!-- LOADING -->
-<div id="loading-state">
-  <div class="loader"></div>
-  <p style="color:var(--text-dim);font-size:.85rem;">Loading your dashboard...</p>
+<div id="loading">
+  <div class="spinner"></div>
+  <span>Loading your dashboard...</span>
 </div>
 
-<!-- NOT LOGGED IN -->
-<div id="logged-out-state">
-  <h2>Sign in to access your dashboard</h2>
-  <p>Your progress, tier, and content are all waiting for you.</p>
-  <button class="login-btn" id="go-login-btn">Sign In</button>
-</div>
+<div id="dashboard">
+<main>
 
-<!-- DASHBOARD -->
-<div id="dashboard-content">
-
-  <div class="dash-hero">
-    <div>
-      <div class="dash-greeting">Welcome back</div>
-      <div class="dash-name" id="dash-username">Coder</div>
-      <div class="dash-sub">Here's where you left off.</div>
+  <!-- HERO CARD -->
+  <div class="hero-card">
+    <div class="hero-left">
+      <h1>Hey, <span id="user-name">Coder</span>.</h1>
+      <p>Welcome back to your Method in Motion hub.</p>
+      <div class="tier-badge free" id="tier-badge">Free</div>
     </div>
-    <div id="tier-badge-wrap"></div>
+    <div class="tier-perks" id="tier-perks">
+      <strong>Your Access</strong>
+      <ul id="perks-list"></ul>
+    </div>
   </div>
 
-  <div class="stats-row">
-    <div class="stat-card">
-      <span class="stat-num" id="stat-characters">0</span>
-      <span class="stat-label">Characters started</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-num" id="stat-lessons">0</span>
-      <span class="stat-label">Lessons completed</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-num" id="stat-tier-lessons">—</span>
-      <span class="stat-label">Lessons unlocked</span>
-    </div>
-    <div class="stat-card">
-      <span class="stat-num" id="stat-workbooks">0</span>
-      <span class="stat-label">Workbooks available</span>
-    </div>
+  <!-- UPGRADE BAR (hidden for Coders) -->
+  <div class="upgrade-bar" id="upgrade-bar">
+    <p><strong>Unlock more worlds.</strong> Upgrade your plan to access all character lessons.</p>
+    <a href="membership.html" id="upgrade-link">Upgrade Plan</a>
   </div>
 
   <!-- CHARACTER WORLDS -->
-  <div class="section-header">
-    <div class="section-eyebrow">Your Worlds</div>
-  </div>
-  <div class="char-grid" id="char-grid"></div>
+  <div class="section-label">Character Worlds</div>
+  <div class="character-grid" id="char-grid">
 
-  <!-- UPGRADE BANNER (hidden for coders) -->
-  <div class="upgrade-banner" id="upgrade-banner">
-    <div class="upgrade-text">
-      <h3>Unlock more of the universe</h3>
-      <p id="upgrade-text-body">Upgrade your plan to access more lessons, all six character worlds, and printable workbooks.</p>
-    </div>
-    <a href="membership.html" class="upgrade-btn">Upgrade Plan →</a>
+    <a href="zen.html" class="char-card char-zen" id="card-zen">
+      <div class="char-icon">🌸</div>
+      <div class="char-info">
+        <h3>Zen</h3>
+        <p>Creative Coder · Ages 8–10</p>
+      </div>
+      <span class="char-access access-free">Free</span>
+    </a>
+
+    <a href="byte.html" class="char-card char-byte" id="card-byte">
+      <div class="char-icon">🐱</div>
+      <div class="char-info">
+        <h3>Byte</h3>
+        <p>Glitch Cat · Ages 6–8</p>
+      </div>
+      <span class="char-access access-free" id="access-byte">Free</span>
+    </a>
+
+    <a href="loop.html" class="char-card char-loop" id="card-loop">
+      <div class="char-icon">↻</div>
+      <div class="char-info">
+        <h3>Loop</h3>
+        <p>Flow Guide · Ages 9–11</p>
+      </div>
+      <span class="char-access access-free" id="access-loop">Free</span>
+    </a>
+
+    <a href="nova.html" class="char-card char-nova" id="card-nova">
+      <div class="char-icon">⚡</div>
+      <div class="char-info">
+        <h3>Nova</h3>
+        <p>Builder Bot · Ages 8–10</p>
+      </div>
+      <span class="char-access access-free" id="access-nova">Free</span>
+    </a>
+
+    <a href="bug.html" class="char-card char-bug" id="card-bug">
+      <div class="char-icon">🐛</div>
+      <div class="char-info">
+        <h3>Bug</h3>
+        <p>Debug Gremlin · Ages 10–12</p>
+      </div>
+      <span class="char-access access-free" id="access-bug">Free</span>
+    </a>
+
+    <a href="echo.html" class="char-card char-echo" id="card-echo">
+      <div class="char-icon">🎵</div>
+      <div class="char-info">
+        <h3>Echo</h3>
+        <p>Signal DJ · Ages 10–12</p>
+      </div>
+      <span class="char-access access-free" id="access-echo">Free</span>
+    </a>
+
   </div>
 
   <!-- WORKBOOKS -->
-  <div class="workbooks-section">
-    <div class="section-header">
-      <div class="section-eyebrow">Workbooks</div>
-    </div>
-    <div class="workbook-grid" id="workbook-grid"></div>
+  <div class="section-label">Workbooks</div>
+  <div class="workbook-grid">
+    <a href="https://buy.stripe.com/ZEN_STRIPE_LINK" class="wb-card" target="_blank">
+      <div class="wb-emoji">🌸</div>
+      <h4>Zen's Creative Circuits</h4>
+      <p>Vol. 1 · HTML & CSS</p>
+      <span class="wb-price">$7.99</span>
+    </a>
+    <a href="https://buy.stripe.com/BYTE_STRIPE_LINK" class="wb-card" target="_blank">
+      <div class="wb-emoji">🐱</div>
+      <h4>Byte's Debug Lab</h4>
+      <p>Vol. 1 · Debugging</p>
+      <span class="wb-price">$7.99</span>
+    </a>
+    <a href="https://buy.stripe.com/LOOP_STRIPE_LINK" class="wb-card" target="_blank">
+      <div class="wb-emoji">↻</div>
+      <h4>Loop's Logic Quest</h4>
+      <p>Vol. 1 · Loops & Logic</p>
+      <span class="wb-price">$7.99</span>
+    </a>
+    <a href="https://buy.stripe.com/NOVA_STRIPE_LINK" class="wb-card" target="_blank">
+      <div class="wb-emoji">⚡</div>
+      <h4>Nova's Build Lab</h4>
+      <p>Vol. 1 · Projects</p>
+      <span class="wb-price">$7.99</span>
+    </a>
+    <a href="https://buy.stripe.com/BUG_STRIPE_LINK" class="wb-card" target="_blank">
+      <div class="wb-emoji">🐛</div>
+      <h4>Bug's Chaos Code</h4>
+      <p>Vol. 1 · Problem Solving</p>
+      <span class="wb-price">$7.99</span>
+    </a>
+    <a href="https://buy.stripe.com/ECHO_STRIPE_LINK" class="wb-card" target="_blank">
+      <div class="wb-emoji">🎵</div>
+      <h4>Echo's Signal Lab</h4>
+      <p>Vol. 1 · Events & Timing</p>
+      <span class="wb-price">$7.99</span>
+    </a>
   </div>
 
+</main>
+<footer>
+  Method in Motion &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="membership.html">Membership</a> &nbsp;·&nbsp; "Create, Don't Consume."
+</footer>
 </div>
 
-<!-- AUTH MODAL INCLUDE -->
-<div id="auth-modal-container"></div>
-<script src="auth.js"></script>
-<script>
-// Character data
-const CHARACTERS = [
-  {id:'zen',  name:'Zen',  role:'Creative Coder', subject:'HTML Structure',  color:'#00e5ff', page:'zen.html'},
-  {id:'byte', name:'Byte', role:'Glitch Cat',      subject:'Debugging',       color:'#b06aff', page:'byte.html'},
-  {id:'loop', name:'Loop', role:'Flow Guide',      subject:'CSS & Loops',     color:'#00e5ff', page:'loop.html'},
-  {id:'nova', name:'Nova', role:'Builder Bot',     subject:'Building Projects',color:'#ffe566',page:'nova.html'},
-  {id:'bug',  name:'Bug',  role:'Debug Gremlin',   subject:'Problem Solving', color:'#ff8c42', page:'bug.html'},
-  {id:'echo', name:'Echo', role:'Signal DJ',       subject:'Data & Output',   color:'#4ecfff', page:'echo.html'},
-];
+<!-- Firebase -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { getAuth, onAuthStateChanged, signOut } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 
-const WORKBOOKS = [
-  {id:'zen',  name:"Zen's Creative Circuits",  cover:'ZEN_COVER.png',  file:'#'},
-  {id:'byte', name:"Byte's Debug Lab",          cover:'BYTE_COVER.png', file:'#'},
-  {id:'loop', name:"Loop's Logic Quest",        cover:'LOOP_COVER.png', file:'#'},
-  {id:'nova', name:"Nova Builds a Website",     cover:'NOVA_COVER.png', file:'#'},
-  {id:'bug',  name:"Bug's Glitch Quest",        cover:'BUG_COVER.png',  file:'#'},
-  {id:'echo', name:"Echo's Sound Systems",      cover:'ECHO_COVER.png', file:'#'},
-];
+const firebaseConfig = {
+  apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
+  authDomain: "method-in-motion.firebaseapp.com",
+  projectId: "method-in-motion",
+  storageBucket: "method-in-motion.appspot.com",
+  messagingSenderId: "1067937974009",
+  appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
+};
 
-// Tier config
-const TIER_LESSONS = {free:1, sparks:2, builders:3, coders:4};
-const TIER_LABELS  = {free:'Free',sparks:'Sparks',builders:'Builders',coders:'Coders'};
-const TIER_CLASSES = {free:'tier-free',sparks:'tier-sparks',builders:'tier-builders',coders:'tier-coders'};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
 
-function getTierLessons(tier){return TIER_LESSONS[tier]||1;}
+const TIER_DATA = {
+  free: {
+    label: 'Free',
+    cls: 'free',
+    perks: ['Lesson 1 on every character world', 'Free activities & previews'],
+    unlocks: []
+  },
+  sparks: {
+    label: 'Sparks — $5/mo',
+    cls: 'sparks',
+    perks: ['Lessons 1 & 2 on all 6 worlds', 'Printable cheat sheets', 'Early access to new content'],
+    unlocks: ['byte','loop','nova','bug','echo']
+  },
+  builders: {
+    label: 'Builders — $9/mo',
+    cls: 'builders',
+    perks: ['Lessons 1–3 on all 6 worlds', 'Everything in Sparks', 'Project challenges unlocked'],
+    unlocks: ['byte','loop','nova','bug','echo']
+  },
+  coders: {
+    label: 'Coders — $15/mo',
+    cls: 'coders',
+    perks: ['All 4 lessons on every world', 'Full capstone projects', 'Everything in Builders'],
+    unlocks: ['byte','loop','nova','bug','echo']
+  }
+};
 
-function renderTierBadge(tier){
-  const label = TIER_LABELS[tier]||'Free';
-  const cls   = TIER_CLASSES[tier]||'tier-free';
-  document.getElementById('tier-badge-wrap').innerHTML =
-    `<div class="tier-badge ${cls}"><span class="tier-dot"></span>${label} Member</div>`;
-}
-
-function renderStats(tier, progress){
-  const started  = Object.values(progress).filter(v=>v>0).length;
-  const lessons  = Object.values(progress).reduce((a,b)=>a+b,0);
-  const unlocked = getTierLessons(tier)*6;
-  const workbooks= tier==='coders'?6:0;
-  document.getElementById('stat-characters').textContent = started;
-  document.getElementById('stat-lessons').textContent    = lessons;
-  document.getElementById('stat-tier-lessons').textContent = unlocked;
-  document.getElementById('stat-workbooks').textContent  = workbooks;
-}
-
-function renderCharGrid(tier, progress){
-  const maxLessons = getTierLessons(tier);
-  const grid = document.getElementById('char-grid');
-  grid.innerHTML = CHARACTERS.map(c=>{
-    const done    = progress[c.id]||0;
-    const pct     = Math.round((done/4)*100);
-    let statusLabel, statusClass;
-    if(done===4){statusLabel='Complete';statusClass='status-complete';}
-    else if(done>0){statusLabel='In Progress';statusClass='status-started';}
-    else if(maxLessons>=1){statusLabel='Available';statusClass='status-available';}
-    else{statusLabel='Locked';statusClass='status-locked';}
-
-    return `<a href="${c.page}" class="char-card" style="--char-color:${c.color}">
-      <div class="char-card-top">
-        <div class="char-info">
-          <div class="char-name" style="color:${c.color}">${c.name}</div>
-          <div class="char-role">${c.role}</div>
-        </div>
-        <div class="char-status ${statusClass}">${statusLabel}</div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-label">
-          <span>${c.subject}</span>
-          <span>${done}/4 lessons</span>
-        </div>
-        <div class="progress-bar"><div class="progress-fill" style="width:${pct}%;background:${c.color}"></div></div>
-      </div>
-      <div class="char-cta">Enter World →</div>
-    </a>`;
-  }).join('');
-}
-
-function renderWorkbooks(tier){
-  const hasWorkbooks = tier==='coders';
-  const grid = document.getElementById('workbook-grid');
-  const base = 'https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/';
-  grid.innerHTML = WORKBOOKS.map(w=>`
-    <div class="workbook-card">
-      <img class="workbook-thumb" src="${base}${w.cover}" alt="${w.name}" onerror="this.style.opacity='.3'">
-      <div class="workbook-name">${w.name}</div>
-      ${hasWorkbooks
-        ? `<a href="${w.file}" class="workbook-btn" download>Download PDF</a>`
-        : `<span class="workbook-locked">Coders Only</span>`}
-    </div>`).join('');
-}
-
-function renderUpgradeBanner(tier){
-  const banner = document.getElementById('upgrade-banner');
-  const text   = document.getElementById('upgrade-text-body');
-  if(tier==='coders'){
-    banner.style.display='none';
+onAuthStateChanged(auth, async (user) => {
+  if (!user) {
+    window.location.href = 'index.html';
     return;
   }
-  const msgs = {
-    free:'You have access to Lesson 1 on every character. Upgrade to Sparks to unlock Lesson 2 and the games.',
-    sparks:'You\'re on Sparks — upgrade to Builders to unlock Lesson 3 on every character.',
-    builders:'You\'re one step away from full access. Upgrade to Coders to unlock all lessons and all 6 workbooks.'
-  };
-  text.textContent = msgs[tier]||msgs.free;
-}
 
-// Auth state listener
-document.addEventListener('DOMContentLoaded', ()=>{
-  const loading   = document.getElementById('loading-state');
-  const dashboard = document.getElementById('dashboard-content');
-  const loggedOut = document.getElementById('logged-out-state');
-  const logoutBtn = document.getElementById('logout-btn');
-  const goLoginBtn= document.getElementById('go-login-btn');
-
-  // Wait for Firebase auth
-  function waitForAuth(cb){
-    let attempts=0;
-    const interval=setInterval(()=>{
-      attempts++;
-      if(window.firebase && window.firebase.auth){
-        clearInterval(interval);
-        cb();
-      }
-      if(attempts>40){
-        clearInterval(interval);
-        loading.style.display='none';
-        loggedOut.style.display='flex';
-      }
-    },250);
+  // Get tier from Firestore
+  let tier = 'free';
+  try {
+    const snap = await getDoc(doc(db, 'users', user.uid));
+    if (snap.exists() && snap.data().tier) {
+      tier = snap.data().tier.toLowerCase();
+    }
+  } catch(e) {
+    console.error('Firestore error:', e);
   }
 
-  waitForAuth(()=>{
-    firebase.auth().onAuthStateChanged(async user=>{
-      loading.style.display='none';
-      if(!user){
-        loggedOut.style.display='flex';
-        return;
-      }
-      // Get user tier from Firestore
-      let tier='free';
-      let progress={zen:0,byte:0,loop:0,nova:0,bug:0,echo:0};
-      try{
-        const doc = await firebase.firestore().collection('users').doc(user.uid).get();
-        if(doc.exists){
-          const data=doc.data();
-          tier=data.tier||'free';
-          progress=data.progress||progress;
-        }
-      }catch(e){console.log('Firestore error',e);}
+  const data = TIER_DATA[tier] || TIER_DATA.free;
 
-      // Render dashboard
-      const displayName = user.displayName||user.email.split('@')[0];
-      document.getElementById('dash-username').textContent = displayName;
-      renderTierBadge(tier);
-      renderStats(tier,progress);
-      renderCharGrid(tier,progress);
-      renderWorkbooks(tier);
-      renderUpgradeBanner(tier);
-      dashboard.style.display='block';
-    });
-  });
+  // Name
+  const displayName = user.displayName || user.email.split('@')[0];
+  document.getElementById('user-name').textContent = displayName;
 
-  logoutBtn.addEventListener('click',()=>{
-    if(window.firebase&&window.firebase.auth){
-      firebase.auth().signOut().then(()=>window.location.href='index.html');
+  // Tier badge
+  const badge = document.getElementById('tier-badge');
+  badge.textContent = data.label;
+  badge.className = 'tier-badge ' + data.cls;
+
+  // Perks list
+  const perksList = document.getElementById('perks-list');
+  perksList.innerHTML = data.perks.map(p => `<li>${p}</li>`).join('');
+
+  // Upgrade bar
+  if (tier === 'coders') {
+    document.getElementById('upgrade-bar').style.display = 'none';
+  }
+
+  // Character card access badges
+  const chars = ['byte','loop','nova','bug','echo'];
+  chars.forEach(c => {
+    const accessEl = document.getElementById('access-' + c);
+    if (accessEl && data.unlocks.includes(c)) {
+      accessEl.textContent = 'Unlocked';
+      accessEl.className = 'char-access access-unlocked';
     }
   });
+  // Zen is always free/accessible
+  // All cards are always clickable — locking happens on the character page itself
 
-  goLoginBtn.addEventListener('click',()=>{
-    window.location.href='index.html';
-    setTimeout(()=>{
-      const modal=document.getElementById('auth-modal');
-      if(modal)modal.style.display='flex';
-    },500);
-  });
+  // Show dashboard
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+});
+
+// Logout
+document.getElementById('logout-btn').addEventListener('click', () => {
+  signOut(auth).then(() => { window.location.href = 'index.html'; });
 });
 </script>
-<script type="module" src="auth-init.js"></script>
 </body>
 </html>
