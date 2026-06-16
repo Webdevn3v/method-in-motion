@@ -18,449 +18,189 @@
 html,body{height:100%;overflow:hidden;font-family:'Syne',sans-serif;color:#fff;background:var(--dark);}
 a{text-decoration:none;color:inherit;}
 
-/* WORLD BACKGROUND */
-.world{
-  position:fixed;inset:0;z-index:0;
-  background-image:url('byte-entrance.png');
-  background-size:cover;
-  background-position:center top;
-}
-.world-overlay{
-  position:fixed;inset:0;z-index:1;
-  background:linear-gradient(to bottom,rgba(10,0,20,0.35) 0%,rgba(10,0,20,0.2) 40%,rgba(10,0,20,0.6) 85%,rgba(10,0,20,0.95) 100%);
-}
+.world{position:fixed;inset:0;z-index:0;background-image:url('byte-entrance.png');background-size:cover;background-position:center top;}
+.world-overlay{position:fixed;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(10,0,20,0.35) 0%,rgba(10,0,20,0.2) 40%,rgba(10,0,20,0.6) 85%,rgba(10,0,20,0.95) 100%);}
 
 /* BINARY RAIN */
 .binary-rain{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
-.rain-col{position:absolute;top:-100%;font-family:'DM Mono',monospace;font-size:0.75rem;color:rgba(168,85,247,0.35);line-height:1.4;animation:rain-fall linear infinite;white-space:nowrap;writing-mode:vertical-lr;}
+.rain-col{position:absolute;top:-100%;font-family:'DM Mono',monospace;font-size:0.75rem;color:rgba(168,85,247,0.3);line-height:1.4;animation:rain-fall linear infinite;writing-mode:vertical-lr;}
 @keyframes rain-fall{0%{transform:translateY(-100%);}100%{transform:translateY(200vh);}}
 
-/* FLOATING WORLD ELEMENTS */
+/* WORLD ELEMENTS */
 .world-elements{position:fixed;inset:0;z-index:3;pointer-events:none;}
-.float-cube{
+.float-cube{position:absolute;border-radius:8px;border:1px solid rgba(168,85,247,0.4);background:rgba(20,0,50,0.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;color:rgba(168,85,247,0.8);animation:cube-float ease-in-out infinite;box-shadow:0 0 20px rgba(168,85,247,0.2),inset 0 0 20px rgba(168,85,247,0.05);}
+@keyframes cube-float{0%,100%{transform:translateY(0) rotate(0deg);}33%{transform:translateY(-18px) rotate(3deg);}66%{transform:translateY(-8px) rotate(-2deg);}}
+
+/* PIXEL FISH — CSS drawn, no emoji */
+.pixel-fish{
   position:absolute;
-  border-radius:8px;
-  border:1px solid rgba(168,85,247,0.4);
-  background:rgba(20,0,50,0.7);
-  backdrop-filter:blur(4px);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'DM Mono',monospace;
-  font-size:0.9rem;
-  color:rgba(168,85,247,0.8);
-  animation:cube-float ease-in-out infinite;
-  box-shadow:0 0 20px rgba(168,85,247,0.2),inset 0 0 20px rgba(168,85,247,0.05);
-}
-@keyframes cube-float{
-  0%,100%{transform:translateY(0) rotate(0deg);}
-  33%{transform:translateY(-18px) rotate(3deg);}
-  66%{transform:translateY(-8px) rotate(-2deg);}
-}
-.fish{
-  position:absolute;
-  font-size:1.4rem;
   animation:fish-swim linear infinite;
-  filter:drop-shadow(0 0 8px rgba(0,245,212,0.6));
+  pointer-events:none;
 }
-@keyframes fish-swim{
-  0%{transform:translateX(110vw) scaleX(-1);}
-  100%{transform:translateX(-20vw) scaleX(-1);}
-}
-.fish.reverse{
-  animation-name:fish-swim-rev;
-}
-@keyframes fish-swim-rev{
-  0%{transform:translateX(-20vw);}
-  100%{transform:translateX(110vw);}
+.pixel-fish.reverse{ animation-name:fish-swim-rev; }
+@keyframes fish-swim{0%{transform:translateX(110vw);}100%{transform:translateX(-20vw);}}
+@keyframes fish-swim-rev{0%{transform:translateX(-20vw) scaleX(-1);}100%{transform:translateX(110vw) scaleX(-1);}}
+
+.pixel-fish svg{
+  filter:drop-shadow(0 0 6px var(--fish-glow, rgba(168,85,247,0.8)));
 }
 
 /* NAV */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:50;
-  padding:12px 24px;
-  display:flex;align-items:center;justify-content:space-between;
-  background:rgba(10,0,20,0.8);
-  backdrop-filter:blur(20px);
-  border-bottom:1px solid var(--border);
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,0,20,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
 .nav-back{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);transition:color 0.2s;}
 .nav-back:hover{color:var(--purple);}
 .nav-title{font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.15em;color:var(--purple);text-shadow:0 0 20px rgba(168,85,247,0.6);}
 .nav-lang{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(0,245,212,0.4);color:var(--cyan);padding:4px 12px;border-radius:4px;background:rgba(0,245,212,0.06);}
 
-/* GAME CANVAS AREA */
-.game-world{
-  position:fixed;
-  inset:0;
-  z-index:10;
-  overflow:hidden;
-}
-
-/* BYTE CHARACTER */
-.byte-char{
-  position:fixed;
-  bottom:80px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:30;
-  width:160px;
-  pointer-events:none;
-  transition:all 0.3s cubic-bezier(0.175,0.885,0.32,1.275);
-  filter:drop-shadow(0 0 30px rgba(168,85,247,0.8)) drop-shadow(0 0 60px rgba(168,85,247,0.4));
-}
-.byte-char.idle{animation:byte-idle 3s ease-in-out infinite;}
-.byte-char.celebrate{animation:byte-celebrate 0.5s ease;}
-.byte-char.panic{animation:byte-panic 0.4s ease;}
-@keyframes byte-idle{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-10px);}}
-@keyframes byte-celebrate{0%{transform:translateX(-50%) scale(1);}40%{transform:translateX(-50%) scale(1.2) translateY(-15px);}100%{transform:translateX(-50%) scale(1);}}
-@keyframes byte-panic{0%,100%{transform:translateX(-50%);}25%{transform:translateX(calc(-50% - 12px)) rotate(-5deg);}75%{transform:translateX(calc(-50% + 12px)) rotate(5deg);}}
-
-/* BYTE SPEECH BUBBLE */
-.byte-bubble{
-  position:fixed;
-  bottom:250px;
-  left:50%;
-  transform:translateX(-50%);
-  z-index:31;
-  background:rgba(20,0,40,0.95);
-  border:1px solid var(--border);
-  border-radius:14px;
-  padding:10px 18px;
-  font-size:0.8rem;
-  color:rgba(255,255,255,0.9);
-  white-space:nowrap;
-  backdrop-filter:blur(12px);
-  opacity:0;
-  transition:opacity 0.3s;
-  max-width:280px;
-  white-space:normal;
-  text-align:center;
-  box-shadow:0 0 30px rgba(168,85,247,0.3);
-}
-.byte-bubble::after{content:'';position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);border:4px solid transparent;border-top-color:var(--border);}
-.byte-bubble.show{opacity:1;}
-
-/* GLITCH CREATURES */
-.glitch{
-  position:fixed;
-  z-index:20;
-  cursor:pointer;
-  touch-action:none;
-  user-select:none;
-  transition:filter 0.1s;
-}
-.glitch:hover{filter:brightness(1.4);}
-.glitch-body{
-  position:relative;
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-}
-.glitch-icon{
-  font-size:2rem;
-  filter:drop-shadow(0 0 12px var(--glitch-color,#a855f7));
-  animation:glitch-wiggle 0.3s ease-in-out infinite alternate;
-}
-@keyframes glitch-wiggle{0%{transform:rotate(-5deg) scale(1);}100%{transform:rotate(5deg) scale(1.05);}}
-.glitch-code{
-  font-family:'DM Mono',monospace;
-  font-size:0.6rem;
-  color:var(--glitch-color,#a855f7);
-  background:rgba(0,0,0,0.7);
-  border:1px solid var(--glitch-color,#a855f7);
-  border-radius:4px;
-  padding:2px 8px;
-  white-space:nowrap;
-  max-width:140px;
-  overflow:hidden;
-  text-overflow:ellipsis;
-  box-shadow:0 0 10px var(--glitch-color,#a855f7);
-}
-.glitch-corrupt{
-  position:absolute;
-  inset:-4px;
-  border:2px solid var(--glitch-color,#a855f7);
-  border-radius:4px;
-  opacity:0;
-  animation:corrupt-pulse 1.5s ease-in-out infinite;
-}
-@keyframes corrupt-pulse{0%,100%{opacity:0;transform:scale(1);}50%{opacity:0.4;transform:scale(1.1);}}
-
-/* GLITCH CATCH BURST */
-.catch-burst{
-  position:fixed;
-  z-index:25;
-  pointer-events:none;
-  width:80px;height:80px;
-  transform:translate(-50%,-50%);
-}
-.burst-ring{
-  position:absolute;
-  inset:0;
-  border-radius:50%;
-  border:3px solid var(--cyan);
-  animation:burst-out 0.5s ease-out forwards;
-}
-@keyframes burst-out{0%{transform:scale(0);opacity:1;}100%{transform:scale(3);opacity:0;}}
-.burst-text{
-  position:absolute;
-  top:-30px;left:50%;
-  transform:translateX(-50%);
-  font-family:'Orbitron',monospace;
-  font-size:0.7rem;
-  letter-spacing:0.1em;
-  color:var(--cyan);
-  white-space:nowrap;
-  animation:burst-text-up 0.8s ease-out forwards;
-  text-shadow:0 0 10px var(--cyan);
-}
-@keyframes burst-text-up{0%{opacity:1;transform:translateX(-50%) translateY(0);}100%{opacity:0;transform:translateX(-50%) translateY(-40px);}}
-
 /* HUD */
-.hud{
-  position:fixed;top:64px;left:0;right:0;z-index:40;
-  padding:12px 24px;
-  display:flex;align-items:center;justify-content:space-between;
-  gap:16px;
-  pointer-events:none;
-}
+.hud{position:fixed;top:64px;left:0;right:0;z-index:40;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;pointer-events:none;}
 .hud-left{display:flex;align-items:center;gap:12px;}
-.hud-stat{
-  background:rgba(10,0,20,0.85);
-  border:1px solid var(--border);
-  border-radius:10px;
-  padding:8px 16px;
-  backdrop-filter:blur(12px);
-  text-align:center;
-}
+.hud-stat{background:rgba(10,0,20,0.85);border:1px solid var(--border);border-radius:10px;padding:8px 16px;backdrop-filter:blur(12px);text-align:center;}
 .hud-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--purple);}
 .hud-val.cyan{color:var(--cyan);}
-.hud-val.pink{color:var(--pink);}
 .hud-label{font-family:'Orbitron',monospace;font-size:0.45rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);}
-
-/* LIVES */
 .lives{display:flex;gap:6px;align-items:center;}
-.life{font-size:1.2rem;filter:drop-shadow(0 0 6px rgba(244,114,182,0.8));transition:all 0.3s;}
+.life{font-size:1.2rem;transition:all 0.3s;}
 .life.lost{filter:grayscale(1);opacity:0.25;}
+.level-badge{background:rgba(10,0,20,0.85);border:1px solid rgba(0,245,212,0.3);border-radius:10px;padding:8px 16px;backdrop-filter:blur(12px);font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan);}
 
-/* LEVEL BADGE */
-.level-badge{
-  background:rgba(10,0,20,0.85);
-  border:1px solid rgba(0,245,212,0.3);
-  border-radius:10px;
-  padding:8px 16px;
-  backdrop-filter:blur(12px);
-  font-family:'Orbitron',monospace;
-  font-size:0.55rem;
-  letter-spacing:0.14em;
-  text-transform:uppercase;
-  color:var(--cyan);
-}
+/* GAME WORLD */
+.game-world{position:fixed;inset:0;z-index:10;overflow:hidden;pointer-events:none;}
 
-/* PROGRESS TRACK */
-.progress-track{
-  position:fixed;
-  bottom:16px;left:24px;right:24px;
-  z-index:40;
-  display:flex;align-items:center;gap:12px;
-}
-.progress-label{font-family:'Orbitron',monospace;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.4);white-space:nowrap;}
-.progress-bar{flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;}
-.progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:3px;transition:width 0.5s ease;}
-.progress-count{font-family:'Orbitron',monospace;font-size:0.5rem;color:var(--cyan);white-space:nowrap;}
+/* BYTE */
+.byte-char{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:30;width:150px;pointer-events:none;transition:all 0.3s;filter:drop-shadow(0 0 30px rgba(168,85,247,0.8)) drop-shadow(0 0 60px rgba(168,85,247,0.3));}
+.byte-char.idle{animation:byte-idle 3s ease-in-out infinite;}
+.byte-char.celebrate{animation:byte-celebrate 0.6s ease;}
+.byte-char.panic{animation:byte-panic 0.4s ease;}
+@keyframes byte-idle{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-10px);}}
+@keyframes byte-celebrate{0%{transform:translateX(-50%) scale(1);}40%{transform:translateX(-50%) scale(1.25) translateY(-20px);}100%{transform:translateX(-50%) scale(1);}}
+@keyframes byte-panic{0%,100%{transform:translateX(-50%);}25%{transform:translateX(calc(-50% - 14px)) rotate(-6deg);}75%{transform:translateX(calc(-50% + 14px)) rotate(6deg);}}
 
-/* INTRO SCREEN */
-.intro{
-  position:fixed;inset:0;z-index:100;
-  display:flex;align-items:center;justify-content:center;
-  padding:24px;
-  background:rgba(5,0,15,0.7);
-  backdrop-filter:blur(4px);
-}
-.intro-card{
-  max-width:480px;width:100%;
-  background:rgba(10,0,25,0.97);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:36px 32px;
-  text-align:center;
-  box-shadow:0 0 60px rgba(168,85,247,0.25);
-}
-.intro-byte{width:140px;margin:0 auto 16px;filter:drop-shadow(0 0 20px rgba(168,85,247,0.6));animation:byte-idle 3s ease-in-out infinite;}
-.intro-eyebrow{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
-.intro-title{font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;margin-bottom:6px;}
-.intro-title span{background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.intro-quote{font-size:0.85rem;color:rgba(255,255,255,0.55);font-style:italic;margin-bottom:20px;line-height:1.6;}
-.intro-steps{background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:18px 20px;margin-bottom:24px;text-align:left;}
-.intro-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:10px;font-size:0.82rem;color:rgba(255,255,255,0.75);line-height:1.5;}
-.intro-step:last-child{margin-bottom:0;}
-.step-dot{width:20px;height:20px;border-radius:50%;background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.4);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:0.42rem;color:var(--purple);flex-shrink:0;margin-top:1px;}
-.intro-lang{display:inline-flex;align-items:center;gap:8px;font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(0,245,212,0.35);color:var(--cyan);padding:6px 14px;border-radius:6px;background:rgba(0,245,212,0.06);margin-bottom:20px;}
-.intro-btn{
-  font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;
-  padding:14px 32px;
-  background:linear-gradient(135deg,var(--purple),#6366f1);
-  color:#fff;font-weight:700;border:none;border-radius:999px;cursor:pointer;
-  transition:all 0.2s;
-  box-shadow:0 8px 30px rgba(168,85,247,0.4);
-  width:100%;
-}
-.intro-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(168,85,247,0.5);}
+.byte-bubble{position:fixed;bottom:248px;left:50%;transform:translateX(-50%);z-index:31;background:rgba(20,0,40,0.95);border:1px solid var(--border);border-radius:14px;padding:10px 18px;font-size:0.8rem;color:rgba(255,255,255,0.9);backdrop-filter:blur(12px);opacity:0;transition:opacity 0.3s;max-width:260px;text-align:center;box-shadow:0 0 30px rgba(168,85,247,0.25);pointer-events:none;}
+.byte-bubble.show{opacity:1;}
 
-/* ANSWER PANEL — slides up when a glitch is caught */
-.answer-panel{
-  position:fixed;
-  bottom:-100%;left:0;right:0;
-  z-index:60;
-  padding:20px 24px 24px;
-  background:rgba(8,0,20,0.97);
-  border-top:1px solid var(--border);
-  backdrop-filter:blur(20px);
-  transition:bottom 0.4s cubic-bezier(0.175,0.885,0.32,1.275);
-  box-shadow:0 -20px 60px rgba(168,85,247,0.2);
-}
+/* GLITCH */
+.glitch{position:fixed;z-index:20;cursor:pointer;touch-action:manipulation;user-select:none;pointer-events:all;}
+.glitch-body{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;}
+.glitch-icon{font-size:2.2rem;filter:drop-shadow(0 0 12px var(--gc,#a855f7));animation:glitch-wiggle 0.35s ease-in-out infinite alternate;}
+@keyframes glitch-wiggle{0%{transform:rotate(-6deg) scale(1);}100%{transform:rotate(6deg) scale(1.08);}}
+.glitch-code{font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--gc,#a855f7);background:rgba(0,0,0,0.75);border:1px solid var(--gc,#a855f7);border-radius:4px;padding:2px 8px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis;box-shadow:0 0 10px var(--gc,#a855f7);}
+
+/* CATCH BURST */
+.catch-burst{position:fixed;z-index:25;pointer-events:none;transform:translate(-50%,-50%);}
+.burst-ring{position:absolute;inset:-30px;border-radius:50%;border:3px solid var(--cyan);animation:burst-out 0.5s ease-out forwards;}
+@keyframes burst-out{0%{transform:scale(0);opacity:1;}100%{transform:scale(2.5);opacity:0;}}
+.burst-text{position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--cyan);white-space:nowrap;animation:burst-up 0.8s ease-out forwards;text-shadow:0 0 10px var(--cyan);}
+@keyframes burst-up{0%{opacity:1;transform:translateX(-50%) translateY(0);}100%{opacity:0;transform:translateX(-50%) translateY(-40px);}}
+
+/* ANSWER PANEL */
+.answer-panel{position:fixed;bottom:-100%;left:0;right:0;z-index:60;padding:18px 20px 20px;background:rgba(6,0,18,0.98);border-top:1px solid var(--border);backdrop-filter:blur(20px);transition:bottom 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 -20px 60px rgba(168,85,247,0.15);}
 .answer-panel.show{bottom:0;}
-.ap-header{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-.ap-icon{font-size:1.6rem;filter:drop-shadow(0 0 10px rgba(168,85,247,0.6));}
-.ap-title{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--purple);}
-.ap-glitch-code{font-family:'DM Mono',monospace;font-size:0.85rem;color:rgba(255,255,255,0.5);margin-top:2px;}
-.ap-question{font-size:0.92rem;color:rgba(255,255,255,0.85);margin-bottom:14px;line-height:1.6;}
-.ap-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:0;}
-.ap-option{
-  padding:12px 16px;
-  background:rgba(168,85,247,0.06);
-  border:1px solid rgba(168,85,247,0.2);
-  border-radius:10px;
-  cursor:pointer;
-  font-family:'DM Mono',monospace;
-  font-size:0.8rem;
-  color:rgba(255,255,255,0.8);
-  transition:all 0.2s;
-  text-align:left;
-  line-height:1.5;
-}
-.ap-option:hover{background:rgba(168,85,247,0.15);border-color:var(--purple);color:#fff;}
-.ap-option.correct{background:rgba(0,245,212,0.1);border-color:var(--cyan);color:var(--cyan);}
-.ap-option.wrong{background:rgba(244,114,182,0.08);border-color:rgba(244,114,182,0.4);color:rgba(244,114,182,0.7);}
-.ap-feedback{margin-top:12px;padding:10px 14px;border-radius:8px;font-size:0.82rem;display:none;line-height:1.5;}
+.ap-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
+.ap-icon{font-size:1.5rem;}
+.ap-title{font-family:'Orbitron',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple);}
+.ap-code{font-family:'DM Mono',monospace;font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:2px;}
+.ap-question{font-size:0.9rem;color:rgba(255,255,255,0.85);margin-bottom:12px;line-height:1.6;}
+.ap-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.ap-option{padding:11px 14px;background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);border-radius:10px;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.8rem;color:rgba(255,255,255,0.8);transition:all 0.2s;text-align:left;line-height:1.5;}
+.ap-option:hover,.ap-option:active{background:rgba(168,85,247,0.18);border-color:var(--purple);color:#fff;}
+.ap-option.correct{background:rgba(0,245,212,0.1)!important;border-color:var(--cyan)!important;color:var(--cyan)!important;pointer-events:none;}
+.ap-option.wrong{background:rgba(244,114,182,0.07)!important;border-color:rgba(244,114,182,0.3)!important;color:rgba(244,114,182,0.6)!important;pointer-events:none;}
+.ap-option.disabled{pointer-events:none;}
+.ap-feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:0.8rem;display:none;line-height:1.5;}
 .ap-feedback.show{display:block;}
 .ap-feedback.correct{background:rgba(0,245,212,0.06);border:1px solid rgba(0,245,212,0.2);color:var(--cyan);}
 .ap-feedback.wrong{background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);color:rgba(255,255,255,0.7);}
 
-/* RESULT SCREEN */
-.result-screen{
-  display:none;
-  position:fixed;inset:0;z-index:200;
-  align-items:center;justify-content:center;
-  padding:24px;
-  background:rgba(5,0,15,0.95);
-  backdrop-filter:blur(8px);
-}
-.result-screen.show{display:flex;}
-.result-card{
-  max-width:420px;width:100%;
-  background:rgba(10,0,25,0.98);
-  border:1px solid var(--border);
-  border-radius:20px;
-  padding:40px 32px;
-  text-align:center;
-  box-shadow:0 0 80px rgba(168,85,247,0.3);
-}
-.result-byte{width:120px;margin:0 auto 20px;}
-.result-icon{font-size:3rem;margin-bottom:12px;}
-.result-title{font-family:'Orbitron',monospace;font-size:1.1rem;letter-spacing:0.1em;margin-bottom:8px;}
-.result-title.win{color:var(--cyan);}
-.result-title.fail{color:var(--pink);}
-.result-score{font-family:'Orbitron',monospace;font-size:2.2rem;font-weight:900;color:var(--purple);margin-bottom:8px;}
-.result-msg{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:24px;}
-.result-actions{display:flex;gap:12px;}
-.result-btn{flex:1;font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;padding:12px 16px;border-radius:8px;cursor:pointer;border:none;transition:all 0.2s;}
-.result-btn.primary{background:linear-gradient(135deg,var(--purple),#6366f1);color:#fff;font-weight:700;box-shadow:0 4px 20px rgba(168,85,247,0.4);}
-.result-btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.5);}
-.result-btn:hover{transform:translateY(-1px);}
+/* PROGRESS */
+.progress-track{position:fixed;bottom:14px;left:24px;right:24px;z-index:40;display:flex;align-items:center;gap:12px;}
+.progress-label{font-family:'Orbitron',monospace;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);white-space:nowrap;}
+.progress-bar{flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:3px;transition:width 0.5s ease;}
+.progress-count{font-family:'Orbitron',monospace;font-size:0.5rem;color:var(--cyan);white-space:nowrap;}
 
-/* CHEST PROGRESS */
-.chest{
-  position:fixed;
-  bottom:90px;right:24px;
-  z-index:35;
-  font-size:2.5rem;
-  filter:drop-shadow(0 0 16px rgba(168,85,247,0.5));
-  animation:chest-pulse 2s ease-in-out infinite;
-  pointer-events:none;
-}
-@keyframes chest-pulse{0%,100%{filter:drop-shadow(0 0 10px rgba(168,85,247,0.4));}50%{filter:drop-shadow(0 0 25px rgba(168,85,247,0.8));}}
+/* CHEST */
+.chest{position:fixed;bottom:88px;right:20px;z-index:35;font-size:2.2rem;filter:drop-shadow(0 0 16px rgba(168,85,247,0.5));animation:chest-pulse 2s ease-in-out infinite;pointer-events:none;}
+@keyframes chest-pulse{0%,100%{filter:drop-shadow(0 0 10px rgba(168,85,247,0.4));}50%{filter:drop-shadow(0 0 24px rgba(168,85,247,0.8));}}
 
-/* PAW PLATFORM GLOW */
-.paw-platform{
-  position:fixed;
-  bottom:50px;left:50%;transform:translateX(-50%);
-  z-index:5;
-  width:220px;height:220px;
-  border-radius:50%;
-  background:radial-gradient(ellipse,rgba(168,85,247,0.15) 0%,transparent 70%);
-  animation:platform-breathe 3s ease-in-out infinite;
-  pointer-events:none;
-}
+.paw-platform{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);z-index:5;width:200px;height:200px;border-radius:50%;background:radial-gradient(ellipse,rgba(168,85,247,0.12) 0%,transparent 70%);animation:platform-breathe 3s ease-in-out infinite;pointer-events:none;}
 @keyframes platform-breathe{0%,100%{transform:translateX(-50%) scale(1);opacity:0.6;}50%{transform:translateX(-50%) scale(1.1);opacity:1;}}
 
+/* INTRO */
+.intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(5,0,15,0.75);backdrop-filter:blur(4px);}
+.intro-card{max-width:460px;width:100%;background:rgba(8,0,22,0.98);border:1px solid var(--border);border-radius:20px;padding:32px 28px;text-align:center;box-shadow:0 0 60px rgba(168,85,247,0.2);}
+.intro-byte{width:130px;margin:0 auto 14px;filter:drop-shadow(0 0 20px rgba(168,85,247,0.6));animation:byte-idle 3s ease-in-out infinite;}
+.intro-eyebrow{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
+.intro-title{font-family:'Orbitron',monospace;font-size:1.35rem;font-weight:900;margin-bottom:6px;}
+.intro-title span{background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.intro-quote{font-size:0.82rem;color:rgba(255,255,255,0.5);font-style:italic;margin-bottom:18px;line-height:1.6;}
+.intro-steps{background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:16px 18px;margin-bottom:18px;text-align:left;}
+.intro-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:9px;font-size:0.8rem;color:rgba(255,255,255,0.75);line-height:1.5;}
+.intro-step:last-child{margin-bottom:0;}
+.step-dot{width:19px;height:19px;border-radius:50%;background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.4);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:0.42rem;color:var(--purple);flex-shrink:0;margin-top:1px;}
+.intro-lang{display:inline-flex;align-items:center;gap:8px;font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(0,245,212,0.35);color:var(--cyan);padding:6px 14px;border-radius:6px;background:rgba(0,245,212,0.06);margin-bottom:18px;}
+.intro-btn{font-family:'Orbitron',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;padding:13px 28px;background:linear-gradient(135deg,var(--purple),#6366f1);color:#fff;font-weight:700;border:none;border-radius:999px;cursor:pointer;transition:all 0.2s;box-shadow:0 8px 30px rgba(168,85,247,0.4);width:100%;}
+.intro-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(168,85,247,0.5);}
+
+/* RESULT */
+.result-screen{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:24px;background:rgba(5,0,15,0.95);backdrop-filter:blur(8px);}
+.result-screen.show{display:flex;}
+.result-card{max-width:400px;width:100%;background:rgba(8,0,22,0.98);border:1px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;box-shadow:0 0 80px rgba(168,85,247,0.25);}
+.result-byte{width:110px;margin:0 auto 16px;}
+.result-title{font-family:'Orbitron',monospace;font-size:1rem;letter-spacing:0.1em;margin-bottom:8px;}
+.result-title.win{color:var(--cyan);}
+.result-title.fail{color:var(--pink);}
+.result-score{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--purple);margin-bottom:8px;}
+.result-msg{font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:22px;}
+.result-actions{display:flex;gap:10px;}
+.result-btn{flex:1;font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:11px 14px;border-radius:8px;cursor:pointer;border:none;transition:all 0.2s;}
+.result-btn.primary{background:linear-gradient(135deg,var(--purple),#6366f1);color:#fff;font-weight:700;}
+.result-btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);}
+.result-btn:hover{transform:translateY(-1px);}
+
 @media(max-width:600px){
-  .byte-char{width:120px;bottom:70px;}
+  .byte-char{width:110px;bottom:70px;}
   .ap-options{grid-template-columns:1fr;}
-  .hud{padding:10px 16px;}
+  .hud{padding:10px 14px;}
+  .byte-bubble{bottom:230px;}
 }
 </style>
 </head>
 <body>
 
-<!-- WORLD -->
 <div class="world"></div>
 <div class="world-overlay"></div>
 <div class="binary-rain" id="binaryRain"></div>
 <div class="world-elements" id="worldElements"></div>
 <div class="paw-platform"></div>
 
-<!-- NAV -->
 <nav>
   <a href="games.html" class="nav-back">← Game Universe</a>
   <span class="nav-title">Glitch Hunt</span>
   <span class="nav-lang">Debugging Basics</span>
 </nav>
 
-<!-- HUD -->
 <div class="hud">
   <div class="hud-left">
-    <div class="hud-stat">
-      <div class="hud-val cyan" id="hud-score">0</div>
-      <div class="hud-label">Score</div>
-    </div>
-    <div class="hud-stat">
-      <div class="hud-val" id="hud-caught">0</div>
-      <div class="hud-label">Caught</div>
-    </div>
+    <div class="hud-stat"><div class="hud-val cyan" id="hudScore">0</div><div class="hud-label">Score</div></div>
+    <div class="hud-stat"><div class="hud-val" id="hudCaught">0</div><div class="hud-label">Caught</div></div>
     <div class="lives" id="lives">
-      <span class="life">🐾</span>
-      <span class="life">🐾</span>
-      <span class="life">🐾</span>
+      <span class="life">🐾</span><span class="life">🐾</span><span class="life">🐾</span>
     </div>
   </div>
-  <div class="level-badge" id="level-badge">Wave 1</div>
+  <div class="level-badge" id="levelBadge">Wave 1</div>
 </div>
 
-<!-- BYTE CHARACTER -->
 <img class="byte-char idle" id="byteChar" src="byte-pose-6.png" alt="Byte"/>
-
-<!-- BYTE SPEECH BUBBLE -->
 <div class="byte-bubble" id="byteBubble"></div>
-
-<!-- CHEST -->
 <div class="chest" id="chest">📦</div>
 
-<!-- PROGRESS -->
 <div class="progress-track">
   <span class="progress-label">Wave Progress</span>
   <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
   <span class="progress-count" id="progressCount">0 / 8</span>
 </div>
 
-<!-- GAME WORLD (glitches spawn here) -->
 <div class="game-world" id="gameWorld"></div>
 
 <!-- ANSWER PANEL -->
@@ -469,7 +209,7 @@ nav{
     <div class="ap-icon" id="apIcon">🐛</div>
     <div>
       <div class="ap-title">Glitch Caught! What's the fix?</div>
-      <div class="ap-glitch-code" id="apCode"></div>
+      <div class="ap-code" id="apCode"></div>
     </div>
   </div>
   <div class="ap-question" id="apQuestion"></div>
@@ -486,12 +226,12 @@ nav{
     <p class="intro-quote">"Every big program starts with one small byte — and every bug starts with one small mistake. Let's find them!"</p>
     <div class="intro-lang">📚 Debugging Basics · Patterns · Logic</div>
     <div class="intro-steps">
-      <div class="intro-step"><div class="step-dot">1</div>Glitches will crawl out of the binary waterfalls and scuttle across the world.</div>
-      <div class="intro-step"><div class="step-dot">2</div>Tap or click a glitch to catch it before it reaches the portal!</div>
-      <div class="intro-step"><div class="step-dot">3</div>When you catch one, Byte will ask you what the fix is. Pick the right answer to score big.</div>
-      <div class="intro-step"><div class="step-dot">4</div>You have 3 lives (paw prints). Don't let glitches escape!</div>
+      <div class="intro-step"><div class="step-dot">1</div>Glitches crawl out of the binary rain and scuttle through the world.</div>
+      <div class="intro-step"><div class="step-dot">2</div>Tap or click a glitch to catch it before it escapes!</div>
+      <div class="intro-step"><div class="step-dot">3</div>Pick the right fix to score big. Byte will explain every answer.</div>
+      <div class="intro-step"><div class="step-dot">4</div>You have 3 lives (paw prints). Don't let glitches get away!</div>
     </div>
-    <button class="intro-btn" onclick="startGame()">Let's Hunt Some Glitches! 🐾</button>
+    <button class="intro-btn" id="startBtn">Let's Hunt Some Glitches! 🐾</button>
   </div>
 </div>
 
@@ -503,16 +243,14 @@ nav{
     <div class="result-score" id="resultScore">0 pts</div>
     <div class="result-msg" id="resultMsg"></div>
     <div class="result-actions">
-      <button class="result-btn secondary" onclick="restartGame()">Play Again</button>
-      <button class="result-btn primary" onclick="window.location.href='games.html'">Back to Universe</button>
+      <button class="result-btn secondary" id="retryBtn">Play Again</button>
+      <button class="result-btn primary" id="universeBtn">Back to Universe</button>
     </div>
   </div>
 </div>
 
 <script>
-// ============================================================
-// GLITCH DATA — each glitch has a code snippet, question, options
-// ============================================================
+// ── GLITCH DATA ──────────────────────────────────────────────
 const GLITCHES = [
   {
     emoji:'🐛', color:'#a855f7',
@@ -520,63 +258,63 @@ const GLITCHES = [
     question:'Byte spotted a typo! What should "colr" be?',
     options:['colour','color','colors','col'],
     correct:1,
-    explain:'CSS uses "color" — American English spelling, no extra letters!'
+    explain:'"color" — CSS uses American English spelling. No extra letters!'
   },
   {
     emoji:'👾', color:'#f472b6',
     code:'<img src="cat.png"',
-    question:'This tag is missing something. What\'s wrong?',
-    options:['Missing alt=""','Missing the >','Missing src','Missing color'],
+    question:'This HTML tag is missing something. What\'s wrong?',
+    options:['Missing alt=""','Missing the >','Missing src','Missing width'],
     correct:1,
     explain:'Every HTML tag needs a closing > to tell the browser where it ends!'
   },
   {
     emoji:'🦠', color:'#00f5d4',
     code:'font-size: 16',
-    question:'The font size has no unit. What should it say?',
-    options:['font-size: 16px','font-size: 16em','font-size: 16%','font-size: "16"'],
+    question:'The font size has no unit. Which fix is correct?',
+    options:['font-size: 16px','font-size: 16em','font-size: "16"','font-size: 16pt'],
     correct:0,
-    explain:'CSS sizes need units! "px" means pixels — the most common unit for font size.'
+    explain:'"px" means pixels — it goes right after the number. font-size: 16px!'
   },
   {
     emoji:'🐛', color:'#a855f7',
     code:'<p>Hello<p>',
-    question:'This paragraph tag isn\'t closed properly. What\'s the fix?',
-    options:['<p>Hello</p>','<p>Hello</>','<p/>Hello<p>','<p>Hello<p/>'],
+    question:'This paragraph tag doesn\'t close correctly. What\'s the fix?',
+    options:['<p>Hello</p>','<p>Hello</>','<p/>Hello','<P>Hello</P>'],
     correct:0,
-    explain:'Closing tags need a slash BEFORE the tag name: </p> not <p> again!'
+    explain:'Closing tags need a slash before the name: </p>. Also HTML is lowercase!'
   },
   {
     emoji:'👾', color:'#f472b6',
     code:'background: ;',
-    question:'The background property is empty! Byte needs a color. Which is valid?',
-    options:['background: purple;','background: #purple;','background: color(purple);','background: "purple"'],
+    question:'The background is empty! Which is a valid color value?',
+    options:['background: purple;','background: #purple;','background: color(purple)','background: "purple"'],
     correct:0,
-    explain:'You can use color names like "purple" directly in CSS — no quotes or hash needed for names!'
+    explain:'You can use color names directly in CSS — just write the word, no quotes or hash!'
   },
   {
     emoji:'🦠', color:'#00f5d4',
     code:'padding: 10',
-    question:'This padding is missing its unit. Which fix is correct?',
-    options:['padding: 10px','padding: 10pixels','padding: px10','padding: "10px"'],
+    question:'Padding is missing its unit. Which is correct?',
+    options:['padding: 10px','padding: px10','padding: 10pixels','padding: (10)'],
     correct:0,
-    explain:'"px" always comes AFTER the number in CSS. 10px = 10 pixels of space!'
+    explain:'"px" always comes AFTER the number. 10px = 10 pixels of space!'
   },
   {
     emoji:'🐛', color:'#a855f7',
     code:'<h1>Title<h2>',
-    question:'The heading tag doesn\'t match! What\'s the correct closing tag?',
+    question:'The closing tag doesn\'t match the opening tag. What should it be?',
     options:['</h2>','</h1>','<h1/>','</heading>'],
     correct:1,
-    explain:'Opening and closing tags must match! <h1> needs </h1>, not </h2>.'
+    explain:'Opening and closing tags must match! <h1> opens, </h1> closes. They have to be the same number!'
   },
   {
     emoji:'👾', color:'#f472b6',
     code:'border: 1 solid black',
-    question:'The border is missing a unit. What goes after "1"?',
+    question:'The border value is missing a unit after "1". What goes there?',
     options:['1px','1em','1%','1rem'],
     correct:0,
-    explain:'"px" is the most common unit for borders. "border: 1px solid black" draws a 1-pixel border!'
+    explain:'"border: 1px solid black" draws a 1-pixel border. px is the most common unit!'
   },
   {
     emoji:'🦠', color:'#00f5d4',
@@ -584,315 +322,122 @@ const GLITCHES = [
     question:'Byte found a typo in "blok"! What should it say?',
     options:['block','blocks','blocked','blocking'],
     correct:0,
-    explain:'"display: block" is a CSS value that makes elements stack on top of each other!'
+    explain:'"display: block" makes elements stack on top of each other. One word, no extra letters!'
   },
   {
     emoji:'🐛', color:'#a855f7',
     code:'<button>Click<button>',
-    question:'The button tag closes wrong. What\'s the fix?',
+    question:'The button closing tag is wrong. What\'s the correct fix?',
     options:['<button>Click</button>','<button>Click</>','<button/>Click','<Button>Click</Button>'],
     correct:0,
-    explain:'Closing tags need a forward slash: </button>. HTML tags are also lowercase!'
+    explain:'Closing tags need </tagname>. And HTML tags should always be lowercase!'
   },
 ];
 
-// ============================================================
-// WAVE CONFIG
-// ============================================================
 const WAVES = [
-  {name:'Wave 1', glitchCount:5, speed:18, spawnRate:3000, label:'Exploration Mode'},
-  {name:'Wave 2', glitchCount:7, speed:13, spawnRate:2200, label:'Getting Faster'},
-  {name:'Wave 3', glitchCount:10, speed:9, spawnRate:1600, label:'Chaos Mode'},
+  {name:'Wave 1', count:5, speed:20000, spawnRate:3200, label:'Exploration Mode'},
+  {name:'Wave 2', count:7, speed:14000, spawnRate:2400, label:'Getting Faster'},
+  {name:'Wave 3', count:10, speed:9000, spawnRate:1800, label:'Chaos Mode'},
 ];
 
-// ============================================================
-// GAME STATE
-// ============================================================
-let score=0, caught=0, lives=3, wave=0, waveTotal=0, waveGoal=0;
-let spawnTimer=null, activeGlitch=null, gameRunning=false;
-let byteState='idle'; // idle, celebrate, panic
+// ── STATE ────────────────────────────────────────────────────
+let score=0, caught=0, lives=3, waveIdx=0, waveGoal=0;
+let spawnTimer=null, activeGlitchEl=null, gameRunning=false;
+let pendingGlitch=null; // glitch data waiting for answer
 
-// ============================================================
-// WORLD SETUP
-// ============================================================
+// ── PIXEL FISH SVG ───────────────────────────────────────────
+function makeFishSVG(color, size){
+  return `<svg width="${size}" height="${size*0.55}" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- pixel fish body -->
+    <rect x="4" y="4" width="12" height="6" fill="${color}"/>
+    <rect x="2" y="5" width="2" height="4" fill="${color}"/>
+    <rect x="16" y="3" width="2" height="2" fill="${color}"/>
+    <rect x="16" y="9" width="2" height="2" fill="${color}"/>
+    <rect x="18" y="2" width="2" height="4" fill="${color}"/>
+    <rect x="18" y="8" width="2" height="4" fill="${color}"/>
+    <!-- eye -->
+    <rect x="6" y="5" width="2" height="2" fill="#fff"/>
+    <rect x="6" y="5" width="1" height="1" fill="#000"/>
+    <!-- pixel dots on body -->
+    <rect x="10" y="6" width="1" height="1" fill="${color === '#a855f7' ? '#c084fc' : '#67e8f9'}"/>
+    <rect x="13" y="7" width="1" height="1" fill="${color === '#a855f7' ? '#c084fc' : '#67e8f9'}"/>
+  </svg>`;
+}
+
+// ── WORLD SETUP ──────────────────────────────────────────────
 function buildBinaryRain(){
-  const container=document.getElementById('binaryRain');
+  const c=document.getElementById('binaryRain');
   for(let i=0;i<12;i++){
     const col=document.createElement('div');
     col.className='rain-col';
-    col.style.left=(i*9+Math.random()*5)+'%';
+    col.style.left=(i*9+Math.random()*4)+'%';
     col.style.animationDuration=(8+Math.random()*8)+'s';
     col.style.animationDelay=(-Math.random()*10)+'s';
-    col.style.opacity=(0.15+Math.random()*0.25).toString();
+    col.style.opacity=(0.15+Math.random()*0.2).toString();
     let str='';
     for(let j=0;j<40;j++) str+=(Math.random()>0.5?'1':'0')+'\n';
     col.textContent=str;
-    container.appendChild(col);
+    c.appendChild(col);
   }
 }
 
 function buildWorldElements(){
-  const container=document.getElementById('worldElements');
-  const cubes=[
-    {text:'</>',top:'12%',left:'8%',size:52,delay:0},
-    {text:'{}',top:'18%',right:'10%',size:48,delay:1.5},
-    {text:'?',top:'8%',left:'20%',size:44,delay:0.8},
-    {text:'01',top:'25%',right:'22%',size:40,delay:2},
-    {text:'</>',top:'6%',right:'35%',size:36,delay:1},
-  ];
-  cubes.forEach(c=>{
+  const c=document.getElementById('worldElements');
+
+  // Floating cubes
+  [
+    {text:'</>',top:'10%',left:'7%',size:50,delay:0},
+    {text:'{}',top:'16%',right:'9%',size:46,delay:1.5},
+    {text:'?',top:'7%',left:'22%',size:42,delay:0.8},
+    {text:'01',top:'22%',right:'20%',size:38,delay:2},
+    {text:'</>',top:'5%',right:'38%',size:34,delay:1.2},
+  ].forEach(cu=>{
     const el=document.createElement('div');
     el.className='float-cube';
-    el.style.cssText=`top:${c.top};${c.left?'left:'+c.left:''};${c.right?'right:'+c.right:''};width:${c.size}px;height:${c.size}px;animation-duration:${4+c.delay}s;animation-delay:-${c.delay}s;font-size:${c.size*0.35}px;`;
-    el.textContent=c.text;
-    container.appendChild(el);
+    el.style.cssText=`top:${cu.top};${cu.left?'left:'+cu.left:'right:'+cu.right};width:${cu.size}px;height:${cu.size}px;animation-duration:${4+cu.delay}s;animation-delay:-${cu.delay}s;font-size:${cu.size*0.34}px;`;
+    el.textContent=cu.text;
+    c.appendChild(el);
   });
 
-  // Fish (cat theme — pixel fish swimming past)
-  const fishData=[
-    {top:'20%',duration:14,delay:0,emoji:'🐟',reverse:false},
-    {top:'35%',duration:18,delay:3,emoji:'🐠',reverse:true},
-    {top:'15%',duration:22,delay:8,emoji:'🐡',reverse:false},
-    {top:'28%',duration:16,delay:12,emoji:'🐟',reverse:true},
+  // Pixel fish — CSS SVG, matches the world palette
+  const fishDefs=[
+    {top:'22%',dur:15,delay:0,color:'#a855f7',size:36,reverse:false},
+    {top:'34%',dur:20,delay:4,color:'#00f5d4',size:28,reverse:true},
+    {top:'14%',dur:24,delay:9,color:'#a855f7',size:24,reverse:false},
+    {top:'28%',dur:17,delay:14,color:'#c084fc',size:32,reverse:true},
+    {top:'18%',dur:22,delay:7,color:'#00f5d4',size:20,reverse:false},
   ];
-  fishData.forEach(f=>{
+  fishDefs.forEach(f=>{
     const el=document.createElement('div');
-    el.className='fish'+(f.reverse?' reverse':'');
+    el.className='pixel-fish'+(f.reverse?' reverse':'');
     el.style.top=f.top;
-    el.style.fontSize='1.6rem';
-    el.style.animationDuration=f.duration+'s';
-    el.style.animationDelay=f.delay+'s';
-    el.textContent=f.emoji;
-    container.appendChild(el);
+    el.style.setProperty('--fish-glow', f.color+'99');
+    el.style.animationDuration=f.dur+'s';
+    el.style.animationDelay=(-f.delay)+'s';
+    el.innerHTML=makeFishSVG(f.color, f.size);
+    c.appendChild(el);
   });
 }
 
-// ============================================================
-// BYTE REACTIONS
-// ============================================================
-function byteReact(state, message=''){
+// ── BYTE REACTIONS ───────────────────────────────────────────
+function byteReact(state, msg=''){
   const img=document.getElementById('byteChar');
-  const bubble=document.getElementById('byteBubble');
-
-  img.src = state==='celebrate' ? 'byte-pose-4.png'
-           : state==='panic'    ? 'byte-pose-5.png'
-           : 'byte-pose-6.png';
-
+  const bub=document.getElementById('byteBubble');
+  img.src=state==='celebrate'?'byte-pose-4.png':state==='panic'?'byte-pose-5.png':'byte-pose-6.png';
   img.className='byte-char '+state;
-
-  if(message){
-    bubble.textContent=message;
-    bubble.classList.add('show');
-    setTimeout(()=>bubble.classList.remove('show'),2500);
-  }
-
-  if(state!=='idle'){
-    setTimeout(()=>{
-      img.src='byte-pose-6.png';
-      img.className='byte-char idle';
-    },1200);
-  }
+  if(msg){ bub.textContent=msg; bub.classList.add('show'); setTimeout(()=>bub.classList.remove('show'),2800); }
+  if(state!=='idle') setTimeout(()=>{ img.src='byte-pose-6.png'; img.className='byte-char idle'; },1400);
 }
 
-// ============================================================
-// CHEST — fills up as glitches are caught
-// ============================================================
-function updateChest(n, total){
-  const chest=document.getElementById('chest');
-  const pct=n/total;
-  if(pct>=1) chest.textContent='🎁';
-  else if(pct>=0.6) chest.textContent='📬';
-  else if(pct>=0.3) chest.textContent='📭';
-  else chest.textContent='📦';
+function updateChest(n,total){
+  const ch=document.getElementById('chest');
+  const p=n/total;
+  ch.textContent=p>=1?'🎁':p>=0.6?'📬':p>=0.3?'📭':'📦';
 }
 
-// ============================================================
-// GLITCH SPAWNING
-// ============================================================
-function spawnGlitch(){
-  if(!gameRunning || activeGlitch) return;
-
-  const waveData=WAVES[wave];
-  const glitchData=GLITCHES[Math.floor(Math.random()*GLITCHES.length)];
-
-  const el=document.createElement('div');
-  el.className='glitch';
-  el.style.setProperty('--glitch-color', glitchData.color);
-
-  // Spawn from left or right side, at random height (upper 2/3 of screen)
-  const fromLeft=Math.random()>0.5;
-  const topPct=15+Math.random()*45; // 15% to 60% from top
-  const startX=fromLeft ? -80 : window.innerWidth+80;
-  const endX=fromLeft ? window.innerWidth*0.3+Math.random()*window.innerWidth*0.4
-                      : window.innerWidth*0.3+Math.random()*window.innerWidth*0.3;
-
-  el.style.top=topPct+'%';
-  el.style.left=startX+'px';
-  el.dataset.glitch=JSON.stringify(glitchData);
-  el.dataset.endX=endX;
-  el.dataset.fromLeft=fromLeft;
-
-  el.innerHTML=`
-    <div class="glitch-body">
-      <div class="glitch-corrupt"></div>
-      <div class="glitch-icon">${glitchData.emoji}</div>
-      <div class="glitch-code">${glitchData.code}</div>
-    </div>`;
-
-  // Touch/click handler
-  el.addEventListener('click', ()=>catchGlitch(el, glitchData));
-  el.addEventListener('touchstart', (e)=>{e.preventDefault();catchGlitch(el, glitchData);},{passive:false});
-
-  document.getElementById('gameWorld').appendChild(el);
-
-  // Animate movement across screen
-  const duration=waveData.speed*1000;
-  let startTime=null;
-  let escaped=false;
-
-  function moveGlitch(ts){
-    if(!startTime) startTime=ts;
-    const progress=(ts-startTime)/duration;
-    if(progress>=1){
-      if(!escaped && el.parentNode){
-        escaped=true;
-        glitchEscaped(el);
-      }
-      return;
-    }
-    // Wiggly path — sine wave vertical movement
-    const x=startX+(endX-startX)*progress*(fromLeft?1:-1)+( fromLeft ? 0 : startX-endX)*progress;
-    const actualX=fromLeft ? startX+(endX-startX)*progress : startX-(startX-endX)*progress;
-    const wiggle=Math.sin(progress*Math.PI*6)*20;
-    el.style.left=actualX+'px';
-    el.style.top=(topPct + wiggle*0.3)+'%';
-    requestAnimationFrame(moveGlitch);
-  }
-  requestAnimationFrame(moveGlitch);
-
-  activeGlitch=el;
+function updateLives(){
+  document.querySelectorAll('.life').forEach((l,i)=>l.classList.toggle('lost',i>=lives));
 }
-
-function catchGlitch(el, glitchData){
-  if(!gameRunning || !el.parentNode) return;
-  activeGlitch=null;
-
-  // Burst effect at glitch position
-  const rect=el.getBoundingClientRect();
-  showCatchBurst(rect.left+rect.width/2, rect.top+rect.height/2, glitchData.color);
-
-  el.remove();
-  showAnswerPanel(glitchData);
-  byteReact('celebrate', 'Got one! Now what\'s the fix?');
-}
-
-function glitchEscaped(el){
-  if(el.parentNode) el.remove();
-  activeGlitch=null;
-  lives--;
-  updateLives();
-  byteReact('panic', lives>0 ? 'Oh no! It got away! 😱' : 'The glitches won this time...');
-
-  if(lives<=0){
-    setTimeout(()=>endGame(false), 1200);
-  }
-}
-
-function showCatchBurst(x, y, color){
-  const burst=document.createElement('div');
-  burst.className='catch-burst';
-  burst.style.left=x+'px';
-  burst.style.top=y+'px';
-  burst.innerHTML=`<div class="burst-ring" style="border-color:${color}"></div><div class="burst-text" style="color:${color}">CAUGHT!</div>`;
-  document.body.appendChild(burst);
-  setTimeout(()=>burst.remove(), 800);
-}
-
-// ============================================================
-// ANSWER PANEL
-// ============================================================
-function showAnswerPanel(glitchData){
-  clearSpawnTimer();
-  document.getElementById('apIcon').textContent=glitchData.emoji;
-  document.getElementById('apCode').textContent=glitchData.code;
-  document.getElementById('apQuestion').textContent=glitchData.question;
-  document.getElementById('apFeedback').className='ap-feedback';
-  document.getElementById('apFeedback').textContent='';
-
-  const opts=document.getElementById('apOptions');
-  opts.innerHTML=glitchData.options.map((o,i)=>
-    `<div class="ap-option" onclick="answerGlitch(${i},${glitchData.correct},'${glitchData.explain.replace(/'/g,"\\'")}',${glitchData.options.length})">${o}</div>`
-  ).join('');
-
-  document.getElementById('answerPanel').classList.add('show');
-}
-
-function answerGlitch(chosen, correct, explain, total){
-  const opts=document.querySelectorAll('.ap-option');
-  opts.forEach(o=>o.style.pointerEvents='none');
-  opts[chosen].classList.add(chosen===correct?'correct':'wrong');
-  if(chosen!==correct) opts[correct].classList.add('correct');
-
-  const fb=document.getElementById('apFeedback');
-  fb.className='ap-feedback show '+(chosen===correct?'correct':'wrong');
-  fb.textContent=chosen===correct ? '✦ Correct! '+explain : '✗ Not quite — '+explain;
-
-  const pts=chosen===correct ? 100 : 25;
-  score+=pts;
-  caught++;
-  document.getElementById('hud-score').textContent=score;
-  document.getElementById('hud-caught').textContent=caught;
-  updateProgress();
-  updateChest(caught, waveGoal);
-
-  if(chosen===correct) byteReact('celebrate', 'Yes!! You nailed it! 🌟');
-
-  setTimeout(()=>{
-    document.getElementById('answerPanel').classList.remove('show');
-    // Check wave complete
-    if(caught>=waveGoal){
-      setTimeout(()=>nextWave(), 400);
-    } else {
-      startSpawnTimer();
-    }
-  }, 2000);
-}
-
-// ============================================================
-// WAVE MANAGEMENT
-// ============================================================
-function startWave(){
-  const waveData=WAVES[wave];
-  waveGoal=waveData.glitchCount;
-  caught=0;
-  document.getElementById('level-badge').textContent=waveData.name;
-  updateProgress();
-  updateChest(0, waveGoal);
-  byteReact('idle');
-  showBubble(wave===0 ? 'Glitches incoming! Tap them fast! 🐾' : waveData.name+' — '+waveData.label+'!');
-  startSpawnTimer();
-  gameRunning=true;
-}
-
-function nextWave(){
-  wave++;
-  if(wave>=WAVES.length){
-    endGame(true);
-    return;
-  }
-  byteReact('celebrate', 'Wave cleared! Next wave incoming!');
-  setTimeout(startWave, 1500);
-}
-
-function startSpawnTimer(){
-  clearSpawnTimer();
-  spawnTimer=setTimeout(()=>{
-    spawnGlitch();
-    startSpawnTimer();
-  }, WAVES[wave].spawnRate + Math.random()*800);
-}
-
-function clearSpawnTimer(){ if(spawnTimer){clearTimeout(spawnTimer);spawnTimer=null;} }
 
 function updateProgress(){
   const pct=Math.min((caught/waveGoal)*100,100);
@@ -900,58 +445,214 @@ function updateProgress(){
   document.getElementById('progressCount').textContent=`${caught} / ${waveGoal}`;
 }
 
-function updateLives(){
-  const livesEl=document.getElementById('lives').querySelectorAll('.life');
-  livesEl.forEach((l,i)=>l.classList.toggle('lost',i>=lives));
+// ── SPAWN ────────────────────────────────────────────────────
+function spawnGlitch(){
+  if(!gameRunning||activeGlitchEl) return;
+  const gd=GLITCHES[Math.floor(Math.random()*GLITCHES.length)];
+  const wave=WAVES[waveIdx];
+
+  const el=document.createElement('div');
+  el.className='glitch';
+  el.style.setProperty('--gc',gd.color);
+
+  const fromLeft=Math.random()>0.5;
+  const topPct=15+Math.random()*42;
+  const startX=fromLeft?-90:window.innerWidth+90;
+  const targetX=window.innerWidth*0.25+Math.random()*window.innerWidth*0.5;
+
+  el.style.top=topPct+'%';
+  el.style.left=startX+'px';
+  el.innerHTML=`<div class="glitch-body"><div class="glitch-icon">${gd.emoji}</div><div class="glitch-code">${gd.code}</div></div>`;
+
+  // Click / touch
+  const onCatch=(e)=>{ e.stopPropagation(); catchGlitch(el,gd); };
+  el.addEventListener('click',onCatch);
+  el.addEventListener('touchend',onCatch,{passive:false});
+
+  document.getElementById('gameWorld').appendChild(el);
+  activeGlitchEl=el;
+
+  // Animate
+  const duration=wave.speed;
+  let start=null;
+  let escaped=false;
+
+  function move(ts){
+    if(!el.parentNode) return;
+    if(!start) start=ts;
+    const t=(ts-start)/duration;
+    if(t>=1){
+      if(!escaped){ escaped=true; glitchEscaped(el); }
+      return;
+    }
+    const x=fromLeft ? startX+(targetX-startX)*t : startX+(targetX-startX)*t;
+    const wobble=Math.sin(t*Math.PI*5)*25;
+    el.style.left=x+'px';
+    el.style.top=(topPct+wobble*0.4)+'%';
+    requestAnimationFrame(move);
+  }
+  requestAnimationFrame(move);
 }
+
+function catchGlitch(el, gd){
+  if(!gameRunning||!el.parentNode||pendingGlitch) return;
+  pendingGlitch=gd;
+  activeGlitchEl=null;
+  clearSpawnTimer();
+
+  const rect=el.getBoundingClientRect();
+  showBurst(rect.left+rect.width/2, rect.top+rect.height/2, gd.color);
+  el.remove();
+
+  byteReact('celebrate','Got one! Now what\'s the fix?');
+  showAnswerPanel(gd);
+}
+
+function glitchEscaped(el){
+  if(el.parentNode) el.remove();
+  activeGlitchEl=null;
+  if(!gameRunning) return;
+  lives--;
+  updateLives();
+  byteReact('panic', lives>0?'Oh no! It escaped! 😱':'The glitches won this time...');
+  if(lives<=0){ setTimeout(()=>endGame(false),1200); }
+}
+
+function showBurst(x,y,color){
+  const b=document.createElement('div');
+  b.className='catch-burst';
+  b.style.cssText=`left:${x}px;top:${y}px;`;
+  b.innerHTML=`<div class="burst-ring" style="border-color:${color}"></div><div class="burst-text" style="color:${color}">CAUGHT!</div>`;
+  document.body.appendChild(b);
+  setTimeout(()=>b.remove(),900);
+}
+
+// ── ANSWER PANEL ─────────────────────────────────────────────
+function showAnswerPanel(gd){
+  document.getElementById('apIcon').textContent=gd.emoji;
+  document.getElementById('apCode').textContent=gd.code;
+  document.getElementById('apQuestion').textContent=gd.question;
+  document.getElementById('apFeedback').className='ap-feedback';
+  document.getElementById('apFeedback').textContent='';
+
+  const container=document.getElementById('apOptions');
+  container.innerHTML='';
+
+  gd.options.forEach((opt,i)=>{
+    const btn=document.createElement('div');
+    btn.className='ap-option';
+    btn.textContent=opt;
+    btn.addEventListener('click',()=>selectAnswer(i,gd));
+    btn.addEventListener('touchend',(e)=>{ e.preventDefault(); selectAnswer(i,gd); },{passive:false});
+    container.appendChild(btn);
+  });
+
+  document.getElementById('answerPanel').classList.add('show');
+}
+
+function selectAnswer(chosen, gd){
+  // Disable all options immediately
+  const opts=document.querySelectorAll('.ap-option');
+  opts.forEach(o=>{ o.classList.add('disabled'); o.style.pointerEvents='none'; });
+
+  const correct=chosen===gd.correct;
+  opts[chosen].classList.add(correct?'correct':'wrong');
+  if(!correct) opts[gd.correct].classList.add('correct');
+
+  const fb=document.getElementById('apFeedback');
+  fb.className='ap-feedback show '+(correct?'correct':'wrong');
+  fb.textContent=(correct?'✦ Correct! ':'✗ Not quite — ')+gd.explain;
+
+  score+=correct?100:25;
+  caught++;
+  document.getElementById('hudScore').textContent=score;
+  document.getElementById('hudCaught').textContent=caught;
+  updateProgress();
+  updateChest(caught,waveGoal);
+  pendingGlitch=null;
+
+  if(correct) byteReact('celebrate','Yes!! You nailed it! ⭐');
+
+  setTimeout(()=>{
+    document.getElementById('answerPanel').classList.remove('show');
+    if(caught>=waveGoal){ setTimeout(nextWave,400); }
+    else { startSpawnTimer(); }
+  },2200);
+}
+
+// ── WAVE FLOW ────────────────────────────────────────────────
+function startWave(){
+  const w=WAVES[waveIdx];
+  waveGoal=w.count;
+  caught=0;
+  document.getElementById('levelBadge').textContent=w.name;
+  updateProgress();
+  updateChest(0,waveGoal);
+  byteReact('idle');
+  showBubble(waveIdx===0?'Glitches incoming! Tap them fast! 🐾':w.name+' — '+w.label+'!');
+  gameRunning=true;
+  startSpawnTimer();
+}
+
+function nextWave(){
+  waveIdx++;
+  if(waveIdx>=WAVES.length){ endGame(true); return; }
+  byteReact('celebrate','Wave cleared! Get ready!');
+  setTimeout(startWave,1600);
+}
+
+function startSpawnTimer(){
+  clearSpawnTimer();
+  const delay=WAVES[waveIdx].spawnRate+Math.random()*600;
+  spawnTimer=setTimeout(()=>{ spawnGlitch(); startSpawnTimer(); },delay);
+}
+
+function clearSpawnTimer(){ if(spawnTimer){ clearTimeout(spawnTimer); spawnTimer=null; } }
 
 function showBubble(msg){
   const b=document.getElementById('byteBubble');
-  b.textContent=msg;
-  b.classList.add('show');
+  b.textContent=msg; b.classList.add('show');
   setTimeout(()=>b.classList.remove('show'),3000);
 }
 
-// ============================================================
-// GAME FLOW
-// ============================================================
-function startGame(){
-  document.getElementById('introScreen').style.display='none';
-  buildBinaryRain();
-  buildWorldElements();
-  startWave();
-}
-
+// ── END GAME ─────────────────────────────────────────────────
 function endGame(win){
   gameRunning=false;
   clearSpawnTimer();
   document.getElementById('answerPanel').classList.remove('show');
-
-  // Clear remaining glitches
   document.querySelectorAll('.glitch').forEach(g=>g.remove());
+  activeGlitchEl=null; pendingGlitch=null;
 
-  const rs=document.getElementById('resultScreen');
   document.getElementById('resultByte').src=win?'byte-pose-4.png':'byte-pose-5.png';
   document.getElementById('resultTitle').textContent=win?'All Glitches Cleared!':'The Glitches Won';
   document.getElementById('resultTitle').className='result-title '+(win?'win':'fail');
   document.getElementById('resultScore').textContent=score+' pts';
   document.getElementById('resultMsg').textContent=win
-    ? `You caught every glitch across all 3 waves! Byte is impressed. Score: ${score} points. Every bug you caught is a real coding mistake — now you know how to fix them.`
-    : `The glitches got away this time, but Byte believes in you. You scored ${score} points. Try again — every real developer debugs more than once!`;
-  rs.classList.add('show');
+    ?`You caught every glitch across all 3 waves! Score: ${score} points. Every bug you caught is a real coding mistake — now you know how to fix them.`
+    :`The glitches got away this time, but you scored ${score} points. Every real developer debugs more than once. Try again!`;
+  document.getElementById('resultScreen').classList.add('show');
 }
 
 function restartGame(){
-  score=0;caught=0;lives=3;wave=0;gameRunning=false;
-  document.getElementById('hud-score').textContent='0';
-  document.getElementById('hud-caught').textContent='0';
+  score=0; caught=0; lives=3; waveIdx=0; gameRunning=false;
+  activeGlitchEl=null; pendingGlitch=null;
+  document.getElementById('hudScore').textContent='0';
+  document.getElementById('hudCaught').textContent='0';
   document.getElementById('resultScreen').classList.remove('show');
-  document.getElementById('binaryRain').innerHTML='';
-  document.getElementById('worldElements').innerHTML='';
   document.querySelectorAll('.glitch').forEach(g=>g.remove());
   updateLives();
-  startGame();
+  startWave();
 }
+
+// ── INIT ─────────────────────────────────────────────────────
+document.getElementById('startBtn').addEventListener('click',()=>{
+  document.getElementById('introScreen').style.display='none';
+  buildBinaryRain();
+  buildWorldElements();
+  startWave();
+});
+document.getElementById('retryBtn').addEventListener('click',restartGame);
+document.getElementById('universeBtn').addEventListener('click',()=>window.location.href='games.html');
 </script>
 </body>
 </html>
