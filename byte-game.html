@@ -8,7 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --bg:#07070f;
+  --bg:#050508;
   --surface:#0f0f1a;
   --card:#131324;
   --border:#1e1e35;
@@ -22,7 +22,7 @@
   --red:#f87171;
   --orange:#fb923c;
 }
-body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
+body{background:#a855f711;color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
 
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--surface);}
 .nav-left{display:flex;align-items:center;gap:16px;}
@@ -96,7 +96,7 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 .fix-panel.show{display:block;}
 .fix-label{font-size:0.72rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--purple);margin-bottom:10px;}
 .fix-input-row{display:flex;gap:10px;align-items:center;}
-.fix-input{flex:1;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--text);outline:none;transition:border-color 0.2s;}
+.fix-input{flex:1;background:#a855f711;border:1px solid var(--border);border-radius:6px;padding:10px 14px;font-family:'DM Mono',monospace;font-size:0.82rem;color:var(--text);outline:none;transition:border-color 0.2s;}
 .fix-input:focus{border-color:var(--purple);}
 .fix-submit{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;background:var(--purple);color:#fff;border:none;padding:10px 18px;border-radius:6px;cursor:pointer;white-space:nowrap;transition:opacity 0.2s;}
 .fix-submit:hover{opacity:0.85;}
@@ -145,9 +145,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 </head>
 <body>
 
+<div style="position:fixed;inset:0;background-image:url('byte-entrance.png');background-size:cover;background-position:center top;z-index:0;"></div>
+<div style="position:fixed;inset:0;background:linear-gradient(to bottom,rgba(5,5,8,0.55) 0%,rgba(5,5,8,0.72) 50%,rgba(5,5,8,0.94) 100%);z-index:1;"></div>
+<div style="position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,#a855f722 0%,transparent 60%);z-index:1;pointer-events:none;"></div>
+
+
+<div style="position:relative;z-index:10;">
 <nav>
   <div class="nav-left">
-    <a href="byte.html" class="nav-back">← Byte's World</a>
+    <a href='games.html'>← Game Universe</a>
     <span class="nav-title">Debug Lab</span>
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
@@ -556,5 +562,6 @@ function restartGame() {
 
 initLevel(0);
 </script>
+</div>
 </body>
 </html>
