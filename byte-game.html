@@ -12,38 +12,28 @@
   --pink:#f472b6;
   --cyan:#00f5d4;
   --dark:#0a0014;
-  --surface:rgba(20,0,40,0.85);
   --border:rgba(168,85,247,0.25);
 }
 html,body{height:100%;overflow:hidden;font-family:'Syne',sans-serif;color:#fff;background:var(--dark);}
 a{text-decoration:none;color:inherit;}
 
 .world{position:fixed;inset:0;z-index:0;background-image:url('byte-entrance.png');background-size:cover;background-position:center top;}
-.world-overlay{position:fixed;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(10,0,20,0.35) 0%,rgba(10,0,20,0.2) 40%,rgba(10,0,20,0.6) 85%,rgba(10,0,20,0.95) 100%);}
+.world-overlay{position:fixed;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(10,0,20,0.3) 0%,rgba(10,0,20,0.15) 40%,rgba(10,0,20,0.55) 80%,rgba(10,0,20,0.95) 100%);}
 
 /* BINARY RAIN */
 .binary-rain{position:fixed;inset:0;z-index:2;pointer-events:none;overflow:hidden;}
-.rain-col{position:absolute;top:-100%;font-family:'DM Mono',monospace;font-size:0.75rem;color:rgba(168,85,247,0.3);line-height:1.4;animation:rain-fall linear infinite;writing-mode:vertical-lr;}
+.rain-col{position:absolute;top:-100%;font-family:'DM Mono',monospace;font-size:0.75rem;color:rgba(168,85,247,0.28);line-height:1.4;animation:rain-fall linear infinite;writing-mode:vertical-lr;}
 @keyframes rain-fall{0%{transform:translateY(-100%);}100%{transform:translateY(200vh);}}
 
 /* WORLD ELEMENTS */
 .world-elements{position:fixed;inset:0;z-index:3;pointer-events:none;}
-.float-cube{position:absolute;border-radius:8px;border:1px solid rgba(168,85,247,0.4);background:rgba(20,0,50,0.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;color:rgba(168,85,247,0.8);animation:cube-float ease-in-out infinite;box-shadow:0 0 20px rgba(168,85,247,0.2),inset 0 0 20px rgba(168,85,247,0.05);}
-@keyframes cube-float{0%,100%{transform:translateY(0) rotate(0deg);}33%{transform:translateY(-18px) rotate(3deg);}66%{transform:translateY(-8px) rotate(-2deg);}}
+.float-cube{position:absolute;border-radius:8px;border:1px solid rgba(168,85,247,0.4);background:rgba(20,0,50,0.7);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;color:rgba(168,85,247,0.8);animation:cube-float ease-in-out infinite;box-shadow:0 0 20px rgba(168,85,247,0.2);}
+@keyframes cube-float{0%,100%{transform:translateY(0) rotate(0deg);}33%{transform:translateY(-16px) rotate(3deg);}66%{transform:translateY(-7px) rotate(-2deg);}}
 
-/* PIXEL FISH — CSS drawn, no emoji */
-.pixel-fish{
-  position:absolute;
-  animation:fish-swim linear infinite;
-  pointer-events:none;
-}
-.pixel-fish.reverse{ animation-name:fish-swim-rev; }
-@keyframes fish-swim{0%{transform:translateX(110vw);}100%{transform:translateX(-20vw);}}
-@keyframes fish-swim-rev{0%{transform:translateX(-20vw) scaleX(-1);}100%{transform:translateX(110vw) scaleX(-1);}}
-
-.pixel-fish svg{
-  filter:drop-shadow(0 0 6px var(--fish-glow, rgba(168,85,247,0.8)));
-}
+/* PIXEL FISH — all going right to left, purple/cyan only */
+.pixel-fish{position:absolute;animation:fish-rtl linear infinite;pointer-events:none;}
+@keyframes fish-rtl{0%{transform:translateX(110vw);}100%{transform:translateX(-20vw);}}
+.pixel-fish svg{display:block;}
 
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(10,0,20,0.8);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
@@ -53,116 +43,164 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:12px 24px;display:fle
 .nav-lang{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(0,245,212,0.4);color:var(--cyan);padding:4px 12px;border-radius:4px;background:rgba(0,245,212,0.06);}
 
 /* HUD */
-.hud{position:fixed;top:64px;left:0;right:0;z-index:40;padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;pointer-events:none;}
-.hud-left{display:flex;align-items:center;gap:12px;}
-.hud-stat{background:rgba(10,0,20,0.85);border:1px solid var(--border);border-radius:10px;padding:8px 16px;backdrop-filter:blur(12px);text-align:center;}
-.hud-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--purple);}
+.hud{position:fixed;top:58px;left:0;right:0;z-index:40;padding:10px 20px;display:flex;align-items:center;justify-content:space-between;gap:10px;pointer-events:none;}
+.hud-left{display:flex;align-items:center;gap:10px;}
+.hud-stat{background:rgba(10,0,20,0.88);border:1px solid var(--border);border-radius:10px;padding:7px 14px;backdrop-filter:blur(12px);text-align:center;}
+.hud-val{font-family:'Orbitron',monospace;font-size:1rem;font-weight:900;color:var(--purple);}
 .hud-val.cyan{color:var(--cyan);}
-.hud-label{font-family:'Orbitron',monospace;font-size:0.45rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);}
-.lives{display:flex;gap:6px;align-items:center;}
-.life{font-size:1.2rem;transition:all 0.3s;}
-.life.lost{filter:grayscale(1);opacity:0.25;}
-.level-badge{background:rgba(10,0,20,0.85);border:1px solid rgba(0,245,212,0.3);border-radius:10px;padding:8px 16px;backdrop-filter:blur(12px);font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan);}
+.hud-label{font-family:'Orbitron',monospace;font-size:0.42rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);}
+.lives{display:flex;gap:5px;align-items:center;background:rgba(10,0,20,0.88);border:1px solid var(--border);border-radius:10px;padding:7px 12px;backdrop-filter:blur(12px);}
+.life{font-size:1.1rem;transition:all 0.3s;}
+.life.lost{filter:grayscale(1);opacity:0.2;}
+.level-badge{background:rgba(10,0,20,0.88);border:1px solid rgba(0,245,212,0.3);border-radius:10px;padding:7px 14px;backdrop-filter:blur(12px);font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);}
 
 /* GAME WORLD */
 .game-world{position:fixed;inset:0;z-index:10;overflow:hidden;pointer-events:none;}
 
-/* BYTE */
-.byte-char{position:fixed;bottom:80px;left:50%;transform:translateX(-50%);z-index:30;width:150px;pointer-events:none;transition:all 0.3s;filter:drop-shadow(0 0 30px rgba(168,85,247,0.8)) drop-shadow(0 0 60px rgba(168,85,247,0.3));}
-.byte-char.idle{animation:byte-idle 3s ease-in-out infinite;}
+/* BYTE CHARACTER */
+.byte-char{position:fixed;bottom:72px;left:50%;transform:translateX(-50%);z-index:30;width:160px;pointer-events:none;animation:byte-float 3s ease-in-out infinite;filter:drop-shadow(0 0 30px rgba(168,85,247,0.9)) drop-shadow(0 0 60px rgba(168,85,247,0.4));}
+@keyframes byte-float{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-12px);}}
 .byte-char.celebrate{animation:byte-celebrate 0.6s ease;}
-.byte-char.panic{animation:byte-panic 0.4s ease;}
-@keyframes byte-idle{0%,100%{transform:translateX(-50%) translateY(0);}50%{transform:translateX(-50%) translateY(-10px);}}
-@keyframes byte-celebrate{0%{transform:translateX(-50%) scale(1);}40%{transform:translateX(-50%) scale(1.25) translateY(-20px);}100%{transform:translateX(-50%) scale(1);}}
-@keyframes byte-panic{0%,100%{transform:translateX(-50%);}25%{transform:translateX(calc(-50% - 14px)) rotate(-6deg);}75%{transform:translateX(calc(-50% + 14px)) rotate(6deg);}}
+@keyframes byte-celebrate{0%{transform:translateX(-50%) scale(1);}40%{transform:translateX(-50%) scale(1.3) translateY(-22px);}100%{transform:translateX(-50%) scale(1) translateY(0);}}
+.byte-char.panic{animation:byte-panic 0.5s ease;}
+@keyframes byte-panic{0%,100%{transform:translateX(-50%);}25%{transform:translateX(calc(-50% - 16px)) rotate(-8deg);}75%{transform:translateX(calc(-50% + 16px)) rotate(8deg);}}
 
-.byte-bubble{position:fixed;bottom:248px;left:50%;transform:translateX(-50%);z-index:31;background:rgba(20,0,40,0.95);border:1px solid var(--border);border-radius:14px;padding:10px 18px;font-size:0.8rem;color:rgba(255,255,255,0.9);backdrop-filter:blur(12px);opacity:0;transition:opacity 0.3s;max-width:260px;text-align:center;box-shadow:0 0 30px rgba(168,85,247,0.25);pointer-events:none;}
+/* SPEECH BUBBLE */
+.byte-bubble{position:fixed;bottom:250px;left:50%;transform:translateX(-50%);z-index:31;background:rgba(15,0,35,0.97);border:2px solid rgba(168,85,247,0.5);border-radius:16px;padding:12px 20px;font-size:0.88rem;color:#fff;backdrop-filter:blur(12px);opacity:0;transition:opacity 0.3s;max-width:280px;text-align:center;box-shadow:0 0 30px rgba(168,85,247,0.3);pointer-events:none;line-height:1.5;}
 .byte-bubble.show{opacity:1;}
 
 /* GLITCH */
-.glitch{position:fixed;z-index:20;cursor:pointer;touch-action:manipulation;user-select:none;pointer-events:all;}
-.glitch-body{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;}
-.glitch-icon{font-size:2.2rem;filter:drop-shadow(0 0 12px var(--gc,#a855f7));animation:glitch-wiggle 0.35s ease-in-out infinite alternate;}
-@keyframes glitch-wiggle{0%{transform:rotate(-6deg) scale(1);}100%{transform:rotate(6deg) scale(1.08);}}
-.glitch-code{font-family:'DM Mono',monospace;font-size:0.58rem;color:var(--gc,#a855f7);background:rgba(0,0,0,0.75);border:1px solid var(--gc,#a855f7);border-radius:4px;padding:2px 8px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis;box-shadow:0 0 10px var(--gc,#a855f7);}
+.glitch{position:fixed;z-index:20;cursor:pointer;touch-action:manipulation;pointer-events:all;}
+.glitch-body{display:flex;flex-direction:column;align-items:center;gap:6px;}
+/* PIXEL BUG — CSS drawn, no emoji */
+.pixel-bug{width:52px;height:52px;position:relative;animation:g-wiggle 0.35s ease-in-out infinite alternate;flex-shrink:0;}
+@keyframes g-wiggle{0%{transform:rotate(-7deg) scale(1);}100%{transform:rotate(7deg) scale(1.1);}}
+.pb-body{position:absolute;background:var(--gc,#a855f7);border-radius:40% 40% 50% 50%;width:26px;height:22px;top:14px;left:13px;box-shadow:0 0 12px var(--gc,#a855f7);}
+.pb-head{position:absolute;background:var(--gc,#a855f7);border-radius:50%;width:16px;height:14px;top:6px;left:18px;box-shadow:0 0 10px var(--gc,#a855f7);}
+.pb-eye{position:absolute;background:#fff;border-radius:50%;width:4px;height:4px;top:4px;}
+.pb-eye.l{left:3px;}.pb-eye.r{right:3px;}
+.pb-pupil{position:absolute;background:#1a0030;border-radius:50%;width:2px;height:2px;top:1px;left:1px;}
+.pb-leg{position:absolute;width:10px;height:2px;background:var(--gc,#a855f7);border-radius:1px;box-shadow:0 0 6px var(--gc,#a855f7);}
+.pb-leg.l1{top:18px;left:2px;transform:rotate(30deg);}
+.pb-leg.l2{top:24px;left:1px;transform:rotate(10deg);}
+.pb-leg.l3{top:30px;left:3px;transform:rotate(-15deg);}
+.pb-leg.r1{top:18px;right:2px;transform:rotate(-30deg);}
+.pb-leg.r2{top:24px;right:1px;transform:rotate(-10deg);}
+.pb-leg.r3{top:30px;right:3px;transform:rotate(15deg);}
+.pb-antenna{position:absolute;width:2px;height:8px;background:var(--gc,#a855f7);border-radius:1px;top:0px;}
+.pb-antenna.l{left:20px;transform:rotate(-15deg);}.pb-antenna.r{right:20px;transform:rotate(15deg);}
+.pb-antenna::after{content:'';position:absolute;top:-3px;left:50%;transform:translateX(-50%);width:4px;height:4px;border-radius:50%;background:var(--gc,#a855f7);box-shadow:0 0 6px var(--gc,#a855f7);}
+
+/* glitch code label — hidden for tiny kids */
+.glitch-code{font-family:'DM Mono',monospace;font-size:0.6rem;color:var(--gc,#a855f7);background:rgba(0,0,0,0.8);border:1px solid var(--gc,#a855f7);border-radius:4px;padding:2px 8px;white-space:nowrap;max-width:140px;overflow:hidden;text-overflow:ellipsis;box-shadow:0 0 10px var(--gc,#a855f7);}
+.glitch-code.hidden{display:none;}
 
 /* CATCH BURST */
 .catch-burst{position:fixed;z-index:25;pointer-events:none;transform:translate(-50%,-50%);}
 .burst-ring{position:absolute;inset:-30px;border-radius:50%;border:3px solid var(--cyan);animation:burst-out 0.5s ease-out forwards;}
 @keyframes burst-out{0%{transform:scale(0);opacity:1;}100%{transform:scale(2.5);opacity:0;}}
-.burst-text{position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--cyan);white-space:nowrap;animation:burst-up 0.8s ease-out forwards;text-shadow:0 0 10px var(--cyan);}
-@keyframes burst-up{0%{opacity:1;transform:translateX(-50%) translateY(0);}100%{opacity:0;transform:translateX(-50%) translateY(-40px);}}
+.burst-stars{position:absolute;inset:-20px;animation:burst-out 0.6s ease-out forwards;}
+.burst-star{position:absolute;font-size:1.4rem;animation:star-fly 0.7s ease-out forwards;}
+@keyframes star-fly{0%{opacity:1;transform:translate(0,0) scale(1);}100%{opacity:0;transform:translate(var(--sx,20px),var(--sy,-40px)) scale(0.5);}}
+.burst-text{position:absolute;top:-36px;left:50%;transform:translateX(-50%);font-family:'Orbitron',monospace;font-size:0.8rem;letter-spacing:0.1em;color:var(--cyan);white-space:nowrap;animation:burst-up 0.8s ease-out forwards;text-shadow:0 0 10px var(--cyan);font-weight:900;}
+@keyframes burst-up{0%{opacity:1;transform:translateX(-50%) translateY(0);}100%{opacity:0;transform:translateX(-50%) translateY(-50px);}}
 
 /* ANSWER PANEL */
-.answer-panel{position:fixed;bottom:-100%;left:0;right:0;z-index:60;padding:18px 20px 20px;background:rgba(6,0,18,0.98);border-top:1px solid var(--border);backdrop-filter:blur(20px);transition:bottom 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 -20px 60px rgba(168,85,247,0.15);}
+.answer-panel{position:fixed;bottom:-100%;left:0;right:0;z-index:60;background:rgba(6,0,18,0.98);border-top:2px solid rgba(168,85,247,0.35);backdrop-filter:blur(20px);transition:bottom 0.4s cubic-bezier(0.175,0.885,0.32,1.275);box-shadow:0 -20px 60px rgba(168,85,247,0.15);}
 .answer-panel.show{bottom:0;}
-.ap-header{display:flex;align-items:center;gap:12px;margin-bottom:12px;}
-.ap-icon{font-size:1.5rem;}
-.ap-title{font-family:'Orbitron',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple);}
-.ap-code{font-family:'DM Mono',monospace;font-size:0.78rem;color:rgba(255,255,255,0.45);margin-top:2px;}
-.ap-question{font-size:0.9rem;color:rgba(255,255,255,0.85);margin-bottom:12px;line-height:1.6;}
-.ap-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.ap-option{padding:11px 14px;background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);border-radius:10px;cursor:pointer;font-family:'DM Mono',monospace;font-size:0.8rem;color:rgba(255,255,255,0.8);transition:all 0.2s;text-align:left;line-height:1.5;}
-.ap-option:hover,.ap-option:active{background:rgba(168,85,247,0.18);border-color:var(--purple);color:#fff;}
-.ap-option.correct{background:rgba(0,245,212,0.1)!important;border-color:var(--cyan)!important;color:var(--cyan)!important;pointer-events:none;}
-.ap-option.wrong{background:rgba(244,114,182,0.07)!important;border-color:rgba(244,114,182,0.3)!important;color:rgba(244,114,182,0.6)!important;pointer-events:none;}
-.ap-option.disabled{pointer-events:none;}
-.ap-feedback{margin-top:10px;padding:10px 14px;border-radius:8px;font-size:0.8rem;display:none;line-height:1.5;}
+.ap-inner{padding:16px 20px 20px;}
+.ap-header{display:flex;align-items:center;gap:10px;margin-bottom:10px;}
+.ap-emoji{font-size:1.6rem;}
+.ap-title{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--purple);}
+.ap-code{font-family:'DM Mono',monospace;font-size:0.78rem;color:rgba(255,255,255,0.4);margin-top:1px;}
+.ap-question{font-size:0.95rem;color:rgba(255,255,255,0.9);margin-bottom:12px;line-height:1.6;}
+.ap-question.big{font-size:1.15rem;font-weight:700;}
+
+/* YES/NO — big buttons for tiny kids */
+.yn-options{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:0;}
+.yn-btn{padding:22px 16px;border-radius:16px;border:3px solid;font-family:'Orbitron',monospace;font-size:1.4rem;font-weight:900;letter-spacing:0.1em;cursor:pointer;transition:all 0.15s;text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;}
+.yn-btn:active{transform:scale(0.95);}
+.yn-yes{border-color:var(--cyan);color:var(--cyan);background:rgba(0,245,212,0.08);}
+.yn-yes:hover{background:rgba(0,245,212,0.2);}
+.yn-no{border-color:var(--pink);color:var(--pink);background:rgba(244,114,182,0.08);}
+.yn-no:hover{background:rgba(244,114,182,0.18);}
+.yn-sub{font-size:0.65rem;letter-spacing:0.1em;opacity:0.7;}
+
+/* 2-OPTION — for middle age */
+.two-options{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.two-opt{padding:16px 14px;border-radius:12px;border:2px solid rgba(168,85,247,0.3);background:rgba(168,85,247,0.07);font-family:'DM Mono',monospace;font-size:0.92rem;color:#fff;cursor:pointer;transition:all 0.15s;text-align:center;line-height:1.4;}
+.two-opt:hover,.two-opt:active{background:rgba(168,85,247,0.2);border-color:var(--purple);}
+
+/* 4-OPTION — for older kids */
+.four-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.four-opt{padding:12px 14px;border-radius:10px;border:1px solid rgba(168,85,247,0.2);background:rgba(168,85,247,0.06);font-family:'DM Mono',monospace;font-size:0.82rem;color:rgba(255,255,255,0.85);cursor:pointer;transition:all 0.15s;text-align:left;line-height:1.4;}
+.four-opt:hover,.four-opt:active{background:rgba(168,85,247,0.18);border-color:var(--purple);color:#fff;}
+
+/* Shared option states */
+.opt-correct{background:rgba(0,245,212,0.12)!important;border-color:var(--cyan)!important;color:var(--cyan)!important;pointer-events:none;}
+.opt-wrong{background:rgba(244,114,182,0.07)!important;border-color:rgba(244,114,182,0.3)!important;color:rgba(244,114,182,0.6)!important;pointer-events:none;}
+.opt-disabled{pointer-events:none;}
+
+.ap-feedback{margin-top:10px;padding:10px 14px;border-radius:10px;font-size:0.85rem;display:none;line-height:1.6;}
 .ap-feedback.show{display:block;}
-.ap-feedback.correct{background:rgba(0,245,212,0.06);border:1px solid rgba(0,245,212,0.2);color:var(--cyan);}
-.ap-feedback.wrong{background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.2);color:rgba(255,255,255,0.7);}
+.ap-feedback.correct{background:rgba(0,245,212,0.07);border:1px solid rgba(0,245,212,0.25);color:var(--cyan);}
+.ap-feedback.wrong{background:rgba(168,85,247,0.07);border:1px solid rgba(168,85,247,0.25);color:rgba(255,255,255,0.75);}
 
 /* PROGRESS */
-.progress-track{position:fixed;bottom:14px;left:24px;right:24px;z-index:40;display:flex;align-items:center;gap:12px;}
-.progress-label{font-family:'Orbitron',monospace;font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.35);white-space:nowrap;}
-.progress-bar{flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;}
+.progress-track{position:fixed;bottom:12px;left:20px;right:20px;z-index:40;display:flex;align-items:center;gap:10px;}
+.progress-label{font-family:'Orbitron',monospace;font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.3);white-space:nowrap;}
+.progress-bar{flex:1;height:5px;background:rgba(255,255,255,0.05);border-radius:3px;overflow:hidden;}
 .progress-fill{height:100%;background:linear-gradient(90deg,var(--purple),var(--cyan));border-radius:3px;transition:width 0.5s ease;}
-.progress-count{font-family:'Orbitron',monospace;font-size:0.5rem;color:var(--cyan);white-space:nowrap;}
+.progress-count{font-family:'Orbitron',monospace;font-size:0.48rem;color:var(--cyan);white-space:nowrap;}
 
 /* CHEST */
-.chest{position:fixed;bottom:88px;right:20px;z-index:35;font-size:2.2rem;filter:drop-shadow(0 0 16px rgba(168,85,247,0.5));animation:chest-pulse 2s ease-in-out infinite;pointer-events:none;}
-@keyframes chest-pulse{0%,100%{filter:drop-shadow(0 0 10px rgba(168,85,247,0.4));}50%{filter:drop-shadow(0 0 24px rgba(168,85,247,0.8));}}
+.chest{position:fixed;bottom:85px;right:18px;z-index:35;font-size:2.2rem;filter:drop-shadow(0 0 16px rgba(168,85,247,0.5));animation:chest-pulse 2s ease-in-out infinite;pointer-events:none;}
+@keyframes chest-pulse{0%,100%{filter:drop-shadow(0 0 10px rgba(168,85,247,0.4));}50%{filter:drop-shadow(0 0 26px rgba(168,85,247,0.85));}}
 
-.paw-platform{position:fixed;bottom:40px;left:50%;transform:translateX(-50%);z-index:5;width:200px;height:200px;border-radius:50%;background:radial-gradient(ellipse,rgba(168,85,247,0.12) 0%,transparent 70%);animation:platform-breathe 3s ease-in-out infinite;pointer-events:none;}
-@keyframes platform-breathe{0%,100%{transform:translateX(-50%) scale(1);opacity:0.6;}50%{transform:translateX(-50%) scale(1.1);opacity:1;}}
+.paw-platform{position:fixed;bottom:36px;left:50%;transform:translateX(-50%);z-index:5;width:200px;height:200px;border-radius:50%;background:radial-gradient(ellipse,rgba(168,85,247,0.1) 0%,transparent 70%);animation:platform-breathe 3s ease-in-out infinite;pointer-events:none;}
+@keyframes platform-breathe{0%,100%{transform:translateX(-50%) scale(1);opacity:0.5;}50%{transform:translateX(-50%) scale(1.12);opacity:1;}}
 
-/* INTRO */
-.intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(5,0,15,0.75);backdrop-filter:blur(4px);}
-.intro-card{max-width:460px;width:100%;background:rgba(8,0,22,0.98);border:1px solid var(--border);border-radius:20px;padding:32px 28px;text-align:center;box-shadow:0 0 60px rgba(168,85,247,0.2);}
-.intro-byte{width:130px;margin:0 auto 14px;filter:drop-shadow(0 0 20px rgba(168,85,247,0.6));animation:byte-idle 3s ease-in-out infinite;}
-.intro-eyebrow{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
-.intro-title{font-family:'Orbitron',monospace;font-size:1.35rem;font-weight:900;margin-bottom:6px;}
-.intro-title span{background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.intro-quote{font-size:0.82rem;color:rgba(255,255,255,0.5);font-style:italic;margin-bottom:18px;line-height:1.6;}
-.intro-steps{background:rgba(168,85,247,0.06);border:1px solid rgba(168,85,247,0.15);border-radius:12px;padding:16px 18px;margin-bottom:18px;text-align:left;}
-.intro-step{display:flex;align-items:flex-start;gap:10px;margin-bottom:9px;font-size:0.8rem;color:rgba(255,255,255,0.75);line-height:1.5;}
-.intro-step:last-child{margin-bottom:0;}
-.step-dot{width:19px;height:19px;border-radius:50%;background:rgba(168,85,247,0.2);border:1px solid rgba(168,85,247,0.4);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:0.42rem;color:var(--purple);flex-shrink:0;margin-top:1px;}
-.intro-lang{display:inline-flex;align-items:center;gap:8px;font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(0,245,212,0.35);color:var(--cyan);padding:6px 14px;border-radius:6px;background:rgba(0,245,212,0.06);margin-bottom:18px;}
-.intro-btn{font-family:'Orbitron',monospace;font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;padding:13px 28px;background:linear-gradient(135deg,var(--purple),#6366f1);color:#fff;font-weight:700;border:none;border-radius:999px;cursor:pointer;transition:all 0.2s;box-shadow:0 8px 30px rgba(168,85,247,0.4);width:100%;}
-.intro-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(168,85,247,0.5);}
+/* ── AGE SELECTOR SCREEN ── */
+.age-screen{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;padding:24px;background:rgba(5,0,15,0.8);backdrop-filter:blur(6px);}
+.age-card{max-width:480px;width:100%;background:rgba(8,0,22,0.98);border:1px solid var(--border);border-radius:22px;padding:32px 28px;text-align:center;box-shadow:0 0 60px rgba(168,85,247,0.2);}
+.age-byte{width:130px;margin:0 auto 16px;filter:drop-shadow(0 0 24px rgba(168,85,247,0.8));animation:byte-float 3s ease-in-out infinite;}
+.age-eyebrow{font-family:'Orbitron',monospace;font-size:0.52rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--purple);margin-bottom:8px;}
+.age-title{font-family:'Orbitron',monospace;font-size:1.3rem;font-weight:900;margin-bottom:6px;}
+.age-title span{background:linear-gradient(135deg,var(--purple),var(--cyan));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.age-sub{font-size:0.85rem;color:rgba(255,255,255,0.5);margin-bottom:24px;line-height:1.6;}
+.age-options{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:20px;}
+.age-btn{padding:20px 10px;border-radius:14px;border:2px solid rgba(168,85,247,0.25);background:rgba(168,85,247,0.06);cursor:pointer;transition:all 0.2s;display:flex;flex-direction:column;align-items:center;gap:8px;}
+.age-btn:hover,.age-btn.selected{border-color:var(--purple);background:rgba(168,85,247,0.15);}
+.age-btn.selected{box-shadow:0 0 20px rgba(168,85,247,0.4);}
+.age-emoji{font-size:2rem;}
+.age-range{font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.1em;color:var(--cyan);font-weight:900;}
+.age-desc{font-size:0.7rem;color:rgba(255,255,255,0.5);line-height:1.4;}
+.age-go{font-family:'Orbitron',monospace;font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;padding:14px 28px;background:linear-gradient(135deg,var(--purple),#6366f1);color:#fff;font-weight:700;border:none;border-radius:999px;cursor:pointer;transition:all 0.2s;box-shadow:0 8px 30px rgba(168,85,247,0.4);width:100%;opacity:0.4;pointer-events:none;}
+.age-go.ready{opacity:1;pointer-events:all;}
+.age-go.ready:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(168,85,247,0.5);}
+.age-lang{display:inline-flex;align-items:center;gap:6px;font-family:'Orbitron',monospace;font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;border:1px solid rgba(0,245,212,0.3);color:var(--cyan);padding:5px 12px;border-radius:6px;background:rgba(0,245,212,0.05);margin-bottom:18px;}
 
 /* RESULT */
-.result-screen{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:24px;background:rgba(5,0,15,0.95);backdrop-filter:blur(8px);}
+.result-screen{display:none;position:fixed;inset:0;z-index:200;align-items:center;justify-content:center;padding:24px;background:rgba(5,0,15,0.96);backdrop-filter:blur(8px);}
 .result-screen.show{display:flex;}
 .result-card{max-width:400px;width:100%;background:rgba(8,0,22,0.98);border:1px solid var(--border);border-radius:20px;padding:36px 28px;text-align:center;box-shadow:0 0 80px rgba(168,85,247,0.25);}
-.result-byte{width:110px;margin:0 auto 16px;}
+.result-byte{width:120px;margin:0 auto 16px;filter:drop-shadow(0 0 24px rgba(168,85,247,0.8));}
 .result-title{font-family:'Orbitron',monospace;font-size:1rem;letter-spacing:0.1em;margin-bottom:8px;}
 .result-title.win{color:var(--cyan);}
 .result-title.fail{color:var(--pink);}
 .result-score{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--purple);margin-bottom:8px;}
-.result-msg{font-size:0.82rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:22px;}
+.result-stars{font-size:2rem;margin-bottom:8px;}
+.result-msg{font-size:0.85rem;color:rgba(255,255,255,0.5);line-height:1.7;margin-bottom:22px;}
 .result-actions{display:flex;gap:10px;}
-.result-btn{flex:1;font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:11px 14px;border-radius:8px;cursor:pointer;border:none;transition:all 0.2s;}
+.result-btn{flex:1;font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:12px 14px;border-radius:8px;cursor:pointer;border:none;transition:all 0.2s;}
 .result-btn.primary{background:linear-gradient(135deg,var(--purple),#6366f1);color:#fff;font-weight:700;}
 .result-btn.secondary{background:transparent;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);}
 .result-btn:hover{transform:translateY(-1px);}
 
 @media(max-width:600px){
-  .byte-char{width:110px;bottom:70px;}
-  .ap-options{grid-template-columns:1fr;}
-  .hud{padding:10px 14px;}
-  .byte-bubble{bottom:230px;}
+  .byte-char{width:120px;bottom:65px;}
+  .four-options,.two-options{grid-template-columns:1fr;}
+  .age-options{grid-template-columns:repeat(3,1fr);}
 }
 </style>
 </head>
@@ -191,54 +229,68 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:12px 24px;display:fle
   <div class="level-badge" id="levelBadge">Wave 1</div>
 </div>
 
-<img class="byte-char idle" id="byteChar" src="byte-pose-6.png" alt="Byte"/>
+<img class="byte-char" id="byteChar" src="byte-idle.gif" alt="Byte"/>
 <div class="byte-bubble" id="byteBubble"></div>
 <div class="chest" id="chest">📦</div>
 
 <div class="progress-track">
-  <span class="progress-label">Wave Progress</span>
+  <span class="progress-label">Progress</span>
   <div class="progress-bar"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
-  <span class="progress-count" id="progressCount">0 / 8</span>
+  <span class="progress-count" id="progressCount">0 / 5</span>
 </div>
 
 <div class="game-world" id="gameWorld"></div>
 
 <!-- ANSWER PANEL -->
 <div class="answer-panel" id="answerPanel">
-  <div class="ap-header">
-    <div class="ap-icon" id="apIcon">🐛</div>
-    <div>
-      <div class="ap-title">Glitch Caught! What's the fix?</div>
-      <div class="ap-code" id="apCode"></div>
+  <div class="ap-inner">
+    <div class="ap-header">
+      <div class="ap-bug-indicator" id="apBugIndicator" style="width:32px;height:32px;position:relative;flex-shrink:0;"></div>
+      <div>
+        <div class="ap-title" id="apTitle">Glitch Caught!</div>
+        <div class="ap-code" id="apCode"></div>
+      </div>
     </div>
+    <div class="ap-question" id="apQuestion"></div>
+    <div id="apOptions"></div>
+    <div class="ap-feedback" id="apFeedback"></div>
   </div>
-  <div class="ap-question" id="apQuestion"></div>
-  <div class="ap-options" id="apOptions"></div>
-  <div class="ap-feedback" id="apFeedback"></div>
 </div>
 
-<!-- INTRO -->
-<div class="intro" id="introScreen">
-  <div class="intro-card">
-    <img class="intro-byte" src="byte-pose-6.png" alt="Byte"/>
-    <div class="intro-eyebrow">Byte's World</div>
-    <div class="intro-title">Glitch <span>Hunt</span></div>
-    <p class="intro-quote">"Every big program starts with one small byte — and every bug starts with one small mistake. Let's find them!"</p>
-    <div class="intro-lang">📚 Debugging Basics · Patterns · Logic</div>
-    <div class="intro-steps">
-      <div class="intro-step"><div class="step-dot">1</div>Glitches crawl out of the binary rain and scuttle through the world.</div>
-      <div class="intro-step"><div class="step-dot">2</div>Tap or click a glitch to catch it before it escapes!</div>
-      <div class="intro-step"><div class="step-dot">3</div>Pick the right fix to score big. Byte will explain every answer.</div>
-      <div class="intro-step"><div class="step-dot">4</div>You have 3 lives (paw prints). Don't let glitches get away!</div>
+<!-- AGE SELECTOR -->
+<div class="age-screen" id="ageScreen">
+  <div class="age-card">
+    <img class="age-byte" src="byte-idle.gif" alt="Byte"/>
+    <div class="age-eyebrow">Byte's World</div>
+    <div class="age-title">Glitch <span>Hunt</span></div>
+    <p class="age-sub">Byte needs YOUR help catching glitches! How old are you?</p>
+    <div class="age-lang">📚 Debugging · Patterns · Problem Solving</div>
+    <div class="age-options">
+      <div class="age-btn" data-mode="tiny" onclick="selectAge(this)">
+        <div class="age-emoji">🐣</div>
+        <div class="age-range">4 – 6</div>
+        <div class="age-desc">Tap the glitches!</div>
+      </div>
+      <div class="age-btn" data-mode="mid" onclick="selectAge(this)">
+        <div class="age-emoji">🐱</div>
+        <div class="age-range">7 – 9</div>
+        <div class="age-desc">Fix the bugs!</div>
+      </div>
+      <div class="age-btn" data-mode="big" onclick="selectAge(this)">
+        <div class="age-emoji">⚡</div>
+        <div class="age-range">10 +</div>
+        <div class="age-desc">Full challenge!</div>
+      </div>
     </div>
-    <button class="intro-btn" id="startBtn">Let's Hunt Some Glitches! 🐾</button>
+    <button class="age-go" id="ageGoBtn">Let's Hunt Glitches! 🐾</button>
   </div>
 </div>
 
 <!-- RESULT -->
 <div class="result-screen" id="resultScreen">
   <div class="result-card">
-    <img class="result-byte" id="resultByte" src="byte-pose-4.png" alt="Byte"/>
+    <img class="result-byte" id="resultByte" src="byte-idle.gif" alt="Byte"/>
+    <div class="result-stars" id="resultStars">⭐⭐⭐</div>
     <div class="result-title win" id="resultTitle">Glitches Cleared!</div>
     <div class="result-score" id="resultScore">0 pts</div>
     <div class="result-msg" id="resultMsg"></div>
@@ -251,319 +303,478 @@ nav{position:fixed;top:0;left:0;right:0;z-index:50;padding:12px 24px;display:fle
 
 <script>
 // ── GLITCH DATA ──────────────────────────────────────────────
+// Each glitch has content for all three modes
 const GLITCHES = [
   {
     emoji:'🐛', color:'#a855f7',
     code:'colr: red;',
-    question:'Byte spotted a typo! What should "colr" be?',
-    options:['colour','color','colors','col'],
-    correct:1,
-    explain:'"color" — CSS uses American English spelling. No extra letters!'
+    // TINY: spot the weird thing (yes = something wrong, answer = no)
+    tinyQ:'Does "colr" look right to you?',
+    tinyCorrect:'NO', // NO = something IS wrong
+    tinyYesText:'Yep, looks good! ✅',
+    tinyNoText:'Nope, something\'s weird! ❌',
+    // MID: pick the fix from 2
+    midQ:'Byte found a typo! Which one is spelled right?',
+    midOpts:['colr','color'],
+    midCorrect:1,
+    // BIG: 4 options
+    bigQ:'What should "colr" be to set a color in CSS?',
+    bigOpts:['colour','color','colors','col'],
+    bigCorrect:1,
+    explain:'"color" — CSS uses American English spelling!'
   },
   {
     emoji:'👾', color:'#f472b6',
     code:'<img src="cat.png"',
-    question:'This HTML tag is missing something. What\'s wrong?',
-    options:['Missing alt=""','Missing the >','Missing src','Missing width'],
-    correct:1,
+    tinyQ:'This tag is missing something at the end. Can you see it?',
+    tinyCorrect:'NO',
+    tinyYesText:'Looks fine! ✅',
+    tinyNoText:'Something\'s missing! ❌',
+    midQ:'HTML tags need a special character at the end. Which one?',
+    midOpts:['<img src="cat.png" /','<img src="cat.png">'],
+    midCorrect:1,
+    bigQ:'What is missing from this img tag?',
+    bigOpts:['Missing alt=""','Missing the >','Missing src','Missing width'],
+    bigCorrect:1,
     explain:'Every HTML tag needs a closing > to tell the browser where it ends!'
   },
   {
     emoji:'🦠', color:'#00f5d4',
     code:'font-size: 16',
-    question:'The font size has no unit. Which fix is correct?',
-    options:['font-size: 16px','font-size: 16em','font-size: "16"','font-size: 16pt'],
-    correct:0,
-    explain:'"px" means pixels — it goes right after the number. font-size: 16px!'
+    tinyQ:'Font size 16... but 16 WHAT? Is something missing?',
+    tinyCorrect:'NO',
+    tinyYesText:'Nope, 16 is fine! ✅',
+    tinyNoText:'Yeah, something\'s missing! ❌',
+    midQ:'CSS sizes need a unit after the number. Which is correct?',
+    midOpts:['font-size: 16','font-size: 16px'],
+    midCorrect:1,
+    bigQ:'What unit is missing after "16"?',
+    bigOpts:['font-size: 16px','font-size: 16em','font-size: "16"','font-size: 16pt'],
+    bigCorrect:0,
+    explain:'"px" means pixels. It goes right after the number — font-size: 16px!'
   },
   {
     emoji:'🐛', color:'#a855f7',
     code:'<p>Hello<p>',
-    question:'This paragraph tag doesn\'t close correctly. What\'s the fix?',
-    options:['<p>Hello</p>','<p>Hello</>','<p/>Hello','<P>Hello</P>'],
-    correct:0,
-    explain:'Closing tags need a slash before the name: </p>. Also HTML is lowercase!'
+    tinyQ:'Look at the end tag. Does it look the same as the start tag?',
+    tinyCorrect:'NO',
+    tinyYesText:'They look the same! ✅',
+    tinyNoText:'Something\'s different! ❌',
+    midQ:'The closing tag for <p> should have a slash. Which is correct?',
+    midOpts:['<p>Hello<p>','<p>Hello</p>'],
+    midCorrect:1,
+    bigQ:'What\'s wrong with this paragraph tag?',
+    bigOpts:['<p>Hello</p>','<p>Hello</>','<p/>Hello','<P>Hello</P>'],
+    bigCorrect:0,
+    explain:'Closing tags need a slash before the name: </p> not <p> again!'
   },
   {
     emoji:'👾', color:'#f472b6',
-    code:'background: ;',
-    question:'The background is empty! Which is a valid color value?',
-    options:['background: purple;','background: #purple;','background: color(purple)','background: "purple"'],
-    correct:0,
-    explain:'You can use color names directly in CSS — just write the word, no quotes or hash!'
-  },
-  {
-    emoji:'🦠', color:'#00f5d4',
     code:'padding: 10',
-    question:'Padding is missing its unit. Which is correct?',
-    options:['padding: 10px','padding: px10','padding: 10pixels','padding: (10)'],
-    correct:0,
+    tinyQ:'Padding 10... but 10 what? Is a unit missing?',
+    tinyCorrect:'NO',
+    tinyYesText:'Looks complete! ✅',
+    tinyNoText:'Something\'s missing! ❌',
+    midQ:'Pick the one that has the correct unit:',
+    midOpts:['padding: 10','padding: 10px'],
+    midCorrect:1,
+    bigQ:'What\'s the correct way to write this padding value?',
+    bigOpts:['padding: 10px','padding: px10','padding: 10pixels','padding: (10)'],
+    bigCorrect:0,
     explain:'"px" always comes AFTER the number. 10px = 10 pixels of space!'
   },
   {
-    emoji:'🐛', color:'#a855f7',
+    emoji:'🦠', color:'#00f5d4',
     code:'<h1>Title<h2>',
-    question:'The closing tag doesn\'t match the opening tag. What should it be?',
-    options:['</h2>','</h1>','<h1/>','</heading>'],
-    correct:1,
-    explain:'Opening and closing tags must match! <h1> opens, </h1> closes. They have to be the same number!'
+    tinyQ:'The tag at the start says h1. Does the end tag say the same?',
+    tinyCorrect:'NO',
+    tinyYesText:'Yes they match! ✅',
+    tinyNoText:'They don\'t match! ❌',
+    midQ:'Opening and closing tags must match. Which end tag is right?',
+    midOpts:['</h2>','</h1>'],
+    midCorrect:1,
+    bigQ:'What\'s wrong with this heading?',
+    bigOpts:['</h2>','</h1>','<h1/>','</heading>'],
+    bigCorrect:1,
+    explain:'Opening and closing tags must match! <h1> needs </h1> — same number!'
+  },
+  {
+    emoji:'🐛', color:'#a855f7',
+    code:'display: blok;',
+    tinyQ:'Byte sees a spelling mistake! Does "blok" look right?',
+    tinyCorrect:'NO',
+    tinyYesText:'Looks right to me! ✅',
+    tinyNoText:'That looks wrong! ❌',
+    midQ:'"blok" is a typo. Which is the correct spelling?',
+    midOpts:['blok','block'],
+    midCorrect:1,
+    bigQ:'What should "blok" say?',
+    bigOpts:['block','blocks','blocked','blocking'],
+    bigCorrect:0,
+    explain:'"display: block" makes elements stack on top of each other!'
   },
   {
     emoji:'👾', color:'#f472b6',
-    code:'border: 1 solid black',
-    question:'The border value is missing a unit after "1". What goes there?',
-    options:['1px','1em','1%','1rem'],
-    correct:0,
-    explain:'"border: 1px solid black" draws a 1-pixel border. px is the most common unit!'
-  },
-  {
-    emoji:'🦠', color:'#00f5d4',
-    code:'display: blok;',
-    question:'Byte found a typo in "blok"! What should it say?',
-    options:['block','blocks','blocked','blocking'],
-    correct:0,
-    explain:'"display: block" makes elements stack on top of each other. One word, no extra letters!'
-  },
-  {
-    emoji:'🐛', color:'#a855f7',
     code:'<button>Click<button>',
-    question:'The button closing tag is wrong. What\'s the correct fix?',
-    options:['<button>Click</button>','<button>Click</>','<button/>Click','<Button>Click</Button>'],
-    correct:0,
-    explain:'Closing tags need </tagname>. And HTML tags should always be lowercase!'
+    tinyQ:'The closing button tag needs a special mark. Is it there?',
+    tinyCorrect:'NO',
+    tinyYesText:'Yep it\'s there! ✅',
+    tinyNoText:'The mark is missing! ❌',
+    midQ:'Closing tags need a slash. Which button is closed correctly?',
+    midOpts:['<button>Click<button>','<button>Click</button>'],
+    midCorrect:1,
+    bigQ:'How should this button be written?',
+    bigOpts:['<button>Click</button>','<button>Click</>','<button/>Click','<Button>Click</Button>'],
+    bigCorrect:0,
+    explain:'Closing tags need </tagname>. Always lowercase in HTML!'
   },
 ];
 
-const WAVES = [
-  {name:'Wave 1', count:5, speed:20000, spawnRate:3200, label:'Exploration Mode'},
-  {name:'Wave 2', count:7, speed:14000, spawnRate:2400, label:'Getting Faster'},
-  {name:'Wave 3', count:10, speed:9000, spawnRate:1800, label:'Chaos Mode'},
+const WAVES=[
+  {name:'Wave 1',count:5,speed:22000,spawnRate:3500},
+  {name:'Wave 2',count:7,speed:15000,spawnRate:2500},
+  {name:'Wave 3',count:10,speed:9500,spawnRate:1800},
 ];
 
 // ── STATE ────────────────────────────────────────────────────
-let score=0, caught=0, lives=3, waveIdx=0, waveGoal=0;
-let spawnTimer=null, activeGlitchEl=null, gameRunning=false;
-let pendingGlitch=null; // glitch data waiting for answer
+let mode='tiny'; // tiny | mid | big
+let score=0,caught=0,lives=3,waveIdx=0,waveGoal=0;
+let spawnTimer=null,activeGlitchEl=null,gameRunning=false,pendingGlitch=null;
+
+// ── AGE SELECT ───────────────────────────────────────────────
+function selectAge(el){
+  document.querySelectorAll('.age-btn').forEach(b=>b.classList.remove('selected'));
+  el.classList.add('selected');
+  mode=el.dataset.mode;
+  document.getElementById('ageGoBtn').classList.add('ready');
+}
+document.getElementById('ageGoBtn').addEventListener('click',()=>{
+  if(!document.getElementById('ageGoBtn').classList.contains('ready')) return;
+  document.getElementById('ageScreen').style.display='none';
+  buildWorld();
+  startWave();
+});
 
 // ── PIXEL FISH SVG ───────────────────────────────────────────
-function makeFishSVG(color, size){
-  return `<svg width="${size}" height="${size*0.55}" viewBox="0 0 24 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <!-- pixel fish body -->
-    <rect x="4" y="4" width="12" height="6" fill="${color}"/>
-    <rect x="2" y="5" width="2" height="4" fill="${color}"/>
-    <rect x="16" y="3" width="2" height="2" fill="${color}"/>
-    <rect x="16" y="9" width="2" height="2" fill="${color}"/>
-    <rect x="18" y="2" width="2" height="4" fill="${color}"/>
-    <rect x="18" y="8" width="2" height="4" fill="${color}"/>
-    <!-- eye -->
-    <rect x="6" y="5" width="2" height="2" fill="#fff"/>
-    <rect x="6" y="5" width="1" height="1" fill="#000"/>
-    <!-- pixel dots on body -->
-    <rect x="10" y="6" width="1" height="1" fill="${color === '#a855f7' ? '#c084fc' : '#67e8f9'}"/>
-    <rect x="13" y="7" width="1" height="1" fill="${color === '#a855f7' ? '#c084fc' : '#67e8f9'}"/>
+function makeFishSVG(color,size){
+  return `<svg width="${size}" height="${Math.round(size*0.55)}" viewBox="0 0 24 13" xmlns="http://www.w3.org/2000/svg">
+    <rect x="4" y="3" width="11" height="7" fill="${color}"/>
+    <rect x="2" y="4" width="2" height="5" fill="${color}"/>
+    <rect x="15" y="2" width="2" height="3" fill="${color}"/>
+    <rect x="15" y="8" width="2" height="3" fill="${color}"/>
+    <rect x="17" y="1" width="2" height="5" fill="${color}"/>
+    <rect x="17" y="7" width="2" height="5" fill="${color}"/>
+    <rect x="6" y="4" width="2" height="2" fill="#fff"/>
+    <rect x="6" y="4" width="1" height="1" fill="#1a0030"/>
+    <rect x="10" y="5" width="1" height="1" fill="${color==='#a855f7'?'#c084fc':'#67e8f9'}"/>
+    <rect x="12" y="7" width="1" height="1" fill="${color==='#a855f7'?'#c084fc':'#67e8f9'}"/>
   </svg>`;
 }
 
-// ── WORLD SETUP ──────────────────────────────────────────────
-function buildBinaryRain(){
-  const c=document.getElementById('binaryRain');
+// ── WORLD BUILD ──────────────────────────────────────────────
+function buildWorld(){
+  // Binary rain
+  const rain=document.getElementById('binaryRain');
   for(let i=0;i<12;i++){
     const col=document.createElement('div');
     col.className='rain-col';
     col.style.left=(i*9+Math.random()*4)+'%';
     col.style.animationDuration=(8+Math.random()*8)+'s';
     col.style.animationDelay=(-Math.random()*10)+'s';
-    col.style.opacity=(0.15+Math.random()*0.2).toString();
-    let str='';
-    for(let j=0;j<40;j++) str+=(Math.random()>0.5?'1':'0')+'\n';
-    col.textContent=str;
-    c.appendChild(col);
+    col.style.opacity=(0.12+Math.random()*0.2).toString();
+    let s='';for(let j=0;j<40;j++)s+=(Math.random()>.5?'1':'0')+'\n';
+    col.textContent=s;
+    rain.appendChild(col);
   }
-}
 
-function buildWorldElements(){
-  const c=document.getElementById('worldElements');
-
-  // Floating cubes
-  [
-    {text:'</>',top:'10%',left:'7%',size:50,delay:0},
-    {text:'{}',top:'16%',right:'9%',size:46,delay:1.5},
-    {text:'?',top:'7%',left:'22%',size:42,delay:0.8},
-    {text:'01',top:'22%',right:'20%',size:38,delay:2},
-    {text:'</>',top:'5%',right:'38%',size:34,delay:1.2},
-  ].forEach(cu=>{
+  // World elements
+  const we=document.getElementById('worldElements');
+  [{text:'</>',top:'10%',left:'7%',size:50,d:0},{text:'{}',top:'16%',right:'9%',size:46,d:1.5},
+   {text:'?',top:'7%',left:'22%',size:42,d:0.8},{text:'01',top:'22%',right:'20%',size:38,d:2}]
+  .forEach(cu=>{
     const el=document.createElement('div');
     el.className='float-cube';
-    el.style.cssText=`top:${cu.top};${cu.left?'left:'+cu.left:'right:'+cu.right};width:${cu.size}px;height:${cu.size}px;animation-duration:${4+cu.delay}s;animation-delay:-${cu.delay}s;font-size:${cu.size*0.34}px;`;
+    el.style.cssText=`top:${cu.top};${cu.left?'left:'+cu.left:'right:'+cu.right};width:${cu.size}px;height:${cu.size}px;animation-duration:${4+cu.d}s;animation-delay:-${cu.d}s;font-size:${cu.size*.34}px;`;
     el.textContent=cu.text;
-    c.appendChild(el);
+    we.appendChild(el);
   });
 
-  // Pixel fish — CSS SVG, matches the world palette
-  const fishDefs=[
-    {top:'22%',dur:15,delay:0,color:'#a855f7',size:36,reverse:false},
-    {top:'34%',dur:20,delay:4,color:'#00f5d4',size:28,reverse:true},
-    {top:'14%',dur:24,delay:9,color:'#a855f7',size:24,reverse:false},
-    {top:'28%',dur:17,delay:14,color:'#c084fc',size:32,reverse:true},
-    {top:'18%',dur:22,delay:7,color:'#00f5d4',size:20,reverse:false},
-  ];
-  fishDefs.forEach(f=>{
+  // Pixel fish — purple and cyan only, all right-to-left
+  [{top:'20%',dur:16,delay:0,color:'#a855f7',size:36},
+   {top:'33%',dur:21,delay:5,color:'#00f5d4',size:28},
+   {top:'14%',dur:25,delay:10,color:'#a855f7',size:24},
+   {top:'27%',dur:18,delay:15,color:'#c084fc',size:32},
+   {top:'18%',dur:23,delay:7,color:'#00f5d4',size:20}]
+  .forEach(f=>{
     const el=document.createElement('div');
-    el.className='pixel-fish'+(f.reverse?' reverse':'');
+    el.className='pixel-fish';
     el.style.top=f.top;
-    el.style.setProperty('--fish-glow', f.color+'99');
     el.style.animationDuration=f.dur+'s';
     el.style.animationDelay=(-f.delay)+'s';
-    el.innerHTML=makeFishSVG(f.color, f.size);
-    c.appendChild(el);
+    el.style.filter=`drop-shadow(0 0 5px ${f.color}88)`;
+    el.innerHTML=makeFishSVG(f.color,f.size);
+    we.appendChild(el);
   });
 }
 
 // ── BYTE REACTIONS ───────────────────────────────────────────
-function byteReact(state, msg=''){
+function byteReact(state,msg=''){
   const img=document.getElementById('byteChar');
   const bub=document.getElementById('byteBubble');
-  img.src=state==='celebrate'?'byte-pose-4.png':state==='panic'?'byte-pose-5.png':'byte-pose-6.png';
-  img.className='byte-char '+state;
-  if(msg){ bub.textContent=msg; bub.classList.add('show'); setTimeout(()=>bub.classList.remove('show'),2800); }
-  if(state!=='idle') setTimeout(()=>{ img.src='byte-pose-6.png'; img.className='byte-char idle'; },1400);
+  // Always use the webp — just change animation class
+  img.className='byte-char '+(state==='celebrate'?'celebrate':state==='panic'?'panic':'');
+  if(!img.className.trim()) img.style.animation='byte-float 3s ease-in-out infinite';
+  if(msg){bub.textContent=msg;bub.classList.add('show');setTimeout(()=>bub.classList.remove('show'),3000);}
+  if(state!=='idle') setTimeout(()=>{img.className='byte-char';},1500);
 }
 
-function updateChest(n,total){
-  const ch=document.getElementById('chest');
-  const p=n/total;
-  ch.textContent=p>=1?'🎁':p>=0.6?'📬':p>=0.3?'📭':'📦';
+function showBubble(msg){
+  const b=document.getElementById('byteBubble');
+  b.textContent=msg;b.classList.add('show');setTimeout(()=>b.classList.remove('show'),3200);
 }
 
-function updateLives(){
-  document.querySelectorAll('.life').forEach((l,i)=>l.classList.toggle('lost',i>=lives));
+function updateChest(n,t){
+  const c=document.getElementById('chest');
+  const p=n/t;
+  c.textContent=p>=1?'🎁':p>=0.6?'📬':p>=0.3?'📭':'📦';
 }
-
+function updateLives(){document.querySelectorAll('.life').forEach((l,i)=>l.classList.toggle('lost',i>=lives));}
 function updateProgress(){
-  const pct=Math.min((caught/waveGoal)*100,100);
-  document.getElementById('progressFill').style.width=pct+'%';
+  const p=Math.min((caught/waveGoal)*100,100);
+  document.getElementById('progressFill').style.width=p+'%';
   document.getElementById('progressCount').textContent=`${caught} / ${waveGoal}`;
+}
+
+// ── SHUFFLE — no back-to-back repeats ───────────────────────
+let _glitchQueue=[];
+let _lastGlitchIdx=-1;
+function pickGlitch(){
+  // Refill queue when empty, always shuffled
+  if(_glitchQueue.length===0){
+    _glitchQueue=[...Array(GLITCHES.length).keys()];
+    // Fisher-Yates shuffle
+    for(let i=_glitchQueue.length-1;i>0;i--){
+      const j=Math.floor(Math.random()*(i+1));
+      [_glitchQueue[i],_glitchQueue[j]]=[_glitchQueue[j],_glitchQueue[i]];
+    }
+    // If first item same as last used, swap with second
+    if(_glitchQueue[0]===_lastGlitchIdx && _glitchQueue.length>1){
+      [_glitchQueue[0],_glitchQueue[1]]=[_glitchQueue[1],_glitchQueue[0]];
+    }
+  }
+  _lastGlitchIdx=_glitchQueue.shift();
+  return GLITCHES[_lastGlitchIdx];
 }
 
 // ── SPAWN ────────────────────────────────────────────────────
 function spawnGlitch(){
-  if(!gameRunning||activeGlitchEl) return;
-  const gd=GLITCHES[Math.floor(Math.random()*GLITCHES.length)];
+  if(!gameRunning||activeGlitchEl||pendingGlitch) return;
+  const gd=pickGlitch();
   const wave=WAVES[waveIdx];
 
   const el=document.createElement('div');
   el.className='glitch';
   el.style.setProperty('--gc',gd.color);
 
-  const fromLeft=Math.random()>0.5;
-  const topPct=15+Math.random()*42;
+  const fromLeft=Math.random()>.5;
+  const topPct=18+Math.random()*38;
   const startX=fromLeft?-90:window.innerWidth+90;
-  const targetX=window.innerWidth*0.25+Math.random()*window.innerWidth*0.5;
+  const targetX=window.innerWidth*.2+Math.random()*window.innerWidth*.6;
 
   el.style.top=topPct+'%';
   el.style.left=startX+'px';
-  el.innerHTML=`<div class="glitch-body"><div class="glitch-icon">${gd.emoji}</div><div class="glitch-code">${gd.code}</div></div>`;
 
-  // Click / touch
-  const onCatch=(e)=>{ e.stopPropagation(); catchGlitch(el,gd); };
+  // Show code label only for mid/big
+  const codeVisible=mode!=='tiny';
+  el.innerHTML=`<div class="glitch-body">
+    <div class="pixel-bug" style="--gc:${gd.color}">
+      <div class="pb-antenna l"></div><div class="pb-antenna r"></div>
+      <div class="pb-head">
+        <div class="pb-eye l"><div class="pb-pupil"></div></div>
+        <div class="pb-eye r"><div class="pb-pupil"></div></div>
+      </div>
+      <div class="pb-body"></div>
+      <div class="pb-leg l1"></div><div class="pb-leg l2"></div><div class="pb-leg l3"></div>
+      <div class="pb-leg r1"></div><div class="pb-leg r2"></div><div class="pb-leg r3"></div>
+    </div>
+    <div class="glitch-code${codeVisible?'':' hidden'}">${gd.code}</div>
+  </div>`;
+
+  // For tiny mode — add a bouncing arrow hint
+  if(mode==='tiny'){
+    const hint=document.createElement('div');
+    hint.style.cssText='position:absolute;top:-28px;left:50%;transform:translateX(-50%);font-size:1.4rem;animation:g-wiggle 0.4s ease-in-out infinite alternate;';
+    hint.textContent='👆';
+    el.querySelector('.glitch-body').prepend(hint);
+  }
+
+  const onCatch=(e)=>{e.stopPropagation();catchGlitch(el,gd);};
   el.addEventListener('click',onCatch);
-  el.addEventListener('touchend',onCatch,{passive:false});
+  el.addEventListener('touchend',(e)=>{e.preventDefault();onCatch(e);},{passive:false});
 
   document.getElementById('gameWorld').appendChild(el);
   activeGlitchEl=el;
 
-  // Animate
   const duration=wave.speed;
-  let start=null;
-  let escaped=false;
-
+  let start=null;let escaped=false;
   function move(ts){
     if(!el.parentNode) return;
     if(!start) start=ts;
     const t=(ts-start)/duration;
-    if(t>=1){
-      if(!escaped){ escaped=true; glitchEscaped(el); }
-      return;
-    }
-    const x=fromLeft ? startX+(targetX-startX)*t : startX+(targetX-startX)*t;
-    const wobble=Math.sin(t*Math.PI*5)*25;
+    if(t>=1){if(!escaped){escaped=true;glitchEscaped(el);}return;}
+    const x=fromLeft?startX+(targetX-startX)*t:startX+(targetX-startX)*t;
+    const wobble=Math.sin(t*Math.PI*5)*22;
     el.style.left=x+'px';
-    el.style.top=(topPct+wobble*0.4)+'%';
+    el.style.top=(topPct+wobble*.35)+'%';
     requestAnimationFrame(move);
   }
   requestAnimationFrame(move);
 }
 
-function catchGlitch(el, gd){
+function catchGlitch(el,gd){
   if(!gameRunning||!el.parentNode||pendingGlitch) return;
   pendingGlitch=gd;
   activeGlitchEl=null;
   clearSpawnTimer();
-
   const rect=el.getBoundingClientRect();
-  showBurst(rect.left+rect.width/2, rect.top+rect.height/2, gd.color);
+  showBurst(rect.left+rect.width/2,rect.top+rect.height/2,gd.color);
   el.remove();
-
-  byteReact('celebrate','Got one! Now what\'s the fix?');
-  showAnswerPanel(gd);
+  byteReact('celebrate', mode==='tiny'?'You found it! 🌟 Now... is it broken?':'Got one! What\'s the fix?');
+  setTimeout(()=>showAnswerPanel(gd),300);
 }
 
 function glitchEscaped(el){
   if(el.parentNode) el.remove();
   activeGlitchEl=null;
   if(!gameRunning) return;
-  lives--;
-  updateLives();
-  byteReact('panic', lives>0?'Oh no! It escaped! 😱':'The glitches won this time...');
-  if(lives<=0){ setTimeout(()=>endGame(false),1200); }
+  lives--;updateLives();
+  byteReact('panic',lives>0?'Oh no, it escaped! 😱':'The glitches won this time...');
+  if(lives<=0) setTimeout(()=>endGame(false),1200);
 }
 
 function showBurst(x,y,color){
   const b=document.createElement('div');
   b.className='catch-burst';
   b.style.cssText=`left:${x}px;top:${y}px;`;
-  b.innerHTML=`<div class="burst-ring" style="border-color:${color}"></div><div class="burst-text" style="color:${color}">CAUGHT!</div>`;
+  const stars=['⭐','✨','💫','🌟'];
+  const starHTML=stars.map((s,i)=>{
+    const angle=(i/stars.length)*Math.PI*2;
+    const dist=50+Math.random()*30;
+    return `<div class="burst-star" style="left:50%;top:50%;--sx:${Math.cos(angle)*dist}px;--sy:${Math.sin(angle)*dist}px;animation-delay:${i*0.05}s;">${s}</div>`;
+  }).join('');
+  b.innerHTML=`<div class="burst-ring" style="border-color:${color}"></div>
+    <div class="burst-stars">${starHTML}</div>
+    <div class="burst-text">CAUGHT! ✦</div>`;
   document.body.appendChild(b);
   setTimeout(()=>b.remove(),900);
 }
 
 // ── ANSWER PANEL ─────────────────────────────────────────────
 function showAnswerPanel(gd){
-  document.getElementById('apIcon').textContent=gd.emoji;
-  document.getElementById('apCode').textContent=gd.code;
-  document.getElementById('apQuestion').textContent=gd.question;
+  const ind=document.getElementById('apBugIndicator');
+  ind.style.background=gd.color;
+  ind.style.borderRadius='50%';
+  ind.style.boxShadow=`0 0 12px ${gd.color}`;
   document.getElementById('apFeedback').className='ap-feedback';
   document.getElementById('apFeedback').textContent='';
 
-  const container=document.getElementById('apOptions');
-  container.innerHTML='';
+  const opts=document.getElementById('apOptions');
+  opts.innerHTML='';
 
-  gd.options.forEach((opt,i)=>{
-    const btn=document.createElement('div');
-    btn.className='ap-option';
-    btn.textContent=opt;
-    btn.addEventListener('click',()=>selectAnswer(i,gd));
-    btn.addEventListener('touchend',(e)=>{ e.preventDefault(); selectAnswer(i,gd); },{passive:false});
-    container.appendChild(btn);
-  });
+  if(mode==='tiny'){
+    // YES / NO — is something wrong?
+    document.getElementById('apTitle').textContent='Is something wrong here?';
+    document.getElementById('apCode').textContent=gd.code;
+    document.getElementById('apQuestion').textContent=gd.tinyQ;
+    document.getElementById('apQuestion').className='ap-question big';
+
+    opts.className='yn-options';
+    opts.innerHTML=`
+      <div class="yn-btn yn-yes" id="yn-yes">
+        <span style="font-size:2rem">✅</span>
+        <span>LOOKS GOOD!</span>
+        <span class="yn-sub">Nothing wrong</span>
+      </div>
+      <div class="yn-btn yn-no" id="yn-no">
+        <span style="font-size:2rem">❌</span>
+        <span>UH OH!</span>
+        <span class="yn-sub">Something's wrong</span>
+      </div>`;
+
+    document.getElementById('yn-yes').addEventListener('click',()=>answerTiny('YES',gd));
+    document.getElementById('yn-yes').addEventListener('touchend',(e)=>{e.preventDefault();answerTiny('YES',gd);},{passive:false});
+    document.getElementById('yn-no').addEventListener('click',()=>answerTiny('NO',gd));
+    document.getElementById('yn-no').addEventListener('touchend',(e)=>{e.preventDefault();answerTiny('NO',gd);},{passive:false});
+
+  } else if(mode==='mid'){
+    document.getElementById('apTitle').textContent='Glitch Caught! Pick the fix:';
+    document.getElementById('apCode').textContent=gd.code;
+    document.getElementById('apQuestion').textContent=gd.midQ;
+    document.getElementById('apQuestion').className='ap-question';
+
+    opts.className='two-options';
+    gd.midOpts.forEach((o,i)=>{
+      const btn=document.createElement('div');
+      btn.className='two-opt';
+      btn.textContent=o;
+      btn.addEventListener('click',()=>answerChoice(i,gd.midCorrect,gd,opts,'two-opt'));
+      btn.addEventListener('touchend',(e)=>{e.preventDefault();answerChoice(i,gd.midCorrect,gd,opts,'two-opt');},{passive:false});
+      opts.appendChild(btn);
+    });
+
+  } else {
+    document.getElementById('apTitle').textContent='Glitch Caught! What\'s the fix?';
+    document.getElementById('apCode').textContent=gd.code;
+    document.getElementById('apQuestion').textContent=gd.bigQ;
+    document.getElementById('apQuestion').className='ap-question';
+
+    opts.className='four-options';
+    gd.bigOpts.forEach((o,i)=>{
+      const btn=document.createElement('div');
+      btn.className='four-opt';
+      btn.textContent=o;
+      btn.addEventListener('click',()=>answerChoice(i,gd.bigCorrect,gd,opts,'four-opt'));
+      btn.addEventListener('touchend',(e)=>{e.preventDefault();answerChoice(i,gd.bigCorrect,gd,opts,'four-opt');},{passive:false});
+      opts.appendChild(btn);
+    });
+  }
 
   document.getElementById('answerPanel').classList.add('show');
 }
 
-function selectAnswer(chosen, gd){
-  // Disable all options immediately
-  const opts=document.querySelectorAll('.ap-option');
-  opts.forEach(o=>{ o.classList.add('disabled'); o.style.pointerEvents='none'; });
+function answerTiny(chosen, gd){
+  const correct=chosen===gd.tinyCorrect;
+  const yesBtn=document.getElementById('yn-yes');
+  const noBtn=document.getElementById('yn-no');
+  yesBtn.style.pointerEvents='none';
+  noBtn.style.pointerEvents='none';
 
-  const correct=chosen===gd.correct;
-  opts[chosen].classList.add(correct?'correct':'wrong');
-  if(!correct) opts[gd.correct].classList.add('correct');
+  if(chosen==='YES') yesBtn.classList.add(correct?'opt-correct':'opt-wrong');
+  else noBtn.classList.add(correct?'opt-correct':'opt-wrong');
 
+  // Show which was right
+  if(!correct){
+    if(gd.tinyCorrect==='NO') noBtn.classList.add('opt-correct');
+    else yesBtn.classList.add('opt-correct');
+  }
+
+  finishAnswer(correct, correct?'✦ Yes! Something IS wrong with that code. Good eye!':'The code has a problem — '+gd.explain, gd);
+}
+
+function answerChoice(chosen, correct, gd, container, cls){
+  const btns=container.querySelectorAll('.'+cls);
+  btns.forEach(b=>{b.classList.add('opt-disabled');b.style.pointerEvents='none';});
+  btns[chosen].classList.add(chosen===correct?'opt-correct':'opt-wrong');
+  if(chosen!==correct) btns[correct].classList.add('opt-correct');
+  finishAnswer(chosen===correct, (chosen===correct?'✦ Correct! ':'✗ Not quite — ')+gd.explain, gd);
+}
+
+function finishAnswer(correct, feedbackText, gd){
   const fb=document.getElementById('apFeedback');
   fb.className='ap-feedback show '+(correct?'correct':'wrong');
-  fb.textContent=(correct?'✦ Correct! ':'✗ Not quite — ')+gd.explain;
+  fb.textContent=feedbackText;
 
-  score+=correct?100:25;
+  score+=correct?100:20;
   caught++;
   document.getElementById('hudScore').textContent=score;
   document.getElementById('hudCaught').textContent=caught;
@@ -571,86 +782,77 @@ function selectAnswer(chosen, gd){
   updateChest(caught,waveGoal);
   pendingGlitch=null;
 
-  if(correct) byteReact('celebrate','Yes!! You nailed it! ⭐');
+  if(correct) byteReact('celebrate', mode==='tiny'?'YOU DID IT! 🎉':'Yes!! Perfect fix! ⭐');
 
+  const delay=mode==='tiny'?1800:2400;
   setTimeout(()=>{
     document.getElementById('answerPanel').classList.remove('show');
-    if(caught>=waveGoal){ setTimeout(nextWave,400); }
-    else { startSpawnTimer(); }
-  },2200);
+    if(caught>=waveGoal) setTimeout(nextWave,400);
+    else startSpawnTimer();
+  },delay);
 }
 
 // ── WAVE FLOW ────────────────────────────────────────────────
 function startWave(){
   const w=WAVES[waveIdx];
-  waveGoal=w.count;
-  caught=0;
+  waveGoal=w.count;caught=0;
   document.getElementById('levelBadge').textContent=w.name;
-  updateProgress();
-  updateChest(0,waveGoal);
-  byteReact('idle');
-  showBubble(waveIdx===0?'Glitches incoming! Tap them fast! 🐾':w.name+' — '+w.label+'!');
+  updateProgress();updateChest(0,waveGoal);
   gameRunning=true;
+  const msg=waveIdx===0
+    ? (mode==='tiny'?'Tap the glitches! 🐾':'Glitches incoming! Catch them! 🐾')
+    : w.name+' — getting faster!';
+  showBubble(msg);
   startSpawnTimer();
 }
 
 function nextWave(){
   waveIdx++;
-  if(waveIdx>=WAVES.length){ endGame(true); return; }
-  byteReact('celebrate','Wave cleared! Get ready!');
-  setTimeout(startWave,1600);
+  if(waveIdx>=WAVES.length){endGame(true);return;}
+  byteReact('celebrate','Wave cleared! Get ready! 🌟');
+  setTimeout(startWave,1800);
 }
 
 function startSpawnTimer(){
   clearSpawnTimer();
   const delay=WAVES[waveIdx].spawnRate+Math.random()*600;
-  spawnTimer=setTimeout(()=>{ spawnGlitch(); startSpawnTimer(); },delay);
+  spawnTimer=setTimeout(()=>{spawnGlitch();startSpawnTimer();},delay);
 }
-
-function clearSpawnTimer(){ if(spawnTimer){ clearTimeout(spawnTimer); spawnTimer=null; } }
-
-function showBubble(msg){
-  const b=document.getElementById('byteBubble');
-  b.textContent=msg; b.classList.add('show');
-  setTimeout(()=>b.classList.remove('show'),3000);
-}
+function clearSpawnTimer(){if(spawnTimer){clearTimeout(spawnTimer);spawnTimer=null;}}
 
 // ── END GAME ─────────────────────────────────────────────────
 function endGame(win){
-  gameRunning=false;
-  clearSpawnTimer();
+  gameRunning=false;clearSpawnTimer();
   document.getElementById('answerPanel').classList.remove('show');
   document.querySelectorAll('.glitch').forEach(g=>g.remove());
-  activeGlitchEl=null; pendingGlitch=null;
+  activeGlitchEl=null;pendingGlitch=null;
 
-  document.getElementById('resultByte').src=win?'byte-pose-4.png':'byte-pose-5.png';
-  document.getElementById('resultTitle').textContent=win?'All Glitches Cleared!':'The Glitches Won';
+  const stars=score>=600?'⭐⭐⭐':score>=350?'⭐⭐':'⭐';
+  document.getElementById('resultStars').textContent=win?stars:'';
+  // no emoji glitches in result
+  document.getElementById('resultTitle').textContent=win?'All Glitches Cleared! 🎉':'The Glitches Won...';
   document.getElementById('resultTitle').className='result-title '+(win?'win':'fail');
   document.getElementById('resultScore').textContent=score+' pts';
   document.getElementById('resultMsg').textContent=win
-    ?`You caught every glitch across all 3 waves! Score: ${score} points. Every bug you caught is a real coding mistake — now you know how to fix them.`
-    :`The glitches got away this time, but you scored ${score} points. Every real developer debugs more than once. Try again!`;
+    ?`Amazing! You caught ${WAVES.reduce((a,w)=>a+w.count,0)} glitches across all 3 waves. Every bug you caught is a real coding mistake — and now you know how to fix them!`
+    :`The glitches got away this time, but you scored ${score} points! Every coder has to debug more than once. Try again — you'll get them!`;
   document.getElementById('resultScreen').classList.add('show');
 }
 
 function restartGame(){
-  score=0; caught=0; lives=3; waveIdx=0; gameRunning=false;
-  activeGlitchEl=null; pendingGlitch=null;
+  score=0;caught=0;lives=3;waveIdx=0;gameRunning=false;
+  activeGlitchEl=null;pendingGlitch=null;
   document.getElementById('hudScore').textContent='0';
   document.getElementById('hudCaught').textContent='0';
   document.getElementById('resultScreen').classList.remove('show');
   document.querySelectorAll('.glitch').forEach(g=>g.remove());
   updateLives();
-  startWave();
+  // Go back to age screen
+  document.getElementById('ageScreen').style.display='flex';
+  document.querySelectorAll('.age-btn').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('ageGoBtn').classList.remove('ready');
 }
 
-// ── INIT ─────────────────────────────────────────────────────
-document.getElementById('startBtn').addEventListener('click',()=>{
-  document.getElementById('introScreen').style.display='none';
-  buildBinaryRain();
-  buildWorldElements();
-  startWave();
-});
 document.getElementById('retryBtn').addEventListener('click',restartGame);
 document.getElementById('universeBtn').addEventListener('click',()=>window.location.href='games.html');
 </script>
