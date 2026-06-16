@@ -1,59 +1,37 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>The Game Universe — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --void:#050508;
-  --pink:#ff6baa;
-  --purple:#c66bff;
-  --cyan:#00e8ff;
-  --yellow:#fbbf24;
-  --lime:#84cc16;
-  --orange:#fb923c;
-  --blue:#38bdf8;
-  --green:#4ade80;
-  --grad:linear-gradient(135deg,#ff6baa,#c66bff);
-}
-html{scroll-behavior:smooth;}
-body{background:var(--void);color:#fff;font-family:'Syne',sans-serif;overflow-x:hidden;min-height:100vh;}
-a{text-decoration:none;color:inherit;}
+<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"/> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <title>The Game Universe — Method in Motion</title> <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"> <style> *{margin:0;padding:0;box-sizing:border-box;} :root{ --void:#050508; --pink:#ff6baa; --purple:#c66bff; --cyan:#00e8ff; --yellow:#fbbf24; --lime:#84cc16; --orange:#fb923c; --blue:#38bdf8; --green:#4ade80; --grad:linear-gradient(135deg,#ff6baa,#c66bff); } html{scroll-behavior:smooth;} body{background:var(--void);color:#fff;font-family:'Syne',sans-serif;overflow-x:hidden;min-height:100vh;} a{text-decoration:none;color:inherit;} /* NAV */ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);} .nav-logo{display:flex;align-items:center;gap:10px;font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.12em;} .nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#000;} .nav-links{display:flex;align-items:center;gap:28px;} .nav-link{font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.5);transition:color 0.2s;} .nav-link:hover{color:#fff;} .nav-link.active{color:var(--cyan);} .nav-back{font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);transition:color 0.2s;} .nav-back:hover{color:var(--pink);}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.12em;}
-.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#000;}
-.nav-links{display:flex;align-items:center;gap:28px;}
-.nav-link{font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;color:rgba(255,255,255,0.5);transition:color 0.2s;}
-.nav-link:hover{color:#fff;}
-.nav-link.active{color:var(--cyan);}
-.nav-back{font-family:'Orbitron',monospace;font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.4);transition:color 0.2s;}
-.nav-back:hover{color:var(--pink);}
-
-/* HERO */
+/* HERO — VIDEO BG */
 .hero{position:relative;height:100vh;min-height:600px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.hero-bg{position:absolute;inset:0;background-image:url('universe-view.png');background-size:cover;background-position:center;transform:scale(1.05);animation:slow-zoom 20s ease-in-out infinite alternate;}
-@keyframes slow-zoom{0%{transform:scale(1.05);}100%{transform:scale(1.12);}}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,5,8,0.3) 0%,rgba(5,5,8,0.1) 40%,rgba(5,5,8,0.7) 80%,rgba(5,5,8,1) 100%);}
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;}
+.hero-video-fallback{position:absolute;inset:0;background-image:url('universe-view.png');background-size:cover;background-position:center;z-index:0;}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(5,5,8,0.25) 0%,rgba(5,5,8,0.05) 35%,rgba(5,5,8,0.65) 75%,rgba(5,5,8,1) 100%);z-index:1;}
+.hero-vignette{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 50%, transparent 30%, rgba(5,5,8,0.5) 100%);z-index:1;pointer-events:none;}
 
 /* SCAN LINE */
-.scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.03) 2px,rgba(0,0,0,0.03) 4px);pointer-events:none;z-index:2;}
+.scanline{position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);pointer-events:none;z-index:2;}
 
 /* PARTICLES */
-.particles{position:absolute;inset:0;z-index:1;pointer-events:none;}
+.particles{position:absolute;inset:0;z-index:3;pointer-events:none;}
 .particle{position:absolute;width:3px;height:3px;border-radius:50%;animation:float-particle linear infinite;}
 @keyframes float-particle{0%{transform:translateY(100vh) scale(0);opacity:0;}10%{opacity:1;}90%{opacity:1;}100%{transform:translateY(-100px) scale(1);opacity:0;}}
 
 .hero-content{position:relative;z-index:10;text-align:center;padding:0 24px;}
 .hero-eyebrow{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:16px;opacity:0;animation:fade-up 0.8s ease 0.3s forwards;}
-.hero-title{font-family:'Orbitron',monospace;font-size:clamp(2.5rem,6vw,5rem);font-weight:900;letter-spacing:0.06em;line-height:1;margin-bottom:16px;opacity:0;animation:fade-up 0.8s ease 0.5s forwards;text-shadow:0 0 40px rgba(0,232,255,0.4);}
+.hero-title{font-family:'Orbitron',monospace;font-size:clamp(2.5rem,6vw,5rem);font-weight:900;letter-spacing:0.06em;line-height:1;margin-bottom:16px;opacity:0;animation:fade-up 0.8s ease 0.5s forwards;text-shadow:0 0 60px rgba(0,232,255,0.5),0 0 120px rgba(0,232,255,0.2);}
 .hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.hero-sub{font-size:0.95rem;color:rgba(255,255,255,0.6);letter-spacing:0.08em;margin-bottom:32px;opacity:0;animation:fade-up 0.8s ease 0.7s forwards;}
-.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;background:rgba(0,232,255,0.08);border:1px solid rgba(0,232,255,0.25);color:var(--cyan);padding:8px 20px;border-radius:999px;opacity:0;animation:fade-up 0.8s ease 0.9s forwards;}
+.hero-sub{font-size:0.95rem;color:rgba(255,255,255,0.7);letter-spacing:0.08em;margin-bottom:32px;opacity:0;animation:fade-up 0.8s ease 0.7s forwards;text-shadow:0 2px 20px rgba(0,0,0,0.8);}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.15em;text-transform:uppercase;background:rgba(0,232,255,0.1);border:1px solid rgba(0,232,255,0.3);color:var(--cyan);padding:8px 20px;border-radius:999px;opacity:0;animation:fade-up 0.8s ease 0.9s forwards;backdrop-filter:blur(8px);}
+
+/* WORLD LABELS floating on hero */
+.world-labels{position:absolute;inset:0;z-index:5;pointer-events:none;}
+.world-label{position:absolute;font-family:'Orbitron',monospace;font-size:0.48rem;letter-spacing:0.14em;text-transform:uppercase;padding:4px 10px;border-radius:4px;backdrop-filter:blur(4px);border:1px solid;opacity:0;animation:fade-up 1s ease forwards;}
+.wl-zen{top:22%;left:12%;color:#f472b6;border-color:rgba(244,114,182,0.4);background:rgba(244,114,182,0.1);animation-delay:1.4s;}
+.wl-byte{top:40%;left:8%;color:#a855f7;border-color:rgba(168,85,247,0.4);background:rgba(168,85,247,0.1);animation-delay:1.6s;}
+.wl-bug{top:60%;left:15%;color:#84cc16;border-color:rgba(132,204,22,0.4);background:rgba(132,204,22,0.1);animation-delay:1.8s;}
+.wl-echo{top:22%;right:8%;color:#38bdf8;border-color:rgba(56,189,248,0.4);background:rgba(56,189,248,0.1);animation-delay:1.4s;}
+.wl-nova{top:40%;right:6%;color:#fbbf24;border-color:rgba(251,191,36,0.4);background:rgba(251,191,36,0.1);animation-delay:1.6s;}
+.wl-loop{top:60%;right:10%;color:#00f5d4;border-color:rgba(0,245,212,0.4);background:rgba(0,245,212,0.1);animation-delay:1.8s;}
+
 .scroll-hint{position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:10;text-align:center;opacity:0;animation:fade-up 0.8s ease 1.2s forwards;}
 .scroll-hint span{font-family:'Orbitron',monospace;font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.3);display:block;margin-bottom:8px;}
 .scroll-arrow{width:24px;height:24px;border-right:2px solid rgba(255,255,255,0.2);border-bottom:2px solid rgba(255,255,255,0.2);transform:rotate(45deg);margin:0 auto;animation:bounce-arrow 1.5s ease-in-out infinite;}
@@ -75,7 +53,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:16px 48px;display:fl
 /* GAME CARD */
 .game-card{position:relative;border-radius:20px;overflow:hidden;aspect-ratio:9/14;cursor:pointer;transition:transform 0.4s cubic-bezier(0.175,0.885,0.32,1.275);}
 .game-card:hover{transform:translateY(-8px) scale(1.02);}
-
 .card-bg{position:absolute;inset:0;background-size:cover;background-position:center top;transition:transform 0.6s ease;}
 .game-card:hover .card-bg{transform:scale(1.08);}
 
@@ -164,12 +141,11 @@ nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:16px 48px;display:fl
 footer{text-align:center;padding:32px 24px;border-top:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.25);font-size:0.75rem;letter-spacing:0.06em;}
 footer a{color:var(--cyan);}
 
-@media(max-width:900px){.game-grid{grid-template-columns:repeat(2,1fr);}.games-section{padding:60px 24px 80px;}.nav-links{display:none;}}
+@media(max-width:900px){.game-grid{grid-template-columns:repeat(2,1fr);}.games-section{padding:60px 24px 80px;}.nav-links{display:none;}.world-labels{display:none;}}
 @media(max-width:600px){.game-grid{grid-template-columns:1fr;}.upgrade-section{padding:0 24px 60px;}}
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
   <div class="nav-links">
@@ -182,12 +158,29 @@ footer a{color:var(--cyan);}
   <a href="index.html" class="nav-back">← Universe</a>
 </nav>
 
-<!-- HERO -->
+<!-- HERO WITH VIDEO -->
 <div class="hero">
-  <div class="hero-bg"></div>
+  <!-- VIDEO: loops silently, no controls -->
+  <video class="hero-video" autoplay muted loop playsinline poster="universe-view.png">
+    <source src="Method_in_Motion_Universe_View.mp4" type="video/mp4">
+  </video>
+  <!-- Fallback in case video fails -->
+  <div class="hero-video-fallback" id="videoFallback" style="display:none;"></div>
   <div class="hero-overlay"></div>
+  <div class="hero-vignette"></div>
   <div class="scanline"></div>
   <div class="particles" id="particles"></div>
+
+  <!-- World label overlays -->
+  <div class="world-labels">
+    <div class="world-label wl-zen">Zen's Coding Realm</div>
+    <div class="world-label wl-byte">Byte's Code City</div>
+    <div class="world-label wl-bug">Bug's Debug Garage</div>
+    <div class="world-label wl-echo">Echo's Sound Studio</div>
+    <div class="world-label wl-nova">Nova's Discovery Dome</div>
+    <div class="world-label wl-loop">Loop's Challenge Course</div>
+  </div>
+
   <div class="hero-content">
     <div class="hero-eyebrow">Method in Motion</div>
     <h1 class="hero-title">THE GAME<br><span>UNIVERSE</span></h1>
@@ -204,8 +197,7 @@ footer a{color:var(--cyan);}
 </div>
 
 <div class="free-banner">
-  <strong>Free players</strong> — Byte's Debug Lab is open. <strong>Coders members</strong> — all 6 games unlocked.
-  <a href="membership.html" style="color:var(--pink);margin-left:8px;">Start 3-day free trial →</a>
+  <strong>Free players</strong> — Byte's Debug Lab is open. <strong>Coders members</strong> — all 6 games unlocked. <a href="membership.html" style="color:var(--pink);margin-left:8px;">Start 3-day free trial →</a>
 </div>
 
 <!-- GAMES GRID -->
@@ -355,7 +347,6 @@ footer a{color:var(--cyan);}
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
 import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-
 const firebaseConfig = {
   apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
   authDomain: "method-in-motion.firebaseapp.com",
@@ -364,13 +355,10 @@ const firebaseConfig = {
   messagingSenderId: "1067937974009",
   appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
 };
-
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
-
 let userTier = 'free';
-
 onAuthStateChanged(auth, async (user) => {
   if (user) {
     try {
@@ -379,9 +367,7 @@ onAuthStateChanged(auth, async (user) => {
         userTier = snap.data().tier.toLowerCase();
       }
     } catch(e) { console.error(e); }
-
     if (userTier === 'coders') {
-      // Remove all lock overlays for coders
       document.querySelectorAll('.lock-overlay').forEach(el => el.style.display = 'none');
       document.querySelectorAll('.game-card').forEach(card => {
         const cta = card.querySelector('.card-cta');
@@ -393,21 +379,23 @@ onAuthStateChanged(auth, async (user) => {
     }
   }
 });
-
 window.enterGame = function(url, requiresCoders) {
-  if (!requiresCoders) {
-    window.location.href = url;
-    return;
-  }
-  if (userTier === 'coders') {
-    window.location.href = url;
-  } else {
-    window.location.href = 'membership.html';
-  }
+  if (!requiresCoders) { window.location.href = url; return; }
+  if (userTier === 'coders') { window.location.href = url; }
+  else { window.location.href = 'membership.html'; }
 };
 </script>
 
 <script>
+// VIDEO FALLBACK
+const vid = document.querySelector('.hero-video');
+if (vid) {
+  vid.addEventListener('error', () => {
+    vid.style.display = 'none';
+    document.getElementById('videoFallback').style.display = 'block';
+  });
+}
+
 // PARTICLES
 function createParticles() {
   const container = document.getElementById('particles');
