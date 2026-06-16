@@ -8,7 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --bg:#07070f;
+  --bg:#050508;
   --surface:#0f0f1a;
   --card:#131324;
   --border:#1e1e35;
@@ -21,7 +21,7 @@
   --red:#f87171;
   --blue:#38bdf8;
 }
-body{background:var(--bg);color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
+body{background:#00f5d411;color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
 
 nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--surface);}
 .nav-left{display:flex;align-items:center;gap:16px;}
@@ -135,9 +135,15 @@ nav{display:flex;align-items:center;justify-content:space-between;padding:14px 2
 </head>
 <body>
 
+<div style="position:fixed;inset:0;background-image:url('loop-entrance.png');background-size:cover;background-position:center top;z-index:0;"></div>
+<div style="position:fixed;inset:0;background:linear-gradient(to bottom,rgba(5,5,8,0.55) 0%,rgba(5,5,8,0.72) 50%,rgba(5,5,8,0.94) 100%);z-index:1;"></div>
+<div style="position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,#00f5d422 0%,transparent 60%);z-index:1;pointer-events:none;"></div>
+
+
+<div style="position:relative;z-index:10;">
 <nav>
   <div class="nav-left">
-    <a href="loop.html" class="nav-back">← Loop's World</a>
+    <a href='games.html'>← Game Universe</a>
     <span class="nav-title">Logic Quest</span>
   </div>
   <div style="display:flex;align-items:center;gap:12px;">
@@ -530,5 +536,6 @@ function restartGame() {
 let dragFromIdx = 0;
 initLevel(0);
 </script>
+</div>
 </body>
 </html>
