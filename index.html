@@ -243,31 +243,35 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .wb-btn:hover{background:var(--wb-color,var(--pink));color:#000}
 
 /* ═══════════════════════════════════════
-   GAMES SECTION
+   NEWSLETTER SIGNUP
 ═══════════════════════════════════════ */
-.games-sec{background:var(--void);padding:96px 0;}
-.games-sec__inner{max-width:1100px;margin:0 auto;padding:0 48px}
-.games-sec__header{text-align:center;margin-bottom:52px}
-.games-cta-row{display:flex;justify-content:center;margin-top:36px;}
-.games-preview{display:grid;grid-template-columns:repeat(3,1fr);grid-auto-rows:1fr;gap:3px;border-radius:16px;overflow:hidden;}
-.gp-card.gp-featured{grid-column:span 2;grid-row:span 2;}
-@media(max-width:768px){
-  .games-preview{grid-template-columns:1fr}
-  .gp-card.gp-featured{grid-column:span 1;grid-row:span 1;}
+.newsletter-sec{background:var(--void);padding:96px 0;text-align:center;}
+.newsletter-sec__inner{max-width:560px;margin:0 auto;padding:0 24px}
+.newsletter-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
+.newsletter-form input{
+  flex:1;min-width:220px;
+  background:rgba(255,255,255,.05);
+  border:1px solid var(--border-md);
+  border-radius:100px;
+  padding:14px 22px;
+  color:#fff;
+  font-family:var(--body);
+  font-size:.88rem;
+  outline:none;
+  transition:border-color .2s;
 }
-.gp-card{background:var(--card);padding:32px 24px;position:relative;overflow:hidden;transition:background .3s;min-height:260px;display:flex;flex-direction:column;justify-content:center;}
-.gp-card:hover{background:rgba(255,255,255,.04)}
-.gp-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--gc,var(--grad));transform:scaleX(0);transform-origin:left;transition:transform .4s;}
-.gp-card:hover::before{transform:scaleX(1)}
-.gp-symbol{position:absolute;bottom:-10px;right:-10px;font-size:8rem;line-height:1;color:var(--gc3,var(--pink));opacity:.06;pointer-events:none;transition:opacity .4s,transform .4s;user-select:none;}
-.gp-card:hover .gp-symbol{opacity:.1;transform:scale(1.1) rotate(-5deg);}
-.gp-char{font-family:var(--display);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gc3,var(--pink));margin-bottom:6px;}
-.gp-title{font-family:var(--heading);font-size:1rem;font-weight:700;margin-bottom:7px;}
-.gp-desc{font-size:.8rem;color:var(--muted);line-height:1.8;margin-bottom:14px;}
-.gp-lang{font-family:var(--display);font-size:.46rem;letter-spacing:.12em;text-transform:uppercase;border:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);padding:3px 10px;border-radius:4px;display:inline-block;margin-bottom:12px;}
-.gp-status{display:inline-flex;align-items:center;gap:5px;font-family:var(--display);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gc3,var(--pink));}
-.gp-dot{width:5px;height:5px;border-radius:50%;background:var(--gc3,var(--pink));animation:pulse 2s ease-in-out infinite;}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.7)}}
+.newsletter-form input:focus{border-color:var(--cyan);}
+.newsletter-form input::placeholder{color:rgba(255,255,255,.25);}
+.newsletter-msg{font-family:var(--display);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;margin-top:14px;min-height:1.4em;color:var(--cyan);}
+.newsletter-msg.error{color:var(--pink);}
+.games-cta-row{display:flex;justify-content:center;margin-top:32px;}
+
+/* MEMBERSHIP TEASER STRIP (sits right after crew section) */
+.mem-teaser{background:var(--deep);padding:36px 48px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.mem-teaser p{font-size:.9rem;color:var(--off);margin-bottom:14px;}
+.mem-teaser p strong{color:#fff;}
+.mem-teaser a{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);border-bottom:1px solid rgba(0,232,255,.4);padding-bottom:2px;transition:color .2s;}
+.mem-teaser a:hover{color:#fff;}
 
 /* ═══════════════════════════════════════
    MEMBERSHIP
@@ -363,7 +367,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   <ul class="nav-links">
     <li><a href="#crew">The Crew</a></li>
     <li><a href="#workbooks">Workbooks</a></li>
-    <li><a href="#games">Games</a></li>
+    <li><a href="#newsletter">Updates</a></li>
     <li><a href="membership.html">Membership</a></li>
     <li><a href="games.html">Game Universe</a></li>
   </ul>
@@ -631,6 +635,12 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </section>
 
+<!-- ═══ MEMBERSHIP TEASER ═══ -->
+<div class="mem-teaser reveal">
+  <p>Start free — get Lesson 1 for every character. <strong>Upgrade anytime to unlock the full universe.</strong></p>
+  <a href="#membership">See membership plans →</a>
+</div>
+
 <!-- ═══ WORKBOOKS ═══ -->
 <section class="workbooks" id="workbooks">
   <div class="workbooks__inner">
@@ -669,76 +679,19 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </section>
 
-<!-- ═══ GAMES PREVIEW ═══ -->
-<section class="games-sec" id="games">
-  <div class="games-sec__inner">
-    <div class="games-sec__header">
-      <span class="section-label reveal">Interactive Games</span>
-      <h2 class="section-title reveal">The world is the game.</h2>
-      <p class="section-desc reveal">Every character has their own immersive world. Step inside and learn by playing — not by watching.</p>
-    </div>
-
-    <div class="games-preview">
-      <div class="gp-card reveal d1" style="--gc:linear-gradient(90deg,#f472b6,#a855f7);--gc3:#f472b6">
-        <div class="gp-symbol">✦</div>
-        <div class="gp-char">Zen · Creative Coder</div>
-        <div class="gp-title">CSS Challenge</div>
-        <div class="gp-lang">HTML & CSS</div>
-        <div class="gp-desc">Style elements in Zen's world by writing real CSS. Watch the world come alive as you code.</div>
-        <div class="gp-status"><div class="gp-dot"></div>Live Now</div>
-      </div>
-
-      <!-- BYTE — FEATURED, FREE -->
-      <div class="gp-card gp-featured reveal d2" style="--gc:linear-gradient(90deg,#a855f7,#38bdf8);--gc3:#a855f7">
-        <div class="gp-symbol">◈</div>
-        <div class="gp-char">Byte · Glitch Cat</div>
-        <div class="gp-title" style="font-size:1.4rem;">Glitch Hunt</div>
-        <div class="gp-lang">Debugging</div>
-        <div class="gp-desc">Catch glitches crawling through Byte's Code City before they corrupt the system.</div>
-        <div class="gp-status" style="background:rgba(168,85,247,.15);padding:6px 14px;border-radius:100px;border:1px solid rgba(168,85,247,.4);display:inline-flex;">
-          <div class="gp-dot"></div>Free to Play — No Upgrade Needed
-        </div>
-      </div>
-
-      <div class="gp-card reveal d3" style="--gc:linear-gradient(90deg,#00f5d4,#38bdf8);--gc3:#00f5d4">
-        <div class="gp-symbol">↻</div>
-        <div class="gp-char">Loop · Flow Guide</div>
-        <div class="gp-title">Logic Quest</div>
-        <div class="gp-lang">JavaScript</div>
-        <div class="gp-desc">Drag code blocks into sequence and watch Loop run the course. Master loops through play.</div>
-        <div class="gp-status"><div class="gp-dot"></div>Live Now · Coders</div>
-      </div>
-
-      <div class="gp-card reveal d1" style="--gc:linear-gradient(90deg,#fbbf24,#fb923c);--gc3:#fbbf24">
-        <div class="gp-symbol">⬡</div>
-        <div class="gp-char">Nova · Builder Bot</div>
-        <div class="gp-title">Build Lab</div>
-        <div class="gp-lang">HTML Structure</div>
-        <div class="gp-desc">Snap HTML pieces into Nova's Discovery Dome blueprint. Watch it assemble in real time.</div>
-        <div class="gp-status"><div class="gp-dot"></div>Live Now · Coders</div>
-      </div>
-
-      <div class="gp-card reveal d2" style="--gc:linear-gradient(90deg,#84cc16,#fb923c);--gc3:#84cc16">
-        <div class="gp-symbol">⚡</div>
-        <div class="gp-char">Bug · Debug Gremlin</div>
-        <div class="gp-title">Debug Garage</div>
-        <div class="gp-lang">Debugging</div>
-        <div class="gp-desc">Bugs are crawling across Bug's Garage walls. Catch them before chaos takes over.</div>
-        <div class="gp-status"><div class="gp-dot"></div>Live Now · Coders</div>
-      </div>
-
-      <div class="gp-card reveal d3" style="--gc:linear-gradient(90deg,#38bdf8,#a855f7);--gc3:#38bdf8">
-        <div class="gp-symbol">♪</div>
-        <div class="gp-char">Echo · Signal DJ</div>
-        <div class="gp-title">Signal Lab</div>
-        <div class="gp-lang">JS Events</div>
-        <div class="gp-desc">Wire events onto Echo's mixing board. Fire the signal. Watch the studio come alive.</div>
-        <div class="gp-status"><div class="gp-dot"></div>Live Now · Coders</div>
-      </div>
-    </div>
-
+<!-- ═══ NEWSLETTER SIGNUP ═══ -->
+<section class="newsletter-sec" id="newsletter">
+  <div class="newsletter-sec__inner">
+    <span class="section-label reveal">Stay In Orbit</span>
+    <h2 class="section-title reveal">The universe is always expanding.</h2>
+    <p class="section-desc reveal" style="margin:0 auto 32px;">New games, new worlds, printable drops, merch — get it first. No spam, just signal.</p>
+    <form class="newsletter-form reveal" id="newsletter-form" onsubmit="return handleNewsletterSignup(event)">
+      <input type="email" id="newsletter-email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="btn-primary" id="newsletter-submit-btn">Join the List →</button>
+    </form>
+    <p class="newsletter-msg" id="newsletter-msg"></p>
     <div class="games-cta-row">
-      <a href="games.html" class="btn-primary">Enter the Game Universe →</a>
+      <a href="games.html" class="btn-outline">Enter the Game Universe →</a>
     </div>
   </div>
 </section>
@@ -877,7 +830,7 @@ const cursor=document.getElementById('cursor'),ring=document.getElementById('cur
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
 (function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
-document.querySelectorAll('a,button,.stat-card,.wb-card,.gp-card,.mem-card,.island-link').forEach(el=>{
+document.querySelectorAll('a,button,.stat-card,.wb-card,.mem-card,.island-link').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cursor.style.width='18px';cursor.style.height='18px';ring.style.width='50px';ring.style.height='50px';});
   el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='32px';ring.style.height='32px';});
 });
@@ -939,6 +892,57 @@ document.getElementById('soundToggle').addEventListener('click',()=>{
   if(ambientOn){[60,90,120].forEach(f=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.value=.015;o.start();ambientNodes.push({o,g});});}
   else{ambientNodes.forEach(({o,g})=>{g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+1);o.stop(ac.currentTime+1);});ambientNodes=[];}
 });
+</script>
+
+<!-- ── NEWSLETTER SIGNUP: WRITES TO FIRESTORE ── -->
+<script type="module">
+  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
+    authDomain: "method-in-motion.firebaseapp.com",
+    projectId: "method-in-motion",
+    storageBucket: "method-in-motion.firebasestorage.app",
+    messagingSenderId: "1067937974009",
+    appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
+  };
+  // Reuse existing app instance if auth-init.js already initialized one, otherwise create it.
+  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
+  const db = getFirestore(app);
+
+  window.handleNewsletterSignup = async function(e){
+    e.preventDefault();
+    const input = document.getElementById('newsletter-email');
+    const btn = document.getElementById('newsletter-submit-btn');
+    const msg = document.getElementById('newsletter-msg');
+    const email = input.value.trim();
+
+    if(!email){ return false; }
+
+    btn.disabled = true;
+    btn.textContent = "Joining...";
+    msg.classList.remove('error');
+    msg.textContent = "";
+
+    try{
+      await addDoc(collection(db, "newsletter_signups"), {
+        email: email,
+        createdAt: serverTimestamp(),
+        source: "homepage"
+      });
+      msg.textContent = "You're in! Watch your inbox for updates.";
+      input.value = "";
+    }catch(err){
+      msg.classList.add('error');
+      msg.textContent = "Something went wrong — please try again.";
+      console.error("Newsletter signup error:", err);
+    }finally{
+      btn.disabled = false;
+      btn.textContent = "Join the List →";
+    }
+    return false;
+  };
 </script>
 
 <!-- ── ENTER THE UNIVERSE: AUTH-AWARE ROUTING ── -->
