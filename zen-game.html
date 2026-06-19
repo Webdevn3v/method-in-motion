@@ -1,473 +1,437 @@
-<!DOCTYPE html> <html lang="en"> <head> <meta charset="UTF-8"/> <meta name="viewport" content="width=device-width, initial-scale=1.0"/> <title>Zen's CSS Challenge — Method in Motion</title> <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"> <style> *{margin:0;padding:0;box-sizing:border-box;} :root{ --accent:#f472b6; --accent2:#a855f7; --bg:#0a0008; --surface:rgba(15,10,25,0.88); --card:rgba(20,10,30,0.92); --border:rgba(244,114,182,0.18); --text:#e8e8f5; --muted:#7a6a80; --green:#4ade80; --red:#f87171; --yellow:#fbbf24; --cyan:#00f5d4; } html,body{height:100%;margin:0;} body{font-family:'Syne',sans-serif;color:var(--text);min-height:100vh;overflow-x:hidden;position:relative;} .world-bg{position:fixed;inset:0;background-image:url('zen-entrance.png');background-size:cover;background-position:center top;z-index:0;} .world-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(10,0,8,0.6) 0%,rgba(10,0,8,0.75) 50%,rgba(10,0,8,0.95) 100%);z-index:1;} .world-glow{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(244,114,182,0.14) 0%,transparent 60%);z-index:1;pointer-events:none;} .content{position:relative;z-index:10;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Zen's CSS Studio — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --void:#050508;--deep:#0a0a18;
+  --pink:#f472b6;--purple:#a855f7;--cyan:#00e8ff;
+  --grad:linear-gradient(135deg,#f472b6,#a855f7);
+  --D:'Orbitron',monospace;--H:'Syne',sans-serif;--B:'DM Sans',sans-serif;
+}
+html,body{height:100%;overflow:hidden;}
+body{background:var(--void);color:#fff;font-family:var(--B);cursor:default;}
+a{text-decoration:none;color:inherit;}
 
 /* NAV */
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;background:rgba(10,0,8,0.75);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
-.nav-left{display:flex;align-items:center;gap:16px;}
-.nav-back{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);text-decoration:none;transition:color 0.2s;}
-.nav-back:hover{color:var(--accent);}
-.nav-title{font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.15em;color:var(--accent);text-shadow:0 0 20px rgba(244,114,182,0.5);}
-.nav-tier{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent2);border:1px solid rgba(168,85,247,0.4);padding:3px 10px;border-radius:4px;}
-.progress-dots{display:flex;gap:8px;align-items:center;}
-.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:background 0.3s;}
-.dot.active{background:var(--accent);box-shadow:0 0 8px var(--accent);}
-.dot.done{background:var(--green);}
+nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,0.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.05);}
+.nav-logo{display:flex;align-items:center;gap:8px;font-family:var(--D);font-size:0.68rem;letter-spacing:0.12em;}
+.nav-mark{width:24px;height:24px;background:var(--grad);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.6rem;font-weight:700;color:#000;}
+.nav-back{font-family:var(--D);font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);transition:color 0.2s;}
+.nav-back:hover{color:var(--pink);}
 
-/* INTRO SCREEN */
-.intro-screen{min-height:calc(100vh - 60px);display:flex;align-items:center;justify-content:center;padding:40px 24px;}
-.intro-card{max-width:560px;width:100%;background:var(--card);border:1px solid var(--border);border-radius:20px;padding:48px 40px;text-align:center;backdrop-filter:blur(20px);}
-.intro-char{font-size:4rem;margin-bottom:20px;filter:drop-shadow(0 0 20px rgba(244,114,182,0.6));animation:float 3s ease-in-out infinite;}
-@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
-.intro-eyebrow{font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--accent);opacity:0.7;margin-bottom:12px;}
-.intro-title{font-family:'Orbitron',monospace;font-size:1.5rem;font-weight:900;letter-spacing:0.06em;margin-bottom:6px;}
-.intro-title span{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.intro-sub{font-size:0.88rem;color:var(--muted);margin-bottom:28px;line-height:1.7;}
-.intro-what{background:rgba(244,114,182,0.06);border:1px solid rgba(244,114,182,0.15);border-radius:12px;padding:20px 24px;margin-bottom:28px;text-align:left;}
-.intro-what-title{font-family:'Orbitron',monospace;font-size:0.55rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;}
-.intro-step{display:flex;align-items:flex-start;gap:12px;margin-bottom:10px;font-size:0.85rem;color:var(--text);line-height:1.5;}
-.intro-step:last-child{margin-bottom:0;}
-.step-num{width:22px;height:22px;border-radius:50%;background:rgba(244,114,182,0.15);border:1px solid rgba(244,114,182,0.3);display:flex;align-items:center;justify-content:center;font-family:'Orbitron',monospace;font-size:0.48rem;color:var(--accent);flex-shrink:0;margin-top:1px;}
-.intro-btn{font-family:'Orbitron',monospace;font-size:0.72rem;letter-spacing:0.14em;text-transform:uppercase;padding:14px 36px;background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000;font-weight:700;border:none;border-radius:999px;cursor:pointer;transition:all 0.2s;box-shadow:0 8px 30px rgba(244,114,182,0.3);}
-.intro-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(244,114,182,0.45);}
-.intro-levels{display:flex;gap:10px;justify-content:center;margin-top:20px;}
-.intro-level-dot{padding:6px 14px;border-radius:999px;font-family:'Orbitron',monospace;font-size:0.5rem;letter-spacing:0.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,0.1);color:var(--muted);}
-.intro-level-dot.active{border-color:rgba(244,114,182,0.4);color:var(--accent);background:rgba(244,114,182,0.08);}
+/* ── SCREENS ── */
+.screen{position:fixed;inset:0;top:50px;display:flex;align-items:center;justify-content:center;transition:opacity 0.4s,transform 0.4s;pointer-events:none;opacity:0;}
+.screen.active{opacity:1;pointer-events:all;}
+.screen.exit{opacity:0;transform:scale(0.96);}
 
-/* GAME SHELL */
-.game-shell{max-width:1200px;margin:0 auto;padding:24px 24px 40px;}
+/* ══════════════════════════════
+   INTRO SCREEN
+══════════════════════════════ */
+#screen-intro{flex-direction:column;text-align:center;padding:24px;background:radial-gradient(ellipse at 50% 40%,rgba(244,114,182,0.12),transparent 65%),var(--void);}
+.intro-zen{width:160px;height:160px;object-fit:contain;filter:drop-shadow(0 0 32px rgba(244,114,182,0.6));animation:float 3s ease-in-out infinite;margin-bottom:8px;}
+@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
+.intro-bubble{background:rgba(244,114,182,0.1);border:1px solid rgba(244,114,182,0.3);border-radius:16px 16px 16px 4px;padding:14px 20px;max-width:320px;margin:0 auto 28px;font-size:1rem;line-height:1.5;position:relative;}
+.intro-bubble em{font-style:normal;color:var(--pink);font-weight:700;}
+.intro-title{font-family:var(--D);font-size:clamp(1.6rem,5vw,2.8rem);font-weight:900;letter-spacing:0.06em;margin-bottom:6px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.intro-sub{font-size:0.85rem;color:rgba(255,255,255,0.45);margin-bottom:28px;letter-spacing:0.04em;}
+.intro-btn{font-family:var(--D);font-size:0.7rem;letter-spacing:0.14em;text-transform:uppercase;padding:16px 40px;background:var(--grad);color:#000;font-weight:700;border:none;border-radius:100px;cursor:pointer;box-shadow:0 8px 32px rgba(244,114,182,0.4);transition:transform 0.2s,box-shadow 0.2s;animation:pulse-btn 2s ease-in-out infinite;}
+@keyframes pulse-btn{0%,100%{box-shadow:0 8px 32px rgba(244,114,182,0.4);}50%{box-shadow:0 8px 48px rgba(244,114,182,0.7);}}
+.intro-btn:hover{transform:translateY(-3px);}
 
-/* ZEN QUOTE */
-.char-quote{background:rgba(244,114,182,0.06);border:1px solid rgba(244,114,182,0.2);backdrop-filter:blur(12px);border-radius:14px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
-.char-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--accent),var(--accent2));display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0;box-shadow:0 0 20px rgba(244,114,182,0.4);}
-.char-text{font-size:0.82rem;color:rgba(255,255,255,0.65);line-height:1.6;font-style:italic;}
-.char-text strong{color:var(--accent);font-style:normal;}
+/* ══════════════════════════════
+   GAME SCREEN
+══════════════════════════════ */
+#screen-game{flex-direction:column;padding:0;align-items:stretch;justify-content:flex-start;overflow:hidden;}
+.game-layout{display:grid;grid-template-columns:1fr 1fr;height:calc(100vh - 50px);overflow:hidden;}
+@media(max-width:700px){.game-layout{grid-template-columns:1fr;}}
 
-/* LEVEL HEADER */
-.level-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
-.level-badge{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--accent);border:1px solid rgba(244,114,182,0.3);padding:5px 14px;border-radius:4px;background:rgba(244,114,182,0.06);backdrop-filter:blur(8px);}
-.level-title{font-size:1.1rem;font-weight:800;}
-.level-desc{font-size:0.8rem;color:var(--muted);margin-top:2px;}
-.score-bar{display:flex;align-items:center;gap:20px;}
-.score-item{text-align:center;}
-.score-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--accent);}
-.score-label{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
-#timer-val.warning{color:var(--yellow);}
-#timer-val.danger{color:var(--red);animation:pulse 0.5s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+/* LEFT — LIVE CARD PREVIEW */
+.preview-side{background:linear-gradient(160deg,#1a0030 0%,#0d0020 50%,#050508 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;position:relative;overflow:hidden;}
+.preview-side::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 30%,rgba(244,114,182,0.1),transparent 55%),radial-gradient(ellipse at 60% 70%,rgba(168,85,247,0.08),transparent 55%);pointer-events:none;}
 
-/* PANELS */
-.panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;backdrop-filter:blur(16px);}
-.panel-header{padding:12px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.panel-label{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
-.panel-label span{color:var(--accent);}
+/* progress dots */
+.prog-dots{display:flex;gap:7px;margin-bottom:20px;z-index:1;}
+.pdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all 0.35s;}
+.pdot.done{background:var(--pink);}
+.pdot.active{background:var(--pink);width:22px;border-radius:4px;}
 
-.game-area{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+/* zen mini */
+.zen-mini{width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(244,114,182,0.5));animation:float 3s ease-in-out infinite;z-index:1;margin-bottom:4px;}
+.zen-say{font-size:0.78rem;color:rgba(255,255,255,0.65);text-align:center;max-width:220px;min-height:40px;z-index:1;margin-bottom:20px;line-height:1.5;}
+.zen-say strong{color:var(--pink);}
 
-/* TARGET PREVIEW — dark themed, not white */
-.target-preview{
-  padding:32px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:240px;
-  background:linear-gradient(135deg,#0d0818,#120820);
+/* THE CARD BEING STYLED */
+.card-stage{z-index:1;width:100%;max-width:280px;}
+.styled-card{
+  border-radius:var(--c-radius,16px);
+  padding:24px 20px;
+  background:var(--c-bg,rgba(26,0,48,0.8));
+  border:var(--c-border,1px solid rgba(244,114,182,0.2));
+  box-shadow:var(--c-shadow,0 0 40px rgba(244,114,182,0.15));
+  transition:all 0.5s cubic-bezier(0.34,1.2,0.64,1);
+  text-align:center;
   position:relative;
+  overflow:hidden;
 }
-.target-preview::before{
-  content:'TARGET';
-  position:absolute;
-  top:10px;left:12px;
-  font-family:'Orbitron',monospace;
-  font-size:0.42rem;
-  letter-spacing:0.2em;
-  color:rgba(244,114,182,0.3);
+.styled-card::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:80%;height:80px;border-radius:50%;background:var(--c-glow,rgba(244,114,182,0.08));filter:blur(20px);transition:all 0.5s;}
+.sc-label{font-family:var(--D);font-size:0.42rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--c-accent,#f472b6);margin-bottom:8px;opacity:0.7;}
+.sc-name{font-family:var(--H);font-size:1.3rem;font-weight:800;color:var(--c-title,#fff);margin-bottom:4px;transition:color 0.4s;}
+.sc-role{font-size:0.75rem;color:rgba(255,255,255,0.45);margin-bottom:16px;}
+.sc-btn{display:inline-block;font-family:var(--D);font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;padding:var(--c-btnpad,8px 18px);border-radius:var(--c-btnrad,100px);background:var(--c-btnbg,rgba(244,114,182,0.15));border:1px solid var(--c-accent,rgba(244,114,182,0.4));color:var(--c-accent,#f472b6);transition:all 0.4s;}
+
+/* css line readout */
+.css-line{margin-top:16px;font-family:monospace;font-size:0.68rem;color:rgba(255,255,255,0.3);z-index:1;text-align:center;min-height:20px;transition:all 0.3s;}
+.css-line span{color:var(--cyan);}
+
+/* RIGHT — CHOICE PANEL */
+.choice-side{background:var(--deep);border-left:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column;overflow:hidden;}
+
+.step-top{padding:22px 22px 14px;border-bottom:1px solid rgba(255,255,255,0.05);}
+.step-tag{font-family:var(--D);font-size:0.44rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:6px;display:block;}
+.step-q{font-family:var(--H);font-size:1.2rem;font-weight:800;line-height:1.2;}
+.step-q em{font-style:normal;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+
+/* OPTIONS */
+.choices{flex:1;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;overflow-y:auto;align-content:start;}
+.choice{border-radius:12px;border:2px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 10px;gap:8px;}
+.choice:hover{border-color:rgba(244,114,182,0.35);background:rgba(244,114,182,0.05);transform:scale(1.03);}
+.choice.picked{border-color:var(--pink);background:rgba(244,114,182,0.12);transform:scale(1.04);}
+.choice.picked::after{content:'✓';position:absolute;top:6px;right:8px;font-size:0.7rem;color:var(--pink);}
+
+/* visual previews inside options */
+.opt-swatch{width:48px;height:48px;border-radius:8px;flex-shrink:0;}
+.opt-radius-preview{width:44px;height:44px;background:rgba(244,114,182,0.25);border:2px solid var(--pink);flex-shrink:0;}
+.opt-shadow-preview{width:44px;height:44px;background:rgba(26,0,48,0.8);border-radius:8px;flex-shrink:0;}
+.opt-border-preview{width:44px;height:44px;background:rgba(26,0,48,0.8);border-radius:8px;flex-shrink:0;}
+.opt-name{font-family:var(--H);font-size:0.78rem;font-weight:700;text-align:center;line-height:1.2;}
+.opt-code{font-family:monospace;font-size:0.6rem;color:rgba(255,255,255,0.3);text-align:center;}
+.choice.picked .opt-code{color:rgba(244,114,182,0.6);}
+
+/* bottom feedback toast */
+.toast{padding:10px 18px;background:rgba(244,114,182,0.1);border-top:1px solid rgba(244,114,182,0.2);font-size:0.78rem;color:rgba(255,255,255,0.75);min-height:42px;line-height:1.5;transition:all 0.3s;display:flex;align-items:center;gap:8px;}
+.toast-icon{font-size:1rem;flex-shrink:0;}
+
+/* ══════════════════════════════
+   REVEAL SCREEN
+══════════════════════════════ */
+#screen-reveal{flex-direction:column;text-align:center;padding:20px;background:var(--void);overflow-y:auto;}
+#screen-reveal.active{pointer-events:all;}
+.reveal-title{font-family:var(--D);font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;letter-spacing:0.06em;margin-bottom:6px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.reveal-sub{font-size:0.85rem;color:rgba(255,255,255,0.45);margin-bottom:24px;}
+
+/* big card reveal */
+.reveal-card-wrap{position:relative;display:inline-block;margin-bottom:24px;}
+.reveal-card{
+  border-radius:var(--c-radius,16px);
+  padding:36px 32px;
+  background:var(--c-bg,rgba(26,0,48,0.8));
+  border:var(--c-border,1px solid rgba(244,114,182,0.2));
+  box-shadow:var(--c-shadow,0 0 40px rgba(244,114,182,0.15));
+  text-align:center;
+  min-width:260px;
+  animation:card-pop 0.6s cubic-bezier(0.34,1.56,0.64,1);
+  position:relative;overflow:hidden;
 }
+@keyframes card-pop{0%{transform:scale(0.7);opacity:0;}100%{transform:scale(1);opacity:1;}}
+.reveal-card::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:80%;height:80px;border-radius:50%;background:var(--c-glow,rgba(244,114,182,0.08));filter:blur(20px);}
+.rsc-label{font-family:var(--D);font-size:0.42rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--c-accent,#f472b6);margin-bottom:8px;opacity:0.7;}
+.rsc-name{font-family:var(--H);font-size:1.6rem;font-weight:800;color:var(--c-title,#fff);margin-bottom:4px;}
+.rsc-role{font-size:0.78rem;color:rgba(255,255,255,0.45);margin-bottom:20px;}
+.rsc-btn{display:inline-block;font-family:var(--D);font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;padding:var(--c-btnpad,10px 22px);border-radius:var(--c-btnrad,100px);background:var(--c-btnbg,rgba(244,114,182,0.15));border:1px solid var(--c-accent,rgba(244,114,182,0.4));color:var(--c-accent,#f472b6);}
 
-.hint-btn{font-size:0.65rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);background:none;border:1px solid rgba(255,255,255,0.1);padding:4px 12px;border-radius:4px;cursor:pointer;transition:all 0.2s;}
-.hint-btn:hover{border-color:var(--accent);color:var(--accent);}
-.hint-used{color:var(--red)!important;border-color:rgba(248,113,113,0.3)!important;}
+/* CSS trophy */
+.css-trophy{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 20px;text-align:left;max-width:340px;margin:0 auto 24px;font-family:monospace;font-size:0.72rem;line-height:2;}
+.ct-prop{color:var(--cyan);}
+.ct-val{color:var(--pink);}
+.ct-comment{color:rgba(255,255,255,0.2);}
 
-.css-editor{width:100%;min-height:240px;background:rgba(5,0,10,0.8);border:none;outline:none;padding:18px;font-family:'DM Mono',monospace;font-size:0.82rem;color:#e8e8f5;line-height:1.8;resize:none;tab-size:2;}
-.css-editor::placeholder{color:var(--muted);}
+.reveal-btns{display:flex;flex-direction:column;gap:10px;max-width:300px;margin:0 auto;}
+.rbtn-primary{font-family:var(--D);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;padding:14px;border-radius:10px;background:var(--grad);color:#000;font-weight:700;border:none;cursor:pointer;transition:transform 0.2s;}
+.rbtn-primary:hover{transform:translateY(-2px);}
+.rbtn-sec{font-family:var(--D);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;padding:12px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.45);background:none;cursor:pointer;transition:all 0.2s;}
+.rbtn-sec:hover{border-color:var(--pink);color:var(--pink);}
 
-/* LIVE PREVIEW — dark themed */
-.preview-panel{margin-bottom:20px;}
-.live-preview{
-  padding:32px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  min-height:180px;
-  background:linear-gradient(135deg,#0d0818,#120820);
-  border-radius:0 0 12px 12px;
-  position:relative;
-}
-.live-preview::before{
-  content:'YOUR RESULT';
-  position:absolute;
-  top:10px;left:12px;
-  font-family:'Orbitron',monospace;
-  font-size:0.42rem;
-  letter-spacing:0.2em;
-  color:rgba(244,114,182,0.25);
-}
-
-.feedback-bar{padding:12px 18px;border-top:1px solid var(--border);display:flex;align-items:center;gap:12px;min-height:48px;}
-.accuracy-label{font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);}
-.accuracy-track{flex:1;height:6px;background:rgba(255,255,255,0.06);border-radius:3px;overflow:hidden;}
-.accuracy-fill{height:100%;border-radius:3px;transition:width 0.3s,background 0.3s;width:0%;}
-.accuracy-pct{font-family:'Orbitron',monospace;font-size:0.75rem;color:var(--text);min-width:40px;text-align:right;}
-
-.hint-box{display:none;background:rgba(168,85,247,0.08);border:1px solid rgba(168,85,247,0.25);border-radius:8px;padding:14px 18px;margin-bottom:16px;font-size:0.82rem;color:var(--text);line-height:1.7;backdrop-filter:blur(8px);}
-.hint-box strong{color:var(--accent2);}
-
-/* STARTER CODE DISPLAY */
-.starter-note{padding:8px 18px;border-top:1px solid var(--border);font-size:0.72rem;color:var(--muted);font-family:'DM Mono',monospace;}
-.starter-note span{color:rgba(244,114,182,0.6);}
-
-.action-row{display:flex;gap:12px;justify-content:flex-end;flex-wrap:wrap;}
-.btn{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.12em;text-transform:uppercase;padding:11px 24px;border-radius:6px;cursor:pointer;border:none;transition:all 0.2s;}
-.btn-primary{background:var(--accent);color:#000;font-weight:700;}
-.btn-primary:hover{opacity:0.85;transform:translateY(-1px);box-shadow:0 8px 20px rgba(244,114,182,0.4);}
-.btn-secondary{background:transparent;border:1px solid rgba(255,255,255,0.1);color:var(--muted);}
-.btn-secondary:hover{border-color:var(--accent);color:var(--accent);}
-.btn-next{background:var(--green);color:#000;font-weight:700;display:none;}
-.btn-next:hover{opacity:0.85;}
-
-/* RESULT OVERLAY */
-.result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.88);z-index:100;align-items:center;justify-content:center;backdrop-filter:blur(8px);}
-.result-overlay.show{display:flex;}
-.result-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:480px;width:90%;text-align:center;backdrop-filter:blur(20px);}
-.result-icon{font-size:3rem;margin-bottom:16px;}
-.result-title{font-family:'Orbitron',monospace;font-size:1.1rem;letter-spacing:0.1em;margin-bottom:8px;}
-.result-title.win{color:var(--green);}
-.result-title.fail{color:var(--red);}
-.result-score{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--accent);margin-bottom:16px;}
-.result-msg{font-size:0.88rem;color:var(--muted);line-height:1.7;margin-bottom:24px;}
-.result-actions{display:flex;gap:12px;justify-content:center;}
-
-/* LEVEL TRANSITION */
-@keyframes level-in{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.game-shell.entering{animation:level-in 0.4s ease forwards;}
-
-@media(max-width:768px){.game-area{grid-template-columns:1fr;}}
+/* CONFETTI */
+.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;pointer-events:none;animation:confetti-fall linear forwards;}
+@keyframes confetti-fall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
 </style>
 </head>
 <body>
-<div class="world-bg"></div>
-<div class="world-overlay"></div>
-<div class="world-glow"></div>
-<div class="content">
-
 <nav>
-  <div class="nav-left">
-    <a href="games.html" class="nav-back">← Game Universe</a>
-    <span class="nav-title">CSS Challenge</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <div class="progress-dots" id="progress-dots">
-      <div class="dot active" id="dot-0"></div>
-      <div class="dot" id="dot-1"></div>
-      <div class="dot" id="dot-2"></div>
-    </div>
-    <span class="nav-tier">Coders</span>
-  </div>
+  <a href="index.html" class="nav-logo"><div class="nav-mark">&gt;</div>method in motion</a>
+  <a href="games.html" class="nav-back">← All Games</a>
 </nav>
 
-<!-- INTRO SCREEN -->
-<div class="intro-screen" id="intro-screen">
-  <div class="intro-card">
-    <div class="intro-char">🌸</div>
-    <div class="intro-eyebrow">Zen's World</div>
-    <div class="intro-title">CSS <span>Challenge</span></div>
-    <p class="intro-sub">CSS is the language that makes websites beautiful. You're going to style real elements — and watch them change as you type.</p>
-    <div class="intro-what">
-      <div class="intro-what-title">How it works</div>
-      <div class="intro-step"><div class="step-num">1</div>Look at the TARGET on the left — that's what you're trying to match.</div>
-      <div class="intro-step"><div class="step-num">2</div>Write CSS in the editor on the right. Your result updates live as you type.</div>
-      <div class="intro-step"><div class="step-num">3</div>Hit <strong style="color:var(--accent)">Check Answer</strong> when you think you're close. 70% match or better = you win the level.</div>
-      <div class="intro-step"><div class="step-num">4</div>Stuck? Use a Hint — it costs 50 points but gives you the properties you need.</div>
+<!-- ══ INTRO SCREEN ══ -->
+<div class="screen active" id="screen-intro">
+  <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px;">
+    <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" class="intro-zen" alt="Zen">
+    <div class="intro-bubble">
+      Hey! I'm <em>Zen</em>. We're going to design a card together —<br>your choices, your style, <em>real CSS.</em> ✨
     </div>
-    <button class="intro-btn" onclick="startGame()">I'm Ready — Let's Code ✦</button>
-    <div class="intro-levels">
-      <div class="intro-level-dot active">Level 1 · Button</div>
-      <div class="intro-level-dot">Level 2 · Card</div>
-      <div class="intro-level-dot">Level 3 · Layout</div>
-    </div>
+    <div class="intro-title">ZEN'S CSS STUDIO</div>
+    <div class="intro-sub">5 choices · Watch it build live · See your code</div>
+    <button class="intro-btn" onclick="startGame()">Start Designing →</button>
   </div>
 </div>
 
-<!-- GAME -->
-<div class="game-shell" id="game-shell" style="display:none;">
-  <div class="char-quote">
-    <div class="char-avatar">🌸</div>
-    <div class="char-text" id="zen-text">Loading...</div>
-  </div>
-  <div class="level-header">
-    <div style="display:flex;align-items:center;gap:16px;">
-      <div class="level-badge" id="level-badge">LEVEL 1</div>
-      <div>
-        <div class="level-title" id="level-title">Loading...</div>
-        <div class="level-desc" id="level-desc"></div>
+<!-- ══ GAME SCREEN ══ -->
+<div class="screen" id="screen-game">
+  <div class="game-layout">
+
+    <!-- LEFT: LIVE PREVIEW -->
+    <div class="preview-side">
+      <div class="prog-dots" id="prog-dots"></div>
+      <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" class="zen-mini" alt="Zen">
+      <div class="zen-say" id="zen-say">Let's go!</div>
+      <div class="card-stage">
+        <div class="styled-card" id="styled-card">
+          <div class="sc-label">Zen's Studio</div>
+          <div class="sc-name" id="sc-name">ZEN</div>
+          <div class="sc-role">Creative Coder · CSS Artist</div>
+          <div class="sc-btn" id="sc-btn">Enter →</div>
+        </div>
       </div>
+      <div class="css-line" id="css-line">waiting for your first pick...</div>
     </div>
-    <div class="score-bar">
-      <div class="score-item"><div class="score-val" id="timer-val" style="color:var(--cyan)">90</div><div class="score-label">Seconds</div></div>
-      <div class="score-item"><div class="score-val" id="score-val">0</div><div class="score-label">Score</div></div>
-    </div>
-  </div>
-  <div class="hint-box" id="hint-box"></div>
-  <div class="game-area">
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-label"><span>TARGET</span> — Match this design</div>
+
+    <!-- RIGHT: CHOICES -->
+    <div class="choice-side">
+      <div class="step-top">
+        <span class="step-tag" id="step-tag">Step 1 of 5</span>
+        <div class="step-q" id="step-q">What's the <em>background?</em></div>
       </div>
-      <div class="target-preview" id="target-preview"></div>
+      <div class="choices" id="choices-grid"></div>
+      <div class="toast" id="toast"><span class="toast-icon">👆</span><span id="toast-text">Pick one to see the card change!</span></div>
     </div>
-    <div class="panel">
-      <div class="panel-header">
-        <div class="panel-label"><span>YOUR CSS</span> — Write it here</div>
-        <button class="hint-btn" id="hint-btn" onclick="showHint()">Use Hint (−50pts)</button>
-      </div>
-      <textarea class="css-editor" id="css-editor" spellcheck="false"></textarea>
-      <div class="starter-note">Style the <span>.box</span> element — properties go inside the { }</div>
-      <div class="feedback-bar">
-        <span class="accuracy-label">Accuracy</span>
-        <div class="accuracy-track"><div class="accuracy-fill" id="accuracy-fill"></div></div>
-        <span class="accuracy-pct" id="accuracy-pct">0%</span>
-      </div>
-    </div>
+
   </div>
-  <div class="panel preview-panel">
-    <div class="panel-header">
-      <div class="panel-label"><span>LIVE PREVIEW</span> — Updates as you type</div>
-      <div id="match-status" style="font-size:0.7rem;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);"></div>
-    </div>
-    <div class="live-preview" id="live-preview"></div>
-  </div>
-  <div class="action-row">
-    <button class="btn btn-secondary" onclick="resetLevel()">Reset</button>
-    <button class="btn btn-primary" onclick="checkAnswer()">Check Answer</button>
-    <button class="btn btn-next" id="btn-next" onclick="nextLevel()">Next Level →</button>
-  </div>
-</div>
 </div>
 
-<div class="result-overlay" id="result-overlay">
-  <div class="result-box">
-    <div class="result-icon" id="result-icon"></div>
-    <div class="result-title" id="result-title"></div>
-    <div class="result-score" id="result-score"></div>
-    <div class="result-msg" id="result-msg"></div>
-    <div class="result-actions" id="result-actions"></div>
+<!-- ══ REVEAL SCREEN ══ -->
+<div class="screen" id="screen-reveal">
+  <div style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:440px;margin:0 auto;">
+    <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(244,114,182,0.6));animation:float 3s ease-in-out infinite;margin-bottom:10px;" alt="Zen">
+    <div class="reveal-title">You designed this. 🎨</div>
+    <div class="reveal-sub">Every choice was a real CSS property.</div>
+    <div class="reveal-card-wrap">
+      <div class="reveal-card" id="reveal-card">
+        <div class="rsc-label">Zen's Studio</div>
+        <div class="rsc-name" id="rsc-name">ZEN</div>
+        <div class="rsc-role">Creative Coder · CSS Artist</div>
+        <div class="rsc-btn" id="rsc-btn">Enter →</div>
+      </div>
+    </div>
+    <div class="css-trophy" id="css-trophy"></div>
+    <div class="reveal-btns">
+      <button class="rbtn-primary" onclick="restartGame()">Design Again →</button>
+      <a href="zen.html" class="rbtn-sec">Go Deeper with Zen's Lessons</a>
+      <a href="games.html" class="rbtn-sec">← Back to All Games</a>
+    </div>
   </div>
 </div>
 
 <script>
-const LEVELS = [
+const STEPS = [
   {
-    id:0,
-    title:'Style a Button',
-    desc:'Make the button match the target — use color, padding, and rounded corners',
-    quote:'<strong>Zen says:</strong> Every button on the web was styled by a coder. Now it\'s your turn. Change the color, round the corners, and make it pop.',
-    time:120,
-    html:`<button class="box">Click Me</button>`,
-    starter:`.box {\n  background-color: \n  color: \n  padding: \n  border-radius: \n  border: none;\n}`,
-    target:{
-      'background-color':'#f472b6',
-      'color':'#ffffff',
-      'padding':'12px 28px',
-      'border-radius':'999px',
-      'border':'none',
-      'font-size':'16px',
-      'cursor':'pointer'
-    },
-    hint:'Try: background-color: #f472b6 · color: #ffffff · padding: 12px 28px · border-radius: 999px',
-    points:300,
-    // For preview context — make the element visible on dark bg
-    previewBg:'#1a0a20'
+    tag:"Step 1 of 5",
+    q:"What's the <em>background?</em>",
+    say:"Pick a background — watch the card change instantly! 👇",
+    prop:"--c-bg", cssProp:"background",
+    opts:[
+      {name:"Deep Space",    code:"#1a0030",  preview:"swatch", color:"#1a0030",  toast:"Dark purple — moody and bold. ✨"},
+      {name:"Midnight",      code:"#0d1b4b",  preview:"swatch", color:"#0d1b4b",  toast:"Deep blue — clean and professional. 💙"},
+      {name:"Void Black",    code:"#080810",  preview:"swatch", color:"#080810",  toast:"Near-black — minimal and striking. 🖤"},
+      {name:"Soft Plum",     code:"#1e0a2e",  preview:"swatch", color:"#1e0a2e",  toast:"Warm plum — dreamy and creative. 💜"},
+    ]
   },
   {
-    id:1,
-    title:'Build a Card',
-    desc:'Give this card a background, border, shadow, and breathing room',
-    quote:'<strong>Zen says:</strong> Cards are everywhere — product pages, profiles, dashboards. Master the box and you can build anything.',
-    time:120,
-    html:`<div class="box"><h3 style="margin-bottom:8px;font-size:1rem;">Zen\'s Lab</h3><p style="font-size:0.85rem;opacity:0.7;">Creative coding starts here.</p></div>`,
-    starter:`.box {\n  background-color: \n  color: \n  padding: \n  border-radius: \n  border: \n  max-width: \n}`,
-    target:{
-      'background-color':'#1e1e35',
-      'color':'#e8e8f5',
-      'padding':'24px',
-      'border-radius':'12px',
-      'border':'1px solid #a855f7',
-      'max-width':'280px'
-    },
-    hint:'Try: background-color: #1e1e35 · color: #e8e8f5 · padding: 24px · border-radius: 12px · border: 1px solid #a855f7 · max-width: 280px',
-    points:400,
-    previewBg:'#0d0818'
+    tag:"Step 2 of 5",
+    q:"How <em>round</em> are the corners?",
+    say:"border-radius shapes the card. Round or sharp?",
+    prop:"--c-radius", cssProp:"border-radius",
+    opts:[
+      {name:"Super Round",   code:"28px",   preview:"radius", radius:"28px",   toast:"28px — soft and friendly. 🟣"},
+      {name:"Modern",        code:"14px",   preview:"radius", radius:"14px",   toast:"14px — balanced and clean. ✅"},
+      {name:"Sharp",         code:"4px",    preview:"radius", radius:"4px",    toast:"4px — crisp and editorial. 📐"},
+      {name:"Square",        code:"0px",    preview:"radius", radius:"0px",    toast:"0px — bold and architectural. ⬛"},
+    ]
   },
   {
-    id:2,
-    title:'Flex Layout',
-    desc:'Use flexbox to line up the three items side by side with space between them',
-    quote:'<strong>Zen says:</strong> Flexbox is the superpower every coder needs. Learn to line things up and you\'ll never fight a layout again.',
-    time:150,
-    html:`<div class="box"><span style="background:#f472b6;color:#000;padding:6px 14px;border-radius:4px;font-weight:700;font-size:0.85rem;">HTML</span><span style="background:#a855f7;color:#fff;padding:6px 14px;border-radius:4px;font-weight:700;font-size:0.85rem;">CSS</span><span style="background:#00f5d4;color:#000;padding:6px 14px;border-radius:4px;font-weight:700;font-size:0.85rem;">JS</span></div>`,
-    starter:`.box {\n  display: \n  justify-content: \n  align-items: \n  gap: \n  background-color: \n  padding: \n  border-radius: \n}`,
-    target:{
-      'display':'flex',
-      'justify-content':'space-around',
-      'align-items':'center',
-      'background-color':'#0f0f1a',
-      'padding':'20px',
-      'border-radius':'8px',
-      'gap':'16px'
-    },
-    hint:'Key: display: flex · justify-content: space-around · align-items: center · gap: 16px · padding: 20px',
-    points:500,
-    previewBg:'#080812'
+    tag:"Step 3 of 5",
+    q:"What <em>color</em> is the name?",
+    say:"The color property changes text. What vibe?",
+    prop:"--c-title", cssProp:"color",
+    opts:[
+      {name:"Pink",          code:"#f472b6",  preview:"swatch", color:"#f472b6",  toast:"Zen's signature pink! 💗"},
+      {name:"Cyan",          code:"#00e8ff",  preview:"swatch", color:"#00e8ff",  toast:"Electric blue — digital energy. ⚡"},
+      {name:"White",         code:"#ffffff",  preview:"swatch", color:"#ffffff",  toast:"Pure white — always clean. 🤍"},
+      {name:"Purple",        code:"#c66bff",  preview:"swatch", color:"#c66bff",  toast:"Soft purple — dreamy. 🔮"},
+    ]
+  },
+  {
+    tag:"Step 4 of 5",
+    q:"Add a <em>glow</em>?",
+    say:"box-shadow — this is what makes things feel alive!",
+    prop:"--c-shadow", cssProp:"box-shadow",
+    opts:[
+      {name:"Pink Glow",     code:"0 0 40px rgba(244,114,182,0.5)", preview:"shadow", shadowColor:"rgba(244,114,182,0.6)", toast:"Glowing from within! 💗"},
+      {name:"Purple Aura",   code:"0 0 50px rgba(168,85,247,0.4)",  preview:"shadow", shadowColor:"rgba(168,85,247,0.6)",  toast:"Mysterious purple aura. 🔮"},
+      {name:"Lifted",        code:"0 20px 60px rgba(0,0,0,0.7)",    preview:"shadow", shadowColor:"rgba(0,0,0,0.9)",       toast:"Drop shadow — floats off the page. ⬆️"},
+      {name:"No Shadow",     code:"none",                            preview:"shadow", shadowColor:"transparent",           toast:"Flat and minimal — clean! ✨"},
+    ]
+  },
+  {
+    tag:"Step 5 of 5",
+    q:"What's the <em>border?</em>",
+    say:"Last one! The border is your finishing touch. 🎨",
+    prop:"--c-border", cssProp:"border",
+    opts:[
+      {name:"Pink Line",     code:"1px solid #f472b6",              preview:"border", borderVal:"2px solid #f472b6",              toast:"Sharp pink edge — signature Zen. 💗"},
+      {name:"Glow Edge",     code:"1px solid rgba(244,114,182,0.4)",preview:"border", borderVal:"2px solid rgba(244,114,182,0.5)",toast:"Soft glowing border. ✨"},
+      {name:"Cyan Pop",      code:"1px solid rgba(0,232,255,0.5)",  preview:"border", borderVal:"2px solid rgba(0,232,255,0.6)", toast:"Cyan contrast — eye-catching! 💙"},
+      {name:"No Border",     code:"none",                           preview:"border", borderVal:"none",                          toast:"Borderless — the card stands alone. ⬛"},
+    ]
   }
 ];
 
-let currentLevel=0, score=0, timer=null, timeLeft=0, hintUsed=false, levelComplete=false;
+let step = 0;
+let picks = {};
+const card = document.getElementById('styled-card');
 
-function startGame(){
-  document.getElementById('intro-screen').style.display='none';
-  document.getElementById('game-shell').style.display='block';
-  initLevel(0);
+function setCSS(prop, val) {
+  card.style.setProperty(prop, val);
+  document.getElementById('reveal-card') && document.getElementById('reveal-card').style.setProperty(prop, val);
 }
 
-function initLevel(idx){
-  const lvl=LEVELS[idx];
-  levelComplete=false; hintUsed=false;
-  document.getElementById('level-badge').textContent=`LEVEL ${idx+1}`;
-  document.getElementById('level-title').textContent=lvl.title;
-  document.getElementById('level-desc').textContent=lvl.desc;
-  document.getElementById('zen-text').innerHTML=lvl.quote;
-  LEVELS.forEach((_,i)=>{
-    const d=document.getElementById(`dot-${i}`);
-    d.className='dot'+(i<idx?' done':i===idx?' active':'');
+function startGame() {
+  switchScreen('screen-intro','screen-game');
+  loadStep();
+}
+
+function switchScreen(from, to) {
+  document.getElementById(from).classList.add('exit');
+  setTimeout(() => {
+    document.getElementById(from).classList.remove('active','exit');
+    document.getElementById(to).classList.add('active');
+  }, 380);
+}
+
+function buildDots() {
+  const el = document.getElementById('prog-dots');
+  el.innerHTML = '';
+  STEPS.forEach((_,i) => {
+    const d = document.createElement('div');
+    d.className = 'pdot' + (i < step ? ' done' : '') + (i === step ? ' active' : '');
+    el.appendChild(d);
   });
-  renderTarget(lvl);
-  document.getElementById('css-editor').value=lvl.starter||'.box {\n  \n}';
-  updatePreview(lvl.starter||'');
-  setAccuracy(0);
-  document.getElementById('match-status').textContent='';
-  document.getElementById('hint-box').style.display='none';
-  document.getElementById('hint-btn').className='hint-btn';
-  document.getElementById('hint-btn').textContent='Use Hint (−50pts)';
-  document.getElementById('btn-next').style.display='none';
-  const shell=document.getElementById('game-shell');
-  shell.classList.remove('entering');
-  void shell.offsetWidth;
-  shell.classList.add('entering');
-  clearInterval(timer); timeLeft=lvl.time; updateTimer();
-  timer=setInterval(tick,1000);
 }
 
-function renderTarget(lvl){
-  const styles=Object.entries(lvl.target).map(([k,v])=>`${k}:${v}`).join(';');
-  document.getElementById('target-preview').innerHTML=
-    `<style>.tgt-box{${styles}}</style>`+
-    `<div style="background:${lvl.previewBg||'#0d0818'};padding:32px;display:flex;align-items:center;justify-content:center;width:100%;min-height:160px;border-radius:4px;">`+
-    lvl.html.replace(/class="box"/g,'class="tgt-box"')+
-    `</div>`;
-  // override target-preview bg to transparent since we inline it
-  document.getElementById('target-preview').style.padding='0';
-  document.getElementById('target-preview').style.background='transparent';
+function loadStep() {
+  const s = STEPS[step];
+  document.getElementById('step-tag').textContent = s.tag;
+  document.getElementById('step-q').innerHTML = s.q;
+  document.getElementById('zen-say').innerHTML = s.say;
+  document.getElementById('toast').querySelector('#toast-text').textContent = 'Pick one to see the card change!';
+  document.getElementById('toast').querySelector('.toast-icon').textContent = '👆';
+  buildDots();
+  buildChoices(s);
 }
 
-function updatePreview(css){
-  const lvl=LEVELS[currentLevel];
-  document.getElementById('live-preview').innerHTML=
-    `<style>.pv-box{${css}}.pv-box *{box-sizing:border-box;}</style>`+
-    `<div style="background:${lvl.previewBg||'#0d0818'};padding:32px;display:flex;align-items:center;justify-content:center;width:100%;min-height:120px;border-radius:4px;">`+
-    lvl.html.replace(/class="box"/g,'class="pv-box"')+
-    `</div>`;
-  document.getElementById('live-preview').style.padding='0';
-}
-
-function tick(){ timeLeft--; updateTimer(); if(timeLeft<=0){clearInterval(timer);if(!levelComplete)showResult(false);} }
-function updateTimer(){ const el=document.getElementById('timer-val'); el.textContent=timeLeft; el.className=timeLeft<=10?'danger':timeLeft<=20?'warning':''; }
-
-document.getElementById('css-editor').addEventListener('input',function(){
-  updatePreview(this.value);
-  const acc=calcAccuracy(this.value); setAccuracy(acc);
-  const ms=document.getElementById('match-status');
-  if(acc>=85){ms.textContent='✓ Looking great!';ms.style.color='var(--green)';}
-  else if(acc>=50){ms.textContent='Getting closer...';ms.style.color='var(--yellow)';}
-  else{ms.textContent='';}
-});
-document.getElementById('css-editor').addEventListener('keydown',function(e){
-  if(e.key==='Tab'){e.preventDefault();const s=this.selectionStart;this.value=this.value.substring(0,s)+'  '+this.value.substring(this.selectionEnd);this.selectionStart=this.selectionEnd=s+2;}
-});
-
-function calcAccuracy(css){
-  const lvl=LEVELS[currentLevel]; const props=Object.entries(lvl.target); let matched=0;
-  props.forEach(([prop,val])=>{
-    const escaped=prop.replace(/-/g,'\\-');
-    const valEscaped=val.replace(/[().#,\s]/g,'.*');
-    const re=new RegExp(escaped+'\\s*:\\s*'+valEscaped,'i');
-    if(re.test(css)) matched++;
+function buildChoices(s) {
+  const grid = document.getElementById('choices-grid');
+  grid.innerHTML = '';
+  s.opts.forEach((opt, i) => {
+    const el = document.createElement('div');
+    el.className = 'choice';
+    let previewHTML = '';
+    if (opt.preview === 'swatch') {
+      previewHTML = `<div class="opt-swatch" style="background:${opt.color};"></div>`;
+    } else if (opt.preview === 'radius') {
+      previewHTML = `<div class="opt-radius-preview" style="border-radius:${opt.radius};"></div>`;
+    } else if (opt.preview === 'shadow') {
+      previewHTML = `<div class="opt-shadow-preview" style="box-shadow:0 0 16px ${opt.shadowColor};"></div>`;
+    } else if (opt.preview === 'border') {
+      previewHTML = `<div class="opt-border-preview" style="border:${opt.borderVal};"></div>`;
+    }
+    el.innerHTML = `${previewHTML}<div class="opt-name">${opt.name}</div><div class="opt-code">${opt.code.length > 22 ? opt.code.substring(0,22)+'…' : opt.code}</div>`;
+    el.addEventListener('click', () => pick(el, opt, s));
+    grid.appendChild(el);
   });
-  return Math.round((matched/props.length)*100);
 }
 
-function setAccuracy(pct){
-  document.getElementById('accuracy-fill').style.width=pct+'%';
-  document.getElementById('accuracy-fill').style.background=pct>=80?'var(--green)':pct>=50?'var(--yellow)':'var(--accent)';
-  document.getElementById('accuracy-pct').textContent=pct+'%';
+function pick(el, opt, s) {
+  // mark selected
+  document.querySelectorAll('.choice').forEach(c => c.classList.remove('picked'));
+  el.classList.add('picked');
+  // apply to card
+  setCSS(s.prop, opt.code);
+  picks[s.cssProp] = opt.code;
+  // css readout
+  document.getElementById('css-line').innerHTML = `<span>${s.cssProp}</span>: ${opt.code}`;
+  // toast
+  document.getElementById('toast-text').textContent = opt.toast;
+  document.getElementById('toast').querySelector('.toast-icon').textContent = '✨';
+  // auto advance after 1s
+  setTimeout(() => {
+    step++;
+    if (step >= STEPS.length) showReveal();
+    else loadStep();
+  }, 900);
 }
 
-function checkAnswer(){
-  const css=document.getElementById('css-editor').value; const acc=calcAccuracy(css); setAccuracy(acc);
-  const ms=document.getElementById('match-status');
-  if(acc>=70){
-    clearInterval(timer); levelComplete=true;
-    const pts=Math.round(LEVELS[currentLevel].points*(acc/100))+Math.floor(timeLeft*2)-(hintUsed?50:0);
-    score+=Math.max(0,pts); document.getElementById('score-val').textContent=score;
-    ms.textContent=`✓ ${acc}% match — Level complete!`; ms.style.color='var(--green)';
-    document.getElementById('btn-next').style.display='block';
-    if(currentLevel===LEVELS.length-1) showResult(true);
-  } else {
-    ms.textContent=`${acc}% — Need 70%+ to pass. Try adjusting your values.`; ms.style.color='var(--red)';
+function showReveal() {
+  // sync reveal card CSS vars
+  const rc = document.getElementById('reveal-card');
+  Object.keys(picks).forEach(() => {}); // already set via setCSS
+  // build CSS trophy
+  let trophy = `<span class="ct-comment">/* Your card's CSS */</span>\n.zen-card {\n`;
+  const propMap = {
+    'background':'--c-bg','border-radius':'--c-radius','color':'--c-title','box-shadow':'--c-shadow','border':'--c-border'
+  };
+  Object.entries(picks).forEach(([p, v]) => {
+    trophy += `  <span class="ct-prop">${p}</span>: <span class="ct-val">${v.length > 30 ? v.substring(0,30)+'…' : v}</span>;\n`;
+  });
+  trophy += `}`;
+  document.getElementById('css-trophy').innerHTML = trophy;
+  // sync card styles to reveal card
+  Object.entries(propMap).forEach(([_, cssVar]) => {
+    const val = card.style.getPropertyValue(cssVar);
+    if (val) rc.style.setProperty(cssVar, val);
+  });
+  switchScreen('screen-game','screen-reveal');
+  launchConfetti();
+}
+
+function launchConfetti() {
+  const colors = ['#f472b6','#a855f7','#00e8ff','#fbbf24','#84cc16','#ffffff'];
+  for (let i = 0; i < 60; i++) {
+    setTimeout(() => {
+      const c = document.createElement('div');
+      c.className = 'confetti-piece';
+      c.style.left = Math.random() * 100 + 'vw';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (Math.random() * 2 + 1.5) + 's';
+      c.style.animationDelay = '0s';
+      c.style.width = c.style.height = (Math.random() * 8 + 4) + 'px';
+      document.body.appendChild(c);
+      setTimeout(() => c.remove(), 4000);
+    }, i * 40);
   }
 }
 
-function showHint(){
-  if(hintUsed)return; hintUsed=true;
-  const h=document.getElementById('hint-box');
-  h.innerHTML=`<strong>Hint:</strong> ${LEVELS[currentLevel].hint}`; h.style.display='block';
-  const btn=document.getElementById('hint-btn'); btn.textContent='Hint used'; btn.classList.add('hint-used');
-}
-
-function resetLevel(){ initLevel(currentLevel); }
-
-function nextLevel(){
-  if(currentLevel<LEVELS.length-1){ currentLevel++; initLevel(currentLevel); }
-  else showResult(true);
-}
-
-function showResult(win){
-  clearInterval(timer);
-  document.getElementById('result-icon').textContent=win?'🌸':'💻';
-  document.getElementById('result-title').textContent=win?'CHALLENGE COMPLETE':'TIME\'S UP';
-  document.getElementById('result-title').className=`result-title ${win?'win':'fail'}`;
-  document.getElementById('result-score').textContent=score+' pts';
-  document.getElementById('result-msg').textContent=win
-    ?`You matched all 3 CSS challenges! Score: ${score} points. Real developers write CSS like this every day — and now so do you.`
-    :`Time ran out — CSS takes practice. Every pro struggled with this too. The code you wrote is saved — try again and beat your score.`;
-  document.getElementById('result-actions').innerHTML=
-    `<button class="btn btn-secondary" onclick="restartGame()">Try Again</button>`+
-    `<button class="btn btn-primary" onclick="window.location.href='games.html'">Back to Universe</button>`;
-  document.getElementById('result-overlay').classList.add('show');
-}
-
-function restartGame(){
-  score=0; currentLevel=0;
-  document.getElementById('score-val').textContent='0';
-  document.getElementById('result-overlay').classList.remove('show');
-  initLevel(0);
+function restartGame() {
+  step = 0;
+  picks = {};
+  card.removeAttribute('style');
+  document.getElementById('css-line').textContent = 'waiting for your first pick...';
+  switchScreen('screen-reveal','screen-game');
+  loadStep();
 }
 </script>
 </body>
