@@ -20,19 +20,17 @@ html{scroll-behavior:smooth}
 body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7;cursor:none;}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
-
 /* CURSOR */
 .cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--pink);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen;}
 .cursor-ring{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(198,107,255,.5);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s;}
 body:hover .cursor{opacity:1}
-
 /* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,padding .3s;}
 nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 48px;border-bottom:1px solid var(--border);}
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;}
 .nav-logo-mark{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#000;}
-.nav-links{display:flex;gap:28px;list-style:none}
-.nav-links a{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s;}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s;}
 .nav-links a:hover{color:#fff}
 .nav-right{display:flex;align-items:center;gap:10px}
 .nav-cta{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(198,107,255,.4);color:var(--purple);border-radius:100px;transition:all .3s;background:none;cursor:pointer;}
@@ -51,7 +49,6 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
    HERO — UNIVERSE AS FULL BACKGROUND
 ═══════════════════════════════════════ */
 .hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-
 .hero-universe{
   position:absolute;inset:0;z-index:0;
   background-image:url('universe-view.png');
@@ -60,7 +57,6 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
   animation:universe-breathe 14s ease-in-out infinite alternate;
 }
 @keyframes universe-breathe{0%{transform:scale(1.02);}100%{transform:scale(1.08);}}
-
 .hero-overlay{
   position:absolute;inset:0;z-index:1;
   background:radial-gradient(ellipse at 50% 40%,rgba(5,5,8,0.25) 0%,rgba(5,5,8,0.55) 50%,rgba(5,5,8,0.92) 100%);
@@ -69,7 +65,6 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
   position:absolute;bottom:0;left:0;right:0;height:40%;z-index:2;
   background:linear-gradient(to bottom,transparent,rgba(5,5,8,1));
 }
-
 .hero-light{
   position:absolute;inset:0;z-index:2;pointer-events:none;
   background:radial-gradient(ellipse at 30% 45%,rgba(255,107,170,.12) 0%,transparent 50%),
@@ -77,54 +72,15 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
   animation:light-drift 8s ease-in-out infinite alternate;
 }
 @keyframes light-drift{0%{opacity:.7}100%{opacity:1}}
-
 .hero-orb{position:absolute;border-radius:50%;filter:blur(80px);z-index:2;pointer-events:none;animation:orb-drift ease-in-out infinite;}
 @keyframes orb-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(var(--dx,20px),var(--dy,-20px))}}
 .orb-a{width:350px;height:350px;top:5%;left:5%;background:radial-gradient(circle,rgba(255,107,170,.18),transparent);--dx:30px;--dy:20px;animation-duration:10s;}
 .orb-b{width:280px;height:280px;top:15%;right:8%;background:radial-gradient(circle,rgba(0,232,255,.14),transparent);--dx:-20px;--dy:25px;animation-duration:13s;animation-delay:2s;}
 .orb-c{width:240px;height:240px;bottom:20%;left:20%;background:radial-gradient(circle,rgba(198,107,255,.12),transparent);--dx:25px;--dy:-15px;animation-duration:11s;animation-delay:4s;}
-
 .hero-scan{position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.022) 2px,rgba(0,0,0,.022) 4px);}
-
 .hero-particles{position:absolute;inset:0;z-index:4;pointer-events:none;}
 .hparticle{position:absolute;border-radius:50%;animation:hp-float linear infinite;}
 @keyframes hp-float{0%{transform:translateY(100vh);opacity:0}10%{opacity:1}90%{opacity:.5}100%{transform:translateY(-80px);opacity:0}}
-
-/* CLICKABLE WORLD ISLANDS — now with persistent glow + visible labels */
-.island-link{
-  position:absolute;z-index:8;
-  border-radius:50%;
-  cursor:pointer;
-  transition:all 0.3s;
-  box-shadow:0 0 0 1px rgba(255,255,255,.08), 0 0 24px var(--island-color,rgba(198,107,255,.25));
-  animation:island-pulse 3s ease-in-out infinite;
-}
-@keyframes island-pulse{
-  0%,100%{box-shadow:0 0 0 1px rgba(255,255,255,.08),0 0 18px var(--island-color,rgba(198,107,255,.2));}
-  50%{box-shadow:0 0 0 1px rgba(255,255,255,.18),0 0 32px var(--island-color,rgba(198,107,255,.45));}
-}
-.island-link:hover .island-tooltip{opacity:1;transform:translateX(-50%) translateY(-4px);}
-.island-tooltip{
-  position:absolute;bottom:100%;left:50%;transform:translateX(-50%) translateY(0);
-  background:rgba(5,5,8,0.9);
-  border:1px solid;
-  border-radius:10px;
-  padding:7px 14px;
-  font-family:var(--display);
-  font-size:.48rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  white-space:nowrap;
-  opacity:.55;
-  transition:all 0.25s;
-  pointer-events:none;
-  backdrop-filter:blur(12px);
-  margin-bottom:8px;
-}
-.island-link:hover{
-  background:rgba(255,255,255,.06);
-  box-shadow:0 0 30px var(--island-color,rgba(198,107,255,.4));
-}
 
 /* Hero content */
 .hero-content{position:relative;z-index:10;text-align:center;padding:0 24px;max-width:700px;}
@@ -165,54 +121,25 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .crew__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
 @media(max-width:900px){.crew__grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.crew__grid{grid-template-columns:1fr}}
-
-.stat-card{
-  background:var(--card);
-  border-radius:16px;
-  border:1px solid var(--border);
-  overflow:hidden;
-  position:relative;
-  transition:border-color .35s,transform .3s,box-shadow .35s;
-  cursor:pointer;
-}
+.stat-card{background:var(--card);border-radius:16px;border:1px solid var(--border);overflow:hidden;position:relative;transition:border-color .35s,transform .3s,box-shadow .35s;cursor:pointer;}
 .stat-card:focus-visible{outline:2px solid var(--cc,var(--purple));outline-offset:2px;}
-.stat-card:hover{
-  transform:translateY(-6px);
-  border-color:var(--cc,rgba(198,107,255,.5));
-  box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(var(--cc-raw,198,107,255),.15);
-}
-
-.sc-media{
-  position:relative;
-  aspect-ratio:3/4;
-  overflow:hidden;
-  background:rgba(0,0,0,.3);
-}
-.sc-media img{
-  position:absolute;inset:0;width:100%;height:100%;
-  object-fit:contain;object-position:center;padding:8px;
-  filter:drop-shadow(0 0 24px var(--cc,rgba(198,107,255,.4)));
-  transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .4s;
-  z-index:1;
-}
+.stat-card:hover{transform:translateY(-6px);border-color:var(--cc,rgba(198,107,255,.5));box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(var(--cc-raw,198,107,255),.15);}
+.sc-media{position:relative;aspect-ratio:3/4;overflow:hidden;background:rgba(0,0,0,.3);}
+.sc-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;padding:8px;filter:drop-shadow(0 0 24px var(--cc,rgba(198,107,255,.4)));transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .4s;z-index:1;}
 .stat-card:hover .sc-media img{transform:scale(1.07);filter:drop-shadow(0 0 40px var(--cc,rgba(198,107,255,.7)));}
 .sc-glow{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,var(--card) 0%,transparent 45%);pointer-events:none;}
-
 .sc-body{padding:0 18px 20px;position:relative;z-index:3;}
 .sc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
 .sc-id{font-family:var(--display);font-size:.48rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cc,var(--pink));opacity:.6;}
 .sc-lang-badge{font-family:var(--display);font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:4px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));background:rgba(0,0,0,.3);opacity:.8;}
 .sc-name{font-family:var(--heading);font-size:1.25rem;font-weight:800;margin-bottom:1px;}
 .sc-role{font-size:.78rem;color:var(--muted);margin-bottom:12px;}
-
 .sc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;padding:12px;background:rgba(0,0,0,.3);border-radius:10px;border:1px solid var(--border);}
 .sc-stat{text-align:center;}
 .sc-stat-val{font-family:var(--display);font-size:.85rem;font-weight:900;color:var(--cc,var(--pink));line-height:1;}
 .sc-stat-label{font-family:var(--display);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
-
 .sc-topics{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
 .sc-topic{padding:3px 9px;border-radius:100px;font-family:var(--display);font-size:.46rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));opacity:.75;}
-
 .sc-actions{display:flex;gap:8px;}
 .sc-btn-game{flex:1;font-family:var(--display);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:10px 10px;border-radius:8px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));background:rgba(0,0,0,.3);text-align:center;transition:all .2s;position:relative;z-index:5;}
 .sc-btn-game:hover{background:var(--cc,var(--pink));color:#000;}
@@ -248,25 +175,14 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .newsletter-sec{background:var(--void);padding:96px 0;text-align:center;}
 .newsletter-sec__inner{max-width:560px;margin:0 auto;padding:0 24px}
 .newsletter-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
-.newsletter-form input{
-  flex:1;min-width:220px;
-  background:rgba(255,255,255,.05);
-  border:1px solid var(--border-md);
-  border-radius:100px;
-  padding:14px 22px;
-  color:#fff;
-  font-family:var(--body);
-  font-size:.88rem;
-  outline:none;
-  transition:border-color .2s;
-}
+.newsletter-form input{flex:1;min-width:220px;background:rgba(255,255,255,.05);border:1px solid var(--border-md);border-radius:100px;padding:14px 22px;color:#fff;font-family:var(--body);font-size:.88rem;outline:none;transition:border-color .2s;}
 .newsletter-form input:focus{border-color:var(--cyan);}
 .newsletter-form input::placeholder{color:rgba(255,255,255,.25);}
 .newsletter-msg{font-family:var(--display);font-size:.6rem;letter-spacing:.1em;text-transform:uppercase;margin-top:14px;min-height:1.4em;color:var(--cyan);}
 .newsletter-msg.error{color:var(--pink);}
 .games-cta-row{display:flex;justify-content:center;margin-top:32px;}
 
-/* MEMBERSHIP TEASER STRIP (sits right after crew section) */
+/* MEMBERSHIP TEASER STRIP */
 .mem-teaser{background:var(--deep);padding:36px 48px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
 .mem-teaser p{font-size:.9rem;color:var(--off);margin-bottom:14px;}
 .mem-teaser p strong{color:#fff;}
@@ -354,10 +270,8 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
 </style>
 </head>
 <body>
-
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
-
 <div class="sound-toggle" id="soundToggle" title="Toggle sound">
   <svg viewBox="0 0 24 24"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M19.07 4.93a10 10 0 010 14.14M15.54 8.46a5 5 0 010 7.07" id="soundWaves"/></svg>
 </div>
@@ -365,11 +279,12 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
 <nav id="nav">
   <a href="#hero" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
   <ul class="nav-links">
-    <li><a href="#crew">The Crew</a></li>
-    <li><a href="#workbooks">Workbooks</a></li>
-    <li><a href="#newsletter">Updates</a></li>
+    <li><a href="#crew">Crew</a></li>
     <li><a href="membership.html">Membership</a></li>
-    <li><a href="games.html">Game Universe</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="pdfs.html">PDFs</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="lessons.html">Lessons</a></li>
   </ul>
   <div class="nav-right">
     <div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
@@ -382,7 +297,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </nav>
 
-<!-- ═══ HERO ═══ -->
+<!-- ═══ HERO — islands removed, universe image is pure ambient background ═══ -->
 <section class="hero" id="hero">
   <div class="hero-universe"></div>
   <div class="hero-overlay"></div>
@@ -393,26 +308,6 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   <div class="hero-orb orb-c"></div>
   <div class="hero-scan"></div>
   <div class="hero-particles" id="heroParticles"></div>
-
-  <a href="zen.html" class="island-link" style="--island-color:#f472b6;width:120px;height:120px;top:18%;left:9%;">
-    <div class="island-tooltip" style="border-color:rgba(244,114,182,.5);color:#f472b6;">Zen's Coding Realm</div>
-  </a>
-  <a href="byte.html" class="island-link" style="--island-color:#a855f7;width:110px;height:110px;top:38%;left:6%;">
-    <div class="island-tooltip" style="border-color:rgba(168,85,247,.5);color:#a855f7;">Byte's Code City</div>
-  </a>
-  <a href="bug.html" class="island-link" style="--island-color:#84cc16;width:100px;height:100px;top:58%;left:12%;">
-    <div class="island-tooltip" style="border-color:rgba(132,204,22,.5);color:#84cc16;">Bug's Debug Garage</div>
-  </a>
-  <a href="echo.html" class="island-link" style="--island-color:#38bdf8;width:120px;height:120px;top:18%;right:6%;">
-    <div class="island-tooltip" style="border-color:rgba(56,189,248,.5);color:#38bdf8;">Echo's Sound Studio</div>
-  </a>
-  <a href="nova.html" class="island-link" style="--island-color:#fbbf24;width:110px;height:110px;top:38%;right:4%;">
-    <div class="island-tooltip" style="border-color:rgba(251,191,36,.5);color:#fbbf24;">Nova's Discovery Dome</div>
-  </a>
-  <a href="loop.html" class="island-link" style="--island-color:#00f5d4;width:100px;height:100px;top:58%;right:8%;">
-    <div class="island-tooltip" style="border-color:rgba(0,245,212,.5);color:#00f5d4;">Loop's Challenge Course</div>
-  </a>
-
   <div class="hero-content">
     <div class="hero-eyebrow">Coding · Creativity · Confidence</div>
     <div class="hero-title">METHOD<br>IN MOTION</div>
@@ -422,7 +317,6 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
       <a href="#crew" class="btn-outline">Meet the Crew</a>
     </div>
   </div>
-
   <div class="hero-scroll">
     <span>scroll to explore</span>
     <div class="scroll-line"></div>
@@ -450,19 +344,12 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
       <h2 class="section-title reveal">Six characters.<br>One universe.</h2>
       <p class="section-desc reveal">Each character owns a language. Hover to activate. Click to enter their world.</p>
     </div>
-
     <div class="crew__grid">
       <!-- ZEN -->
       <div class="stat-card reveal d1" style="--cc:#f472b6;" onmouseenter="playCharSound('zen')" onclick="window.location.href='zen.html'" tabindex="0" role="link" aria-label="Enter Zen's world" onkeypress="if(event.key==='Enter')window.location.href='zen.html'">
-        <div class="sc-media">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" alt="Zen">
-          <div class="sc-glow"></div>
-        </div>
+        <div class="sc-media"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" alt="Zen"><div class="sc-glow"></div></div>
         <div class="sc-body">
-          <div class="sc-header">
-            <div class="sc-id">Character 01</div>
-            <div class="sc-lang-badge">HTML & CSS</div>
-          </div>
+          <div class="sc-header"><div class="sc-id">Character 01</div><div class="sc-lang-badge">HTML & CSS</div></div>
           <div class="sc-name" style="color:#f472b6;">Zen</div>
           <div class="sc-role">Creative Coder · she/her</div>
           <div class="sc-stats">
@@ -470,29 +357,16 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
             <div class="sc-stat"><div class="sc-stat-val">1</div><div class="sc-stat-label">Game</div></div>
             <div class="sc-stat"><div class="sc-stat-val">★★★</div><div class="sc-stat-label">Beginner</div></div>
           </div>
-          <div class="sc-topics">
-            <span class="sc-topic">Creative Thinking</span>
-            <span class="sc-topic">Digital Design</span>
-            <span class="sc-topic">CSS Styling</span>
-          </div>
-          <div class="sc-actions">
-            <a href="zen-game.html" class="sc-btn-game" onclick="event.stopPropagation()">CSS Challenge →</a>
-          </div>
+          <div class="sc-topics"><span class="sc-topic">Creative Thinking</span><span class="sc-topic">Digital Design</span><span class="sc-topic">CSS Styling</span></div>
+          <div class="sc-actions"><a href="zen-game.html" class="sc-btn-game" onclick="event.stopPropagation()">CSS Challenge →</a></div>
           <div class="sc-card-hint">Click to enter Zen's world →</div>
         </div>
       </div>
-
       <!-- BYTE -->
       <div class="stat-card reveal d2" style="--cc:#a855f7;" onmouseenter="playCharSound('byte')" onclick="window.location.href='byte.html'" tabindex="0" role="link" aria-label="Enter Byte's world" onkeypress="if(event.key==='Enter')window.location.href='byte.html'">
-        <div class="sc-media">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-idle.gif" alt="Byte">
-          <div class="sc-glow"></div>
-        </div>
+        <div class="sc-media"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-idle.gif" alt="Byte"><div class="sc-glow"></div></div>
         <div class="sc-body">
-          <div class="sc-header">
-            <div class="sc-id">Character 02</div>
-            <div class="sc-lang-badge">Debugging</div>
-          </div>
+          <div class="sc-header"><div class="sc-id">Character 02</div><div class="sc-lang-badge">Debugging</div></div>
           <div class="sc-name" style="color:#a855f7;">Byte</div>
           <div class="sc-role">Glitch Cat · she/her</div>
           <div class="sc-stats">
@@ -500,29 +374,16 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
             <div class="sc-stat"><div class="sc-stat-val">1</div><div class="sc-stat-label">Game</div></div>
             <div class="sc-stat"><div class="sc-stat-val">★★★</div><div class="sc-stat-label">Beginner</div></div>
           </div>
-          <div class="sc-topics">
-            <span class="sc-topic">Debugging</span>
-            <span class="sc-topic">Error Thinking</span>
-            <span class="sc-topic">Logic Tracing</span>
-          </div>
-          <div class="sc-actions">
-            <a href="byte-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Glitch Hunt →</a>
-          </div>
+          <div class="sc-topics"><span class="sc-topic">Debugging</span><span class="sc-topic">Error Thinking</span><span class="sc-topic">Logic Tracing</span></div>
+          <div class="sc-actions"><a href="byte-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Glitch Hunt →</a></div>
           <div class="sc-card-hint">Click to enter Byte's world →</div>
         </div>
       </div>
-
       <!-- LOOP -->
       <div class="stat-card reveal d3" style="--cc:#00f5d4;" onmouseenter="playCharSound('loop')" onclick="window.location.href='loop.html'" tabindex="0" role="link" aria-label="Enter Loop's world" onkeypress="if(event.key==='Enter')window.location.href='loop.html'">
-        <div class="sc-media">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.gif" alt="Loop">
-          <div class="sc-glow"></div>
-        </div>
+        <div class="sc-media"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.gif" alt="Loop"><div class="sc-glow"></div></div>
         <div class="sc-body">
-          <div class="sc-header">
-            <div class="sc-id">Character 03</div>
-            <div class="sc-lang-badge">JavaScript</div>
-          </div>
+          <div class="sc-header"><div class="sc-id">Character 03</div><div class="sc-lang-badge">JavaScript</div></div>
           <div class="sc-name" style="color:#00f5d4;">Loop</div>
           <div class="sc-role">Flow Guide · they/them</div>
           <div class="sc-stats">
@@ -530,29 +391,16 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
             <div class="sc-stat"><div class="sc-stat-val">1</div><div class="sc-stat-label">Game</div></div>
             <div class="sc-stat"><div class="sc-stat-val">★★★★</div><div class="sc-stat-label">Intermediate</div></div>
           </div>
-          <div class="sc-topics">
-            <span class="sc-topic">Patterns</span>
-            <span class="sc-topic">Sequences</span>
-            <span class="sc-topic">Algorithms</span>
-          </div>
-          <div class="sc-actions">
-            <a href="loop-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Logic Quest →</a>
-          </div>
+          <div class="sc-topics"><span class="sc-topic">Patterns</span><span class="sc-topic">Sequences</span><span class="sc-topic">Algorithms</span></div>
+          <div class="sc-actions"><a href="loop-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Logic Quest →</a></div>
           <div class="sc-card-hint">Click to enter Loop's world →</div>
         </div>
       </div>
-
       <!-- NOVA -->
       <div class="stat-card reveal d1" style="--cc:#fbbf24;" onmouseenter="playCharSound('nova')" onclick="window.location.href='nova.html'" tabindex="0" role="link" aria-label="Enter Nova's world" onkeypress="if(event.key==='Enter')window.location.href='nova.html'">
-        <div class="sc-media">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-motion.gif" alt="Nova">
-          <div class="sc-glow"></div>
-        </div>
+        <div class="sc-media"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-motion.gif" alt="Nova"><div class="sc-glow"></div></div>
         <div class="sc-body">
-          <div class="sc-header">
-            <div class="sc-id">Character 04</div>
-            <div class="sc-lang-badge">HTML Structure</div>
-          </div>
+          <div class="sc-header"><div class="sc-id">Character 04</div><div class="sc-lang-badge">HTML Structure</div></div>
           <div class="sc-name" style="color:#fbbf24;">Nova</div>
           <div class="sc-role">Builder Bot · she/her</div>
           <div class="sc-stats">
@@ -560,29 +408,16 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
             <div class="sc-stat"><div class="sc-stat-val">1</div><div class="sc-stat-label">Game</div></div>
             <div class="sc-stat"><div class="sc-stat-val">★★★</div><div class="sc-stat-label">Beginner</div></div>
           </div>
-          <div class="sc-topics">
-            <span class="sc-topic">Web Building</span>
-            <span class="sc-topic">Structure</span>
-            <span class="sc-topic">Problem Solving</span>
-          </div>
-          <div class="sc-actions">
-            <a href="nova-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Build Lab →</a>
-          </div>
+          <div class="sc-topics"><span class="sc-topic">Web Building</span><span class="sc-topic">Structure</span><span class="sc-topic">Problem Solving</span></div>
+          <div class="sc-actions"><a href="nova-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Build Lab →</a></div>
           <div class="sc-card-hint">Click to enter Nova's world →</div>
         </div>
       </div>
-
       <!-- BUG -->
       <div class="stat-card reveal d2" style="--cc:#84cc16;" onmouseenter="playCharSound('bug')" onclick="window.location.href='bug.html'" tabindex="0" role="link" aria-label="Enter Bug's world" onkeypress="if(event.key==='Enter')window.location.href='bug.html'">
-        <div class="sc-media">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-motion.gif" alt="Bug">
-          <div class="sc-glow"></div>
-        </div>
+        <div class="sc-media"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-motion.gif" alt="Bug"><div class="sc-glow"></div></div>
         <div class="sc-body">
-          <div class="sc-header">
-            <div class="sc-id">Character 05</div>
-            <div class="sc-lang-badge">Debug Lab</div>
-          </div>
+          <div class="sc-header"><div class="sc-id">Character 05</div><div class="sc-lang-badge">Debug Lab</div></div>
           <div class="sc-name" style="color:#84cc16;">Bug</div>
           <div class="sc-role">Debug Gremlin · he/him</div>
           <div class="sc-stats">
@@ -590,29 +425,16 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
             <div class="sc-stat"><div class="sc-stat-val">1</div><div class="sc-stat-label">Game</div></div>
             <div class="sc-stat"><div class="sc-stat-val">★★★★★</div><div class="sc-stat-label">Advanced</div></div>
           </div>
-          <div class="sc-topics">
-            <span class="sc-topic">Debugging</span>
-            <span class="sc-topic">Systems Thinking</span>
-            <span class="sc-topic">Chaos Code</span>
-          </div>
-          <div class="sc-actions">
-            <a href="bug-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Debug Garage →</a>
-          </div>
+          <div class="sc-topics"><span class="sc-topic">Debugging</span><span class="sc-topic">Systems Thinking</span><span class="sc-topic">Chaos Code</span></div>
+          <div class="sc-actions"><a href="bug-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Debug Garage →</a></div>
           <div class="sc-card-hint">Click to enter Bug's world →</div>
         </div>
       </div>
-
       <!-- ECHO -->
       <div class="stat-card reveal d3" style="--cc:#38bdf8;" onmouseenter="playCharSound('echo')" onclick="window.location.href='echo.html'" tabindex="0" role="link" aria-label="Enter Echo's world" onkeypress="if(event.key==='Enter')window.location.href='echo.html'">
-        <div class="sc-media">
-          <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-motion.gif" alt="Echo">
-          <div class="sc-glow"></div>
-        </div>
+        <div class="sc-media"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-motion.gif" alt="Echo"><div class="sc-glow"></div></div>
         <div class="sc-body">
-          <div class="sc-header">
-            <div class="sc-id">Character 06</div>
-            <div class="sc-lang-badge">JS Events</div>
-          </div>
+          <div class="sc-header"><div class="sc-id">Character 06</div><div class="sc-lang-badge">JS Events</div></div>
           <div class="sc-name" style="color:#38bdf8;">Echo</div>
           <div class="sc-role">Signal DJ · he/him</div>
           <div class="sc-stats">
@@ -620,14 +442,8 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
             <div class="sc-stat"><div class="sc-stat-val">1</div><div class="sc-stat-label">Game</div></div>
             <div class="sc-stat"><div class="sc-stat-val">★★★★</div><div class="sc-stat-label">Intermediate</div></div>
           </div>
-          <div class="sc-topics">
-            <span class="sc-topic">Sound Coding</span>
-            <span class="sc-topic">Rhythm & Events</span>
-            <span class="sc-topic">Audio Logic</span>
-          </div>
-          <div class="sc-actions">
-            <a href="echo-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Signal Lab →</a>
-          </div>
+          <div class="sc-topics"><span class="sc-topic">Sound Coding</span><span class="sc-topic">Rhythm & Events</span><span class="sc-topic">Audio Logic</span></div>
+          <div class="sc-actions"><a href="echo-game.html" class="sc-btn-game" onclick="event.stopPropagation()">Signal Lab →</a></div>
           <div class="sc-card-hint">Click to enter Echo's world →</div>
         </div>
       </div>
@@ -649,32 +465,13 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
       <h2 class="section-title reveal">Take it offline.</h2>
       <p class="section-desc reveal">Printable curriculum packs. Designed for kids, loved by educators. $7.99 each.</p>
     </div>
-
     <div class="workbooks__grid">
-      <div class="wb-card reveal d1" style="--wb-color:#f472b6;--wb-bg:linear-gradient(135deg,#1a0020,#0d0f1e)">
-        <div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_COVER.png" alt="Zen's Creative Circuits"></div>
-        <div class="wb-body"><div class="wb-char">Zen · HTML & CSS</div><div class="wb-title">Zen's Creative Circuits Vol. 1</div><div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="wb-btn">Get It →</a></div></div>
-      </div>
-      <div class="wb-card reveal d2" style="--wb-color:#a855f7;--wb-bg:linear-gradient(135deg,#0d0020,#0d0f1e)">
-        <div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_COVER.png" alt="Byte's Debug Lab"></div>
-        <div class="wb-body"><div class="wb-char">Byte · Debugging</div><div class="wb-title">Byte's Debug Lab</div><div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="wb-btn">Get It →</a></div></div>
-      </div>
-      <div class="wb-card reveal d3" style="--wb-color:#00f5d4;--wb-bg:linear-gradient(135deg,#001520,#0d0f1e)">
-        <div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_COVER.png" alt="Loop's Logic Quest"></div>
-        <div class="wb-body"><div class="wb-char">Loop · JavaScript</div><div class="wb-title">Loop's Logic Quest</div><div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="wb-btn">Get It →</a></div></div>
-      </div>
-      <div class="wb-card reveal d1" style="--wb-color:#fbbf24;--wb-bg:linear-gradient(135deg,#1a1500,#0d0f1e)">
-        <div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_COVER.png" alt="Nova Builds a Website"></div>
-        <div class="wb-body"><div class="wb-char">Nova · HTML Structure</div><div class="wb-title">Nova Builds a Website</div><div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZubJ1bRA0GSeh4bSua3u03" target="_blank" class="wb-btn">Get It →</a></div></div>
-      </div>
-      <div class="wb-card reveal d2" style="--wb-color:#84cc16;--wb-bg:linear-gradient(135deg,#0a1a00,#0d0f1e)">
-        <div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_COVER.png" alt="Bug's Glitch Quest"></div>
-        <div class="wb-body"><div class="wb-char">Bug · Debug Lab</div><div class="wb-title">Bug's Glitch Quest</div><div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/cNibJ13l4exI1ui2hUa3u02" target="_blank" class="wb-btn">Get It →</a></div></div>
-      </div>
-      <div class="wb-card reveal d3" style="--wb-color:#38bdf8;--wb-bg:linear-gradient(135deg,#001a2a,#0d0f1e)">
-        <div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_COVER.png" alt="Echo's Sound Systems"></div>
-        <div class="wb-body"><div class="wb-char">Echo · JS Events</div><div class="wb-title">Echo's Sound Systems</div><div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/dRmfZh9Js3T4c8W9Kma3u01" target="_blank" class="wb-btn">Get It →</a></div></div>
-      </div>
+      <div class="wb-card reveal d1" style="--wb-color:#f472b6;--wb-bg:linear-gradient(135deg,#1a0020,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_COVER.png" alt="Zen's Creative Circuits"></div><div class="wb-body"><div class="wb-char">Zen · HTML & CSS</div><div class="wb-title">Zen's Creative Circuits Vol. 1</div><div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d2" style="--wb-color:#a855f7;--wb-bg:linear-gradient(135deg,#0d0020,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_COVER.png" alt="Byte's Debug Lab"></div><div class="wb-body"><div class="wb-char">Byte · Debugging</div><div class="wb-title">Byte's Debug Lab</div><div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d3" style="--wb-color:#00f5d4;--wb-bg:linear-gradient(135deg,#001520,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_COVER.png" alt="Loop's Logic Quest"></div><div class="wb-body"><div class="wb-char">Loop · JavaScript</div><div class="wb-title">Loop's Logic Quest</div><div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d1" style="--wb-color:#fbbf24;--wb-bg:linear-gradient(135deg,#1a1500,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_COVER.png" alt="Nova Builds a Website"></div><div class="wb-body"><div class="wb-char">Nova · HTML Structure</div><div class="wb-title">Nova Builds a Website</div><div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZubJ1bRA0GSeh4bSua3u03" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d2" style="--wb-color:#84cc16;--wb-bg:linear-gradient(135deg,#0a1a00,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_COVER.png" alt="Bug's Glitch Quest"></div><div class="wb-body"><div class="wb-char">Bug · Debug Lab</div><div class="wb-title">Bug's Glitch Quest</div><div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/cNibJ13l4exI1ui2hUa3u02" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d3" style="--wb-color:#38bdf8;--wb-bg:linear-gradient(135deg,#001a2a,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_COVER.png" alt="Echo's Sound Systems"></div><div class="wb-body"><div class="wb-char">Echo · JS Events</div><div class="wb-title">Echo's Sound Systems</div><div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/dRmfZh9Js3T4c8W9Kma3u01" target="_blank" class="wb-btn">Get It →</a></div></div></div>
     </div>
   </div>
 </section>
@@ -704,7 +501,6 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
       <h2 class="section-title reveal">Start free. Unlock everything.</h2>
       <p class="section-desc reveal">Create a free account and get Lesson 1 for all 6 characters. Upgrade anytime for full access.</p>
     </div>
-
     <div class="membership__grid">
       <div class="mem-card reveal d1">
         <div class="mem-badge">Sparks</div>
@@ -718,7 +514,6 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
         </ul>
         <button class="mem-cta" onclick="openAuthModal('signup')">Get Started →</button>
       </div>
-
       <div class="mem-card featured reveal d2">
         <div class="mem-badge">Most Popular</div>
         <div class="mem-name">Builders</div>
@@ -731,7 +526,6 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
         </ul>
         <button class="mem-cta" onclick="openAuthModal('signup')">Start Free Trial →</button>
       </div>
-
       <div class="mem-card reveal d3">
         <div class="mem-badge">Coders</div>
         <div class="mem-name">Coders</div>
@@ -745,7 +539,6 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
         <button class="mem-cta" onclick="openAuthModal('signup')">Get Started →</button>
       </div>
     </div>
-
     <div style="text-align:center;margin-top:28px">
       <button onclick="openAuthModal('signup')" style="font-family:'Orbitron',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.35);border:none;background:none;border-bottom:1px solid rgba(255,255,255,.12);padding-bottom:2px;cursor:pointer;">Or start free — no card needed →</button>
     </div>
@@ -764,8 +557,10 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
         <h4>Explore</h4>
         <ul>
           <li><a href="#crew">The Crew</a></li>
-          <li><a href="#workbooks">Workbooks</a></li>
-          <li><a href="games.html">Game Universe</a></li>
+          <li><a href="games.html">Games</a></li>
+          <li><a href="pdfs.html">PDFs</a></li>
+          <li><a href="library.html">Library</a></li>
+          <li><a href="lessons.html">Lessons</a></li>
           <li><a href="membership.html">Membership</a></li>
         </ul>
       </div>
@@ -825,36 +620,25 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
 </div>
 
 <script>
-// ── CURSOR ────────────────────────────────────────────────────
 const cursor=document.getElementById('cursor'),ring=document.getElementById('cursorRing');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
 (function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
-document.querySelectorAll('a,button,.stat-card,.wb-card,.mem-card,.island-link').forEach(el=>{
+document.querySelectorAll('a,button,.stat-card,.wb-card,.mem-card').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cursor.style.width='18px';cursor.style.height='18px';ring.style.width='50px';ring.style.height='50px';});
   el.addEventListener('mouseleave',()=>{cursor.style.width='10px';cursor.style.height='10px';ring.style.width='32px';ring.style.height='32px';});
 });
-
-// ── NAV SCROLL ────────────────────────────────────────────────
 window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('scrolled',scrollY>60));
-
-// ── HERO PARTICLES ────────────────────────────────────────────
 (function(){
   const c=document.getElementById('heroParticles');
   const colors=['#ff6baa','#c66bff','#00e8ff','#fbbf24','#84cc16','#38bdf8'];
   for(let i=0;i<50;i++){
-    const p=document.createElement('div');
-    p.className='hparticle';
+    const p=document.createElement('div');p.className='hparticle';
     p.style.cssText=`left:${Math.random()*100}%;width:${Math.random()*2.5+1}px;height:${Math.random()*2.5+1}px;background:${colors[Math.floor(Math.random()*colors.length)]};animation-duration:${Math.random()*14+8}s;animation-delay:${Math.random()*10}s;box-shadow:0 0 6px ${colors[Math.floor(Math.random()*colors.length)]};`;
     c.appendChild(p);
   }
 })();
-
-// ── AUTH MODAL ────────────────────────────────────────────────
-function openAuthModal(tab){
-  document.getElementById('auth-modal').classList.add('active');
-  switchTab(tab);
-}
+function openAuthModal(tab){document.getElementById('auth-modal').classList.add('active');switchTab(tab);}
 function switchTab(tab){
   document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));
   document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));
@@ -865,12 +649,8 @@ document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=
 document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
 document.getElementById('auth-close-btn').addEventListener('click',()=>document.getElementById('auth-modal').classList.remove('active'));
 document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').classList.remove('active');});
-
-// ── SCROLL REVEAL ─────────────────────────────────────────────
 const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:.1});
 document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-// ── CHARACTER SOUNDS ────────────────────────────────────────────
 let audioCtx=null;
 function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
 const charSounds={
@@ -879,12 +659,10 @@ const charSounds={
   loop:()=>{const ac=getAudio();[523.2,523.2,659.3,523.2].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='triangle';o.frequency.value=f;g.gain.setValueAtTime(0,ac.currentTime+i*.15);g.gain.linearRampToValueAtTime(.07,ac.currentTime+i*.15+.04);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.15+.22);o.start(ac.currentTime+i*.15);o.stop(ac.currentTime+i*.15+.22);});},
   nova:()=>{const ac=getAudio();[440,554,659,880].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,ac.currentTime+i*.1);g.gain.linearRampToValueAtTime(.065,ac.currentTime+i*.1+.05);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.1+.6);o.start(ac.currentTime+i*.1);o.stop(ac.currentTime+i*.1+.6);});},
   bug:()=>{const ac=getAudio();[110,220,55,165].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sawtooth';o.frequency.value=f;g.gain.setValueAtTime(0,ac.currentTime+i*.05);g.gain.linearRampToValueAtTime(.05,ac.currentTime+i*.05+.02);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.05+.25);o.start(ac.currentTime+i*.05);o.stop(ac.currentTime+i*.05+.25);});},
-  echo:()=>{const ac=getAudio();[261.6,329.6,392,523.2,659.3].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,ac.currentTime+i*.15);g.gain.linearRampToValueAtTime(.08,ac.currentTime+i*.15+.05);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.15+.8);o.start(ac.currentTime+i*.15);o.stop(ac.currentTime+i*.15+.8);});}
+  echo:()=>{const ac=getAudio();[261.6,329.6,392,523.2,659.3].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.setValueAtTime(0,ac.currentTime+i*.15);g.gain.linearRampToValueAtTime(.08,ac.currentTime+i*.15+.05);g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+i*.15+.8);o.start(ac.currentTime+i*.15);o.stop(ac.currentTime+i*.15+.8);}）;}
 };
 const lastSound={};
 function playCharSound(name){const now=Date.now();if(lastSound[name]&&now-lastSound[name]<1200)return;lastSound[name]=now;if(charSounds[name])charSounds[name]();}
-
-// ── AMBIENT SOUND ─────────────────────────────────────────────
 let ambientOn=false,ambientNodes=[];
 document.getElementById('soundToggle').addEventListener('click',()=>{
   const ac=getAudio();ambientOn=!ambientOn;
@@ -893,72 +671,34 @@ document.getElementById('soundToggle').addEventListener('click',()=>{
   else{ambientNodes.forEach(({o,g})=>{g.gain.exponentialRampToValueAtTime(.001,ac.currentTime+1);o.stop(ac.currentTime+1);});ambientNodes=[];}
 });
 </script>
-
-<!-- ── NEWSLETTER SIGNUP: WRITES TO FIRESTORE ── -->
 <script type="module">
-  import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-  const firebaseConfig = {
-    apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
-    authDomain: "method-in-motion.firebaseapp.com",
-    projectId: "method-in-motion",
-    storageBucket: "method-in-motion.firebasestorage.app",
-    messagingSenderId: "1067937974009",
-    appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
-  };
-  // Reuse existing app instance if auth-init.js already initialized one, otherwise create it.
-  const app = getApps().length ? getApp() : initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-
-  window.handleNewsletterSignup = async function(e){
-    e.preventDefault();
-    const input = document.getElementById('newsletter-email');
-    const btn = document.getElementById('newsletter-submit-btn');
-    const msg = document.getElementById('newsletter-msg');
-    const email = input.value.trim();
-
-    if(!email){ return false; }
-
-    btn.disabled = true;
-    btn.textContent = "Joining...";
-    msg.classList.remove('error');
-    msg.textContent = "";
-
-    try{
-      await addDoc(collection(db, "newsletter_signups"), {
-        email: email,
-        createdAt: serverTimestamp(),
-        source: "homepage"
-      });
-      msg.textContent = "You're in! Watch your inbox for updates.";
-      input.value = "";
-    }catch(err){
-      msg.classList.add('error');
-      msg.textContent = "Something went wrong — please try again.";
-      console.error("Newsletter signup error:", err);
-    }finally{
-      btn.disabled = false;
-      btn.textContent = "Join the List →";
-    }
-    return false;
-  };
+import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+const firebaseConfig={apiKey:"AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",authDomain:"method-in-motion.firebaseapp.com",projectId:"method-in-motion",storageBucket:"method-in-motion.firebasestorage.app",messagingSenderId:"1067937974009",appId:"1:1067937974009:web:5b21e6abe84e0b28234428"};
+const app=getApps().length?getApp():initializeApp(firebaseConfig);
+const db=getFirestore(app);
+window.handleNewsletterSignup=async function(e){
+  e.preventDefault();
+  const input=document.getElementById('newsletter-email');
+  const btn=document.getElementById('newsletter-submit-btn');
+  const msg=document.getElementById('newsletter-msg');
+  const email=input.value.trim();
+  if(!email)return false;
+  btn.disabled=true;btn.textContent="Joining...";msg.classList.remove('error');msg.textContent="";
+  try{
+    await addDoc(collection(db,"newsletter_signups"),{email,createdAt:serverTimestamp(),source:"homepage"});
+    msg.textContent="You're in! Watch your inbox for updates.";input.value="";
+  }catch(err){msg.classList.add('error');msg.textContent="Something went wrong — please try again.";console.error(err);}
+  finally{btn.disabled=false;btn.textContent="Join the List →";}
+  return false;
+};
 </script>
-
-<!-- ── ENTER THE UNIVERSE: AUTH-AWARE ROUTING ── -->
 <script type="module">
-  import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-  let currentUser = null;
-  onAuthStateChanged(getAuth(), (user) => { currentUser = user; });
-  window.handleEnterUniverse = function() {
-    if (currentUser) {
-      window.location.href = "dashboard.html";
-    } else {
-      openAuthModal('signup');
-    }
-  };
+import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+let currentUser=null;
+onAuthStateChanged(getAuth(),(user)=>{currentUser=user;});
+window.handleEnterUniverse=function(){if(currentUser){window.location.href="dashboard.html";}else{openAuthModal('signup');}};
 </script>
-
 <script type="module" src="auth-init.js"></script>
 </body>
 </html>
