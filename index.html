@@ -20,6 +20,7 @@ html{scroll-behavior:smooth}
 body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7;cursor:none;}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
+
 /* CURSOR */
 .cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--pink);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen;opacity:1;}
 .cursor-ring{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(198,107,255,.5);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s;opacity:1;}
@@ -45,32 +46,13 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 #nav-logout-btn:hover{border-color:var(--pink);color:var(--pink)}
 @media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
 
-/* ═══════════════════════════════════════
-   HERO — UNIVERSE AS FULL BACKGROUND
-═══════════════════════════════════════ */
+/* HERO */
 .hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.hero-universe{
-  position:absolute;inset:0;z-index:0;
-  background-image:url('universe-view.png');
-  background-size:cover;
-  background-position:center;
-  animation:universe-breathe 14s ease-in-out infinite alternate;
-}
+.hero-universe{position:absolute;inset:0;z-index:0;background-image:url('universe-night-veiw.png');background-size:cover;background-position:center;animation:universe-breathe 14s ease-in-out infinite alternate;}
 @keyframes universe-breathe{0%{transform:scale(1.02);}100%{transform:scale(1.08);}}
-.hero-overlay{
-  position:absolute;inset:0;z-index:1;
-  background:radial-gradient(ellipse at 50% 40%,rgba(5,5,8,0.25) 0%,rgba(5,5,8,0.55) 50%,rgba(5,5,8,0.92) 100%);
-}
-.hero-overlay-bottom{
-  position:absolute;bottom:0;left:0;right:0;height:40%;z-index:2;
-  background:linear-gradient(to bottom,transparent,rgba(5,5,8,1));
-}
-.hero-light{
-  position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:radial-gradient(ellipse at 30% 45%,rgba(255,107,170,.12) 0%,transparent 50%),
-              radial-gradient(ellipse at 70% 55%,rgba(0,232,255,.08) 0%,transparent 45%);
-  animation:light-drift 8s ease-in-out infinite alternate;
-}
+.hero-overlay{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 40%,rgba(5,5,8,0.25) 0%,rgba(5,5,8,0.55) 50%,rgba(5,5,8,0.92) 100%);}
+.hero-overlay-bottom{position:absolute;bottom:0;left:0;right:0;height:40%;z-index:2;background:linear-gradient(to bottom,transparent,rgba(5,5,8,1));}
+.hero-light{position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(ellipse at 30% 45%,rgba(255,107,170,.12) 0%,transparent 50%),radial-gradient(ellipse at 70% 55%,rgba(0,232,255,.08) 0%,transparent 45%);animation:light-drift 8s ease-in-out infinite alternate;}
 @keyframes light-drift{0%{opacity:.7}100%{opacity:1}}
 .hero-orb{position:absolute;border-radius:50%;filter:blur(80px);z-index:2;pointer-events:none;animation:orb-drift ease-in-out infinite;}
 @keyframes orb-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(var(--dx,20px),var(--dy,-20px))}}
@@ -81,11 +63,9 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .hero-particles{position:absolute;inset:0;z-index:4;pointer-events:none;}
 .hparticle{position:absolute;border-radius:50%;animation:hp-float linear infinite;}
 @keyframes hp-float{0%{transform:translateY(100vh);opacity:0}10%{opacity:1}90%{opacity:.5}100%{transform:translateY(-80px);opacity:0}}
-
-/* Hero content */
 .hero-content{position:relative;z-index:10;text-align:center;padding:0 24px;max-width:700px;}
 .hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan);opacity:.8;margin-bottom:16px;animation:fadeUp .8s .2s both;text-shadow:0 0 20px rgba(0,232,255,.6);}
-.hero-title{font-family:var(--display);font-size:clamp(2.6rem,7vw,6rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;animation:fadeUp 1s .3s both;text-shadow:none;filter:drop-shadow(0 0 40px rgba(198,107,255,.3));}
+.hero-title{font-family:var(--display);font-size:clamp(2.6rem,7vw,6rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;animation:fadeUp 1s .3s both;filter:drop-shadow(0 0 40px rgba(198,107,255,.3));}
 .hero-sub{font-family:var(--display);font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:40px;animation:fadeUp .9s .5s both;}
 .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s .65s both;}
 .btn-primary{font-family:var(--display);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 32px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 30px rgba(198,107,255,.3);}
@@ -97,58 +77,86 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 @keyframes scrollPulse{0%{transform:scaleY(0);transform-origin:top;opacity:0}40%{opacity:1}60%{transform:scaleY(1);transform-origin:top}60.01%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 
-/* ═══════════════════════════════════════
-   MISSION STRIP
-═══════════════════════════════════════ */
-.mission{background:var(--deep);padding:72px 48px;text-align:center;position:relative;overflow:hidden;}
-.mission::before{content:'';position:absolute;top:50%;left:50%;width:500px;height:500px;border-radius:50%;background:radial-gradient(circle,rgba(198,107,255,.05),transparent 70%);transform:translate(-50%,-50%);pointer-events:none;}
-.mission-label{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:block;}
-.mission-title{font-family:var(--heading);font-size:clamp(1.6rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:14px;}
-.mission-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.mission-body{font-size:.96rem;color:var(--off);max-width:500px;margin:0 auto 28px;line-height:1.9;}
+/* PHILOSOPHY / MISSION */
+.mission{background:var(--deep);padding:80px 48px;text-align:center;position:relative;overflow:hidden;}
+.mission::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(198,107,255,.05),transparent 70%);transform:translate(-50%,-50%);pointer-events:none;}
+.mission-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;display:block;}
+/* CREATE DON'T CONSUME — the big statement */
+.cdc-statement{font-family:var(--display);font-size:clamp(1.8rem,5vw,4rem);font-weight:900;letter-spacing:.04em;line-height:1;margin-bottom:18px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(255,107,170,.25));}
+.mission-title{font-family:var(--heading);font-size:clamp(1rem,2.5vw,1.4rem);font-weight:700;line-height:1.4;margin-bottom:16px;color:rgba(255,255,255,.8);}
+.mission-body{font-size:.96rem;color:var(--off);max-width:560px;margin:0 auto 28px;line-height:1.9;}
 .mission-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 .mission-pill{padding:6px 16px;border:1px solid var(--border-md);border-radius:100px;font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--off);}
 
-/* ═══════════════════════════════════════
-   CREW — STAT CARDS
-═══════════════════════════════════════ */
+/* CREW */
 .crew{background:var(--void);padding:96px 0;scroll-margin-top:80px;}
 .crew__inner{max-width:1240px;margin:0 auto;padding:0 48px}
 .crew__header{text-align:center;margin-bottom:52px}
 .section-label{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:12px;display:block;}
 .section-title{font-family:var(--heading);font-size:clamp(1.7rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:10px;}
 .section-desc{font-size:.92rem;color:var(--muted);max-width:440px;margin:0 auto;}
-.crew__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+
+/* STAT CARDS — tighter so they don't clip */
+.crew__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 @media(max-width:900px){.crew__grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.crew__grid{grid-template-columns:1fr}}
-.stat-card{background:var(--card);border-radius:16px;border:1px solid var(--border);overflow:hidden;position:relative;transition:border-color .35s,transform .3s,box-shadow .35s;cursor:pointer;}
+.stat-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;position:relative;transition:border-color .35s,transform .3s,box-shadow .35s;cursor:pointer;}
 .stat-card:focus-visible{outline:2px solid var(--cc,var(--purple));outline-offset:2px;}
-.stat-card:hover{transform:translateY(-6px);border-color:var(--cc,rgba(198,107,255,.5));box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 40px rgba(var(--cc-raw,198,107,255),.15);}
-.sc-media{position:relative;aspect-ratio:3/4;overflow:hidden;background:rgba(0,0,0,.3);}
-.sc-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;padding:8px;filter:drop-shadow(0 0 24px var(--cc,rgba(198,107,255,.4)));transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .4s;z-index:1;}
-.stat-card:hover .sc-media img{transform:scale(1.07);filter:drop-shadow(0 0 40px var(--cc,rgba(198,107,255,.7)));}
-.sc-glow{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,var(--card) 0%,transparent 45%);pointer-events:none;}
-.sc-body{padding:0 18px 20px;position:relative;z-index:3;}
-.sc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:10px;}
-.sc-id{font-family:var(--display);font-size:.48rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cc,var(--pink));opacity:.6;}
-.sc-lang-badge{font-family:var(--display);font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:4px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));background:rgba(0,0,0,.3);opacity:.8;}
-.sc-name{font-family:var(--heading);font-size:1.25rem;font-weight:800;margin-bottom:1px;}
-.sc-role{font-size:.78rem;color:var(--muted);margin-bottom:12px;}
-.sc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-bottom:14px;padding:12px;background:rgba(0,0,0,.3);border-radius:10px;border:1px solid var(--border);}
+.stat-card:hover{transform:translateY(-5px);border-color:var(--cc,rgba(198,107,255,.5));box-shadow:0 16px 50px rgba(0,0,0,.5),0 0 30px rgba(var(--cc-raw,198,107,255),.12);}
+/* Shorter media area so cards don't clip at top of viewport */
+.sc-media{position:relative;aspect-ratio:3/3.2;overflow:hidden;background:rgba(0,0,0,.3);}
+.sc-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;padding:6px;filter:drop-shadow(0 0 20px var(--cc,rgba(198,107,255,.4)));transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .4s;z-index:1;}
+.stat-card:hover .sc-media img{transform:scale(1.06);filter:drop-shadow(0 0 36px var(--cc,rgba(198,107,255,.7)));}
+.sc-glow{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,var(--card) 0%,transparent 40%);pointer-events:none;}
+.sc-body{padding:0 16px 18px;position:relative;z-index:3;}
+.sc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;}
+.sc-id{font-family:var(--display);font-size:.44rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cc,var(--pink));opacity:.6;}
+.sc-lang-badge{font-family:var(--display);font-size:.42rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));background:rgba(0,0,0,.3);opacity:.8;}
+.sc-name{font-family:var(--heading);font-size:1.15rem;font-weight:800;margin-bottom:1px;}
+.sc-role{font-size:.74rem;color:var(--muted);margin-bottom:10px;}
+.sc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:5px;margin-bottom:12px;padding:10px;background:rgba(0,0,0,.3);border-radius:8px;border:1px solid var(--border);}
 .sc-stat{text-align:center;}
-.sc-stat-val{font-family:var(--display);font-size:.85rem;font-weight:900;color:var(--cc,var(--pink));line-height:1;}
-.sc-stat-label{font-family:var(--display);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
-.sc-topics{display:flex;flex-wrap:wrap;gap:5px;margin-bottom:14px;}
-.sc-topic{padding:3px 9px;border-radius:100px;font-family:var(--display);font-size:.46rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));opacity:.75;}
-.sc-actions{display:flex;gap:8px;}
-.sc-btn-game{flex:1;font-family:var(--display);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:10px 10px;border-radius:8px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));background:rgba(0,0,0,.3);text-align:center;transition:all .2s;position:relative;z-index:5;}
+.sc-stat-val{font-family:var(--display);font-size:.8rem;font-weight:900;color:var(--cc,var(--pink));line-height:1;}
+.sc-stat-label{font-family:var(--display);font-size:.36rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:2px;}
+.sc-topics{display:flex;flex-wrap:wrap;gap:4px;margin-bottom:12px;}
+.sc-topic{padding:3px 8px;border-radius:100px;font-family:var(--display);font-size:.42rem;letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));opacity:.75;}
+.sc-actions{display:flex;gap:7px;}
+.sc-btn-game{flex:1;font-family:var(--display);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 8px;border-radius:7px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));background:rgba(0,0,0,.3);text-align:center;transition:all .2s;position:relative;z-index:5;}
 .sc-btn-game:hover{background:var(--cc,var(--pink));color:#000;}
-.sc-card-hint{font-family:var(--display);font-size:.46rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);text-align:center;margin-top:10px;transition:color .3s;}
+.sc-card-hint{font-family:var(--display);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.3);text-align:center;margin-top:8px;transition:color .3s;}
 .stat-card:hover .sc-card-hint{color:var(--cc,var(--pink));}
 
-/* ═══════════════════════════════════════
-   WORKBOOKS
-═══════════════════════════════════════ */
+/* GAMES UNIVERSE CALLOUT */
+.games-universe{background:var(--void);padding:0 0 80px;}
+.games-universe__inner{max-width:1100px;margin:0 auto;padding:0 48px;}
+.games-banner{position:relative;border-radius:20px;overflow:hidden;border:1px solid rgba(198,107,255,.25);background:linear-gradient(135deg,rgba(198,107,255,.08),rgba(0,232,255,.06));padding:52px 48px;display:flex;align-items:center;justify-content:space-between;gap:32px;flex-wrap:wrap;}
+.games-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 20% 50%,rgba(255,107,170,.1) 0%,transparent 55%),radial-gradient(ellipse at 80% 50%,rgba(0,232,255,.08) 0%,transparent 55%);pointer-events:none;}
+.games-banner-left{position:relative;z-index:1;flex:1;min-width:260px;}
+.games-eyebrow{font-family:var(--display);font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:block;}
+.games-banner-title{font-family:var(--heading);font-size:clamp(1.6rem,3.5vw,2.6rem);font-weight:800;line-height:1.1;margin-bottom:10px;}
+.games-banner-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.games-banner-desc{font-size:.9rem;color:var(--off);line-height:1.8;max-width:420px;margin-bottom:22px;}
+.games-free-tag{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border-radius:100px;border:1px solid rgba(0,232,255,.35);color:var(--cyan);margin-bottom:18px;}
+.games-banner-cta{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px rgba(198,107,255,.35);}
+.games-banner-cta:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(198,107,255,.5);}
+.games-banner-right{position:relative;z-index:1;display:flex;flex-direction:column;gap:10px;min-width:200px;}
+.games-char-row{display:flex;gap:8px;align-items:center;}
+.games-char-pill{font-family:var(--display);font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;padding:5px 12px;border-radius:100px;border:1px solid;white-space:nowrap;}
+.games-lock-note{font-family:var(--display);font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.25);margin-top:4px;}
+
+/* FREE TO START — MEMBERSHIP TEASER */
+.mem-teaser{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(198,107,255,0.1),rgba(0,232,255,0.07));padding:56px 48px;text-align:center;border-top:1px solid rgba(198,107,255,0.2);border-bottom:1px solid rgba(0,232,255,0.15);}
+.mem-teaser::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%,rgba(255,107,170,0.08) 0%,transparent 60%),radial-gradient(ellipse at 70% 50%,rgba(0,232,255,0.07) 0%,transparent 60%);pointer-events:none;}
+.mem-teaser-eyebrow{font-family:var(--display);font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:16px;display:block;position:relative;}
+.mem-teaser h3{font-family:var(--heading);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:800;margin-bottom:10px;position:relative;}
+.mem-teaser-sub{font-size:.92rem;color:rgba(255,255,255,.7);margin-bottom:6px;line-height:1.7;position:relative;}
+.mem-teaser-note{font-family:var(--display);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(255,255,255,.35);margin-bottom:24px;position:relative;}
+.mem-teaser-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:28px;position:relative;}
+.mem-teaser-pill{padding:5px 14px;border-radius:100px;font-family:var(--display);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);}
+.mem-teaser a{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;color:#000;background:var(--grad);padding:13px 30px;border-radius:100px;font-weight:700;transition:transform .2s,box-shadow .2s;box-shadow:0 6px 24px rgba(198,107,255,.35);position:relative;}
+.mem-teaser a:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(198,107,255,.5);}
+
+/* WORKBOOKS */
 .workbooks{background:#08080f;padding:96px 0;}
 .workbooks__inner{max-width:1100px;margin:0 auto;padding:0 48px}
 .workbooks__header{text-align:center;margin-bottom:52px}
@@ -169,9 +177,7 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .wb-btn{font-family:var(--display);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 14px;border-radius:100px;border:1px solid var(--wb-color,var(--pink));color:var(--wb-color,var(--pink));transition:all .2s;}
 .wb-btn:hover{background:var(--wb-color,var(--pink));color:#000}
 
-/* ═══════════════════════════════════════
-   NEWSLETTER SIGNUP
-═══════════════════════════════════════ */
+/* NEWSLETTER */
 .newsletter-sec{background:var(--void);padding:96px 0;text-align:center;}
 .newsletter-sec__inner{max-width:560px;margin:0 auto;padding:0 24px}
 .newsletter-form{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:8px;}
@@ -182,45 +188,7 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .newsletter-msg.error{color:var(--pink);}
 .games-cta-row{display:flex;justify-content:center;margin-top:32px;}
 
-/* MEMBERSHIP TEASER STRIP */
-.mem-teaser{
-  position:relative;overflow:hidden;
-  background:linear-gradient(135deg,rgba(198,107,255,0.08),rgba(0,232,255,0.06));
-  padding:52px 48px;text-align:center;
-  border-top:1px solid rgba(198,107,255,0.2);
-  border-bottom:1px solid rgba(0,232,255,0.15);
-}
-.mem-teaser::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(ellipse at 30% 50%,rgba(255,107,170,0.07) 0%,transparent 60%),
-             radial-gradient(ellipse at 70% 50%,rgba(0,232,255,0.06) 0%,transparent 60%);
-  pointer-events:none;
-}
-.mem-teaser-eyebrow{
-  font-family:var(--display);font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--pink);margin-bottom:14px;display:block;
-}
-.mem-teaser p{font-size:1.05rem;color:rgba(255,255,255,0.8);margin-bottom:22px;line-height:1.7;}
-.mem-teaser p strong{color:#fff;}
-.mem-teaser-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;}
-.mem-teaser-pill{
-  padding:5px 14px;border-radius:100px;
-  font-family:var(--display);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;
-  border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);
-}
-.mem-teaser a{
-  display:inline-flex;align-items:center;gap:8px;
-  font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
-  color:#000;background:var(--grad);
-  padding:12px 28px;border-radius:100px;font-weight:700;
-  transition:transform .2s,box-shadow .2s;
-  box-shadow:0 6px 24px rgba(198,107,255,.35);
-}
-.mem-teaser a:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(198,107,255,.5);}
-
-/* ═══════════════════════════════════════
-   MEMBERSHIP
-═══════════════════════════════════════ */
+/* MEMBERSHIP */
 .membership{background:var(--deep);padding:96px 0}
 .membership__inner{max-width:1100px;margin:0 auto;padding:0 48px}
 .membership__header{text-align:center;margin-bottom:52px}
@@ -245,9 +213,16 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .mem-card.featured .mem-cta{background:var(--grad);color:#000}
 .mem-card.featured .mem-cta:hover{opacity:.9;transform:translateY(-1px)}
 
-/* ═══════════════════════════════════════
-   FOOTER
-═══════════════════════════════════════ */
+/* PRINCIPLES — COMING SOON */
+.principles{background:var(--void);padding:80px 0;}
+.principles__inner{max-width:900px;margin:0 auto;padding:0 48px;text-align:center;}
+.principles-coming{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.52rem;letter-spacing:.24em;text-transform:uppercase;padding:8px 20px;border-radius:100px;border:1px solid rgba(0,232,255,.25);color:var(--cyan);margin-bottom:24px;}
+.principles-coming::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:blink 1.4s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.principles-title{font-family:var(--heading);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:800;margin-bottom:12px;color:rgba(255,255,255,.5);}
+.principles-sub{font-size:.9rem;color:var(--muted);max-width:420px;margin:0 auto;line-height:1.8;}
+
+/* FOOTER */
 footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48px 24px;}
 .footer-inner{max-width:1100px;margin:0 auto;display:flex;justify-content:space-between;align-items:flex-start;gap:40px;margin-bottom:36px;flex-wrap:wrap;}
 .footer-brand{flex:1;min-width:200px}
@@ -327,7 +302,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </nav>
 
-<!-- ═══ HERO — islands removed, universe image is pure ambient background ═══ -->
+<!-- HERO -->
 <section class="hero" id="hero">
   <div class="hero-universe"></div>
   <div class="hero-overlay"></div>
@@ -353,10 +328,11 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </section>
 
-<!-- ═══ MISSION ═══ -->
-<section class="mission">
-  <div class="mission-label reveal">Our Philosophy</div>
-  <h2 class="mission-title reveal">Technology is a <span>creative tool.</span><br>Not a distraction.</h2>
+<!-- PHILOSOPHY / OUR PHILOSOPHY -->
+<section class="mission" id="philosophy">
+  <span class="mission-eyebrow reveal">Our Philosophy</span>
+  <div class="cdc-statement reveal">Create, Don't Consume.</div>
+  <h2 class="mission-title reveal">Technology is a creative tool — not a distraction.</h2>
   <p class="mission-body reveal">Method in Motion is a universe built for kids who are ready to build, think, debug, and create. Six characters. Six worlds. One mission — to make every child feel like they belong in the future of tech.</p>
   <div class="mission-pills reveal">
     <div class="mission-pill">No Ages. Just Levels.</div>
@@ -366,7 +342,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </section>
 
-<!-- ═══ CREW — STAT CARDS ═══ -->
+<!-- CREW STAT CARDS -->
 <section class="crew" id="crew">
   <div class="crew__inner">
     <div class="crew__header">
@@ -481,62 +457,66 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </section>
 
-<!-- ═══ MEMBERSHIP TEASER ═══ -->
+<!-- GAME UNIVERSE CALLOUT -->
+<section class="games-universe">
+  <div class="games-universe__inner">
+    <div class="games-banner reveal">
+      <div class="games-banner-left">
+        <span class="games-eyebrow">The Game Universe</span>
+        <h2 class="games-banner-title">Six worlds.<br><span>Six games.</span></h2>
+        <p class="games-banner-desc">Every character has their own immersive game world where the lesson becomes the level. Byte's Glitch Hunt is free to play — no account needed. The rest unlock with a Coders membership.</p>
+        <div class="games-free-tag">✦ Byte's Glitch Hunt — Free to Play</div>
+        <br>
+        <a href="games.html" class="games-banner-cta">Enter the Game Universe →</a>
+      </div>
+      <div class="games-banner-right">
+        <div style="font-family:var(--display);font-size:.46rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);margin-bottom:8px;">All 6 Games</div>
+        <div class="games-char-row">
+          <div class="games-char-pill" style="border-color:#f472b6;color:#f472b6;">Zen · CSS Challenge</div>
+        </div>
+        <div class="games-char-row">
+          <div class="games-char-pill" style="border-color:#a855f7;color:#a855f7;">Byte · Glitch Hunt ✦ Free</div>
+        </div>
+        <div class="games-char-row">
+          <div class="games-char-pill" style="border-color:#00f5d4;color:#00f5d4;">Loop · Logic Quest</div>
+        </div>
+        <div class="games-char-row">
+          <div class="games-char-pill" style="border-color:#fbbf24;color:#fbbf24;">Nova · Build Lab</div>
+        </div>
+        <div class="games-char-row">
+          <div class="games-char-pill" style="border-color:#84cc16;color:#84cc16;">Bug · Debug Garage</div>
+        </div>
+        <div class="games-char-row">
+          <div class="games-char-pill" style="border-color:#38bdf8;color:#38bdf8;">Echo · Signal Lab</div>
+        </div>
+        <div class="games-lock-note">Coders membership unlocks all games</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FREE TO START — MEMBERSHIP TEASER (fixed copy) -->
 <div class="mem-teaser reveal">
   <span class="mem-teaser-eyebrow">Free to start. Built to grow.</span>
-  <p>Get <strong>Lesson 1 for all 6 characters</strong> — free, no card needed.<br>Upgrade anytime to unlock the full universe.</p>
+  <h3>Start with Zen or Byte — free.</h3>
+  <p class="mem-teaser-sub">Create a free account and get <strong>Lesson 1 for Zen and Byte</strong> at no cost.</p>
+  <p class="mem-teaser-note">Sparks membership ($5/mo) unlocks Lesson 1 for all six characters.</p>
   <div class="mem-teaser-pills">
-    <div class="mem-teaser-pill">✦ Zen's Lesson 1 Free</div>
-    <div class="mem-teaser-pill">✦ Byte's Game Free</div>
+    <div class="mem-teaser-pill">✦ Zen's Lesson 1 — Free</div>
+    <div class="mem-teaser-pill">✦ Byte's Lesson 1 — Free</div>
+    <div class="mem-teaser-pill">✦ Byte's Glitch Hunt — Free</div>
     <div class="mem-teaser-pill">✦ No Credit Card</div>
-    <div class="mem-teaser-pill">✦ Cancel Anytime</div>
   </div>
   <a href="#membership">See Membership Plans →</a>
 </div>
 
-<!-- ═══ WORKBOOKS ═══ -->
-<section class="workbooks" id="workbooks">
-  <div class="workbooks__inner">
-    <div class="workbooks__header">
-      <span class="section-label reveal">Printable Workbooks</span>
-      <h2 class="section-title reveal">Take it offline.</h2>
-      <p class="section-desc reveal">Printable curriculum packs. Designed for kids, loved by educators. $7.99 each.</p>
-    </div>
-    <div class="workbooks__grid">
-      <div class="wb-card reveal d1" style="--wb-color:#f472b6;--wb-bg:linear-gradient(135deg,#1a0020,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_COVER.png" alt="Zen's Creative Circuits"></div><div class="wb-body"><div class="wb-char">Zen · HTML & CSS</div><div class="wb-title">Zen's Creative Circuits Vol. 1</div><div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d2" style="--wb-color:#a855f7;--wb-bg:linear-gradient(135deg,#0d0020,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_COVER.png" alt="Byte's Debug Lab"></div><div class="wb-body"><div class="wb-char">Byte · Debugging</div><div class="wb-title">Byte's Debug Lab</div><div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d3" style="--wb-color:#00f5d4;--wb-bg:linear-gradient(135deg,#001520,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_COVER.png" alt="Loop's Logic Quest"></div><div class="wb-body"><div class="wb-char">Loop · JavaScript</div><div class="wb-title">Loop's Logic Quest</div><div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d1" style="--wb-color:#fbbf24;--wb-bg:linear-gradient(135deg,#1a1500,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_COVER.png" alt="Nova Builds a Website"></div><div class="wb-body"><div class="wb-char">Nova · HTML Structure</div><div class="wb-title">Nova Builds a Website</div><div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZubJ1bRA0GSeh4bSua3u03" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d2" style="--wb-color:#84cc16;--wb-bg:linear-gradient(135deg,#0a1a00,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_COVER.png" alt="Bug's Glitch Quest"></div><div class="wb-body"><div class="wb-char">Bug · Debug Lab</div><div class="wb-title">Bug's Glitch Quest</div><div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/cNibJ13l4exI1ui2hUa3u02" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d3" style="--wb-color:#38bdf8;--wb-bg:linear-gradient(135deg,#001a2a,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_COVER.png" alt="Echo's Sound Systems"></div><div class="wb-body"><div class="wb-char">Echo · JS Events</div><div class="wb-title">Echo's Sound Systems</div><div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/dRmfZh9Js3T4c8W9Kma3u01" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ NEWSLETTER SIGNUP ═══ -->
-<section class="newsletter-sec" id="newsletter">
-  <div class="newsletter-sec__inner">
-    <span class="section-label reveal">Stay In Orbit</span>
-    <h2 class="section-title reveal">The universe is always expanding.</h2>
-    <p class="section-desc reveal" style="margin:0 auto 32px;">New games, new worlds, printable drops, merch — get it first. No spam, just signal.</p>
-    <form class="newsletter-form reveal" id="newsletter-form" onsubmit="return handleNewsletterSignup(event)">
-      <input type="email" id="newsletter-email" placeholder="your@email.com" required autocomplete="email">
-      <button type="submit" class="btn-primary" id="newsletter-submit-btn">Join the List →</button>
-    </form>
-    <p class="newsletter-msg" id="newsletter-msg"></p>
-    <div class="games-cta-row">
-      <a href="games.html" class="btn-outline">Enter the Game Universe →</a>
-    </div>
-  </div>
-</section>
-
-<!-- ═══ MEMBERSHIP ═══ -->
+<!-- MEMBERSHIP TIERS -->
 <section class="membership" id="membership">
   <div class="membership__inner">
     <div class="membership__header">
       <span class="section-label reveal">Membership</span>
       <h2 class="section-title reveal">Start free. Unlock everything.</h2>
-      <p class="section-desc reveal">Create a free account and get Lesson 1 for all 6 characters. Upgrade anytime for full access.</p>
+      <p class="section-desc reveal">Free account gets you Lesson 1 for Zen and Byte. Upgrade anytime to go deeper.</p>
     </div>
     <div class="membership__grid">
       <div class="mem-card reveal d1">
@@ -544,7 +524,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
         <div class="mem-name">Sparks</div>
         <div class="mem-price"><span class="mem-price-num">$5</span><span class="mem-price-mo">/month</span></div>
         <ul class="mem-features">
-          <li>Lessons 1 & 2 on every character</li>
+          <li>Lesson 1 for all 6 characters</li>
           <li>Interactive activities</li>
           <li>All 6 character worlds</li>
           <li>Byte's Glitch Hunt — free</li>
@@ -557,7 +537,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
         <div class="mem-price"><span class="mem-price-num">$9</span><span class="mem-price-mo">/month</span></div>
         <ul class="mem-features">
           <li>Everything in Sparks</li>
-          <li>Lesson 3 on every character</li>
+          <li>Lessons 1–3 for every character</li>
           <li>Project challenges</li>
           <li>3-day free trial</li>
         </ul>
@@ -582,7 +562,49 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </section>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- PRINCIPLES — COMING SOON -->
+<section class="principles reveal">
+  <div class="principles__inner">
+    <div class="principles-coming">Coming Soon</div>
+    <h2 class="principles-title">The Principles</h2>
+    <p class="principles-sub">The universe is always expanding. Stay in orbit — more is on its way.</p>
+  </div>
+</section>
+
+<!-- WORKBOOKS -->
+<section class="workbooks" id="workbooks">
+  <div class="workbooks__inner">
+    <div class="workbooks__header">
+      <span class="section-label reveal">Printable Workbooks</span>
+      <h2 class="section-title reveal">Take it offline.</h2>
+      <p class="section-desc reveal">Printable curriculum packs. Designed for kids, loved by educators. $7.99 each.</p>
+    </div>
+    <div class="workbooks__grid">
+      <div class="wb-card reveal d1" style="--wb-color:#f472b6;--wb-bg:linear-gradient(135deg,#1a0020,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_COVER.png" alt="Zen's Creative Circuits"></div><div class="wb-body"><div class="wb-char">Zen · HTML & CSS</div><div class="wb-title">Zen's Creative Circuits Vol. 1</div><div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d2" style="--wb-color:#a855f7;--wb-bg:linear-gradient(135deg,#0d0020,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_COVER.png" alt="Byte's Debug Lab"></div><div class="wb-body"><div class="wb-char">Byte · Debugging</div><div class="wb-title">Byte's Debug Lab</div><div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d3" style="--wb-color:#00f5d4;--wb-bg:linear-gradient(135deg,#001520,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_COVER.png" alt="Loop's Logic Quest"></div><div class="wb-body"><div class="wb-char">Loop · JavaScript</div><div class="wb-title">Loop's Logic Quest</div><div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d1" style="--wb-color:#fbbf24;--wb-bg:linear-gradient(135deg,#1a1500,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_COVER.png" alt="Nova Builds a Website"></div><div class="wb-body"><div class="wb-char">Nova · HTML Structure</div><div class="wb-title">Nova Builds a Website</div><div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZubJ1bRA0GSeh4bSua3u03" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d2" style="--wb-color:#84cc16;--wb-bg:linear-gradient(135deg,#0a1a00,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_COVER.png" alt="Bug's Glitch Quest"></div><div class="wb-body"><div class="wb-char">Bug · Debug Lab</div><div class="wb-title">Bug's Glitch Quest</div><div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/cNibJ13l4exI1ui2hUa3u02" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+      <div class="wb-card reveal d3" style="--wb-color:#38bdf8;--wb-bg:linear-gradient(135deg,#001a2a,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_COVER.png" alt="Echo's Sound Systems"></div><div class="wb-body"><div class="wb-char">Echo · JS Events</div><div class="wb-title">Echo's Sound Systems</div><div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/dRmfZh9Js3T4c8W9Kma3u01" target="_blank" class="wb-btn">Get It →</a></div></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<section class="newsletter-sec" id="newsletter">
+  <div class="newsletter-sec__inner">
+    <span class="section-label reveal">Stay In Orbit</span>
+    <h2 class="section-title reveal">The universe is always expanding.</h2>
+    <p class="section-desc reveal" style="margin:0 auto 32px;">New games, new worlds, printable drops, merch — get it first. No spam, just signal.</p>
+    <form class="newsletter-form reveal" id="newsletter-form" onsubmit="return handleNewsletterSignup(event)">
+      <input type="email" id="newsletter-email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="btn-primary" id="newsletter-submit-btn">Join the List →</button>
+    </form>
+    <p class="newsletter-msg" id="newsletter-msg"></p>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <div class="footer-inner">
     <div class="footer-brand">
@@ -658,199 +680,43 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
 
 <script>
 // CURSOR
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', function(e) {
-  mx = e.clientX; my = e.clientY;
-  cursor.style.left = mx + 'px';
-  cursor.style.top = my + 'px';
-});
-(function animRing() {
-  rx += (mx - rx) * 0.12;
-  ry += (my - ry) * 0.12;
-  ring.style.left = rx + 'px';
-  ring.style.top = ry + 'px';
-  requestAnimationFrame(animRing);
-})();
-document.querySelectorAll('a,button,.stat-card,.wb-card,.mem-card').forEach(function(el) {
-  el.addEventListener('mouseenter', function() {
-    cursor.style.width = '18px'; cursor.style.height = '18px';
-    ring.style.width = '50px'; ring.style.height = '50px';
-  });
-  el.addEventListener('mouseleave', function() {
-    cursor.style.width = '10px'; cursor.style.height = '10px';
-    ring.style.width = '32px'; ring.style.height = '32px';
-  });
-});
-
+const cursor=document.getElementById('cursor');const ring=document.getElementById('cursorRing');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',function(e){mx=e.clientX;my=e.clientY;cursor.style.left=mx+'px';cursor.style.top=my+'px';});
+(function animRing(){rx+=(mx-rx)*.12;ry+=(my-ry)*.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(animRing);})();
+document.querySelectorAll('a,button,.stat-card,.wb-card,.mem-card').forEach(function(el){el.addEventListener('mouseenter',function(){cursor.style.width='18px';cursor.style.height='18px';ring.style.width='50px';ring.style.height='50px';});el.addEventListener('mouseleave',function(){cursor.style.width='10px';cursor.style.height='10px';ring.style.width='32px';ring.style.height='32px';});});
 // NAV SCROLL
-window.addEventListener('scroll', function() {
-  document.getElementById('nav').classList.toggle('scrolled', scrollY > 60);
-});
-
+window.addEventListener('scroll',function(){document.getElementById('nav').classList.toggle('scrolled',scrollY>60);});
 // HERO PARTICLES
-(function() {
-  var c = document.getElementById('heroParticles');
-  var colors = ['#ff6baa','#c66bff','#00e8ff','#fbbf24','#84cc16','#38bdf8'];
-  for (var i = 0; i < 50; i++) {
-    var p = document.createElement('div');
-    p.className = 'hparticle';
-    p.style.left = (Math.random() * 100) + '%';
-    p.style.width = p.style.height = (Math.random() * 2.5 + 1) + 'px';
-    p.style.background = colors[Math.floor(Math.random() * colors.length)];
-    p.style.animationDuration = (Math.random() * 14 + 8) + 's';
-    p.style.animationDelay = (Math.random() * 10) + 's';
-    p.style.boxShadow = '0 0 6px ' + colors[Math.floor(Math.random() * colors.length)];
-    c.appendChild(p);
-  }
-})();
-
+(function(){var c=document.getElementById('heroParticles');var colors=['#ff6baa','#c66bff','#00e8ff','#fbbf24','#84cc16','#38bdf8'];for(var i=0;i<50;i++){var p=document.createElement('div');p.className='hparticle';p.style.left=(Math.random()*100)+'%';p.style.width=p.style.height=(Math.random()*2.5+1)+'px';p.style.background=colors[Math.floor(Math.random()*colors.length)];p.style.animationDuration=(Math.random()*14+8)+'s';p.style.animationDelay=(Math.random()*10)+'s';p.style.boxShadow='0 0 6px '+colors[Math.floor(Math.random()*colors.length)];c.appendChild(p);}})();
 // AUTH MODAL
-function openAuthModal(tab) {
-  document.getElementById('auth-modal').classList.add('active');
-  switchTab(tab);
-}
-function switchTab(tab) {
-  document.querySelectorAll('.auth-tab').forEach(function(x) { x.classList.remove('active'); });
-  document.querySelectorAll('.auth-form').forEach(function(x) { x.classList.remove('active'); });
-  document.querySelector('.auth-tab[data-tab="' + tab + '"]').classList.add('active');
-  document.getElementById(tab + '-form').classList.add('active');
-}
-document.querySelectorAll('.auth-tab').forEach(function(t) {
-  t.addEventListener('click', function() { switchTab(t.dataset.tab); });
-});
-document.querySelectorAll('.auth-link').forEach(function(l) {
-  l.addEventListener('click', function() { switchTab(l.dataset.tab); });
-});
-document.getElementById('auth-close-btn').addEventListener('click', function() {
-  document.getElementById('auth-modal').classList.remove('active');
-});
-document.getElementById('auth-modal').addEventListener('click', function(e) {
-  if (e.target === document.getElementById('auth-modal')) {
-    document.getElementById('auth-modal').classList.remove('active');
-  }
-});
-
+function openAuthModal(tab){document.getElementById('auth-modal').classList.add('active');switchTab(tab);}
+function switchTab(tab){document.querySelectorAll('.auth-tab').forEach(function(x){x.classList.remove('active');});document.querySelectorAll('.auth-form').forEach(function(x){x.classList.remove('active');});document.querySelector('.auth-tab[data-tab="'+tab+'"]').classList.add('active');document.getElementById(tab+'-form').classList.add('active');}
+document.querySelectorAll('.auth-tab').forEach(function(t){t.addEventListener('click',function(){switchTab(t.dataset.tab);});});
+document.querySelectorAll('.auth-link').forEach(function(l){l.addEventListener('click',function(){switchTab(l.dataset.tab);});});
+document.getElementById('auth-close-btn').addEventListener('click',function(){document.getElementById('auth-modal').classList.remove('active');});
+document.getElementById('auth-modal').addEventListener('click',function(e){if(e.target===document.getElementById('auth-modal')){document.getElementById('auth-modal').classList.remove('active');}});
 // SCROLL REVEAL
-try {
-  var obs = new IntersectionObserver(function(entries) {
-    entries.forEach(function(e) {
-      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
-    });
-  }, { threshold: 0.1 });
-  document.querySelectorAll('.reveal').forEach(function(el) { obs.observe(el); });
-} catch(e) {
-  document.querySelectorAll('.reveal').forEach(function(el) { el.classList.add('visible'); });
-}
-
+try{var obs=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);}});},{threshold:0.1});document.querySelectorAll('.reveal').forEach(function(el){obs.observe(el);});}catch(e){document.querySelectorAll('.reveal').forEach(function(el){el.classList.add('visible');});}
 // CHARACTER SOUNDS
-var audioCtx = null;
-function getAudio() {
-  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-  return audioCtx;
-}
-
-function playTone(ac, freq, type, startDelay, duration, volume) {
-  var o = ac.createOscillator();
-  var g = ac.createGain();
-  o.connect(g);
-  g.connect(ac.destination);
-  o.type = type;
-  o.frequency.value = freq;
-  g.gain.setValueAtTime(0, ac.currentTime + startDelay);
-  g.gain.linearRampToValueAtTime(volume, ac.currentTime + startDelay + 0.05);
-  g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + startDelay + duration);
-  o.start(ac.currentTime + startDelay);
-  o.stop(ac.currentTime + startDelay + duration);
-}
-
-var charSounds = {
-  zen: function() {
-    var ac = getAudio();
-    [[261.6,0],[329.6,0.12],[392,0.24]].forEach(function(f) { playTone(ac,f[0],'sine',f[1],0.9,0.06); });
-  },
-  byte: function() {
-    var ac = getAudio();
-    [[880,0],[440,0.06],[1320,0.12],[220,0.18]].forEach(function(f) { playTone(ac,f[0],'square',f[1],0.18,0.04); });
-  },
-  loop: function() {
-    var ac = getAudio();
-    [[523.2,0],[523.2,0.15],[659.3,0.30],[523.2,0.45]].forEach(function(f) { playTone(ac,f[0],'triangle',f[1],0.22,0.07); });
-  },
-  nova: function() {
-    var ac = getAudio();
-    [[440,0],[554,0.1],[659,0.2],[880,0.3]].forEach(function(f) { playTone(ac,f[0],'sine',f[1],0.6,0.065); });
-  },
-  bug: function() {
-    var ac = getAudio();
-    [[110,0],[220,0.05],[55,0.1],[165,0.15]].forEach(function(f) { playTone(ac,f[0],'sawtooth',f[1],0.25,0.05); });
-  },
-  echo: function() {
-    var ac = getAudio();
-    [[261.6,0],[329.6,0.15],[392,0.30],[523.2,0.45],[659.3,0.60]].forEach(function(f) { playTone(ac,f[0],'sine',f[1],0.8,0.08); });
-  }
-};
-
-var lastSound = {};
-function playCharSound(name) {
-  var now = Date.now();
-  if (lastSound[name] && now - lastSound[name] < 1200) return;
-  lastSound[name] = now;
-  if (charSounds[name]) charSounds[name]();
-}
-
-// AMBIENT SOUND
-var ambientOn = false;
-var ambientNodes = [];
-document.getElementById('soundToggle').addEventListener('click', function() {
-  var ac = getAudio();
-  ambientOn = !ambientOn;
-  document.getElementById('soundWaves').style.opacity = ambientOn ? '1' : '.3';
-  if (ambientOn) {
-    [60, 90, 120].forEach(function(f) {
-      var o = ac.createOscillator();
-      var g = ac.createGain();
-      o.connect(g); g.connect(ac.destination);
-      o.type = 'sine'; o.frequency.value = f; g.gain.value = 0.015;
-      o.start();
-      ambientNodes.push({o: o, g: g});
-    });
-  } else {
-    ambientNodes.forEach(function(n) {
-      n.g.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 1);
-      n.o.stop(ac.currentTime + 1);
-    });
-    ambientNodes = [];
-  }
-});
+var audioCtx=null;function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playTone(ac,freq,type,startDelay,duration,volume){var o=ac.createOscillator();var g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type=type;o.frequency.value=freq;g.gain.setValueAtTime(0,ac.currentTime+startDelay);g.gain.linearRampToValueAtTime(volume,ac.currentTime+startDelay+0.05);g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+startDelay+duration);o.start(ac.currentTime+startDelay);o.stop(ac.currentTime+startDelay+duration);}
+var charSounds={zen:function(){var ac=getAudio();[[261.6,0],[329.6,0.12],[392,0.24]].forEach(function(f){playTone(ac,f[0],'sine',f[1],0.9,0.06);});},byte:function(){var ac=getAudio();[[880,0],[440,0.06],[1320,0.12],[220,0.18]].forEach(function(f){playTone(ac,f[0],'square',f[1],0.18,0.04);});},loop:function(){var ac=getAudio();[[523.2,0],[523.2,0.15],[659.3,0.30],[523.2,0.45]].forEach(function(f){playTone(ac,f[0],'triangle',f[1],0.22,0.07);});},nova:function(){var ac=getAudio();[[440,0],[554,0.1],[659,0.2],[880,0.3]].forEach(function(f){playTone(ac,f[0],'sine',f[1],0.6,0.065);});},bug:function(){var ac=getAudio();[[110,0],[220,0.05],[55,0.1],[165,0.15]].forEach(function(f){playTone(ac,f[0],'sawtooth',f[1],0.25,0.05);});},echo:function(){var ac=getAudio();[[261.6,0],[329.6,0.15],[392,0.30],[523.2,0.45],[659.3,0.60]].forEach(function(f){playTone(ac,f[0],'sine',f[1],0.8,0.08);});}};
+var lastSound={};function playCharSound(name){var now=Date.now();if(lastSound[name]&&now-lastSound[name]<1200)return;lastSound[name]=now;if(charSounds[name])charSounds[name]();}
+// AMBIENT
+var ambientOn=false;var ambientNodes=[];
+document.getElementById('soundToggle').addEventListener('click',function(){var ac=getAudio();ambientOn=!ambientOn;document.getElementById('soundWaves').style.opacity=ambientOn?'1':'.3';if(ambientOn){[60,90,120].forEach(function(f){var o=ac.createOscillator();var g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='sine';o.frequency.value=f;g.gain.value=0.015;o.start();ambientNodes.push({o:o,g:g});});}else{ambientNodes.forEach(function(n){n.g.gain.exponentialRampToValueAtTime(0.001,ac.currentTime+1);n.o.stop(ac.currentTime+1);});ambientNodes=[];}});
 </script>
 <script type="module">
-import { initializeApp, getApps, getApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getFirestore, collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+import{initializeApp,getApps,getApp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import{getFirestore,collection,addDoc,serverTimestamp}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 const firebaseConfig={apiKey:"AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",authDomain:"method-in-motion.firebaseapp.com",projectId:"method-in-motion",storageBucket:"method-in-motion.firebasestorage.app",messagingSenderId:"1067937974009",appId:"1:1067937974009:web:5b21e6abe84e0b28234428"};
-const app=getApps().length?getApp():initializeApp(firebaseConfig);
-const db=getFirestore(app);
-window.handleNewsletterSignup=async function(e){
-  e.preventDefault();
-  const input=document.getElementById('newsletter-email');
-  const btn=document.getElementById('newsletter-submit-btn');
-  const msg=document.getElementById('newsletter-msg');
-  const email=input.value.trim();
-  if(!email)return false;
-  btn.disabled=true;btn.textContent="Joining...";msg.classList.remove('error');msg.textContent="";
-  try{
-    await addDoc(collection(db,"newsletter_signups"),{email,createdAt:serverTimestamp(),source:"homepage"});
-    msg.textContent="You're in! Watch your inbox for updates.";input.value="";
-  }catch(err){msg.classList.add('error');msg.textContent="Something went wrong — please try again.";console.error(err);}
-  finally{btn.disabled=false;btn.textContent="Join the List →";}
-  return false;
-};
+const app=getApps().length?getApp():initializeApp(firebaseConfig);const db=getFirestore(app);
+window.handleNewsletterSignup=async function(e){e.preventDefault();const input=document.getElementById('newsletter-email');const btn=document.getElementById('newsletter-submit-btn');const msg=document.getElementById('newsletter-msg');const email=input.value.trim();if(!email)return false;btn.disabled=true;btn.textContent="Joining...";msg.classList.remove('error');msg.textContent="";try{await addDoc(collection(db,"newsletter_signups"),{email,createdAt:serverTimestamp(),source:"homepage"});msg.textContent="You're in! Watch your inbox for updates.";input.value="";}catch(err){msg.classList.add('error');msg.textContent="Something went wrong — please try again.";console.error(err);}finally{btn.disabled=false;btn.textContent="Join the List →";}return false;};
 </script>
 <script type="module">
-import { getAuth, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-let currentUser=null;
-onAuthStateChanged(getAuth(),(user)=>{currentUser=user;});
+import{getAuth,onAuthStateChanged}from"https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+let currentUser=null;onAuthStateChanged(getAuth(),(user)=>{currentUser=user;});
 window.handleEnterUniverse=function(){if(currentUser){window.location.href="dashboard.html";}else{openAuthModal('signup');}};
 </script>
 <script type="module" src="auth-init.js"></script>
