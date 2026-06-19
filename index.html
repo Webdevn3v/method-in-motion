@@ -112,7 +112,7 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 /* ═══════════════════════════════════════
    CREW — STAT CARDS
 ═══════════════════════════════════════ */
-.crew{background:var(--void);padding:96px 0}
+.crew{background:var(--void);padding:96px 0;scroll-margin-top:80px;}
 .crew__inner{max-width:1240px;margin:0 auto;padding:0 48px}
 .crew__header{text-align:center;margin-bottom:52px}
 .section-label{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:12px;display:block;}
@@ -183,11 +183,40 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .games-cta-row{display:flex;justify-content:center;margin-top:32px;}
 
 /* MEMBERSHIP TEASER STRIP */
-.mem-teaser{background:var(--deep);padding:36px 48px;text-align:center;border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
-.mem-teaser p{font-size:.9rem;color:var(--off);margin-bottom:14px;}
+.mem-teaser{
+  position:relative;overflow:hidden;
+  background:linear-gradient(135deg,rgba(198,107,255,0.08),rgba(0,232,255,0.06));
+  padding:52px 48px;text-align:center;
+  border-top:1px solid rgba(198,107,255,0.2);
+  border-bottom:1px solid rgba(0,232,255,0.15);
+}
+.mem-teaser::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(ellipse at 30% 50%,rgba(255,107,170,0.07) 0%,transparent 60%),
+             radial-gradient(ellipse at 70% 50%,rgba(0,232,255,0.06) 0%,transparent 60%);
+  pointer-events:none;
+}
+.mem-teaser-eyebrow{
+  font-family:var(--display);font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:14px;display:block;
+}
+.mem-teaser p{font-size:1.05rem;color:rgba(255,255,255,0.8);margin-bottom:22px;line-height:1.7;}
 .mem-teaser p strong{color:#fff;}
-.mem-teaser a{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);border-bottom:1px solid rgba(0,232,255,.4);padding-bottom:2px;transition:color .2s;}
-.mem-teaser a:hover{color:#fff;}
+.mem-teaser-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-bottom:22px;}
+.mem-teaser-pill{
+  padding:5px 14px;border-radius:100px;
+  font-family:var(--display);font-size:.5rem;letter-spacing:.1em;text-transform:uppercase;
+  border:1px solid rgba(255,255,255,.12);color:rgba(255,255,255,.5);
+}
+.mem-teaser a{
+  display:inline-flex;align-items:center;gap:8px;
+  font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
+  color:#000;background:var(--grad);
+  padding:12px 28px;border-radius:100px;font-weight:700;
+  transition:transform .2s,box-shadow .2s;
+  box-shadow:0 6px 24px rgba(198,107,255,.35);
+}
+.mem-teaser a:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(198,107,255,.5);}
 
 /* ═══════════════════════════════════════
    MEMBERSHIP
@@ -382,7 +411,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
       </div>
       <!-- LOOP -->
       <div class="stat-card reveal d3" style="--cc:#00f5d4;" onmouseenter="playCharSound('loop')" onclick="window.location.href='loop.html'" tabindex="0" role="link" aria-label="Enter Loop's world" onkeypress="if(event.key==='Enter')window.location.href='loop.html'">
-        <div class="sc-media"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.gif" alt="Loop"><div class="sc-glow"></div></div>
+        <div class="sc-media" style="background:linear-gradient(135deg,#001a18,#0d0f1e);"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.gif" alt="Loop" onerror="this.style.display='none'"><div class="sc-glow"></div></div>
         <div class="sc-body">
           <div class="sc-header"><div class="sc-id">Character 03</div><div class="sc-lang-badge">JavaScript</div></div>
           <div class="sc-name" style="color:#00f5d4;">Loop</div>
@@ -454,8 +483,15 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
 
 <!-- ═══ MEMBERSHIP TEASER ═══ -->
 <div class="mem-teaser reveal">
-  <p>Start free — get Lesson 1 for every character. <strong>Upgrade anytime to unlock the full universe.</strong></p>
-  <a href="#membership">See membership plans →</a>
+  <span class="mem-teaser-eyebrow">Free to start. Built to grow.</span>
+  <p>Get <strong>Lesson 1 for all 6 characters</strong> — free, no card needed.<br>Upgrade anytime to unlock the full universe.</p>
+  <div class="mem-teaser-pills">
+    <div class="mem-teaser-pill">✦ Zen's Lesson 1 Free</div>
+    <div class="mem-teaser-pill">✦ Byte's Game Free</div>
+    <div class="mem-teaser-pill">✦ No Credit Card</div>
+    <div class="mem-teaser-pill">✦ Cancel Anytime</div>
+  </div>
+  <a href="#membership">See Membership Plans →</a>
 </div>
 
 <!-- ═══ WORKBOOKS ═══ -->
