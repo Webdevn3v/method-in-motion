@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Library — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050508;--deep:#080b14;--card:#0f1525;
+  --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
+  --white:#fff;--off:#c8cce0;--muted:#5a6080;
+  --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
+  --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7;}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;}
+.nav-logo-mark{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#000;}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s;}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-cta{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(198,107,255,.4);color:var(--purple);border-radius:100px;transition:all .3s;background:none;cursor:pointer;}
+.nav-join{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;}
+#nav-user-menu{display:none;align-items:center;gap:10px}
+#nav-dashboard-link{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(0,232,255,.3);color:var(--cyan);border-radius:100px;}
+#nav-logout-btn{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.15);background:none;color:rgba(255,255,255,.4);border-radius:100px;cursor:pointer}
+@media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
+
+/* HERO */
+.page-hero{position:relative;padding:140px 48px 80px;text-align:center;overflow:hidden;background:var(--deep);}
+.page-hero::before{content:'';position:absolute;inset:0;background-image:url('MiM_Library.png');background-size:cover;background-position:center top;opacity:.2;z-index:0;}
+.page-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,transparent 0%,var(--deep) 65%);z-index:1;}
+.page-hero-content{position:relative;z-index:2;}
+.page-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:block;}
+.page-title{font-family:var(--display);font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;}
+.page-desc{font-size:1rem;color:var(--off);max-width:520px;margin:0 auto;line-height:1.9;}
+
+/* CONTENT */
+.lib-section{padding:80px 0;}
+.lib__inner{max-width:1100px;margin:0 auto;padding:0 48px;}
+.lib-block{margin-bottom:64px;}
+.lib-label{font-family:var(--display);font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;display:block;}
+.lib-block-title{font-family:var(--heading);font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:800;margin-bottom:8px;}
+.lib-block-desc{font-size:.9rem;color:var(--muted);margin-bottom:28px;line-height:1.8;max-width:580px;}
+
+/* Did You Know cards */
+.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:800px){.fact-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.fact-grid{grid-template-columns:1fr}}
+.fact-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:20px;transition:all .3s;}
+.fact-card:hover{transform:translateY(-3px);border-color:var(--purple);box-shadow:0 10px 36px rgba(0,0,0,.3);}
+.fact-icon{font-size:1.6rem;margin-bottom:10px;}
+.fact-title{font-family:var(--heading);font-size:.92rem;font-weight:700;margin-bottom:6px;}
+.fact-body{font-size:.78rem;color:var(--muted);line-height:1.7;}
+
+/* History Timeline */
+.timeline{display:flex;flex-direction:column;gap:0;}
+.timeline-item{display:flex;gap:24px;align-items:flex-start;padding:20px 0;border-bottom:1px solid var(--border);}
+.timeline-item:last-child{border-bottom:none;}
+.timeline-year{font-family:var(--display);font-size:.9rem;font-weight:900;color:var(--cyan);min-width:64px;padding-top:2px;}
+.timeline-info{}
+.timeline-event{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:4px;}
+.timeline-desc{font-size:.78rem;color:var(--muted);line-height:1.7;}
+
+/* Mini Games placeholder */
+.mini-games-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:700px){.mini-games-grid{grid-template-columns:1fr}}
+.mini-game-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;text-align:center;transition:all .3s;position:relative;overflow:hidden;}
+.mini-game-card::before{content:'';position:absolute;inset:0;background:var(--mg-bg,radial-gradient(circle at 50% 0%,rgba(198,107,255,.08),transparent 60%));pointer-events:none;}
+.mini-game-card:hover{transform:translateY(-3px);border-color:var(--mg-color,var(--purple));}
+.mini-game-icon{font-size:2rem;margin-bottom:10px;}
+.mini-game-title{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:6px;}
+.mini-game-desc{font-size:.76rem;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.mini-game-tag{font-family:var(--display);font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px;border:1px solid;display:inline-block;}
+
+/* Clips section */
+.clips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+@media(max-width:700px){.clips-grid{grid-template-columns:1fr}}
+.clip-card{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow:hidden;transition:all .3s;}
+.clip-card:hover{transform:translateY(-3px);border-color:var(--cc,var(--pink));}
+.clip-thumb{aspect-ratio:9/16;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;position:relative;}
+.clip-thumb-bg{position:absolute;inset:0;background:var(--cc-bg,linear-gradient(135deg,#1a0020,#0d0f1e));opacity:.5;}
+.clip-play{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;}
+.clip-info{padding:14px;}
+.clip-char{font-family:var(--display);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:3px;}
+.clip-title{font-family:var(--heading);font-size:.88rem;font-weight:700;}
+
+/* coming soon */
+.coming-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:7px 18px;border-radius:100px;border:1px solid rgba(0,232,255,.2);color:var(--cyan);margin-bottom:16px;}
+.coming-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:blink 1.4s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.coming-card{background:var(--deep);border-radius:14px;border:1px solid var(--border);padding:36px;text-align:center;}
+.coming-title{font-family:var(--heading);font-size:1.1rem;font-weight:800;margin-bottom:8px;color:rgba(255,255,255,.45);}
+.coming-desc{font-size:.84rem;color:var(--muted);max-width:360px;margin:0 auto;}
+
+/* AUTH MODAL */
+.auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
+.auth-modal-overlay.active{display:flex}
+.auth-modal-box{background:#0a0a1a;border:1px solid rgba(0,240,255,.2);border-radius:16px;padding:2.4rem 2rem;width:100%;max-width:420px;position:relative;}
+.auth-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.4rem;cursor:pointer;}
+.auth-modal-header{text-align:center;margin-bottom:1.6rem}
+.auth-logo-mark{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(135deg,#00f0ff,#ff6ec7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.auth-tagline{font-family:'Syne',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.auth-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.6rem}
+.auth-tab{flex:1;background:none;border:none;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.7rem 0;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
+.auth-tab.active{color:#00f0ff;border-bottom-color:#00f0ff}
+.auth-form{display:none}.auth-form.active{display:block}
+.auth-field{margin-bottom:1rem}
+.auth-field label{display:block;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.35rem}
+.auth-field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.68rem .88rem;color:#fff;font-family:'Syne',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;box-sizing:border-box}
+.auth-field input:focus{border-color:rgba(0,240,255,.5)}
+.auth-field input::placeholder{color:rgba(255,255,255,.2)}
+.auth-error{font-family:'Syne',sans-serif;font-size:.76rem;color:#ff6ec7;min-height:1.2em;margin:.2rem 0 .7rem}
+.auth-submit{width:100%;background:linear-gradient(135deg,#00f0ff,#7b61ff);border:none;border-radius:8px;padding:.82rem;color:#000;font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;margin-bottom:.9rem}
+.auth-switch{text-align:center;font-family:'Syne',sans-serif;font-size:.76rem;color:rgba(255,255,255,.35)}
+.auth-link{background:none;border:none;color:#00f0ff;font-family:'Syne',sans-serif;font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
+  <ul class="nav-links">
+    <li><a href="index.html#crew">Crew</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="pdfs.html">PDFs</a></li>
+    <li><a href="library.html" class="active">Library</a></li>
+    <li><a href="lessons.html">Lessons</a></li>
+  </ul>
+  <div class="nav-right">
+    <div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
+      <a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
+      <button id="nav-logout-btn">Sign Out</button>
+    </div>
+    <button class="nav-cta" onclick="openAuthModal('login')">Log In</button>
+    <button class="nav-join" onclick="openAuthModal('signup')">Join Free →</button>
+  </div>
+</nav>
+
+<section class="page-hero">
+  <div class="page-hero-content">
+    <span class="page-eyebrow">Method in Motion · Knowledge Is Power</span>
+    <h1 class="page-title">The Library</h1>
+    <p class="page-desc">Coding history, fun facts, character clips, and free mini-games. Free to explore — no account needed.</p>
+  </div>
+</section>
+
+<section class="lib-section">
+  <div class="lib__inner">
+
+    <!-- DID YOU KNOW -->
+    <div class="lib-block">
+      <span class="lib-label">Did You Know?</span>
+      <h2 class="lib-block-title">Coding facts that'll blow your mind.</h2>
+      <p class="lib-block-desc">Real facts about coding, computers, and the internet — the kind of things that make you go "wait, what?"</p>
+      <div class="fact-grid">
+        <div class="fact-card">
+          <div class="fact-icon">🐛</div>
+          <div class="fact-title">The First Bug Was Real</div>
+          <div class="fact-body">In 1947, a moth was found stuck inside a computer at Harvard. It was literally a bug — and that's where the word came from.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">🌐</div>
+          <div class="fact-title">The Web Is Only 35 Years Old</div>
+          <div class="fact-body">Tim Berners-Lee invented the World Wide Web in 1989. The internet feels ancient but it's actually newer than most of your teachers.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">💾</div>
+          <div class="fact-title">Apollo Used Less Power Than Your Phone</div>
+          <div class="fact-body">The computer that sent humans to the moon had less processing power than a basic scientific calculator today.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">🎮</div>
+          <div class="fact-title">The First Video Game Was in 1958</div>
+          <div class="fact-body">Tennis for Two was created on an oscilloscope by physicist William Higinbotham — decades before consoles existed.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">👩‍💻</div>
+          <div class="fact-title">The First Programmer Was a Woman</div>
+          <div class="fact-body">Ada Lovelace wrote the first computer algorithm in 1843 — for a machine that hadn't even been built yet.</div>
+        </div>
+        <div class="fact-card">
+          <div class="fact-icon">📱</div>
+          <div class="fact-title">There Are 5 Billion Websites</div>
+          <div class="fact-body">Every one of them started as a blank HTML file. Yours could be next.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HISTORY TIMELINE -->
+    <div class="lib-block">
+      <span class="lib-label">History of Coding</span>
+      <h2 class="lib-block-title">How we got here.</h2>
+      <p class="lib-block-desc">From punch cards to Python — the story of how coding became the most important skill on the planet.</p>
+      <div class="timeline">
+        <div class="timeline-item"><div class="timeline-year" style="color:#f472b6;">1843</div><div class="timeline-info"><div class="timeline-event">Ada Lovelace Writes the First Algorithm</div><div class="timeline-desc">For Charles Babbage's Analytical Engine — a computer that existed only on paper. She saw what machines could do before machines could do it.</div></div></div>
+        <div class="timeline-item"><div class="timeline-year" style="color:#a855f7;">1940s</div><div class="timeline-info"><div class="timeline-event">The First Electronic Computers</div><div class="timeline-desc">ENIAC filled an entire room. It could do 5,000 additions per second. Your phone does billions.</div></div></div>
+        <div class="timeline-item"><div class="timeline-year" style="color:#00f5d4;">1969</div><div class="timeline-info"><div class="timeline-event">ARPANET — The Internet Is Born</div><div class="timeline-desc">The US Defense Department connected four university computers. The first message sent was "lo" — the system crashed before "login" was complete.</div></div></div>
+        <div class="timeline-item"><div class="timeline-year" style="color:#fbbf24;">1989</div><div class="timeline-info"><div class="timeline-event">Tim Berners-Lee Invents the Web</div><div class="timeline-desc">The World Wide Web was originally a project to help scientists share research. It accidentally became everything.</div></div></div>
+        <div class="timeline-item"><div class="timeline-year" style="color:#84cc16;">1995</div><div class="timeline-info"><div class="timeline-event">JavaScript Is Created in 10 Days</div><div class="timeline-desc">Brendan Eich wrote the first version of JavaScript in just 10 days. It now runs on 98% of all websites.</div></div></div>
+        <div class="timeline-item"><div class="timeline-year" style="color:#38bdf8;">2024</div><div class="timeline-info"><div class="timeline-event">AI Changes Everything (Again)</div><div class="timeline-desc">The coders who understand how things work will be the ones who build what comes next. That's you.</div></div></div>
+      </div>
+    </div>
+
+    <!-- MINI GAMES -->
+    <div class="lib-block">
+      <span class="lib-label">Free Mini Games</span>
+      <h2 class="lib-block-title">Play for free. No account needed.</h2>
+      <p class="lib-block-desc">Quick matching and memory games — a taste of each character's world. Full games unlock with Coders membership.</p>
+      <div class="mini-games-grid">
+        <div class="mini-game-card" style="--mg-color:#f472b6;--mg-bg:radial-gradient(circle at 50% 0%,rgba(244,114,182,.1),transparent 60%);">
+          <div class="mini-game-icon">🎨</div>
+          <div class="mini-game-title">CSS Color Match</div>
+          <div class="mini-game-desc">Match hex codes to colors before time runs out. Zen's warm-up for new coders.</div>
+          <div class="mini-game-tag" style="border-color:#f472b6;color:#f472b6;">Coming Soon</div>
+        </div>
+        <div class="mini-game-card" style="--mg-color:#a855f7;--mg-bg:radial-gradient(circle at 50% 0%,rgba(168,85,247,.1),transparent 60%);">
+          <div class="mini-game-icon">🐾</div>
+          <div class="mini-game-title">Byte's Bug Finder</div>
+          <div class="mini-game-desc">Find the typo in the code before Byte does. A mini debug challenge for all ages.</div>
+          <div class="mini-game-tag" style="border-color:#a855f7;color:#a855f7;">Coming Soon</div>
+        </div>
+        <div class="mini-game-card" style="--mg-color:#00f5d4;--mg-bg:radial-gradient(circle at 50% 0%,rgba(0,245,212,.08),transparent 60%);">
+          <div class="mini-game-icon">♾️</div>
+          <div class="mini-game-title">Loop's Sequence Puzzle</div>
+          <div class="mini-game-desc">Put the steps in the right order. Loop teaches you pattern thinking through puzzles.</div>
+          <div class="mini-game-tag" style="border-color:#00f5d4;color:#00f5d4;">Coming Soon</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARACTER CLIPS -->
+    <div class="lib-block">
+      <span class="lib-label">Character Clips</span>
+      <h2 class="lib-block-title">Meet the crew in motion.</h2>
+      <p class="lib-block-desc">Short clips of each character doing their signature thing. Watch, share, and get inspired.</p>
+      <div class="clips-grid">
+        <div class="clip-card" style="--cc:#f472b6;"><div class="clip-thumb"><div class="clip-thumb-bg" style="background:linear-gradient(135deg,#1a0020,#0d0f1e);"></div><div class="clip-play">▶</div></div><div class="clip-info"><div class="clip-char" style="color:#f472b6;">Zen</div><div class="clip-title">Skateboard Trick at the Coding Realm</div></div></div>
+        <div class="clip-card" style="--cc:#a855f7;"><div class="clip-thumb"><div class="clip-thumb-bg" style="background:linear-gradient(135deg,#0d0020,#0d0f1e);"></div><div class="clip-play">▶</div></div><div class="clip-info"><div class="clip-char" style="color:#a855f7;">Byte</div><div class="clip-title">Playing Video Games in Code City</div></div></div>
+        <div class="clip-card" style="--cc:#38bdf8;"><div class="clip-thumb"><div class="clip-thumb-bg" style="background:linear-gradient(135deg,#001a2a,#0d0f1e);"></div><div class="clip-play">▶</div></div><div class="clip-info"><div class="clip-char" style="color:#38bdf8;">Echo</div><div class="clip-title">Dancing in the Sound Studio Dome</div></div></div>
+      </div>
+      <div style="margin-top:16px;">
+        <div class="coming-card">
+          <div class="coming-badge">Coming Soon</div>
+          <div class="coming-title">All 6 Character Clips</div>
+          <div class="coming-desc">Nova, Bug, and Loop's signature clips are in production. The universe is always expanding.</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
+  <div class="auth-modal-box">
+    <button class="auth-close" id="auth-close-btn">&times;</button>
+    <div class="auth-modal-header"><div class="auth-logo-mark">MiM</div><p class="auth-tagline">Create. Don't Consume.</p></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Log In</button>
+      <button class="auth-tab" data-tab="signup">Join the Crew</button>
+    </div>
+    <div id="login-form" class="auth-form active">
+      <div class="auth-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/></div>
+      <p class="auth-error" id="login-error"></p>
+      <button class="auth-submit" id="login-submit-btn">Log In</button>
+      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
+    </div>
+    <div id="signup-form" class="auth-form">
+      <p style="font-family:'Syne',sans-serif;font-size:.72rem;color:rgba(0,232,255,.8);text-align:center;margin-bottom:.9rem">Free account — no card needed</p>
+      <div class="auth-field"><label>Display Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"/></div>
+      <div class="auth-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"/></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"/></div>
+      <p class="auth-error" id="signup-error"></p>
+      <button class="auth-submit" id="signup-submit-btn">Create Free Account</button>
+      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
+    </div>
+  </div>
+</div>
+<script>
+function openAuthModal(tab){document.getElementById('auth-modal').classList.add('active');switchTab(tab);}
+function switchTab(tab){document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));document.querySelector('.auth-tab[data-tab="'+tab+'"]').classList.add('active');document.getElementById(tab+'-form').classList.add('active');}
+document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
+document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
+document.getElementById('auth-close-btn').addEventListener('click',()=>document.getElementById('auth-modal').classList.remove('active'));
+document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').classList.remove('active');});
+</script>
+<script type="module" src="auth-init.js"></script>
+</body>
+</html>
