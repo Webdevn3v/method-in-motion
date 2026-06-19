@@ -48,7 +48,7 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 
 /* HERO */
 .hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
-.hero-universe{position:absolute;inset:0;z-index:0;background-image:url('universe-night-veiw.png');background-size:cover;background-position:center;animation:universe-breathe 14s ease-in-out infinite alternate;}
+.hero-universe{position:absolute;inset:0;z-index:0;background-image:url('universe-view.png');background-size:cover;background-position:center;animation:universe-breathe 14s ease-in-out infinite alternate;}
 @keyframes universe-breathe{0%{transform:scale(1.02);}100%{transform:scale(1.08);}}
 .hero-overlay{position:absolute;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 40%,rgba(5,5,8,0.25) 0%,rgba(5,5,8,0.55) 50%,rgba(5,5,8,0.92) 100%);}
 .hero-overlay-bottom{position:absolute;bottom:0;left:0;right:0;height:40%;z-index:2;background:linear-gradient(to bottom,transparent,rgba(5,5,8,1));}
@@ -176,6 +176,23 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .wb-price{font-family:var(--display);font-size:.88rem;font-weight:700;}
 .wb-btn{font-family:var(--display);font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 14px;border-radius:100px;border:1px solid var(--wb-color,var(--pink));color:var(--wb-color,var(--pink));transition:all .2s;}
 .wb-btn:hover{background:var(--wb-color,var(--pink));color:#000}
+
+/* WORKBOOK TEASER — cinematic blended strip */
+.wb-teaser{position:relative;overflow:hidden;height:320px;display:flex;align-items:center;justify-content:center;}
+.wb-teaser-covers{position:absolute;inset:0;display:flex;gap:0;}
+.wb-cover-img{flex:1;background-size:cover;background-position:center;background-color:var(--card);position:relative;filter:saturate(.7) brightness(.5);}
+.wb-cover-img::after{content:'';position:absolute;inset:0;background:var(--tint,transparent);}
+.wb-fade-left{position:absolute;left:0;top:0;bottom:0;width:180px;background:linear-gradient(to right,var(--void),transparent);z-index:2;}
+.wb-fade-right{position:absolute;right:0;top:0;bottom:0;width:180px;background:linear-gradient(to left,var(--void),transparent);z-index:2;}
+.wb-fade-overlay{position:absolute;inset:0;background:rgba(5,5,8,.55);z-index:3;}
+.wb-teaser-content{position:relative;z-index:10;text-align:center;padding:0 24px;}
+.wb-teaser-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.5rem;letter-spacing:.24em;text-transform:uppercase;padding:6px 16px;border-radius:100px;border:1px solid rgba(0,232,255,.3);color:var(--cyan);margin-bottom:16px;}
+.wb-teaser-badge::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--cyan);animation:blink 1.4s ease-in-out infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.wb-teaser-title{font-family:var(--heading);font-size:clamp(1.5rem,3.5vw,2.6rem);font-weight:800;line-height:1.1;margin-bottom:10px;}
+.wb-teaser-desc{font-size:.9rem;color:var(--off);margin-bottom:20px;}
+.wb-teaser-link{font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);border-bottom:1px solid rgba(0,232,255,.3);padding-bottom:2px;transition:border-color .2s,color .2s;}
+.wb-teaser-link:hover{color:#fff;border-color:#fff;}
 
 /* NEWSLETTER */
 .newsletter-sec{background:var(--void);padding:96px 0;text-align:center;}
@@ -498,14 +515,14 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
 <!-- FREE TO START — MEMBERSHIP TEASER (fixed copy) -->
 <div class="mem-teaser reveal">
   <span class="mem-teaser-eyebrow">Free to start. Built to grow.</span>
-  <h3>Start with Zen or Byte — free.</h3>
-  <p class="mem-teaser-sub">Create a free account and get <strong>Lesson 1 for Zen and Byte</strong> at no cost.</p>
+  <h3>Start free. No card needed.</h3>
+  <p class="mem-teaser-sub">Create a free account and get <strong>Zen's Lesson 1</strong> + <strong>Byte's Glitch Hunt</strong> — on us.</p>
   <p class="mem-teaser-note">Sparks membership ($5/mo) unlocks Lesson 1 for all six characters.</p>
   <div class="mem-teaser-pills">
     <div class="mem-teaser-pill">✦ Zen's Lesson 1 — Free</div>
-    <div class="mem-teaser-pill">✦ Byte's Lesson 1 — Free</div>
     <div class="mem-teaser-pill">✦ Byte's Glitch Hunt — Free</div>
     <div class="mem-teaser-pill">✦ No Credit Card</div>
+    <div class="mem-teaser-pill">✦ Cancel Anytime</div>
   </div>
   <a href="#membership">See Membership Plans →</a>
 </div>
@@ -562,31 +579,27 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:48px 48
   </div>
 </section>
 
-<!-- PRINCIPLES — COMING SOON -->
-<section class="principles reveal">
-  <div class="principles__inner">
-    <div class="principles-coming">Coming Soon</div>
-    <h2 class="principles-title">The Principles</h2>
-    <p class="principles-sub">The universe is always expanding. Stay in orbit — more is on its way.</p>
+<!-- WORKBOOKS TEASER -->
+<section class="wb-teaser reveal">
+  <!-- blended cover strip -->
+  <div class="wb-teaser-covers" aria-hidden="true">
+    <div class="wb-cover-img" style="background-image:url('https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_COVER.png');--tint:rgba(244,114,182,.18);"></div>
+    <div class="wb-cover-img" style="background-image:url('https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_COVER.png');--tint:rgba(168,85,247,.18);"></div>
+    <div class="wb-cover-img" style="background-image:url('https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_COVER.png');--tint:rgba(0,245,212,.14);"></div>
+    <div class="wb-cover-img" style="background-image:url('https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_COVER.png');--tint:rgba(251,191,36,.14);"></div>
+    <div class="wb-cover-img" style="background-image:url('https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_COVER.png');--tint:rgba(132,204,22,.12);"></div>
+    <div class="wb-cover-img" style="background-image:url('https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_COVER.png');--tint:rgba(56,189,248,.14);"></div>
+    <!-- fade edges -->
+    <div class="wb-fade-left"></div>
+    <div class="wb-fade-right"></div>
+    <div class="wb-fade-overlay"></div>
   </div>
-</section>
-
-<!-- WORKBOOKS -->
-<section class="workbooks" id="workbooks">
-  <div class="workbooks__inner">
-    <div class="workbooks__header">
-      <span class="section-label reveal">Printable Workbooks</span>
-      <h2 class="section-title reveal">Take it offline.</h2>
-      <p class="section-desc reveal">Printable curriculum packs. Designed for kids, loved by educators. $7.99 each.</p>
-    </div>
-    <div class="workbooks__grid">
-      <div class="wb-card reveal d1" style="--wb-color:#f472b6;--wb-bg:linear-gradient(135deg,#1a0020,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ZEN_COVER.png" alt="Zen's Creative Circuits"></div><div class="wb-body"><div class="wb-char">Zen · HTML & CSS</div><div class="wb-title">Zen's Creative Circuits Vol. 1</div><div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d2" style="--wb-color:#a855f7;--wb-bg:linear-gradient(135deg,#0d0020,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BYTE_COVER.png" alt="Byte's Debug Lab"></div><div class="wb-body"><div class="wb-char">Byte · Debugging</div><div class="wb-title">Byte's Debug Lab</div><div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d3" style="--wb-color:#00f5d4;--wb-bg:linear-gradient(135deg,#001520,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/LOOP_COVER.png" alt="Loop's Logic Quest"></div><div class="wb-body"><div class="wb-char">Loop · JavaScript</div><div class="wb-title">Loop's Logic Quest</div><div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d1" style="--wb-color:#fbbf24;--wb-bg:linear-gradient(135deg,#1a1500,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/NOVA_COVER.png" alt="Nova Builds a Website"></div><div class="wb-body"><div class="wb-char">Nova · HTML Structure</div><div class="wb-title">Nova Builds a Website</div><div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/fZubJ1bRA0GSeh4bSua3u03" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d2" style="--wb-color:#84cc16;--wb-bg:linear-gradient(135deg,#0a1a00,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/BUG_COVER.png" alt="Bug's Glitch Quest"></div><div class="wb-body"><div class="wb-char">Bug · Debug Lab</div><div class="wb-title">Bug's Glitch Quest</div><div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/cNibJ13l4exI1ui2hUa3u02" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-      <div class="wb-card reveal d3" style="--wb-color:#38bdf8;--wb-bg:linear-gradient(135deg,#001a2a,#0d0f1e)"><div class="wb-cover"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/ECHO_COVER.png" alt="Echo's Sound Systems"></div><div class="wb-body"><div class="wb-char">Echo · JS Events</div><div class="wb-title">Echo's Sound Systems</div><div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div><div class="wb-footer"><div class="wb-price">$7.99</div><a href="https://buy.stripe.com/dRmfZh9Js3T4c8W9Kma3u01" target="_blank" class="wb-btn">Get It →</a></div></div></div>
-    </div>
+  <!-- text on top -->
+  <div class="wb-teaser-content">
+    <span class="wb-teaser-badge">Coming Soon</span>
+    <h2 class="wb-teaser-title">Six workbooks.<br>Take the universe offline.</h2>
+    <p class="wb-teaser-desc">Printable curriculum packs for every character — designed for kids, built for creators.</p>
+    <a href="pdfs.html" class="wb-teaser-link">Preview the PDFs →</a>
   </div>
 </section>
 
