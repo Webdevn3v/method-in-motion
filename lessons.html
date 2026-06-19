@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lessons — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --void:#050508;--deep:#080b14;--card:#0f1525;
+  --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
+  --white:#fff;--off:#c8cce0;--muted:#5a6080;
+  --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
+  --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7;}
+a{color:inherit;text-decoration:none}
+img{display:block;max-width:100%}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;}
+.nav-logo-mark{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#000;}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s;}
+.nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-right{display:flex;align-items:center;gap:10px}
+.nav-cta{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(198,107,255,.4);color:var(--purple);border-radius:100px;transition:all .3s;background:none;cursor:pointer;}
+.nav-join{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;}
+#nav-user-menu{display:none;align-items:center;gap:10px}
+#nav-dashboard-link{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(0,232,255,.3);color:var(--cyan);border-radius:100px;}
+#nav-logout-btn{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.15);background:none;color:rgba(255,255,255,.4);border-radius:100px;cursor:pointer}
+@media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
+
+/* HERO */
+.page-hero{position:relative;padding:140px 48px 80px;text-align:center;overflow:hidden;background:var(--deep);}
+.page-hero::before{content:'';position:absolute;inset:0;background-image:url('Mim_Lesson_Entrance.png');background-size:cover;background-position:center top;opacity:.18;z-index:0;}
+.page-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,transparent 0%,var(--deep) 70%);z-index:1;}
+.page-hero-content{position:relative;z-index:2;}
+.page-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:block;}
+.page-title{font-family:var(--display);font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;}
+.page-desc{font-size:1rem;color:var(--off);max-width:520px;margin:0 auto 32px;line-height:1.9;}
+
+/* TIER KEY */
+.tier-key{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:0;}
+.tier-tag{font-family:var(--display);font-size:.46rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 14px;border-radius:100px;border:1px solid;}
+.tier-free{border-color:var(--cyan);color:var(--cyan);}
+.tier-sparks{border-color:#f472b6;color:#f472b6;}
+.tier-builders{border-color:#a855f7;color:#a855f7;}
+.tier-coders{border-color:#fbbf24;color:#fbbf24;}
+
+/* LESSON GRID */
+.lessons-section{padding:80px 0;}
+.lessons__inner{max-width:1200px;margin:0 auto;padding:0 48px;}
+.char-block{margin-bottom:72px;}
+.char-block-header{display:flex;align-items:center;gap:16px;margin-bottom:28px;padding-bottom:16px;border-bottom:1px solid var(--border);}
+.char-avatar{width:52px;height:52px;border-radius:50%;overflow:hidden;border:2px solid var(--cc,var(--pink));background:rgba(0,0,0,.4);flex-shrink:0;}
+.char-avatar img{width:100%;height:100%;object-fit:cover;}
+.char-block-info{}
+.char-block-name{font-family:var(--heading);font-size:1.4rem;font-weight:800;line-height:1;}
+.char-block-role{font-size:.8rem;color:var(--muted);}
+.char-block-link{margin-left:auto;font-family:var(--display);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:8px 18px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));border-radius:100px;transition:all .2s;white-space:nowrap;}
+.char-block-link:hover{background:var(--cc,var(--pink));color:#000;}
+
+/* Lesson cards row */
+.lessons-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+@media(max-width:900px){.lessons-row{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.lessons-row{grid-template-columns:1fr}}
+.lesson-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:20px;position:relative;transition:all .3s;overflow:hidden;}
+.lesson-card.locked{opacity:.55;filter:grayscale(.3);}
+.lesson-card:not(.locked):hover{transform:translateY(-4px);border-color:var(--cc,var(--pink));box-shadow:0 12px 40px rgba(0,0,0,.4);}
+.lesson-num{font-family:var(--display);font-size:.46rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cc,var(--pink));margin-bottom:8px;display:flex;align-items:center;justify-content:space-between;}
+.lesson-lock{font-size:.7rem;opacity:.6;}
+.lesson-title{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:6px;line-height:1.3;}
+.lesson-desc{font-size:.76rem;color:var(--muted);line-height:1.7;margin-bottom:14px;}
+.lesson-tier{font-family:var(--display);font-size:.42rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 10px;border-radius:100px;border:1px solid;display:inline-block;margin-bottom:14px;}
+.lesson-cta{display:block;text-align:center;font-family:var(--display);font-size:.5rem;letter-spacing:.12em;text-transform:uppercase;padding:9px;border-radius:8px;background:var(--cc,var(--pink));color:#000;font-weight:700;transition:opacity .2s;}
+.lesson-cta:hover{opacity:.85}
+.lesson-cta.locked-cta{background:none;border:1px solid var(--border-md);color:var(--muted);}
+.lesson-cta.locked-cta:hover{border-color:var(--cc,var(--pink));color:var(--cc,var(--pink));}
+
+/* CTA STRIP */
+.lessons-cta-strip{background:var(--deep);padding:72px 48px;text-align:center;border-top:1px solid var(--border);}
+.lessons-cta-strip h2{font-family:var(--heading);font-size:clamp(1.4rem,3vw,2.2rem);font-weight:800;margin-bottom:12px;}
+.lessons-cta-strip p{font-size:.92rem;color:var(--off);max-width:420px;margin:0 auto 24px;line-height:1.8;}
+.btn-primary{font-family:var(--display);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 32px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;box-shadow:0 8px 30px rgba(198,107,255,.3);display:inline-block;}
+.btn-primary:hover{transform:translateY(-2px);}
+
+/* AUTH MODAL */
+.auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
+.auth-modal-overlay.active{display:flex}
+.auth-modal-box{background:#0a0a1a;border:1px solid rgba(0,240,255,.2);border-radius:16px;padding:2.4rem 2rem;width:100%;max-width:420px;position:relative;}
+.auth-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.4rem;cursor:pointer;}
+.auth-modal-header{text-align:center;margin-bottom:1.6rem}
+.auth-logo-mark{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(135deg,#00f0ff,#ff6ec7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.auth-tagline{font-family:'Syne',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
+.auth-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.6rem}
+.auth-tab{flex:1;background:none;border:none;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.7rem 0;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
+.auth-tab.active{color:#00f0ff;border-bottom-color:#00f0ff}
+.auth-form{display:none}.auth-form.active{display:block}
+.auth-field{margin-bottom:1rem}
+.auth-field label{display:block;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.35rem}
+.auth-field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.68rem .88rem;color:#fff;font-family:'Syne',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;box-sizing:border-box}
+.auth-field input:focus{border-color:rgba(0,240,255,.5)}
+.auth-field input::placeholder{color:rgba(255,255,255,.2)}
+.auth-error{font-family:'Syne',sans-serif;font-size:.76rem;color:#ff6ec7;min-height:1.2em;margin:.2rem 0 .7rem}
+.auth-submit{width:100%;background:linear-gradient(135deg,#00f0ff,#7b61ff);border:none;border-radius:8px;padding:.82rem;color:#000;font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;margin-bottom:.9rem}
+.auth-switch{text-align:center;font-family:'Syne',sans-serif;font-size:.76rem;color:rgba(255,255,255,.35)}
+.auth-link{background:none;border:none;color:#00f0ff;font-family:'Syne',sans-serif;font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
+  <ul class="nav-links">
+    <li><a href="index.html#crew">Crew</a></li>
+    <li><a href="membership.html">Membership</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="pdfs.html">PDFs</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="lessons.html" class="active">Lessons</a></li>
+  </ul>
+  <div class="nav-right">
+    <div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
+      <a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
+      <button id="nav-logout-btn">Sign Out</button>
+    </div>
+    <button class="nav-cta" onclick="openAuthModal('login')">Log In</button>
+    <button class="nav-join" onclick="openAuthModal('signup')">Join Free →</button>
+  </div>
+</nav>
+
+<!-- PAGE HERO -->
+<section class="page-hero">
+  <div class="page-hero-content">
+    <span class="page-eyebrow">Method in Motion · Academy</span>
+    <h1 class="page-title">Lessons</h1>
+    <p class="page-desc">Six characters. Four lessons each. Every lesson is a world — pick your crew member and start building.</p>
+    <div class="tier-key">
+      <div class="tier-tag tier-free">Free — Zen & Byte L1</div>
+      <div class="tier-tag tier-sparks">Sparks · L1 All Chars</div>
+      <div class="tier-tag tier-builders">Builders · L1–3</div>
+      <div class="tier-tag tier-coders">Coders · All 4 Lessons</div>
+    </div>
+  </div>
+</section>
+
+<!-- LESSONS -->
+<section class="lessons-section">
+  <div class="lessons__inner">
+
+    <!-- ZEN -->
+    <div class="char-block">
+      <div class="char-block-header" style="--cc:#f472b6;">
+        <div class="char-avatar" style="border-color:#f472b6;"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" alt="Zen"></div>
+        <div class="char-block-info">
+          <div class="char-block-name" style="color:#f472b6;">Zen</div>
+          <div class="char-block-role">Creative Coder · HTML & CSS</div>
+        </div>
+        <a href="zen.html" class="char-block-link" style="--cc:#f472b6;border-color:#f472b6;color:#f472b6;">Enter Zen's World →</a>
+      </div>
+      <div class="lessons-row" style="--cc:#f472b6;">
+        <div class="lesson-card">
+          <div class="lesson-num">Lesson 1 <span class="lesson-tier tier-free" style="border-color:var(--cyan);color:var(--cyan);">Free</span></div>
+          <div class="lesson-title">Think Like a Designer</div>
+          <div class="lesson-desc">What is code? How does the web work? Zen walks you through how ideas become websites.</div>
+          <a href="zen.html#lesson1" class="lesson-cta">Start Lesson →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 2 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Color, Shape & Style</div>
+          <div class="lesson-desc">Dive into CSS properties — colors, fonts, borders — and make the web your own.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 3 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#a855f7;color:#a855f7;">Builders+</div>
+          <div class="lesson-title">Layout Lab</div>
+          <div class="lesson-desc">Flexbox and grid — learn how to place things where you want them on the page.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Builders →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 4 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#fbbf24;color:#fbbf24;">Coders</div>
+          <div class="lesson-title">Build Your First Page</div>
+          <div class="lesson-desc">Put it all together. Design and code a real webpage from scratch with Zen's guidance.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Coders →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- BYTE -->
+    <div class="char-block">
+      <div class="char-block-header" style="--cc:#a855f7;">
+        <div class="char-avatar" style="border-color:#a855f7;"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/byte-idle.gif" alt="Byte"></div>
+        <div class="char-block-info">
+          <div class="char-block-name" style="color:#a855f7;">Byte</div>
+          <div class="char-block-role">Glitch Cat · Debugging</div>
+        </div>
+        <a href="byte.html" class="char-block-link" style="border-color:#a855f7;color:#a855f7;">Enter Byte's World →</a>
+      </div>
+      <div class="lessons-row" style="--cc:#a855f7;">
+        <div class="lesson-card">
+          <div class="lesson-num">Lesson 1 <span class="lesson-tier tier-free" style="border-color:var(--cyan);color:var(--cyan);">Free</span></div>
+          <div class="lesson-title">What Is a Bug?</div>
+          <div class="lesson-desc">Every bug is a clue. Byte teaches you how to read errors and start thinking like a debugger.</div>
+          <a href="byte.html#lesson1" class="lesson-cta" style="background:#a855f7;">Start Lesson →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 2 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Reading the Console</div>
+          <div class="lesson-desc">Your browser's console is a secret weapon. Learn to use it to find and fix problems fast.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 3 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#a855f7;color:#a855f7;">Builders+</div>
+          <div class="lesson-title">Trace the Logic</div>
+          <div class="lesson-desc">Follow code like a detective follows clues — learn to trace execution step by step.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Builders →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 4 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#fbbf24;color:#fbbf24;">Coders</div>
+          <div class="lesson-title">Fix It Forward</div>
+          <div class="lesson-desc">Take a broken project and bring it back to life. Full debug challenge with Byte's help.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Coders →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- LOOP -->
+    <div class="char-block">
+      <div class="char-block-header" style="--cc:#00f5d4;">
+        <div class="char-avatar" style="border-color:#00f5d4;background:linear-gradient(135deg,#001a18,#0d0f1e);"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-motion.gif" alt="Loop" onerror="this.style.display='none'"></div>
+        <div class="char-block-info">
+          <div class="char-block-name" style="color:#00f5d4;">Loop</div>
+          <div class="char-block-role">Flow Guide · JavaScript</div>
+        </div>
+        <a href="loop.html" class="char-block-link" style="border-color:#00f5d4;color:#00f5d4;">Enter Loop's World →</a>
+      </div>
+      <div class="lessons-row" style="--cc:#00f5d4;">
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 1 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Patterns & Sequences</div>
+          <div class="lesson-desc">Everything repeats. Loop shows you how computers think in patterns and how to write them.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 2 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Variables & Values</div>
+          <div class="lesson-desc">What does it mean to store something? Learn variables and why they're the memory of your code.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 3 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#a855f7;color:#a855f7;">Builders+</div>
+          <div class="lesson-title">Loops in the Wild</div>
+          <div class="lesson-desc">For loops, while loops — Loop breaks down each one and shows you where they live in real code.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Builders →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 4 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#fbbf24;color:#fbbf24;">Coders</div>
+          <div class="lesson-title">Build an Algorithm</div>
+          <div class="lesson-desc">A real problem, a real solution. Build a working algorithm from scratch with Loop.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Coders →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- NOVA -->
+    <div class="char-block">
+      <div class="char-block-header" style="--cc:#fbbf24;">
+        <div class="char-avatar" style="border-color:#fbbf24;"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/nova-motion.gif" alt="Nova"></div>
+        <div class="char-block-info">
+          <div class="char-block-name" style="color:#fbbf24;">Nova</div>
+          <div class="char-block-role">Builder Bot · HTML Structure</div>
+        </div>
+        <a href="nova.html" class="char-block-link" style="border-color:#fbbf24;color:#fbbf24;">Enter Nova's World →</a>
+      </div>
+      <div class="lessons-row" style="--cc:#fbbf24;">
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 1 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Building Blocks</div>
+          <div class="lesson-desc">HTML tags are like LEGO — Nova shows you what every piece does and how they snap together.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 2 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Structure Is Everything</div>
+          <div class="lesson-desc">Why does structure matter? Nova breaks down semantic HTML and how it shapes the web.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 3 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#a855f7;color:#a855f7;">Builders+</div>
+          <div class="lesson-title">Forms & Functions</div>
+          <div class="lesson-desc">Build forms, buttons, and interactive elements — the tools your user actually touches.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Builders →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 4 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#fbbf24;color:#fbbf24;">Coders</div>
+          <div class="lesson-title">Blueprint Challenge</div>
+          <div class="lesson-desc">Nova gives you a design. You build the HTML. Full capstone project from scratch.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Coders →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUG -->
+    <div class="char-block">
+      <div class="char-block-header" style="--cc:#84cc16;">
+        <div class="char-avatar" style="border-color:#84cc16;"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/bug-motion.gif" alt="Bug"></div>
+        <div class="char-block-info">
+          <div class="char-block-name" style="color:#84cc16;">Bug</div>
+          <div class="char-block-role">Debug Gremlin · Debug Lab</div>
+        </div>
+        <a href="bug.html" class="char-block-link" style="border-color:#84cc16;color:#84cc16;">Enter Bug's World →</a>
+      </div>
+      <div class="lessons-row" style="--cc:#84cc16;">
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 1 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Chaos Is Data</div>
+          <div class="lesson-desc">Bug loves breaking things. Learn why errors are information — not failure.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 2 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Error Types 101</div>
+          <div class="lesson-desc">Syntax, runtime, logic — Bug walks you through every flavor of error and what to do about it.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 3 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#a855f7;color:#a855f7;">Builders+</div>
+          <div class="lesson-title">Systems Thinking</div>
+          <div class="lesson-desc">How does one thing affect everything else? Bug teaches you to see code as a system.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Builders →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 4 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#fbbf24;color:#fbbf24;">Coders</div>
+          <div class="lesson-title">The Chaos Lab</div>
+          <div class="lesson-desc">Bug hands you a completely broken project. Your job: find every bug and fix them all.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Coders →</a>
+        </div>
+      </div>
+    </div>
+
+    <!-- ECHO -->
+    <div class="char-block">
+      <div class="char-block-header" style="--cc:#38bdf8;">
+        <div class="char-avatar" style="border-color:#38bdf8;"><img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-motion.gif" alt="Echo"></div>
+        <div class="char-block-info">
+          <div class="char-block-name" style="color:#38bdf8;">Echo</div>
+          <div class="char-block-role">Signal DJ · JS Events</div>
+        </div>
+        <a href="echo.html" class="char-block-link" style="border-color:#38bdf8;color:#38bdf8;">Enter Echo's World →</a>
+      </div>
+      <div class="lessons-row" style="--cc:#38bdf8;">
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 1 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">When Things Happen</div>
+          <div class="lesson-desc">Events are how code listens. Echo shows you click, hover, scroll — and how to respond to all of them.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 2 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#f472b6;color:#f472b6;">Sparks+</div>
+          <div class="lesson-title">Functions as Responses</div>
+          <div class="lesson-desc">What does your code do when something happens? Echo teaches you to write functions that respond.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Sparks →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 3 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#a855f7;color:#a855f7;">Builders+</div>
+          <div class="lesson-title">Sound & Signal</div>
+          <div class="lesson-desc">Use the Web Audio API to make sound with code — Echo's signature move, and yours too.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Builders →</a>
+        </div>
+        <div class="lesson-card locked">
+          <div class="lesson-num">Lesson 4 <span class="lesson-lock">🔒</span></div>
+          <div class="lesson-tier" style="border-color:#fbbf24;color:#fbbf24;">Coders</div>
+          <div class="lesson-title">Build a Beat Machine</div>
+          <div class="lesson-desc">Echo's capstone: build a working 16-step beat machine using JavaScript events and audio.</div>
+          <a href="membership.html" class="lesson-cta locked-cta">Unlock with Coders →</a>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- CTA -->
+<div class="lessons-cta-strip">
+  <h2>Ready to unlock everything?</h2>
+  <p>Sparks membership ($5/mo) gives you Lesson 1 for all six characters. Coders unlocks every lesson, every game.</p>
+  <button class="btn-primary" onclick="openAuthModal('signup')">Start Free — No Card Needed →</button>
+</div>
+
+<!-- AUTH MODAL -->
+<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
+  <div class="auth-modal-box">
+    <button class="auth-close" id="auth-close-btn">&times;</button>
+    <div class="auth-modal-header"><div class="auth-logo-mark">MiM</div><p class="auth-tagline">Create. Don't Consume.</p></div>
+    <div class="auth-tabs">
+      <button class="auth-tab active" data-tab="login">Log In</button>
+      <button class="auth-tab" data-tab="signup">Join the Crew</button>
+    </div>
+    <div id="login-form" class="auth-form active">
+      <div class="auth-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/></div>
+      <p class="auth-error" id="login-error"></p>
+      <button class="auth-submit" id="login-submit-btn">Log In</button>
+      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
+    </div>
+    <div id="signup-form" class="auth-form">
+      <p style="font-family:'Syne',sans-serif;font-size:.72rem;color:rgba(0,232,255,.8);text-align:center;margin-bottom:.9rem">Free account — no card needed</p>
+      <div class="auth-field"><label>Display Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"/></div>
+      <div class="auth-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"/></div>
+      <div class="auth-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"/></div>
+      <p class="auth-error" id="signup-error"></p>
+      <button class="auth-submit" id="signup-submit-btn">Create Free Account</button>
+      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
+    </div>
+  </div>
+</div>
+
+<script>
+function openAuthModal(tab){document.getElementById('auth-modal').classList.add('active');switchTab(tab);}
+function switchTab(tab){document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));document.querySelector('.auth-tab[data-tab="'+tab+'"]').classList.add('active');document.getElementById(tab+'-form').classList.add('active');}
+document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
+document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
+document.getElementById('auth-close-btn').addEventListener('click',()=>document.getElementById('auth-modal').classList.remove('active'));
+document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').classList.remove('active');});
+</script>
+<script type="module" src="auth-init.js"></script>
+</body>
+</html>
