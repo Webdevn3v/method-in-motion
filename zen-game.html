@@ -170,7 +170,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 <!-- ══ INTRO SCREEN ══ -->
 <div class="screen active" id="screen-intro">
   <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px;">
-    <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" class="intro-zen" alt="Zen">
+    <video id="zen-intro-vid" class="intro-zen" autoplay muted playsinline style="background:transparent;">
+      <source src="zen-game-intro-trans.mp4" type="video/mp4">
+    </video>
     <div class="intro-bubble">
       Hey! I'm <em>Zen</em>. We're going to design a card together —<br>your choices, your style, <em>real CSS.</em> ✨
     </div>
@@ -187,7 +189,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
     <!-- LEFT: LIVE PREVIEW -->
     <div class="preview-side">
       <div class="prog-dots" id="prog-dots"></div>
-      <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" class="zen-mini" alt="Zen">
+      <video class="zen-mini" autoplay muted loop playsinline style="background:transparent;">
+        <source src="zen-game-idle-trans.mp4" type="video/mp4">
+      </video>
       <div class="zen-say" id="zen-say">Let's go!</div>
       <div class="card-stage">
         <div class="styled-card" id="styled-card">
@@ -216,7 +220,9 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 <!-- ══ REVEAL SCREEN ══ -->
 <div class="screen" id="screen-reveal">
   <div style="display:flex;flex-direction:column;align-items:center;width:100%;max-width:440px;margin:0 auto;">
-    <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/zen-motion.gif" style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(244,114,182,0.6));animation:float 3s ease-in-out infinite;margin-bottom:10px;" alt="Zen">
+    <video autoplay muted loop playsinline style="width:80px;height:80px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(244,114,182,0.6));animation:float 3s ease-in-out infinite;margin-bottom:10px;background:transparent;">
+      <source src="zen-game-idle-trans.mp4" type="video/mp4">
+    </video>
     <div class="reveal-title">You designed this. 🎨</div>
     <div class="reveal-sub">Every choice was a real CSS property.</div>
     <div class="reveal-card-wrap">
@@ -237,6 +243,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 </div>
 
 <script>
+// Intro video: play once then swap to idle loop
+const introVid = document.getElementById('zen-intro-vid');
+if (introVid) {
+  introVid.addEventListener('ended', () => {
+    introVid.innerHTML = '<source src="zen-game-idle-trans.mp4" type="video/mp4">';
+    introVid.loop = true;
+    introVid.load();
+    introVid.play();
+  });
+}
+
 const STEPS = [
   {
     tag:"Step 1 of 5",
