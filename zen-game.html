@@ -24,16 +24,81 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 .nav-back{font-family:var(--D);font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.35);transition:color 0.2s;}
 .nav-back:hover{color:var(--pink);}
 
-/* ── SCREENS ── */
-.screen{position:fixed;inset:0;top:50px;display:flex;align-items:center;justify-content:center;transition:opacity 0.4s,transform 0.4s;pointer-events:none;opacity:0;}
+/* SCREENS */
+.screen{position:fixed;inset:0;top:50px;display:flex;align-items:center;justify-content:center;transition:opacity 0.5s,transform 0.5s;pointer-events:none;opacity:0;}
 .screen.active{opacity:1;pointer-events:all;}
 .screen.exit{opacity:0;transform:scale(0.96);}
 
 /* ══════════════════════════════
-   INTRO SCREEN
+   CINEMATIC FULLSCREEN INTRO
+══════════════════════════════ */
+#screen-cinematic{
+  top:0;
+  background:#000;
+  z-index:200;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+}
+#screen-cinematic.active{opacity:1;pointer-events:all;}
+
+#zen-cinematic-vid{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  z-index:1;
+}
+
+/* subtle vignette over the video */
+.cinematic-vignette{
+  position:absolute;
+  inset:0;
+  z-index:2;
+  background:radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,0.7) 100%);
+  pointer-events:none;
+}
+
+/* skip button */
+.cinematic-skip{
+  position:absolute;
+  bottom:32px;
+  right:32px;
+  z-index:10;
+  font-family:var(--D);
+  font-size:0.5rem;
+  letter-spacing:0.18em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,0.35);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:100px;
+  padding:8px 18px;
+  cursor:pointer;
+  background:rgba(0,0,0,0.4);
+  backdrop-filter:blur(8px);
+  transition:color 0.2s, border-color 0.2s;
+}
+.cinematic-skip:hover{color:#fff;border-color:rgba(255,255,255,0.5);}
+
+/* progress bar at bottom */
+.cinematic-progress{
+  position:absolute;
+  bottom:0;
+  left:0;
+  height:2px;
+  background:var(--grad);
+  z-index:10;
+  width:0%;
+  transition:width 0.1s linear;
+}
+
+/* ══════════════════════════════
+   INTRO / INSTRUCTIONS SCREEN
 ══════════════════════════════ */
 #screen-intro{flex-direction:column;text-align:center;padding:24px;background:radial-gradient(ellipse at 50% 40%,rgba(244,114,182,0.12),transparent 65%),var(--void);}
-.intro-zen{width:160px;height:160px;object-fit:contain;filter:drop-shadow(0 0 32px rgba(244,114,182,0.6));animation:float 3s ease-in-out infinite;margin-bottom:8px;}
+.intro-zen{width:120px;height:120px;object-fit:contain;filter:drop-shadow(0 0 32px rgba(244,114,182,0.6));animation:float 3s ease-in-out infinite;margin-bottom:8px;background:transparent;}
 @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-12px);}}
 .intro-bubble{background:rgba(244,114,182,0.1);border:1px solid rgba(244,114,182,0.3);border-radius:16px 16px 16px 4px;padding:14px 20px;max-width:320px;margin:0 auto 28px;font-size:1rem;line-height:1.5;position:relative;}
 .intro-bubble em{font-style:normal;color:var(--pink);font-weight:700;}
@@ -53,19 +118,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 /* LEFT — LIVE CARD PREVIEW */
 .preview-side{background:linear-gradient(160deg,#1a0030 0%,#0d0020 50%,#050508 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px 24px;position:relative;overflow:hidden;}
 .preview-side::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 40% 30%,rgba(244,114,182,0.1),transparent 55%),radial-gradient(ellipse at 60% 70%,rgba(168,85,247,0.08),transparent 55%);pointer-events:none;}
-
-/* progress dots */
 .prog-dots{display:flex;gap:7px;margin-bottom:20px;z-index:1;}
 .pdot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all 0.35s;}
 .pdot.done{background:var(--pink);}
 .pdot.active{background:var(--pink);width:22px;border-radius:4px;}
-
-/* zen mini */
-.zen-mini{width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(244,114,182,0.5));animation:float 3s ease-in-out infinite;z-index:1;margin-bottom:4px;}
+.zen-mini{width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 0 16px rgba(244,114,182,0.5));animation:float 3s ease-in-out infinite;z-index:1;margin-bottom:4px;background:transparent;}
 .zen-say{font-size:0.78rem;color:rgba(255,255,255,0.65);text-align:center;max-width:220px;min-height:40px;z-index:1;margin-bottom:20px;line-height:1.5;}
 .zen-say strong{color:var(--pink);}
-
-/* THE CARD BEING STYLED */
 .card-stage{z-index:1;width:100%;max-width:280px;}
 .styled-card{
   border-radius:var(--c-radius,16px);
@@ -74,36 +133,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
   border:var(--c-border,1px solid rgba(244,114,182,0.2));
   box-shadow:var(--c-shadow,0 0 40px rgba(244,114,182,0.15));
   transition:all 0.5s cubic-bezier(0.34,1.2,0.64,1);
-  text-align:center;
-  position:relative;
-  overflow:hidden;
+  text-align:center;position:relative;overflow:hidden;
 }
 .styled-card::before{content:'';position:absolute;top:-40px;left:50%;transform:translateX(-50%);width:80%;height:80px;border-radius:50%;background:var(--c-glow,rgba(244,114,182,0.08));filter:blur(20px);transition:all 0.5s;}
 .sc-label{font-family:var(--D);font-size:0.42rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--c-accent,#f472b6);margin-bottom:8px;opacity:0.7;}
 .sc-name{font-family:var(--H);font-size:1.3rem;font-weight:800;color:var(--c-title,#fff);margin-bottom:4px;transition:color 0.4s;}
 .sc-role{font-size:0.75rem;color:rgba(255,255,255,0.45);margin-bottom:16px;}
 .sc-btn{display:inline-block;font-family:var(--D);font-size:0.46rem;letter-spacing:0.12em;text-transform:uppercase;padding:var(--c-btnpad,8px 18px);border-radius:var(--c-btnrad,100px);background:var(--c-btnbg,rgba(244,114,182,0.15));border:1px solid var(--c-accent,rgba(244,114,182,0.4));color:var(--c-accent,#f472b6);transition:all 0.4s;}
-
-/* css line readout */
 .css-line{margin-top:16px;font-family:monospace;font-size:0.68rem;color:rgba(255,255,255,0.3);z-index:1;text-align:center;min-height:20px;transition:all 0.3s;}
 .css-line span{color:var(--cyan);}
 
 /* RIGHT — CHOICE PANEL */
 .choice-side{background:var(--deep);border-left:1px solid rgba(255,255,255,0.05);display:flex;flex-direction:column;overflow:hidden;}
-
 .step-top{padding:22px 22px 14px;border-bottom:1px solid rgba(255,255,255,0.05);}
 .step-tag{font-family:var(--D);font-size:0.44rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:6px;display:block;}
 .step-q{font-family:var(--H);font-size:1.2rem;font-weight:800;line-height:1.2;}
 .step-q em{font-style:normal;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-
-/* OPTIONS */
 .choices{flex:1;padding:16px;display:grid;grid-template-columns:1fr 1fr;gap:10px;overflow-y:auto;align-content:start;}
 .choice{border-radius:12px;border:2px solid rgba(255,255,255,0.06);background:rgba(255,255,255,0.02);cursor:pointer;transition:all 0.2s;position:relative;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 10px;gap:8px;}
 .choice:hover{border-color:rgba(244,114,182,0.35);background:rgba(244,114,182,0.05);transform:scale(1.03);}
 .choice.picked{border-color:var(--pink);background:rgba(244,114,182,0.12);transform:scale(1.04);}
 .choice.picked::after{content:'✓';position:absolute;top:6px;right:8px;font-size:0.7rem;color:var(--pink);}
-
-/* visual previews inside options */
 .opt-swatch{width:48px;height:48px;border-radius:8px;flex-shrink:0;}
 .opt-radius-preview{width:44px;height:44px;background:rgba(244,114,182,0.25);border:2px solid var(--pink);flex-shrink:0;}
 .opt-shadow-preview{width:44px;height:44px;background:rgba(26,0,48,0.8);border-radius:8px;flex-shrink:0;}
@@ -111,8 +161,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 .opt-name{font-family:var(--H);font-size:0.78rem;font-weight:700;text-align:center;line-height:1.2;}
 .opt-code{font-family:monospace;font-size:0.6rem;color:rgba(255,255,255,0.3);text-align:center;}
 .choice.picked .opt-code{color:rgba(244,114,182,0.6);}
-
-/* bottom feedback toast */
 .toast{padding:10px 18px;background:rgba(244,114,182,0.1);border-top:1px solid rgba(244,114,182,0.2);font-size:0.78rem;color:rgba(255,255,255,0.75);min-height:42px;line-height:1.5;transition:all 0.3s;display:flex;align-items:center;gap:8px;}
 .toast-icon{font-size:1rem;flex-shrink:0;}
 
@@ -123,8 +171,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 #screen-reveal.active{pointer-events:all;}
 .reveal-title{font-family:var(--D);font-size:clamp(1.4rem,4vw,2.2rem);font-weight:900;letter-spacing:0.06em;margin-bottom:6px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
 .reveal-sub{font-size:0.85rem;color:rgba(255,255,255,0.45);margin-bottom:24px;}
-
-/* big card reveal */
 .reveal-card-wrap{position:relative;display:inline-block;margin-bottom:24px;}
 .reveal-card{
   border-radius:var(--c-radius,16px);
@@ -132,8 +178,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
   background:var(--c-bg,rgba(26,0,48,0.8));
   border:var(--c-border,1px solid rgba(244,114,182,0.2));
   box-shadow:var(--c-shadow,0 0 40px rgba(244,114,182,0.15));
-  text-align:center;
-  min-width:260px;
+  text-align:center;min-width:260px;
   animation:card-pop 0.6s cubic-bezier(0.34,1.56,0.64,1);
   position:relative;overflow:hidden;
 }
@@ -143,13 +188,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 .rsc-name{font-family:var(--H);font-size:1.6rem;font-weight:800;color:var(--c-title,#fff);margin-bottom:4px;}
 .rsc-role{font-size:0.78rem;color:rgba(255,255,255,0.45);margin-bottom:20px;}
 .rsc-btn{display:inline-block;font-family:var(--D);font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;padding:var(--c-btnpad,10px 22px);border-radius:var(--c-btnrad,100px);background:var(--c-btnbg,rgba(244,114,182,0.15));border:1px solid var(--c-accent,rgba(244,114,182,0.4));color:var(--c-accent,#f472b6);}
-
-/* CSS trophy */
 .css-trophy{background:rgba(0,0,0,0.4);border:1px solid rgba(255,255,255,0.06);border-radius:12px;padding:16px 20px;text-align:left;max-width:340px;margin:0 auto 24px;font-family:monospace;font-size:0.72rem;line-height:2;}
 .ct-prop{color:var(--cyan);}
 .ct-val{color:var(--pink);}
 .ct-comment{color:rgba(255,255,255,0.2);}
-
 .reveal-btns{display:flex;flex-direction:column;gap:10px;max-width:300px;margin:0 auto;}
 .rbtn-primary{font-family:var(--D);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;padding:14px;border-radius:10px;background:var(--grad);color:#000;font-weight:700;border:none;cursor:pointer;transition:transform 0.2s;}
 .rbtn-primary:hover{transform:translateY(-2px);}
@@ -162,16 +204,27 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 </style>
 </head>
 <body>
+
 <nav>
   <a href="index.html" class="nav-logo"><div class="nav-mark">&gt;</div>method in motion</a>
   <a href="games.html" class="nav-back">← All Games</a>
 </nav>
 
-<!-- ══ INTRO SCREEN ══ -->
-<div class="screen active" id="screen-intro">
+<!-- ══ CINEMATIC FULLSCREEN INTRO ══ -->
+<div class="screen active" id="screen-cinematic">
+  <video id="zen-cinematic-vid" autoplay muted playsinline>
+    <source src="zen-intro.mp4" type="video/mp4">
+  </video>
+  <div class="cinematic-vignette"></div>
+  <div class="cinematic-progress" id="cinematic-progress"></div>
+  <button class="cinematic-skip" onclick="skipCinematic()">Skip →</button>
+</div>
+
+<!-- ══ INTRO / INSTRUCTIONS SCREEN ══ -->
+<div class="screen" id="screen-intro">
   <div style="display:flex;flex-direction:column;align-items:center;text-align:center;padding:20px;">
-    <video id="zen-intro-vid" class="intro-zen" autoplay muted playsinline style="background:transparent;">
-      <source src="zen-game-intro-trans.mp4" type="video/mp4">
+    <video class="intro-zen" autoplay muted loop playsinline>
+      <source src="zen-game-idle-trans.mp4" type="video/mp4">
     </video>
     <div class="intro-bubble">
       Hey! I'm <em>Zen</em>. We're going to design a card together —<br>your choices, your style, <em>real CSS.</em> ✨
@@ -185,11 +238,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 <!-- ══ GAME SCREEN ══ -->
 <div class="screen" id="screen-game">
   <div class="game-layout">
-
     <!-- LEFT: LIVE PREVIEW -->
     <div class="preview-side">
       <div class="prog-dots" id="prog-dots"></div>
-      <video class="zen-mini" autoplay muted loop playsinline style="background:transparent;">
+      <video class="zen-mini" autoplay muted loop playsinline>
         <source src="zen-game-idle-trans.mp4" type="video/mp4">
       </video>
       <div class="zen-say" id="zen-say">Let's go!</div>
@@ -203,7 +255,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
       </div>
       <div class="css-line" id="css-line">waiting for your first pick...</div>
     </div>
-
     <!-- RIGHT: CHOICES -->
     <div class="choice-side">
       <div class="step-top">
@@ -213,7 +264,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
       <div class="choices" id="choices-grid"></div>
       <div class="toast" id="toast"><span class="toast-icon">👆</span><span id="toast-text">Pick one to see the card change!</span></div>
     </div>
-
   </div>
 </div>
 
@@ -243,76 +293,99 @@ nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:12px 28px;display:fl
 </div>
 
 <script>
-// Intro video: play once then swap to idle loop
-const introVid = document.getElementById('zen-intro-vid');
-if (introVid) {
-  introVid.addEventListener('ended', () => {
-    introVid.innerHTML = '<source src="zen-game-idle-trans.mp4" type="video/mp4">';
-    introVid.loop = true;
-    introVid.load();
-    introVid.play();
-  });
+// ══ CINEMATIC INTRO ══
+const cinematicVid = document.getElementById('zen-cinematic-vid');
+const progressBar = document.getElementById('cinematic-progress');
+
+// update progress bar as video plays
+cinematicVid.addEventListener('timeupdate', () => {
+  if (cinematicVid.duration) {
+    const pct = (cinematicVid.currentTime / cinematicVid.duration) * 100;
+    progressBar.style.width = pct + '%';
+  }
+});
+
+// auto-advance when video ends
+cinematicVid.addEventListener('ended', () => {
+  advanceToCinematic();
+});
+
+// fallback: if video fails to load, skip after 3s
+cinematicVid.addEventListener('error', () => {
+  setTimeout(advanceToCinematic, 3000);
+});
+
+function advanceToCinematic() {
+  const cin = document.getElementById('screen-cinematic');
+  cin.style.transition = 'opacity 0.8s';
+  cin.style.opacity = '0';
+  setTimeout(() => {
+    cin.classList.remove('active');
+    cin.style.opacity = '';
+    document.getElementById('screen-intro').classList.add('active');
+  }, 800);
 }
 
+function skipCinematic() {
+  cinematicVid.pause();
+  advanceToCinematic();
+}
+
+// ══ GAME DATA ══
 const STEPS = [
   {
-    tag:"Step 1 of 5",
-    q:"What's the <em>background?</em>",
+    tag:"Step 1 of 5", q:"What's the <em>background?</em>",
     say:"Pick a background — watch the card change instantly! 👇",
     prop:"--c-bg", cssProp:"background",
     opts:[
-      {name:"Deep Space",    code:"#1a0030",  preview:"swatch", color:"#1a0030",  toast:"Dark purple — moody and bold. ✨"},
-      {name:"Midnight",      code:"#0d1b4b",  preview:"swatch", color:"#0d1b4b",  toast:"Deep blue — clean and professional. 💙"},
-      {name:"Void Black",    code:"#080810",  preview:"swatch", color:"#080810",  toast:"Near-black — minimal and striking. 🖤"},
-      {name:"Soft Plum",     code:"#1e0a2e",  preview:"swatch", color:"#1e0a2e",  toast:"Warm plum — dreamy and creative. 💜"},
+      {name:"Deep Space", code:"#1a0030", preview:"swatch", color:"#1a0030", toast:"Dark purple — moody and bold. ✨"},
+      {name:"Midnight",   code:"#0d1b4b", preview:"swatch", color:"#0d1b4b", toast:"Deep blue — clean and professional. 💙"},
+      {name:"Void Black", code:"#080810", preview:"swatch", color:"#080810", toast:"Near-black — minimal and striking. 🖤"},
+      {name:"Soft Plum",  code:"#1e0a2e", preview:"swatch", color:"#1e0a2e", toast:"Warm plum — dreamy and creative. 💜"},
     ]
   },
   {
-    tag:"Step 2 of 5",
-    q:"How <em>round</em> are the corners?",
+    tag:"Step 2 of 5", q:"How <em>round</em> are the corners?",
     say:"border-radius shapes the card. Round or sharp?",
     prop:"--c-radius", cssProp:"border-radius",
     opts:[
-      {name:"Super Round",   code:"28px",   preview:"radius", radius:"28px",   toast:"28px — soft and friendly. 🟣"},
-      {name:"Modern",        code:"14px",   preview:"radius", radius:"14px",   toast:"14px — balanced and clean. ✅"},
-      {name:"Sharp",         code:"4px",    preview:"radius", radius:"4px",    toast:"4px — crisp and editorial. 📐"},
-      {name:"Square",        code:"0px",    preview:"radius", radius:"0px",    toast:"0px — bold and architectural. ⬛"},
+      {name:"Super Round", code:"28px", preview:"radius", radius:"28px", toast:"28px — soft and friendly. 🟣"},
+      {name:"Modern",      code:"14px", preview:"radius", radius:"14px", toast:"14px — balanced and clean. ✅"},
+      {name:"Sharp",       code:"4px",  preview:"radius", radius:"4px",  toast:"4px — crisp and editorial. 📐"},
+      {name:"Square",      code:"0px",  preview:"radius", radius:"0px",  toast:"0px — bold and architectural. ⬛"},
     ]
   },
   {
-    tag:"Step 3 of 5",
-    q:"What <em>color</em> is the name?",
+    tag:"Step 3 of 5", q:"What <em>color</em> is the name?",
     say:"The color property changes text. What vibe?",
     prop:"--c-title", cssProp:"color",
     opts:[
-      {name:"Pink",          code:"#f472b6",  preview:"swatch", color:"#f472b6",  toast:"Zen's signature pink! 💗"},
-      {name:"Cyan",          code:"#00e8ff",  preview:"swatch", color:"#00e8ff",  toast:"Electric blue — digital energy. ⚡"},
-      {name:"White",         code:"#ffffff",  preview:"swatch", color:"#ffffff",  toast:"Pure white — always clean. 🤍"},
-      {name:"Purple",        code:"#c66bff",  preview:"swatch", color:"#c66bff",  toast:"Soft purple — dreamy. 🔮"},
+      {name:"Pink",   code:"#f472b6", preview:"swatch", color:"#f472b6", toast:"Zen's signature pink! 💗"},
+      {name:"Cyan",   code:"#00e8ff", preview:"swatch", color:"#00e8ff", toast:"Electric blue — digital energy. ⚡"},
+      {name:"White",  code:"#ffffff", preview:"swatch", color:"#ffffff", toast:"Pure white — always clean. 🤍"},
+      {name:"Purple", code:"#c66bff", preview:"swatch", color:"#c66bff", toast:"Soft purple — dreamy. 🔮"},
     ]
   },
   {
-    tag:"Step 4 of 5",
-    q:"Add a <em>glow</em>?",
+    tag:"Step 4 of 5", q:"Add a <em>glow?</em>",
     say:"box-shadow — this is what makes things feel alive!",
     prop:"--c-shadow", cssProp:"box-shadow",
     opts:[
-      {name:"Pink Glow",     code:"0 0 40px rgba(244,114,182,0.5)", preview:"shadow", shadowColor:"rgba(244,114,182,0.6)", toast:"Glowing from within! 💗"},
-      {name:"Purple Aura",   code:"0 0 50px rgba(168,85,247,0.4)",  preview:"shadow", shadowColor:"rgba(168,85,247,0.6)",  toast:"Mysterious purple aura. 🔮"},
-      {name:"Lifted",        code:"0 20px 60px rgba(0,0,0,0.7)",    preview:"shadow", shadowColor:"rgba(0,0,0,0.9)",       toast:"Drop shadow — floats off the page. ⬆️"},
-      {name:"No Shadow",     code:"none",                            preview:"shadow", shadowColor:"transparent",           toast:"Flat and minimal — clean! ✨"},
+      {name:"Pink Glow",   code:"0 0 40px rgba(244,114,182,0.5)", preview:"shadow", shadowColor:"rgba(244,114,182,0.6)", toast:"Glowing from within! 💗"},
+      {name:"Purple Aura", code:"0 0 50px rgba(168,85,247,0.4)",  preview:"shadow", shadowColor:"rgba(168,85,247,0.6)",  toast:"Mysterious purple aura. 🔮"},
+      {name:"Lifted",      code:"0 20px 60px rgba(0,0,0,0.7)",    preview:"shadow", shadowColor:"rgba(0,0,0,0.9)",       toast:"Drop shadow — floats off the page. ⬆️"},
+      {name:"No Shadow",   code:"none",                            preview:"shadow", shadowColor:"transparent",           toast:"Flat and minimal — clean! ✨"},
     ]
   },
   {
-    tag:"Step 5 of 5",
-    q:"What's the <em>border?</em>",
+    tag:"Step 5 of 5", q:"What's the <em>border?</em>",
     say:"Last one! The border is your finishing touch. 🎨",
     prop:"--c-border", cssProp:"border",
     opts:[
-      {name:"Pink Line",     code:"1px solid #f472b6",              preview:"border", borderVal:"2px solid #f472b6",              toast:"Sharp pink edge — signature Zen. 💗"},
-      {name:"Glow Edge",     code:"1px solid rgba(244,114,182,0.4)",preview:"border", borderVal:"2px solid rgba(244,114,182,0.5)",toast:"Soft glowing border. ✨"},
-      {name:"Cyan Pop",      code:"1px solid rgba(0,232,255,0.5)",  preview:"border", borderVal:"2px solid rgba(0,232,255,0.6)", toast:"Cyan contrast — eye-catching! 💙"},
-      {name:"No Border",     code:"none",                           preview:"border", borderVal:"none",                          toast:"Borderless — the card stands alone. ⬛"},
+      {name:"Pink Line",  code:"1px solid #f472b6",            preview:"border", borderVal:"2px solid #f472b6",           toast:"Sharp pink edge — signature Zen. 💗"},
+      {name:"Glow Edge",  code:"1px solid rgba(244,114,182,0.4)", preview:"border", borderVal:"2px solid rgba(244,114,182,0.5)", toast:"Soft glowing border. ✨"},
+      {name:"Cyan Pop",   code:"1px solid rgba(0,232,255,0.5)", preview:"border", borderVal:"2px solid rgba(0,232,255,0.6)", toast:"Cyan contrast — eye-catching! 💙"},
+      {name:"No Border",  code:"none",                          preview:"border", borderVal:"none",                       toast:"Borderless — the card stands alone. ⬛"},
     ]
   }
 ];
@@ -323,19 +396,22 @@ const card = document.getElementById('styled-card');
 
 function setCSS(prop, val) {
   card.style.setProperty(prop, val);
-  document.getElementById('reveal-card') && document.getElementById('reveal-card').style.setProperty(prop, val);
+  const rc = document.getElementById('reveal-card');
+  if (rc) rc.style.setProperty(prop, val);
 }
 
 function startGame() {
-  switchScreen('screen-intro','screen-game');
+  switchScreen('screen-intro', 'screen-game');
   loadStep();
 }
 
 function switchScreen(from, to) {
-  document.getElementById(from).classList.add('exit');
+  const f = document.getElementById(from);
+  const t = document.getElementById(to);
+  f.classList.add('exit');
   setTimeout(() => {
-    document.getElementById(from).classList.remove('active','exit');
-    document.getElementById(to).classList.add('active');
+    f.classList.remove('active','exit');
+    t.classList.add('active');
   }, 380);
 }
 
@@ -354,7 +430,7 @@ function loadStep() {
   document.getElementById('step-tag').textContent = s.tag;
   document.getElementById('step-q').innerHTML = s.q;
   document.getElementById('zen-say').innerHTML = s.say;
-  document.getElementById('toast').querySelector('#toast-text').textContent = 'Pick one to see the card change!';
+  document.getElementById('toast-text').textContent = 'Pick one to see the card change!';
   document.getElementById('toast').querySelector('.toast-icon').textContent = '👆';
   buildDots();
   buildChoices(s);
@@ -363,7 +439,7 @@ function loadStep() {
 function buildChoices(s) {
   const grid = document.getElementById('choices-grid');
   grid.innerHTML = '';
-  s.opts.forEach((opt, i) => {
+  s.opts.forEach((opt) => {
     const el = document.createElement('div');
     el.className = 'choice';
     let previewHTML = '';
@@ -383,18 +459,13 @@ function buildChoices(s) {
 }
 
 function pick(el, opt, s) {
-  // mark selected
   document.querySelectorAll('.choice').forEach(c => c.classList.remove('picked'));
   el.classList.add('picked');
-  // apply to card
   setCSS(s.prop, opt.code);
   picks[s.cssProp] = opt.code;
-  // css readout
   document.getElementById('css-line').innerHTML = `<span>${s.cssProp}</span>: ${opt.code}`;
-  // toast
   document.getElementById('toast-text').textContent = opt.toast;
   document.getElementById('toast').querySelector('.toast-icon').textContent = '✨';
-  // auto advance after 1s
   setTimeout(() => {
     step++;
     if (step >= STEPS.length) showReveal();
@@ -403,24 +474,21 @@ function pick(el, opt, s) {
 }
 
 function showReveal() {
-  // sync reveal card CSS vars
   const rc = document.getElementById('reveal-card');
-  Object.keys(picks).forEach(() => {}); // already set via setCSS
-  // build CSS trophy
-  let trophy = `<span class="ct-comment">/* Your card's CSS */</span>\n.zen-card {\n`;
   const propMap = {
-    'background':'--c-bg','border-radius':'--c-radius','color':'--c-title','box-shadow':'--c-shadow','border':'--c-border'
+    'background':'--c-bg','border-radius':'--c-radius',
+    'color':'--c-title','box-shadow':'--c-shadow','border':'--c-border'
   };
+  Object.entries(propMap).forEach(([_, cssVar]) => {
+    const val = card.style.getPropertyValue(cssVar);
+    if (val) rc.style.setProperty(cssVar, val);
+  });
+  let trophy = `<span class="ct-comment">/* Your card's CSS */</span>\n.zen-card {\n`;
   Object.entries(picks).forEach(([p, v]) => {
     trophy += `  <span class="ct-prop">${p}</span>: <span class="ct-val">${v.length > 30 ? v.substring(0,30)+'…' : v}</span>;\n`;
   });
   trophy += `}`;
   document.getElementById('css-trophy').innerHTML = trophy;
-  // sync card styles to reveal card
-  Object.entries(propMap).forEach(([_, cssVar]) => {
-    const val = card.style.getPropertyValue(cssVar);
-    if (val) rc.style.setProperty(cssVar, val);
-  });
   switchScreen('screen-game','screen-reveal');
   launchConfetti();
 }
