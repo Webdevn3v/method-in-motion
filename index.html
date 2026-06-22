@@ -98,8 +98,9 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 
 /* CREW TOGGLE */
 .crew-toggle-wrap{text-align:center;margin-bottom:36px;}
-.crew-toggle-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;padding:12px 28px;border-radius:100px;border:1px solid rgba(198,107,255,.35);color:var(--purple);background:rgba(198,107,255,.07);cursor:pointer;transition:all .3s;}
-.crew-toggle-btn:hover{background:rgba(198,107,255,.15);border-color:var(--purple);}
+.crew-toggle-btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;padding:18px 40px;border-radius:100px;border:2px solid var(--purple);color:#fff;background:linear-gradient(135deg,rgba(198,107,255,.25),rgba(0,232,255,.1));cursor:pointer;transition:all .3s;box-shadow:0 0 30px rgba(198,107,255,.25),inset 0 0 20px rgba(198,107,255,.05);animation:toggle-pulse 3s ease-in-out infinite;}
+@keyframes toggle-pulse{0%,100%{box-shadow:0 0 30px rgba(198,107,255,.25),inset 0 0 20px rgba(198,107,255,.05)}50%{box-shadow:0 0 50px rgba(198,107,255,.5),0 0 20px rgba(0,232,255,.2),inset 0 0 20px rgba(198,107,255,.1)}}
+.crew-toggle-btn:hover{background:linear-gradient(135deg,rgba(198,107,255,.4),rgba(0,232,255,.15));border-color:var(--cyan);transform:translateY(-2px);box-shadow:0 8px 40px rgba(198,107,255,.4);}
 .crew-toggle-arrow{display:inline-block;transition:transform .35s;font-style:normal;}
 .crew-toggle-btn.open .crew-toggle-arrow{transform:rotate(180deg);}
 .crew__grid-wrap{overflow:hidden;max-height:0;transition:max-height .55s cubic-bezier(.4,0,.2,1),opacity .4s;opacity:0;}
@@ -313,7 +314,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
         <!-- ZEN -->
         <div class="stat-card" style="--cc:#ff6baa" onclick="window.location='zen.html'">
           <div class="sc-media">
-            <img src="ZEN_COVER.png" alt="Zen">
+            <img src="ZEN_COVER.gif" alt="Zen">
             <div class="sc-glow"></div>
           </div>
           <div class="sc-body">
@@ -340,7 +341,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
         <!-- BYTE -->
         <div class="stat-card" style="--cc:#c66bff" onclick="window.location='byte.html'">
           <div class="sc-media">
-            <img src="BYTE_COVER.png" alt="Byte">
+            <img src="BYTE_COVER.gif" alt="Byte">
             <div class="sc-glow"></div>
           </div>
           <div class="sc-body">
@@ -367,7 +368,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
         <!-- LOOP -->
         <div class="stat-card" style="--cc:#00e8ff" onclick="window.location='loop.html'">
           <div class="sc-media">
-            <img src="LOOP_COVER.png" alt="Loop">
+            <img src="LOOP_COVER.gif" alt="Loop">
             <div class="sc-glow"></div>
           </div>
           <div class="sc-body">
@@ -394,7 +395,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
         <!-- NOVA -->
         <div class="stat-card" style="--cc:#ffe066" onclick="window.location='nova.html'">
           <div class="sc-media">
-            <img src="NOVA_COVER.png" alt="Nova">
+            <img src="NOVA_COVER.gif" alt="Nova">
             <div class="sc-glow"></div>
           </div>
           <div class="sc-body">
@@ -421,7 +422,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
         <!-- BUG -->
         <div class="stat-card" style="--cc:#a8ff3e" onclick="window.location='bug.html'">
           <div class="sc-media">
-            <img src="BUG_COVER.png" alt="Bug">
+            <img src="BUG_COVER.gif" alt="Bug">
             <div class="sc-glow"></div>
           </div>
           <div class="sc-body">
@@ -448,7 +449,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
         <!-- ECHO -->
         <div class="stat-card" style="--cc:#00e8ff" onclick="window.location='echo.html'">
           <div class="sc-media">
-            <img src="ECHO_COVER.png" alt="Echo">
+            <img src="ECHO_COVER.gif" alt="Echo">
             <div class="sc-glow"></div>
           </div>
           <div class="sc-body">
@@ -530,14 +531,14 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     <div class="workbook-strip__text">
       <span class="section-label">Workbooks</span>
       <h2 class="section-title" style="font-size:clamp(1.4rem,3vw,2.2rem);margin-bottom:12px;">Take the learning offline.</h2>
-      <p style="font-size:.9rem;color:var(--off);line-height:1.8;margin-bottom:20px;">Zen's Creative Circuits Vol. 1 is a 50-page printable workbook packed with CSS challenges, design prompts, and creative projects. No screen required.</p>
+      <p style="font-size:.9rem;color:var(--off);line-height:1.8;margin-bottom:20px;">Zen's Creative Circuits Vol. 1 is a printable workbook packed with CSS challenges, design prompts, and creative projects. No screen required.</p>
       <a href="pdfs.html" class="btn-primary" style="display:inline-block">Browse Workbooks</a>
     </div>
     <div class="workbook-strip__visual">
       <div class="workbook-preview-title">Now Available</div>
       <div class="workbook-preview-name">Zen's Creative Circuits</div>
       <div class="workbook-preview-sub">Vol. 1 — CSS & Design Thinking</div>
-      <div class="workbook-preview-pages">50 pages · Printable PDF</div>
+      <div class="workbook-preview-pages">Printable PDF · Available Now</div>
     </div>
   </div>
 </section>
