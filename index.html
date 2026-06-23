@@ -29,8 +29,6 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 .cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--pink);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen;opacity:1;}
 .cursor-ring{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(198,107,255,.5);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s;opacity:1;}
-
-/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,padding .3s;}
 nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 48px;border-bottom:1px solid var(--border);}
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;}
@@ -41,8 +39,8 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .nav-right{display:flex;align-items:center;gap:10px}
 .nav-cta{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(198,107,255,.4);color:var(--purple);border-radius:100px;transition:all .3s;background:none;cursor:pointer;}
 .nav-cta:hover{background:rgba(198,107,255,.15)}
-.nav-join{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s;}
-.nav-join:hover{transform:translateY(-1px)}
+.nav-join-btn{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s;}
+.nav-join-btn:hover{transform:translateY(-1px)}
 #nav-user-menu{display:none;align-items:center;gap:10px}
 #nav-username{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;color:rgba(255,255,255,.55)}
 #nav-dashboard-link{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(0,232,255,.3);color:var(--cyan);border-radius:100px;transition:all .2s;}
@@ -50,8 +48,6 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 #nav-logout-btn{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.15);background:none;color:rgba(255,255,255,.4);border-radius:100px;cursor:pointer}
 #nav-logout-btn:hover{border-color:var(--pink);color:var(--pink)}
 @media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
-
-/* HERO — no video, pure CSS universe */
 .hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .hero-bg{position:absolute;inset:0;z-index:0;background:var(--void);}
 .hero-bg-grad{position:absolute;inset:0;background:
@@ -60,14 +56,9 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
   radial-gradient(ellipse 90% 50% at 50% 80%,rgba(198,107,255,.10) 0%,transparent 60%),
   radial-gradient(ellipse 40% 40% at 65% 60%,rgba(255,107,170,.07) 0%,transparent 50%);
 animation:bg-breathe 12s ease-in-out infinite alternate;}
-@keyframes bg-breathe{
-  0%{opacity:.7;transform:scale(1);}
-  100%{opacity:1;transform:scale(1.04);}
-}
-.hero-stars{position:absolute;inset:0;z-index:1;pointer-events:none;}
+@keyframes bg-breathe{0%{opacity:.7;transform:scale(1);}100%{opacity:1;transform:scale(1.04);}}
 .hero-nebula{position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:
-    radial-gradient(ellipse 30% 20% at 15% 25%,rgba(198,107,255,.06) 0%,transparent 70%),
+  background:radial-gradient(ellipse 30% 20% at 15% 25%,rgba(198,107,255,.06) 0%,transparent 70%),
     radial-gradient(ellipse 25% 30% at 85% 70%,rgba(0,232,255,.05) 0%,transparent 70%),
     radial-gradient(ellipse 20% 25% at 60% 15%,rgba(255,107,170,.05) 0%,transparent 70%);
   animation:nebula-drift 18s ease-in-out infinite alternate;}
@@ -102,8 +93,6 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--cyan),transparent);animation:scrollPulse 2s ease-in-out infinite;}
 @keyframes scrollPulse{0%{transform:scaleY(0);transform-origin:top;opacity:0}40%{opacity:1}60%{transform:scaleY(1);transform-origin:top}60.01%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
-
-/* MISSION */
 .mission{background:var(--deep);padding:80px 48px;text-align:center;position:relative;overflow:hidden;}
 .mission::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(198,107,255,.05),transparent 70%);transform:translate(-50%,-50%);pointer-events:none;}
 .mission-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;display:block;}
@@ -112,8 +101,6 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .mission-body{font-size:.96rem;color:var(--off);max-width:560px;margin:0 auto 28px;line-height:1.9;}
 .mission-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 .mission-pill{padding:6px 16px;border:1px solid var(--border-md);border-radius:100px;font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--off);}
-
-/* TRUST BAR */
 .trust-bar{background:var(--void);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:32px 48px;}
 .trust-bar__inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
 @media(max-width:768px){.trust-bar__inner{grid-template-columns:repeat(2,1fr)}}
@@ -122,8 +109,6 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .trust-icon{font-size:1.4rem;margin-bottom:8px;display:block;}
 .trust-label{font-family:var(--display);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:4px;}
 .trust-desc{font-size:.78rem;color:var(--muted);line-height:1.5;}
-
-/* CREW */
 .crew{background:var(--void);padding:96px 0;scroll-margin-top:80px;}
 .crew__inner{max-width:1240px;margin:0 auto;padding:0 48px}
 .crew__header{text-align:center;margin-bottom:52px}
@@ -141,8 +126,6 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .crew__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 @media(max-width:900px){.crew__grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.crew__grid{grid-template-columns:1fr}}
-
-/* CREW CARDS */
 .stat-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;position:relative;transition:border-color .35s,transform .3s,box-shadow .35s;cursor:pointer;}
 .stat-card:hover{transform:translateY(-5px);border-color:var(--cc,rgba(198,107,255,.5));box-shadow:0 16px 50px rgba(0,0,0,.5),0 0 30px rgba(198,107,255,.12);}
 .sc-media{position:relative;aspect-ratio:3/2.8;overflow:hidden;background:rgba(0,0,0,.3);}
@@ -156,8 +139,6 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .sc-name{font-family:var(--heading);font-size:1.15rem;font-weight:800;margin-bottom:1px;}
 .sc-role{font-size:.74rem;color:var(--muted);margin-bottom:4px;}
 .sc-catchphrase{font-size:.72rem;color:var(--cc,var(--pink));font-style:italic;margin-bottom:12px;opacity:.9;line-height:1.4;}
-
-/* LESSON ACCORDION inside card */
 .sc-lesson-toggle{width:100%;display:flex;align-items:center;justify-content:space-between;background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:8px;padding:8px 12px;margin-bottom:10px;cursor:pointer;transition:border-color .2s,background .2s;}
 .sc-lesson-toggle:hover{border-color:var(--cc,var(--pink));background:rgba(0,0,0,.5);}
 .sc-lesson-toggle-label{font-family:var(--display);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
@@ -176,8 +157,6 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .sc-btn-game:hover{background:var(--cc,var(--pink));color:#000;}
 .sc-btn-game .free-badge{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:100px;font-size:.38rem;letter-spacing:.1em;font-weight:700;background:linear-gradient(135deg,#00e8ff,#c66bff);color:#000;vertical-align:middle;box-shadow:0 0 8px rgba(0,232,255,.5);animation:badge-pulse 2s ease-in-out infinite;}
 @keyframes badge-pulse{0%,100%{box-shadow:0 0 8px rgba(0,232,255,.5)}50%{box-shadow:0 0 16px rgba(0,232,255,.9),0 0 24px rgba(198,107,255,.4)}}
-
-/* MEMBERSHIP */
 .membership-strip{background:var(--deep);padding:80px 48px;position:relative;overflow:hidden;}
 .membership-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(198,107,255,.08),transparent 70%);pointer-events:none;}
 .membership-strip__inner{max-width:1100px;margin:0 auto;}
@@ -204,8 +183,6 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .tier-card.featured .tier-btn{background:var(--grad);border:none;color:#000;font-weight:700;}
 .tier-card.free-tier .tier-btn{border-color:rgba(0,232,255,.4);color:var(--cyan);}
 .tier-card.free-tier .tier-btn:hover{background:var(--cyan);color:#000;}
-
-/* WORKBOOKS */
 .workbook-strip{background:var(--void);padding:80px 48px;border-top:1px solid var(--border);}
 .workbook-strip__inner{max-width:900px;margin:0 auto;display:flex;gap:40px;align-items:center;}
 @media(max-width:768px){.workbook-strip__inner{flex-direction:column;text-align:center}}
@@ -216,14 +193,10 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .workbook-preview-name{font-family:var(--heading);font-size:1.1rem;font-weight:800;margin-bottom:4px;}
 .workbook-preview-sub{font-size:.74rem;color:var(--muted);margin-bottom:16px;}
 .workbook-preview-pages{font-family:var(--display);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);opacity:.7;}
-
-/* GAME WORLD */
 .dark-orb-strip{position:relative;padding:80px 48px;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,rgba(198,107,255,.07) 0%,var(--void) 70%);border-top:1px solid var(--border);}
 .dark-orb-strip__inner{max-width:700px;margin:0 auto;text-align:center;}
 .dark-orb{width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(198,107,255,.6),rgba(5,5,8,.9));border:1px solid rgba(198,107,255,.3);margin:0 auto 28px;box-shadow:0 0 60px rgba(198,107,255,.25),inset 0 0 40px rgba(0,0,0,.5);animation:orb-pulse 4s ease-in-out infinite;}
 @keyframes orb-pulse{0%,100%{box-shadow:0 0 60px rgba(198,107,255,.25),inset 0 0 40px rgba(0,0,0,.5)}50%{box-shadow:0 0 100px rgba(198,107,255,.45),0 0 40px rgba(0,232,255,.15),inset 0 0 40px rgba(0,0,0,.5)}}
-
-/* NEWSLETTER */
 .newsletter{background:var(--deep);padding:72px 48px;text-align:center;border-top:1px solid var(--border);}
 .newsletter__inner{max-width:480px;margin:0 auto;}
 .newsletter-form{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center;}
@@ -233,16 +206,12 @@ animation:bg-breathe 12s ease-in-out infinite alternate;}
 .newsletter-btn{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 24px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s;}
 .newsletter-btn:hover{transform:translateY(-1px)}
 #newsletter-success{display:none;font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-top:12px;}
-
-/* FOOTER */
 footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
 .footer-logo{font-family:var(--display);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);}
 .footer-copy{font-size:.74rem;color:var(--muted);}
 .footer-links{display:flex;gap:20px;}
 .footer-links a{font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);transition:color .2s;}
 .footer-links a:hover{color:var(--pink);}
-
-/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,5,8,.88);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:20px;}
 .modal-box{background:var(--card);border:1px solid var(--border-md);border-radius:20px;padding:40px;width:100%;max-width:400px;position:relative;}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;line-height:1;transition:color .2s;}
@@ -279,23 +248,21 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     <li><a href="library.html">Library</a></li>
   </ul>
   <div class="nav-right">
-    <div id="nav-auth-btns">
-      <button class="nav-cta" onclick="openModal('login')">Log In</button>
-      <button class="nav-join" onclick="openModal('signup')">Join Free</button>
+    <div id="nav-auth-btns" style="display:flex;align-items:center;gap:10px;">
+      <button class="nav-cta" id="nav-login" onclick="openModal('login')">Log In</button>
+      <button class="nav-join-btn" id="nav-join" onclick="openModal('signup')">Join Free</button>
     </div>
     <div id="nav-user-menu">
       <span id="nav-username"></span>
       <a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
-      <button id="nav-logout-btn" onclick="handleLogout()">Log Out</button>
+      <button id="nav-logout-btn">Log Out</button>
     </div>
   </div>
 </nav>
 
-<!-- HERO — CSS universe, no video -->
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-bg-grad"></div>
-  </div>
+  <div class="hero-bg"><div class="hero-bg-grad"></div></div>
   <div class="hero-nebula"></div>
   <div class="hero-orb orb-a"></div>
   <div class="hero-orb orb-b"></div>
@@ -315,10 +282,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     </div>
     <p class="hero-free-note">✦ No card needed <span>·</span> Real code. Real projects. <span>·</span> Upgrade anytime</p>
   </div>
-  <div class="hero-scroll">
-    <div class="scroll-line"></div>
-    <span>Explore</span>
-  </div>
+  <div class="hero-scroll"><div class="scroll-line"></div><span>Explore</span></div>
 </section>
 
 <!-- MISSION -->
@@ -373,8 +337,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     </div>
     <div class="crew-toggle-wrap">
       <button class="crew-toggle-btn" id="crewToggleBtn" onclick="toggleCrew()">
-        Choose Your Guide
-        <i class="crew-toggle-arrow">&#8964;</i>
+        Choose Your Guide <i class="crew-toggle-arrow">&#8964;</i>
       </button>
     </div>
     <div class="crew__grid-wrap" id="crewGridWrap">
@@ -657,217 +620,122 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
   </div>
 </footer>
 
-<!-- AUTH MODAL -->
-<div class="modal-overlay" id="auth-modal">
+<!-- AUTH MODAL — matches auth-init.js exactly -->
+<div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    <button class="modal-close" id="auth-close-btn">&#10005;</button>
     <div class="modal-title">Method in Motion</div>
     <div class="modal-sub">Your adventure starts here.</div>
     <div class="modal-tabs">
-      <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
-      <button class="modal-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+      <button class="modal-tab active auth-tab" data-tab="login">Log In</button>
+      <button class="modal-tab auth-tab" data-tab="signup">Sign Up</button>
     </div>
-    <div id="login-form">
-      <div class="modal-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com"></div>
-      <div class="modal-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••"></div>
-      <button class="modal-submit" onclick="handleLogin()">Log In</button>
-      <div class="modal-error" id="login-error"></div>
+    <div id="login-form" class="auth-form" style="display:block">
+      <div class="modal-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
+      <p class="modal-error" id="login-error"></p>
+      <button class="modal-submit" id="login-submit-btn">Log In</button>
+      <p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">New here? <button class="auth-link" data-tab="signup" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Create an account</button></p>
     </div>
-    <div id="signup-form" style="display:none">
-      <div class="modal-field"><label>Name</label><input type="text" id="signup-name" placeholder="Your name"></div>
-      <div class="modal-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com"></div>
-      <div class="modal-field"><label>Password</label><input type="password" id="signup-password" placeholder="••••••••"></div>
-      <button class="modal-submit" onclick="handleSignup()">Create Your Account</button>
-      <div class="modal-error" id="signup-error"></div>
-      <div class="modal-success" id="signup-success"></div>
+    <div id="signup-form" class="auth-form" style="display:none">
+      <div class="modal-field"><label>Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"></div>
+      <div class="modal-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"></div>
+      <p class="modal-error" id="signup-error"></p>
+      <button class="modal-submit" id="signup-submit-btn">Create Your Account</button>
+      <p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">Already in the crew? <button class="auth-link" data-tab="login" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Log in</button></p>
     </div>
   </div>
 </div>
-
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-const firebaseConfig = {
-  apiKey: "AIzaSyBY5cooking9Placeholder",
-  authDomain: "method-in-motion.firebaseapp.com",
-  projectId: "method-in-motion",
-  storageBucket: "method-in-motion.appspot.com",
-  messagingSenderId: "123456789",
-  appId: "1:123456789:web:abcdef"
-};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-window._auth = auth;
-window._db = db;
-window._createUser = createUserWithEmailAndPassword;
-window._signIn = signInWithEmailAndPassword;
-window._signOut = signOut;
-window._updateProfile = updateProfile;
-window._doc = doc;
-window._setDoc = setDoc;
-window._getDoc = getDoc;
-onAuthStateChanged(auth, async (user) => {
-  const authBtns = document.getElementById('nav-auth-btns');
-  const userMenu = document.getElementById('nav-user-menu');
-  const usernameEl = document.getElementById('nav-username');
-  if(user){
-    authBtns.style.display = 'none';
-    userMenu.style.display = 'flex';
-    usernameEl.textContent = user.displayName || user.email.split('@')[0];
-  } else {
-    authBtns.style.display = 'flex';
-    userMenu.style.display = 'none';
-  }
-});
-window.handleLogin = async function(){
-  const email = document.getElementById('login-email').value;
-  const pass = document.getElementById('login-password').value;
-  const errEl = document.getElementById('login-error');
-  errEl.style.display = 'none';
-  try {
-    await window._signIn(auth, email, pass);
-    closeModal();
-    window.location.href = 'dashboard.html';
-  } catch(e){
-    errEl.textContent = 'Invalid email or password.';
-    errEl.style.display = 'block';
-  }
-};
-window.handleSignup = async function(){
-  const name = document.getElementById('signup-name').value;
-  const email = document.getElementById('signup-email').value;
-  const pass = document.getElementById('signup-password').value;
-  const errEl = document.getElementById('signup-error');
-  const succEl = document.getElementById('signup-success');
-  errEl.style.display = 'none';
-  try {
-    const cred = await window._createUser(auth, email, pass);
-    await window._updateProfile(cred.user, {displayName: name});
-    await window._setDoc(window._doc(db, 'users', cred.user.uid), {
-      name, email, tier: 'free', createdAt: new Date().toISOString()
-    });
-    succEl.textContent = 'Welcome to the universe! Redirecting...';
-    succEl.style.display = 'block';
-    setTimeout(()=>{ window.location.href='dashboard.html'; }, 1500);
-  } catch(e){
-    errEl.textContent = e.message.includes('email') ? 'That email is already in use.' : 'Something went wrong. Try again.';
-    errEl.style.display = 'block';
-  }
-};
-window.handleLogout = async function(){
-  await window._signOut(auth);
-  window.location.reload();
-};
-window.handleNewsletter = async function(){
-  const email = document.getElementById('newsletterEmail').value;
-  if(!email) return;
-  try {
-    await window._setDoc(window._doc(db, 'newsletter', email), {
-      email, subscribedAt: new Date().toISOString()
-    });
-    document.querySelector('.newsletter-form').style.display = 'none';
-    document.getElementById('newsletter-success').style.display = 'block';
-  } catch(e){ console.log(e); }
-};
-</script>
 
 <script>
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
 document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX + 'px';
-  cursor.style.top = e.clientY + 'px';
-  setTimeout(()=>{
-    ring.style.left = e.clientX + 'px';
-    ring.style.top = e.clientY + 'px';
-  }, 80);
+  cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px';
+  setTimeout(()=>{ ring.style.left = e.clientX+'px'; ring.style.top = e.clientY+'px'; }, 80);
 });
 window.addEventListener('scroll', ()=>{
   document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
 });
+
+// MODAL
 function openModal(tab){
-  document.getElementById('auth-modal').style.display = 'flex';
-  switchTab(tab || 'login');
+  document.getElementById('auth-modal').style.display='flex';
+  switchTab(tab||'login');
 }
-function closeModal(){
-  document.getElementById('auth-modal').style.display = 'none';
-}
+function closeModal(){ document.getElementById('auth-modal').style.display='none'; }
 function switchTab(tab){
-  document.getElementById('login-form').style.display = tab==='login' ? 'block' : 'none';
-  document.getElementById('signup-form').style.display = tab==='signup' ? 'block' : 'none';
-  document.getElementById('tab-login').classList.toggle('active', tab==='login');
-  document.getElementById('tab-signup').classList.toggle('active', tab==='signup');
+  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
+  document.getElementById('login-form').style.display = tab==='login'?'block':'none';
+  document.getElementById('signup-form').style.display = tab==='signup'?'block':'none';
 }
-document.getElementById('auth-modal').addEventListener('click', function(e){
-  if(e.target === this) closeModal();
-});
+document.getElementById('auth-close-btn').addEventListener('click', closeModal);
+document.getElementById('auth-modal').addEventListener('click', e=>{ if(e.target===document.getElementById('auth-modal')) closeModal(); });
+document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
+document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
 window.openModal = openModal;
 window.closeModal = closeModal;
-window.switchTab = switchTab;
 
+// CREW TOGGLE
 function toggleCrew(){
-  const wrap = document.getElementById('crewGridWrap');
-  const btn = document.getElementById('crewToggleBtn');
-  wrap.classList.toggle('open');
-  btn.classList.toggle('open');
+  document.getElementById('crewGridWrap').classList.toggle('open');
+  document.getElementById('crewToggleBtn').classList.toggle('open');
 }
 window.toggleCrew = toggleCrew;
 
+// LESSON TOGGLES
 function toggleLessons(btn){
   const lessons = btn.nextElementSibling;
   btn.classList.toggle('open');
   lessons.classList.toggle('open');
   const label = btn.querySelector('.sc-lesson-toggle-label');
-  label.textContent = lessons.classList.contains('open')
-    ? '5 Lessons · Hide Journey'
-    : '5 Lessons · View Journey';
+  label.textContent = lessons.classList.contains('open') ? '5 Lessons · Hide Journey' : '5 Lessons · View Journey';
 }
 window.toggleLessons = toggleLessons;
 
-// Stars
+// NEWSLETTER
+window.handleNewsletter = async function(){
+  const email = document.getElementById('newsletterEmail').value;
+  if(!email) return;
+  document.querySelector('.newsletter-form').style.display='none';
+  document.getElementById('newsletter-success').style.display='block';
+};
+
+// STARS
 (function(){
-  const container = document.querySelector('.hero-stars') || document.querySelector('.hero-bg');
-  if(!container) return;
-  const starField = document.createElement('canvas');
-  starField.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
-  container.appendChild(starField);
-  const ctx = starField.getContext('2d');
-  function resize(){
-    starField.width = window.innerWidth;
-    starField.height = window.innerHeight;
-    drawStars();
-  }
-  function drawStars(){
-    ctx.clearRect(0,0,starField.width,starField.height);
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
+  document.querySelector('.hero-bg').appendChild(canvas);
+  const ctx = canvas.getContext('2d');
+  function draw(){
+    canvas.width=window.innerWidth; canvas.height=window.innerHeight;
+    ctx.clearRect(0,0,canvas.width,canvas.height);
     for(let i=0;i<180;i++){
-      const x = Math.random()*starField.width;
-      const y = Math.random()*starField.height;
-      const r = Math.random()*1.2+0.2;
-      const alpha = Math.random()*0.5+0.1;
       ctx.beginPath();
-      ctx.arc(x,y,r,0,Math.PI*2);
-      ctx.fillStyle = `rgba(255,255,255,${alpha})`;
+      ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.2+.2, 0, Math.PI*2);
+      ctx.fillStyle=`rgba(255,255,255,${Math.random()*.5+.1})`;
       ctx.fill();
     }
   }
-  resize();
-  window.addEventListener('resize', resize);
+  draw(); window.addEventListener('resize', draw);
 })();
 
-// Particles
+// PARTICLES
 (function(){
-  const container = document.getElementById('heroParticles');
-  const colors = ['#ff6baa','#c66bff','#00e8ff','#fff'];
+  const c = document.getElementById('heroParticles');
+  const cols = ['#ff6baa','#c66bff','#00e8ff','#fff'];
   for(let i=0;i<28;i++){
     const p = document.createElement('div');
-    p.className = 'hparticle';
-    const size = Math.random()*3+1;
-    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};opacity:${Math.random()*.5+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*10}s;`;
-    container.appendChild(p);
+    p.className='hparticle';
+    const s=Math.random()*3+1;
+    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};opacity:${Math.random()*.5+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*10}s;`;
+    c.appendChild(p);
   }
 })();
 </script>
+
+<!-- AUTH — uses your real auth-init.js -->
+<script type="module" src="auth-init.js"></script>
 </body>
 </html>
