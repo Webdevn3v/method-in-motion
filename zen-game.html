@@ -1,572 +1,1229 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-DJ3Q488K7W');
-</script>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Zen's CSS Style Studio — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=Press+Start+2P&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --void:#050508;--deep:#0a0a18;
-  --pink:#f472b6;--purple:#a855f7;--cyan:#00e8ff;--yellow:#ffe066;
-  --grad:linear-gradient(135deg,#f472b6,#a855f7);
-  --D:'Orbitron',monospace;--H:'Syne',sans-serif;--B:'DM Sans',sans-serif;
+  --void:#050508;--pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
+  --yellow:#ffe066;--green:#a2ff32;--orange:#ff8c42;
+  --grad:linear-gradient(135deg,#ff6baa,#c66bff);
+  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
 }
-html,body{height:100%;overflow:hidden;}
-body{background:var(--void);color:#fff;font-family:var(--B);}
-a{text-decoration:none;color:inherit;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{width:100%;height:100%;overflow:hidden;background:var(--void);font-family:var(--body);}
+a{color:inherit;text-decoration:none}
 
-/* BG VIDEO */
-.bg-video{position:fixed;inset:0;z-index:0;overflow:hidden;}
-.bg-video video{width:100%;height:100%;object-fit:cover;opacity:0.35;}
-.bg-overlay{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 50%,rgba(5,5,8,0.55) 0%,rgba(5,5,8,0.82) 100%);}
+/* SCANLINES */
+body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
+  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);}
+
+/* WORLD BG */
+#worldBg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#050508;}
+.bg-gradient{position:absolute;inset:0;
+  background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(255,107,170,.18) 0%,transparent 60%),
+    radial-gradient(ellipse 60% 60% at 10% 80%,rgba(198,107,255,.12) 0%,transparent 50%),
+    radial-gradient(ellipse 50% 50% at 90% 70%,rgba(0,232,255,.08) 0%,transparent 50%);
+  animation:bg-breathe 10s ease-in-out infinite alternate;}
+@keyframes bg-breathe{0%{opacity:.7}100%{opacity:1}}
+
+/* PAINT STROKES BG */
+.paint-stroke{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;animation:stroke-drift ease-in-out infinite;}
+@keyframes stroke-drift{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(var(--dx),var(--dy)) rotate(var(--dr,5deg))}}
+.ps-a{width:600px;height:200px;top:-60px;left:-100px;background:rgba(255,107,170,.15);--dx:30px;--dy:20px;--dr:8deg;animation-duration:14s;}
+.ps-b{width:400px;height:400px;top:20%;right:-80px;background:rgba(198,107,255,.12);--dx:-20px;--dy:40px;animation-duration:17s;animation-delay:2s;}
+.ps-c{width:500px;height:180px;bottom:10%;left:10%;background:rgba(0,232,255,.1);--dx:25px;--dy:-20px;animation-duration:12s;animation-delay:5s;}
+.ps-d{width:300px;height:300px;bottom:-50px;right:20%;background:rgba(255,107,170,.1);--dx:-15px;--dy:-25px;animation-duration:16s;animation-delay:3s;}
+
+/* FLOATING COLOR SWATCHES */
+.swatch{position:absolute;border-radius:12px;pointer-events:none;animation:swatch-float ease-in-out infinite;opacity:.6;}
+@keyframes swatch-float{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(var(--dy,-20px)) rotate(var(--r2,5deg))}}
+
+/* GRID FLOOR */
+.grid-floor{position:absolute;bottom:0;left:0;right:0;height:45%;pointer-events:none;
+  background-image:linear-gradient(rgba(255,107,170,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,170,.08) 1px,transparent 1px);
+  background-size:60px 60px;
+  transform:perspective(600px) rotateX(55deg);transform-origin:bottom center;
+  mask-image:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 80%);}
+
+/* GLITCH OVERLAY */
+.glitch-overlay{position:fixed;inset:0;z-index:8998;pointer-events:none;opacity:0;
+  background:repeating-linear-gradient(90deg,rgba(255,107,170,.1),transparent 2px,transparent 8px);
+  transition:opacity .08s;}
+.glitch-overlay.fire{opacity:1;}
 
 /* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:300;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,0.85);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);}
-.nav-logo{display:flex;align-items:center;gap:8px;font-family:var(--D);font-size:0.65rem;letter-spacing:0.12em;}
-.nav-mark{width:22px;height:22px;background:var(--grad);border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:0.55rem;font-weight:700;color:#000;}
-.nav-back{font-family:var(--D);font-size:0.48rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);transition:color 0.2s;}
-.nav-back:hover{color:var(--pink);}
-.nav-progress{display:flex;align-items:center;gap:6px;}
-.nav-prog-label{font-family:var(--D);font-size:0.42rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.3);}
-.nav-prog-dots{display:flex;gap:5px;}
-.npd{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all 0.3s;}
-.npd.done{background:var(--pink);}
-.npd.active{background:var(--pink);width:16px;border-radius:3px;}
+#gameNav{position:fixed;top:0;left:0;right:0;z-index:500;
+  padding:10px 28px;display:flex;align-items:center;justify-content:space-between;
+  background:rgba(5,5,8,.8);backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(255,107,170,.2);}
+.nav-back-btn{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:.55rem;
+  letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);
+  transition:color .2s;cursor:pointer;border:none;background:none;}
+.nav-back-btn:hover{color:var(--pink)}
+.nav-back-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
+.nav-title{font-family:var(--display);font-size:.7rem;letter-spacing:.14em;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.nav-user{font-family:var(--display);font-size:.52rem;letter-spacing:.1em;color:rgba(255,255,255,.3);}
+
+/* HUD */
+#hud{position:fixed;top:52px;left:0;right:0;z-index:400;
+  padding:8px 28px;display:flex;align-items:center;gap:20px;
+  background:rgba(5,5,8,.6);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(255,107,170,.1);}
+.hud-block{display:flex;flex-direction:column;gap:1px;}
+.hud-label{font-family:var(--display);font-size:.35rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.hud-value{font-family:var(--display);font-size:.85rem;font-weight:900;letter-spacing:.06em;color:#fff;transition:transform .15s;}
+.hud-value.pop{transform:scale(1.3);}
+.hud-divider{width:1px;height:32px;background:rgba(255,255,255,.06);}
+.hud-spacer{flex:1;}
+
+/* STYLE METER */
+.style-meter-wrap{display:flex;align-items:center;gap:10px;}
+.style-meter-label{font-family:var(--display);font-size:.38rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);}
+.style-meter-bar{width:160px;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;border:1px solid rgba(255,107,170,.2);}
+.style-meter-fill{height:100%;background:var(--grad);border-radius:4px;transition:width .3s ease;}
+
+/* TIMER RING */
+.timer-ring-wrap{position:relative;width:36px;height:36px;}
+.timer-ring-svg{transform:rotate(-90deg);}
+.timer-ring-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:3;}
+.timer-ring-fill{fill:none;stroke:var(--pink);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .1s linear;}
+.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.6rem;font-weight:900;color:#fff;}
+
+/* LEVEL BANNER */
+#levelBanner{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:800;
+  font-family:var(--display);font-size:clamp(2rem,6vw,4rem);font-weight:900;letter-spacing:.1em;
+  text-transform:uppercase;text-align:center;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 40px rgba(255,107,170,.8));
+  pointer-events:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;}
+#levelBanner.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
+
+/* MAIN GAME AREA */
+#gameArea{position:fixed;top:96px;left:0;right:0;bottom:0;z-index:100;display:flex;gap:0;overflow:hidden;}
+
+/* LEFT — BROKEN PAGE PREVIEW */
+#previewPane{
+  flex:0 0 42%;display:flex;flex-direction:column;
+  border-right:1px solid rgba(255,107,170,.15);
+  background:rgba(5,5,8,.4);backdrop-filter:blur(8px);
+  position:relative;overflow:hidden;
+}
+.pane-header{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.05);
+  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
+.pane-title{font-family:var(--display);font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);}
+.glitch-tag{font-family:var(--display);font-size:.4rem;letter-spacing:.12em;padding:3px 10px;
+  border-radius:100px;background:rgba(255,107,107,.15);border:1px solid rgba(255,107,107,.4);color:#ff6b6b;}
+.glitch-tag.fixed{background:rgba(162,255,50,.12);border-color:rgba(162,255,50,.4);color:var(--green);}
+
+#pagePreview{flex:1;padding:24px;overflow-y:auto;position:relative;}
+#pagePreview::-webkit-scrollbar{width:3px;}
+#pagePreview::-webkit-scrollbar-track{background:transparent;}
+#pagePreview::-webkit-scrollbar-thumb{background:rgba(255,107,170,.3);border-radius:2px;}
+
+/* The broken/fixed page elements */
+.preview-el{margin-bottom:16px;transition:all .4s cubic-bezier(.34,1.56,.64,1);position:relative;}
+.preview-el.glitching{animation:el-glitch .3s ease infinite;}
+@keyframes el-glitch{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.preview-el.fixed-anim{animation:el-fix .5s cubic-bezier(.34,1.56,.64,1);}
+@keyframes el-fix{0%{transform:scale(.95);opacity:.5}60%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
+
+/* RIGHT — CSS CHALLENGE PANEL */
+#challengePane{
+  flex:1;display:flex;flex-direction:column;
+  background:rgba(5,5,8,.3);backdrop-filter:blur(6px);
+  position:relative;overflow:hidden;
+}
+.challenge-header{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;}
+.challenge-title{font-family:var(--display);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:4px;}
+.challenge-desc{font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5;}
+
+#challengeBody{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:16px;}
+#challengeBody::-webkit-scrollbar{width:3px;}
+#challengeBody::-webkit-scrollbar-thumb{background:rgba(255,107,170,.3);}
+
+/* CSS PROPERTY CARDS */
+.css-challenge{background:rgba(255,107,170,.04);border:1px solid rgba(255,107,170,.2);
+  border-radius:14px;padding:18px;transition:border-color .3s,box-shadow .3s;}
+.css-challenge.solved{border-color:rgba(162,255,50,.4);background:rgba(162,255,50,.04);}
+.css-challenge.active{border-color:rgba(255,107,170,.6);box-shadow:0 0 20px rgba(255,107,170,.15);}
+.css-prop-label{font-family:var(--display);font-size:.42rem;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
+.css-prop-label .solved-badge{font-size:.38rem;padding:2px 8px;border-radius:100px;
+  background:rgba(162,255,50,.15);border:1px solid rgba(162,255,50,.4);color:var(--green);}
+.css-prop-name{font-family:monospace;font-size:.95rem;color:#fff;margin-bottom:6px;}
+.css-desc{font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:14px;line-height:1.5;}
+
+/* OPTION BUTTONS */
+.css-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.css-opt{padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);
+  background:rgba(255,255,255,.03);font-family:monospace;font-size:.82rem;
+  color:rgba(255,255,255,.7);cursor:pointer;transition:all .2s;text-align:left;
+  display:flex;align-items:center;gap:8px;}
+.css-opt:hover{border-color:var(--pink);background:rgba(255,107,170,.08);color:#fff;transform:translateX(3px);}
+.css-opt.correct{border-color:var(--green);background:rgba(162,255,50,.1);color:var(--green);pointer-events:none;}
+.css-opt.wrong{border-color:#ff6b6b;background:rgba(255,107,107,.1);color:#ff6b6b;pointer-events:none;animation:shake .3s ease;}
+.css-opt.reveal{border-color:var(--green);background:rgba(162,255,50,.06);pointer-events:none;}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.opt-swatch{width:16px;height:16px;border-radius:4px;flex-shrink:0;border:1px solid rgba(255,255,255,.15);}
+
+/* ZEN FACE */
+#zenFace{position:fixed;right:24px;bottom:24px;z-index:700;
+  width:76px;height:76px;border-radius:50%;
+  background:rgba(5,5,8,.9);border:2px solid rgba(255,107,170,.4);
+  display:flex;align-items:center;justify-content:center;font-size:2rem;
+  box-shadow:0 0 30px rgba(255,107,170,.3);
+  transition:all .3s cubic-bezier(.34,1.56,.64,1);overflow:hidden;}
+#zenFace.react{transform:scale(1.2);border-color:var(--pink);box-shadow:0 0 50px rgba(255,107,170,.6);}
+#zenFace.sad{border-color:#ff6b6b;box-shadow:0 0 30px rgba(255,107,107,.5);}
+#zenFaceEmoji{transition:all .2s;font-size:2rem;}
+#zenFaceImg{width:100%;height:100%;object-fit:cover;object-position:center;display:none;}
+
+/* COMBO */
+#comboDisplay{position:fixed;left:50%;top:45%;transform:translate(-50%,-50%) scale(0);
+  z-index:700;pointer-events:none;font-family:var(--display);font-weight:900;
+  letter-spacing:.08em;text-transform:uppercase;text-align:center;
+  transition:transform .2s cubic-bezier(.34,1.56,.64,1),opacity .2s;opacity:0;}
+#comboDisplay.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
+
+/* PAINT BURST */
+.paint-burst{position:fixed;pointer-events:none;z-index:600;border-radius:50%;
+  animation:paint-out .6s ease forwards;}
+@keyframes paint-out{0%{transform:translate(-50%,-50%) scale(0);opacity:1}
+  60%{opacity:.8}100%{transform:translate(-50%,-50%) scale(3);opacity:0;}}
+
+/* SCORE FLOAT */
+.score-float{position:fixed;pointer-events:none;z-index:650;
+  font-family:var(--display);font-weight:900;font-size:1.2rem;
+  animation:score-up .8s ease forwards;}
+@keyframes score-up{0%{opacity:1;transform:translate(-50%,-50%) scale(.8)}
+  100%{opacity:0;transform:translate(-50%,-120%) scale(1)}}
 
 /* SCREENS */
-.screen{position:fixed;inset:0;top:44px;z-index:10;display:flex;opacity:0;pointer-events:none;transition:opacity 0.5s;}
-.screen.active{opacity:1;pointer-events:all;}
+.screen{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  background:rgba(5,5,8,.97);backdrop-filter:blur(20px);padding:32px 24px;text-align:center;}
+.screen.hidden{display:none;}
+.screen-eyebrow{font-family:var(--display);font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;
+  color:var(--pink);margin-bottom:12px;opacity:.8;}
+.screen-title{font-family:var(--display);font-size:clamp(2rem,6vw,4.5rem);font-weight:900;letter-spacing:.08em;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  filter:drop-shadow(0 0 40px rgba(255,107,170,.6));margin-bottom:10px;line-height:1;}
+.screen-sub{font-family:var(--heading);font-size:clamp(.9rem,2vw,1.2rem);color:rgba(255,255,255,.55);
+  margin-bottom:32px;line-height:1.6;max-width:520px;}
+.screen-score{font-family:var(--display);font-size:clamp(1.6rem,4vw,3rem);font-weight:900;
+  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
+.screen-best{font-family:var(--display);font-size:.55rem;letter-spacing:.16em;color:rgba(255,255,255,.25);margin-bottom:28px;}
+.screen-stats{display:flex;gap:32px;justify-content:center;margin-bottom:28px;flex-wrap:wrap;}
+.stat-item .stat-num{font-family:var(--display);font-size:1.5rem;font-weight:900;color:#fff;}
+.stat-item .stat-lbl{font-family:var(--display);font-size:.38rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.screen-btn{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:14px 36px;background:var(--grad);color:#000;font-weight:900;border-radius:100px;
+  border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;
+  box-shadow:0 8px 30px rgba(255,107,170,.4);margin:6px;}
+.screen-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,107,170,.6);}
+.screen-btn.outline{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);box-shadow:none;}
+.screen-btn.outline:hover{border-color:#fff;color:#fff;}
+.screen-zen{font-size:4rem;margin-bottom:16px;animation:zen-float .8s ease-in-out infinite alternate;}
+@keyframes zen-float{from{transform:translateY(0)}to{transform:translateY(-12px)}}
 
-/* ── CINEMATIC INTRO ── */
-#screen-cinematic{top:0;z-index:200;background:#000;align-items:center;justify-content:center;}
-#zen-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;}
-.cin-vignette{position:absolute;inset:0;z-index:2;background:radial-gradient(ellipse at 50% 50%,transparent 30%,rgba(0,0,0,0.75) 100%);}
-.cin-skip{position:absolute;bottom:28px;right:28px;z-index:10;font-family:var(--D);font-size:0.48rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.4);border:1px solid rgba(255,255,255,0.15);border-radius:100px;padding:8px 18px;cursor:pointer;background:rgba(0,0,0,0.5);backdrop-filter:blur(8px);transition:all 0.2s;}
-.cin-skip:hover{color:#fff;border-color:rgba(255,255,255,0.5);}
-.cin-bar{position:absolute;bottom:0;left:0;height:3px;background:var(--grad);z-index:10;width:0%;transition:width 0.1s linear;}
+/* HOW TO PLAY */
+.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;max-width:640px;width:100%;}
+.how-item{background:rgba(255,107,170,.05);border:1px solid rgba(255,107,170,.2);border-radius:12px;padding:16px 12px;text-align:center;}
+.how-icon{font-size:1.6rem;margin-bottom:8px;}
+.how-label{font-family:var(--display);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:4px;}
+.how-desc{font-size:.75rem;color:rgba(255,255,255,.45);line-height:1.5;}
 
-/* ── INSTRUCTIONS ── */
-#screen-intro{flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:24px;gap:0;}
-.intro-title{font-family:var(--D);font-size:clamp(1.8rem,5vw,3.2rem);font-weight:900;letter-spacing:0.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;filter:drop-shadow(0 0 30px rgba(244,114,182,0.5));}
-.intro-sub{font-family:var(--D);font-size:0.55rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:36px;}
-.intro-steps{display:flex;gap:20px;justify-content:center;flex-wrap:wrap;margin-bottom:36px;}
-.intro-step{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px 24px;max-width:200px;text-align:center;}
-.intro-step-num{font-family:var(--D);font-size:1.4rem;font-weight:900;color:var(--pink);margin-bottom:8px;display:block;}
-.intro-step-text{font-size:0.82rem;color:rgba(255,255,255,0.55);line-height:1.5;}
-.intro-btn{font-family:var(--D);font-size:0.7rem;letter-spacing:0.16em;text-transform:uppercase;padding:18px 48px;background:var(--grad);color:#000;font-weight:700;border:none;border-radius:100px;cursor:pointer;box-shadow:0 8px 40px rgba(244,114,182,0.45);transition:transform 0.2s,box-shadow 0.2s;}
-.intro-btn:hover{transform:translateY(-3px);box-shadow:0 14px 50px rgba(244,114,182,0.65);}
+/* PROGRESS DOTS */
+#progressDots{display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:20px;}
+.pdot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,107,170,.2);transition:all .3s;}
+.pdot.done{background:var(--green);border-color:var(--green);box-shadow:0 0 8px rgba(162,255,50,.6);}
+.pdot.active{background:var(--pink);border-color:var(--pink);box-shadow:0 0 8px rgba(255,107,170,.6);}
 
-/* ── GAME SCREEN ── */
-#screen-game{flex-direction:row;align-items:stretch;}
+/* ZONE TAG */
+.zone-badge{position:fixed;top:100px;right:20px;z-index:400;
+  font-family:var(--display);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:5px 14px;border-radius:100px;border:1px solid rgba(255,107,170,.4);
+  color:var(--pink);background:rgba(255,107,170,.08);backdrop-filter:blur(8px);}
 
-/* LEFT — TOOL TRAY */
-.tool-tray{width:300px;flex-shrink:0;background:rgba(5,5,8,0.88);border-right:1px solid rgba(255,255,255,0.07);display:flex;flex-direction:column;overflow:hidden;backdrop-filter:blur(20px);}
-.tray-header{padding:18px 18px 12px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.tray-step-label{font-family:var(--D);font-size:0.4rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.25);margin-bottom:6px;display:block;}
-.tray-q{font-family:var(--H);font-size:1.1rem;font-weight:800;line-height:1.2;margin-bottom:4px;}
-.tray-q em{font-style:normal;color:var(--pink);}
-.tray-hint{font-size:0.75rem;color:rgba(255,255,255,0.35);line-height:1.4;}
-.tray-items{flex:1;padding:14px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;}
-.tray-category{font-family:var(--D);font-size:0.38rem;letter-spacing:0.18em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:2px;margin-top:6px;}
-.drag-item{border-radius:10px;border:1px solid rgba(255,255,255,0.08);background:rgba(255,255,255,0.04);padding:12px 14px;cursor:grab;display:flex;align-items:center;gap:12px;transition:all 0.2s;user-select:none;}
-.drag-item:hover{border-color:rgba(244,114,182,0.4);background:rgba(244,114,182,0.07);transform:translateX(3px);}
-.drag-item:active{cursor:grabbing;transform:scale(0.97);}
-.drag-item.used{opacity:0.3;cursor:default;pointer-events:none;}
-.di-preview{width:40px;height:40px;border-radius:7px;flex-shrink:0;}
-.di-info{flex:1;min-width:0;}
-.di-name{font-family:var(--H);font-size:0.82rem;font-weight:700;margin-bottom:2px;}
-.di-code{font-family:monospace;font-size:0.62rem;color:rgba(255,255,255,0.3);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.di-drag-icon{font-size:0.7rem;color:rgba(255,255,255,0.15);flex-shrink:0;}
-.tray-feedback{padding:12px 14px;border-top:1px solid rgba(255,255,255,0.06);font-size:0.76rem;color:rgba(255,255,255,0.45);min-height:48px;line-height:1.5;display:flex;align-items:center;gap:8px;}
-.tray-feedback-icon{font-size:1rem;flex-shrink:0;}
+/* PARTICLES */
+.particle{position:fixed;border-radius:50%;pointer-events:none;animation:p-fly linear forwards;}
+@keyframes p-fly{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--px),var(--py))}}
 
-/* RIGHT — WEBPAGE PREVIEW */
-.preview-area{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:28px;position:relative;overflow:hidden;}
-.preview-label{font-family:var(--D);font-size:0.42rem;letter-spacing:0.2em;text-transform:uppercase;color:rgba(255,255,255,0.2);margin-bottom:14px;text-align:center;}
-
-/* THE MINI WEBPAGE */
-.mini-webpage{width:100%;max-width:560px;border-radius:var(--wp-radius,12px);overflow:hidden;border:1px solid rgba(255,255,255,0.1);box-shadow:0 20px 80px rgba(0,0,0,0.6),0 0 0 1px rgba(255,255,255,0.04);transition:all 0.5s cubic-bezier(0.34,1.2,0.64,1);background:var(--wp-bg,#0d0020);}
-.wp-browser-bar{background:rgba(0,0,0,0.4);padding:8px 12px;display:flex;align-items:center;gap:7px;border-bottom:1px solid rgba(255,255,255,0.06);}
-.wp-dot{width:9px;height:9px;border-radius:50%;}
-.wp-dot-r{background:#ff5f57;}
-.wp-dot-y{background:#febc2e;}
-.wp-dot-g{background:#28c840;}
-.wp-url{flex:1;background:rgba(255,255,255,0.06);border-radius:100px;padding:3px 10px;font-family:monospace;font-size:0.6rem;color:rgba(255,255,255,0.25);margin:0 8px;}
-
-/* WEBPAGE SECTIONS — ALL ARE DROP TARGETS */
-.wp-nav{
-  padding:14px 20px;
-  background:var(--nav-bg,rgba(26,0,48,0.9));
-  display:flex;align-items:center;justify-content:space-between;
-  border-bottom:1px solid rgba(255,255,255,0.05);
-  transition:all 0.4s;position:relative;
-}
-.wp-nav-logo{font-family:var(--D);font-size:0.6rem;letter-spacing:0.12em;font-weight:700;color:var(--nav-accent,#f472b6);transition:color 0.4s;}
-.wp-nav-links{display:flex;gap:14px;}
-.wp-nav-link{font-family:var(--D);font-size:0.42rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.4);}
-.wp-hero{
-  padding:40px 28px 36px;
-  background:var(--hero-bg,linear-gradient(160deg,#1a0030,#0d0020));
-  text-align:center;
-  transition:all 0.4s;position:relative;
-}
-.wp-hero-tag{font-family:var(--D);font-size:0.42rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--hero-accent,#f472b6);margin-bottom:10px;opacity:0.8;transition:color 0.4s;}
-.wp-hero-h1{font-family:var(--hero-font,'Syne',sans-serif);font-size:clamp(1.4rem,3vw,2rem);font-weight:800;line-height:1.1;color:var(--hero-color,#fff);margin-bottom:10px;transition:all 0.4s;}
-.wp-hero-sub{font-size:0.82rem;color:rgba(255,255,255,0.45);margin-bottom:22px;line-height:1.5;}
-.wp-hero-btn{
-  display:inline-block;
-  font-family:var(--D);font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;
-  padding:var(--btn-pad,12px 28px);
-  border-radius:var(--btn-radius,100px);
-  background:var(--btn-bg,linear-gradient(135deg,#f472b6,#a855f7));
-  color:var(--btn-color,#000);
-  font-weight:700;
-  border:var(--btn-border,none);
-  transition:all 0.4s;
-  cursor:default;
-}
-.wp-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:0;border-top:1px solid rgba(255,255,255,0.05);}
-.wp-card{padding:18px 16px;background:var(--card-bg,rgba(10,10,24,0.9));text-align:center;border-right:1px solid rgba(255,255,255,0.04);transition:background 0.4s;position:relative;}
-.wp-card:last-child{border-right:none;}
-.wp-card-icon{font-size:1.2rem;margin-bottom:6px;}
-.wp-card-title{font-family:var(--H);font-size:0.78rem;font-weight:700;margin-bottom:3px;color:var(--card-title,#fff);transition:color 0.4s;}
-.wp-card-desc{font-size:0.65rem;color:rgba(255,255,255,0.35);line-height:1.4;}
-.wp-footer{padding:12px 20px;background:var(--footer-bg,rgba(5,5,8,0.95));display:flex;align-items:center;justify-content:space-between;transition:background 0.4s;}
-.wp-footer-text{font-family:var(--D);font-size:0.38rem;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.2);}
-.wp-footer-dot{width:5px;height:5px;border-radius:50%;background:var(--footer-accent,#f472b6);transition:background 0.4s;}
-
-/* DROP ZONE HIGHLIGHT */
-.drop-target{position:relative;transition:outline 0.2s;}
-.drop-target.drag-over{outline:2px dashed var(--pink);outline-offset:-2px;}
-.drop-target.drag-over::after{content:attr(data-label);position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-family:var(--D);font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--pink);background:rgba(5,5,8,0.85);padding:4px 10px;border-radius:100px;white-space:nowrap;z-index:10;pointer-events:none;}
-
-/* CSS READOUT */
-.css-readout{margin-top:16px;background:rgba(0,0,0,0.5);border:1px solid rgba(255,255,255,0.06);border-radius:10px;padding:12px 16px;width:100%;max-width:560px;font-family:monospace;font-size:0.68rem;line-height:1.9;min-height:52px;}
-.cr-prop{color:var(--cyan);}
-.cr-val{color:var(--pink);}
-.cr-sel{color:rgba(255,255,255,0.4);}
-.cr-empty{color:rgba(255,255,255,0.2);font-style:italic;}
-
-/* ── REVEAL SCREEN ── */
-#screen-reveal{flex-direction:column;align-items:center;justify-content:center;padding:24px;text-align:center;overflow-y:auto;}
-.reveal-title{font-family:var(--D);font-size:clamp(1.4rem,4vw,2.4rem);font-weight:900;letter-spacing:0.06em;margin-bottom:8px;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;filter:drop-shadow(0 0 30px rgba(244,114,182,0.5));}
-.reveal-sub{font-size:0.85rem;color:rgba(255,255,255,0.4);margin-bottom:28px;}
-.reveal-css{background:rgba(0,0,0,0.6);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:20px 24px;text-align:left;max-width:480px;width:100%;font-family:monospace;font-size:0.72rem;line-height:2;margin-bottom:28px;}
-.reveal-btns{display:flex;flex-direction:column;gap:10px;max-width:320px;width:100%;}
-.rbtn-p{font-family:var(--D);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;padding:15px;border-radius:10px;background:var(--grad);color:#000;font-weight:700;border:none;cursor:pointer;transition:transform 0.2s;}
-.rbtn-p:hover{transform:translateY(-2px);}
-.rbtn-s{font-family:var(--D);font-size:0.55rem;letter-spacing:0.12em;text-transform:uppercase;padding:13px;border-radius:10px;border:1px solid rgba(255,255,255,0.1);color:rgba(255,255,255,0.4);background:none;cursor:pointer;transition:all 0.2s;text-align:center;display:block;}
-.rbtn-s:hover{border-color:var(--pink);color:var(--pink);}
-
-/* CONFETTI */
-.confetti-piece{position:fixed;width:8px;height:8px;border-radius:2px;pointer-events:none;animation:cffall linear forwards;}
-@keyframes cffall{0%{transform:translateY(-20px) rotate(0deg);opacity:1;}100%{transform:translateY(110vh) rotate(720deg);opacity:0;}}
-
-/* DRAGGING GHOST */
-.drag-ghost{position:fixed;pointer-events:none;z-index:999;opacity:0.85;border-radius:8px;padding:8px 12px;font-family:var(--H);font-size:0.8rem;font-weight:700;color:#fff;display:flex;align-items:center;gap:8px;box-shadow:0 8px 32px rgba(0,0,0,0.5);transform:translate(-50%,-50%);transition:none;}
-
+/* RESPONSIVE */
 @media(max-width:700px){
-  .tool-tray{width:100%;max-width:100%;height:45vh;border-right:none;border-bottom:1px solid rgba(255,255,255,0.07);}
-  #screen-game{flex-direction:column;}
-  .preview-area{padding:16px;}
+  #gameArea{flex-direction:column;}
+  #previewPane{flex:0 0 40%;border-right:none;border-bottom:1px solid rgba(255,107,170,.15);}
 }
 </style>
 </head>
 <body>
 
-<!-- BG -->
-<div class="bg-video">
-  <video autoplay muted loop playsinline>
-    <source src="universe-view.mp4" type="video/mp4">
-  </video>
+<!-- WORLD -->
+<div id="worldBg">
+  <div class="bg-gradient"></div>
+  <div class="paint-stroke ps-a"></div>
+  <div class="paint-stroke ps-b"></div>
+  <div class="paint-stroke ps-c"></div>
+  <div class="paint-stroke ps-d"></div>
+  <div class="grid-floor"></div>
 </div>
-<div class="bg-overlay"></div>
+<div class="glitch-overlay" id="glitchOverlay"></div>
 
 <!-- NAV -->
-<nav>
-  <a href="index.html" class="nav-logo"><div class="nav-mark">&gt;</div>method in motion</a>
-  <div class="nav-progress">
-    <span class="nav-prog-label">Progress</span>
-    <div class="nav-prog-dots" id="navDots"></div>
-  </div>
-  <a href="games.html" class="nav-back">← All Games</a>
+<nav id="gameNav">
+  <button class="nav-back-btn" onclick="window.location.href='games.html'">
+    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+    Game Universe
+  </button>
+  <div class="nav-title">Zen's CSS Style Studio</div>
+  <div class="nav-user" id="navUserInfo">—</div>
 </nav>
 
-<!-- CINEMATIC INTRO -->
-<div class="screen active" id="screen-cinematic">
-  <video id="zen-vid" autoplay muted playsinline>
-    <source src="zen-intro.mp4" type="video/mp4">
-  </video>
-  <div class="cin-vignette"></div>
-  <div class="cin-bar" id="cin-bar"></div>
-  <button class="cin-skip" onclick="skipCinematic()">Skip →</button>
-</div>
-
-<!-- INSTRUCTIONS -->
-<div class="screen" id="screen-intro">
-  <div class="intro-title">ZEN'S CSS STYLE STUDIO</div>
-  <div class="intro-sub">Drag. Drop. Style. Learn real CSS.</div>
-  <div class="intro-steps">
-    <div class="intro-step">
-      <span class="intro-step-num">01</span>
-      <div class="intro-step-text">Grab a color, font, or style from the tray on the left</div>
-    </div>
-    <div class="intro-step">
-      <span class="intro-step-num">02</span>
-      <div class="intro-step-text">Drop it onto the part of the webpage you want to change</div>
-    </div>
-    <div class="intro-step">
-      <span class="intro-step-num">03</span>
-      <div class="intro-step-text">Watch it update live and see the real CSS you just wrote</div>
-    </div>
+<!-- HUD -->
+<div id="hud">
+  <div class="hud-block">
+    <div class="hud-label">Score</div>
+    <div class="hud-value" id="scoreVal" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
   </div>
-  <button class="intro-btn" onclick="startGame()">Start Styling →</button>
-</div>
-
-<!-- GAME -->
-<div class="screen" id="screen-game">
-
-  <!-- LEFT: TOOL TRAY -->
-  <div class="tool-tray">
-    <div class="tray-header">
-      <span class="tray-step-label" id="tray-step-label">Your CSS Tools</span>
-      <div class="tray-q" id="tray-q">Drag a style onto the <em>webpage</em></div>
-      <div class="tray-hint" id="tray-hint">Drop tools onto any glowing section. Each one teaches a real CSS property.</div>
-    </div>
-    <div class="tray-items" id="tray-items"></div>
-    <div class="tray-feedback">
-      <span class="tray-feedback-icon" id="fb-icon">✦</span>
-      <span id="fb-text">Pick up a tool and drop it anywhere on the page.</span>
-    </div>
+  <div class="hud-divider"></div>
+  <div class="hud-block">
+    <div class="hud-label">Best</div>
+    <div class="hud-value" style="color:rgba(255,255,255,.3)" id="bestVal">0</div>
   </div>
-
-  <!-- RIGHT: WEBPAGE PREVIEW -->
-  <div class="preview-area">
-    <div class="preview-label">Your webpage — drop styles anywhere</div>
-
-    <div class="mini-webpage" id="mini-webpage">
-      <!-- browser chrome -->
-      <div class="wp-browser-bar">
-        <div class="wp-dot wp-dot-r"></div>
-        <div class="wp-dot wp-dot-y"></div>
-        <div class="wp-dot wp-dot-g"></div>
-        <div class="wp-url">methodinmotion.org/zen</div>
-      </div>
-      <!-- nav -->
-      <div class="wp-nav drop-target" id="dt-nav" data-zone="nav" data-label="Drop here → navbar">
-        <div class="wp-nav-logo" id="wp-nav-logo">ZEN STUDIO</div>
-        <div class="wp-nav-links">
-          <div class="wp-nav-link">Work</div>
-          <div class="wp-nav-link">About</div>
-          <div class="wp-nav-link">Contact</div>
-        </div>
-      </div>
-      <!-- hero -->
-      <div class="wp-hero drop-target" id="dt-hero" data-zone="hero" data-label="Drop here → hero section">
-        <div class="wp-hero-tag">Creative Coder</div>
-        <h1 class="wp-hero-h1" id="wp-h1">Style Your World</h1>
-        <p class="wp-hero-sub">Real CSS. Real creativity. Real you.</p>
-        <div class="wp-hero-btn" id="wp-btn">Enter the Studio →</div>
-      </div>
-      <!-- cards -->
-      <div class="wp-cards" id="dt-cards" data-zone="cards" data-label="Drop here → cards section">
-        <div class="wp-card drop-target" data-zone="cards">
-          <div class="wp-card-icon">✦</div>
-          <div class="wp-card-title" id="wc-t1">Colors</div>
-          <div class="wp-card-desc">Build a palette</div>
-        </div>
-        <div class="wp-card drop-target" data-zone="cards">
-          <div class="wp-card-icon">Aa</div>
-          <div class="wp-card-title" id="wc-t2">Fonts</div>
-          <div class="wp-card-desc">Set the vibe</div>
-        </div>
-        <div class="wp-card drop-target" data-zone="cards">
-          <div class="wp-card-icon">&#9633;</div>
-          <div class="wp-card-title" id="wc-t3">Spacing</div>
-          <div class="wp-card-desc">Give it room</div>
-        </div>
-      </div>
-      <!-- footer -->
-      <div class="wp-footer drop-target" id="dt-footer" data-zone="footer" data-label="Drop here → footer">
-        <div class="wp-footer-text">Method in Motion © 2025</div>
-        <div class="wp-footer-dot" id="wp-footer-dot"></div>
-      </div>
-    </div>
-
-    <!-- LIVE CSS READOUT -->
-    <div class="css-readout" id="css-readout">
-      <span class="cr-empty">/* Drop a style tool onto the webpage to see your CSS here... */</span>
-    </div>
+  <div class="hud-divider"></div>
+  <div class="hud-block">
+    <div class="hud-label">Level</div>
+    <div class="hud-value" style="color:var(--pink)" id="levelVal">1</div>
+  </div>
+  <div class="hud-divider"></div>
+  <div class="style-meter-wrap">
+    <div class="style-meter-label">Style Meter</div>
+    <div class="style-meter-bar"><div class="style-meter-fill" id="styleMeter" style="width:100%"></div></div>
+  </div>
+  <div class="hud-spacer"></div>
+  <div class="timer-ring-wrap">
+    <svg class="timer-ring-svg" width="36" height="36" viewBox="0 0 36 36">
+      <circle class="timer-ring-bg" cx="18" cy="18" r="15"/>
+      <circle class="timer-ring-fill" id="timerRing" cx="18" cy="18" r="15"
+        stroke-dasharray="94.2" stroke-dashoffset="0"/>
+    </svg>
+    <div class="timer-num" id="timerNum">15</div>
   </div>
 </div>
 
-<!-- REVEAL -->
-<div class="screen" id="screen-reveal">
-  <div class="reveal-title">You built this. ✦</div>
-  <div class="reveal-sub">Every drop was a real CSS property. Here's the stylesheet you wrote:</div>
-  <div class="reveal-css" id="reveal-css"></div>
-  <div class="reveal-btns">
-    <button class="rbtn-p" onclick="restartGame()">Style It Again →</button>
-    <a href="zen.html" class="rbtn-s">Go Deeper — Zen's Lessons</a>
-    <a href="games.html" class="rbtn-s">← All Games</a>
+<!-- ZONE -->
+<div class="zone-badge" id="zoneBadge">SKETCH ZONE</div>
+
+<!-- LEVEL BANNER -->
+<div id="levelBanner"></div>
+
+<!-- GAME AREA -->
+<div id="gameArea">
+  <!-- LEFT: BROKEN PAGE PREVIEW -->
+  <div id="previewPane">
+    <div class="pane-header">
+      <div class="pane-title">🖼 Page Preview</div>
+      <div class="glitch-tag" id="glitchTag">NEEDS STYLE</div>
+    </div>
+    <div id="pagePreview"></div>
+  </div>
+
+  <!-- RIGHT: CSS CHALLENGES -->
+  <div id="challengePane">
+    <div class="challenge-header">
+      <div class="challenge-title" id="challengeTitle">Fix the Style</div>
+      <div class="challenge-desc" id="challengeDesc">Choose the correct CSS value to fix each broken element.</div>
+    </div>
+    <div id="progressDots"></div>
+    <div id="challengeBody"></div>
   </div>
 </div>
+
+<!-- ZEN FACE -->
+<div id="zenFace">
+  <img id="zenFaceImg" src="" alt="Zen">
+  <span id="zenFaceEmoji">🎨</span>
+</div>
+
+<!-- COMBO -->
+<div id="comboDisplay"></div>
+
+<!-- BOOT SCREEN -->
+<div class="screen" id="bootScreen">
+  <div class="screen-zen">🎨</div>
+  <div class="screen-eyebrow">Booting Zen's Studio</div>
+  <div class="screen-title">STYLE STUDIO</div>
+  <div style="max-width:400px;width:100%;margin:0 auto 28px;">
+    <div id="bootLines" style="text-align:left;"></div>
+  </div>
+</div>
+
+<!-- START SCREEN -->
+<div class="screen hidden" id="startScreen">
+  <div class="screen-zen" id="startZen">🎨</div>
+  <div class="screen-eyebrow">Zen's Underground Studio</div>
+  <div class="screen-title">CSS STYLE STUDIO</div>
+  <div class="screen-sub">Zen's creative world is broken and grey.<br>Fix the CSS. Restore the color. Bring the studio back to life.</div>
+  <div class="how-grid">
+    <div class="how-item">
+      <div class="how-icon">🖼</div>
+      <div class="how-label">See the Damage</div>
+      <div class="how-desc">The left panel shows Zen's broken webpage in real time.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-icon">🎯</div>
+      <div class="how-label">Pick the Fix</div>
+      <div class="how-desc">Choose the correct CSS value from four options before time runs out.</div>
+    </div>
+    <div class="how-item">
+      <div class="how-icon">✨</div>
+      <div class="how-label">Watch it Heal</div>
+      <div class="how-desc">Every correct answer restores the page. Wrong answers drain the Style Meter.</div>
+    </div>
+  </div>
+  <button class="screen-btn" onclick="startGame()">Enter the Studio →</button>
+  <button class="screen-btn outline" onclick="window.location.href='games.html'">← Back to Universe</button>
+</div>
+
+<!-- GAME OVER SCREEN -->
+<div class="screen hidden" id="gameOverScreen">
+  <div class="screen-zen" id="gameOverZen">🎨</div>
+  <div class="screen-eyebrow" id="gameOverEyebrow">Studio Shutdown</div>
+  <div class="screen-title" id="gameOverTitle">STYLE LOST</div>
+  <div class="screen-sub" id="gameOverSub">The style meter drained. But Zen says: every great design starts with a rough draft.</div>
+  <div class="screen-score" id="finalScore">0</div>
+  <div class="screen-best" id="finalBest">Best: 0</div>
+  <div class="screen-stats">
+    <div class="stat-item"><div class="stat-num" id="statFixed">0</div><div class="stat-lbl">Fixed</div></div>
+    <div class="stat-item"><div class="stat-num" id="statLevel">1</div><div class="stat-lbl">Level</div></div>
+    <div class="stat-item"><div class="stat-num" id="statCombo">x1</div><div class="stat-lbl">Best Combo</div></div>
+    <div class="stat-item"><div class="stat-num" id="statAccuracy">0%</div><div class="stat-lbl">Accuracy</div></div>
+  </div>
+  <button class="screen-btn" onclick="startGame()">Redesign →</button>
+  <button class="screen-btn outline" onclick="window.location.href='games.html'">← Back to Universe</button>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+const firebaseConfig = {
+  apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
+  authDomain: "method-in-motion.firebaseapp.com",
+  projectId: "method-in-motion",
+  storageBucket: "method-in-motion.firebasestorage.app",
+  messagingSenderId: "1067937974009",
+  appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+let currentUser = null;
+onAuthStateChanged(auth, async user => {
+  currentUser = user;
+  if(user){
+    document.getElementById('navUserInfo').textContent = user.displayName || user.email.split('@')[0];
+    try{
+      const snap = await getDoc(doc(db,'users',user.uid));
+      if(snap.exists()){
+        const saved = snap.data().zenGameBest || 0;
+        if(saved > (parseInt(localStorage.getItem('zenGameBest'))||0))
+          localStorage.setItem('zenGameBest', saved);
+      }
+    }catch(e){}
+  }
+});
+window._saveZenScore = async function(score){
+  const local = parseInt(localStorage.getItem('zenGameBest'))||0;
+  if(score > local) localStorage.setItem('zenGameBest', score);
+  if(currentUser && score > local){
+    try{ await setDoc(doc(db,'users',currentUser.uid),{zenGameBest:score},{merge:true}); }catch(e){}
+  }
+};
+</script>
 
 <script>
-// ── TOOL DATA ──
-const TOOLS = [
-  // COLORS
-  { id:'c1', cat:'Background Colors', name:'Deep Violet', code:'#1a0030', prop:'--wp-bg', cssRule:'.webpage { background: #1a0030; }', preview:'bg', color:'#1a0030', feedback:'background sets the page color. Yours is now deep violet. ✨', zones:['hero','nav','footer','cards'] },
-  { id:'c2', cat:'Background Colors', name:'Midnight Blue', code:'#0d1b4b', prop:'--wp-bg', cssRule:'.webpage { background: #0d1b4b; }', preview:'bg', color:'#0d1b4b', feedback:'background: #0d1b4b — a deep blue. CSS hex colors always start with #. 💙', zones:['hero','nav','footer','cards'] },
-  { id:'c3', cat:'Background Colors', name:'Noir Black', code:'#080810', prop:'--wp-bg', cssRule:'.webpage { background: #080810; }', preview:'bg', color:'#080810', feedback:'background: #080810 — near-black. Minimal and sharp. 🖤', zones:['hero','nav','footer','cards'] },
-  { id:'c4', cat:'Accent Colors', name:'Zen Pink', code:'#f472b6', prop:'accent', cssRule:'.hero-title { color: #f472b6; }', preview:'swatch', color:'#f472b6', feedback:'color changes text. Zen\'s signature pink! 💗', zones:['hero','nav'] },
-  { id:'c5', cat:'Accent Colors', name:'Electric Cyan', code:'#00e8ff', prop:'accent', cssRule:'.hero-title { color: #00e8ff; }', preview:'swatch', color:'#00e8ff', feedback:'color: #00e8ff — electric cyan. High contrast on dark backgrounds. ⚡', zones:['hero','nav'] },
-  { id:'c6', cat:'Accent Colors', name:'Solar Yellow', code:'#ffe066', prop:'accent', cssRule:'.hero-title { color: #ffe066; }', preview:'swatch', color:'#ffe066', feedback:'color: #ffe066 — warm yellow. Creates energy on dark backgrounds. ☀️', zones:['hero','nav'] },
-  // FONTS
-  { id:'f1', cat:'Fonts', name:'Orbitron', code:'Orbitron', prop:'--hero-font', cssRule:".hero-title { font-family: 'Orbitron', monospace; }", preview:'font', fontFamily:'Orbitron,monospace', feedback:"font-family: 'Orbitron' — techy and bold. Great for sci-fi vibes. 🚀", zones:['hero'] },
-  { id:'f2', cat:'Fonts', name:'Press Start 2P', code:'Press Start 2P', prop:'--hero-font', cssRule:".hero-title { font-family: 'Press Start 2P'; }", preview:'font', fontFamily:"'Press Start 2P',monospace", feedback:"font-family: 'Press Start 2P' — pixel retro. Pure gaming energy. 🎮", zones:['hero'] },
-  { id:'f3', cat:'Fonts', name:'Syne Bold', code:'Syne', prop:'--hero-font', cssRule:".hero-title { font-family: 'Syne', sans-serif; }", preview:'font', fontFamily:'Syne,sans-serif', feedback:"font-family: 'Syne' — clean and editorial. Modern design energy. ✦", zones:['hero'] },
-  { id:'f4', cat:'Fonts', name:'DM Sans', code:'DM Sans', prop:'--hero-font', cssRule:".hero-title { font-family: 'DM Sans', sans-serif; }", preview:'font', fontFamily:"'DM Sans',sans-serif", feedback:"font-family: 'DM Sans' — friendly and readable. Great for body text. 📖", zones:['hero'] },
-  // BUTTON STYLES
-  { id:'b1', cat:'Button Styles', name:'Pill Button', code:'border-radius:100px', prop:'--btn-radius', cssRule:'.btn { border-radius: 100px; padding: 12px 28px; }', preview:'btn', btnRadius:'100px', btnPad:'12px 28px', feedback:'border-radius: 100px — fully rounded pill. Friendly and modern. 💊', zones:['hero'] },
-  { id:'b2', cat:'Button Styles', name:'Square Button', code:'border-radius:0px', prop:'--btn-radius', cssRule:'.btn { border-radius: 0px; padding: 14px 32px; }', preview:'btn', btnRadius:'0px', btnPad:'14px 32px', feedback:'border-radius: 0 — sharp corners. Bold and architectural. ⬛', zones:['hero'] },
-  { id:'b3', cat:'Button Styles', name:'Outline Button', code:'border:2px solid', prop:'btn-style', cssRule:'.btn { background: transparent; border: 2px solid #f472b6; color: #f472b6; }', preview:'btn-outline', feedback:'background: transparent; border: 2px solid — outline style. Light and elegant. ✦', zones:['hero'] },
-  // SPACING
-  { id:'s1', cat:'Spacing', name:'Tight Spacing', code:'padding:16px 20px', prop:'--hero-spacing', cssRule:'.hero { padding: 16px 20px; }', preview:'spacing', spacingVal:'16px 20px', feedback:'padding controls inner spacing. Tight keeps things dense and dramatic. 📐', zones:['hero'] },
-  { id:'s2', cat:'Spacing', name:'Roomy Spacing', code:'padding:60px 28px', prop:'--hero-spacing', cssRule:'.hero { padding: 60px 28px; }', preview:'spacing', spacingVal:'60px 28px', feedback:'padding: 60px — generous breathing room. Gives the content space to breathe. 🌬️', zones:['hero'] },
-  { id:'s3', cat:'Spacing', name:'Dark Footer', code:'background:#000', prop:'--footer-bg', cssRule:'.footer { background: #000000; }', preview:'bg', color:'#000000', feedback:'footer background — near-black. A grounding anchor for the page. 🖤', zones:['footer'] },
-  { id:'s4', cat:'Spacing', name:'Card Dark', code:'background:#0a0a18', prop:'--card-bg', cssRule:'.cards { background: #0a0a18; }', preview:'bg', color:'#0a0a18', feedback:'background on cards section — deep navy. Adds depth and contrast. 🌌', zones:['cards'] },
+// ============================================================
+// CSS CHALLENGES DATABASE
+// ============================================================
+const CSS_CHALLENGES = [
+  // LEVEL 1 — Colors
+  {
+    id:'color-heading', level:1,
+    property:'color',
+    element:'h1',
+    label:'Heading Color',
+    broken:{color:'#333333',fontSize:'2.4rem',fontWeight:'900',fontFamily:'Syne,sans-serif'},
+    desc:'The main heading is invisible against the dark background. Pick the right color to make it pop.',
+    correct:'#ff6baa',
+    options:['#ff6baa','#333333','transparent','inherit'],
+    swatches:['#ff6baa','#333333','transparent','rgba(255,255,255,.1)'],
+    fixed:{color:'#ff6baa',fontSize:'2.4rem',fontWeight:'900',fontFamily:'Syne,sans-serif'},
+    preview:{type:'h1',text:"Zen's Creative World"},
+  },
+  {
+    id:'bg-color', level:1,
+    property:'background-color',
+    element:'section',
+    label:'Card Background',
+    broken:{background:'#ffffff',padding:'20px',borderRadius:'12px',color:'#000'},
+    desc:'This card has a blinding white background. Fix it to match the dark studio vibe.',
+    correct:'rgba(15,21,37,1)',
+    options:['rgba(15,21,37,1)','#ffffff','#ff0000','transparent'],
+    swatches:['#0f1525','#ffffff','#ff0000','transparent'],
+    fixed:{background:'#0f1525',padding:'20px',borderRadius:'12px',color:'#fff',border:'1px solid rgba(255,255,255,.08)'},
+    preview:{type:'card',text:'Style is everything.'},
+  },
+  {
+    id:'text-color', level:1,
+    property:'color',
+    element:'p',
+    label:'Paragraph Color',
+    broken:{color:'#050508',fontSize:'1rem',lineHeight:'1.7'},
+    desc:'The paragraph text is invisible — same color as the background. Fix it.',
+    correct:'#c8cce0',
+    options:['#c8cce0','#050508','#000000','#ff0000'],
+    swatches:['#c8cce0','#050508','#000000','#ff0000'],
+    fixed:{color:'#c8cce0',fontSize:'1rem',lineHeight:'1.7'},
+    preview:{type:'p',text:'Code is just instructions — and you already know how to give instructions.'},
+  },
+  // LEVEL 2 — Typography
+  {
+    id:'font-size', level:2,
+    property:'font-size',
+    element:'h2',
+    label:'Heading Size',
+    broken:{color:'#ff6baa',fontSize:'0.5rem',fontWeight:'800'},
+    desc:'The subheading is way too small to read. Set the right font-size.',
+    correct:'1.8rem',
+    options:['1.8rem','0.5rem','0.1rem','100px'],
+    swatches:[null,null,null,null],
+    fixed:{color:'#ff6baa',fontSize:'1.8rem',fontWeight:'800'},
+    preview:{type:'h2',text:'Welcome to the Studio'},
+  },
+  {
+    id:'font-weight', level:2,
+    property:'font-weight',
+    element:'h1',
+    label:'Heading Weight',
+    broken:{color:'#fff',fontSize:'2.2rem',fontWeight:'100'},
+    desc:"The heading looks too thin and weak. Zen's titles are always bold and confident.",
+    correct:'900',
+    options:['900','100','normal','300'],
+    swatches:[null,null,null,null],
+    fixed:{color:'#fff',fontSize:'2.2rem',fontWeight:'900'},
+    preview:{type:'h1',text:'Create. Build. Imagine.'},
+  },
+  {
+    id:'letter-spacing', level:2,
+    property:'letter-spacing',
+    element:'label',
+    label:'Letter Spacing',
+    broken:{color:'var(--pink)',fontSize:'0.6rem',letterSpacing:'0em',textTransform:'uppercase',fontFamily:'Orbitron,monospace'},
+    desc:'This label looks cramped and hard to read. Space out the letters.',
+    correct:'.2em',
+    options:['.2em','0em','-0.1em','2px'],
+    swatches:[null,null,null,null],
+    fixed:{color:'#ff6baa',fontSize:'0.6rem',letterSpacing:'.2em',textTransform:'uppercase',fontFamily:'Orbitron,monospace'},
+    preview:{type:'label',text:'LESSON 01'},
+  },
+  // LEVEL 3 — Spacing & Layout
+  {
+    id:'padding', level:3,
+    property:'padding',
+    element:'button',
+    label:'Button Padding',
+    broken:{padding:'0px',background:'linear-gradient(135deg,#ff6baa,#c66bff)',color:'#000',borderRadius:'100px',border:'none',fontFamily:'Orbitron,monospace',fontSize:'0.7rem',fontWeight:'700',letterSpacing:'.14em'},
+    desc:'The button has no padding — the text is squished against the edges.',
+    correct:'14px 32px',
+    options:['14px 32px','0px','1px','100px 0px'],
+    swatches:[null,null,null,null],
+    fixed:{padding:'14px 32px',background:'linear-gradient(135deg,#ff6baa,#c66bff)',color:'#000',borderRadius:'100px',border:'none',fontFamily:'Orbitron,monospace',fontSize:'0.7rem',fontWeight:'700',letterSpacing:'.14em'},
+    preview:{type:'button',text:'START LESSON'},
+  },
+  {
+    id:'border-radius', level:3,
+    property:'border-radius',
+    element:'card',
+    label:'Card Corners',
+    broken:{background:'#0f1525',padding:'20px',borderRadius:'0px',border:'1px solid rgba(255,255,255,.1)',color:'#c8cce0'},
+    desc:'This card has sharp corners — very un-Zen. Soften them up.',
+    correct:'16px',
+    options:['16px','0px','100px','1px'],
+    swatches:[null,null,null,null],
+    fixed:{background:'#0f1525',padding:'20px',borderRadius:'16px',border:'1px solid rgba(255,255,255,.1)',color:'#c8cce0'},
+    preview:{type:'card',text:'Every idea deserves a smooth corner.'},
+  },
+  {
+    id:'margin-bottom', level:3,
+    property:'margin-bottom',
+    element:'section',
+    label:'Section Spacing',
+    broken:{marginBottom:'0px',color:'#c8cce0',fontSize:'0.95rem',lineHeight:'1.9'},
+    desc:'These paragraphs are stacked with zero space between them. Add some breathing room.',
+    correct:'24px',
+    options:['24px','0px','-10px','200px'],
+    swatches:[null,null,null,null],
+    fixed:{marginBottom:'24px',color:'#c8cce0',fontSize:'0.95rem',lineHeight:'1.9'},
+    preview:{type:'spacing',text:'Space is part of the design.'},
+  },
+  // LEVEL 4 — Effects & Animation
+  {
+    id:'box-shadow', level:4,
+    property:'box-shadow',
+    element:'button',
+    label:'Button Glow',
+    broken:{padding:'14px 32px',background:'linear-gradient(135deg,#ff6baa,#c66bff)',color:'#000',borderRadius:'100px',border:'none',boxShadow:'none',fontFamily:'Orbitron,monospace',fontSize:'0.7rem',fontWeight:'700'},
+    desc:"Zen's buttons always glow. This one has no shadow at all. Fix it.",
+    correct:'0 8px 30px rgba(198,107,255,.4)',
+    options:['0 8px 30px rgba(198,107,255,.4)','none','0 0 0 #000','inset 0 0 20px #000'],
+    swatches:[null,null,null,null],
+    fixed:{padding:'14px 32px',background:'linear-gradient(135deg,#ff6baa,#c66bff)',color:'#000',borderRadius:'100px',border:'none',boxShadow:'0 8px 30px rgba(198,107,255,.4)',fontFamily:'Orbitron,monospace',fontSize:'0.7rem',fontWeight:'700'},
+    preview:{type:'button',text:'GLOW UP'},
+  },
+  {
+    id:'opacity', level:4,
+    property:'opacity',
+    element:'muted',
+    label:'Muted Text',
+    broken:{opacity:'1',color:'#5a6080',fontSize:'0.88rem'},
+    desc:'This supporting text should be subtle, not fully visible. Reduce the opacity.',
+    correct:'0.6',
+    options:['0.6','1','0','2'],
+    swatches:[null,null,null,null],
+    fixed:{opacity:'0.6',color:'#5a6080',fontSize:'0.88rem'},
+    preview:{type:'muted',text:'Supporting information lives here.'},
+  },
+  {
+    id:'border', level:4,
+    property:'border',
+    element:'card',
+    label:'Card Border',
+    broken:{background:'#0f1525',padding:'20px',borderRadius:'16px',border:'none',color:'#c8cce0'},
+    desc:'This card has no border — it blends into the background invisibly.',
+    correct:'1px solid rgba(255,107,170,.3)',
+    options:['1px solid rgba(255,107,170,.3)','none','10px solid #000','1px solid transparent'],
+    swatches:[null,null,null,null],
+    fixed:{background:'#0f1525',padding:'20px',borderRadius:'16px',border:'1px solid rgba(255,107,170,.3)',color:'#c8cce0'},
+    preview:{type:'card',text:'A border gives a card its shape.'},
+  },
+  // LEVEL 5 — BOSS ROUND — Multiple fixes
+  {
+    id:'gradient-text', level:5,
+    property:'background',
+    element:'gradient',
+    label:'Gradient Heading',
+    broken:{background:'#808080',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',fontSize:'2.4rem',fontWeight:'900'},
+    desc:"Zen's signature gradient heading went grey. Restore the pink-to-purple gradient.",
+    correct:'linear-gradient(135deg,#ff6baa,#c66bff)',
+    options:['linear-gradient(135deg,#ff6baa,#c66bff)','#808080','linear-gradient(135deg,#000,#fff)','none'],
+    swatches:['url(#grad)','#808080','url(#bw)','transparent'],
+    fixed:{background:'linear-gradient(135deg,#ff6baa,#c66bff)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',fontSize:'2.4rem',fontWeight:'900'},
+    preview:{type:'gradient',text:'METHOD IN MOTION'},
+  },
 ];
 
-let appliedCSS = {};
-let droppedCount = 0;
-const TOTAL = 6;
-let draggingTool = null;
-let ghost = null;
+// ============================================================
+// LEVELS CONFIG
+// ============================================================
+const LEVELS = [
+  {level:1, name:'SKETCH ZONE',   color:'#ff6baa', challengeIds:['color-heading','bg-color','text-color'],       timePerQ:18, pointsBase:100},
+  {level:2, name:'DRAFT ZONE',    color:'#c66bff', challengeIds:['font-size','font-weight','letter-spacing'],    timePerQ:15, pointsBase:150},
+  {level:3, name:'BUILD ZONE',    color:'#00e8ff', challengeIds:['padding','border-radius','margin-bottom'],     timePerQ:13, pointsBase:200},
+  {level:4, name:'POLISH ZONE',   color:'#ffe066', challengeIds:['box-shadow','opacity','border'],               timePerQ:11, pointsBase:250},
+  {level:5, name:'MASTERPIECE',   color:'#a2ff32', challengeIds:['gradient-text','color-heading','font-weight'], timePerQ:9,  pointsBase:400},
+];
 
-// ── CINEMATIC ──
-const vid = document.getElementById('zen-vid');
-const bar = document.getElementById('cin-bar');
-vid.addEventListener('timeupdate', ()=>{ if(vid.duration) bar.style.width = (vid.currentTime/vid.duration*100)+'%'; });
-vid.addEventListener('ended', advanceCinematic);
-vid.addEventListener('error', ()=>setTimeout(advanceCinematic,1500));
+// ============================================================
+// GAME STATE
+// ============================================================
+let state = {
+  running:false, score:0, level:1, styleMeter:100,
+  combo:1, maxCombo:1, fixed:0, wrong:0,
+  currentChallengeIdx:0, challenges:[],
+  timerInterval:null, timeLeft:0,
+  levelChallenges:[], levelIdx:0,
+};
 
-function advanceCinematic(){
-  const s = document.getElementById('screen-cinematic');
-  s.style.transition='opacity 0.8s';s.style.opacity='0';
-  setTimeout(()=>{ s.classList.remove('active');s.style.opacity='';
-    document.getElementById('screen-intro').classList.add('active'); },800);
-}
-function skipCinematic(){ vid.pause(); advanceCinematic(); }
+function getLevelCfg(){ return LEVELS[Math.min(state.level-1, LEVELS.length-1)]; }
 
-function switchScreen(from,to){
-  const f=document.getElementById(from),t=document.getElementById(to);
-  f.style.opacity='0';f.style.pointerEvents='none';
-  setTimeout(()=>{ f.classList.remove('active');t.classList.add('active'); },400);
-}
+// ============================================================
+// BOOT SEQUENCE
+// ============================================================
+const BOOT = [
+  {text:'> Initializing ZEN.exe', cls:'ok', d:200},
+  {text:'> Loading creative studio...', cls:'ok', d:500},
+  {text:'> ERROR: All styles corrupted', cls:'err', d:900},
+  {text:'> CSS database: offline', cls:'err', d:1200},
+  {text:'> Deploying Zen protocol...', cls:'ok', d:1600},
+  {text:'> Studio: READY — awaiting designer', cls:'ok', d:2100},
+];
 
-function startGame(){ switchScreen('screen-intro','screen-game'); buildTray(); buildDots(); }
-
-// ── TRAY ──
-function buildTray(){
-  const container = document.getElementById('tray-items');
-  container.innerHTML='';
-  const cats = [...new Set(TOOLS.map(t=>t.cat))];
-  cats.forEach(cat=>{
-    const label = document.createElement('div');
-    label.className='tray-category';
-    label.textContent=cat;
-    container.appendChild(label);
-    TOOLS.filter(t=>t.cat===cat).forEach(tool=>{
-      const el = document.createElement('div');
-      el.className='drag-item';
-      el.id='tool-'+tool.id;
-      el.draggable=true;
-      let previewHTML='';
-      if(tool.preview==='swatch'||tool.preview==='bg') previewHTML=`<div class="di-preview" style="background:${tool.color};"></div>`;
-      else if(tool.preview==='font') previewHTML=`<div class="di-preview" style="background:rgba(244,114,182,0.12);display:flex;align-items:center;justify-content:center;font-family:${tool.fontFamily};font-size:0.9rem;font-weight:700;color:#f472b6;">Aa</div>`;
-      else if(tool.preview==='btn') previewHTML=`<div class="di-preview" style="background:linear-gradient(135deg,#f472b6,#a855f7);border-radius:${tool.btnRadius||'100px'};display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:#000;font-weight:700;">BTN</div>`;
-      else if(tool.preview==='btn-outline') previewHTML=`<div class="di-preview" style="border:2px solid #f472b6;border-radius:100px;display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:#f472b6;font-weight:700;">BTN</div>`;
-      else if(tool.preview==='spacing') previewHTML=`<div class="di-preview" style="background:rgba(0,232,255,0.1);border:1px dashed rgba(0,232,255,0.4);display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:rgba(0,232,255,0.7);">PAD</div>`;
-      el.innerHTML=`${previewHTML}<div class="di-info"><div class="di-name">${tool.name}</div><div class="di-code">${tool.code}</div></div><div class="di-drag-icon">⠿</div>`;
-      // DRAG EVENTS
-      el.addEventListener('dragstart', e=>{ draggingTool=tool; el.style.opacity='0.4'; createGhost(tool,e); });
-      el.addEventListener('dragend', e=>{ el.style.opacity=''; removeGhost(); draggingTool=null; clearDragOver(); });
-      container.appendChild(el);
-    });
+window.addEventListener('DOMContentLoaded',()=>{
+  const best = localStorage.getItem('zenGameBest')||0;
+  document.getElementById('bestVal').textContent = best;
+  const c = document.getElementById('bootLines');
+  BOOT.forEach(({text,cls,d})=>{
+    const el = document.createElement('div');
+    el.style.cssText='font-family:monospace;font-size:.75rem;padding:3px 0;opacity:0;transition:opacity .3s;';
+    el.style.color = cls==='ok' ? 'rgba(162,255,50,.8)' : '#ff6b6b';
+    el.textContent = text;
+    c.appendChild(el);
+    setTimeout(()=>el.style.opacity='1', d);
   });
-  setupDropZones();
-}
-
-function createGhost(tool,e){
-  ghost=document.createElement('div');
-  ghost.className='drag-ghost';
-  ghost.style.background=tool.color||'#1a0030';
-  if(!tool.color) ghost.style.background='linear-gradient(135deg,#f472b6,#a855f7)';
-  ghost.innerHTML=`<span style="font-family:var(--H);font-weight:700;">${tool.name}</span>`;
-  document.body.appendChild(ghost);
-  e.dataTransfer.setDragImage(new Image(),0,0);
-}
-function removeGhost(){ if(ghost){ghost.remove();ghost=null;} }
-
-document.addEventListener('dragover',e=>{
-  e.preventDefault();
-  if(ghost){ ghost.style.left=e.clientX+'px'; ghost.style.top=e.clientY+'px'; }
+  setTimeout(()=>{
+    document.getElementById('bootScreen').classList.add('hidden');
+    document.getElementById('startScreen').classList.remove('hidden');
+    spawnSwatches();
+  }, 2800);
 });
 
-function setupDropZones(){
-  document.querySelectorAll('.drop-target').forEach(zone=>{
-    zone.addEventListener('dragover',e=>{ e.preventDefault(); zone.classList.add('drag-over'); });
-    zone.addEventListener('dragleave',e=>{ zone.classList.remove('drag-over'); });
-    zone.addEventListener('drop',e=>{
-      e.preventDefault();
-      zone.classList.remove('drag-over');
-      if(!draggingTool) return;
-      const zoneId = zone.dataset.zone;
-      applyTool(draggingTool, zoneId, zone);
-    });
+// ============================================================
+// FLOATING SWATCHES (ambient decoration)
+// ============================================================
+function spawnSwatches(){
+  const colors=['#ff6baa','#c66bff','#00e8ff','#ffe066','#a2ff32','#ff8c42'];
+  const sizes=[20,28,16,24,18,32];
+  for(let i=0;i<12;i++){
+    const el = document.createElement('div');
+    el.className = 'swatch';
+    const c = colors[Math.floor(Math.random()*colors.length)];
+    const s = sizes[Math.floor(Math.random()*sizes.length)];
+    const r = (Math.random()*30-15)+'deg';
+    const r2 = (Math.random()*30-15)+'deg';
+    const dy = -(20+Math.random()*30)+'px';
+    el.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*95}%;top:${Math.random()*90}%;background:${c};opacity:${0.3+Math.random()*.3};--r:${r};--r2:${r2};--dy:${dy};animation-duration:${4+Math.random()*6}s;animation-delay:${Math.random()*4}s;`;
+    document.getElementById('worldBg').appendChild(el);
+  }
+}
+
+// ============================================================
+// START GAME
+// ============================================================
+window.startGame = function(){
+  document.getElementById('startScreen').classList.add('hidden');
+  document.getElementById('gameOverScreen').classList.add('hidden');
+  state = {
+    running:true, score:0, level:1, styleMeter:100,
+    combo:1, maxCombo:1, fixed:0, wrong:0,
+    currentChallengeIdx:0, challenges:[],
+    timerInterval:null, timeLeft:0,
+    levelChallenges:[], levelIdx:0,
+  };
+  updateHUD();
+  updateStyleMeter();
+  loadLevel(1);
+};
+
+// ============================================================
+// LEVEL LOADING
+// ============================================================
+function loadLevel(lvl){
+  state.level = lvl;
+  state.levelIdx = 0;
+  const cfg = getLevelCfg();
+  state.levelChallenges = cfg.challengeIds
+    .map(id => CSS_CHALLENGES.find(c=>c.id===id))
+    .filter(Boolean);
+
+  updateHUD();
+  updateZoneBadge();
+  buildProgressDots();
+  renderPreview();
+  showNextChallenge();
+}
+
+function buildProgressDots(){
+  const cfg = getLevelCfg();
+  const el = document.getElementById('progressDots');
+  el.innerHTML = '';
+  cfg.challengeIds.forEach((_,i)=>{
+    const d = document.createElement('div');
+    d.className = 'pdot' + (i===0?' active':'');
+    d.id = 'pdot_'+i;
+    el.appendChild(d);
   });
 }
-function clearDragOver(){ document.querySelectorAll('.drag-over').forEach(z=>z.classList.remove('drag-over')); }
 
-function applyTool(tool, zoneId, zone){
-  const page = document.getElementById('mini-webpage');
-
-  // apply visual changes
-  if(tool.prop==='--wp-bg'){
-    if(zoneId==='hero') page.querySelector('.wp-hero').style.background=tool.color;
-    else if(zoneId==='nav') page.querySelector('.wp-nav').style.background=tool.color;
-    else if(zoneId==='footer') page.querySelector('.wp-footer').style.background=tool.color;
-    else if(zoneId==='cards') page.querySelectorAll('.wp-card').forEach(c=>c.style.background=tool.color);
-  }
-  else if(tool.prop==='accent'){
-    page.querySelector('#wp-h1').style.color=tool.color;
-    page.querySelector('.wp-nav-logo').style.color=tool.color;
-    page.querySelector('.wp-hero-tag').style.color=tool.color;
-    page.querySelector('#wp-footer-dot').style.background=tool.color;
-  }
-  else if(tool.prop==='--hero-font'){
-    page.querySelector('#wp-h1').style.fontFamily=tool.fontFamily;
-  }
-  else if(tool.prop==='--btn-radius'){
-    page.querySelector('#wp-btn').style.borderRadius=tool.btnRadius;
-    page.querySelector('#wp-btn').style.padding=tool.btnPad;
-  }
-  else if(tool.prop==='btn-style'){
-    const btn=page.querySelector('#wp-btn');
-    btn.style.background='transparent';
-    btn.style.border='2px solid #f472b6';
-    btn.style.color='#f472b6';
-  }
-  else if(tool.prop==='--hero-spacing'){
-    page.querySelector('.wp-hero').style.padding=tool.spacingVal;
-  }
-  else if(tool.prop==='--footer-bg'){
-    page.querySelector('.wp-footer').style.background=tool.color;
-  }
-  else if(tool.prop==='--card-bg'){
-    page.querySelectorAll('.wp-card').forEach(c=>c.style.background=tool.color);
-  }
-
-  // mark tool used
-  const toolEl=document.getElementById('tool-'+tool.id);
-  if(toolEl) toolEl.classList.add('used');
-
-  // update feedback
-  document.getElementById('fb-icon').textContent='✨';
-  document.getElementById('fb-text').textContent=tool.feedback;
-
-  // track CSS
-  appliedCSS[tool.cssRule]=tool;
-  droppedCount++;
-  updateCSSReadout();
-  updateDots();
-
-  // flash the zone
-  zone.style.transition='outline 0s';
-  zone.style.outline='2px solid rgba(244,114,182,0.8)';
-  setTimeout(()=>{ zone.style.outline=''; zone.style.transition=''; },600);
-
-  if(droppedCount>=TOTAL) setTimeout(showReveal,800);
+function updateProgressDots(){
+  const cfg = getLevelCfg();
+  cfg.challengeIds.forEach((_,i)=>{
+    const d = document.getElementById('pdot_'+i);
+    if(!d) return;
+    d.className = 'pdot' + (i < state.levelIdx ? ' done' : i === state.levelIdx ? ' active' : '');
+  });
 }
 
-function updateCSSReadout(){
-  const el=document.getElementById('css-readout');
-  if(Object.keys(appliedCSS).length===0){
-    el.innerHTML='<span class="cr-empty">/* Drop a style tool onto the webpage to see your CSS here... */</span>';
+// ============================================================
+// RENDER PREVIEW PANE
+// ============================================================
+function renderPreview(){
+  const preview = document.getElementById('pagePreview');
+  preview.innerHTML = '';
+
+  // Show all challenges for this level with current styles
+  state.levelChallenges.forEach((ch, i)=>{
+    const el = document.createElement('div');
+    el.className = 'preview-el' + (i===state.levelIdx?' active-preview':'');
+    el.id = 'prev_'+ch.id;
+    el.appendChild(buildPreviewEl(ch, i < state.levelIdx));
+    preview.appendChild(el);
+  });
+}
+
+function buildPreviewEl(ch, isSolved){
+  const styles = isSolved ? ch.fixed : ch.broken;
+  const wrapper = document.createElement('div');
+
+  if(ch.preview.type === 'h1'){
+    const el = document.createElement('h1');
+    Object.assign(el.style, styles, {fontFamily:'Syne,sans-serif'});
+    el.textContent = ch.preview.text;
+    if(!isSolved) el.style.filter = 'grayscale(0.8)';
+    wrapper.appendChild(el);
+  } else if(ch.preview.type === 'h2'){
+    const el = document.createElement('h2');
+    Object.assign(el.style, styles, {fontFamily:'Syne,sans-serif'});
+    el.textContent = ch.preview.text;
+    if(!isSolved) el.style.filter = 'grayscale(0.8)';
+    wrapper.appendChild(el);
+  } else if(ch.preview.type === 'p'){
+    const el = document.createElement('p');
+    Object.assign(el.style, styles);
+    el.textContent = ch.preview.text;
+    wrapper.appendChild(el);
+  } else if(ch.preview.type === 'label'){
+    const el = document.createElement('div');
+    Object.assign(el.style, styles);
+    el.textContent = ch.preview.text;
+    wrapper.appendChild(el);
+  } else if(ch.preview.type === 'button'){
+    const el = document.createElement('button');
+    Object.assign(el.style, styles, {cursor:'default',display:'inline-block'});
+    el.textContent = ch.preview.text;
+    wrapper.appendChild(el);
+  } else if(ch.preview.type === 'card'){
+    const el = document.createElement('div');
+    Object.assign(el.style, styles);
+    el.textContent = ch.preview.text;
+    wrapper.appendChild(el);
+  } else if(ch.preview.type === 'spacing'){
+    ['Space creates clarity.','Every element needs room to breathe.','Design is about what you leave out.'].forEach(t=>{
+      const el = document.createElement('p');
+      Object.assign(el.style, styles);
+      el.textContent = t;
+      wrapper.appendChild(el);
+    });
+  } else if(ch.preview.type === 'muted'){
+    const el = document.createElement('p');
+    Object.assign(el.style, styles);
+    el.textContent = ch.preview.text;
+    wrapper.appendChild(el);
+  } else if(ch.preview.type === 'gradient'){
+    const el = document.createElement('h1');
+    Object.assign(el.style, styles, {fontFamily:'Orbitron,monospace'});
+    el.textContent = ch.preview.text;
+    if(!isSolved) el.style.filter = 'grayscale(1)';
+    wrapper.appendChild(el);
+  }
+
+  return wrapper;
+}
+
+function updatePreviewEl(ch, solved){
+  const el = document.getElementById('prev_'+ch.id);
+  if(!el) return;
+  el.innerHTML = '';
+  el.appendChild(buildPreviewEl(ch, solved));
+  if(solved){
+    el.classList.remove('glitching');
+    el.classList.add('fixed-anim');
+    setTimeout(()=>el.classList.remove('fixed-anim'), 600);
+  } else {
+    el.classList.add('glitching');
+    setTimeout(()=>el.classList.remove('glitching'), 400);
+  }
+}
+
+// ============================================================
+// CHALLENGE FLOW
+// ============================================================
+function showNextChallenge(){
+  if(!state.running) return;
+  if(state.levelIdx >= state.levelChallenges.length){
+    // Level complete
+    levelComplete();
     return;
   }
-  let html='';
-  Object.values(appliedCSS).forEach(tool=>{
-    const parts=tool.cssRule.replace('{','{\n  ').replace('}','\n}').split('\n');
-    html+=`<span class="cr-sel">${parts[0]}</span> {\n  `;
-    const inner=parts[1].trim().replace(/:\s*/,': ');
-    const colon=inner.indexOf(':');
-    html+=`<span class="cr-prop">${inner.substring(0,colon)}</span>: <span class="cr-val">${inner.substring(colon+1)}</span>\n<span class="cr-sel">}</span>\n`;
+  const ch = state.levelChallenges[state.levelIdx];
+  updateProgressDots();
+  renderChallengePanel(ch);
+  startTimer();
+
+  // Mark active preview
+  state.levelChallenges.forEach((_,i)=>{
+    const el = document.getElementById('prev_'+_.id);
+    if(el) el.style.outline = i===state.levelIdx ? '2px solid rgba(255,107,170,.5)' : 'none';
   });
-  el.innerHTML=html;
+
+  // Scroll preview to active element
+  const activeEl = document.getElementById('prev_'+ch.id);
+  if(activeEl) activeEl.scrollIntoView({behavior:'smooth', block:'center'});
 }
 
-function buildDots(){
-  const el=document.getElementById('navDots');
-  el.innerHTML='';
-  for(let i=0;i<TOTAL;i++){
-    const d=document.createElement('div');
-    d.className='npd'+(i<droppedCount?' done':i===droppedCount?' active':'');
-    el.appendChild(d);
+function renderChallengePanel(ch){
+  document.getElementById('challengeTitle').textContent = 'Fix: ' + ch.label;
+  document.getElementById('challengeDesc').textContent = ch.desc;
+
+  const body = document.getElementById('challengeBody');
+  body.innerHTML = '';
+
+  const card = document.createElement('div');
+  card.className = 'css-challenge active';
+  card.innerHTML = `
+    <div class="css-prop-label">
+      <span>${ch.element}</span>
+      <span style="color:rgba(255,255,255,.3)">·</span>
+      <span style="color:rgba(255,255,255,.5)">${ch.property}</span>
+    </div>
+    <div class="css-prop-name" style="color:rgba(255,255,255,.4)">${ch.element} { <span style="color:#ffe066">${ch.property}</span>: <span id="liveVal" style="color:#ff6b6b">???</span>; }</div>
+    <div class="css-desc">${ch.desc}</div>
+    <div class="css-options" id="cssOpts"></div>
+  `;
+  body.appendChild(card);
+
+  const opts = document.getElementById('cssOpts');
+  ch.options.forEach((opt, i)=>{
+    const btn = document.createElement('button');
+    btn.className = 'css-opt';
+    if(ch.swatches[i]){
+      const sw = document.createElement('span');
+      sw.className = 'opt-swatch';
+      sw.style.background = ch.swatches[i];
+      btn.appendChild(sw);
+    }
+    btn.appendChild(document.createTextNode(opt));
+    btn.addEventListener('click', ()=>answerChallenge(opt, ch, btn, opts));
+    opts.appendChild(btn);
+  });
+}
+
+function answerChallenge(chosen, ch, btn, optsEl){
+  if(!state.running) return;
+  clearTimer();
+
+  const isCorrect = chosen === ch.correct;
+  const opts = optsEl.querySelectorAll('.css-opt');
+  opts.forEach(o=>o.style.pointerEvents='none');
+
+  // Update live val display
+  const lv = document.getElementById('liveVal');
+  if(lv){ lv.textContent = chosen; lv.style.color = isCorrect ? '#a2ff32' : '#ff6b6b'; }
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    state.combo++;
+    if(state.combo > state.maxCombo) state.maxCombo = state.combo;
+    state.fixed++;
+    const cfg = getLevelCfg();
+    const earned = cfg.pointsBase * Math.min(state.combo, 6);
+    state.score += earned;
+    spawnScoreFloat(earned, btn);
+    spawnPaintBurst(btn);
+    spawnParticles(btn);
+    zenExpression('happy');
+    playCorrect();
+    if(state.combo >= 3) showCombo();
+    updatePreviewEl(ch, true);
+    document.getElementById('glitchTag').textContent = state.levelIdx >= state.levelChallenges.length-1 ? 'STYLED ✓' : 'FIXING...';
+    document.getElementById('glitchTag').className = 'glitch-tag' + (state.levelIdx >= state.levelChallenges.length-1 ? ' fixed' : '');
+  } else {
+    btn.classList.add('wrong');
+    opts.forEach(o=>{ if(o.textContent.trim()===ch.correct || o.textContent.includes(ch.correct)) o.classList.add('reveal'); });
+    state.combo = 1;
+    state.wrong++;
+    state.styleMeter = Math.max(0, state.styleMeter - 25);
+    updateStyleMeter();
+    zenExpression('sad');
+    triggerGlitch();
+    playWrong();
+    if(state.styleMeter <= 0){ endGame(); return; }
+  }
+
+  updateHUD();
+  state.levelIdx++;
+  setTimeout(()=>{ if(state.running) showNextChallenge(); }, 1000);
+}
+
+function timeOutChallenge(){
+  if(!state.running) return;
+  state.combo = 1;
+  state.wrong++;
+  state.styleMeter = Math.max(0, state.styleMeter - 20);
+  updateStyleMeter();
+  zenExpression('sad');
+  triggerGlitch();
+  playWrong();
+  updateHUD();
+  if(state.styleMeter <= 0){ endGame(); return; }
+  state.levelIdx++;
+  showNextChallenge();
+}
+
+// ============================================================
+// TIMER
+// ============================================================
+function startTimer(){
+  const cfg = getLevelCfg();
+  state.timeLeft = cfg.timePerQ;
+  updateTimerRing();
+  if(state.timerInterval) clearInterval(state.timerInterval);
+  state.timerInterval = setInterval(()=>{
+    state.timeLeft -= 0.1;
+    updateTimerRing();
+    if(state.timeLeft <= 0){ clearInterval(state.timerInterval); timeOutChallenge(); }
+  }, 100);
+}
+
+function clearTimer(){ if(state.timerInterval) clearInterval(state.timerInterval); }
+
+function updateTimerRing(){
+  const cfg = getLevelCfg();
+  const pct = Math.max(0, state.timeLeft / cfg.timePerQ);
+  const circ = 94.2;
+  const offset = circ * (1-pct);
+  const ring = document.getElementById('timerRing');
+  const num = document.getElementById('timerNum');
+  if(ring) ring.style.strokeDashoffset = offset;
+  if(num) num.textContent = Math.ceil(state.timeLeft);
+  if(ring){
+    if(pct > 0.5) ring.style.stroke = '#ff6baa';
+    else if(pct > 0.25) ring.style.stroke = '#ffe066';
+    else ring.style.stroke = '#ff6b6b';
   }
 }
-function updateDots(){ buildDots(); }
 
-function showReveal(){
-  let css='/* Your stylesheet */\n\n';
-  Object.values(appliedCSS).forEach(t=>{ css+=t.cssRule+'\n\n'; });
-  const el=document.getElementById('reveal-css');
-  el.innerHTML=css.replace(/\{/g,'{\n  ').replace(/;/g,';\n  ').replace(/\}/g,'\n}')
-    .replace(/\/\*.*?\*\//g,m=>`<span style="color:rgba(255,255,255,0.25)">${m}</span>`)
-    .replace(/([\w-]+)(?=\s*:)/g,'<span style="color:var(--cyan)">$1</span>')
-    .replace(/:\s*([^;\n}]+)/g,(m,v)=>`: <span style="color:var(--pink)">${v}</span>`);
-  switchScreen('screen-game','screen-reveal');
-  launchConfetti();
+// ============================================================
+// LEVEL COMPLETE
+// ============================================================
+function levelComplete(){
+  clearTimer();
+  const nextLevel = state.level + 1;
+  if(nextLevel > LEVELS.length){ endGame(true); return; }
+  showLevelBanner(`LEVEL ${nextLevel}`);
+  playLevelUp();
+  zenExpression('happy');
+  setTimeout(()=>{ if(state.running) loadLevel(nextLevel); }, 2000);
 }
 
-function restartGame(){
-  droppedCount=0; appliedCSS={};
-  document.getElementById('mini-webpage').querySelectorAll('[style]').forEach(el=>{
-    if(!el.classList.contains('wp-dot')&&!el.classList.contains('wp-url')) el.removeAttribute('style');
-  });
-  document.getElementById('css-readout').innerHTML='<span class="cr-empty">/* Drop a style tool onto the webpage to see your CSS here... */</span>';
-  document.getElementById('fb-text').textContent='Pick up a tool and drop it anywhere on the page.';
-  document.getElementById('fb-icon').textContent='✦';
-  switchScreen('screen-reveal','screen-game');
-  buildTray(); buildDots();
+function showLevelBanner(text){
+  const el = document.getElementById('levelBanner');
+  el.textContent = text;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 1800);
 }
 
-function launchConfetti(){
-  const colors=['#f472b6','#a855f7','#00e8ff','#ffe066','#84cc16','#fff'];
-  for(let i=0;i<70;i++){
-    setTimeout(()=>{
-      const c=document.createElement('div');
-      c.className='confetti-piece';
-      c.style.left=Math.random()*100+'vw';
-      c.style.background=colors[Math.floor(Math.random()*colors.length)];
-      c.style.animationDuration=(Math.random()*2+1.5)+'s';
-      c.style.width=c.style.height=(Math.random()*8+4)+'px';
-      document.body.appendChild(c);
-      setTimeout(()=>c.remove(),4000);
-    },i*40);
+function updateZoneBadge(){
+  const cfg = getLevelCfg();
+  const el = document.getElementById('zoneBadge');
+  el.textContent = cfg.name;
+  el.style.color = cfg.color;
+  el.style.borderColor = cfg.color+'66';
+  el.style.background = cfg.color+'18';
+}
+
+// ============================================================
+// HUD
+// ============================================================
+function updateHUD(){
+  document.getElementById('scoreVal').textContent = state.score.toLocaleString();
+  document.getElementById('levelVal').textContent = state.level;
+  const best = Math.max(state.score, parseInt(localStorage.getItem('zenGameBest'))||0);
+  document.getElementById('bestVal').textContent = best.toLocaleString();
+}
+
+function popHud(id){
+  const el = document.getElementById(id);
+  el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
+  setTimeout(()=>el.classList.remove('pop'), 200);
+}
+
+function updateStyleMeter(){
+  const el = document.getElementById('styleMeter');
+  el.style.width = state.styleMeter + '%';
+  if(state.styleMeter > 60) el.style.background = 'linear-gradient(135deg,#ff6baa,#c66bff)';
+  else if(state.styleMeter > 30) el.style.background = 'linear-gradient(135deg,#ffe066,#ff8c42)';
+  else el.style.background = 'linear-gradient(135deg,#ff6b6b,#ff3232)';
+}
+
+// ============================================================
+// COMBO DISPLAY
+// ============================================================
+function showCombo(){
+  const el = document.getElementById('comboDisplay');
+  const labels={3:'TRIPLE!',4:'QUAD!!',5:'ON FIRE!',6:'ZEN MODE!',7:'MASTERPIECE!',8:'LEGENDARY!'};
+  const colors={3:'#00e8ff',4:'#c66bff',5:'#ff6baa',6:'#ffe066',7:'#a2ff32',8:'#ff3232'};
+  const c = Math.min(state.combo, 8);
+  el.textContent = labels[c] || `x${c} COMBO!`;
+  el.style.color = colors[c] || '#fff';
+  el.style.fontSize = `clamp(1.4rem,${2+c*.25}vw,3rem)`;
+  el.style.textShadow = `0 0 40px ${colors[c]||'#fff'}`;
+  el.classList.add('show');
+  setTimeout(()=>el.classList.remove('show'), 900);
+}
+
+// ============================================================
+// ZEN EXPRESSION
+// ============================================================
+const ZEN_FACES = {
+  idle:  {emoji:'🎨', border:'rgba(255,107,170,.4)', glow:'rgba(255,107,170,.3)'},
+  happy: {emoji:'😍', border:'rgba(162,255,50,.6)',  glow:'rgba(162,255,50,.5)'},
+  sad:   {emoji:'😰', border:'rgba(255,107,107,.6)', glow:'rgba(255,107,107,.5)'},
+};
+let faceTimeout=null;
+
+function zenExpression(mood){
+  const face = document.getElementById('zenFace');
+  const emoji = document.getElementById('zenFaceEmoji');
+  const f = ZEN_FACES[mood]||ZEN_FACES.idle;
+  emoji.textContent = f.emoji;
+  face.style.borderColor = f.border;
+  face.style.boxShadow = `0 0 30px ${f.glow}`;
+  face.classList.add('react');
+  if(mood==='sad') face.classList.add('sad');
+  if(faceTimeout) clearTimeout(faceTimeout);
+  faceTimeout = setTimeout(()=>{
+    face.classList.remove('react','sad');
+    emoji.textContent = ZEN_FACES.idle.emoji;
+    face.style.borderColor = ZEN_FACES.idle.border;
+    face.style.boxShadow = `0 0 30px ${ZEN_FACES.idle.glow}`;
+  }, 1200);
+}
+
+// ============================================================
+// FX
+// ============================================================
+function triggerGlitch(){
+  const el = document.getElementById('glitchOverlay');
+  el.classList.add('fire');
+  setTimeout(()=>el.classList.remove('fire'), 150);
+}
+
+function spawnPaintBurst(btn){
+  const rect = btn.getBoundingClientRect();
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top + rect.height/2;
+  const colors = ['#ff6baa','#c66bff','#00e8ff','#ffe066','#a2ff32'];
+  const c = colors[Math.floor(Math.random()*colors.length)];
+  const burst = document.createElement('div');
+  burst.className = 'paint-burst';
+  burst.style.cssText = `left:${cx}px;top:${cy}px;width:60px;height:60px;background:${c};opacity:.6;`;
+  document.body.appendChild(burst);
+  setTimeout(()=>burst.remove(), 600);
+}
+
+function spawnScoreFloat(pts, btn){
+  const rect = btn.getBoundingClientRect();
+  const el = document.createElement('div');
+  el.className = 'score-float';
+  el.textContent = '+'+pts;
+  el.style.cssText = `left:${rect.left+rect.width/2}px;top:${rect.top}px;color:#a2ff32;`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 800);
+}
+
+function spawnParticles(btn){
+  const rect = btn.getBoundingClientRect();
+  const cx = rect.left + rect.width/2;
+  const cy = rect.top + rect.height/2;
+  const colors=['#ff6baa','#c66bff','#00e8ff','#ffe066','#a2ff32'];
+  for(let i=0;i<10;i++){
+    const angle = (i/10)*Math.PI*2;
+    const dist = 50 + Math.random()*50;
+    const p = document.createElement('div');
+    p.className = 'particle';
+    p.style.cssText = `left:${cx}px;top:${cy}px;width:${3+Math.random()*5}px;height:${3+Math.random()*5}px;background:${colors[Math.floor(Math.random()*colors.length)]};--px:${Math.cos(angle)*dist}px;--py:${Math.sin(angle)*dist}px;animation-duration:${.4+Math.random()*.3}s;border-radius:${Math.random()>0.5?'50%':'3px'};`;
+    document.body.appendChild(p);
+    setTimeout(()=>p.remove(), 700);
   }
+}
+
+// ============================================================
+// SOUND
+// ============================================================
+let audioCtx=null;
+function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+
+function playCorrect(){
+  try{
+    const ac=getAudio();
+    [523,659,784,1047].forEach((f,i)=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='sine';o.frequency.value=f;
+      const t=ac.currentTime+i*.06;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.07,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.3);
+      o.start(t);o.stop(t+.3);
+    });
+  }catch(e){}
+}
+
+function playWrong(){
+  try{
+    const ac=getAudio();
+    [300,220,180].forEach((f,i)=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='sawtooth';o.frequency.value=f;
+      const t=ac.currentTime+i*.08;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.25);
+      o.start(t);o.stop(t+.25);
+    });
+  }catch(e){}
+}
+
+function playLevelUp(){
+  try{
+    const ac=getAudio();
+    [440,554,659,880,1108].forEach((f,i)=>{
+      const o=ac.createOscillator(),g=ac.createGain();
+      o.connect(g);g.connect(ac.destination);
+      o.type='sine';o.frequency.value=f;
+      const t=ac.currentTime+i*.1;
+      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.04);g.gain.exponentialRampToValueAtTime(.001,t+.4);
+      o.start(t);o.stop(t+.4);
+    });
+  }catch(e){}
+}
+
+// ============================================================
+// GAME OVER
+// ============================================================
+function endGame(won=false){
+  state.running = false;
+  clearTimer();
+  if(window._saveZenScore) window._saveZenScore(state.score);
+  const best = Math.max(state.score, parseInt(localStorage.getItem('zenGameBest'))||0);
+  const total = state.fixed + state.wrong;
+  document.getElementById('finalScore').textContent = state.score.toLocaleString();
+  document.getElementById('finalBest').textContent = 'Best: '+best.toLocaleString();
+  document.getElementById('statFixed').textContent = state.fixed;
+  document.getElementById('statLevel').textContent = state.level;
+  document.getElementById('statCombo').textContent = 'x'+state.maxCombo;
+  document.getElementById('statAccuracy').textContent = total>0?Math.round((state.fixed/total)*100)+'%':'0%';
+  document.getElementById('gameOverTitle').textContent = won ? 'MASTERPIECE!' : 'STYLE LOST';
+  document.getElementById('gameOverEyebrow').textContent = won ? 'Studio Complete' : 'Style Meter Drained';
+  document.getElementById('gameOverSub').textContent = won
+    ? `You restored Zen's studio across all ${LEVELS.length} zones. That's real design skill.`
+    : "The style meter drained. But Zen says: every great design starts with a rough draft.";
+  document.getElementById('gameOverZen').textContent = won ? '🌟' : '😰';
+  setTimeout(()=>document.getElementById('gameOverScreen').classList.remove('hidden'), 500);
 }
 </script>
 </body>
