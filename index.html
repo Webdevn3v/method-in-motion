@@ -113,4 +113,580 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .sc-lessons{margin-bottom:12px;padding:10px;background:rgba(0,0,0,.3);border-radius:8px;border:1px solid var(--border);}
 .sc-lessons-label{font-family:var(--display);font-size:.38rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
 .sc-lesson-item{display:flex;align-items:baseline;gap:6px;padding:3px 0;border-bottom:1px solid rgba(255,255,255,.04);}
-.sc-lesson-item:last-child{border-bottom
+.sc-lesson-item:last-child{border-bottom:none;}
+.sc-lesson-num{font-family:var(--display);font-size:.38rem;color:var(--cc,var(--pink));opacity:.7;min-width:18px;}
+.sc-lesson-title{font-size:.7rem;color:var(--off);line-height:1.3;}
+.sc-lesson-free{display:inline-block;margin-left:4px;padding:1px 5px;border-radius:100px;font-family:var(--display);font-size:.32rem;font-weight:700;background:linear-gradient(135deg,#00e8ff,#c66bff);color:#000;vertical-align:middle;}
+.sc-actions{display:flex;gap:7px;}
+.sc-btn-game{flex:1;font-family:var(--display);font-size:.48rem;letter-spacing:.1em;text-transform:uppercase;padding:9px 8px;border-radius:7px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));background:rgba(0,0,0,.3);text-align:center;transition:all .2s;position:relative;z-index:5;display:block;}
+.sc-btn-game:hover{background:var(--cc,var(--pink));color:#000;}
+.sc-btn-game .free-badge{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:100px;font-size:.38rem;letter-spacing:.1em;font-weight:700;background:linear-gradient(135deg,#00e8ff,#c66bff);color:#000;vertical-align:middle;box-shadow:0 0 8px rgba(0,232,255,.5);animation:badge-pulse 2s ease-in-out infinite;}
+@keyframes badge-pulse{0%,100%{box-shadow:0 0 8px rgba(0,232,255,.5)}50%{box-shadow:0 0 16px rgba(0,232,255,.9),0 0 24px rgba(198,107,255,.4)}}
+.membership-strip{background:var(--deep);padding:80px 48px;position:relative;overflow:hidden;}
+.membership-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(198,107,255,.08),transparent 70%);pointer-events:none;}
+.membership-strip__inner{max-width:1100px;margin:0 auto;}
+.membership-strip__head{text-align:center;margin-bottom:32px;}
+.membership-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;align-items:start;}
+@media(max-width:900px){.membership-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:540px){.membership-grid{grid-template-columns:1fr}}
+.tier-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:24px;position:relative;transition:border-color .3s,transform .3s;}
+.tier-card:hover{transform:translateY(-4px);border-color:var(--cc,rgba(198,107,255,.4));}
+.tier-card.featured{border-color:rgba(198,107,255,.4);background:linear-gradient(135deg,rgba(198,107,255,.08),rgba(0,232,255,.04));}
+.tier-card.free-tier{border-color:rgba(0,232,255,.2);}
+.tier-card.free-tier:hover{border-color:rgba(0,232,255,.5);}
+.tier-featured-badge{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-family:var(--display);font-size:.38rem;letter-spacing:.14em;text-transform:uppercase;padding:3px 12px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;}
+.tier-name{font-family:var(--display);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cc,var(--purple));margin-bottom:4px;}
+.tier-price{font-family:var(--display);font-size:1.6rem;font-weight:900;line-height:1;margin-bottom:4px;}
+.tier-price span{font-size:.6rem;color:var(--muted);font-weight:400;}
+.tier-desc{font-size:.78rem;color:var(--muted);margin-bottom:14px;line-height:1.5;}
+.tier-perks{list-style:none;margin-bottom:16px;}
+.tier-perks li{font-size:.76rem;color:var(--off);padding:4px 0;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.tier-perks li:last-child{border-bottom:none;}
+.tier-perks li::before{content:'';width:4px;height:4px;border-radius:50%;background:var(--cc,var(--purple));flex-shrink:0;}
+.tier-btn{width:100%;font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:10px;border-radius:8px;border:1px solid var(--cc,rgba(198,107,255,.4));color:var(--cc,var(--purple));background:none;cursor:pointer;transition:all .2s;}
+.tier-btn:hover{background:var(--cc,var(--purple));color:#000;}
+.tier-card.featured .tier-btn{background:var(--grad);border:none;color:#000;font-weight:700;}
+.tier-card.free-tier .tier-btn{border-color:rgba(0,232,255,.4);color:var(--cyan);}
+.tier-card.free-tier .tier-btn:hover{background:var(--cyan);color:#000;}
+.workbook-strip{background:var(--void);padding:80px 48px;border-top:1px solid var(--border);}
+.workbook-strip__inner{max-width:900px;margin:0 auto;display:flex;gap:40px;align-items:center;}
+@media(max-width:768px){.workbook-strip__inner{flex-direction:column;text-align:center}}
+.workbook-strip__text{flex:1;}
+.workbook-strip__visual{flex:0 0 260px;background:var(--card);border:1px solid var(--border);border-radius:14px;padding:28px;text-align:center;position:relative;overflow:hidden;}
+.workbook-strip__visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(255,107,170,.1),transparent 60%);pointer-events:none;}
+.workbook-preview-title{font-family:var(--display);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--pink);margin-bottom:6px;}
+.workbook-preview-name{font-family:var(--heading);font-size:1.1rem;font-weight:800;margin-bottom:4px;}
+.workbook-preview-sub{font-size:.74rem;color:var(--muted);margin-bottom:16px;}
+.workbook-preview-pages{font-family:var(--display);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);opacity:.7;}
+.dark-orb-strip{position:relative;padding:80px 48px;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,rgba(198,107,255,.07) 0%,var(--void) 70%);border-top:1px solid var(--border);}
+.dark-orb-strip__inner{max-width:700px;margin:0 auto;text-align:center;}
+.dark-orb{width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(198,107,255,.6),rgba(5,5,8,.9));border:1px solid rgba(198,107,255,.3);margin:0 auto 28px;box-shadow:0 0 60px rgba(198,107,255,.25),inset 0 0 40px rgba(0,0,0,.5);animation:orb-pulse 4s ease-in-out infinite;}
+@keyframes orb-pulse{0%,100%{box-shadow:0 0 60px rgba(198,107,255,.25),inset 0 0 40px rgba(0,0,0,.5)}50%{box-shadow:0 0 100px rgba(198,107,255,.45),0 0 40px rgba(0,232,255,.15),inset 0 0 40px rgba(0,0,0,.5)}}
+.newsletter{background:var(--deep);padding:72px 48px;text-align:center;border-top:1px solid var(--border);}
+.newsletter__inner{max-width:480px;margin:0 auto;}
+.newsletter-form{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center;}
+.newsletter-input{flex:1;min-width:220px;font-family:var(--body);font-size:.88rem;padding:12px 18px;background:var(--card);border:1px solid var(--border-md);border-radius:100px;color:var(--white);outline:none;transition:border-color .2s;}
+.newsletter-input:focus{border-color:var(--purple);}
+.newsletter-input::placeholder{color:var(--muted);}
+.newsletter-btn{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 24px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s;}
+.newsletter-btn:hover{transform:translateY(-1px)}
+#newsletter-success{display:none;font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-top:12px;}
+footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
+.footer-logo{font-family:var(--display);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);}
+.footer-copy{font-size:.74rem;color:var(--muted);}
+.footer-links{display:flex;gap:20px;}
+.footer-links a{font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);transition:color .2s;}
+.footer-links a:hover{color:var(--pink);}
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,5,8,.88);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:20px;}
+.modal-box{background:var(--card);border:1px solid var(--border-md);border-radius:20px;padding:40px;width:100%;max-width:400px;position:relative;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;line-height:1;transition:color .2s;}
+.modal-close:hover{color:#fff}
+.modal-title{font-family:var(--display);font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
+.modal-sub{font-size:.82rem;color:var(--muted);margin-bottom:24px;}
+.modal-tabs{display:flex;gap:4px;margin-bottom:24px;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;}
+.modal-tab{flex:1;font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:8px;border-radius:7px;border:none;background:none;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;}
+.modal-tab.active{background:rgba(198,107,255,.2);color:var(--purple);}
+.modal-field{margin-bottom:14px;}
+.modal-field label{display:block;font-family:var(--display);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:5px;}
+.modal-field input{width:100%;padding:11px 14px;background:rgba(0,0,0,.3);border:1px solid var(--border-md);border-radius:8px;color:#fff;font-family:var(--body);font-size:.88rem;outline:none;transition:border-color .2s;}
+.modal-field input:focus{border-color:var(--purple);}
+.modal-submit{width:100%;font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:13px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;margin-top:6px;transition:transform .2s;}
+.modal-submit:hover{transform:translateY(-1px)}
+.modal-error{font-size:.78rem;color:var(--pink);margin-top:8px;display:none;}
+.modal-success{font-size:.78rem;color:var(--cyan);margin-top:8px;display:none;}
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+
+<nav id="mainNav">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-mark">M</div>
+    Method in Motion
+  </a>
+  <ul class="nav-links">
+    <li><a href="#crew">Crew</a></li>
+    <li><a href="#membership">Membership</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="pdfs.html">PDFs</a></li>
+    <li><a href="library.html">Library</a></li>
+  </ul>
+  <div class="nav-right">
+    <div id="nav-auth-btns">
+      <button class="nav-cta" onclick="openModal('login')">Log In</button>
+      <button class="nav-join" onclick="openModal('signup')">Join Free</button>
+    </div>
+    <div id="nav-user-menu">
+      <span id="nav-username"></span>
+      <a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
+      <button id="nav-logout-btn" onclick="handleLogout()">Log Out</button>
+    </div>
+  </div>
+</nav>
+
+<section class="hero">
+  <div class="hero-universe">
+    <video autoplay muted loop playsinline>
+      <source src="universe-view.mp4" type="video/mp4">
+    </video>
+  </div>
+  <div class="hero-overlay"></div>
+  <div class="hero-overlay-bottom"></div>
+  <div class="hero-light"></div>
+  <div class="hero-orb orb-a"></div>
+  <div class="hero-orb orb-b"></div>
+  <div class="hero-orb orb-c"></div>
+  <div class="hero-scan"></div>
+  <div class="hero-particles" id="heroParticles"></div>
+  <div class="hero-content">
+    <p class="hero-eyebrow">Welcome to the Universe</p>
+    <h1 class="hero-title">METHOD IN MOTION</h1>
+    <p class="hero-sub">Create, Don't Consume.</p>
+    <div class="hero-actions">
+      <button class="btn-primary" onclick="openModal('signup')">Start Free — No Card Needed</button>
+      <button class="btn-outline" onclick="document.getElementById('crew').scrollIntoView({behavior:'smooth'})">Meet the Crew</button>
+    </div>
+    <p class="hero-free-note">✦ No card needed <span>·</span> Zen &amp; Byte Lesson 1 free <span>·</span> Upgrade anytime</p>
+  </div>
+  <div class="hero-scroll">
+    <div class="scroll-line"></div>
+    <span>Scroll</span>
+  </div>
+</section>
+
+<section class="mission">
+  <span class="mission-eyebrow">The Philosophy</span>
+  <div class="cdc-statement">Create, Don't Consume.</div>
+  <h2 class="mission-title">Real code. Real worlds. Real kids building both.</h2>
+  <p class="mission-body">Method in Motion is a kids' coding universe where six characters each teach a different piece of the web — HTML, CSS, JavaScript, debugging, logic, and sound. No drag-and-drop toys. Real lessons. Real projects. And now, real games in the underground.</p>
+  <div class="mission-pills">
+    <span class="mission-pill">HTML</span>
+    <span class="mission-pill">CSS</span>
+    <span class="mission-pill">JavaScript</span>
+    <span class="mission-pill">Debugging</span>
+    <span class="mission-pill">Logic</span>
+    <span class="mission-pill">Web Audio</span>
+  </div>
+</section>
+
+<section class="crew" id="crew">
+  <div class="crew__inner">
+    <div class="crew__header">
+      <span class="section-label">The Crew</span>
+      <h2 class="section-title">Six worlds. Six specialties.</h2>
+      <p class="section-desc">Every character teaches a different skill. Every lesson unlocks more of their world.</p>
+    </div>
+    <div class="crew-toggle-wrap">
+      <button class="crew-toggle-btn" id="crewToggleBtn" onclick="toggleCrew()">
+        Meet the Crew <i class="crew-toggle-arrow">&#8964;</i>
+      </button>
+    </div>
+    <div class="crew__grid-wrap" id="crewGridWrap">
+      <div class="crew__grid">
+
+        <div class="stat-card" style="--cc:#ff6baa" onclick="window.location='zen.html'">
+          <div class="sc-media"><img src="zen-motion.gif" alt="Zen"><div class="sc-glow"></div></div>
+          <div class="sc-body">
+            <div class="sc-header"><span class="sc-id">MIM-001</span><span class="sc-lang-badge">CSS</span></div>
+            <div class="sc-name">Zen</div>
+            <div class="sc-role">Creative Coder — she/her</div>
+            <div class="sc-lessons">
+              <div class="sc-lessons-label">What you'll learn</div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Intro to CSS — colors, fonts & your first style <span class="sc-lesson-free">FREE</span></span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Box model, spacing & layout basics</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Flexbox & building real page sections</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Animations, transitions & your full CSS project</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">CSS Style Studio — meet me in the game world</span></div>
+            </div>
+            <div class="sc-actions">
+              <a href="zen.html" class="sc-btn-game">Start Lesson 1 <span class="free-badge">FREE</span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" style="--cc:#c66bff" onclick="window.location='byte.html'">
+          <div class="sc-media"><img src="byte-motion.gif" alt="Byte"><div class="sc-glow"></div></div>
+          <div class="sc-body">
+            <div class="sc-header"><span class="sc-id">MIM-002</span><span class="sc-lang-badge">Debugging</span></div>
+            <div class="sc-name">Byte</div>
+            <div class="sc-role">Glitch Cat — she/her</div>
+            <div class="sc-lessons">
+              <div class="sc-lessons-label">What you'll learn</div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">What is a bug? Reading your first error <span class="sc-lesson-free">FREE</span></span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Console tools & spotting broken code</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Fixing logic errors & understanding flow</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Debugging a full broken project</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Glitch Hunt Arcade — meet me in the game world</span></div>
+            </div>
+            <div class="sc-actions">
+              <a href="byte.html" class="sc-btn-game">Start Lesson 1 <span class="free-badge">FREE</span></a>
+            </div>
+          </div>
+        </div>
+
+        <div class="stat-card" style="--cc:#00e8ff" onclick="window.location='loop.html'">
+          <div class="sc-media"><img src="loop-motion.gif" alt="Loop"><div class="sc-glow"></div></div>
+          <div class="sc-body">
+            <div class="sc-header"><span class="sc-id">MIM-003</span><span class="sc-lang-badge">JavaScript</span></div>
+            <div class="sc-name">Loop</div>
+            <div class="sc-role">Flow Guide — they/them</div>
+            <div class="sc-lessons">
+              <div class="sc-lessons-label">What you'll learn</div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">What is a loop? For loops & repetition</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">While loops, conditions & flow control</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Functions, parameters & reusable logic</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Building a logic-driven mini project</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Pattern Runner — meet me in the game world</span></div>
+            </div>
+            <div class="sc-actions"><a href="loop.html" class="sc-btn-game">Start Lessons</a></div>
+          </div>
+        </div>
+
+        <div class="stat-card" style="--cc:#ffe066" onclick="window.location='nova.html'">
+          <div class="sc-media"><img src="nova-motion.gif" alt="Nova"><div class="sc-glow"></div></div>
+          <div class="sc-body">
+            <div class="sc-header"><span class="sc-id">MIM-004</span><span class="sc-lang-badge">HTML</span></div>
+            <div class="sc-name">Nova</div>
+            <div class="sc-role">Builder — she/her</div>
+            <div class="sc-lessons">
+              <div class="sc-lessons-label">What you'll learn</div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">HTML tags, structure & your first webpage</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Links, images & building page sections</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Forms, buttons & interactive elements</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Full HTML blueprint project — build a real page</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Blueprint Builder — meet me in the game world</span></div>
+            </div>
+            <div class="sc-actions"><a href="nova.html" class="sc-btn-game">Start Lessons</a></div>
+          </div>
+        </div>
+
+        <div class="stat-card" style="--cc:#a8ff3e" onclick="window.location='bug.html'">
+          <div class="sc-media"><img src="bug-motion.gif" alt="Bug"><div class="sc-glow"></div></div>
+          <div class="sc-body">
+            <div class="sc-header"><span class="sc-id">MIM-005</span><span class="sc-lang-badge">JS Logic</span></div>
+            <div class="sc-name">Bug</div>
+            <div class="sc-role">Debug Gremlin — he/him</div>
+            <div class="sc-lessons">
+              <div class="sc-lessons-label">What you'll learn</div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Variables, data types & why code breaks</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">If/else logic & conditional chaos</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Arrays, objects & storing messy data</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Full JS debugging project — fix the wreckage</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Debug Dash — meet me in the game world</span></div>
+            </div>
+            <div class="sc-actions"><a href="bug.html" class="sc-btn-game">Start Lessons</a></div>
+          </div>
+        </div>
+
+        <div class="stat-card" style="--cc:#00e8ff" onclick="window.location='echo.html'">
+          <div class="sc-media"><img src="echo-motion.gif" alt="Echo"><div class="sc-glow"></div></div>
+          <div class="sc-body">
+            <div class="sc-header"><span class="sc-id">MIM-006</span><span class="sc-lang-badge">Web Audio</span></div>
+            <div class="sc-name">Echo</div>
+            <div class="sc-role">Signal DJ — he/him</div>
+            <div class="sc-lessons">
+              <div class="sc-lessons-label">What you'll learn</div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Sound on the web — intro to Web Audio API</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Frequencies, oscillators & making tones</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Rhythm, timing & sequencing sounds</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build a 16-step beat machine from scratch</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Beat Lab — meet me in the game world</span></div>
+            </div>
+            <div class="sc-actions"><a href="echo.html" class="sc-btn-game">Start Lessons</a></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="membership-strip" id="membership">
+  <div class="membership-strip__inner">
+    <div class="membership-strip__head">
+      <span class="section-label">Membership</span>
+      <h2 class="section-title">Start free. Unlock the universe.</h2>
+      <p class="section-desc" style="max-width:480px;margin:0 auto;">No card needed to get started. Create a free account and dive into Zen and Byte's Lesson 1 right now. Upgrade anytime to unlock every character, every lesson, and every game world.</p>
+    </div>
+    <div class="membership-grid">
+
+      <div class="tier-card free-tier" style="--cc:rgba(0,232,255,.8)">
+        <div class="tier-name" style="color:var(--cyan)">Free</div>
+        <div class="tier-price" style="color:var(--cyan)">$0<span>/ to start</span></div>
+        <div class="tier-desc">No credit card. No catch. Start coding today.</div>
+        <ul class="tier-perks">
+          <li>Free account — always</li>
+          <li>Zen's Lesson 1 unlocked</li>
+          <li>Byte's Lesson 1 unlocked</li>
+          <li>No expiration</li>
+        </ul>
+        <button class="tier-btn" onclick="openModal('signup')">Start Free Now</button>
+      </div>
+
+      <div class="tier-card" style="--cc:rgba(255,107,170,.6)">
+        <div class="tier-name">Sparks</div>
+        <div class="tier-price">$5<span>/mo</span></div>
+        <div class="tier-desc">Dip your toes in. Perfect for getting started.</div>
+        <ul class="tier-perks">
+          <li>Lesson 1 for all 6 characters</li>
+          <li>Access to the MiM Library</li>
+          <li>3-day free trial</li>
+        </ul>
+        <button class="tier-btn" onclick="openModal('signup')">Start Free Trial</button>
+      </div>
+
+      <div class="tier-card featured" style="--cc:var(--purple)">
+        <div class="tier-featured-badge">Most Popular</div>
+        <div class="tier-name">Builders</div>
+        <div class="tier-price">$9<span>/mo</span></div>
+        <div class="tier-desc">For kids ready to actually build things.</div>
+        <ul class="tier-perks">
+          <li>All 4 lessons per character</li>
+          <li>PDF workbook access</li>
+          <li>Full Library + cheat sheets</li>
+          <li>3-day free trial</li>
+        </ul>
+        <button class="tier-btn" onclick="openModal('signup')">Start Free Trial</button>
+      </div>
+
+      <div class="tier-card" style="--cc:var(--cyan)">
+        <div class="tier-name">Coders</div>
+        <div class="tier-price">$15<span>/mo</span></div>
+        <div class="tier-desc">The full underground. All lessons, all games.</div>
+        <ul class="tier-perks">
+          <li>Everything in Builders</li>
+          <li>All 6 game worlds unlocked</li>
+          <li>Early access to new content</li>
+          <li>3-day free trial</li>
+        </ul>
+        <button class="tier-btn" onclick="openModal('signup')">Start Free Trial</button>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<section class="workbook-strip">
+  <div class="workbook-strip__inner">
+    <div class="workbook-strip__text">
+      <span class="section-label">Workbooks</span>
+      <h2 class="section-title" style="font-size:clamp(1.4rem,3vw,2.2rem);margin-bottom:12px;">Take the learning offline.</h2>
+      <p style="font-size:.9rem;color:var(--off);line-height:1.8;margin-bottom:20px;">Zen's Creative Circuits Vol. 1 is a printable workbook packed with CSS challenges, design prompts, and creative projects. No screen required.</p>
+      <a href="pdfs.html" class="btn-primary" style="display:inline-block">Browse Workbooks</a>
+    </div>
+    <div class="workbook-strip__visual">
+      <div class="workbook-preview-title">Now Available</div>
+      <div class="workbook-preview-name">Zen's Creative Circuits</div>
+      <div class="workbook-preview-sub">Vol. 1 — CSS & Design Thinking</div>
+      <div class="workbook-preview-pages">Printable PDF · Available Now</div>
+    </div>
+  </div>
+</section>
+
+<section class="dark-orb-strip">
+  <div class="dark-orb-strip__inner">
+    <div class="dark-orb"></div>
+    <span class="section-label" style="display:block;text-align:center;">The Underground Awaits</span>
+    <h2 class="section-title" style="text-align:center;margin-bottom:14px;">The game world is below.</h2>
+    <p style="font-size:.9rem;color:var(--off);text-align:center;max-width:480px;margin:0 auto 28px;line-height:1.8;">Six characters. Six underground worlds. Each game is Lesson 5 — the one that doesn't feel like a lesson at all. Unlock the Coders tier to enter.</p>
+    <div style="text-align:center;">
+      <a href="games.html" class="btn-primary" style="display:inline-block">Enter the Game World</a>
+    </div>
+  </div>
+</section>
+
+<section class="newsletter">
+  <div class="newsletter__inner">
+    <span class="section-label" style="display:block;text-align:center">Stay in the Loop</span>
+    <h2 class="section-title" style="font-size:1.4rem;text-align:center;margin-bottom:6px;">New drops, new worlds.</h2>
+    <p style="font-size:.84rem;color:var(--muted);text-align:center;">Get notified when new characters, games, and workbooks drop.</p>
+    <div class="newsletter-form">
+      <input type="email" class="newsletter-input" id="newsletterEmail" placeholder="your@email.com">
+      <button class="newsletter-btn" onclick="handleNewsletter()">Notify Me</button>
+    </div>
+    <div id="newsletter-success">You're in. Welcome to the universe.</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-logo">Method in Motion</div>
+  <div class="footer-copy">© 2025 Method in Motion. Create, Don't Consume.</div>
+  <div class="footer-links">
+    <a href="pdfs.html">PDFs</a>
+    <a href="library.html">Library</a>
+    <a href="games.html">Games</a>
+    <a href="dashboard.html">Dashboard</a>
+  </div>
+</footer>
+
+<div class="modal-overlay" id="auth-modal">
+  <div class="modal-box">
+    <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    <div class="modal-title">Method in Motion</div>
+    <div class="modal-sub">Create, Don't Consume.</div>
+    <div class="modal-tabs">
+      <button class="modal-tab active" id="tab-login" onclick="switchTab('login')">Log In</button>
+      <button class="modal-tab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
+    </div>
+    <div id="login-form">
+      <div class="modal-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com"></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••"></div>
+      <button class="modal-submit" onclick="handleLogin()">Log In</button>
+      <div class="modal-error" id="login-error"></div>
+    </div>
+    <div id="signup-form" style="display:none">
+      <div class="modal-field"><label>Name</label><input type="text" id="signup-name" placeholder="Your name"></div>
+      <div class="modal-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com"></div>
+      <div class="modal-field"><label>Password</label><input type="password" id="signup-password" placeholder="••••••••"></div>
+      <button class="modal-submit" onclick="handleSignup()">Create Account</button>
+      <div class="modal-error" id="signup-error"></div>
+      <div class="modal-success" id="signup-success"></div>
+    </div>
+  </div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, updateProfile } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, setDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+const firebaseConfig = {
+  apiKey: "AIzaSyBY5cooking9Placeholder",
+  authDomain: "method-in-motion.firebaseapp.com",
+  projectId: "method-in-motion",
+  storageBucket: "method-in-motion.appspot.com",
+  messagingSenderId: "123456789",
+  appId: "1:123456789:web:abcdef"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+window._auth = auth;
+window._db = db;
+window._createUser = createUserWithEmailAndPassword;
+window._signIn = signInWithEmailAndPassword;
+window._signOut = signOut;
+window._updateProfile = updateProfile;
+window._doc = doc;
+window._setDoc = setDoc;
+window._getDoc = getDoc;
+onAuthStateChanged(auth, async (user) => {
+  const authBtns = document.getElementById('nav-auth-btns');
+  const userMenu = document.getElementById('nav-user-menu');
+  const usernameEl = document.getElementById('nav-username');
+  if(user){
+    authBtns.style.display = 'none';
+    userMenu.style.display = 'flex';
+    usernameEl.textContent = user.displayName || user.email.split('@')[0];
+  } else {
+    authBtns.style.display = 'flex';
+    userMenu.style.display = 'none';
+  }
+});
+window.handleLogin = async function(){
+  const email = document.getElementById('login-email').value;
+  const pass = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.style.display = 'none';
+  try {
+    await window._signIn(auth, email, pass);
+    closeModal();
+    window.location.href = 'dashboard.html';
+  } catch(e){
+    errEl.textContent = 'Invalid email or password.';
+    errEl.style.display = 'block';
+  }
+};
+window.handleSignup = async function(){
+  const name = document.getElementById('signup-name').value;
+  const email = document.getElementById('signup-email').value;
+  const pass = document.getElementById('signup-password').value;
+  const errEl = document.getElementById('signup-error');
+  const succEl = document.getElementById('signup-success');
+  errEl.style.display = 'none';
+  try {
+    const cred = await window._createUser(auth, email, pass);
+    await window._updateProfile(cred.user, {displayName: name});
+    await window._setDoc(window._doc(db, 'users', cred.user.uid), {
+      name, email, tier: 'free', createdAt: new Date().toISOString()
+    });
+    succEl.textContent = 'Welcome to the universe! Redirecting...';
+    succEl.style.display = 'block';
+    setTimeout(()=>{ window.location.href='dashboard.html'; }, 1500);
+  } catch(e){
+    errEl.textContent = e.message.includes('email') ? 'That email is already in use.' : 'Something went wrong. Try again.';
+    errEl.style.display = 'block';
+  }
+};
+window.handleLogout = async function(){
+  await window._signOut(auth);
+  window.location.reload();
+};
+window.handleNewsletter = async function(){
+  const email = document.getElementById('newsletterEmail').value;
+  if(!email) return;
+  try {
+    await window._setDoc(window._doc(db, 'newsletter', email), {
+      email, subscribedAt: new Date().toISOString()
+    });
+    document.querySelector('.newsletter-form').style.display = 'none';
+    document.getElementById('newsletter-success').style.display = 'block';
+  } catch(e){ console.log(e); }
+};
+</script>
+
+<script>
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursorRing');
+document.addEventListener('mousemove', e => {
+  cursor.style.left = e.clientX + 'px';
+  cursor.style.top = e.clientY + 'px';
+  setTimeout(()=>{
+    ring.style.left = e.clientX + 'px';
+    ring.style.top = e.clientY + 'px';
+  }, 80);
+});
+window.addEventListener('scroll', ()=>{
+  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
+});
+function openModal(tab){
+  document.getElementById('auth-modal').style.display = 'flex';
+  switchTab(tab || 'login');
+}
+function closeModal(){
+  document.getElementById('auth-modal').style.display = 'none';
+}
+function switchTab(tab){
+  document.getElementById('login-form').style.display = tab==='login' ? 'block' : 'none';
+  document.getElementById('signup-form').style.display = tab==='signup' ? 'block' : 'none';
+  document.getElementById('tab-login').classList.toggle('active', tab==='login');
+  document.getElementById('tab-signup').classList.toggle('active', tab==='signup');
+}
+document.getElementById('auth-modal').addEventListener('click', function(e){
+  if(e.target === this) closeModal();
+});
+window.openModal = openModal;
+window.closeModal = closeModal;
+window.switchTab = switchTab;
+function toggleCrew(){
+  const wrap = document.getElementById('crewGridWrap');
+  const btn = document.getElementById('crewToggleBtn');
+  wrap.classList.toggle('open');
+  btn.classList.toggle('open');
+}
+window.toggleCrew = toggleCrew;
+(function(){
+  const container = document.getElementById('heroParticles');
+  const colors = ['#ff6baa','#c66bff','#00e8ff','#fff'];
+  for(let i=0;i<28;i++){
+    const p = document.createElement('div');
+    p.className = 'hparticle';
+    const size = Math.random()*3+1;
+    p.style.cssText = `width:${size}px;height:${size}px;left:${Math.random()*100}%;background:${colors[Math.floor(Math.random()*colors.length)]};opacity:${Math.random()*.5+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*10}s;`;
+    container.appendChild(p);
+  }
+})();
+</script>
+</body>
+</html>
