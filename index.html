@@ -52,4 +52,15 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .hero-orb{position:absolute;border-radius:50%;filter:blur(80px);z-index:2;pointer-events:none;animation:orb-drift ease-in-out infinite;}
 @keyframes orb-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(var(--dx,20px),var(--dy,-20px))}}
 .orb-a{width:350px;height:350px;top:5%;left:5%;background:radial-gradient(circle,rgba(255,107,170,.18),transparent);--dx:30px;--dy:20px;animation-duration:10s;}
-.orb-b{width:280px;height:280px;to
+.orb-b{width:280px;height:280px;top:15%;right:8%;background:radial-gradient(circle,rgba(0,232,255,.14),transparent);--dx:-20px;--dy:25px;animation-duration:13s;animation-delay:2s;}
+.orb-c{width:240px;height:240px;bottom:20%;left:20%;background:radial-gradient(circle,rgba(198,107,255,.12),transparent);--dx:25px;--dy:-15px;animation-duration:11s;animation-delay:4s;}
+.hero-scan{position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.022) 2px,rgba(0,0,0,.022) 4px);}
+.hero-particles{position:absolute;inset:0;z-index:4;pointer-events:none;}
+.hparticle{position:absolute;border-radius:50%;animation:hp-float linear infinite;}
+@keyframes hp-float{0%{transform:translateY(100vh);opacity:0}10%{opacity:1}90%{opacity:.5}100%{transform:translateY(-80px);opacity:0}}
+.hero-content{position:relative;z-index:10;text-align:center;padding:0 24px;max-width:700px;}
+.hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan);opacity:.8;margin-bottom:16px;animation:fadeUp .8s .2s both;text-shadow:0 0 20px rgba(0,232,255,.6);}
+.hero-title{font-family:var(--display);font-size:clamp(2.6rem,7vw,6rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;animation:fadeUp 1s .3s both;filter:drop-shadow(0 0 40px rgba(198,107,255,.3));}
+.hero-sub{font-family:var(--display);font-size:.68rem;letter-spacing:.28em;text-transform:uppercase;color:rgba(255,255,255,.4);margin-bottom:40px;animation:fadeUp .9s .5s both;}
+.hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;animation:fadeUp .9s .65s both;}
+.btn-primary{font-family:
