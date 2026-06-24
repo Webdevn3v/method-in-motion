@@ -3,1227 +3,421 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zen's CSS Style Studio — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<title>Zen's CSS Style Studio · Method in Motion</title>
 <style>
-:root{
-  --void:#050508;--pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
-  --yellow:#ffe066;--green:#a2ff32;--orange:#ff8c42;
-  --grad:linear-gradient(135deg,#ff6baa,#c66bff);
-  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden;background:var(--void);font-family:var(--body);}
-a{color:inherit;text-decoration:none}
+  :root {
+    --pink: #f472b6;
+    --cyan: #22d3ee;
+    --bg: #05050a;
+    --panel: rgba(10,8,20,0.85);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html,body{width:100%;height:100%;overflow:hidden;font-family:'Segoe UI',sans-serif;background:var(--bg);}
 
-/* SCANLINES */
-body::after{content:'';position:fixed;inset:0;z-index:9000;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,.06) 3px,rgba(0,0,0,.06) 4px);}
+  /* WORLD BACKGROUND */
+  #world-bg{position:fixed;inset:0;background-image:url('zen-entrance.png');background-size:cover;background-position:center top;z-index:0;}
+  #world-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(5,5,10,0.6) 0%,rgba(5,5,10,0.78) 50%,rgba(5,5,10,0.97) 100%);z-index:1;}
+  #world-glow{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(244,114,182,0.18) 0%,transparent 60%);z-index:1;pointer-events:none;}
 
-/* WORLD BG */
-#worldBg{position:fixed;inset:0;z-index:0;overflow:hidden;background:#050508;}
-.bg-gradient{position:absolute;inset:0;
-  background:radial-gradient(ellipse 100% 80% at 50% 0%,rgba(255,107,170,.18) 0%,transparent 60%),
-    radial-gradient(ellipse 60% 60% at 10% 80%,rgba(198,107,255,.12) 0%,transparent 50%),
-    radial-gradient(ellipse 50% 50% at 90% 70%,rgba(0,232,255,.08) 0%,transparent 50%);
-  animation:bg-breathe 10s ease-in-out infinite alternate;}
-@keyframes bg-breathe{0%{opacity:.7}100%{opacity:1}}
+  /* SCANLINES */
+  #scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);z-index:2;pointer-events:none;}
 
-/* PAINT STROKES BG */
-.paint-stroke{position:absolute;border-radius:50%;filter:blur(60px);pointer-events:none;animation:stroke-drift ease-in-out infinite;}
-@keyframes stroke-drift{0%,100%{transform:translate(0,0) rotate(0deg)}50%{transform:translate(var(--dx),var(--dy)) rotate(var(--dr,5deg))}}
-.ps-a{width:600px;height:200px;top:-60px;left:-100px;background:rgba(255,107,170,.15);--dx:30px;--dy:20px;--dr:8deg;animation-duration:14s;}
-.ps-b{width:400px;height:400px;top:20%;right:-80px;background:rgba(198,107,255,.12);--dx:-20px;--dy:40px;animation-duration:17s;animation-delay:2s;}
-.ps-c{width:500px;height:180px;bottom:10%;left:10%;background:rgba(0,232,255,.1);--dx:25px;--dy:-20px;animation-duration:12s;animation-delay:5s;}
-.ps-d{width:300px;height:300px;bottom:-50px;right:20%;background:rgba(255,107,170,.1);--dx:-15px;--dy:-25px;animation-duration:16s;animation-delay:3s;}
+  /* NAV */
+  nav{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;padding:0 20px;background:rgba(5,5,10,0.9);border-bottom:1px solid rgba(244,114,182,0.2);z-index:100;gap:16px;}
+  .nav-back{color:var(--pink);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;transition:opacity .2s;}
+  .nav-back:hover{opacity:1;}
+  .nav-title{color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;flex:1;text-align:center;}
+  #nav-score{color:var(--cyan);font-size:14px;font-weight:700;font-family:monospace;}
 
-/* FLOATING COLOR SWATCHES */
-.swatch{position:absolute;border-radius:12px;pointer-events:none;animation:swatch-float ease-in-out infinite;opacity:.6;}
-@keyframes swatch-float{0%,100%{transform:translateY(0) rotate(var(--r,0deg))}50%{transform:translateY(var(--dy,-20px)) rotate(var(--r2,5deg))}}
+  /* GAME SHELL */
+  #game-shell{position:fixed;inset:52px 0 0 0;display:flex;z-index:10;}
 
-/* GRID FLOOR */
-.grid-floor{position:absolute;bottom:0;left:0;right:0;height:45%;pointer-events:none;
-  background-image:linear-gradient(rgba(255,107,170,.08) 1px,transparent 1px),linear-gradient(90deg,rgba(255,107,170,.08) 1px,transparent 1px);
-  background-size:60px 60px;
-  transform:perspective(600px) rotateX(55deg);transform-origin:bottom center;
-  mask-image:linear-gradient(to top,rgba(0,0,0,.5) 0%,transparent 80%);}
+  /* ZEN PANEL - left, huge */
+  #zen-panel{width:320px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 24px 24px;position:relative;}
+  #zen-img{width:300px;height:auto;filter:drop-shadow(0 0 40px rgba(244,114,182,0.6));transition:all .3s;position:relative;z-index:2;}
+  #zen-face{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(244,114,182,0.8));transition:all .4s;z-index:3;border-radius:50%;background:rgba(5,5,10,0.6);padding:8px;}
+  #zen-name{color:var(--pink);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-top:12px;text-align:center;}
+  #zen-quote{color:rgba(255,255,255,0.55);font-size:12px;text-align:center;max-width:240px;margin-top:6px;font-style:italic;line-height:1.5;}
 
-/* GLITCH OVERLAY */
-.glitch-overlay{position:fixed;inset:0;z-index:8998;pointer-events:none;opacity:0;
-  background:repeating-linear-gradient(90deg,rgba(255,107,170,.1),transparent 2px,transparent 8px);
-  transition:opacity .08s;}
-.glitch-overlay.fire{opacity:1;}
+  /* PREVIEW PANEL - middle */
+  #preview-panel{flex:1;display:flex;flex-direction:column;padding:16px 12px;min-width:0;}
+  #preview-label{color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
+  #preview-frame{flex:1;background:#fff;border-radius:12px;overflow:hidden;border:2px solid rgba(244,114,182,0.3);box-shadow:0 0 40px rgba(244,114,182,0.1);position:relative;}
+  #preview-frame iframe{width:100%;height:100%;border:none;}
+  #style-meter-wrap{margin-top:10px;}
+  #style-meter-label{display:flex;justify-content:space-between;color:rgba(255,255,255,0.5);font-size:11px;margin-bottom:5px;}
+  #style-meter-bar{height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
+  #style-meter-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));border-radius:4px;transition:width .4s;}
 
-/* NAV */
-#gameNav{position:fixed;top:0;left:0;right:0;z-index:500;
-  padding:10px 28px;display:flex;align-items:center;justify-content:space-between;
-  background:rgba(5,5,8,.8);backdrop-filter:blur(20px);
-  border-bottom:1px solid rgba(255,107,170,.2);}
-.nav-back-btn{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:.55rem;
-  letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.4);
-  transition:color .2s;cursor:pointer;border:none;background:none;}
-.nav-back-btn:hover{color:var(--pink)}
-.nav-back-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
-.nav-title{font-family:var(--display);font-size:.7rem;letter-spacing:.14em;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.nav-user{font-family:var(--display);font-size:.52rem;letter-spacing:.1em;color:rgba(255,255,255,.3);}
+  /* CHALLENGE PANEL - right */
+  #challenge-panel{width:360px;flex-shrink:0;display:flex;flex-direction:column;padding:16px 24px 16px 12px;}
+  #zone-badge{display:inline-block;background:rgba(244,114,182,0.15);border:1px solid rgba(244,114,182,0.4);color:var(--pink);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
+  #challenge-card{background:var(--panel);border:1px solid rgba(244,114,182,0.2);border-radius:16px;padding:20px;flex:1;display:flex;flex-direction:column;backdrop-filter:blur(16px);}
+  #challenge-property{color:rgba(255,255,255,0.45);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+  #challenge-question{color:#fff;font-size:18px;font-weight:700;line-height:1.4;margin-bottom:6px;}
+  #challenge-hint{color:var(--cyan);font-size:12px;font-family:monospace;margin-bottom:20px;opacity:.7;}
+  #options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;}
+  .option-btn{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.12);color:#fff;font-size:13px;font-weight:600;font-family:monospace;padding:14px 10px;border-radius:10px;cursor:pointer;transition:all .2s;text-align:center;word-break:break-all;}
+  .option-btn:hover{background:rgba(244,114,182,0.12);border-color:var(--pink);color:var(--pink);transform:translateY(-2px);}
+  .option-btn.correct{background:rgba(34,211,238,0.2)!important;border-color:var(--cyan)!important;color:var(--cyan)!important;animation:pulse-correct .4s ease;}
+  .option-btn.wrong{background:rgba(239,68,68,0.2)!important;border-color:#ef4444!important;color:#ef4444!important;animation:shake .3s ease;}
+  @keyframes pulse-correct{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
 
-/* HUD */
-#hud{position:fixed;top:52px;left:0;right:0;z-index:400;
-  padding:8px 28px;display:flex;align-items:center;gap:20px;
-  background:rgba(5,5,8,.6);backdrop-filter:blur(12px);
-  border-bottom:1px solid rgba(255,107,170,.1);}
-.hud-block{display:flex;flex-direction:column;gap:1px;}
-.hud-label{font-family:var(--display);font-size:.35rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3);}
-.hud-value{font-family:var(--display);font-size:.85rem;font-weight:900;letter-spacing:.06em;color:#fff;transition:transform .15s;}
-.hud-value.pop{transform:scale(1.3);}
-.hud-divider{width:1px;height:32px;background:rgba(255,255,255,.06);}
-.hud-spacer{flex:1;}
+  #timer-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:16px;overflow:hidden;}
+  #timer-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));border-radius:2px;transition:width .1s linear;}
+  #combo-text{text-align:center;color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;min-height:18px;margin-bottom:8px;}
+  #progress-dots{display:flex;gap:6px;justify-content:center;margin-top:12px;}
+  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all .3s;}
+  .dot.done{background:var(--pink);}
+  .dot.current{background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
 
-/* STYLE METER */
-.style-meter-wrap{display:flex;align-items:center;gap:10px;}
-.style-meter-label{font-family:var(--display);font-size:.38rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pink);}
-.style-meter-bar{width:160px;height:8px;background:rgba(255,255,255,.08);border-radius:4px;overflow:hidden;border:1px solid rgba(255,107,170,.2);}
-.style-meter-fill{height:100%;background:var(--grad);border-radius:4px;transition:width .3s ease;}
+  /* SCORE FLOAT */
+  .score-float{position:fixed;font-size:22px;font-weight:900;color:var(--cyan);pointer-events:none;z-index:999;animation:floatUp .8s ease forwards;}
+  @keyframes floatUp{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px);}}
 
-/* TIMER RING */
-.timer-ring-wrap{position:relative;width:36px;height:36px;}
-.timer-ring-svg{transform:rotate(-90deg);}
-.timer-ring-bg{fill:none;stroke:rgba(255,255,255,.08);stroke-width:3;}
-.timer-ring-fill{fill:none;stroke:var(--pink);stroke-width:3;stroke-linecap:round;transition:stroke-dashoffset .1s linear;}
-.timer-num{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.6rem;font-weight:900;color:#fff;}
+  /* PAINT BURST */
+  .paint-burst{position:fixed;pointer-events:none;z-index:50;width:120px;height:120px;border-radius:50%;animation:burstOut .5s ease forwards;}
+  @keyframes burstOut{0%{opacity:.8;transform:scale(0);}100%{opacity:0;transform:scale(3);}}
 
-/* LEVEL BANNER */
-#levelBanner{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:800;
-  font-family:var(--display);font-size:clamp(2rem,6vw,4rem);font-weight:900;letter-spacing:.1em;
-  text-transform:uppercase;text-align:center;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 40px rgba(255,107,170,.8));
-  pointer-events:none;transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;}
-#levelBanner.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
+  /* GAME OVER */
+  #gameOverScreen{position:fixed;inset:0;background:rgba(5,5,10,0.97);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
+  #gameOverScreen.hidden{display:none;}
+  #gameOverEyebrow{color:var(--pink);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
+  #gameOverTitle{color:#fff;font-size:52px;font-weight:900;letter-spacing:-1px;}
+  #gameOverSub{color:rgba(255,255,255,0.5);font-size:15px;max-width:420px;text-align:center;line-height:1.6;}
+  #gameOverScore{color:var(--cyan);font-size:36px;font-weight:900;font-family:monospace;}
+  #gameOverZen{width:200px;height:200px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(244,114,182,0.7));}
+  .over-btn{background:linear-gradient(135deg,var(--pink),var(--cyan));color:#000;font-size:14px;font-weight:800;padding:14px 36px;border-radius:30px;border:none;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-top:8px;transition:transform .2s;}
+  .over-btn:hover{transform:scale(1.05);}
 
-/* MAIN GAME AREA */
-#gameArea{position:fixed;top:96px;left:0;right:0;bottom:0;z-index:100;display:flex;gap:0;overflow:hidden;}
-
-/* LEFT — BROKEN PAGE PREVIEW */
-#previewPane{
-  flex:0 0 42%;display:flex;flex-direction:column;
-  border-right:1px solid rgba(255,107,170,.15);
-  background:rgba(5,5,8,.4);backdrop-filter:blur(8px);
-  position:relative;overflow:hidden;
-}
-.pane-header{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.05);
-  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.pane-title{font-family:var(--display);font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.35);}
-.glitch-tag{font-family:var(--display);font-size:.4rem;letter-spacing:.12em;padding:3px 10px;
-  border-radius:100px;background:rgba(255,107,107,.15);border:1px solid rgba(255,107,107,.4);color:#ff6b6b;}
-.glitch-tag.fixed{background:rgba(162,255,50,.12);border-color:rgba(162,255,50,.4);color:var(--green);}
-
-#pagePreview{flex:1;padding:24px;overflow-y:auto;position:relative;}
-#pagePreview::-webkit-scrollbar{width:3px;}
-#pagePreview::-webkit-scrollbar-track{background:transparent;}
-#pagePreview::-webkit-scrollbar-thumb{background:rgba(255,107,170,.3);border-radius:2px;}
-
-/* The broken/fixed page elements */
-.preview-el{margin-bottom:16px;transition:all .4s cubic-bezier(.34,1.56,.64,1);position:relative;}
-.preview-el.glitching{animation:el-glitch .3s ease infinite;}
-@keyframes el-glitch{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
-.preview-el.fixed-anim{animation:el-fix .5s cubic-bezier(.34,1.56,.64,1);}
-@keyframes el-fix{0%{transform:scale(.95);opacity:.5}60%{transform:scale(1.04)}100%{transform:scale(1);opacity:1}}
-
-/* RIGHT — CSS CHALLENGE PANEL */
-#challengePane{
-  flex:1;display:flex;flex-direction:column;
-  background:rgba(5,5,8,.3);backdrop-filter:blur(6px);
-  position:relative;overflow:hidden;
-}
-.challenge-header{padding:14px 20px;border-bottom:1px solid rgba(255,255,255,.05);flex-shrink:0;}
-.challenge-title{font-family:var(--display);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  margin-bottom:4px;}
-.challenge-desc{font-size:.78rem;color:rgba(255,255,255,.5);line-height:1.5;}
-
-#challengeBody{flex:1;padding:20px;overflow-y:auto;display:flex;flex-direction:column;gap:16px;}
-#challengeBody::-webkit-scrollbar{width:3px;}
-#challengeBody::-webkit-scrollbar-thumb{background:rgba(255,107,170,.3);}
-
-/* CSS PROPERTY CARDS */
-.css-challenge{background:rgba(255,107,170,.04);border:1px solid rgba(255,107,170,.2);
-  border-radius:14px;padding:18px;transition:border-color .3s,box-shadow .3s;}
-.css-challenge.solved{border-color:rgba(162,255,50,.4);background:rgba(162,255,50,.04);}
-.css-challenge.active{border-color:rgba(255,107,170,.6);box-shadow:0 0 20px rgba(255,107,170,.15);}
-.css-prop-label{font-family:var(--display);font-size:.42rem;letter-spacing:.16em;text-transform:uppercase;
-  color:var(--pink);margin-bottom:10px;display:flex;align-items:center;gap:8px;}
-.css-prop-label .solved-badge{font-size:.38rem;padding:2px 8px;border-radius:100px;
-  background:rgba(162,255,50,.15);border:1px solid rgba(162,255,50,.4);color:var(--green);}
-.css-prop-name{font-family:monospace;font-size:.95rem;color:#fff;margin-bottom:6px;}
-.css-desc{font-size:.75rem;color:rgba(255,255,255,.45);margin-bottom:14px;line-height:1.5;}
-
-/* OPTION BUTTONS */
-.css-options{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.css-opt{padding:10px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.03);font-family:monospace;font-size:.82rem;
-  color:rgba(255,255,255,.7);cursor:pointer;transition:all .2s;text-align:left;
-  display:flex;align-items:center;gap:8px;}
-.css-opt:hover{border-color:var(--pink);background:rgba(255,107,170,.08);color:#fff;transform:translateX(3px);}
-.css-opt.correct{border-color:var(--green);background:rgba(162,255,50,.1);color:var(--green);pointer-events:none;}
-.css-opt.wrong{border-color:#ff6b6b;background:rgba(255,107,107,.1);color:#ff6b6b;pointer-events:none;animation:shake .3s ease;}
-.css-opt.reveal{border-color:var(--green);background:rgba(162,255,50,.06);pointer-events:none;}
-@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-.opt-swatch{width:16px;height:16px;border-radius:4px;flex-shrink:0;border:1px solid rgba(255,255,255,.15);}
-
-/* ZEN FACE */
-#zenFace{position:fixed;right:24px;bottom:24px;z-index:700;
-  width:76px;height:76px;border-radius:50%;
-  background:rgba(5,5,8,.9);border:2px solid rgba(255,107,170,.4);
-  display:flex;align-items:center;justify-content:center;font-size:2rem;
-  box-shadow:0 0 30px rgba(255,107,170,.3);
-  transition:all .3s cubic-bezier(.34,1.56,.64,1);overflow:hidden;}
-#zenFace.react{transform:scale(1.2);border-color:var(--pink);box-shadow:0 0 50px rgba(255,107,170,.6);}
-#zenFace.sad{border-color:#ff6b6b;box-shadow:0 0 30px rgba(255,107,107,.5);}
-#zenFaceEmoji{transition:all .2s;font-size:2rem;}
-#zenFaceImg{width:100%;height:100%;object-fit:cover;object-position:center;display:none;}
-
-/* COMBO */
-#comboDisplay{position:fixed;left:50%;top:45%;transform:translate(-50%,-50%) scale(0);
-  z-index:700;pointer-events:none;font-family:var(--display);font-weight:900;
-  letter-spacing:.08em;text-transform:uppercase;text-align:center;
-  transition:transform .2s cubic-bezier(.34,1.56,.64,1),opacity .2s;opacity:0;}
-#comboDisplay.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
-
-/* PAINT BURST */
-.paint-burst{position:fixed;pointer-events:none;z-index:600;border-radius:50%;
-  animation:paint-out .6s ease forwards;}
-@keyframes paint-out{0%{transform:translate(-50%,-50%) scale(0);opacity:1}
-  60%{opacity:.8}100%{transform:translate(-50%,-50%) scale(3);opacity:0;}}
-
-/* SCORE FLOAT */
-.score-float{position:fixed;pointer-events:none;z-index:650;
-  font-family:var(--display);font-weight:900;font-size:1.2rem;
-  animation:score-up .8s ease forwards;}
-@keyframes score-up{0%{opacity:1;transform:translate(-50%,-50%) scale(.8)}
-  100%{opacity:0;transform:translate(-50%,-120%) scale(1)}}
-
-/* SCREENS */
-.screen{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  background:rgba(5,5,8,.97);backdrop-filter:blur(20px);padding:32px 24px;text-align:center;}
-.screen.hidden{display:none;}
-.screen-eyebrow{font-family:var(--display);font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--pink);margin-bottom:12px;opacity:.8;}
-.screen-title{font-family:var(--display);font-size:clamp(2rem,6vw,4.5rem);font-weight:900;letter-spacing:.08em;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 40px rgba(255,107,170,.6));margin-bottom:10px;line-height:1;}
-.screen-sub{font-family:var(--heading);font-size:clamp(.9rem,2vw,1.2rem);color:rgba(255,255,255,.55);
-  margin-bottom:32px;line-height:1.6;max-width:520px;}
-.screen-score{font-family:var(--display);font-size:clamp(1.6rem,4vw,3rem);font-weight:900;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:6px;}
-.screen-best{font-family:var(--display);font-size:.55rem;letter-spacing:.16em;color:rgba(255,255,255,.25);margin-bottom:28px;}
-.screen-stats{display:flex;gap:32px;justify-content:center;margin-bottom:28px;flex-wrap:wrap;}
-.stat-item .stat-num{font-family:var(--display);font-size:1.5rem;font-weight:900;color:#fff;}
-.stat-item .stat-lbl{font-family:var(--display);font-size:.38rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);}
-.screen-btn{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;
-  padding:14px 36px;background:var(--grad);color:#000;font-weight:900;border-radius:100px;
-  border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;
-  box-shadow:0 8px 30px rgba(255,107,170,.4);margin:6px;}
-.screen-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,107,170,.6);}
-.screen-btn.outline{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);box-shadow:none;}
-.screen-btn.outline:hover{border-color:#fff;color:#fff;}
-.screen-zen{font-size:4rem;margin-bottom:16px;animation:zen-float .8s ease-in-out infinite alternate;}
-@keyframes zen-float{from{transform:translateY(0)}to{transform:translateY(-12px)}}
-
-/* HOW TO PLAY */
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:32px;max-width:640px;width:100%;}
-.how-item{background:rgba(255,107,170,.05);border:1px solid rgba(255,107,170,.2);border-radius:12px;padding:16px 12px;text-align:center;}
-.how-icon{font-size:1.6rem;margin-bottom:8px;}
-.how-label{font-family:var(--display);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--pink);margin-bottom:4px;}
-.how-desc{font-size:.75rem;color:rgba(255,255,255,.45);line-height:1.5;}
-
-/* PROGRESS DOTS */
-#progressDots{display:flex;gap:8px;align-items:center;justify-content:center;margin-bottom:20px;}
-.pdot{width:10px;height:10px;border-radius:50%;background:rgba(255,255,255,.1);border:1px solid rgba(255,107,170,.2);transition:all .3s;}
-.pdot.done{background:var(--green);border-color:var(--green);box-shadow:0 0 8px rgba(162,255,50,.6);}
-.pdot.active{background:var(--pink);border-color:var(--pink);box-shadow:0 0 8px rgba(255,107,170,.6);}
-
-/* ZONE TAG */
-.zone-badge{position:fixed;top:100px;right:20px;z-index:400;
-  font-family:var(--display);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;
-  padding:5px 14px;border-radius:100px;border:1px solid rgba(255,107,170,.4);
-  color:var(--pink);background:rgba(255,107,170,.08);backdrop-filter:blur(8px);}
-
-/* PARTICLES */
-.particle{position:fixed;border-radius:50%;pointer-events:none;animation:p-fly linear forwards;}
-@keyframes p-fly{0%{opacity:1;transform:translate(0,0)}100%{opacity:0;transform:translate(var(--px),var(--py))}}
-
-/* RESPONSIVE */
-@media(max-width:700px){
-  #gameArea{flex-direction:column;}
-  #previewPane{flex:0 0 40%;border-right:none;border-bottom:1px solid rgba(255,107,170,.15);}
-}
+  /* INTRO */
+  #introScreen{position:fixed;inset:0;background:rgba(5,5,10,0.98);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
+  #introScreen.hidden{display:none;}
+  #intro-zen{width:280px;height:auto;filter:drop-shadow(0 0 50px rgba(244,114,182,0.7));animation:float 3s ease-in-out infinite;}
+  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
+  #intro-title{color:#fff;font-size:42px;font-weight:900;letter-spacing:-1px;text-align:center;}
+  #intro-sub{color:rgba(255,255,255,0.5);font-size:14px;max-width:360px;text-align:center;line-height:1.7;}
+  #intro-start{background:linear-gradient(135deg,var(--pink),var(--cyan));color:#000;font-size:15px;font-weight:800;padding:16px 48px;border-radius:30px;border:none;cursor:pointer;letter-spacing:2px;text-transform:uppercase;margin-top:12px;transition:transform .2s;}
+  #intro-start:hover{transform:scale(1.06);}
+  .intro-eyebrow{color:var(--pink);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
 </style>
 </head>
 <body>
 
-<!-- WORLD -->
-<div id="worldBg">
-  <div class="bg-gradient"></div>
-  <div class="paint-stroke ps-a"></div>
-  <div class="paint-stroke ps-b"></div>
-  <div class="paint-stroke ps-c"></div>
-  <div class="paint-stroke ps-d"></div>
-  <div class="grid-floor"></div>
-</div>
-<div class="glitch-overlay" id="glitchOverlay"></div>
+<div id="world-bg"></div>
+<div id="world-overlay"></div>
+<div id="world-glow"></div>
+<div id="scanlines"></div>
 
-<!-- NAV -->
-<nav id="gameNav">
-  <button class="nav-back-btn" onclick="window.location.href='games.html'">
-    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    Game Universe
-  </button>
-  <div class="nav-title">Zen's CSS Style Studio</div>
-  <div class="nav-user" id="navUserInfo">—</div>
+<!-- INTRO SCREEN -->
+<div id="introScreen">
+  <div class="intro-eyebrow">Zone 1 · CSS Style Studio</div>
+  <img id="intro-zen" src="zen-idle-pose.png" alt="Zen" onerror="this.style.display='none'">
+  <div id="intro-title">Zen's Style Studio</div>
+  <div id="intro-sub">Zen's world has lost all its color. Pick the right CSS values to bring it back — one challenge at a time.</div>
+  <button id="intro-start" onclick="startGame()">ENTER THE STUDIO</button>
+</div>
+
+<!-- GAME OVER -->
+<div id="gameOverScreen" class="hidden">
+  <div id="gameOverEyebrow">Studio Complete</div>
+  <div id="gameOverTitle">MASTERPIECE!</div>
+  <img id="gameOverZen" src="zen-victory.png" alt="Zen" onerror="this.src='zen-idle-pose.png'">
+  <div id="gameOverSub">You restored Zen's studio. That's real design skill.</div>
+  <div id="gameOverScore">0 pts</div>
+  <button class="over-btn" onclick="location.reload()">PLAY AGAIN</button>
+  <button class="over-btn" style="background:rgba(255,255,255,0.08);color:#fff;" onclick="location.href='games.html'">← GAME UNIVERSE</button>
+</div>
+
+<nav>
+  <a class="nav-back" href="games.html">← Games</a>
+  <div class="nav-title">CSS STYLE STUDIO</div>
+  <div id="nav-score">0 pts</div>
 </nav>
 
-<!-- HUD -->
-<div id="hud">
-  <div class="hud-block">
-    <div class="hud-label">Score</div>
-    <div class="hud-value" id="scoreVal" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
-  </div>
-  <div class="hud-divider"></div>
-  <div class="hud-block">
-    <div class="hud-label">Best</div>
-    <div class="hud-value" style="color:rgba(255,255,255,.3)" id="bestVal">0</div>
-  </div>
-  <div class="hud-divider"></div>
-  <div class="hud-block">
-    <div class="hud-label">Level</div>
-    <div class="hud-value" style="color:var(--pink)" id="levelVal">1</div>
-  </div>
-  <div class="hud-divider"></div>
-  <div class="style-meter-wrap">
-    <div class="style-meter-label">Style Meter</div>
-    <div class="style-meter-bar"><div class="style-meter-fill" id="styleMeter" style="width:100%"></div></div>
-  </div>
-  <div class="hud-spacer"></div>
-  <div class="timer-ring-wrap">
-    <svg class="timer-ring-svg" width="36" height="36" viewBox="0 0 36 36">
-      <circle class="timer-ring-bg" cx="18" cy="18" r="15"/>
-      <circle class="timer-ring-fill" id="timerRing" cx="18" cy="18" r="15"
-        stroke-dasharray="94.2" stroke-dashoffset="0"/>
-    </svg>
-    <div class="timer-num" id="timerNum">15</div>
-  </div>
-</div>
+<div id="game-shell">
 
-<!-- ZONE -->
-<div class="zone-badge" id="zoneBadge">SKETCH ZONE</div>
+  <!-- ZEN PANEL -->
+  <div id="zen-panel">
+    <img id="zen-face" src="zen-happy.png" alt="" onerror="this.style.display='none'">
+    <img id="zen-img" src="zen-idle-pose.png" alt="Zen" onerror="this.style.opacity='0'">
+    <div id="zen-name">ZEN</div>
+    <div id="zen-quote">"Every great design starts with one good choice."</div>
+  </div>
 
-<!-- LEVEL BANNER -->
-<div id="levelBanner"></div>
-
-<!-- GAME AREA -->
-<div id="gameArea">
-  <!-- LEFT: BROKEN PAGE PREVIEW -->
-  <div id="previewPane">
-    <div class="pane-header">
-      <div class="pane-title">🖼 Page Preview</div>
-      <div class="glitch-tag" id="glitchTag">NEEDS STYLE</div>
+  <!-- PREVIEW PANEL -->
+  <div id="preview-panel">
+    <div id="preview-label">ZEN'S WORLD — LIVE PREVIEW</div>
+    <div id="preview-frame">
+      <iframe id="preview-iframe" title="Preview"></iframe>
     </div>
-    <div id="pagePreview"></div>
-  </div>
-
-  <!-- RIGHT: CSS CHALLENGES -->
-  <div id="challengePane">
-    <div class="challenge-header">
-      <div class="challenge-title" id="challengeTitle">Fix the Style</div>
-      <div class="challenge-desc" id="challengeDesc">Choose the correct CSS value to fix each broken element.</div>
-    </div>
-    <div id="progressDots"></div>
-    <div id="challengeBody"></div>
-  </div>
-</div>
-
-<!-- ZEN FACE -->
-<div id="zenFace">
-  <img id="zenFaceImg" src="" alt="Zen">
-  <span id="zenFaceEmoji">🎨</span>
-</div>
-
-<!-- COMBO -->
-<div id="comboDisplay"></div>
-
-<!-- BOOT SCREEN -->
-<div class="screen" id="bootScreen">
-  <div class="screen-zen">🎨</div>
-  <div class="screen-eyebrow">Booting Zen's Studio</div>
-  <div class="screen-title">STYLE STUDIO</div>
-  <div style="max-width:400px;width:100%;margin:0 auto 28px;">
-    <div id="bootLines" style="text-align:left;"></div>
-  </div>
-</div>
-
-<!-- START SCREEN -->
-<div class="screen hidden" id="startScreen">
-  <div class="screen-zen" id="startZen">🎨</div>
-  <div class="screen-eyebrow">Zen's Underground Studio</div>
-  <div class="screen-title">CSS STYLE STUDIO</div>
-  <div class="screen-sub">Zen's creative world is broken and grey.<br>Fix the CSS. Restore the color. Bring the studio back to life.</div>
-  <div class="how-grid">
-    <div class="how-item">
-      <div class="how-icon">🖼</div>
-      <div class="how-label">See the Damage</div>
-      <div class="how-desc">The left panel shows Zen's broken webpage in real time.</div>
-    </div>
-    <div class="how-item">
-      <div class="how-icon">🎯</div>
-      <div class="how-label">Pick the Fix</div>
-      <div class="how-desc">Choose the correct CSS value from four options before time runs out.</div>
-    </div>
-    <div class="how-item">
-      <div class="how-icon">✨</div>
-      <div class="how-label">Watch it Heal</div>
-      <div class="how-desc">Every correct answer restores the page. Wrong answers drain the Style Meter.</div>
+    <div id="style-meter-wrap">
+      <div id="style-meter-label"><span>STYLE METER</span><span id="meter-val">100%</span></div>
+      <div id="style-meter-bar"><div id="style-meter-fill"></div></div>
     </div>
   </div>
-  <button class="screen-btn" onclick="startGame()">Enter the Studio →</button>
-  <button class="screen-btn outline" onclick="window.location.href='games.html'">← Back to Universe</button>
-</div>
 
-<!-- GAME OVER SCREEN -->
-<div class="screen hidden" id="gameOverScreen">
-  <div class="screen-zen" id="gameOverZen">🎨</div>
-  <div class="screen-eyebrow" id="gameOverEyebrow">Studio Shutdown</div>
-  <div class="screen-title" id="gameOverTitle">STYLE LOST</div>
-  <div class="screen-sub" id="gameOverSub">The style meter drained. But Zen says: every great design starts with a rough draft.</div>
-  <div class="screen-score" id="finalScore">0</div>
-  <div class="screen-best" id="finalBest">Best: 0</div>
-  <div class="screen-stats">
-    <div class="stat-item"><div class="stat-num" id="statFixed">0</div><div class="stat-lbl">Fixed</div></div>
-    <div class="stat-item"><div class="stat-num" id="statLevel">1</div><div class="stat-lbl">Level</div></div>
-    <div class="stat-item"><div class="stat-num" id="statCombo">x1</div><div class="stat-lbl">Best Combo</div></div>
-    <div class="stat-item"><div class="stat-num" id="statAccuracy">0%</div><div class="stat-lbl">Accuracy</div></div>
+  <!-- CHALLENGE PANEL -->
+  <div id="challenge-panel">
+    <div id="zone-badge">ZONE 1 · COLOR</div>
+    <div id="timer-bar"><div id="timer-fill"></div></div>
+    <div id="combo-text"></div>
+    <div id="challenge-card">
+      <div id="challenge-property">CSS PROPERTY</div>
+      <div id="challenge-question">Loading...</div>
+      <div id="challenge-hint">/* pick the right value */</div>
+      <div id="options-grid"></div>
+    </div>
+    <div id="progress-dots"></div>
   </div>
-  <button class="screen-btn" onclick="startGame()">Redesign →</button>
-  <button class="screen-btn outline" onclick="window.location.href='games.html'">← Back to Universe</button>
-</div>
 
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-const firebaseConfig = {
-  apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
-  authDomain: "method-in-motion.firebaseapp.com",
-  projectId: "method-in-motion",
-  storageBucket: "method-in-motion.firebasestorage.app",
-  messagingSenderId: "1067937974009",
-  appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
-};
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-let currentUser = null;
-onAuthStateChanged(auth, async user => {
-  currentUser = user;
-  if(user){
-    document.getElementById('navUserInfo').textContent = user.displayName || user.email.split('@')[0];
-    try{
-      const snap = await getDoc(doc(db,'users',user.uid));
-      if(snap.exists()){
-        const saved = snap.data().zenGameBest || 0;
-        if(saved > (parseInt(localStorage.getItem('zenGameBest'))||0))
-          localStorage.setItem('zenGameBest', saved);
-      }
-    }catch(e){}
-  }
-});
-window._saveZenScore = async function(score){
-  const local = parseInt(localStorage.getItem('zenGameBest'))||0;
-  if(score > local) localStorage.setItem('zenGameBest', score);
-  if(currentUser && score > local){
-    try{ await setDoc(doc(db,'users',currentUser.uid),{zenGameBest:score},{merge:true}); }catch(e){}
-  }
-};
-</script>
+</div>
 
 <script>
-// ============================================================
-// CSS CHALLENGES DATABASE
-// ============================================================
-const CSS_CHALLENGES = [
-  // LEVEL 1 — Colors
-  {
-    id:'color-heading', level:1,
-    property:'color',
-    element:'h1',
-    label:'Heading Color',
-    broken:{color:'#333333',fontSize:'2.4rem',fontWeight:'900',fontFamily:'Syne,sans-serif'},
-    desc:'The main heading is invisible against the dark background. Pick the right color to make it pop.',
-    correct:'#ff6baa',
-    options:['#ff6baa','#333333','transparent','inherit'],
-    swatches:['#ff6baa','#333333','transparent','rgba(255,255,255,.1)'],
-    fixed:{color:'#ff6baa',fontSize:'2.4rem',fontWeight:'900',fontFamily:'Syne,sans-serif'},
-    preview:{type:'h1',text:"Zen's Creative World"},
-  },
-  {
-    id:'bg-color', level:1,
-    property:'background-color',
-    element:'section',
-    label:'Card Background',
-    broken:{background:'#ffffff',padding:'20px',borderRadius:'12px',color:'#000'},
-    desc:'This card has a blinding white background. Fix it to match the dark studio vibe.',
-    correct:'rgba(15,21,37,1)',
-    options:['rgba(15,21,37,1)','#ffffff','#ff0000','transparent'],
-    swatches:['#0f1525','#ffffff','#ff0000','transparent'],
-    fixed:{background:'#0f1525',padding:'20px',borderRadius:'12px',color:'#fff',border:'1px solid rgba(255,255,255,.08)'},
-    preview:{type:'card',text:'Style is everything.'},
-  },
-  {
-    id:'text-color', level:1,
-    property:'color',
-    element:'p',
-    label:'Paragraph Color',
-    broken:{color:'#050508',fontSize:'1rem',lineHeight:'1.7'},
-    desc:'The paragraph text is invisible — same color as the background. Fix it.',
-    correct:'#c8cce0',
-    options:['#c8cce0','#050508','#000000','#ff0000'],
-    swatches:['#c8cce0','#050508','#000000','#ff0000'],
-    fixed:{color:'#c8cce0',fontSize:'1rem',lineHeight:'1.7'},
-    preview:{type:'p',text:'Code is just instructions — and you already know how to give instructions.'},
-  },
-  // LEVEL 2 — Typography
-  {
-    id:'font-size', level:2,
-    property:'font-size',
-    element:'h2',
-    label:'Heading Size',
-    broken:{color:'#ff6baa',fontSize:'0.5rem',fontWeight:'800'},
-    desc:'The subheading is way too small to read. Set the right font-size.',
-    correct:'1.8rem',
-    options:['1.8rem','0.5rem','0.1rem','100px'],
-    swatches:[null,null,null,null],
-    fixed:{color:'#ff6baa',fontSize:'1.8rem',fontWeight:'800'},
-    preview:{type:'h2',text:'Welcome to the Studio'},
-  },
-  {
-    id:'font-weight', level:2,
-    property:'font-weight',
-    element:'h1',
-    label:'Heading Weight',
-    broken:{color:'#fff',fontSize:'2.2rem',fontWeight:'100'},
-    desc:"The heading looks too thin and weak. Zen's titles are always bold and confident.",
-    correct:'900',
-    options:['900','100','normal','300'],
-    swatches:[null,null,null,null],
-    fixed:{color:'#fff',fontSize:'2.2rem',fontWeight:'900'},
-    preview:{type:'h1',text:'Create. Build. Imagine.'},
-  },
-  {
-    id:'letter-spacing', level:2,
-    property:'letter-spacing',
-    element:'label',
-    label:'Letter Spacing',
-    broken:{color:'var(--pink)',fontSize:'0.6rem',letterSpacing:'0em',textTransform:'uppercase',fontFamily:'Orbitron,monospace'},
-    desc:'This label looks cramped and hard to read. Space out the letters.',
-    correct:'.2em',
-    options:['.2em','0em','-0.1em','2px'],
-    swatches:[null,null,null,null],
-    fixed:{color:'#ff6baa',fontSize:'0.6rem',letterSpacing:'.2em',textTransform:'uppercase',fontFamily:'Orbitron,monospace'},
-    preview:{type:'label',text:'LESSON 01'},
-  },
-  // LEVEL 3 — Spacing & Layout
-  {
-    id:'padding', level:3,
-    property:'padding',
-    element:'button',
-    label:'Button Padding',
-    broken:{padding:'0px',background:'linear-gradient(135deg,#ff6baa,#c66bff)',color:'#000',borderRadius:'100px',border:'none',fontFamily:'Orbitron,monospace',fontSize:'0.7rem',fontWeight:'700',letterSpacing:'.14em'},
-    desc:'The button has no padding — the text is squished against the edges.',
-    correct:'14px 32px',
-    options:['14px 32px','0px','1px','100px 0px'],
-    swatches:[null,null,null,null],
-    fixed:{padding:'14px 32px',background:'linear-gradient(135deg,#ff6baa,#c66bff)',color:'#000',borderRadius:'100px',border:'none',fontFamily:'Orbitron,monospace',fontSize:'0.7rem',fontWeight:'700',letterSpacing:'.14em'},
-    preview:{type:'button',text:'START LESSON'},
-  },
-  {
-    id:'border-radius', level:3,
-    property:'border-radius',
-    element:'card',
-    label:'Card Corners',
-    broken:{background:'#0f1525',padding:'20px',borderRadius:'0px',border:'1px solid rgba(255,255,255,.1)',color:'#c8cce0'},
-    desc:'This card has sharp corners — very un-Zen. Soften them up.',
-    correct:'16px',
-    options:['16px','0px','100px','1px'],
-    swatches:[null,null,null,null],
-    fixed:{background:'#0f1525',padding:'20px',borderRadius:'16px',border:'1px solid rgba(255,255,255,.1)',color:'#c8cce0'},
-    preview:{type:'card',text:'Every idea deserves a smooth corner.'},
-  },
-  {
-    id:'margin-bottom', level:3,
-    property:'margin-bottom',
-    element:'section',
-    label:'Section Spacing',
-    broken:{marginBottom:'0px',color:'#c8cce0',fontSize:'0.95rem',lineHeight:'1.9'},
-    desc:'These paragraphs are stacked with zero space between them. Add some breathing room.',
-    correct:'24px',
-    options:['24px','0px','-10px','200px'],
-    swatches:[null,null,null,null],
-    fixed:{marginBottom:'24px',color:'#c8cce0',fontSize:'0.95rem',lineHeight:'1.9'},
-    preview:{type:'spacing',text:'Space is part of the design.'},
-  },
-  // LEVEL 4 — Effects & Animation
-  {
-    id:'box-shadow', level:4,
-    property:'box-shadow',
-    element:'button',
-    label:'Button Glow',
-    broken:{padding:'14px 32px',background:'linear-gradient(135deg,#ff6baa,#c66bff)',color:'#000',borderRadius:'100px',border:'none',boxShadow:'none',fontFamily:'Orbitron,monospace',fontSize:'0.7rem',fontWeight:'700'},
-    desc:"Zen's buttons always glow. This one has no shadow at all. Fix it.",
-    correct:'0 8px 30px rgba(198,107,255,.4)',
-    options:['0 8px 30px rgba(198,107,255,.4)','none','0 0 0 #000','inset 0 0 20px #000'],
-    swatches:[null,null,null,null],
-    fixed:{padding:'14px 32px',background:'linear-gradient(135deg,#ff6baa,#c66bff)',color:'#000',borderRadius:'100px',border:'none',boxShadow:'0 8px 30px rgba(198,107,255,.4)',fontFamily:'Orbitron,monospace',fontSize:'0.7rem',fontWeight:'700'},
-    preview:{type:'button',text:'GLOW UP'},
-  },
-  {
-    id:'opacity', level:4,
-    property:'opacity',
-    element:'muted',
-    label:'Muted Text',
-    broken:{opacity:'1',color:'#5a6080',fontSize:'0.88rem'},
-    desc:'This supporting text should be subtle, not fully visible. Reduce the opacity.',
-    correct:'0.6',
-    options:['0.6','1','0','2'],
-    swatches:[null,null,null,null],
-    fixed:{opacity:'0.6',color:'#5a6080',fontSize:'0.88rem'},
-    preview:{type:'muted',text:'Supporting information lives here.'},
-  },
-  {
-    id:'border', level:4,
-    property:'border',
-    element:'card',
-    label:'Card Border',
-    broken:{background:'#0f1525',padding:'20px',borderRadius:'16px',border:'none',color:'#c8cce0'},
-    desc:'This card has no border — it blends into the background invisibly.',
-    correct:'1px solid rgba(255,107,170,.3)',
-    options:['1px solid rgba(255,107,170,.3)','none','10px solid #000','1px solid transparent'],
-    swatches:[null,null,null,null],
-    fixed:{background:'#0f1525',padding:'20px',borderRadius:'16px',border:'1px solid rgba(255,107,170,.3)',color:'#c8cce0'},
-    preview:{type:'card',text:'A border gives a card its shape.'},
-  },
-  // LEVEL 5 — BOSS ROUND — Multiple fixes
-  {
-    id:'gradient-text', level:5,
-    property:'background',
-    element:'gradient',
-    label:'Gradient Heading',
-    broken:{background:'#808080',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',fontSize:'2.4rem',fontWeight:'900'},
-    desc:"Zen's signature gradient heading went grey. Restore the pink-to-purple gradient.",
-    correct:'linear-gradient(135deg,#ff6baa,#c66bff)',
-    options:['linear-gradient(135deg,#ff6baa,#c66bff)','#808080','linear-gradient(135deg,#000,#fff)','none'],
-    swatches:['url(#grad)','#808080','url(#bw)','transparent'],
-    fixed:{background:'linear-gradient(135deg,#ff6baa,#c66bff)',WebkitBackgroundClip:'text',WebkitTextFillColor:'transparent',backgroundClip:'text',fontSize:'2.4rem',fontWeight:'900'},
-    preview:{type:'gradient',text:'METHOD IN MOTION'},
-  },
+// ─── DATA ────────────────────────────────────────────────────────────────────
+const CHALLENGES = [
+  // Zone 1 - Color
+  { zone:'ZONE 1 · COLOR', prop:'color', q:'Give Zen\'s headline a vibrant pink glow', hint:'color: ___', correct:'#f472b6', opts:['#f472b6','#000000','inherit','transparent'],
+    css:(v)=>`h1{color:${v};text-shadow:0 0 20px ${v};}` },
+  { zone:'ZONE 1 · COLOR', prop:'background', q:'Set the page background to deep midnight', hint:'background: ___', correct:'#0a0a1a', opts:['#0a0a1a','#ffffff','#ff0000','#cccccc'],
+    css:(v)=>`body{background:${v};}` },
+  { zone:'ZONE 1 · COLOR', prop:'color', q:'Make the paragraph text soft white', hint:'color: ___', correct:'rgba(255,255,255,0.75)', opts:['rgba(255,255,255,0.75)','black','#ff6600','blue'],
+    css:(v)=>`p{color:${v};}` },
+
+  // Zone 2 - Typography
+  { zone:'ZONE 2 · TYPE', prop:'font-size', q:'Make the headline BIG — studio-worthy', hint:'font-size: ___', correct:'64px', opts:['64px','12px','2px','100%'],
+    css:(v)=>`h1{font-size:${v};}` },
+  { zone:'ZONE 2 · TYPE', prop:'font-weight', q:'Make the headline ultra bold', hint:'font-weight: ___', correct:'900', opts:['900','100','normal','lighter'],
+    css:(v)=>`h1{font-weight:${v};}` },
+  { zone:'ZONE 2 · TYPE', prop:'letter-spacing', q:'Spread the letters out wide', hint:'letter-spacing: ___', correct:'4px', opts:['4px','0px','-2px','400px'],
+    css:(v)=>`h1{letter-spacing:${v};}` },
+  { zone:'ZONE 2 · TYPE', prop:'text-transform', q:'Force the headline to ALL CAPS', hint:'text-transform: ___', correct:'uppercase', opts:['uppercase','lowercase','none','blink'],
+    css:(v)=>`h1{text-transform:${v};}` },
+
+  // Zone 3 - Layout
+  { zone:'ZONE 3 · LAYOUT', prop:'display', q:'Center everything with flexbox', hint:'display: ___', correct:'flex', opts:['flex','block','grid','none'],
+    css:(v)=>`body{display:${v};flex-direction:column;align-items:center;justify-content:center;}` },
+  { zone:'ZONE 3 · LAYOUT', prop:'padding', q:'Give the card breathing room inside', hint:'padding: ___', correct:'40px', opts:['40px','0','1px','-10px'],
+    css:(v)=>`.card{padding:${v};}` },
+  { zone:'ZONE 3 · LAYOUT', prop:'border-radius', q:'Round the card corners smoothly', hint:'border-radius: ___', correct:'16px', opts:['16px','0px','500px','sharp'],
+    css:(v)=>`.card{border-radius:${v};}` },
+
+  // Zone 4 - Effects
+  { zone:'ZONE 4 · EFFECTS', prop:'box-shadow', q:'Add a glowing pink box shadow', hint:'box-shadow: ___', correct:'0 0 30px #f472b6', opts:['0 0 30px #f472b6','none','2px solid black','blur(10px)'],
+    css:(v)=>`.card{box-shadow:${v};}` },
+  { zone:'ZONE 4 · EFFECTS', prop:'opacity', q:'Make the card slightly see-through', hint:'opacity: ___', correct:'0.85', opts:['0.85','0','2','-0.5'],
+    css:(v)=>`.card{opacity:${v};}` },
+
+  // Zone 5 - Boss
+  { zone:'ZONE 5 · BOSS', prop:'background', q:'Final touch — a gradient worthy of Zen', hint:'background: ___', correct:'linear-gradient(135deg,#f472b6,#22d3ee)', opts:['linear-gradient(135deg,#f472b6,#22d3ee)','red','#000','none'],
+    css:(v)=>`body{background:${v};}` },
 ];
 
-// ============================================================
-// LEVELS CONFIG
-// ============================================================
-const LEVELS = [
-  {level:1, name:'SKETCH ZONE',   color:'#ff6baa', challengeIds:['color-heading','bg-color','text-color'],       timePerQ:18, pointsBase:100},
-  {level:2, name:'DRAFT ZONE',    color:'#c66bff', challengeIds:['font-size','font-weight','letter-spacing'],    timePerQ:15, pointsBase:150},
-  {level:3, name:'BUILD ZONE',    color:'#00e8ff', challengeIds:['padding','border-radius','margin-bottom'],     timePerQ:13, pointsBase:200},
-  {level:4, name:'POLISH ZONE',   color:'#ffe066', challengeIds:['box-shadow','opacity','border'],               timePerQ:11, pointsBase:250},
-  {level:5, name:'MASTERPIECE',   color:'#a2ff32', challengeIds:['gradient-text','color-heading','font-weight'], timePerQ:9,  pointsBase:400},
-];
+// Shuffle array in place
+function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
 
-// ============================================================
-// GAME STATE
-// ============================================================
-let state = {
-  running:false, score:0, level:1, styleMeter:100,
-  combo:1, maxCombo:1, fixed:0, wrong:0,
-  currentChallengeIdx:0, challenges:[],
-  timerInterval:null, timeLeft:0,
-  levelChallenges:[], levelIdx:0,
+// Applied CSS per challenge
+const appliedCSS = {};
+
+// State
+let idx = 0;
+let score = 0;
+let combo = 0;
+let meter = 100;
+let timerInterval = null;
+let timeLeft = 0;
+let answered = false;
+
+// Zen face images
+const ZEN_FACES = {
+  happy: 'zen-happy.png',
+  victory: 'zen-victory.png',
+  scared: 'zen-scared.png',
+  sad: 'zen-sad.png'
 };
 
-function getLevelCfg(){ return LEVELS[Math.min(state.level-1, LEVELS.length-1)]; }
-
-// ============================================================
-// BOOT SEQUENCE
-// ============================================================
-const BOOT = [
-  {text:'> Initializing ZEN.exe', cls:'ok', d:200},
-  {text:'> Loading creative studio...', cls:'ok', d:500},
-  {text:'> ERROR: All styles corrupted', cls:'err', d:900},
-  {text:'> CSS database: offline', cls:'err', d:1200},
-  {text:'> Deploying Zen protocol...', cls:'ok', d:1600},
-  {text:'> Studio: READY — awaiting designer', cls:'ok', d:2100},
-];
-
-window.addEventListener('DOMContentLoaded',()=>{
-  const best = localStorage.getItem('zenGameBest')||0;
-  document.getElementById('bestVal').textContent = best;
-  const c = document.getElementById('bootLines');
-  BOOT.forEach(({text,cls,d})=>{
-    const el = document.createElement('div');
-    el.style.cssText='font-family:monospace;font-size:.75rem;padding:3px 0;opacity:0;transition:opacity .3s;';
-    el.style.color = cls==='ok' ? 'rgba(162,255,50,.8)' : '#ff6b6b';
-    el.textContent = text;
-    c.appendChild(el);
-    setTimeout(()=>el.style.opacity='1', d);
-  });
-  setTimeout(()=>{
-    document.getElementById('bootScreen').classList.add('hidden');
-    document.getElementById('startScreen').classList.remove('hidden');
-    spawnSwatches();
-  }, 2800);
-});
-
-// ============================================================
-// FLOATING SWATCHES (ambient decoration)
-// ============================================================
-function spawnSwatches(){
-  const colors=['#ff6baa','#c66bff','#00e8ff','#ffe066','#a2ff32','#ff8c42'];
-  const sizes=[20,28,16,24,18,32];
-  for(let i=0;i<12;i++){
-    const el = document.createElement('div');
-    el.className = 'swatch';
-    const c = colors[Math.floor(Math.random()*colors.length)];
-    const s = sizes[Math.floor(Math.random()*sizes.length)];
-    const r = (Math.random()*30-15)+'deg';
-    const r2 = (Math.random()*30-15)+'deg';
-    const dy = -(20+Math.random()*30)+'px';
-    el.style.cssText = `width:${s}px;height:${s}px;left:${Math.random()*95}%;top:${Math.random()*90}%;background:${c};opacity:${0.3+Math.random()*.3};--r:${r};--r2:${r2};--dy:${dy};animation-duration:${4+Math.random()*6}s;animation-delay:${Math.random()*4}s;`;
-    document.getElementById('worldBg').appendChild(el);
-  }
+function setZenFace(mood){
+  const f = document.getElementById('zen-face');
+  f.src = ZEN_FACES[mood];
+  f.style.display = 'block';
 }
 
-// ============================================================
-// START GAME
-// ============================================================
-window.startGame = function(){
-  document.getElementById('startScreen').classList.add('hidden');
-  document.getElementById('gameOverScreen').classList.add('hidden');
-  state = {
-    running:true, score:0, level:1, styleMeter:100,
-    combo:1, maxCombo:1, fixed:0, wrong:0,
-    currentChallengeIdx:0, challenges:[],
-    timerInterval:null, timeLeft:0,
-    levelChallenges:[], levelIdx:0,
-  };
-  updateHUD();
-  updateStyleMeter();
-  loadLevel(1);
-};
-
-// ============================================================
-// LEVEL LOADING
-// ============================================================
-function loadLevel(lvl){
-  state.level = lvl;
-  state.levelIdx = 0;
-  const cfg = getLevelCfg();
-  state.levelChallenges = cfg.challengeIds
-    .map(id => CSS_CHALLENGES.find(c=>c.id===id))
-    .filter(Boolean);
-
-  updateHUD();
-  updateZoneBadge();
-  buildProgressDots();
-  renderPreview();
-  showNextChallenge();
-}
-
-function buildProgressDots(){
-  const cfg = getLevelCfg();
-  const el = document.getElementById('progressDots');
-  el.innerHTML = '';
-  cfg.challengeIds.forEach((_,i)=>{
-    const d = document.createElement('div');
-    d.className = 'pdot' + (i===0?' active':'');
-    d.id = 'pdot_'+i;
-    el.appendChild(d);
-  });
-}
-
-function updateProgressDots(){
-  const cfg = getLevelCfg();
-  cfg.challengeIds.forEach((_,i)=>{
-    const d = document.getElementById('pdot_'+i);
-    if(!d) return;
-    d.className = 'pdot' + (i < state.levelIdx ? ' done' : i === state.levelIdx ? ' active' : '');
-  });
-}
-
-// ============================================================
-// RENDER PREVIEW PANE
-// ============================================================
-function renderPreview(){
-  const preview = document.getElementById('pagePreview');
-  preview.innerHTML = '';
-
-  // Show all challenges for this level with current styles
-  state.levelChallenges.forEach((ch, i)=>{
-    const el = document.createElement('div');
-    el.className = 'preview-el' + (i===state.levelIdx?' active-preview':'');
-    el.id = 'prev_'+ch.id;
-    el.appendChild(buildPreviewEl(ch, i < state.levelIdx));
-    preview.appendChild(el);
-  });
-}
-
-function buildPreviewEl(ch, isSolved){
-  const styles = isSolved ? ch.fixed : ch.broken;
-  const wrapper = document.createElement('div');
-
-  if(ch.preview.type === 'h1'){
-    const el = document.createElement('h1');
-    Object.assign(el.style, styles, {fontFamily:'Syne,sans-serif'});
-    el.textContent = ch.preview.text;
-    if(!isSolved) el.style.filter = 'grayscale(0.8)';
-    wrapper.appendChild(el);
-  } else if(ch.preview.type === 'h2'){
-    const el = document.createElement('h2');
-    Object.assign(el.style, styles, {fontFamily:'Syne,sans-serif'});
-    el.textContent = ch.preview.text;
-    if(!isSolved) el.style.filter = 'grayscale(0.8)';
-    wrapper.appendChild(el);
-  } else if(ch.preview.type === 'p'){
-    const el = document.createElement('p');
-    Object.assign(el.style, styles);
-    el.textContent = ch.preview.text;
-    wrapper.appendChild(el);
-  } else if(ch.preview.type === 'label'){
-    const el = document.createElement('div');
-    Object.assign(el.style, styles);
-    el.textContent = ch.preview.text;
-    wrapper.appendChild(el);
-  } else if(ch.preview.type === 'button'){
-    const el = document.createElement('button');
-    Object.assign(el.style, styles, {cursor:'default',display:'inline-block'});
-    el.textContent = ch.preview.text;
-    wrapper.appendChild(el);
-  } else if(ch.preview.type === 'card'){
-    const el = document.createElement('div');
-    Object.assign(el.style, styles);
-    el.textContent = ch.preview.text;
-    wrapper.appendChild(el);
-  } else if(ch.preview.type === 'spacing'){
-    ['Space creates clarity.','Every element needs room to breathe.','Design is about what you leave out.'].forEach(t=>{
-      const el = document.createElement('p');
-      Object.assign(el.style, styles);
-      el.textContent = t;
-      wrapper.appendChild(el);
-    });
-  } else if(ch.preview.type === 'muted'){
-    const el = document.createElement('p');
-    Object.assign(el.style, styles);
-    el.textContent = ch.preview.text;
-    wrapper.appendChild(el);
-  } else if(ch.preview.type === 'gradient'){
-    const el = document.createElement('h1');
-    Object.assign(el.style, styles, {fontFamily:'Orbitron,monospace'});
-    el.textContent = ch.preview.text;
-    if(!isSolved) el.style.filter = 'grayscale(1)';
-    wrapper.appendChild(el);
-  }
-
-  return wrapper;
-}
-
-function updatePreviewEl(ch, solved){
-  const el = document.getElementById('prev_'+ch.id);
-  if(!el) return;
-  el.innerHTML = '';
-  el.appendChild(buildPreviewEl(ch, solved));
-  if(solved){
-    el.classList.remove('glitching');
-    el.classList.add('fixed-anim');
-    setTimeout(()=>el.classList.remove('fixed-anim'), 600);
-  } else {
-    el.classList.add('glitching');
-    setTimeout(()=>el.classList.remove('glitching'), 400);
-  }
-}
-
-// ============================================================
-// CHALLENGE FLOW
-// ============================================================
-function showNextChallenge(){
-  if(!state.running) return;
-  if(state.levelIdx >= state.levelChallenges.length){
-    // Level complete
-    levelComplete();
-    return;
-  }
-  const ch = state.levelChallenges[state.levelIdx];
-  updateProgressDots();
-  renderChallengePanel(ch);
-  startTimer();
-
-  // Mark active preview
-  state.levelChallenges.forEach((_,i)=>{
-    const el = document.getElementById('prev_'+_.id);
-    if(el) el.style.outline = i===state.levelIdx ? '2px solid rgba(255,107,170,.5)' : 'none';
-  });
-
-  // Scroll preview to active element
-  const activeEl = document.getElementById('prev_'+ch.id);
-  if(activeEl) activeEl.scrollIntoView({behavior:'smooth', block:'center'});
-}
-
-function renderChallengePanel(ch){
-  document.getElementById('challengeTitle').textContent = 'Fix: ' + ch.label;
-  document.getElementById('challengeDesc').textContent = ch.desc;
-
-  const body = document.getElementById('challengeBody');
-  body.innerHTML = '';
-
-  const card = document.createElement('div');
-  card.className = 'css-challenge active';
-  card.innerHTML = `
-    <div class="css-prop-label">
-      <span>${ch.element}</span>
-      <span style="color:rgba(255,255,255,.3)">·</span>
-      <span style="color:rgba(255,255,255,.5)">${ch.property}</span>
+// Build preview HTML
+function buildPreviewHTML(){
+  const styles = Object.values(appliedCSS).join('\n');
+  return `<!DOCTYPE html><html><head><style>
+    *{margin:0;padding:0;box-sizing:border-box;}
+    body{min-height:100vh;background:#0a0a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;padding:30px;}
+    h1{color:#888;font-size:28px;font-weight:400;margin-bottom:16px;transition:all .4s;}
+    p{color:#555;font-size:14px;line-height:1.7;margin-bottom:20px;transition:all .4s;}
+    .card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:20px;border-radius:4px;max-width:360px;width:100%;transition:all .4s;}
+    ${styles}
+  </style></head><body>
+    <div class="card">
+      <h1>Zen's World</h1>
+      <p>CSS is the art of the web. Every pixel tells a story.</p>
+      <p style="opacity:.6;font-size:12px;">Style it right and the whole world lights up.</p>
     </div>
-    <div class="css-prop-name" style="color:rgba(255,255,255,.4)">${ch.element} { <span style="color:#ffe066">${ch.property}</span>: <span id="liveVal" style="color:#ff6b6b">???</span>; }</div>
-    <div class="css-desc">${ch.desc}</div>
-    <div class="css-options" id="cssOpts"></div>
-  `;
-  body.appendChild(card);
+  </body></html>`;
+}
 
-  const opts = document.getElementById('cssOpts');
-  ch.options.forEach((opt, i)=>{
-    const btn = document.createElement('button');
-    btn.className = 'css-opt';
-    if(ch.swatches[i]){
-      const sw = document.createElement('span');
-      sw.className = 'opt-swatch';
-      sw.style.background = ch.swatches[i];
-      btn.appendChild(sw);
-    }
-    btn.appendChild(document.createTextNode(opt));
-    btn.addEventListener('click', ()=>answerChallenge(opt, ch, btn, opts));
-    opts.appendChild(btn);
+function updatePreview(){
+  const iframe = document.getElementById('preview-iframe');
+  const doc = iframe.contentDocument || iframe.contentWindow.document;
+  doc.open(); doc.write(buildPreviewHTML()); doc.close();
+}
+
+function buildDots(){
+  const d = document.getElementById('progress-dots');
+  d.innerHTML = '';
+  CHALLENGES.forEach((_,i)=>{
+    const dot = document.createElement('div');
+    dot.className = 'dot' + (i < idx ? ' done' : i === idx ? ' current' : '');
+    d.appendChild(dot);
   });
 }
 
-function answerChallenge(chosen, ch, btn, optsEl){
-  if(!state.running) return;
-  clearTimer();
+function loadChallenge(){
+  if(idx >= CHALLENGES.length){ endGame(true); return; }
+  answered = false;
+  const c = CHALLENGES[idx];
 
-  const isCorrect = chosen === ch.correct;
-  const opts = optsEl.querySelectorAll('.css-opt');
-  opts.forEach(o=>o.style.pointerEvents='none');
+  document.getElementById('zone-badge').textContent = c.zone;
+  document.getElementById('challenge-property').textContent = c.prop.toUpperCase();
+  document.getElementById('challenge-question').textContent = c.q;
+  document.getElementById('challenge-hint').textContent = c.hint;
+  document.getElementById('combo-text').textContent = combo >= 2 ? `🔥 x${combo} COMBO` : '';
 
-  // Update live val display
-  const lv = document.getElementById('liveVal');
-  if(lv){ lv.textContent = chosen; lv.style.color = isCorrect ? '#a2ff32' : '#ff6b6b'; }
+  // SHUFFLE options so correct isn't always slot 0
+  const shuffled = shuffle([...c.opts]);
 
-  if(isCorrect){
-    btn.classList.add('correct');
-    state.combo++;
-    if(state.combo > state.maxCombo) state.maxCombo = state.combo;
-    state.fixed++;
-    const cfg = getLevelCfg();
-    const earned = cfg.pointsBase * Math.min(state.combo, 6);
-    state.score += earned;
-    spawnScoreFloat(earned, btn);
-    spawnPaintBurst(btn);
-    spawnParticles(btn);
-    zenExpression('happy');
-    playCorrect();
-    if(state.combo >= 3) showCombo();
-    updatePreviewEl(ch, true);
-    document.getElementById('glitchTag').textContent = state.levelIdx >= state.levelChallenges.length-1 ? 'STYLED ✓' : 'FIXING...';
-    document.getElementById('glitchTag').className = 'glitch-tag' + (state.levelIdx >= state.levelChallenges.length-1 ? ' fixed' : '');
-  } else {
-    btn.classList.add('wrong');
-    opts.forEach(o=>{ if(o.textContent.trim()===ch.correct || o.textContent.includes(ch.correct)) o.classList.add('reveal'); });
-    state.combo = 1;
-    state.wrong++;
-    state.styleMeter = Math.max(0, state.styleMeter - 25);
-    updateStyleMeter();
-    zenExpression('sad');
-    triggerGlitch();
-    playWrong();
-    if(state.styleMeter <= 0){ endGame(); return; }
-  }
+  const grid = document.getElementById('options-grid');
+  grid.innerHTML = '';
+  shuffled.forEach(opt => {
+    const btn = document.createElement('button');
+    btn.className = 'option-btn';
+    btn.textContent = opt;
+    btn.onclick = () => pickAnswer(btn, opt, c);
+    grid.appendChild(btn);
+  });
 
-  updateHUD();
-  state.levelIdx++;
-  setTimeout(()=>{ if(state.running) showNextChallenge(); }, 1000);
+  buildDots();
+  setZenFace('happy');
+  startTimer(c.zone);
 }
 
-function timeOutChallenge(){
-  if(!state.running) return;
-  state.combo = 1;
-  state.wrong++;
-  state.styleMeter = Math.max(0, state.styleMeter - 20);
-  updateStyleMeter();
-  zenExpression('sad');
-  triggerGlitch();
-  playWrong();
-  updateHUD();
-  if(state.styleMeter <= 0){ endGame(); return; }
-  state.levelIdx++;
-  showNextChallenge();
-}
-
-// ============================================================
-// TIMER
-// ============================================================
-function startTimer(){
-  const cfg = getLevelCfg();
-  state.timeLeft = cfg.timePerQ;
-  updateTimerRing();
-  if(state.timerInterval) clearInterval(state.timerInterval);
-  state.timerInterval = setInterval(()=>{
-    state.timeLeft -= 0.1;
-    updateTimerRing();
-    if(state.timeLeft <= 0){ clearInterval(state.timerInterval); timeOutChallenge(); }
+function startTimer(zone){
+  clearInterval(timerInterval);
+  // Shorter time in later zones
+  const zoneNum = parseInt(zone[5]);
+  timeLeft = zoneNum >= 5 ? 8 : zoneNum >= 4 ? 12 : zoneNum >= 3 ? 16 : 20;
+  const total = timeLeft;
+  const fill = document.getElementById('timer-fill');
+  fill.style.width = '100%';
+  timerInterval = setInterval(()=>{
+    timeLeft -= 0.1;
+    fill.style.width = Math.max(0, (timeLeft/total)*100) + '%';
+    if(timeLeft <= 0){
+      clearInterval(timerInterval);
+      if(!answered){ onTimeout(); }
+    }
   }, 100);
 }
 
-function clearTimer(){ if(state.timerInterval) clearInterval(state.timerInterval); }
+function pickAnswer(btn, val, c){
+  if(answered) return;
+  answered = true;
+  clearInterval(timerInterval);
+  const isCorrect = val === c.correct;
 
-function updateTimerRing(){
-  const cfg = getLevelCfg();
-  const pct = Math.max(0, state.timeLeft / cfg.timePerQ);
-  const circ = 94.2;
-  const offset = circ * (1-pct);
-  const ring = document.getElementById('timerRing');
-  const num = document.getElementById('timerNum');
-  if(ring) ring.style.strokeDashoffset = offset;
-  if(num) num.textContent = Math.ceil(state.timeLeft);
-  if(ring){
-    if(pct > 0.5) ring.style.stroke = '#ff6baa';
-    else if(pct > 0.25) ring.style.stroke = '#ffe066';
-    else ring.style.stroke = '#ff6b6b';
+  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+
+  if(isCorrect){
+    btn.classList.add('correct');
+    combo++;
+    const pts = 100 * Math.max(1, combo);
+    score += pts;
+    appliedCSS[idx] = c.css(val);
+    updatePreview();
+    setZenFace('victory');
+    showScoreFloat('+' + pts);
+    paintBurst(btn);
+    document.getElementById('nav-score').textContent = score + ' pts';
+    setTimeout(()=>{ idx++; loadChallenge(); }, 900);
+  } else {
+    btn.classList.add('wrong');
+    combo = 0;
+    meter -= 25;
+    setZenFace('scared');
+    updateMeter();
+    if(meter <= 0){ setTimeout(()=>endGame(false), 600); return; }
+    // show correct
+    document.querySelectorAll('.option-btn').forEach(b=>{
+      if(b.textContent === c.correct) b.classList.add('correct');
+    });
+    setTimeout(()=>{ idx++; loadChallenge(); }, 1200);
   }
 }
 
-// ============================================================
-// LEVEL COMPLETE
-// ============================================================
-function levelComplete(){
-  clearTimer();
-  const nextLevel = state.level + 1;
-  if(nextLevel > LEVELS.length){ endGame(true); return; }
-  showLevelBanner(`LEVEL ${nextLevel}`);
-  playLevelUp();
-  zenExpression('happy');
-  setTimeout(()=>{ if(state.running) loadLevel(nextLevel); }, 2000);
+function onTimeout(){
+  answered = true;
+  combo = 0;
+  meter -= 20;
+  setZenFace('sad');
+  updateMeter();
+  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
+  const c = CHALLENGES[idx];
+  document.querySelectorAll('.option-btn').forEach(b=>{
+    if(b.textContent === c.correct) b.classList.add('correct');
+  });
+  if(meter <= 0){ setTimeout(()=>endGame(false), 800); return; }
+  setTimeout(()=>{ idx++; loadChallenge(); }, 1200);
 }
 
-function showLevelBanner(text){
-  const el = document.getElementById('levelBanner');
-  el.textContent = text;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 1800);
+function updateMeter(){
+  meter = Math.max(0, meter);
+  document.getElementById('style-meter-fill').style.width = meter + '%';
+  document.getElementById('meter-val').textContent = Math.round(meter) + '%';
 }
 
-function updateZoneBadge(){
-  const cfg = getLevelCfg();
-  const el = document.getElementById('zoneBadge');
-  el.textContent = cfg.name;
-  el.style.color = cfg.color;
-  el.style.borderColor = cfg.color+'66';
-  el.style.background = cfg.color+'18';
-}
-
-// ============================================================
-// HUD
-// ============================================================
-function updateHUD(){
-  document.getElementById('scoreVal').textContent = state.score.toLocaleString();
-  document.getElementById('levelVal').textContent = state.level;
-  const best = Math.max(state.score, parseInt(localStorage.getItem('zenGameBest'))||0);
-  document.getElementById('bestVal').textContent = best.toLocaleString();
-}
-
-function popHud(id){
-  const el = document.getElementById(id);
-  el.classList.remove('pop'); void el.offsetWidth; el.classList.add('pop');
-  setTimeout(()=>el.classList.remove('pop'), 200);
-}
-
-function updateStyleMeter(){
-  const el = document.getElementById('styleMeter');
-  el.style.width = state.styleMeter + '%';
-  if(state.styleMeter > 60) el.style.background = 'linear-gradient(135deg,#ff6baa,#c66bff)';
-  else if(state.styleMeter > 30) el.style.background = 'linear-gradient(135deg,#ffe066,#ff8c42)';
-  else el.style.background = 'linear-gradient(135deg,#ff6b6b,#ff3232)';
-}
-
-// ============================================================
-// COMBO DISPLAY
-// ============================================================
-function showCombo(){
-  const el = document.getElementById('comboDisplay');
-  const labels={3:'TRIPLE!',4:'QUAD!!',5:'ON FIRE!',6:'ZEN MODE!',7:'MASTERPIECE!',8:'LEGENDARY!'};
-  const colors={3:'#00e8ff',4:'#c66bff',5:'#ff6baa',6:'#ffe066',7:'#a2ff32',8:'#ff3232'};
-  const c = Math.min(state.combo, 8);
-  el.textContent = labels[c] || `x${c} COMBO!`;
-  el.style.color = colors[c] || '#fff';
-  el.style.fontSize = `clamp(1.4rem,${2+c*.25}vw,3rem)`;
-  el.style.textShadow = `0 0 40px ${colors[c]||'#fff'}`;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'), 900);
-}
-
-// ============================================================
-// ZEN EXPRESSION
-// ============================================================
-const ZEN_FACES = {
-  idle:  {emoji:'🎨', border:'rgba(255,107,170,.4)', glow:'rgba(255,107,170,.3)'},
-  happy: {emoji:'😍', border:'rgba(162,255,50,.6)',  glow:'rgba(162,255,50,.5)'},
-  sad:   {emoji:'😰', border:'rgba(255,107,107,.6)', glow:'rgba(255,107,107,.5)'},
-};
-let faceTimeout=null;
-
-function zenExpression(mood){
-  const face = document.getElementById('zenFace');
-  const emoji = document.getElementById('zenFaceEmoji');
-  const f = ZEN_FACES[mood]||ZEN_FACES.idle;
-  emoji.textContent = f.emoji;
-  face.style.borderColor = f.border;
-  face.style.boxShadow = `0 0 30px ${f.glow}`;
-  face.classList.add('react');
-  if(mood==='sad') face.classList.add('sad');
-  if(faceTimeout) clearTimeout(faceTimeout);
-  faceTimeout = setTimeout(()=>{
-    face.classList.remove('react','sad');
-    emoji.textContent = ZEN_FACES.idle.emoji;
-    face.style.borderColor = ZEN_FACES.idle.border;
-    face.style.boxShadow = `0 0 30px ${ZEN_FACES.idle.glow}`;
-  }, 1200);
-}
-
-// ============================================================
-// FX
-// ============================================================
-function triggerGlitch(){
-  const el = document.getElementById('glitchOverlay');
-  el.classList.add('fire');
-  setTimeout(()=>el.classList.remove('fire'), 150);
-}
-
-function spawnPaintBurst(btn){
-  const rect = btn.getBoundingClientRect();
-  const cx = rect.left + rect.width/2;
-  const cy = rect.top + rect.height/2;
-  const colors = ['#ff6baa','#c66bff','#00e8ff','#ffe066','#a2ff32'];
-  const c = colors[Math.floor(Math.random()*colors.length)];
-  const burst = document.createElement('div');
-  burst.className = 'paint-burst';
-  burst.style.cssText = `left:${cx}px;top:${cy}px;width:60px;height:60px;background:${c};opacity:.6;`;
-  document.body.appendChild(burst);
-  setTimeout(()=>burst.remove(), 600);
-}
-
-function spawnScoreFloat(pts, btn){
-  const rect = btn.getBoundingClientRect();
+function showScoreFloat(txt){
   const el = document.createElement('div');
   el.className = 'score-float';
-  el.textContent = '+'+pts;
-  el.style.cssText = `left:${rect.left+rect.width/2}px;top:${rect.top}px;color:#a2ff32;`;
+  el.textContent = txt;
+  el.style.left = (window.innerWidth * 0.6) + 'px';
+  el.style.top = (window.innerHeight * 0.4) + 'px';
   document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 800);
+  setTimeout(()=>el.remove(), 900);
 }
 
-function spawnParticles(btn){
-  const rect = btn.getBoundingClientRect();
-  const cx = rect.left + rect.width/2;
-  const cy = rect.top + rect.height/2;
-  const colors=['#ff6baa','#c66bff','#00e8ff','#ffe066','#a2ff32'];
-  for(let i=0;i<10;i++){
-    const angle = (i/10)*Math.PI*2;
-    const dist = 50 + Math.random()*50;
-    const p = document.createElement('div');
-    p.className = 'particle';
-    p.style.cssText = `left:${cx}px;top:${cy}px;width:${3+Math.random()*5}px;height:${3+Math.random()*5}px;background:${colors[Math.floor(Math.random()*colors.length)]};--px:${Math.cos(angle)*dist}px;--py:${Math.sin(angle)*dist}px;animation-duration:${.4+Math.random()*.3}s;border-radius:${Math.random()>0.5?'50%':'3px'};`;
-    document.body.appendChild(p);
-    setTimeout(()=>p.remove(), 700);
-  }
+function paintBurst(btn){
+  const r = btn.getBoundingClientRect();
+  const el = document.createElement('div');
+  el.className = 'paint-burst';
+  el.style.left = (r.left + r.width/2 - 60) + 'px';
+  el.style.top = (r.top + r.height/2 - 60) + 'px';
+  el.style.background = 'radial-gradient(circle,rgba(244,114,182,0.6),transparent)';
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 600);
 }
 
-// ============================================================
-// SOUND
-// ============================================================
-let audioCtx=null;
-function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-
-function playCorrect(){
-  try{
-    const ac=getAudio();
-    [523,659,784,1047].forEach((f,i)=>{
-      const o=ac.createOscillator(),g=ac.createGain();
-      o.connect(g);g.connect(ac.destination);
-      o.type='sine';o.frequency.value=f;
-      const t=ac.currentTime+i*.06;
-      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.07,t+.03);g.gain.exponentialRampToValueAtTime(.001,t+.3);
-      o.start(t);o.stop(t+.3);
-    });
-  }catch(e){}
-}
-
-function playWrong(){
-  try{
-    const ac=getAudio();
-    [300,220,180].forEach((f,i)=>{
-      const o=ac.createOscillator(),g=ac.createGain();
-      o.connect(g);g.connect(ac.destination);
-      o.type='sawtooth';o.frequency.value=f;
-      const t=ac.currentTime+i*.08;
-      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.02);g.gain.exponentialRampToValueAtTime(.001,t+.25);
-      o.start(t);o.stop(t+.25);
-    });
-  }catch(e){}
-}
-
-function playLevelUp(){
-  try{
-    const ac=getAudio();
-    [440,554,659,880,1108].forEach((f,i)=>{
-      const o=ac.createOscillator(),g=ac.createGain();
-      o.connect(g);g.connect(ac.destination);
-      o.type='sine';o.frequency.value=f;
-      const t=ac.currentTime+i*.1;
-      g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.08,t+.04);g.gain.exponentialRampToValueAtTime(.001,t+.4);
-      o.start(t);o.stop(t+.4);
-    });
-  }catch(e){}
-}
-
-// ============================================================
-// GAME OVER
-// ============================================================
-function endGame(won=false){
-  state.running = false;
-  clearTimer();
-  if(window._saveZenScore) window._saveZenScore(state.score);
-  const best = Math.max(state.score, parseInt(localStorage.getItem('zenGameBest'))||0);
-  const total = state.fixed + state.wrong;
-  document.getElementById('finalScore').textContent = state.score.toLocaleString();
-  document.getElementById('finalBest').textContent = 'Best: '+best.toLocaleString();
-  document.getElementById('statFixed').textContent = state.fixed;
-  document.getElementById('statLevel').textContent = state.level;
-  document.getElementById('statCombo').textContent = 'x'+state.maxCombo;
-  document.getElementById('statAccuracy').textContent = total>0?Math.round((state.fixed/total)*100)+'%':'0%';
-  document.getElementById('gameOverTitle').textContent = won ? 'MASTERPIECE!' : 'STYLE LOST';
+function endGame(won){
+  clearInterval(timerInterval);
   document.getElementById('gameOverEyebrow').textContent = won ? 'Studio Complete' : 'Style Meter Drained';
+  document.getElementById('gameOverTitle').textContent = won ? 'MASTERPIECE!' : 'STYLE LOST';
   document.getElementById('gameOverSub').textContent = won
-    ? `You restored Zen's studio across all ${LEVELS.length} zones. That's real design skill.`
+    ? `You restored Zen's studio across all 5 zones. That's real design skill.`
     : "The style meter drained. But Zen says: every great design starts with a rough draft.";
-  document.getElementById('gameOverZen').textContent = won ? '🌟' : '😰';
-  setTimeout(()=>document.getElementById('gameOverScreen').classList.remove('hidden'), 500);
+  document.getElementById('gameOverScore').textContent = score + ' pts';
+  document.getElementById('gameOverZen').src = won ? 'zen-victory.png' : 'zen-sad.png';
+  document.getElementById('gameOverScreen').classList.remove('hidden');
+}
+
+function startGame(){
+  document.getElementById('introScreen').classList.add('hidden');
+  updatePreview();
+  loadChallenge();
 }
 </script>
 </body>
