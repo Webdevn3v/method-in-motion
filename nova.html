@@ -34,8 +34,8 @@
   --bg-card: rgba(255,255,255,0.04);
   --bg-card-hover: rgba(255,255,255,0.07);
   --text-bright: #ffffff;
-  --text-mid: rgba(255,255,255,0.75);
-  --text-dim: rgba(255,255,255,0.45);
+  --text-mid: rgba(255,255,255,0.92);
+  --text-dim: rgba(255,255,255,0.65);
   --border-soft: rgba(255,255,255,0.08);
   --border-nova: rgba(255,217,61,0.3);
 }
@@ -1608,7 +1608,7 @@ textarea.code-input {
   <div class="hero-content">
     <div class="hero-badge">MIM-004 · HTML Structure</div>
     <h1 class="hero-title">NOVA</h1>
-    <div class="hero-role">Builder Bot · she/her · Ages 8–10</div>
+    <div class="hero-role">Builder Bot · HTML Structure</div>
     <div class="hero-catchphrase">"Every great page starts with one good tag."</div>
 
     <div class="lesson-tiles" id="lessonTiles">
@@ -1693,28 +1693,28 @@ textarea.code-input {
 
           <!-- Sidebar nav -->
           <div class="lesson-sidebar">
-            <div class="sidebar-item active" onclick="showBlock(1,'read')">
+            <div class="sidebar-item active" data-block="read" onclick="showBlock(1,'read')">
               <span class="sidebar-icon">📖</span> Read
             </div>
-            <div class="sidebar-item" onclick="showBlock(1,'terms')">
+            <div class="sidebar-item" data-block="terms" onclick="showBlock(1,'terms')">
               <span class="sidebar-icon">📝</span> Key Terms
             </div>
-            <div class="sidebar-item" onclick="showBlock(1,'demo')">
+            <div class="sidebar-item" data-block="demo" onclick="showBlock(1,'demo')">
               <span class="sidebar-icon">💡</span> See It Live
             </div>
-            <div class="sidebar-item" onclick="showBlock(1,'activity')">
+            <div class="sidebar-item" data-block="activity" onclick="showBlock(1,'activity')">
               <span class="sidebar-icon">⚒️</span> Activity
             </div>
-            <div class="sidebar-item" onclick="showBlock(1,'quiz')">
+            <div class="sidebar-item" data-block="quiz" onclick="showBlock(1,'quiz')">
               <span class="sidebar-icon">🎯</span> Quiz
             </div>
-            <div class="sidebar-item" onclick="showBlock(1,'reflect')">
+            <div class="sidebar-item" data-block="reflect" onclick="showBlock(1,'reflect')">
               <span class="sidebar-icon">💭</span> Reflect
             </div>
-            <div class="sidebar-item" onclick="showBlock(1,'cheat')">
+            <div class="sidebar-item" data-block="cheat" onclick="showBlock(1,'cheat')">
               <span class="sidebar-icon">📋</span> Cheat Sheet
             </div>
-            <div class="sidebar-item" onclick="showBlock(1,'complete')">
+            <div class="sidebar-item" data-block="complete" onclick="showBlock(1,'complete')">
               <span class="sidebar-icon">✅</span> Complete
             </div>
           </div>
@@ -1940,14 +1940,14 @@ textarea.code-input {
         <div class="lesson-two-col" id="content-2">
 
           <div class="lesson-sidebar">
-            <div class="sidebar-item active" onclick="showBlock(2,'read')"><span class="sidebar-icon">📖</span> Read</div>
-            <div class="sidebar-item" onclick="showBlock(2,'terms')"><span class="sidebar-icon">📝</span> Key Terms</div>
-            <div class="sidebar-item" onclick="showBlock(2,'demo')"><span class="sidebar-icon">💡</span> See It Live</div>
-            <div class="sidebar-item" onclick="showBlock(2,'activity')"><span class="sidebar-icon">⚒️</span> Activity</div>
-            <div class="sidebar-item" onclick="showBlock(2,'quiz')"><span class="sidebar-icon">🎯</span> Quiz</div>
-            <div class="sidebar-item" onclick="showBlock(2,'reflect')"><span class="sidebar-icon">💭</span> Reflect</div>
-            <div class="sidebar-item" onclick="showBlock(2,'cheat')"><span class="sidebar-icon">📋</span> Cheat Sheet</div>
-            <div class="sidebar-item" onclick="showBlock(2,'complete')"><span class="sidebar-icon">✅</span> Complete</div>
+            <div class="sidebar-item active" data-block="read" onclick="showBlock(2,'read')"><span class="sidebar-icon">📖</span> Read</div>
+            <div class="sidebar-item" data-block="terms" onclick="showBlock(2,'terms')"><span class="sidebar-icon">📝</span> Key Terms</div>
+            <div class="sidebar-item" data-block="demo" onclick="showBlock(2,'demo')"><span class="sidebar-icon">💡</span> See It Live</div>
+            <div class="sidebar-item" data-block="activity" onclick="showBlock(2,'activity')"><span class="sidebar-icon">⚒️</span> Activity</div>
+            <div class="sidebar-item" data-block="quiz" onclick="showBlock(2,'quiz')"><span class="sidebar-icon">🎯</span> Quiz</div>
+            <div class="sidebar-item" data-block="reflect" onclick="showBlock(2,'reflect')"><span class="sidebar-icon">💭</span> Reflect</div>
+            <div class="sidebar-item" data-block="cheat" onclick="showBlock(2,'cheat')"><span class="sidebar-icon">📋</span> Cheat Sheet</div>
+            <div class="sidebar-item" data-block="complete" onclick="showBlock(2,'complete')"><span class="sidebar-icon">✅</span> Complete</div>
           </div>
 
           <div class="lesson-content-pane" id="pane-2-locked">
@@ -2130,14 +2130,14 @@ textarea.code-input {
         <div class="lesson-two-col" id="content-3">
 
           <div class="lesson-sidebar">
-            <div class="sidebar-item active" onclick="showBlock(3,'read')"><span class="sidebar-icon">📖</span> Read</div>
-            <div class="sidebar-item" onclick="showBlock(3,'terms')"><span class="sidebar-icon">📝</span> Key Terms</div>
-            <div class="sidebar-item" onclick="showBlock(3,'demo')"><span class="sidebar-icon">💡</span> See It Live</div>
-            <div class="sidebar-item" onclick="showBlock(3,'activity')"><span class="sidebar-icon">⚒️</span> Activity</div>
-            <div class="sidebar-item" onclick="showBlock(3,'quiz')"><span class="sidebar-icon">🎯</span> Quiz</div>
-            <div class="sidebar-item" onclick="showBlock(3,'reflect')"><span class="sidebar-icon">💭</span> Reflect</div>
-            <div class="sidebar-item" onclick="showBlock(3,'cheat')"><span class="sidebar-icon">📋</span> Cheat Sheet</div>
-            <div class="sidebar-item" onclick="showBlock(3,'complete')"><span class="sidebar-icon">✅</span> Complete</div>
+            <div class="sidebar-item active" data-block="read" onclick="showBlock(3,'read')"><span class="sidebar-icon">📖</span> Read</div>
+            <div class="sidebar-item" data-block="terms" onclick="showBlock(3,'terms')"><span class="sidebar-icon">📝</span> Key Terms</div>
+            <div class="sidebar-item" data-block="demo" onclick="showBlock(3,'demo')"><span class="sidebar-icon">💡</span> See It Live</div>
+            <div class="sidebar-item" data-block="activity" onclick="showBlock(3,'activity')"><span class="sidebar-icon">⚒️</span> Activity</div>
+            <div class="sidebar-item" data-block="quiz" onclick="showBlock(3,'quiz')"><span class="sidebar-icon">🎯</span> Quiz</div>
+            <div class="sidebar-item" data-block="reflect" onclick="showBlock(3,'reflect')"><span class="sidebar-icon">💭</span> Reflect</div>
+            <div class="sidebar-item" data-block="cheat" onclick="showBlock(3,'cheat')"><span class="sidebar-icon">📋</span> Cheat Sheet</div>
+            <div class="sidebar-item" data-block="complete" onclick="showBlock(3,'complete')"><span class="sidebar-icon">✅</span> Complete</div>
           </div>
 
           <div class="lesson-content-pane">
@@ -2323,11 +2323,11 @@ textarea.code-input {
         <div class="lesson-two-col" id="content-4">
 
           <div class="lesson-sidebar">
-            <div class="sidebar-item active" onclick="showBlock(4,'read')"><span class="sidebar-icon">📖</span> Brief</div>
-            <div class="sidebar-item" onclick="showBlock(4,'demo')"><span class="sidebar-icon">💡</span> Inspiration</div>
-            <div class="sidebar-item" onclick="showBlock(4,'build')"><span class="sidebar-icon">🏗️</span> Page Builder</div>
-            <div class="sidebar-item" onclick="showBlock(4,'reflect')"><span class="sidebar-icon">💭</span> Reflect</div>
-            <div class="sidebar-item" onclick="showBlock(4,'complete')"><span class="sidebar-icon">✅</span> Complete</div>
+            <div class="sidebar-item active" data-block="read" onclick="showBlock(4,'read')"><span class="sidebar-icon">📖</span> Brief</div>
+            <div class="sidebar-item" data-block="demo" onclick="showBlock(4,'demo')"><span class="sidebar-icon">💡</span> Inspiration</div>
+            <div class="sidebar-item" data-block="build" onclick="showBlock(4,'build')"><span class="sidebar-icon">🏗️</span> Page Builder</div>
+            <div class="sidebar-item" data-block="reflect" onclick="showBlock(4,'reflect')"><span class="sidebar-icon">💭</span> Reflect</div>
+            <div class="sidebar-item" data-block="complete" onclick="showBlock(4,'complete')"><span class="sidebar-icon">✅</span> Complete</div>
           </div>
 
           <div class="lesson-content-pane">
@@ -2586,44 +2586,36 @@ function toggleLesson(num, forceOpen = false) {
 }
 
 // ============================================================
-// SIDEBAR — SHOW CONTENT BLOCK
+// SIDEBAR — SHOW CONTENT BLOCK (clean rewrite)
 // ============================================================
 function showBlock(lessonNum, blockKey) {
-  const pane = document.getElementById('content-' + lessonNum) ||
-               document.getElementById('lesson' + lessonNum + '-content');
+  // For lesson 1: sidebar and blocks live inside #content-1
+  // For lessons 2-4: sidebar inside #content-N, blocks inside #lessonN-content
+  const twoCol = document.getElementById('content-' + lessonNum);
+  if (!twoCol) return;
 
-  // Find the actual parent pane
-  let sidebarItems, contentBlocks;
+  const sidebarItems = twoCol.querySelectorAll('.sidebar-item');
 
+  let contentBlocks;
   if (lessonNum === 1) {
-    sidebarItems = document.querySelectorAll('#content-1 .sidebar-item');
-    contentBlocks = document.querySelectorAll('#content-1 .content-block');
+    contentBlocks = twoCol.querySelectorAll('.content-block');
   } else {
     const lessonContent = document.getElementById('lesson' + lessonNum + '-content');
     if (!lessonContent) return;
-    // Get sidebar from the two-col parent
-    const twoCol = document.getElementById('content-' + lessonNum);
-    sidebarItems = twoCol.querySelectorAll('.sidebar-item');
     contentBlocks = lessonContent.querySelectorAll('.content-block');
   }
 
-  // Deactivate all sidebar items and blocks
+  // Deactivate all
   sidebarItems.forEach(item => item.classList.remove('active'));
   contentBlocks.forEach(block => block.classList.remove('active'));
 
-  // Activate the clicked one
+  // Activate target block
   const targetBlock = document.getElementById('block-' + lessonNum + '-' + blockKey);
   if (targetBlock) targetBlock.classList.add('active');
 
-  // Find and activate matching sidebar item by matching text content
-  const blockLabels = { read: 'Read', terms: 'Key Terms', demo: 'See It Live', activity: 'Activity',
-                        quiz: 'Quiz', reflect: 'Reflect', cheat: 'Cheat Sheet', complete: 'Complete',
-                        build: 'Page Builder', brief: 'Brief', inspiration: 'Inspiration' };
-
+  // Activate matching sidebar item (match by data-block attribute)
   sidebarItems.forEach(item => {
-    if (item.textContent.trim().includes(blockLabels[blockKey] || blockKey)) {
-      item.classList.add('active');
-    }
+    if (item.dataset.block === blockKey) item.classList.add('active');
   });
 }
 
@@ -2829,7 +2821,10 @@ firebase.auth().onAuthStateChanged(user => {
 
     // Show Lesson 1 (logged in)
     document.getElementById('gate-1').style.display = 'none';
-    document.getElementById('content-1').style.display = 'grid';
+    const c1 = document.getElementById('content-1');
+    c1.style.display = 'grid';
+    // Ensure the first content block is active
+    showBlock(1, 'read');
 
     // Get tier from Firestore
     firebase.firestore().collection('users').doc(user.uid).get()
