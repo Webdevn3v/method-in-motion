@@ -8,7 +8,6 @@
 <style>
 /* ===== RESET & BASE ===== */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
 :root {
   --nova-yellow: #ffe066;
   --nova-pink: #ff6baa;
@@ -19,9 +18,7 @@
   --text: #f0eaff;
   --text-dim: #c8bfe0;
 }
-
 html { scroll-behavior: smooth; }
-
 body {
   background: var(--nova-dark);
   color: var(--text);
@@ -49,9 +46,9 @@ body {
 @keyframes pulse { 0%,100%{opacity:0.6} 50%{opacity:1} }
 
 /* ===== NAV ===== */
-nav {
+nav.top-nav {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  background: rgba(10,8,18,0.92);
+  background: rgba(10,8,18,0.95);
   backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--nova-border);
   display: flex; align-items: center; justify-content: space-between;
@@ -60,32 +57,35 @@ nav {
 .nav-brand {
   font-family: 'Orbitron', sans-serif;
   font-size: 1rem; font-weight: 900;
-  color: var(--nova-yellow);
-  text-decoration: none; letter-spacing: 0.1em;
+  color: var(--nova-yellow); text-decoration: none;
+  letter-spacing: 0.1em;
 }
 .nav-links { display: flex; gap: 1.5rem; list-style: none; }
 .nav-links a {
   color: var(--text-dim); text-decoration: none;
-  font-size: 0.85rem; font-weight: 500;
-  transition: color 0.2s;
+  font-size: 0.85rem; font-weight: 500; transition: color 0.2s;
 }
 .nav-links a:hover { color: var(--nova-yellow); }
+.nav-links a.parent-portal-link {
+  color: var(--nova-pink);
+  border: 1px solid rgba(255,107,170,0.35);
+  padding: 0.25rem 0.75rem;
+  border-radius: 99px;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+.nav-links a.parent-portal-link:hover {
+  background: rgba(255,107,170,0.12);
+  color: var(--nova-pink);
+}
 .nav-auth { display: flex; gap: 0.75rem; align-items: center; }
 .btn-nav {
   padding: 0.4rem 1rem; border-radius: 6px;
   font-size: 0.8rem; font-weight: 600;
-  cursor: pointer; border: none; text-decoration: none;
-  transition: all 0.2s;
+  cursor: pointer; border: none; text-decoration: none; transition: all 0.2s;
 }
-.btn-nav-outline {
-  background: transparent;
-  border: 1px solid var(--nova-yellow);
-  color: var(--nova-yellow);
-}
-.btn-nav-fill {
-  background: var(--nova-yellow);
-  color: #0a0812;
-}
+.btn-nav-outline { background: transparent; border: 1px solid var(--nova-yellow); color: var(--nova-yellow); }
+.btn-nav-fill { background: var(--nova-yellow); color: #0a0812; }
 .btn-nav-fill:hover { background: #ffd700; }
 .btn-nav-outline:hover { background: rgba(255,224,102,0.1); }
 
@@ -104,14 +104,14 @@ nav {
 #heroBg.zoomed { transform: scale(1.08); }
 .hero-overlay {
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse at 60% 40%, rgba(255,107,170,0.18) 0%, transparent 60%),
-              radial-gradient(ellipse at 30% 70%, rgba(255,224,102,0.12) 0%, transparent 55%),
-              linear-gradient(180deg, rgba(10,8,18,0.3) 0%, rgba(10,8,18,0.7) 100%);
+  background:
+    radial-gradient(ellipse at 60% 40%, rgba(255,107,170,0.18) 0%, transparent 60%),
+    radial-gradient(ellipse at 30% 70%, rgba(255,224,102,0.12) 0%, transparent 55%),
+    linear-gradient(180deg, rgba(10,8,18,0.3) 0%, rgba(10,8,18,0.75) 100%);
 }
 .hero-content {
   position: relative; z-index: 2;
-  text-align: center; padding: 2rem;
-  max-width: 900px;
+  text-align: center; padding: 2rem; max-width: 900px;
 }
 .hero-eyebrow {
   display: inline-block;
@@ -120,31 +120,25 @@ nav {
   color: var(--nova-yellow);
   font-size: 0.75rem; font-weight: 700;
   letter-spacing: 0.2em; text-transform: uppercase;
-  padding: 0.35rem 1rem; border-radius: 99px;
-  margin-bottom: 1.25rem;
+  padding: 0.35rem 1rem; border-radius: 99px; margin-bottom: 1.25rem;
 }
 .hero-title {
   font-family: 'Orbitron', sans-serif;
   font-size: clamp(2.8rem, 7vw, 5.5rem);
-  font-weight: 900; line-height: 1.05;
-  color: #ffffff;
+  font-weight: 900; line-height: 1.05; color: #ffffff;
   text-shadow: 0 0 40px rgba(255,224,102,0.5), 0 0 80px rgba(255,107,170,0.3);
   margin-bottom: 0.75rem;
 }
 .hero-title span { color: var(--nova-yellow); }
 .hero-role {
-  font-size: 1rem; font-weight: 600;
-  color: var(--text-dim);
-  letter-spacing: 0.12em; text-transform: uppercase;
-  margin-bottom: 1rem;
+  font-size: 1rem; font-weight: 600; color: var(--text-dim);
+  letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 1rem;
 }
 .hero-quote {
-  font-size: 1.1rem; color: var(--text);
-  font-style: italic; max-width: 480px;
-  margin: 0 auto 2.5rem;
-  opacity: 0.9;
+  font-size: 1.1rem; color: var(--text); font-style: italic;
+  max-width: 480px; margin: 0 auto 2.5rem; opacity: 0.9;
 }
-.hero-tiles {
+.hero-lesson-tiles {
   display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
 }
 .lesson-tile {
@@ -165,108 +159,142 @@ nav {
   font-size: 1.4rem; font-weight: 900;
   color: var(--nova-yellow); line-height: 1;
 }
-.tile-label {
-  font-size: 0.7rem; color: var(--text-dim);
-  margin-top: 0.25rem; font-weight: 500;
-}
+.tile-label { font-size: 0.7rem; color: var(--text-dim); margin-top: 0.25rem; font-weight: 500; }
 .tile-lock { font-size: 0.8rem; margin-top: 0.2rem; }
 
-/* ===== LESSONS ANCHOR ===== */
-#lessonsAnchor { scroll-margin-top: 70px; }
-
-/* ===== ACCORDION ===== */
-.lessons-section {
+/* ===== ABOUT SECTION ===== */
+.about-section {
   max-width: 1100px; margin: 0 auto;
-  padding: 4rem 1.5rem 6rem;
+  padding: 3rem 1.5rem 2rem;
+  display: grid;
+  grid-template-columns: 1fr 280px;
+  gap: 2.5rem;
+  align-items: center;
 }
-.section-header {
-  text-align: center; margin-bottom: 3rem;
-}
-.section-header h2 {
+.about-text h2 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.8rem; font-weight: 900;
-  color: var(--nova-yellow); margin-bottom: 0.5rem;
+  font-size: 1.4rem; font-weight: 900;
+  color: var(--nova-yellow); margin-bottom: 1rem;
 }
-.section-header p {
-  color: var(--text-dim); font-size: 1rem;
+.about-text p {
+  font-size: 0.95rem; color: #e8e0f5;
+  line-height: 1.8; margin-bottom: 0.85rem;
+}
+.about-tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1rem; }
+.about-tag {
+  background: rgba(255,224,102,0.1);
+  border: 1px solid rgba(255,224,102,0.25);
+  color: var(--nova-yellow);
+  font-size: 0.75rem; font-weight: 600;
+  padding: 0.3rem 0.75rem; border-radius: 99px;
+  letter-spacing: 0.05em;
+}
+.about-gif {
+  display: flex; justify-content: center; align-items: center;
+}
+.about-gif img {
+  width: 260px; height: auto;
+  border-radius: 16px;
+  border: 2px solid rgba(255,224,102,0.2);
+  box-shadow: 0 0 40px rgba(255,224,102,0.15), 0 0 80px rgba(255,107,170,0.1);
+}
+.about-divider {
+  max-width: 1100px; margin: 0 auto 0;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid var(--nova-border);
 }
 
-.lesson-panel {
-  background: var(--nova-card);
-  border: 1px solid var(--nova-border);
-  border-radius: 16px; margin-bottom: 1rem;
-  overflow: hidden;
-  transition: border-color 0.25s;
+/* ===== LESSON TABS ===== */
+#lessonsAnchor { scroll-margin-top: 70px; }
+.lessons-section { max-width: 1100px; margin: 0 auto; padding: 2.5rem 1.5rem 6rem; }
+.lessons-header { margin-bottom: 1.5rem; }
+.lessons-header h2 {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.1rem; font-weight: 900;
+  color: var(--text-dim); letter-spacing: 0.1em;
+  text-transform: uppercase; margin-bottom: 1rem;
 }
-.lesson-panel.open { border-color: rgba(255,224,102,0.4); }
-
-.lesson-header {
-  display: flex; align-items: center; gap: 1rem;
-  padding: 1.25rem 1.5rem; cursor: pointer;
-  user-select: none; transition: background 0.2s;
+.lesson-tabs {
+  display: flex; gap: 0.5rem; flex-wrap: wrap;
 }
-.lesson-header:hover { background: rgba(255,224,102,0.05); }
-
-.lesson-num-badge {
-  width: 42px; height: 42px; border-radius: 10px;
+.lesson-tab-btn {
+  display: flex; align-items: center; gap: 0.6rem;
+  background: rgba(255,224,102,0.06);
+  border: 1px solid rgba(255,224,102,0.2);
+  border-radius: 10px;
+  padding: 0.75rem 1.25rem;
+  cursor: pointer; transition: all 0.2s;
+  font-family: 'Inter', sans-serif;
+  color: var(--text-dim);
+}
+.lesson-tab-btn:hover {
+  background: rgba(255,224,102,0.1);
+  border-color: rgba(255,224,102,0.4);
+  color: var(--text);
+}
+.lesson-tab-btn.active {
+  background: rgba(255,224,102,0.15);
+  border-color: var(--nova-yellow);
+  color: var(--nova-yellow);
+}
+.ltb-num {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1rem; font-weight: 900;
+  width: 30px; height: 30px;
   background: linear-gradient(135deg, var(--nova-yellow), var(--nova-pink));
+  border-radius: 8px;
   display: flex; align-items: center; justify-content: center;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 1rem; font-weight: 900; color: #0a0812;
-  flex-shrink: 0;
+  color: #0a0812; flex-shrink: 0;
+  font-size: 0.85rem;
 }
-.lesson-header-text { flex: 1; }
-.lesson-header-title {
-  font-size: 1rem; font-weight: 700; color: #ffffff;
-  display: flex; align-items: center; gap: 0.5rem;
+.lesson-tab-btn.active .ltb-num {
+  box-shadow: 0 0 12px rgba(255,224,102,0.4);
 }
-.lesson-header-sub {
-  font-size: 0.8rem; color: var(--text-dim); margin-top: 0.15rem;
-}
-.lesson-header-meta {
-  display: flex; align-items: center; gap: 0.75rem;
-}
+.ltb-info { text-align: left; }
+.ltb-title { font-size: 0.88rem; font-weight: 700; line-height: 1.2; }
+.ltb-sub { font-size: 0.72rem; color: var(--text-dim); margin-top: 0.15rem; }
 .tier-badge {
-  font-size: 0.65rem; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; padding: 0.25rem 0.6rem; border-radius: 99px;
+  font-size: 0.62rem; font-weight: 700;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  padding: 0.2rem 0.5rem; border-radius: 99px; margin-left: 0.4rem;
 }
 .tier-free { background: rgba(0,229,255,0.15); color: var(--nova-cyan); border: 1px solid rgba(0,229,255,0.3); }
 .tier-sparks { background: rgba(255,224,102,0.15); color: var(--nova-yellow); border: 1px solid rgba(255,224,102,0.3); }
 .tier-builders { background: rgba(255,107,170,0.15); color: var(--nova-pink); border: 1px solid rgba(255,107,170,0.3); }
 .tier-coders { background: rgba(150,100,255,0.15); color: #b088ff; border: 1px solid rgba(150,100,255,0.3); }
 
-.chevron {
-  color: var(--text-dim); font-size: 1rem;
-  transition: transform 0.3s;
+/* ===== LESSON PANEL ===== */
+.lesson-panel-wrap {
+  background: var(--nova-card);
+  border: 1px solid var(--nova-border);
+  border-radius: 16px;
+  overflow: hidden;
+  margin-top: 1rem;
+  display: none;
 }
-.lesson-panel.open .chevron { transform: rotate(180deg); }
-
-/* ===== LESSON BODY ===== */
-.lesson-body { display: none; }
-.lesson-panel.open .lesson-body { display: block; }
+.lesson-panel-wrap.active { display: block; }
 
 /* ===== TWO-COLUMN LAYOUT ===== */
 .two-col-layout {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  min-height: 520px;
-  border-top: 1px solid var(--nova-border);
+  grid-template-columns: 230px 1fr;
+  min-height: 560px;
 }
 .sidebar {
-  background: rgba(0,0,0,0.3);
+  background: rgba(0,0,0,0.35);
   border-right: 1px solid var(--nova-border);
   padding: 1.5rem 1rem;
 }
 .sidebar-label {
-  font-size: 0.65rem; font-weight: 700;
+  font-size: 0.62rem; font-weight: 700;
   text-transform: uppercase; letter-spacing: 0.15em;
-  color: var(--nova-yellow); margin-bottom: 0.75rem;
-  padding: 0 0.5rem;
+  color: var(--nova-yellow); margin-bottom: 0.75rem; padding: 0 0.5rem;
 }
 .sidebar-item {
   display: flex; align-items: center; gap: 0.6rem;
   padding: 0.65rem 0.75rem; border-radius: 8px;
-  cursor: pointer; transition: all 0.2s; margin-bottom: 0.25rem;
+  cursor: pointer; transition: all 0.2s;
+  margin-bottom: 0.25rem;
   font-size: 0.85rem; color: var(--text-dim); font-weight: 500;
 }
 .sidebar-item:hover { background: rgba(255,224,102,0.08); color: var(--text); }
@@ -278,14 +306,14 @@ nav {
   width: 6px; height: 6px; border-radius: 50%;
   background: currentColor; flex-shrink: 0;
 }
+.sidebar-icon { font-size: 1rem; flex-shrink: 0; }
 
-/* ===== CONTENT BLOCKS ===== */
+/* ===== CONTENT AREA ===== */
 .content-area { padding: 2rem; overflow-y: auto; }
-
 .content-block { display: none; }
 .content-block.active { display: block; }
 
-/* ===== TYPOGRAPHY (HIGH CONTRAST) ===== */
+/* ===== TYPOGRAPHY ===== */
 .content-area h3 {
   font-family: 'Orbitron', sans-serif;
   font-size: 1.2rem; font-weight: 700;
@@ -297,8 +325,7 @@ nav {
 }
 .content-area p {
   font-size: 0.95rem; line-height: 1.75;
-  color: #e8e0f5;
-  margin-bottom: 1rem;
+  color: #e8e0f5; margin-bottom: 1rem;
 }
 .content-area ul, .content-area ol {
   color: #e8e0f5; font-size: 0.95rem;
@@ -325,27 +352,20 @@ nav {
   border: 1px solid var(--nova-border);
   border-radius: 8px; padding: 0.75rem;
 }
-.key-term dt {
-  font-size: 0.8rem; font-weight: 700;
-  color: var(--nova-yellow); margin-bottom: 0.25rem;
-}
-.key-term dd {
-  font-size: 0.8rem; color: #d0c8e8; line-height: 1.5;
-}
+.key-term dt { font-size: 0.8rem; font-weight: 700; color: var(--nova-yellow); margin-bottom: 0.25rem; }
+.key-term dd { font-size: 0.8rem; color: #d0c8e8; line-height: 1.5; }
 
 /* ===== CODE BLOCKS ===== */
 .code-block {
   background: #0d0b18;
   border: 1px solid rgba(255,224,102,0.2);
-  border-radius: 10px; margin: 1rem 0;
-  overflow: hidden;
+  border-radius: 10px; margin: 1rem 0; overflow: hidden;
 }
 .code-block-header {
   background: rgba(255,224,102,0.08);
-  padding: 0.5rem 1rem;
-  font-size: 0.75rem; font-weight: 600;
-  color: var(--nova-yellow); letter-spacing: 0.1em;
-  text-transform: uppercase;
+  padding: 0.5rem 1rem; font-size: 0.75rem;
+  font-weight: 600; color: var(--nova-yellow);
+  letter-spacing: 0.1em; text-transform: uppercase;
   display: flex; justify-content: space-between; align-items: center;
 }
 .code-block pre {
@@ -359,10 +379,7 @@ nav {
 .code-comment { color: #6a5f8a; }
 
 /* ===== LIVE EDITOR ===== */
-.editor-wrap {
-  display: grid; grid-template-columns: 1fr 1fr;
-  gap: 1rem; margin: 1rem 0;
-}
+.editor-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 1rem 0; }
 .editor-pane label {
   display: block; font-size: 0.75rem; font-weight: 700;
   color: var(--nova-yellow); margin-bottom: 0.4rem;
@@ -370,20 +387,24 @@ nav {
 }
 textarea.code-editor {
   width: 100%; height: 200px;
-  background: #0d0b18; border: 1px solid rgba(255,224,102,0.2);
+  background: #0d0b18;
+  border: 1px solid rgba(255,224,102,0.2);
   border-radius: 8px; padding: 0.85rem;
-  font-family: 'Courier New', monospace; font-size: 0.82rem;
-  color: #e0d8f5; resize: vertical; outline: none;
-  transition: border-color 0.2s;
+  font-family: 'Courier New', monospace;
+  font-size: 0.82rem; color: #e0d8f5;
+  resize: vertical; outline: none; transition: border-color 0.2s;
 }
 textarea.code-editor:focus { border-color: var(--nova-yellow); }
-.preview-pane { background: #fff; border-radius: 8px; overflow: hidden; min-height: 200px; }
+.preview-pane {
+  background: #fff; border-radius: 8px;
+  overflow: hidden; min-height: 200px;
+}
 .preview-pane iframe { width: 100%; height: 100%; border: none; min-height: 200px; }
 .run-btn {
   background: linear-gradient(135deg, var(--nova-yellow), var(--nova-pink));
   color: #0a0812; border: none; border-radius: 8px;
-  padding: 0.65rem 1.5rem; font-weight: 700; font-size: 0.9rem;
-  cursor: pointer; margin-top: 0.75rem; transition: opacity 0.2s;
+  padding: 0.65rem 1.5rem; font-weight: 700;
+  font-size: 0.9rem; cursor: pointer; margin-top: 0.75rem; transition: opacity 0.2s;
 }
 .run-btn:hover { opacity: 0.88; }
 
@@ -393,10 +414,7 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
   border: 1px solid var(--nova-border);
   border-radius: 12px; padding: 1.25rem; margin: 1.25rem 0;
 }
-.quiz-q {
-  font-size: 0.95rem; font-weight: 600;
-  color: #ffffff; margin-bottom: 0.85rem;
-}
+.quiz-q { font-size: 0.95rem; font-weight: 600; color: #ffffff; margin-bottom: 0.85rem; }
 .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
 .quiz-opt {
   background: rgba(255,224,102,0.06);
@@ -408,10 +426,7 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 .quiz-opt:hover { background: rgba(255,224,102,0.12); border-color: rgba(255,224,102,0.35); }
 .quiz-opt.correct { background: rgba(0,200,100,0.15); border-color: rgba(0,200,100,0.5); color: #7fffb0; }
 .quiz-opt.wrong { background: rgba(255,60,80,0.12); border-color: rgba(255,60,80,0.4); color: #ff8898; }
-.quiz-feedback {
-  margin-top: 0.75rem; font-size: 0.85rem;
-  color: var(--text-dim); font-style: italic;
-}
+.quiz-feedback { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-dim); font-style: italic; }
 
 /* ===== CHEAT SHEET ===== */
 .cheatsheet-card {
@@ -426,60 +441,72 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 .cheatsheet-info p { color: var(--text-dim); font-size: 0.82rem; margin: 0; }
 .cheatsheet-btn {
   background: var(--nova-yellow); color: #0a0812;
-  border: none; border-radius: 8px;
-  padding: 0.6rem 1.2rem; font-weight: 700; font-size: 0.85rem;
-  cursor: pointer; text-decoration: none;
-  transition: opacity 0.2s;
+  border: none; border-radius: 8px; padding: 0.6rem 1.2rem;
+  font-weight: 700; font-size: 0.85rem;
+  cursor: pointer; text-decoration: none; transition: opacity 0.2s;
 }
 .cheatsheet-btn:hover { opacity: 0.85; }
+
+/* ===== MINI GAME CTA ===== */
+.minigame-card {
+  background: linear-gradient(135deg, rgba(255,107,170,0.1), rgba(255,224,102,0.06));
+  border: 1px solid rgba(255,107,170,0.3);
+  border-radius: 12px; padding: 1.5rem;
+  text-align: center; margin-top: 1rem;
+}
+.minigame-card h4 { font-family: 'Orbitron', sans-serif; font-size: 1rem; color: var(--nova-pink); margin-bottom: 0.5rem; }
+.minigame-card p { color: #e8e0f5; font-size: 0.9rem; margin-bottom: 1rem; }
+.minigame-btn {
+  display: inline-block;
+  background: linear-gradient(135deg, var(--nova-pink), var(--nova-yellow));
+  color: #0a0812; border: none; border-radius: 10px;
+  padding: 0.75rem 1.75rem; font-weight: 700;
+  font-size: 0.95rem; cursor: pointer; text-decoration: none; transition: opacity 0.2s;
+}
+.minigame-btn:hover { opacity: 0.88; }
 
 /* ===== UPSELL ===== */
 .upsell-block {
   background: linear-gradient(135deg, rgba(255,224,102,0.06), rgba(255,107,170,0.08));
   border: 1px solid rgba(255,224,102,0.2);
-  border-radius: 16px; padding: 2rem; text-align: center; margin: 2rem 0;
+  border-radius: 16px; padding: 2rem;
+  text-align: center; margin: 2rem 0;
 }
 .upsell-block h3 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.2rem; color: var(--nova-yellow);
-  margin-bottom: 0.75rem;
+  font-size: 1.2rem; color: var(--nova-yellow); margin-bottom: 0.75rem;
 }
 .upsell-block p { color: #e8e0f5; font-size: 0.95rem; margin-bottom: 1.25rem; }
 .upsell-btn {
   display: inline-block;
   background: linear-gradient(135deg, var(--nova-yellow), var(--nova-pink));
   color: #0a0812; border: none; border-radius: 10px;
-  padding: 0.85rem 2rem; font-weight: 700; font-size: 1rem;
-  cursor: pointer; text-decoration: none; transition: opacity 0.2s;
+  padding: 0.85rem 2rem; font-weight: 700;
+  font-size: 1rem; cursor: pointer; text-decoration: none; transition: opacity 0.2s;
 }
 .upsell-btn:hover { opacity: 0.88; }
 
 /* ===== LOCKED STATE ===== */
 .lesson-locked {
-  padding: 2.5rem; text-align: center;
+  padding: 3rem; text-align: center;
 }
 .lock-icon { font-size: 2.5rem; margin-bottom: 1rem; }
 .lesson-locked h3 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem; color: var(--nova-yellow);
-  margin-bottom: 0.6rem;
+  font-size: 1.1rem; color: var(--nova-yellow); margin-bottom: 0.6rem;
 }
 .lesson-locked p { color: #e8e0f5; font-size: 0.95rem; margin-bottom: 1.5rem; }
 .unlock-btn {
   display: inline-block;
   background: linear-gradient(135deg, var(--nova-yellow), var(--nova-pink));
   color: #0a0812; padding: 0.8rem 2rem;
-  border-radius: 10px; font-weight: 700; font-size: 0.95rem;
-  text-decoration: none; cursor: pointer;
-  transition: opacity 0.2s;
+  border-radius: 10px; font-weight: 700;
+  font-size: 0.95rem; text-decoration: none; cursor: pointer; transition: opacity 0.2s;
 }
 .unlock-btn:hover { opacity: 0.88; }
 
 /* ===== PAGE BUILDER (L4) ===== */
-.page-builder {
-  display: grid; grid-template-columns: 260px 1fr;
-  gap: 1rem; margin-top: 1rem;
-}
+.page-builder { display: grid; grid-template-columns: 260px 1fr; gap: 1rem; margin-top: 1rem; }
 .builder-controls {
   background: rgba(0,0,0,0.4);
   border: 1px solid var(--nova-border);
@@ -499,8 +526,7 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 }
 .builder-controls input[type="color"] {
   width: 100%; height: 36px; border-radius: 6px;
-  border: 1px solid rgba(255,224,102,0.2); cursor: pointer;
-  background: none;
+  border: 1px solid rgba(255,224,102,0.2); cursor: pointer; background: none;
 }
 .builder-controls textarea { resize: vertical; height: 80px; }
 .builder-btn {
@@ -518,43 +544,45 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 }
 .builder-preview-frame iframe { width: 100%; height: 400px; border: none; }
 
-/* ===== DASHBOARD BUTTON ===== */
-.dashboard-btn-wrap { padding: 0.75rem 1.5rem; border-top: 1px solid var(--nova-border); }
+/* ===== DASHBOARD BTN ===== */
+.dashboard-btn-wrap {
+  padding: 0.75rem 1.5rem;
+  border-top: 1px solid var(--nova-border);
+  background: rgba(0,0,0,0.2);
+}
 .dashboard-btn {
   display: inline-flex; align-items: center; gap: 0.5rem;
   background: rgba(255,224,102,0.1);
   border: 1px solid rgba(255,224,102,0.3);
   color: var(--nova-yellow); border-radius: 8px;
-  padding: 0.55rem 1rem; font-size: 0.82rem; font-weight: 600;
-  text-decoration: none; transition: all 0.2s; cursor: pointer;
+  padding: 0.55rem 1rem; font-size: 0.82rem;
+  font-weight: 600; text-decoration: none; transition: all 0.2s; cursor: pointer;
 }
 .dashboard-btn:hover { background: rgba(255,224,102,0.18); }
 
-/* ===== AUTH GATE (L1 logged out) ===== */
+/* ===== AUTH GATE ===== */
 .auth-gate {
-  padding: 2.5rem; text-align: center;
-  border-top: 1px solid var(--nova-border);
+  padding: 3rem; text-align: center;
 }
 .auth-gate h3 {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem; color: var(--nova-yellow);
-  margin-bottom: 0.6rem;
+  font-size: 1.1rem; color: var(--nova-yellow); margin-bottom: 0.6rem;
 }
 .auth-gate p { color: #e8e0f5; font-size: 0.95rem; margin-bottom: 1.5rem; }
 .auth-gate-btns { display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap; }
 .btn-primary {
   background: linear-gradient(135deg, var(--nova-yellow), var(--nova-pink));
   color: #0a0812; border: none; border-radius: 10px;
-  padding: 0.75rem 1.75rem; font-weight: 700; font-size: 0.95rem;
-  cursor: pointer; transition: opacity 0.2s;
+  padding: 0.75rem 1.75rem; font-weight: 700;
+  font-size: 0.95rem; cursor: pointer; transition: opacity 0.2s;
 }
 .btn-primary:hover { opacity: 0.88; }
 .btn-secondary {
   background: transparent;
   border: 1px solid rgba(255,224,102,0.4);
   color: var(--nova-yellow); border-radius: 10px;
-  padding: 0.75rem 1.75rem; font-weight: 600; font-size: 0.95rem;
-  cursor: pointer; transition: all 0.2s;
+  padding: 0.75rem 1.75rem; font-weight: 600;
+  font-size: 0.95rem; cursor: pointer; transition: all 0.2s;
 }
 .btn-secondary:hover { background: rgba(255,224,102,0.1); }
 
@@ -566,9 +594,10 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 }
 .modal-overlay.open { display: flex; }
 .modal-box {
-  background: #13101f; border: 1px solid rgba(255,224,102,0.3);
-  border-radius: 16px; padding: 2rem; width: 90%; max-width: 420px;
-  position: relative;
+  background: #13101f;
+  border: 1px solid rgba(255,224,102,0.3);
+  border-radius: 16px; padding: 2rem;
+  width: 90%; max-width: 420px; position: relative;
 }
 .modal-close {
   position: absolute; top: 1rem; right: 1rem;
@@ -577,16 +606,14 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 }
 .modal-title {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.1rem; color: var(--nova-yellow);
-  margin-bottom: 1.25rem;
+  font-size: 1.1rem; color: var(--nova-yellow); margin-bottom: 1.25rem;
 }
 .modal-tabs { display: flex; gap: 0.5rem; margin-bottom: 1.25rem; }
 .modal-tab {
   flex: 1; padding: 0.55rem; border-radius: 8px;
   font-size: 0.85rem; font-weight: 600; cursor: pointer;
   border: 1px solid rgba(255,224,102,0.2);
-  background: transparent; color: var(--text-dim);
-  transition: all 0.2s;
+  background: transparent; color: var(--text-dim); transition: all 0.2s;
 }
 .modal-tab.active { background: var(--nova-yellow); color: #0a0812; border-color: var(--nova-yellow); }
 .modal-input {
@@ -598,7 +625,8 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 }
 .modal-input:focus { border-color: var(--nova-yellow); }
 .modal-submit {
-  width: 100%; background: linear-gradient(135deg, var(--nova-yellow), var(--nova-pink));
+  width: 100%;
+  background: linear-gradient(135deg, var(--nova-yellow), var(--nova-pink));
   color: #0a0812; border: none; border-radius: 8px;
   padding: 0.8rem; font-weight: 700; font-size: 0.95rem;
   cursor: pointer; transition: opacity 0.2s;
@@ -607,13 +635,21 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 .modal-msg { margin-top: 0.75rem; font-size: 0.85rem; color: var(--text-dim); text-align: center; }
 
 /* ===== RESPONSIVE ===== */
-@media (max-width: 768px) {
+@media (max-width: 900px) {
+  .about-section { grid-template-columns: 1fr; }
+  .about-gif { order: -1; }
+  .about-gif img { width: 180px; }
   .two-col-layout { grid-template-columns: 1fr; }
   .sidebar { border-right: none; border-bottom: 1px solid var(--nova-border); }
   .editor-wrap { grid-template-columns: 1fr; }
   .key-terms-body.open { grid-template-columns: 1fr; }
   .page-builder { grid-template-columns: 1fr; }
-  nav .nav-links { display: none; }
+  .lesson-tabs { gap: 0.4rem; }
+  .lesson-tab-btn { padding: 0.6rem 0.9rem; }
+}
+@media (max-width: 600px) {
+  nav.top-nav .nav-links { display: none; }
+  .lesson-tab-btn .ltb-sub { display: none; }
 }
 </style>
 </head>
@@ -625,15 +661,14 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 </div>
 
 <!-- NAV -->
-<nav>
+<nav class="top-nav">
   <a href="index.html" class="nav-brand">MiM</a>
   <ul class="nav-links">
-    <li><a href="crew.html">Crew</a></li>
-    <li><a href="membership.html">Membership</a></li>
     <li><a href="games.html">Games</a></li>
     <li><a href="pdfs.html">PDFs</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
     <li><a href="library.html">Library</a></li>
-    <li><a href="lessons.html">Lessons</a></li>
+    <li><a href="parent-portal.html" class="parent-portal-link">Parent Portal</a></li>
   </ul>
   <div class="nav-auth">
     <span id="nav-user-name" style="font-size:0.8rem;color:var(--text-dim);display:none;"></span>
@@ -652,7 +687,7 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
     <h1 class="hero-title"><span>Nova</span></h1>
     <p class="hero-role">Builder Bot &nbsp;·&nbsp; HTML Architecture</p>
     <p class="hero-quote">"If you can think it, you can build it."</p>
-    <div class="hero-tiles">
+    <div class="hero-lesson-tiles">
       <div class="lesson-tile active" data-lesson="1" onclick="jumpToLesson(1)">
         <div class="tile-num">1</div>
         <div class="tile-label">Blueprint Thinking</div>
@@ -661,85 +696,125 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
       <div class="lesson-tile" data-lesson="2" onclick="jumpToLesson(2)">
         <div class="tile-num">2</div>
         <div class="tile-label">Building Blocks</div>
-        <div class="tile-lock" id="lock-2">⚡</div>
+        <div class="tile-lock">⚡</div>
       </div>
       <div class="lesson-tile" data-lesson="3" onclick="jumpToLesson(3)">
         <div class="tile-num">3</div>
-        <div class="tile-label">Layout & Nesting</div>
-        <div class="tile-lock" id="lock-3">🔧</div>
+        <div class="tile-label">Layout &amp; Nesting</div>
+        <div class="tile-lock">🔧</div>
       </div>
       <div class="lesson-tile" data-lesson="4" onclick="jumpToLesson(4)">
         <div class="tile-num">4</div>
         <div class="tile-label">Build Your Page</div>
-        <div class="tile-lock" id="lock-4">💜</div>
+        <div class="tile-lock">💜</div>
       </div>
     </div>
   </div>
 </section>
 
+<!-- ABOUT SECTION -->
 <div id="lessonsAnchor"></div>
+<div class="about-section">
+  <div class="about-text">
+    <h2>Meet Nova</h2>
+    <p>Nova is the Builder Bot of the MiM universe. While other characters dream and debug, Nova builds. Give Nova a blank canvas and a set of tools, and something real will exist where there was nothing before.</p>
+    <p>Nova's world is HTML: the skeleton of every webpage that has ever existed. Learn to speak Nova's language and you will never look at a website the same way again.</p>
+    <div class="about-tags">
+      <span class="about-tag">HTML Structure</span>
+      <span class="about-tag">Builder Bot</span>
+      <span class="about-tag">Yellow + Pink</span>
+      <span class="about-tag">MiM-004</span>
+    </div>
+  </div>
+  <div class="about-gif">
+    <img src="nova-idle-pose.png" alt="Nova the Builder Bot" onerror="this.style.display='none'">
+  </div>
+</div>
+<div class="about-divider"></div>
 
 <!-- LESSONS -->
 <section class="lessons-section">
-  <div class="section-header">
-    <h2>⬡ Nova's Lessons</h2>
-    <p>Learn HTML from the ground up. Build real things. Think like a builder.</p>
+  <div class="lessons-header">
+    <h2>Nova's Lessons</h2>
+    <div class="lesson-tabs">
+      <!-- Tab 1 -->
+      <button class="lesson-tab-btn active" data-tab="1" onclick="switchLesson(1)">
+        <div class="ltb-num">1</div>
+        <div class="ltb-info">
+          <div class="ltb-title">Blueprint Thinking <span class="tier-badge tier-free">Free</span></div>
+          <div class="ltb-sub">What is HTML? How does the web work?</div>
+        </div>
+      </button>
+      <!-- Tab 2 -->
+      <button class="lesson-tab-btn" data-tab="2" onclick="switchLesson(2)">
+        <div class="ltb-num">2</div>
+        <div class="ltb-info">
+          <div class="ltb-title">Building Blocks <span class="tier-badge tier-sparks">Sparks+</span></div>
+          <div class="ltb-sub">Headings, images, links, lists</div>
+        </div>
+      </button>
+      <!-- Tab 3 -->
+      <button class="lesson-tab-btn" data-tab="3" onclick="switchLesson(3)">
+        <div class="ltb-num">3</div>
+        <div class="ltb-info">
+          <div class="ltb-title">Layout &amp; Nesting <span class="tier-badge tier-builders">Builders+</span></div>
+          <div class="ltb-sub">Divs, containers, page structure</div>
+        </div>
+      </button>
+      <!-- Tab 4 -->
+      <button class="lesson-tab-btn" data-tab="4" onclick="switchLesson(4)">
+        <div class="ltb-num">4</div>
+        <div class="ltb-info">
+          <div class="ltb-title">Build Your Page <span class="tier-badge tier-coders">Coders</span></div>
+          <div class="ltb-sub">Nova's live page builder</div>
+        </div>
+      </button>
+    </div>
   </div>
 
-  <!-- ===== LESSON 1 ===== -->
-  <div class="lesson-panel" id="panel-1">
-    <div class="lesson-header" onclick="toggleLesson(1)">
-      <div class="lesson-num-badge">1</div>
-      <div class="lesson-header-text">
-        <div class="lesson-header-title">Blueprint Thinking <span class="tier-badge tier-free">Free</span></div>
-        <div class="lesson-header-sub">What is HTML? How does the web actually work?</div>
-      </div>
-      <div class="lesson-header-meta">
-        <span class="chevron">▾</span>
-      </div>
-    </div>
-    <div class="lesson-body" id="body-1">
-      <!-- LOGGED OUT STATE -->
-      <div id="gate-1" style="display:none;">
-        <div class="auth-gate">
-          <h3>Create Your Free Account</h3>
-          <p>Lesson 1 is totally free. Sign up to start building with Nova.</p>
-          <div class="auth-gate-btns">
-            <button class="btn-primary" onclick="openModal('signup')">Create Free Account</button>
-            <button class="btn-secondary" onclick="openModal('login')">Log In</button>
-          </div>
+  <!-- ===== LESSON 1 PANEL ===== -->
+  <div class="lesson-panel-wrap active" id="panel-1">
+    <!-- AUTH GATE -->
+    <div id="gate-1" style="display:none;">
+      <div class="auth-gate">
+        <h3>Create Your Free Account</h3>
+        <p>Lesson 1 is completely free. Sign up to start building with Nova.</p>
+        <div class="auth-gate-btns">
+          <button class="btn-primary" onclick="openModal('signup')">Create Free Account</button>
+          <button class="btn-secondary" onclick="openModal('login')">Log In</button>
         </div>
       </div>
-      <!-- LOGGED IN CONTENT -->
-      <div id="content-1" style="display:none;">
-        <div class="two-col-layout">
-          <nav class="sidebar">
-            <div class="sidebar-label">Lesson 1</div>
-            <div class="sidebar-item active" data-block="read" onclick="showBlock(1,'read')"><span class="sidebar-dot"></span>Read</div>
-            <div class="sidebar-item" data-block="terms" onclick="showBlock(1,'terms')"><span class="sidebar-dot"></span>Key Terms</div>
-            <div class="sidebar-item" data-block="code" onclick="showBlock(1,'code')"><span class="sidebar-dot"></span>Try It</div>
-            <div class="sidebar-item" data-block="quiz" onclick="showBlock(1,'quiz')"><span class="sidebar-dot"></span>Quiz</div>
-            <div class="sidebar-item" data-block="cheat" onclick="showBlock(1,'cheat')"><span class="sidebar-dot"></span>Cheat Sheet</div>
-          </nav>
-          <div class="content-area">
-
-            <!-- READ -->
-            <div class="content-block active" id="block-1-read">
-              <h3>Blueprint Thinking</h3>
-              <p>Before a builder picks up a single brick, they look at the blueprint. HTML is the blueprint of every website you have ever visited. It tells the browser <strong>what is on the page</strong> and <strong>where it belongs</strong>.</p>
-              <p>Think about your bedroom. It has a door, windows, a bed, a desk. Each thing has a purpose and a place. A webpage is exactly the same. It has a header, a main area, a footer, images, text, and links. HTML is how you describe all of those pieces.</p>
-              <h4>The Three Layers of a Website</h4>
-              <ul>
-                <li><strong>HTML</strong> — the structure. The walls, floor, and ceiling of your digital room.</li>
-                <li><strong>CSS</strong> — the style. The paint color, furniture, and decorations.</li>
-                <li><strong>JavaScript</strong> — the behavior. The lights that switch on, the door that opens.</li>
-              </ul>
-              <p>Nova's world is all about HTML. Master the structure first, and everything else snaps into place.</p>
-              <h4>How the Browser Reads Your Code</h4>
-              <p>When you visit a website, your browser downloads an HTML file and reads it top to bottom, left to right, just like you would read a book. Every instruction you write is followed in order. That predictability is your superpower as a builder.</p>
-              <div class="code-block">
-                <div class="code-block-header">Your first HTML file</div>
-                <pre><span class="code-tag">&lt;!DOCTYPE html&gt;</span>
+    </div>
+    <!-- LESSON CONTENT -->
+    <div id="content-1" style="display:none;">
+      <div class="two-col-layout">
+        <nav class="sidebar">
+          <div class="sidebar-label">Lesson 1</div>
+          <div class="sidebar-item active" data-block="read" onclick="showBlock(1,'read')"><span class="sidebar-icon">📖</span>Reading</div>
+          <div class="sidebar-item" data-block="terms" onclick="showBlock(1,'terms')"><span class="sidebar-icon">📝</span>Terminology</div>
+          <div class="sidebar-item" data-block="theory" onclick="showBlock(1,'theory')"><span class="sidebar-icon">💡</span>Theory</div>
+          <div class="sidebar-item" data-block="code" onclick="showBlock(1,'code')"><span class="sidebar-icon">⚙️</span>Practical</div>
+          <div class="sidebar-item" data-block="cheat" onclick="showBlock(1,'cheat')"><span class="sidebar-icon">📄</span>Offline PDFs</div>
+          <div class="sidebar-item" data-block="game" onclick="showBlock(1,'game')"><span class="sidebar-icon">🎮</span>Mini Game</div>
+        </nav>
+        <div class="content-area">
+          <!-- READING -->
+          <div class="content-block active" id="block-1-read">
+            <h3>Blueprint Thinking</h3>
+            <p>Before a builder picks up a single brick, they look at the blueprint. HTML is the blueprint of every website you have ever visited. It tells the browser <strong>what is on the page</strong> and <strong>where it belongs</strong>.</p>
+            <p>Think about your bedroom. It has a door, windows, a bed, a desk. Each thing has a purpose and a place. A webpage is exactly the same. It has a header, a main area, a footer, images, text, and links. HTML is how you describe all of those pieces.</p>
+            <h4>The Three Layers of a Website</h4>
+            <ul>
+              <li><strong>HTML</strong> — the structure. The walls, floor, and ceiling of your digital room.</li>
+              <li><strong>CSS</strong> — the style. The paint color, furniture, and decorations.</li>
+              <li><strong>JavaScript</strong> — the behavior. The lights that switch on, the door that opens.</li>
+            </ul>
+            <p>Nova's world is all about HTML. Master the structure first, and everything else snaps into place.</p>
+            <h4>How the Browser Reads Your Code</h4>
+            <p>When you visit a website, your browser downloads an HTML file and reads it top to bottom, just like you would read a book. Every instruction you write is followed in order. That predictability is your superpower as a builder.</p>
+            <div class="code-block">
+              <div class="code-block-header">Your first HTML file</div>
+              <pre><span class="code-tag">&lt;!DOCTYPE html&gt;</span>
 <span class="code-tag">&lt;html&gt;</span>
   <span class="code-tag">&lt;head&gt;</span>
     <span class="code-tag">&lt;title&gt;</span>My First Page<span class="code-tag">&lt;/title&gt;</span>
@@ -749,33 +824,41 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
     <span class="code-tag">&lt;p&gt;</span>I built this myself.<span class="code-tag">&lt;/p&gt;</span>
   <span class="code-tag">&lt;/body&gt;</span>
 <span class="code-tag">&lt;/html&gt;</span></pre>
-              </div>
             </div>
-
-            <!-- KEY TERMS -->
-            <div class="content-block" id="block-1-terms">
-              <h3>Key Terms</h3>
-              <div class="key-terms-toggle" onclick="toggleKeyTerms(this)">
-                <span>Lesson 1 Vocabulary</span><span class="kt-chevron">▾</span>
-              </div>
-              <div class="key-terms-body open">
-                <dl class="key-term"><dt>HTML</dt><dd>HyperText Markup Language. The language used to build the structure of web pages.</dd></dl>
-                <dl class="key-term"><dt>Element</dt><dd>A single piece of HTML, like a heading, paragraph, or image. Made up of tags and content.</dd></dl>
-                <dl class="key-term"><dt>Tag</dt><dd>The label that wraps an element. Opening tag: &lt;h1&gt;. Closing tag: &lt;/h1&gt;.</dd></dl>
-                <dl class="key-term"><dt>Browser</dt><dd>The program (Chrome, Safari, Firefox) that reads HTML and displays it as a visual page.</dd></dl>
-                <dl class="key-term"><dt>&lt;head&gt;</dt><dd>The hidden part of the page. Holds the title and settings the browser needs but users don't see.</dd></dl>
-                <dl class="key-term"><dt>&lt;body&gt;</dt><dd>Everything inside &lt;body&gt; is what the visitor actually sees on the page.</dd></dl>
-              </div>
+          </div>
+          <!-- TERMINOLOGY -->
+          <div class="content-block" id="block-1-terms">
+            <h3>Terminology</h3>
+            <div class="key-terms-toggle open" onclick="toggleKeyTerms(this)">
+              <span>Lesson 1 Vocabulary</span><span class="kt-chevron">▾</span>
             </div>
-
-            <!-- TRY IT -->
-            <div class="content-block" id="block-1-code">
-              <h3>Try It: Your First Page</h3>
-              <p>Edit the HTML on the left. Press <strong>Run</strong> to see it appear on the right. Change the heading to your name.</p>
-              <div class="editor-wrap">
-                <div class="editor-pane">
-                  <label>HTML</label>
-                  <textarea class="code-editor" id="editor-1"><!DOCTYPE html>
+            <div class="key-terms-body open">
+              <dl class="key-term"><dt>HTML</dt><dd>HyperText Markup Language. The language used to build the structure of web pages.</dd></dl>
+              <dl class="key-term"><dt>Element</dt><dd>A single piece of HTML, like a heading, paragraph, or image. Made up of tags and content.</dd></dl>
+              <dl class="key-term"><dt>Tag</dt><dd>The label that wraps an element. Opening tag: &lt;h1&gt;. Closing tag: &lt;/h1&gt;.</dd></dl>
+              <dl class="key-term"><dt>Browser</dt><dd>The program (Chrome, Safari, Firefox) that reads HTML and displays it as a visual page.</dd></dl>
+              <dl class="key-term"><dt>&lt;head&gt;</dt><dd>The hidden part of the page. Holds the title and settings the browser needs but users don't see.</dd></dl>
+              <dl class="key-term"><dt>&lt;body&gt;</dt><dd>Everything inside &lt;body&gt; is what the visitor actually sees on the page.</dd></dl>
+            </div>
+          </div>
+          <!-- THEORY -->
+          <div class="content-block" id="block-1-theory">
+            <h3>Theory</h3>
+            <h4>Why Does Structure Matter?</h4>
+            <p>A page without structure is like a room where everything is piled in the middle. You can see all the pieces, but nothing has a place. HTML gives every element a purpose and a position.</p>
+            <h4>The Document Object Model</h4>
+            <p>When your browser reads HTML, it builds a tree called the <strong>DOM</strong> (Document Object Model). Every element becomes a branch of that tree. This is how browsers understand your page, and it is how JavaScript can later reach in and change things.</p>
+            <h4>HTML is Not Design</h4>
+            <p>HTML describes <em>what</em> something is, not <em>how</em> it looks. A heading tag does not make text big and bold because it is cool. It does it because the browser applies default styles to help users understand the hierarchy. CSS is where design lives. Keep these two jobs separate in your mind from the beginning.</p>
+          </div>
+          <!-- PRACTICAL -->
+          <div class="content-block" id="block-1-code">
+            <h3>Practical: Your First Page</h3>
+            <p>Edit the HTML on the left. Press <strong>Run</strong> to see it appear on the right. Change the heading to your name.</p>
+            <div class="editor-wrap">
+              <div class="editor-pane">
+                <label>HTML</label>
+                <textarea class="code-editor" id="editor-1"><!DOCTYPE html>
 <html>
 <head>
   <title>My Page</title>
@@ -786,151 +869,151 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
   <p>Change this to YOUR name!</p>
 </body>
 </html></textarea>
-                  <button class="run-btn" onclick="runCode('editor-1','preview-1')">▶ Run</button>
-                </div>
-                <div class="preview-pane">
-                  <iframe id="preview-1"></iframe>
-                </div>
+                <button class="run-btn" onclick="runCode('editor-1','preview-1')">▶ Run</button>
               </div>
+              <div class="preview-pane"><iframe id="preview-1"></iframe></div>
             </div>
-
-            <!-- QUIZ -->
-            <div class="content-block" id="block-1-quiz">
-              <h3>Quiz Time</h3>
-              <div class="quiz-block">
-                <div class="quiz-q">What does HTML stand for?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'1a')">Hyper Text Making Language</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'1a')">HyperText Markup Language</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'1a')">High Tech Modern Layout</button>
-                </div>
-                <div class="quiz-feedback" id="qf-1a"></div>
+            <!-- QUIZ here too -->
+            <h3 style="margin-top:2rem;">Quiz</h3>
+            <div class="quiz-block">
+              <div class="quiz-q">What does HTML stand for?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'1a')">Hyper Text Making Language</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'1a')">HyperText Markup Language</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'1a')">High Tech Modern Layout</button>
               </div>
-              <div class="quiz-block">
-                <div class="quiz-q">Which part of the HTML file does the browser display to visitors?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'1b')">&lt;head&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'1b')">&lt;title&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'1b')">&lt;body&gt;</button>
-                </div>
-                <div class="quiz-feedback" id="qf-1b"></div>
-              </div>
-              <div class="quiz-block">
-                <div class="quiz-q">What are the three layers of a website?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'1c')">HTML, Python, JavaScript</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'1c')">HTML, CSS, JavaScript</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'1c')">HTML, CSS, PHP</button>
-                </div>
-                <div class="quiz-feedback" id="qf-1c"></div>
-              </div>
-              <!-- UPSELL after L1 -->
-              <div class="upsell-block" style="margin-top:2rem;">
-                <h3>Ready to Keep Building?</h3>
-                <p>Lesson 2 covers all the HTML building blocks. Headings, paragraphs, images, links and more. Upgrade to Sparks to unlock it.</p>
-                <a href="membership.html" class="upsell-btn">Upgrade to Sparks &rarr;</a>
-              </div>
+              <div class="quiz-feedback" id="qf-1a"></div>
             </div>
-
-            <!-- CHEAT SHEET -->
-            <div class="content-block" id="block-1-cheat">
-              <h3>Cheat Sheet</h3>
-              <p>Download Nova's HTML Basics cheat sheet to keep the key tags at your fingertips.</p>
-              <div class="cheatsheet-card">
-                <div class="cheatsheet-icon">⬡</div>
-                <div class="cheatsheet-info">
-                  <h4>HTML Basics — Cheat Sheet Vol. 1</h4>
-                  <p>Essential tags, structure overview, and builder tips from Nova.</p>
-                </div>
-                <a href="pdfs.html" class="cheatsheet-btn">Download</a>
+            <div class="quiz-block">
+              <div class="quiz-q">Which part of the HTML file does the browser display to visitors?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'1b')">&lt;head&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'1b')">&lt;title&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'1b')">&lt;body&gt;</button>
               </div>
+              <div class="quiz-feedback" id="qf-1b"></div>
             </div>
-
-          </div><!-- content-area -->
-        </div><!-- two-col -->
-        <div class="dashboard-btn-wrap">
-          <a href="dashboard.html" class="dashboard-btn">⬡ Go to Dashboard</a>
+            <div class="quiz-block">
+              <div class="quiz-q">What are the three layers of a website?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'1c')">HTML, Python, JavaScript</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'1c')">HTML, CSS, JavaScript</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'1c')">HTML, CSS, PHP</button>
+              </div>
+              <div class="quiz-feedback" id="qf-1c"></div>
+            </div>
+            <div class="upsell-block" style="margin-top:2rem;">
+              <h3>Ready to Keep Building?</h3>
+              <p>Lesson 2 covers the core HTML building blocks. Upgrade to Sparks to unlock it.</p>
+              <a href="membership.html" class="upsell-btn">Upgrade to Sparks &rarr;</a>
+            </div>
+          </div>
+          <!-- OFFLINE PDFs -->
+          <div class="content-block" id="block-1-cheat">
+            <h3>Offline PDFs</h3>
+            <p>Download Nova's cheat sheet to keep the key tags at your fingertips, even when you are offline.</p>
+            <div class="cheatsheet-card">
+              <div class="cheatsheet-icon">⬡</div>
+              <div class="cheatsheet-info">
+                <h4>HTML Basics — Cheat Sheet Vol. 1</h4>
+                <p>Essential tags, structure overview, and builder tips from Nova.</p>
+              </div>
+              <a href="pdfs.html" class="cheatsheet-btn">Download</a>
+            </div>
+          </div>
+          <!-- MINI GAME -->
+          <div class="content-block" id="block-1-game">
+            <h3>Mini Game</h3>
+            <p>Put your HTML tag knowledge to the test. Place the right tags in the right spots to build Nova's page.</p>
+            <div class="minigame-card">
+              <h4>Nova's Tag Placement Game</h4>
+              <p>Drag HTML tags into the correct positions and watch the page come to life.</p>
+              <a href="nova-game.html" class="minigame-btn">Play Nova's Game</a>
+            </div>
+          </div>
         </div>
-      </div><!-- content-1 -->
-    </div><!-- lesson-body -->
-  </div><!-- panel-1 -->
-
-  <!-- ===== LESSON 2 ===== -->
-  <div class="lesson-panel" id="panel-2">
-    <div class="lesson-header" onclick="toggleLesson(2)">
-      <div class="lesson-num-badge">2</div>
-      <div class="lesson-header-text">
-        <div class="lesson-header-title">Building Blocks <span class="tier-badge tier-sparks">Sparks+</span></div>
-        <div class="lesson-header-sub">Headings, paragraphs, images, links, and lists</div>
       </div>
-      <div class="lesson-header-meta">
-        <span class="chevron">▾</span>
+      <div class="dashboard-btn-wrap">
+        <a href="dashboard.html" class="dashboard-btn">⬡ Go to Dashboard</a>
       </div>
     </div>
-    <div class="lesson-body" id="body-2">
-      <div id="lesson2-locked" style="display:none;">
-        <div class="lesson-locked">
-          <div class="lock-icon">⚡</div>
-          <h3>Sparks Tier Required</h3>
-          <p>Lesson 2 covers the core HTML building blocks every builder needs. Unlock it with a Sparks membership.</p>
-          <a href="membership.html" class="unlock-btn">Upgrade to Sparks</a>
-        </div>
+  </div>
+
+  <!-- ===== LESSON 2 PANEL ===== -->
+  <div class="lesson-panel-wrap" id="panel-2">
+    <div id="lesson2-locked" style="display:none;">
+      <div class="lesson-locked">
+        <div class="lock-icon">⚡</div>
+        <h3>Sparks Tier Required</h3>
+        <p>Lesson 2 covers the core HTML building blocks every builder needs. Unlock it with a Sparks membership.</p>
+        <a href="membership.html" class="unlock-btn">Upgrade to Sparks</a>
       </div>
-      <div id="lesson2-content" style="display:none;">
-        <div class="two-col-layout">
-          <nav class="sidebar">
-            <div class="sidebar-label">Lesson 2</div>
-            <div class="sidebar-item active" data-block="read" onclick="showBlock(2,'read')"><span class="sidebar-dot"></span>Read</div>
-            <div class="sidebar-item" data-block="terms" onclick="showBlock(2,'terms')"><span class="sidebar-dot"></span>Key Terms</div>
-            <div class="sidebar-item" data-block="code" onclick="showBlock(2,'code')"><span class="sidebar-dot"></span>Try It</div>
-            <div class="sidebar-item" data-block="quiz" onclick="showBlock(2,'quiz')"><span class="sidebar-dot"></span>Quiz</div>
-            <div class="sidebar-item" data-block="cheat" onclick="showBlock(2,'cheat')"><span class="sidebar-dot"></span>Cheat Sheet</div>
-          </nav>
-          <div class="content-area">
-            <div class="content-block active" id="block-2-read">
-              <h3>Building Blocks</h3>
-              <p>HTML gives you a set of building blocks. Each one does one job. Stack them together and you can build anything.</p>
-              <h4>Text Elements</h4>
-              <p>Headings go from <strong>&lt;h1&gt;</strong> (biggest, most important) to <strong>&lt;h6&gt;</strong> (smallest). Use them to organize your content like chapters in a book.</p>
-              <p>Paragraphs use <strong>&lt;p&gt;</strong>. Every block of body text lives inside one.</p>
-              <div class="code-block">
-                <div class="code-block-header">Text elements</div>
-                <pre><span class="code-tag">&lt;h1&gt;</span>Main Title<span class="code-tag">&lt;/h1&gt;</span>
+    </div>
+    <div id="lesson2-content" style="display:none;">
+      <div class="two-col-layout">
+        <nav class="sidebar">
+          <div class="sidebar-label">Lesson 2</div>
+          <div class="sidebar-item active" data-block="read" onclick="showBlock(2,'read')"><span class="sidebar-icon">📖</span>Reading</div>
+          <div class="sidebar-item" data-block="terms" onclick="showBlock(2,'terms')"><span class="sidebar-icon">📝</span>Terminology</div>
+          <div class="sidebar-item" data-block="theory" onclick="showBlock(2,'theory')"><span class="sidebar-icon">💡</span>Theory</div>
+          <div class="sidebar-item" data-block="code" onclick="showBlock(2,'code')"><span class="sidebar-icon">⚙️</span>Practical</div>
+          <div class="sidebar-item" data-block="cheat" onclick="showBlock(2,'cheat')"><span class="sidebar-icon">📄</span>Offline PDFs</div>
+          <div class="sidebar-item" data-block="game" onclick="showBlock(2,'game')"><span class="sidebar-icon">🎮</span>Mini Game</div>
+        </nav>
+        <div class="content-area">
+          <div class="content-block active" id="block-2-read">
+            <h3>Building Blocks</h3>
+            <p>HTML gives you a set of building blocks. Each one does one job. Stack them together and you can build anything.</p>
+            <h4>Text Elements</h4>
+            <p>Headings go from <strong>&lt;h1&gt;</strong> (biggest, most important) to <strong>&lt;h6&gt;</strong> (smallest). Use them to organize your content like chapters in a book.</p>
+            <p>Paragraphs use <strong>&lt;p&gt;</strong>. Every block of body text lives inside one.</p>
+            <div class="code-block">
+              <div class="code-block-header">Text elements</div>
+              <pre><span class="code-tag">&lt;h1&gt;</span>Main Title<span class="code-tag">&lt;/h1&gt;</span>
 <span class="code-tag">&lt;h2&gt;</span>Section Title<span class="code-tag">&lt;/h2&gt;</span>
 <span class="code-tag">&lt;p&gt;</span>A paragraph of text goes here.<span class="code-tag">&lt;/p&gt;</span></pre>
-              </div>
-              <h4>Images and Links</h4>
-              <p>Images use the <strong>&lt;img&gt;</strong> tag. It is self-closing (no closing tag needed) and uses attributes to know what to show.</p>
-              <p>Links use <strong>&lt;a href="..."&gt;</strong> to wrap text or images. The href is where clicking takes you.</p>
-              <div class="code-block">
-                <div class="code-block-header">Images and links</div>
-                <pre><span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-val">"nova.png"</span> <span class="code-attr">alt</span>=<span class="code-val">"Nova the Builder"</span><span class="code-tag">&gt;</span>
+            </div>
+            <h4>Images and Links</h4>
+            <p>Images use the <strong>&lt;img&gt;</strong> tag. It is self-closing and uses attributes to know what to show.</p>
+            <p>Links use <strong>&lt;a href="..."&gt;</strong> to wrap text or images. The href is where clicking takes you.</p>
+            <div class="code-block">
+              <div class="code-block-header">Images and links</div>
+              <pre><span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-val">"nova.png"</span> <span class="code-attr">alt</span>=<span class="code-val">"Nova the Builder"</span><span class="code-tag">&gt;</span>
 <span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-val">"https://google.com"</span><span class="code-tag">&gt;</span>Search the Web<span class="code-tag">&lt;/a&gt;</span></pre>
-              </div>
-              <h4>Lists</h4>
-              <p>Use <strong>&lt;ul&gt;</strong> for bullet lists and <strong>&lt;ol&gt;</strong> for numbered lists. Each item is wrapped in <strong>&lt;li&gt;</strong>.</p>
             </div>
-            <div class="content-block" id="block-2-terms">
-              <h3>Key Terms</h3>
-              <div class="key-terms-toggle" onclick="toggleKeyTerms(this)">
-                <span>Lesson 2 Vocabulary</span><span class="kt-chevron">▾</span>
-              </div>
-              <div class="key-terms-body open">
-                <dl class="key-term"><dt>&lt;h1&gt; - &lt;h6&gt;</dt><dd>Heading tags. h1 is the main title. h6 is the smallest sub-heading.</dd></dl>
-                <dl class="key-term"><dt>&lt;p&gt;</dt><dd>Paragraph tag. Wraps a block of body text.</dd></dl>
-                <dl class="key-term"><dt>&lt;img&gt;</dt><dd>Image tag. Self-closing. Uses src= to link to the image file and alt= to describe it.</dd></dl>
-                <dl class="key-term"><dt>&lt;a&gt;</dt><dd>Anchor tag. Creates a link. Uses href= to set the destination.</dd></dl>
-                <dl class="key-term"><dt>Attribute</dt><dd>Extra info added inside a tag. Like src="photo.jpg" or href="page.html".</dd></dl>
-                <dl class="key-term"><dt>&lt;ul&gt; / &lt;ol&gt;</dt><dd>Unordered list (bullets) and ordered list (numbers). Each item uses &lt;li&gt;.</dd></dl>
-              </div>
+            <h4>Lists</h4>
+            <p>Use <strong>&lt;ul&gt;</strong> for bullet lists and <strong>&lt;ol&gt;</strong> for numbered lists. Each item is wrapped in <strong>&lt;li&gt;</strong>.</p>
+          </div>
+          <div class="content-block" id="block-2-terms">
+            <h3>Terminology</h3>
+            <div class="key-terms-toggle open" onclick="toggleKeyTerms(this)">
+              <span>Lesson 2 Vocabulary</span><span class="kt-chevron">▾</span>
             </div>
-            <div class="content-block" id="block-2-code">
-              <h3>Try It: Mix Your Building Blocks</h3>
-              <p>Build a mini profile page using headings, a paragraph, and a list.</p>
-              <div class="editor-wrap">
-                <div class="editor-pane">
-                  <label>HTML</label>
-                  <textarea class="code-editor" id="editor-2"><!DOCTYPE html>
+            <div class="key-terms-body open">
+              <dl class="key-term"><dt>&lt;h1&gt; - &lt;h6&gt;</dt><dd>Heading tags. h1 is the main title. h6 is the smallest sub-heading.</dd></dl>
+              <dl class="key-term"><dt>&lt;p&gt;</dt><dd>Paragraph tag. Wraps a block of body text.</dd></dl>
+              <dl class="key-term"><dt>&lt;img&gt;</dt><dd>Image tag. Self-closing. Uses src= to link to the image file and alt= to describe it.</dd></dl>
+              <dl class="key-term"><dt>&lt;a&gt;</dt><dd>Anchor tag. Creates a link. Uses href= to set the destination.</dd></dl>
+              <dl class="key-term"><dt>Attribute</dt><dd>Extra info added inside a tag. Like src="photo.jpg" or href="page.html".</dd></dl>
+              <dl class="key-term"><dt>&lt;ul&gt; / &lt;ol&gt;</dt><dd>Unordered list (bullets) and ordered list (numbers). Each item uses &lt;li&gt;.</dd></dl>
+            </div>
+          </div>
+          <div class="content-block" id="block-2-theory">
+            <h3>Theory</h3>
+            <h4>Self-Closing vs Paired Tags</h4>
+            <p>Most HTML tags come in pairs: an opening tag and a closing tag with content between them. But some tags, like <strong>&lt;img&gt;</strong> and <strong>&lt;br&gt;</strong>, are self-closing. They do not wrap content, so they do not need a closing partner.</p>
+            <h4>Attributes Add Information</h4>
+            <p>Tags describe what an element is. Attributes describe the element more precisely. An &lt;a&gt; tag means link. Adding <strong>href="..."</strong> tells the browser where the link goes. Without the attribute, the tag is incomplete.</p>
+            <h4>Alt Text Matters</h4>
+            <p>The <strong>alt</strong> attribute on images is not optional. It is read by screen readers for users who cannot see the image, and it is displayed when the image fails to load. Good alt text describes the image the way you would to someone over the phone.</p>
+          </div>
+          <div class="content-block" id="block-2-code">
+            <h3>Practical: Mix Your Building Blocks</h3>
+            <p>Build a mini profile page using headings, a paragraph, and a list.</p>
+            <div class="editor-wrap">
+              <div class="editor-pane">
+                <label>HTML</label>
+                <textarea class="code-editor" id="editor-2"><!DOCTYPE html>
 <html>
 <body>
   <h1>My Name</h1>
@@ -944,126 +1027,129 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
   <a href="#">See My Work</a>
 </body>
 </html></textarea>
-                  <button class="run-btn" onclick="runCode('editor-2','preview-2')">▶ Run</button>
-                </div>
-                <div class="preview-pane"><iframe id="preview-2"></iframe></div>
+                <button class="run-btn" onclick="runCode('editor-2','preview-2')">▶ Run</button>
               </div>
+              <div class="preview-pane"><iframe id="preview-2"></iframe></div>
             </div>
-            <div class="content-block" id="block-2-quiz">
-              <h3>Quiz Time</h3>
-              <div class="quiz-block">
-                <div class="quiz-q">Which tag creates the BIGGEST heading?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'2a')">&lt;h6&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'2a')">&lt;h1&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'2a')">&lt;big&gt;</button>
-                </div>
-                <div class="quiz-feedback" id="qf-2a"></div>
+            <h3 style="margin-top:2rem;">Quiz</h3>
+            <div class="quiz-block">
+              <div class="quiz-q">Which tag creates the BIGGEST heading?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'2a')">&lt;h6&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'2a')">&lt;h1&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'2a')">&lt;big&gt;</button>
               </div>
-              <div class="quiz-block">
-                <div class="quiz-q">What attribute does &lt;img&gt; use to find the image file?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'2b')">href=</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'2b')">link=</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'2b')">src=</button>
-                </div>
-                <div class="quiz-feedback" id="qf-2b"></div>
-              </div>
+              <div class="quiz-feedback" id="qf-2a"></div>
             </div>
-            <div class="content-block" id="block-2-cheat">
-              <h3>Cheat Sheet</h3>
-              <div class="cheatsheet-card">
-                <div class="cheatsheet-icon">⬡</div>
-                <div class="cheatsheet-info">
-                  <h4>HTML Building Blocks — Cheat Sheet Vol. 2</h4>
-                  <p>All the essential tags with examples. Keep it open while you build.</p>
-                </div>
-                <a href="pdfs.html" class="cheatsheet-btn">Download</a>
+            <div class="quiz-block">
+              <div class="quiz-q">What attribute does &lt;img&gt; use to find the image file?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'2b')">href=</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'2b')">link=</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'2b')">src=</button>
               </div>
+              <div class="quiz-feedback" id="qf-2b"></div>
+            </div>
+          </div>
+          <div class="content-block" id="block-2-cheat">
+            <h3>Offline PDFs</h3>
+            <div class="cheatsheet-card">
+              <div class="cheatsheet-icon">⬡</div>
+              <div class="cheatsheet-info">
+                <h4>HTML Building Blocks — Cheat Sheet Vol. 2</h4>
+                <p>All the essential tags with examples. Keep it open while you build.</p>
+              </div>
+              <a href="pdfs.html" class="cheatsheet-btn">Download</a>
+            </div>
+          </div>
+          <div class="content-block" id="block-2-game">
+            <h3>Mini Game</h3>
+            <div class="minigame-card">
+              <h4>Nova's Tag Placement Game</h4>
+              <p>Practice placing headings, images, and links in the right spots.</p>
+              <a href="nova-game.html" class="minigame-btn">Play Nova's Game</a>
             </div>
           </div>
         </div>
-        <div class="dashboard-btn-wrap">
-          <a href="dashboard.html" class="dashboard-btn">⬡ Go to Dashboard</a>
-        </div>
+      </div>
+      <div class="dashboard-btn-wrap">
+        <a href="dashboard.html" class="dashboard-btn">⬡ Go to Dashboard</a>
       </div>
     </div>
   </div>
 
-  <!-- ===== LESSON 3 ===== -->
-  <div class="lesson-panel" id="panel-3">
-    <div class="lesson-header" onclick="toggleLesson(3)">
-      <div class="lesson-num-badge">3</div>
-      <div class="lesson-header-text">
-        <div class="lesson-header-title">Layout &amp; Nesting <span class="tier-badge tier-builders">Builders+</span></div>
-        <div class="lesson-header-sub">Divs, containers, nesting, and page structure</div>
-      </div>
-      <div class="lesson-header-meta">
-        <span class="chevron">▾</span>
+  <!-- ===== LESSON 3 PANEL ===== -->
+  <div class="lesson-panel-wrap" id="panel-3">
+    <div id="lesson3-locked" style="display:none;">
+      <div class="lesson-locked">
+        <div class="lock-icon">🔧</div>
+        <h3>Builders Tier Required</h3>
+        <p>Lesson 3 teaches layout, nesting, and how to structure full pages like a pro. Upgrade to Builders to unlock it.</p>
+        <a href="membership.html" class="unlock-btn">Upgrade to Builders</a>
       </div>
     </div>
-    <div class="lesson-body" id="body-3">
-      <div id="lesson3-locked" style="display:none;">
-        <div class="lesson-locked">
-          <div class="lock-icon">🔧</div>
-          <h3>Builders Tier Required</h3>
-          <p>Lesson 3 teaches layout, nesting, and how to structure full pages like a pro. Upgrade to Builders to unlock it.</p>
-          <a href="membership.html" class="unlock-btn">Upgrade to Builders</a>
-        </div>
-      </div>
-      <div id="lesson3-content" style="display:none;">
-        <div class="two-col-layout">
-          <nav class="sidebar">
-            <div class="sidebar-label">Lesson 3</div>
-            <div class="sidebar-item active" data-block="read" onclick="showBlock(3,'read')"><span class="sidebar-dot"></span>Read</div>
-            <div class="sidebar-item" data-block="terms" onclick="showBlock(3,'terms')"><span class="sidebar-dot"></span>Key Terms</div>
-            <div class="sidebar-item" data-block="code" onclick="showBlock(3,'code')"><span class="sidebar-dot"></span>Try It</div>
-            <div class="sidebar-item" data-block="quiz" onclick="showBlock(3,'quiz')"><span class="sidebar-dot"></span>Quiz</div>
-            <div class="sidebar-item" data-block="cheat" onclick="showBlock(3,'cheat')"><span class="sidebar-dot"></span>Cheat Sheet</div>
-          </nav>
-          <div class="content-area">
-            <div class="content-block active" id="block-3-read">
-              <h3>Layout &amp; Nesting</h3>
-              <p>Individual building blocks are just the start. Real pages are built by grouping elements into sections and nesting them inside containers.</p>
-              <h4>The &lt;div&gt; Tag</h4>
-              <p>A <strong>&lt;div&gt;</strong> is a box. It holds other elements together so you can move them, style them, and organize them as a group. Think of it like putting furniture into a room.</p>
-              <div class="code-block">
-                <div class="code-block-header">Using divs to group content</div>
-                <pre><span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-val">"header"</span><span class="code-tag">&gt;</span>
+    <div id="lesson3-content" style="display:none;">
+      <div class="two-col-layout">
+        <nav class="sidebar">
+          <div class="sidebar-label">Lesson 3</div>
+          <div class="sidebar-item active" data-block="read" onclick="showBlock(3,'read')"><span class="sidebar-icon">📖</span>Reading</div>
+          <div class="sidebar-item" data-block="terms" onclick="showBlock(3,'terms')"><span class="sidebar-icon">📝</span>Terminology</div>
+          <div class="sidebar-item" data-block="theory" onclick="showBlock(3,'theory')"><span class="sidebar-icon">💡</span>Theory</div>
+          <div class="sidebar-item" data-block="code" onclick="showBlock(3,'code')"><span class="sidebar-icon">⚙️</span>Practical</div>
+          <div class="sidebar-item" data-block="cheat" onclick="showBlock(3,'cheat')"><span class="sidebar-icon">📄</span>Offline PDFs</div>
+          <div class="sidebar-item" data-block="game" onclick="showBlock(3,'game')"><span class="sidebar-icon">🎮</span>Mini Game</div>
+        </nav>
+        <div class="content-area">
+          <div class="content-block active" id="block-3-read">
+            <h3>Layout &amp; Nesting</h3>
+            <p>Individual building blocks are just the start. Real pages are built by grouping elements into sections and nesting them inside containers.</p>
+            <h4>The &lt;div&gt; Tag</h4>
+            <p>A <strong>&lt;div&gt;</strong> is a box. It holds other elements together so you can move them, style them, and organize them as a group.</p>
+            <div class="code-block">
+              <div class="code-block-header">Using divs to group content</div>
+              <pre><span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-val">"header"</span><span class="code-tag">&gt;</span>
   <span class="code-tag">&lt;h1&gt;</span>Nova's Page<span class="code-tag">&lt;/h1&gt;</span>
   <span class="code-tag">&lt;p&gt;</span>Builder Bot<span class="code-tag">&lt;/p&gt;</span>
 <span class="code-tag">&lt;/div&gt;</span>
-
 <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-val">"content"</span><span class="code-tag">&gt;</span>
   <span class="code-tag">&lt;p&gt;</span>Main page content here.<span class="code-tag">&lt;/p&gt;</span>
 <span class="code-tag">&lt;/div&gt;</span></pre>
-              </div>
-              <h4>Semantic Tags</h4>
-              <p>HTML5 gives you tags that describe their purpose: <strong>&lt;header&gt;</strong>, <strong>&lt;main&gt;</strong>, <strong>&lt;footer&gt;</strong>, <strong>&lt;section&gt;</strong>, <strong>&lt;nav&gt;</strong>. Use these instead of plain divs where you can. They make your code readable and help screen readers.</p>
-              <h4>Nesting Rules</h4>
-              <p>Elements inside other elements are called children. The outer element is the parent. Children must close before their parent closes. This rule keeps your code valid and prevents visual bugs.</p>
             </div>
-            <div class="content-block" id="block-3-terms">
-              <h3>Key Terms</h3>
-              <div class="key-terms-toggle" onclick="toggleKeyTerms(this)">
-                <span>Lesson 3 Vocabulary</span><span class="kt-chevron">▾</span>
-              </div>
-              <div class="key-terms-body open">
-                <dl class="key-term"><dt>&lt;div&gt;</dt><dd>A generic container. Groups elements so they can be styled and positioned together.</dd></dl>
-                <dl class="key-term"><dt>Nesting</dt><dd>Placing elements inside other elements. The inner element is the child; the outer is the parent.</dd></dl>
-                <dl class="key-term"><dt>&lt;header&gt;</dt><dd>Semantic tag for the top section of a page or component. Usually holds nav and logo.</dd></dl>
-                <dl class="key-term"><dt>&lt;main&gt;</dt><dd>The primary content area of the page. Only one per page.</dd></dl>
-                <dl class="key-term"><dt>&lt;footer&gt;</dt><dd>The bottom of a page. Typically holds copyright, links, and contact info.</dd></dl>
-                <dl class="key-term"><dt>class=</dt><dd>Attribute that labels an element so CSS can style it. Multiple elements can share a class.</dd></dl>
-              </div>
+            <h4>Semantic Tags</h4>
+            <p>HTML5 gives you tags that describe their purpose: <strong>&lt;header&gt;</strong>, <strong>&lt;main&gt;</strong>, <strong>&lt;footer&gt;</strong>, <strong>&lt;section&gt;</strong>, <strong>&lt;nav&gt;</strong>. Use these instead of plain divs where you can.</p>
+            <h4>Nesting Rules</h4>
+            <p>Elements inside other elements are called children. The outer element is the parent. Children must close before their parent closes.</p>
+          </div>
+          <div class="content-block" id="block-3-terms">
+            <h3>Terminology</h3>
+            <div class="key-terms-toggle open" onclick="toggleKeyTerms(this)">
+              <span>Lesson 3 Vocabulary</span><span class="kt-chevron">▾</span>
             </div>
-            <div class="content-block" id="block-3-code">
-              <h3>Try It: Build a Page Layout</h3>
-              <p>Create a page with a header, main content area, and footer using semantic tags.</p>
-              <div class="editor-wrap">
-                <div class="editor-pane">
-                  <label>HTML</label>
-                  <textarea class="code-editor" id="editor-3"><!DOCTYPE html>
+            <div class="key-terms-body open">
+              <dl class="key-term"><dt>&lt;div&gt;</dt><dd>A generic container. Groups elements so they can be styled and positioned together.</dd></dl>
+              <dl class="key-term"><dt>Nesting</dt><dd>Placing elements inside other elements. The inner element is the child; the outer is the parent.</dd></dl>
+              <dl class="key-term"><dt>&lt;header&gt;</dt><dd>Semantic tag for the top section of a page or component. Usually holds nav and logo.</dd></dl>
+              <dl class="key-term"><dt>&lt;main&gt;</dt><dd>The primary content area of the page. Only one per page.</dd></dl>
+              <dl class="key-term"><dt>&lt;footer&gt;</dt><dd>The bottom of a page. Typically holds copyright, links, and contact info.</dd></dl>
+              <dl class="key-term"><dt>class=</dt><dd>Attribute that labels an element so CSS can style it. Multiple elements can share a class.</dd></dl>
+            </div>
+          </div>
+          <div class="content-block" id="block-3-theory">
+            <h3>Theory</h3>
+            <h4>Why Semantic HTML Matters</h4>
+            <p>A screen reader cannot guess that your &lt;div class="header"&gt; is a header. But &lt;header&gt; tells it immediately. Semantic tags make your site accessible and help search engines understand your content.</p>
+            <h4>The Box Model</h4>
+            <p>Every HTML element is a box. That box has content, padding (space inside), a border, and a margin (space outside). Understanding this is the foundation of all CSS layout work.</p>
+            <h4>Parents, Children, Siblings</h4>
+            <p>HTML is a family tree. Elements nested inside another element are its children. Elements at the same level are siblings. This relationship matters when you write CSS selectors and JavaScript that targets specific elements.</p>
+          </div>
+          <div class="content-block" id="block-3-code">
+            <h3>Practical: Build a Page Layout</h3>
+            <p>Create a page with a header, main content area, and footer using semantic tags.</p>
+            <div class="editor-wrap">
+              <div class="editor-pane">
+                <label>HTML</label>
+                <textarea class="code-editor" id="editor-3"><!DOCTYPE html>
 <html>
 <body style="font-family:sans-serif;margin:0;padding:0;">
   <header style="background:#ffe066;padding:1rem;">
@@ -1082,167 +1168,174 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
   </footer>
 </body>
 </html></textarea>
-                  <button class="run-btn" onclick="runCode('editor-3','preview-3')">▶ Run</button>
-                </div>
-                <div class="preview-pane"><iframe id="preview-3"></iframe></div>
+                <button class="run-btn" onclick="runCode('editor-3','preview-3')">▶ Run</button>
               </div>
+              <div class="preview-pane"><iframe id="preview-3"></iframe></div>
             </div>
-            <div class="content-block" id="block-3-quiz">
-              <h3>Quiz Time</h3>
-              <div class="quiz-block">
-                <div class="quiz-q">What is a &lt;div&gt; used for?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'3a')">Adding images to a page</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'3a')">Grouping elements into a container</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'3a')">Creating links to other pages</button>
-                </div>
-                <div class="quiz-feedback" id="qf-3a"></div>
+            <h3 style="margin-top:2rem;">Quiz</h3>
+            <div class="quiz-block">
+              <div class="quiz-q">What is a &lt;div&gt; used for?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'3a')">Adding images to a page</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'3a')">Grouping elements into a container</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'3a')">Creating links to other pages</button>
               </div>
-              <div class="quiz-block">
-                <div class="quiz-q">Which tag marks the primary content area of a page?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'3b')">&lt;content&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'3b')">&lt;body&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'3b')">&lt;main&gt;</button>
-                </div>
-                <div class="quiz-feedback" id="qf-3b"></div>
-              </div>
+              <div class="quiz-feedback" id="qf-3a"></div>
             </div>
-            <div class="content-block" id="block-3-cheat">
-              <h3>Cheat Sheet</h3>
-              <div class="cheatsheet-card">
-                <div class="cheatsheet-icon">⬡</div>
-                <div class="cheatsheet-info">
-                  <h4>Layout & Structure — Cheat Sheet Vol. 3</h4>
-                  <p>Semantic tags, nesting rules, and layout patterns.</p>
-                </div>
-                <a href="pdfs.html" class="cheatsheet-btn">Download</a>
+            <div class="quiz-block">
+              <div class="quiz-q">Which tag marks the primary content area of a page?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'3b')">&lt;content&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'3b')">&lt;body&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'3b')">&lt;main&gt;</button>
               </div>
+              <div class="quiz-feedback" id="qf-3b"></div>
+            </div>
+          </div>
+          <div class="content-block" id="block-3-cheat">
+            <h3>Offline PDFs</h3>
+            <div class="cheatsheet-card">
+              <div class="cheatsheet-icon">⬡</div>
+              <div class="cheatsheet-info">
+                <h4>Layout &amp; Structure — Cheat Sheet Vol. 3</h4>
+                <p>Semantic tags, nesting rules, and layout patterns.</p>
+              </div>
+              <a href="pdfs.html" class="cheatsheet-btn">Download</a>
+            </div>
+          </div>
+          <div class="content-block" id="block-3-game">
+            <h3>Mini Game</h3>
+            <div class="minigame-card">
+              <h4>Nova's Tag Placement Game</h4>
+              <p>Practice nesting elements correctly inside their containers.</p>
+              <a href="nova-game.html" class="minigame-btn">Play Nova's Game</a>
             </div>
           </div>
         </div>
-        <div class="dashboard-btn-wrap">
-          <a href="dashboard.html" class="dashboard-btn">⬡ Go to Dashboard</a>
-        </div>
+      </div>
+      <div class="dashboard-btn-wrap">
+        <a href="dashboard.html" class="dashboard-btn">⬡ Go to Dashboard</a>
       </div>
     </div>
   </div>
 
-  <!-- ===== LESSON 4 ===== -->
-  <div class="lesson-panel" id="panel-4">
-    <div class="lesson-header" onclick="toggleLesson(4)">
-      <div class="lesson-num-badge">4</div>
-      <div class="lesson-header-text">
-        <div class="lesson-header-title">Build Your Page <span class="tier-badge tier-coders">Coders</span></div>
-        <div class="lesson-header-sub">Put it all together with Nova's live page builder</div>
-      </div>
-      <div class="lesson-header-meta">
-        <span class="chevron">▾</span>
+  <!-- ===== LESSON 4 PANEL ===== -->
+  <div class="lesson-panel-wrap" id="panel-4">
+    <div id="lesson4-locked" style="display:none;">
+      <div class="lesson-locked">
+        <div class="lock-icon">💜</div>
+        <h3>Coders Tier Required</h3>
+        <p>Lesson 4 is Nova's capstone. Use the live page builder to create a real webpage and download it. Upgrade to Coders to unlock it.</p>
+        <a href="membership.html" class="unlock-btn">Upgrade to Coders</a>
       </div>
     </div>
-    <div class="lesson-body" id="body-4">
-      <div id="lesson4-locked" style="display:none;">
-        <div class="lesson-locked">
-          <div class="lock-icon">💜</div>
-          <h3>Coders Tier Required</h3>
-          <p>Lesson 4 is Nova's capstone. Use the live page builder to create a real webpage and download it. Upgrade to Coders to unlock it.</p>
-          <a href="membership.html" class="unlock-btn">Upgrade to Coders</a>
-        </div>
-      </div>
-      <div id="lesson4-content" style="display:none;">
-        <div class="two-col-layout">
-          <nav class="sidebar">
-            <div class="sidebar-label">Lesson 4</div>
-            <div class="sidebar-item active" data-block="read" onclick="showBlock(4,'read')"><span class="sidebar-dot"></span>Read</div>
-            <div class="sidebar-item" data-block="builder" onclick="showBlock(4,'builder')"><span class="sidebar-dot"></span>Page Builder</div>
-            <div class="sidebar-item" data-block="quiz" onclick="showBlock(4,'quiz')"><span class="sidebar-dot"></span>Final Quiz</div>
-            <div class="sidebar-item" data-block="cheat" onclick="showBlock(4,'cheat')"><span class="sidebar-dot"></span>Cheat Sheet</div>
-          </nav>
-          <div class="content-area">
-            <div class="content-block active" id="block-4-read">
-              <h3>Build Your Page</h3>
-              <p>You know the building blocks. You know layout. Now it is time to put it all together and build a real webpage from scratch.</p>
-              <p>In this lesson you will use Nova's Page Builder to create your own page. Set the colors, write the content, build the structure. When you are done, download your .html file and open it in any browser.</p>
-              <h4>What You Will Build</h4>
-              <ul>
-                <li>A header with your page title</li>
-                <li>A hero section with a welcome message</li>
-                <li>A section with a list of things about you</li>
-                <li>A footer with your name</li>
-              </ul>
-              <p>Head to the <strong>Page Builder</strong> tab to get started. Nova will be right there with you.</p>
+    <div id="lesson4-content" style="display:none;">
+      <div class="two-col-layout">
+        <nav class="sidebar">
+          <div class="sidebar-label">Lesson 4</div>
+          <div class="sidebar-item active" data-block="read" onclick="showBlock(4,'read')"><span class="sidebar-icon">📖</span>Reading</div>
+          <div class="sidebar-item" data-block="theory" onclick="showBlock(4,'theory')"><span class="sidebar-icon">💡</span>Theory</div>
+          <div class="sidebar-item" data-block="builder" onclick="showBlock(4,'builder')"><span class="sidebar-icon">⚙️</span>Practical</div>
+          <div class="sidebar-item" data-block="cheat" onclick="showBlock(4,'cheat')"><span class="sidebar-icon">📄</span>Offline PDFs</div>
+          <div class="sidebar-item" data-block="game" onclick="showBlock(4,'game')"><span class="sidebar-icon">🎮</span>Mini Game</div>
+        </nav>
+        <div class="content-area">
+          <div class="content-block active" id="block-4-read">
+            <h3>Build Your Page</h3>
+            <p>You know the building blocks. You know layout. Now it is time to put it all together and build a real webpage from scratch.</p>
+            <p>In this lesson you will use Nova's Page Builder to create your own page. Set the colors, write the content, build the structure. When you are done, download your .html file and open it in any browser.</p>
+            <h4>What You Will Build</h4>
+            <ul>
+              <li>A header with your page title</li>
+              <li>A hero section with a welcome message</li>
+              <li>A section with a list of things about you</li>
+              <li>A footer with your name</li>
+            </ul>
+            <p>Head to <strong>Practical</strong> in the sidebar to open the builder.</p>
+            <h3 style="margin-top:2rem;">Final Quiz</h3>
+            <div class="quiz-block">
+              <div class="quiz-q">You want to group your header content together. Which tag do you use?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'4a')">&lt;group&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'4a')">&lt;div&gt; or &lt;header&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'4a')">&lt;section-top&gt;</button>
+              </div>
+              <div class="quiz-feedback" id="qf-4a"></div>
             </div>
-            <div class="content-block" id="block-4-builder">
-              <h3>Nova's Page Builder</h3>
-              <p>Fill in the fields, customize your colors, and hit Preview. When it looks right, download your page.</p>
-              <div class="page-builder">
-                <div class="builder-controls">
-                  <label>Page Title</label>
-                  <input type="text" id="pb-title" placeholder="My Awesome Page">
-                  <label>Your Name</label>
-                  <input type="text" id="pb-name" placeholder="Nova">
-                  <label>Welcome Message</label>
-                  <textarea id="pb-welcome" placeholder="Welcome to my page! I built this with HTML."></textarea>
-                  <label>3 Fun Facts (one per line)</label>
-                  <textarea id="pb-facts" placeholder="I love coding&#10;I built this page&#10;HTML is my superpower"></textarea>
-                  <label>Background Color</label>
-                  <input type="color" id="pb-bg" value="#0a0812">
-                  <label>Accent Color</label>
-                  <input type="color" id="pb-accent" value="#ffe066">
-                  <button class="builder-btn" onclick="buildPreview()">⬡ Preview My Page</button>
-                  <button class="builder-btn" style="background:linear-gradient(135deg,#00e5ff,#ff6baa);margin-top:0.4rem;" onclick="downloadPage()">⬇ Download .html</button>
-                </div>
-                <div class="builder-preview-frame">
-                  <iframe id="pb-preview"></iframe>
-                </div>
+            <div class="quiz-block">
+              <div class="quiz-q">What is the correct order of the three web layers?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'4b')">CSS, HTML, JavaScript</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'4b')">HTML (structure), CSS (style), JavaScript (behavior)</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'4b')">JavaScript, CSS, HTML</button>
               </div>
+              <div class="quiz-feedback" id="qf-4b"></div>
             </div>
-            <div class="content-block" id="block-4-quiz">
-              <h3>Final Quiz</h3>
-              <div class="quiz-block">
-                <div class="quiz-q">You want to group your header content together. Which tag do you use?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'4a')">&lt;group&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'4a')">&lt;div&gt; or &lt;header&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'4a')">&lt;section-top&gt;</button>
-                </div>
-                <div class="quiz-feedback" id="qf-4a"></div>
+            <div class="quiz-block">
+              <div class="quiz-q">Which tag would you NOT find inside a &lt;head&gt;?</div>
+              <div class="quiz-options">
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'4c')">&lt;title&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,true,'4c')">&lt;h1&gt;</button>
+                <button class="quiz-opt" onclick="checkQuiz(this,false,'4c')">&lt;link&gt;</button>
               </div>
-              <div class="quiz-block">
-                <div class="quiz-q">What is the correct order of the three web layers?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'4b')">CSS, HTML, JavaScript</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'4b')">HTML (structure), CSS (style), JavaScript (behavior)</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'4b')">JavaScript, CSS, HTML</button>
-                </div>
-                <div class="quiz-feedback" id="qf-4b"></div>
-              </div>
-              <div class="quiz-block">
-                <div class="quiz-q">Which tag would you NOT find inside a &lt;head&gt;?</div>
-                <div class="quiz-options">
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'4c')">&lt;title&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,true,'4c')">&lt;h1&gt;</button>
-                  <button class="quiz-opt" onclick="checkQuiz(this,false,'4c')">&lt;link&gt;</button>
-                </div>
-                <div class="quiz-feedback" id="qf-4c"></div>
-              </div>
+              <div class="quiz-feedback" id="qf-4c"></div>
             </div>
-            <div class="content-block" id="block-4-cheat">
-              <h3>Cheat Sheet</h3>
-              <div class="cheatsheet-card">
-                <div class="cheatsheet-icon">⬡</div>
-                <div class="cheatsheet-info">
-                  <h4>Complete HTML Reference — Cheat Sheet Vol. 4</h4>
-                  <p>Every tag from Lessons 1-4 in one reference sheet.</p>
-                </div>
-                <a href="pdfs.html" class="cheatsheet-btn">Download</a>
+          </div>
+          <div class="content-block" id="block-4-theory">
+            <h3>Theory</h3>
+            <h4>Putting It All Together</h4>
+            <p>Every professional website is built from the same concepts you have learned: elements, attributes, nesting, and semantic structure. The difference between a beginner and a builder is not the tools, it is understanding how all the pieces connect.</p>
+            <h4>What Comes Next</h4>
+            <p>After HTML comes CSS: making your page look exactly how you imagined it. After CSS comes JavaScript: making your page respond to clicks, inputs, and events. You are already building the foundation for all of that.</p>
+          </div>
+          <div class="content-block" id="block-4-builder">
+            <h3>Nova's Page Builder</h3>
+            <p>Fill in the fields, customize your colors, and hit Preview. When it looks right, download your page.</p>
+            <div class="page-builder">
+              <div class="builder-controls">
+                <label>Page Title</label>
+                <input type="text" id="pb-title" placeholder="My Awesome Page">
+                <label>Your Name</label>
+                <input type="text" id="pb-name" placeholder="Nova">
+                <label>Welcome Message</label>
+                <textarea id="pb-welcome" placeholder="Welcome to my page! I built this with HTML."></textarea>
+                <label>3 Fun Facts (one per line)</label>
+                <textarea id="pb-facts" placeholder="I love coding&#10;I built this page&#10;HTML is my superpower"></textarea>
+                <label>Background Color</label>
+                <input type="color" id="pb-bg" value="#0a0812">
+                <label>Accent Color</label>
+                <input type="color" id="pb-accent" value="#ffe066">
+                <button class="builder-btn" onclick="buildPreview()">⬡ Preview My Page</button>
+                <button class="builder-btn" style="background:linear-gradient(135deg,#00e5ff,#ff6baa);margin-top:0.4rem;" onclick="downloadPage()">⬇ Download .html</button>
+              </div>
+              <div class="builder-preview-frame">
+                <iframe id="pb-preview"></iframe>
               </div>
             </div>
           </div>
+          <div class="content-block" id="block-4-cheat">
+            <h3>Offline PDFs</h3>
+            <div class="cheatsheet-card">
+              <div class="cheatsheet-icon">⬡</div>
+              <div class="cheatsheet-info">
+                <h4>Complete HTML Reference — Cheat Sheet Vol. 4</h4>
+                <p>Every tag from Lessons 1 to 4 in one reference sheet.</p>
+              </div>
+              <a href="pdfs.html" class="cheatsheet-btn">Download</a>
+            </div>
+          </div>
+          <div class="content-block" id="block-4-game">
+            <h3>Mini Game</h3>
+            <div class="minigame-card">
+              <h4>Nova's Tag Placement Game</h4>
+              <p>The final challenge. Build a full page structure from scratch using everything you have learned.</p>
+              <a href="nova-game.html" class="minigame-btn">Play Nova's Game</a>
+            </div>
+          </div>
         </div>
-        <div class="dashboard-btn-wrap">
-          <a href="dashboard.html" class="dashboard-btn">⬡ Go to Dashboard</a>
-        </div>
+      </div>
+      <div class="dashboard-btn-wrap">
+        <a href="dashboard.html" class="dashboard-btn">⬡ Go to Dashboard</a>
       </div>
     </div>
   </div>
@@ -1267,9 +1360,7 @@ textarea.code-editor:focus { border-color: var(--nova-yellow); }
 
 <script src="auth-init.js"></script>
 <script>
-/* ===================================================
-   ENTRANCE ANIMATION
-=================================================== */
+/* ===== ENTRANCE ===== */
 window.addEventListener('load', () => {
   const overlay = document.getElementById('entrance-overlay');
   setTimeout(() => {
@@ -1278,55 +1369,44 @@ window.addEventListener('load', () => {
   }, 1800);
 });
 
-/* ===================================================
-   HERO ZOOM + JUMP TO LESSON
-=================================================== */
+/* ===== HERO ZOOM + JUMP ===== */
 function jumpToLesson(num) {
   const heroBg = document.getElementById('heroBg');
   heroBg.classList.add('zoomed');
   setTimeout(() => heroBg.classList.remove('zoomed'), 900);
-
   document.querySelectorAll('.lesson-tile').forEach(t => t.classList.remove('active'));
   const tile = document.querySelector('.lesson-tile[data-lesson="' + num + '"]');
   if (tile) tile.classList.add('active');
-
   const anchor = document.getElementById('lessonsAnchor');
   setTimeout(() => {
     anchor.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    setTimeout(() => openLesson(num), 600);
+    setTimeout(() => switchLesson(num), 600);
   }, 200);
 }
 
-/* ===================================================
-   ACCORDION
-   openLesson  = always opens (used by auth + jumpToLesson)
-   toggleLesson = toggling on header click
-=================================================== */
-function openLesson(num) {
-  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+/* ===== LESSON TAB SWITCHING ===== */
+function switchLesson(num) {
+  // Update tab buttons
+  document.querySelectorAll('.lesson-tab-btn').forEach(btn => {
+    btn.classList.toggle('active', parseInt(btn.dataset.tab) === num);
+  });
+  // Update hero tiles
+  document.querySelectorAll('.lesson-tile').forEach(t => {
+    t.classList.toggle('active', parseInt(t.dataset.lesson) === num);
+  });
+  // Show panel
+  document.querySelectorAll('.lesson-panel-wrap').forEach(p => p.classList.remove('active'));
   const panel = document.getElementById('panel-' + num);
-  if (panel) panel.classList.add('open');
+  if (panel) panel.classList.add('active');
 }
 
-function toggleLesson(num) {
-  const panel = document.getElementById('panel-' + num);
-  const wasOpen = panel.classList.contains('open');
-  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
-  if (!wasOpen) panel.classList.add('open');
-}
-
-/* ===================================================
-   SIDEBAR — SHOW CONTENT BLOCK
-=================================================== */
+/* ===== SIDEBAR BLOCK SWITCHING ===== */
 function showBlock(lessonNum, blockKey) {
-  // Update sidebar active state
   const panel = document.getElementById('panel-' + lessonNum);
   if (!panel) return;
   panel.querySelectorAll('.sidebar-item').forEach(item => {
     item.classList.toggle('active', item.dataset.block === blockKey);
   });
-
-  // Show matching content block, hide others
   panel.querySelectorAll('.content-block').forEach(block => {
     block.classList.remove('active');
   });
@@ -1334,18 +1414,14 @@ function showBlock(lessonNum, blockKey) {
   if (target) target.classList.add('active');
 }
 
-/* ===================================================
-   KEY TERMS COLLAPSIBLE
-=================================================== */
+/* ===== KEY TERMS ===== */
 function toggleKeyTerms(el) {
   el.classList.toggle('open');
   const body = el.nextElementSibling;
   if (body) body.classList.toggle('open');
 }
 
-/* ===================================================
-   QUIZ
-=================================================== */
+/* ===== QUIZ ===== */
 function checkQuiz(btn, correct, qid) {
   const parent = btn.closest('.quiz-options');
   if (parent.querySelector('.correct, .wrong')) return;
@@ -1355,13 +1431,11 @@ function checkQuiz(btn, correct, qid) {
     if (feedback) feedback.textContent = 'Correct! Great work, builder.';
   } else {
     btn.classList.add('wrong');
-    if (feedback) feedback.textContent = 'Not quite. Think about it again and try another option.';
+    if (feedback) feedback.textContent = 'Not quite. Think about it and try another option.';
   }
 }
 
-/* ===================================================
-   LIVE CODE EDITOR
-=================================================== */
+/* ===== LIVE CODE EDITOR ===== */
 function runCode(editorId, previewId) {
   const code = document.getElementById(editorId).value;
   const iframe = document.getElementById(previewId);
@@ -1369,65 +1443,57 @@ function runCode(editorId, previewId) {
   doc.open(); doc.write(code); doc.close();
 }
 
-/* ===================================================
-   PAGE BUILDER
-=================================================== */
+/* ===== PAGE BUILDER ===== */
 function getBuilderHTML() {
-  const title   = document.getElementById('pb-title').value   || 'My Page';
-  const name    = document.getElementById('pb-name').value    || 'Builder';
+  const title = document.getElementById('pb-title').value || 'My Page';
+  const name = document.getElementById('pb-name').value || 'Builder';
   const welcome = document.getElementById('pb-welcome').value || 'Welcome to my page!';
-  const factsRaw = document.getElementById('pb-facts').value  || '';
-  const bg      = document.getElementById('pb-bg').value      || '#0a0812';
-  const accent  = document.getElementById('pb-accent').value  || '#ffe066';
-
-  const facts = factsRaw.split('\n').filter(f => f.trim()).map(f =>
-    '<li>' + f.trim() + '</li>'
-  ).join('\n    ');
-
+  const factsRaw = document.getElementById('pb-facts').value || '';
+  const bg = document.getElementById('pb-bg').value || '#0a0812';
+  const accent = document.getElementById('pb-accent').value || '#ffe066';
+  const facts = factsRaw.split('\n').filter(f => f.trim()).map(f => '<li>' + f.trim() + '</li>').join('\n    ');
   return `<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <title>${title}</title>
 <style>
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: ${bg}; color: #ffffff; font-family: sans-serif; }
-  header { background: ${accent}; color: #000; padding: 1.5rem 2rem; }
-  header h1 { font-size: 2rem; font-weight: 900; }
-  main { padding: 2rem; max-width: 800px; margin: 0 auto; }
-  .hero { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
-  .hero h2 { color: ${accent}; margin-bottom: 0.75rem; }
-  .facts ul { padding-left: 1.5rem; margin-top: 0.75rem; }
-  .facts li { margin-bottom: 0.5rem; line-height: 1.6; }
-  footer { background: rgba(0,0,0,0.4); padding: 1.25rem 2rem; text-align: center; color: rgba(255,255,255,0.6); margin-top: 2rem; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: ${bg}; color: #ffffff; font-family: sans-serif; }
+header { background: ${accent}; color: #000; padding: 1.5rem 2rem; }
+header h1 { font-size: 2rem; font-weight: 900; }
+main { padding: 2rem; max-width: 800px; margin: 0 auto; }
+.hero { background: rgba(255,255,255,0.05); border-radius: 12px; padding: 2rem; margin-bottom: 2rem; }
+.hero h2 { color: ${accent}; margin-bottom: 0.75rem; }
+.facts ul { padding-left: 1.5rem; margin-top: 0.75rem; }
+.facts li { margin-bottom: 0.5rem; line-height: 1.6; }
+footer { background: rgba(0,0,0,0.4); padding: 1.25rem 2rem; text-align: center; color: rgba(255,255,255,0.6); margin-top: 2rem; }
 </style>
 </head>
 <body>
-  <header><h1>${title}</h1></header>
-  <main>
-    <section class="hero">
-      <h2>Welcome!</h2>
-      <p>${welcome}</p>
-    </section>
-    <section class="facts">
-      <h2 style="color:${accent};margin-bottom:0.75rem;">About Me</h2>
-      <ul>
+<header><h1>${title}</h1></header>
+<main>
+  <section class="hero">
+    <h2>Welcome!</h2>
+    <p>${welcome}</p>
+  </section>
+  <section class="facts">
+    <h2 style="color:${accent};margin-bottom:0.75rem;">About Me</h2>
+    <ul>
     ${facts}
-      </ul>
-    </section>
-  </main>
-  <footer>Built by ${name} with HTML &amp; Method in Motion</footer>
+    </ul>
+  </section>
+</main>
+<footer>Built by ${name} with HTML &amp; Method in Motion</footer>
 </body>
 </html>`;
 }
-
 function buildPreview() {
   const html = getBuilderHTML();
   const iframe = document.getElementById('pb-preview');
   const doc = iframe.contentDocument || iframe.contentWindow.document;
   doc.open(); doc.write(html); doc.close();
 }
-
 function downloadPage() {
   const html = getBuilderHTML();
   const blob = new Blob([html], { type: 'text/html' });
@@ -1440,11 +1506,8 @@ function downloadPage() {
   URL.revokeObjectURL(url);
 }
 
-/* ===================================================
-   AUTH MODAL
-=================================================== */
+/* ===== AUTH MODAL ===== */
 let authMode = 'login';
-
 function openModal(mode) {
   authMode = mode || 'login';
   switchTab(authMode);
@@ -1461,8 +1524,8 @@ function switchTab(mode) {
 }
 function doAuth() {
   const email = document.getElementById('modal-email').value.trim();
-  const pass  = document.getElementById('modal-password').value;
-  const msg   = document.getElementById('modal-msg');
+  const pass = document.getElementById('modal-password').value;
+  const msg = document.getElementById('modal-msg');
   if (!email || !pass) { msg.textContent = 'Please enter your email and password.'; return; }
   msg.textContent = 'Working...';
   if (authMode === 'signup') {
@@ -1475,69 +1538,56 @@ function doAuth() {
       .catch(e => { msg.textContent = e.message; });
   }
 }
-function doLogout() {
-  firebase.auth().signOut();
-}
+function doLogout() { firebase.auth().signOut(); }
 
-/* ===================================================
-   FIREBASE AUTH STATE
-=================================================== */
-document.addEventListener('DOMContentLoaded', function() {
-  // Always open lesson 1 panel immediately on load
-  openLesson(1);
+/* ===== FIREBASE AUTH STATE ===== */
+document.addEventListener('DOMContentLoaded', function () {
+  // Show lesson 1 panel on load
+  switchLesson(1);
 
   if (typeof firebase === 'undefined' || typeof firebase.auth !== 'function') {
-    // Firebase not loaded — show gate for lesson 1
     document.getElementById('gate-1').style.display = 'block';
     document.getElementById('nav-login-btn').style.display = 'inline-block';
     document.getElementById('nav-signup-btn').style.display = 'inline-block';
     return;
   }
 
-  firebase.auth().onAuthStateChanged(function(user) {
-    const loginBtn  = document.getElementById('nav-login-btn');
+  firebase.auth().onAuthStateChanged(function (user) {
+    const loginBtn = document.getElementById('nav-login-btn');
     const signupBtn = document.getElementById('nav-signup-btn');
     const logoutBtn = document.getElementById('nav-logout-btn');
-    const userName  = document.getElementById('nav-user-name');
+    const userName = document.getElementById('nav-user-name');
 
     if (user) {
-      // Logged in
-      loginBtn.style.display  = 'none';
+      loginBtn.style.display = 'none';
       signupBtn.style.display = 'none';
       logoutBtn.style.display = 'inline-block';
-      userName.style.display  = 'inline';
-      userName.textContent    = user.email.split('@')[0];
+      userName.style.display = 'inline';
+      userName.textContent = user.email.split('@')[0];
 
-      // Show L1 content
-      document.getElementById('gate-1').style.display    = 'none';
+      document.getElementById('gate-1').style.display = 'none';
       document.getElementById('content-1').style.display = 'block';
-      // Activate first sidebar block
       showBlock(1, 'read');
 
-      // Tier gating for L2-L4
       const uid = user.uid;
       if (typeof firebase.firestore === 'function') {
-        firebase.firestore().collection('users').doc(uid).get().then(function(doc) {
-          const tier = doc.exists ? (doc.data().tier || 'explorer') : 'explorer';
-          applyTierGating(tier);
-        }).catch(function() {
-          applyTierGating('explorer');
-        });
+        firebase.firestore().collection('users').doc(uid).get()
+          .then(function (doc) {
+            const tier = doc.exists ? (doc.data().tier || 'explorer') : 'explorer';
+            applyTierGating(tier);
+          })
+          .catch(function () { applyTierGating('explorer'); });
       } else {
         applyTierGating('explorer');
       }
     } else {
-      // Logged out
-      loginBtn.style.display  = 'inline-block';
+      loginBtn.style.display = 'inline-block';
       signupBtn.style.display = 'inline-block';
       logoutBtn.style.display = 'none';
-      userName.style.display  = 'none';
+      userName.style.display = 'none';
 
-      // Show gate for L1
-      document.getElementById('gate-1').style.display    = 'block';
+      document.getElementById('gate-1').style.display = 'block';
       document.getElementById('content-1').style.display = 'none';
-
-      // Lock L2-L4
       lockLesson(2); lockLesson(3); lockLesson(4);
     }
   });
@@ -1546,30 +1596,21 @@ document.addEventListener('DOMContentLoaded', function() {
 function applyTierGating(tier) {
   const tiers = ['explorer', 'sparks', 'builders', 'coders'];
   const idx = tiers.indexOf(tier);
-
-  // L2 requires sparks (idx >= 1)
   if (idx >= 1) { unlockLesson(2); } else { lockLesson(2); }
-  // L3 requires builders (idx >= 2)
   if (idx >= 2) { unlockLesson(3); } else { lockLesson(3); }
-  // L4 requires coders (idx >= 3)
   if (idx >= 3) { unlockLesson(4); } else { lockLesson(4); }
 }
-
 function lockLesson(num) {
-  const locked  = document.getElementById('lesson' + num + '-locked');
+  const locked = document.getElementById('lesson' + num + '-locked');
   const content = document.getElementById('lesson' + num + '-content');
-  if (locked)  locked.style.display  = 'block';
+  if (locked) locked.style.display = 'block';
   if (content) content.style.display = 'none';
 }
-
 function unlockLesson(num) {
-  const locked  = document.getElementById('lesson' + num + '-locked');
+  const locked = document.getElementById('lesson' + num + '-locked');
   const content = document.getElementById('lesson' + num + '-content');
-  if (locked)  locked.style.display  = 'none';
-  if (content) {
-    content.style.display = 'block';
-    showBlock(num, 'read');
-  }
+  if (locked) locked.style.display = 'none';
+  if (content) { content.style.display = 'block'; showBlock(num, 'read'); }
 }
 </script>
 </body>
