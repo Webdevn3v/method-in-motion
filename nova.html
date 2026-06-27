@@ -8,265 +8,256 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --y:#ffe066;
-  --pk:#ff6baa;
-  --cy:#00e5ff;
-  --dark:#07050f;
-  --card:#0f0d1a;
-  --card2:#151224;
-  --border:rgba(255,224,102,0.15);
-  --border2:rgba(255,224,102,0.3);
-  --text:#f0eaff;
-  --dim:#a89fc0;
-  --font-display:'Orbitron',sans-serif;
-  --font-body:'Space Grotesk',sans-serif;
-  --font-mono:'Space Mono',monospace;
+  --y:#ffe066;--pk:#ff6baa;--cy:#00e5ff;
+  --dark:#07050f;--card:#0f0d1a;--card2:#151224;
+  --border:rgba(255,224,102,0.15);--border2:rgba(255,224,102,0.3);
+  --text:#f0eaff;--dim:#a89fc0;
+  --font-d:'Orbitron',sans-serif;
+  --font-b:'Space Grotesk',sans-serif;
+  --font-m:'Space Mono',monospace;
 }
 html{scroll-behavior:smooth}
-body{background:var(--dark);color:var(--text);font-family:var(--font-body);font-size:16px;line-height:1.7;min-height:100vh;overflow-x:hidden}
+body{background:var(--dark);color:var(--text);font-family:var(--font-b);font-size:16px;line-height:1.7;min-height:100vh;overflow-x:hidden}
 
-/* ── ENTRANCE ── */
+/* ENTRANCE */
 #entrance-overlay{position:fixed;inset:0;z-index:9999;background:var(--dark);display:flex;align-items:center;justify-content:center;transition:opacity .7s ease}
 #entrance-overlay.fade-out{opacity:0;pointer-events:none}
-.entrance-logo{font-family:var(--font-display);font-size:2rem;color:var(--y);letter-spacing:.25em;animation:epulse 1.4s ease-in-out infinite}
-@keyframes epulse{0%,100%{opacity:.5;text-shadow:0 0 20px rgba(255,224,102,.3)}50%{opacity:1;text-shadow:0 0 40px rgba(255,224,102,.8),0 0 80px rgba(255,107,170,.4)}}
+.entrance-logo{font-family:var(--font-d);font-size:2rem;color:var(--y);letter-spacing:.25em;animation:ep 1.4s ease-in-out infinite}
+@keyframes ep{0%,100%{opacity:.5;text-shadow:0 0 20px rgba(255,224,102,.3)}50%{opacity:1;text-shadow:0 0 40px rgba(255,224,102,.8),0 0 80px rgba(255,107,170,.4)}}
 
-/* ── NAV ── */
-nav.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,5,15,.95);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px}
-.nav-brand{font-family:var(--font-display);font-size:.95rem;font-weight:900;color:var(--y);text-decoration:none;letter-spacing:.12em}
+/* NAV */
+nav.top-nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(7,5,15,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:62px}
+.nav-brand{font-family:var(--font-d);font-size:.95rem;font-weight:900;color:var(--y);text-decoration:none;letter-spacing:.12em}
 .nav-links{display:flex;gap:1.25rem;list-style:none;align-items:center}
-.nav-links a{color:var(--dim);text-decoration:none;font-size:.82rem;font-weight:500;transition:color .2s;letter-spacing:.04em}
+.nav-links a{color:var(--dim);text-decoration:none;font-size:.82rem;font-weight:500;transition:color .2s}
 .nav-links a:hover{color:var(--y)}
 .nav-links a.portal-link{color:var(--pk);border:1px solid rgba(255,107,170,.4);padding:.22rem .7rem;border-radius:99px;font-size:.78rem;transition:all .2s}
 .nav-links a.portal-link:hover{background:rgba(255,107,170,.12)}
 .nav-auth{display:flex;gap:.65rem;align-items:center}
 .nav-user{font-size:.78rem;color:var(--dim)}
-.btn-n{padding:.38rem .95rem;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;border:none;text-decoration:none;transition:all .2s;font-family:var(--font-body);letter-spacing:.04em}
+.btn-n{padding:.38rem .95rem;border-radius:7px;font-size:.78rem;font-weight:700;cursor:pointer;border:none;text-decoration:none;transition:all .2s;font-family:var(--font-b)}
 .btn-outline{background:transparent;border:1px solid var(--y);color:var(--y)}
 .btn-outline:hover{background:rgba(255,224,102,.1)}
 .btn-fill{background:var(--y);color:#07050f}
 .btn-fill:hover{background:#ffd700}
 
-/* ── HERO TWO-COL ── */
-.hero-wrap{padding-top:62px;min-height:100vh;display:grid;grid-template-columns:1fr 420px;align-items:center;max-width:1280px;margin:0 auto;padding-left:3rem;padding-right:2rem;gap:3rem;position:relative}
-.hero-bg-panel{position:absolute;inset:0;overflow:hidden;pointer-events:none}
-.hero-bg-panel::before{content:'';position:absolute;inset:0;background:url('nova-entrance.png') center/cover no-repeat;opacity:.08;filter:blur(2px)}
-.hero-bg-panel::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(255,107,170,.12) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(255,224,102,.1) 0%,transparent 50%)}
+/* HERO TWO-COL */
+.hero-wrap{padding-top:62px;min-height:100vh;display:grid;grid-template-columns:1fr 380px;align-items:center;max-width:1280px;margin:0 auto;padding-left:3rem;padding-right:2rem;gap:2rem;position:relative}
+.hero-bg-panel{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.hero-bg-panel::before{content:'';position:absolute;inset:0;background:url('nova-entrance.png') center/cover no-repeat;opacity:.07;filter:blur(3px)}
+.hero-bg-panel::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 70% 40%,rgba(255,107,170,.14) 0%,transparent 55%),radial-gradient(ellipse at 20% 70%,rgba(255,224,102,.1) 0%,transparent 50%)}
 
 .hero-left{position:relative;z-index:2;padding:3rem 0}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--font-mono);font-size:.7rem;color:var(--y);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5rem;border:1px solid rgba(255,224,102,.25);padding:.35rem .9rem;border-radius:99px;background:rgba(255,224,102,.06)}
-.hero-name{font-family:var(--font-display);font-size:clamp(4rem,8vw,7rem);font-weight:900;line-height:.9;color:#fff;letter-spacing:-.02em;margin-bottom:.5rem}
+.hero-eyebrow{display:inline-flex;align-items:center;gap:.5rem;font-family:var(--font-m);font-size:.7rem;color:var(--y);letter-spacing:.2em;text-transform:uppercase;margin-bottom:1.5rem;border:1px solid rgba(255,224,102,.25);padding:.35rem .9rem;border-radius:99px;background:rgba(255,224,102,.06)}
+.hero-name{font-family:var(--font-d);font-size:clamp(4.5rem,9vw,8rem);font-weight:900;line-height:.88;color:#fff;letter-spacing:-.02em;margin-bottom:.6rem}
 .hero-name span{color:var(--y);display:block;text-shadow:0 0 60px rgba(255,224,102,.5),0 0 120px rgba(255,107,170,.3)}
-.hero-role{font-family:var(--font-mono);font-size:.85rem;color:var(--pk);letter-spacing:.15em;text-transform:uppercase;margin-bottom:.75rem}
-.hero-slogan{font-size:1.3rem;font-style:italic;color:var(--dim);margin-bottom:1.5rem;max-width:480px;line-height:1.5}
+.hero-role{font-family:var(--font-m);font-size:.8rem;color:var(--pk);letter-spacing:.18em;text-transform:uppercase;margin-bottom:.75rem}
+.hero-slogan{font-size:1.2rem;font-style:italic;color:var(--dim);margin-bottom:1.25rem;max-width:460px;line-height:1.5}
 .hero-slogan strong{color:var(--text);font-style:normal}
-.hero-about{font-size:.95rem;color:#d0c8e8;line-height:1.8;max-width:520px;margin-bottom:2rem}
-.hero-tags{display:flex;flex-wrap:wrap;gap:.5rem;margin-bottom:2rem}
-.htag{font-family:var(--font-mono);font-size:.68rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.3rem .75rem;border-radius:99px;border:1px solid;background:rgba(0,0,0,.3)}
-.htag-y{color:var(--y);border-color:rgba(255,224,102,.35)}
-.htag-p{color:var(--pk);border-color:rgba(255,107,170,.35)}
-.htag-c{color:var(--cy);border-color:rgba(0,229,255,.35)}
-.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;align-items:center}
-.btn-hero{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.75rem;border-radius:10px;font-family:var(--font-body);font-weight:700;font-size:.9rem;cursor:pointer;border:none;text-decoration:none;transition:all .25s;letter-spacing:.04em}
+.hero-about{font-size:.93rem;color:#d0c8e8;line-height:1.85;max-width:500px;margin-bottom:1.75rem}
+.hero-tags{display:flex;flex-wrap:wrap;gap:.45rem;margin-bottom:1.75rem}
+.htag{font-family:var(--font-m);font-size:.65rem;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:.28rem .7rem;border-radius:99px;border:1px solid}
+.htag-y{color:var(--y);border-color:rgba(255,224,102,.35);background:rgba(255,224,102,.06)}
+.htag-p{color:var(--pk);border-color:rgba(255,107,170,.35);background:rgba(255,107,170,.06)}
+.htag-c{color:var(--cy);border-color:rgba(0,229,255,.35);background:rgba(0,229,255,.06)}
+.hero-ctas{display:flex;gap:.85rem;flex-wrap:wrap;align-items:center}
+.btn-hero{display:inline-flex;align-items:center;gap:.5rem;padding:.72rem 1.6rem;border-radius:10px;font-family:var(--font-b);font-weight:700;font-size:.88rem;cursor:pointer;border:none;text-decoration:none;transition:all .25s}
 .btn-hero-primary{background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;box-shadow:0 4px 20px rgba(255,224,102,.25)}
 .btn-hero-primary:hover{opacity:.88;transform:translateY(-2px)}
 .btn-hero-ghost{background:transparent;border:1px solid rgba(255,107,170,.4);color:var(--pk)}
 .btn-hero-ghost:hover{background:rgba(255,107,170,.1)}
 
-.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:2rem 0}
+/* CHARACTER GIF */
+.hero-right{position:relative;z-index:2;display:flex;align-items:center;justify-content:center;padding:2rem 0;min-height:400px}
 .char-frame{position:relative;display:flex;align-items:flex-end;justify-content:center}
-.char-glow{position:absolute;bottom:-20px;left:50%;transform:translateX(-50%);width:280px;height:80px;background:radial-gradient(ellipse,rgba(255,224,102,.35) 0%,transparent 70%);filter:blur(20px)}
-.char-img{width:340px;height:auto;filter:drop-shadow(0 0 30px rgba(255,224,102,.3)) drop-shadow(0 0 60px rgba(255,107,170,.2));animation:charfloat 4s ease-in-out infinite}
-@keyframes charfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.char-glow{position:absolute;bottom:-10px;left:50%;transform:translateX(-50%);width:260px;height:70px;background:radial-gradient(ellipse,rgba(255,224,102,.4) 0%,transparent 70%);filter:blur(18px);pointer-events:none}
+.char-img{width:320px;max-width:100%;height:auto;display:block;filter:drop-shadow(0 0 30px rgba(255,224,102,.35)) drop-shadow(0 0 60px rgba(255,107,170,.2));animation:charfloat 4s ease-in-out infinite;position:relative;z-index:1}
+.char-fallback{width:320px;height:320px;display:none;align-items:center;justify-content:center;border:2px dashed rgba(255,224,102,.2);border-radius:16px;font-family:var(--font-d);font-size:.75rem;color:var(--dim);text-align:center;padding:1rem}
+@keyframes charfloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
 
-/* ── LESSON STRIP ── */
+/* LESSON STRIP */
 #lessonsAnchor{scroll-margin-top:70px}
-.lesson-strip{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:0;position:sticky;top:62px;z-index:50}
+.lesson-strip{background:var(--card);border-top:1px solid var(--border);border-bottom:1px solid var(--border);position:sticky;top:62px;z-index:50}
 .lesson-strip-inner{max-width:1280px;margin:0 auto;display:flex;align-items:stretch}
-.ltab{display:flex;align-items:center;gap:.75rem;padding:1rem 1.75rem;cursor:pointer;transition:all .2s;border-right:1px solid var(--border);border-bottom:3px solid transparent;flex:1;min-width:0;text-decoration:none;background:transparent;border-top:none;border-left:none;font-family:var(--font-body)}
+.ltab{display:flex;align-items:center;gap:.75rem;padding:1rem 1.6rem;cursor:pointer;transition:all .2s;border-right:1px solid var(--border);border-bottom:3px solid transparent;flex:1;min-width:0;background:transparent;border-top:none;border-left:none;font-family:var(--font-b)}
 .ltab:last-child{border-right:none}
 .ltab:hover{background:rgba(255,224,102,.04)}
 .ltab.active{background:rgba(255,224,102,.08);border-bottom-color:var(--y)}
-.ltab-num{font-family:var(--font-display);font-size:.8rem;font-weight:900;width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--y),var(--pk));display:flex;align-items:center;justify-content:center;color:#07050f;flex-shrink:0;transition:box-shadow .2s}
+.ltab-num{font-family:var(--font-d);font-size:.78rem;font-weight:900;width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--y),var(--pk));display:flex;align-items:center;justify-content:center;color:#07050f;flex-shrink:0;transition:box-shadow .2s}
 .ltab.active .ltab-num{box-shadow:0 0 16px rgba(255,224,102,.5)}
 .ltab-info{text-align:left;min-width:0}
-.ltab-title{font-size:.82rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:flex;align-items:center;gap:.4rem}
+.ltab-title{font-size:.84rem;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ltab-sub{font-size:.7rem;color:var(--dim);margin-top:.1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.tbadge{font-family:var(--font-mono);font-size:.58rem;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:.15rem .45rem;border-radius:99px;border:1px solid;flex-shrink:0}
-.tb-free{color:var(--cy);border-color:rgba(0,229,255,.35);background:rgba(0,229,255,.08)}
-.tb-sparks{color:var(--y);border-color:rgba(255,224,102,.35);background:rgba(255,224,102,.08)}
-.tb-builders{color:var(--pk);border-color:rgba(255,107,170,.35);background:rgba(255,107,170,.08)}
-.tb-coders{color:#b088ff;border-color:rgba(176,136,255,.35);background:rgba(176,136,255,.08)}
 
-/* ── LESSON PANELS ── */
+/* LESSON PANELS */
 .lesson-panels{max-width:1280px;margin:0 auto;padding:0 0 6rem}
 .lpanel{display:none}
 .lpanel.active{display:block}
 
-/* ── AUTH GATE ── */
-.auth-gate{padding:4rem 2rem;text-align:center;max-width:520px;margin:0 auto}
-.auth-gate-icon{font-size:3rem;margin-bottom:1.25rem;display:block}
-.auth-gate h3{font-family:var(--font-display);font-size:1.3rem;color:var(--y);margin-bottom:.65rem}
+/* AUTH GATE */
+.auth-gate{padding:4rem 2rem;text-align:center;max-width:500px;margin:0 auto}
+.auth-gate h3{font-family:var(--font-d);font-size:1.3rem;color:var(--y);margin-bottom:.65rem}
 .auth-gate p{color:#d0c8e8;font-size:.95rem;margin-bottom:1.75rem;line-height:1.7}
 .auth-btns{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap}
-.btn-prim{background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:10px;padding:.75rem 1.75rem;font-weight:700;font-size:.95rem;cursor:pointer;font-family:var(--font-body);transition:opacity .2s}
+.btn-prim{background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:10px;padding:.75rem 1.75rem;font-weight:700;font-size:.95rem;cursor:pointer;font-family:var(--font-b)}
 .btn-prim:hover{opacity:.88}
-.btn-sec{background:transparent;border:1px solid rgba(255,224,102,.4);color:var(--y);border-radius:10px;padding:.75rem 1.75rem;font-weight:600;font-size:.95rem;cursor:pointer;font-family:var(--font-body);transition:all .2s}
+.btn-sec{background:transparent;border:1px solid rgba(255,224,102,.4);color:var(--y);border-radius:10px;padding:.75rem 1.75rem;font-weight:600;font-size:.95rem;cursor:pointer;font-family:var(--font-b)}
 .btn-sec:hover{background:rgba(255,224,102,.08)}
 
-/* ── LOCKED ── */
-.lesson-locked{padding:3.5rem 2rem;text-align:center;max-width:480px;margin:0 auto}
-.lock-badge{display:inline-block;font-family:var(--font-display);font-size:.65rem;letter-spacing:.15em;text-transform:uppercase;padding:.4rem 1rem;border-radius:99px;margin-bottom:1.25rem;border:1px solid}
-.lock-badge-sparks{color:var(--y);border-color:rgba(255,224,102,.4);background:rgba(255,224,102,.08)}
-.lock-badge-builders{color:var(--pk);border-color:rgba(255,107,170,.4);background:rgba(255,107,170,.08)}
-.lock-badge-coders{color:#b088ff;border-color:rgba(176,136,255,.4);background:rgba(176,136,255,.08)}
-.lesson-locked h3{font-family:var(--font-display);font-size:1.1rem;color:var(--text);margin-bottom:.6rem}
+/* LOCKED */
+.lesson-locked{padding:3.5rem 2rem;text-align:center;max-width:460px;margin:0 auto}
+.lock-badge{display:inline-block;font-family:var(--font-d);font-size:.62rem;letter-spacing:.15em;text-transform:uppercase;padding:.38rem .95rem;border-radius:99px;margin-bottom:1.25rem;border:1px solid}
+.lb-s{color:var(--y);border-color:rgba(255,224,102,.4);background:rgba(255,224,102,.08)}
+.lb-b{color:var(--pk);border-color:rgba(255,107,170,.4);background:rgba(255,107,170,.08)}
+.lb-c{color:#b088ff;border-color:rgba(176,136,255,.4);background:rgba(176,136,255,.08)}
+.lesson-locked h3{font-family:var(--font-d);font-size:1.1rem;color:var(--text);margin-bottom:.6rem}
 .lesson-locked p{color:#d0c8e8;font-size:.92rem;margin-bottom:1.5rem}
-.unlock-btn{display:inline-block;background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;padding:.75rem 2rem;border-radius:10px;font-weight:700;font-size:.92rem;text-decoration:none;transition:opacity .2s;font-family:var(--font-body)}
+.unlock-btn{display:inline-block;background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;padding:.75rem 2rem;border-radius:10px;font-weight:700;font-size:.92rem;text-decoration:none;font-family:var(--font-b)}
 .unlock-btn:hover{opacity:.88}
 
-/* ── TWO-COL LESSON LAYOUT ── */
-.lesson-layout{display:grid;grid-template-columns:240px 1fr;min-height:600px;border-top:1px solid var(--border)}
-.lsidebar{background:rgba(0,0,0,.4);border-right:1px solid var(--border);padding:1.75rem 1rem;position:sticky;top:calc(62px + 57px);align-self:start;max-height:calc(100vh - 120px);overflow-y:auto}
-.lsidebar-label{font-family:var(--font-mono);font-size:.6rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--y);margin-bottom:.85rem;padding:0 .5rem}
-.lsidebar-item{display:flex;align-items:center;gap:.65rem;padding:.6rem .75rem;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:.2rem;font-size:.83rem;color:var(--dim);font-weight:500;border:none;background:transparent;width:100%;text-align:left;font-family:var(--font-body)}
+/* TWO-COL LESSON */
+.lesson-layout{display:grid;grid-template-columns:210px 1fr;min-height:600px;border-top:1px solid var(--border)}
+.lsidebar{background:rgba(0,0,0,.4);border-right:1px solid var(--border);padding:1.5rem .85rem;position:sticky;top:calc(62px + 57px);align-self:start;max-height:calc(100vh - 130px);overflow-y:auto}
+.lsidebar-label{font-family:var(--font-m);font-size:.58rem;font-weight:700;text-transform:uppercase;letter-spacing:.18em;color:var(--y);margin-bottom:.85rem;padding:0 .4rem}
+.lsidebar-item{display:flex;align-items:center;gap:.6rem;padding:.58rem .7rem;border-radius:8px;cursor:pointer;transition:all .2s;margin-bottom:.18rem;font-size:.82rem;color:var(--dim);font-weight:500;border:none;background:transparent;width:100%;text-align:left;font-family:var(--font-b)}
 .lsidebar-item:hover{background:rgba(255,224,102,.06);color:var(--text)}
 .lsidebar-item.active{background:rgba(255,224,102,.1);color:var(--y);font-weight:600}
-.sidebar-ico{width:22px;height:22px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-size:.75rem;flex-shrink:0;background:rgba(255,255,255,.06)}
-.lsidebar-item.active .sidebar-ico{background:rgba(255,224,102,.15)}
+.sico{width:20px;height:20px;border-radius:5px;display:flex;align-items:center;justify-content:center;font-family:var(--font-m);font-size:.62rem;flex-shrink:0;background:rgba(255,255,255,.05);color:inherit}
+.lsidebar-item.active .sico{background:rgba(255,224,102,.15)}
 
-/* ── CONTENT AREA ── */
+/* GAME LINK ITEM */
+.lsidebar-item.game-link{color:var(--pk);border:1px solid rgba(255,107,170,.2);margin-top:.75rem}
+.lsidebar-item.game-link:hover{background:rgba(255,107,170,.08);border-color:rgba(255,107,170,.4);color:var(--pk)}
+.lsidebar-item.game-link .sico{background:rgba(255,107,170,.12);color:var(--pk)}
+
+/* CONTENT */
 .lcontent{padding:2.5rem;overflow-y:auto}
 .cblock{display:none}
 .cblock.active{display:block}
 
-/* ── CONTENT TYPOGRAPHY ── */
-.lcontent h3{font-family:var(--font-display);font-size:1.25rem;font-weight:900;color:var(--y);margin-bottom:1.1rem;letter-spacing:.02em}
-.lcontent h4{font-family:var(--font-body);font-size:1rem;font-weight:700;color:#fff;margin:1.5rem 0 .6rem}
-.lcontent p{font-size:.95rem;line-height:1.8;color:#ddd6f3;margin-bottom:1rem}
-.lcontent ul,.lcontent ol{color:#ddd6f3;font-size:.95rem;padding-left:1.5rem;margin-bottom:1rem}
-.lcontent li{margin-bottom:.45rem;line-height:1.7}
+/* TYPOGRAPHY */
+.lcontent h3{font-family:var(--font-d);font-size:1.2rem;font-weight:900;color:var(--y);margin-bottom:1rem;letter-spacing:.03em}
+.lcontent h4{font-family:var(--font-b);font-size:1rem;font-weight:700;color:#fff;margin:1.4rem 0 .55rem}
+.lcontent p{font-size:.95rem;line-height:1.8;color:#ddd6f3;margin-bottom:.9rem}
+.lcontent ul,.lcontent ol{color:#ddd6f3;font-size:.95rem;padding-left:1.5rem;margin-bottom:.9rem}
+.lcontent li{margin-bottom:.4rem;line-height:1.7}
 .lcontent strong{color:#fff;font-weight:700}
-.nova-quote{border-left:3px solid var(--y);padding:.85rem 1.25rem;background:rgba(255,224,102,.05);border-radius:0 10px 10px 0;font-style:italic;color:#e8e0f5;margin:1.25rem 0;font-size:.97rem;line-height:1.7}
 
-/* ── CODE BLOCKS ── */
-.code-block{background:#0a0814;border:1px solid rgba(255,224,102,.2);border-radius:10px;margin:1.25rem 0;overflow:hidden}
-.code-header{background:rgba(255,224,102,.07);padding:.45rem 1rem;font-family:var(--font-mono);font-size:.68rem;color:var(--y);letter-spacing:.12em;text-transform:uppercase;display:flex;justify-content:space-between;align-items:center}
-.code-block pre{padding:1rem;font-family:var(--font-mono);font-size:.82rem;color:#e0d8f5;line-height:1.65;overflow-x:auto}
+/* NOVA QUOTE PULL */
+.nova-pull{position:relative;border-left:3px solid var(--y);padding:1rem 1.25rem 1rem 1.5rem;background:rgba(255,224,102,.05);border-radius:0 12px 12px 0;margin:1.25rem 0;font-style:italic;color:#e8e0f5;font-size:1rem;line-height:1.65}
+.nova-pull::before{content:'>';font-family:var(--font-m);font-size:.8rem;color:var(--y);position:absolute;left:.6rem;top:1rem}
+
+/* IMMERSIVE READING CARDS */
+.read-cards{display:flex;flex-direction:column;gap:1rem;margin:1.25rem 0}
+.read-card{background:var(--card2);border:1px solid var(--border);border-radius:12px;padding:1.25rem 1.5rem;display:grid;grid-template-columns:3rem 1fr;gap:1rem;align-items:start}
+.read-card-num{font-family:var(--font-d);font-size:1.4rem;font-weight:900;color:var(--y);line-height:1;opacity:.5}
+.read-card-body h4{color:#fff;font-size:.95rem;font-weight:700;margin:0 0 .35rem}
+.read-card-body p{color:#ddd6f3;font-size:.88rem;line-height:1.7;margin:0}
+
+/* TERMS GRID */
+.terms-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem}
+.term-card{background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:10px;padding:.9rem}
+.term-card dt{font-family:var(--font-m);font-size:.72rem;font-weight:700;color:var(--y);margin-bottom:.28rem;letter-spacing:.04em}
+.term-card dd{font-size:.82rem;color:#c8bfe0;line-height:1.55}
+
+/* CODE */
+.code-block{background:#080614;border:1px solid rgba(255,224,102,.18);border-radius:10px;margin:1.1rem 0;overflow:hidden}
+.code-header{background:rgba(255,224,102,.06);padding:.42rem 1rem;font-family:var(--font-m);font-size:.65rem;color:var(--y);letter-spacing:.12em;text-transform:uppercase}
+.code-block pre{padding:.9rem 1rem;font-family:var(--font-m);font-size:.8rem;color:#e0d8f5;line-height:1.65;overflow-x:auto}
 .ct{color:#ff6baa}.ca{color:#ffe066}.cv{color:#00e5ff}.cc{color:#4a4060}
 
-/* ── KEY TERMS ── */
-.terms-grid{display:grid;grid-template-columns:1fr 1fr;gap:.75rem;margin-top:.75rem}
-.term-card{background:rgba(0,0,0,.35);border:1px solid var(--border);border-radius:9px;padding:.85rem}
-.term-card dt{font-family:var(--font-mono);font-size:.75rem;font-weight:700;color:var(--y);margin-bottom:.3rem}
-.term-card dd{font-size:.8rem;color:#c8bfe0;line-height:1.55}
-
-/* ── EDITOR ── */
+/* EDITOR */
 .editor-wrap{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin:1rem 0}
-.editor-pane label{display:block;font-family:var(--font-mono);font-size:.68rem;font-weight:700;color:var(--y);margin-bottom:.4rem;letter-spacing:.12em;text-transform:uppercase}
-textarea.code-ed{width:100%;height:220px;background:#0a0814;border:1px solid rgba(255,224,102,.2);border-radius:8px;padding:.85rem;font-family:var(--font-mono);font-size:.8rem;color:#e0d8f5;resize:vertical;outline:none;transition:border-color .2s}
+.editor-pane label{display:block;font-family:var(--font-m);font-size:.65rem;font-weight:700;color:var(--y);margin-bottom:.4rem;letter-spacing:.12em;text-transform:uppercase}
+textarea.code-ed{width:100%;height:220px;background:#080614;border:1px solid rgba(255,224,102,.18);border-radius:8px;padding:.85rem;font-family:var(--font-m);font-size:.8rem;color:#e0d8f5;resize:vertical;outline:none;transition:border-color .2s}
 textarea.code-ed:focus{border-color:var(--y)}
 .preview-box{background:#fff;border-radius:8px;overflow:hidden;min-height:220px}
 .preview-box iframe{width:100%;height:100%;border:none;min-height:220px}
-.run-btn{background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:8px;padding:.6rem 1.5rem;font-weight:700;font-size:.88rem;cursor:pointer;margin-top:.75rem;transition:opacity .2s;font-family:var(--font-body)}
+.run-btn{background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:8px;padding:.58rem 1.4rem;font-weight:700;font-size:.86rem;cursor:pointer;margin-top:.65rem;font-family:var(--font-b)}
 .run-btn:hover{opacity:.85}
 
-/* ── QUIZ ── */
-.quiz-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:12px;padding:1.25rem;margin:1.1rem 0}
-.quiz-q{font-size:.95rem;font-weight:600;color:#fff;margin-bottom:.85rem}
-.quiz-opts{display:flex;flex-direction:column;gap:.45rem}
-.qopt{background:rgba(255,224,102,.05);border:1px solid rgba(255,224,102,.14);border-radius:8px;padding:.62rem 1rem;font-size:.88rem;color:#ddd6f3;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--font-body)}
+/* QUIZ */
+.quiz-card{background:rgba(0,0,0,.3);border:1px solid var(--border);border-radius:12px;padding:1.2rem;margin:.9rem 0}
+.quiz-q{font-size:.93rem;font-weight:600;color:#fff;margin-bottom:.8rem}
+.quiz-opts{display:flex;flex-direction:column;gap:.42rem}
+.qopt{background:rgba(255,224,102,.05);border:1px solid rgba(255,224,102,.13);border-radius:8px;padding:.6rem 1rem;font-size:.87rem;color:#ddd6f3;cursor:pointer;transition:all .2s;text-align:left;font-family:var(--font-b)}
 .qopt:hover{background:rgba(255,224,102,.1);border-color:rgba(255,224,102,.3)}
 .qopt.correct{background:rgba(0,200,100,.12);border-color:rgba(0,200,100,.5);color:#7fffb0}
 .qopt.wrong{background:rgba(255,60,80,.1);border-color:rgba(255,60,80,.4);color:#ff8898}
-.quiz-fb{margin-top:.65rem;font-size:.82rem;color:var(--dim);font-style:italic}
+.quiz-fb{margin-top:.6rem;font-size:.8rem;color:var(--dim);font-style:italic}
 
-/* ── ACTIVITY CARD ── */
-.activity-card{background:linear-gradient(135deg,rgba(0,229,255,.06),rgba(255,224,102,.04));border:1px solid rgba(0,229,255,.2);border-radius:12px;padding:1.5rem;margin:1.25rem 0}
-.activity-card h4{color:var(--cy);font-family:var(--font-display);font-size:.9rem;margin-bottom:.6rem;letter-spacing:.05em}
-.activity-card p{color:#ddd6f3;font-size:.9rem;margin-bottom:.5rem}
-.activity-steps{list-style:none;padding:0;counter-reset:steps}
-.activity-steps li{counter-increment:steps;padding:.5rem .5rem .5rem 2.2rem;position:relative;font-size:.88rem;color:#ddd6f3;border-bottom:1px solid rgba(255,255,255,.05)}
-.activity-steps li:last-child{border-bottom:none}
-.activity-steps li::before{content:counter(steps);position:absolute;left:0;top:.5rem;width:1.5rem;height:1.5rem;background:var(--cy);color:#07050f;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:900;font-family:var(--font-mono)}
+/* REFLECT */
+.reflect-card{background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(176,136,255,.06));border:1px solid rgba(176,136,255,.2);border-radius:12px;padding:1.5rem;margin:1rem 0}
+.reflect-card h4{color:#b088ff;font-family:var(--font-d);font-size:.85rem;margin-bottom:.85rem;letter-spacing:.06em}
+.reflect-prompts{display:flex;flex-direction:column;gap:.6rem}
+.rprompt{font-size:.88rem;color:#ddd6f3;padding:.65rem 1rem;background:rgba(0,0,0,.25);border-radius:8px;border-left:3px solid #b088ff;line-height:1.6}
 
-/* ── REFLECT ── */
-.reflect-card{background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(176,136,255,.06));border:1px solid rgba(176,136,255,.2);border-radius:12px;padding:1.5rem;margin:1.25rem 0}
-.reflect-card h4{color:#b088ff;font-family:var(--font-display);font-size:.9rem;margin-bottom:.75rem;letter-spacing:.05em}
-.reflect-prompts{display:flex;flex-direction:column;gap:.65rem}
-.rprompt{font-size:.9rem;color:#ddd6f3;padding:.65rem 1rem;background:rgba(0,0,0,.25);border-radius:8px;border-left:3px solid #b088ff}
+/* PDF / CHEAT SHEET */
+.cheat-card{background:linear-gradient(135deg,rgba(255,224,102,.07),rgba(255,107,170,.05));border:1px solid rgba(255,224,102,.22);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;margin:.85rem 0}
+.cheat-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--y),var(--pk));border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--font-d);font-size:.75rem;font-weight:900;color:#07050f;flex-shrink:0}
+.cheat-info{flex:1}
+.cheat-info h4{color:#fff;font-size:.9rem;margin-bottom:.2rem;font-weight:700}
+.cheat-info p{color:var(--dim);font-size:.78rem;margin:0;line-height:1.4}
+.cheat-btn{background:var(--y);color:#07050f;border:none;border-radius:8px;padding:.52rem 1rem;font-weight:700;font-size:.8rem;cursor:pointer;text-decoration:none;font-family:var(--font-b);white-space:nowrap}
+.cheat-btn:hover{opacity:.85}
 
-/* ── CHEAT SHEET CARD ── */
-.pdf-card{background:linear-gradient(135deg,rgba(255,224,102,.07),rgba(255,107,170,.05));border:1px solid rgba(255,224,102,.22);border-radius:12px;padding:1.25rem;display:flex;align-items:center;gap:1rem;margin:.85rem 0}
-.pdf-icon{width:44px;height:44px;background:linear-gradient(135deg,var(--y),var(--pk));border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
-.pdf-info{flex:1}
-.pdf-info h4{color:#fff;font-size:.92rem;margin-bottom:.2rem}
-.pdf-info p{color:var(--dim);font-size:.8rem;margin:0}
-.pdf-btn{background:var(--y);color:#07050f;border:none;border-radius:8px;padding:.55rem 1.1rem;font-weight:700;font-size:.82rem;cursor:pointer;text-decoration:none;transition:opacity .2s;font-family:var(--font-body);white-space:nowrap}
-.pdf-btn:hover{opacity:.85}
-
-/* ── MINI GAME CTA ── */
-.game-cta{background:linear-gradient(135deg,rgba(255,107,170,.1),rgba(255,224,102,.06));border:1px solid rgba(255,107,170,.3);border-radius:14px;padding:2rem;text-align:center;margin:1rem 0}
-.game-cta h4{font-family:var(--font-display);font-size:1rem;color:var(--pk);margin-bottom:.5rem;letter-spacing:.05em}
-.game-cta p{color:#ddd6f3;font-size:.9rem;margin-bottom:1.25rem}
-.game-btn{display:inline-block;background:linear-gradient(135deg,var(--pk),var(--y));color:#07050f;border:none;border-radius:10px;padding:.75rem 2rem;font-weight:700;font-size:.92rem;cursor:pointer;text-decoration:none;transition:all .25s;font-family:var(--font-body)}
-.game-btn:hover{opacity:.88;transform:translateY(-2px)}
-
-/* ── UPSELL ── */
-.upsell-block{background:linear-gradient(135deg,rgba(255,224,102,.06),rgba(255,107,170,.08));border:1px solid rgba(255,224,102,.2);border-radius:16px;padding:2.5rem;text-align:center;margin:2.5rem 0}
-.upsell-block h3{font-family:var(--font-display);font-size:1.2rem;color:var(--y);margin-bottom:.7rem}
-.upsell-block p{color:#ddd6f3;font-size:.95rem;margin-bottom:1.5rem}
-.upsell-btn{display:inline-block;background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:10px;padding:.85rem 2rem;font-weight:700;font-size:1rem;cursor:pointer;text-decoration:none;transition:opacity .2s;font-family:var(--font-body)}
+/* UPSELL */
+.upsell-block{background:linear-gradient(135deg,rgba(255,224,102,.06),rgba(255,107,170,.08));border:1px solid rgba(255,224,102,.2);border-radius:14px;padding:2.25rem;text-align:center;margin:2rem 0}
+.upsell-block h3{font-family:var(--font-d);font-size:1.1rem;color:var(--y);margin-bottom:.65rem}
+.upsell-block p{color:#ddd6f3;font-size:.93rem;margin-bottom:1.4rem}
+.upsell-btn{display:inline-block;background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:10px;padding:.8rem 2rem;font-weight:700;font-size:.95rem;cursor:pointer;text-decoration:none;font-family:var(--font-b)}
 .upsell-btn:hover{opacity:.88}
 
-/* ── PAGE BUILDER ── */
-.page-builder{display:grid;grid-template-columns:260px 1fr;gap:1rem;margin-top:1rem}
+/* PAGE BUILDER */
+.page-builder{display:grid;grid-template-columns:250px 1fr;gap:1rem;margin-top:1rem}
 .builder-controls{background:rgba(0,0,0,.4);border:1px solid var(--border);border-radius:12px;padding:1rem}
-.builder-controls label{display:block;font-family:var(--font-mono);font-size:.68rem;font-weight:700;color:var(--y);margin:.75rem 0 .3rem;letter-spacing:.1em;text-transform:uppercase}
-.builder-controls input[type="text"],.builder-controls textarea{width:100%;background:rgba(0,0,0,.35);border:1px solid rgba(255,224,102,.2);border-radius:6px;padding:.55rem;color:#e8e0f5;font-size:.83rem;font-family:var(--font-body);outline:none}
-.builder-controls input[type="color"]{width:100%;height:34px;border-radius:6px;border:1px solid rgba(255,224,102,.2);cursor:pointer;background:none}
-.builder-controls textarea{resize:vertical;height:75px}
-.builder-btn{width:100%;margin-top:.65rem;background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:8px;padding:.6rem;font-weight:700;font-size:.82rem;cursor:pointer;transition:opacity .2s;font-family:var(--font-body)}
+.builder-controls label{display:block;font-family:var(--font-m);font-size:.65rem;font-weight:700;color:var(--y);margin:.7rem 0 .28rem;letter-spacing:.1em;text-transform:uppercase}
+.builder-controls input[type="text"],.builder-controls textarea{width:100%;background:rgba(0,0,0,.35);border:1px solid rgba(255,224,102,.18);border-radius:6px;padding:.52rem;color:#e8e0f5;font-size:.82rem;font-family:var(--font-b);outline:none}
+.builder-controls input[type="color"]{width:100%;height:32px;border-radius:6px;border:1px solid rgba(255,224,102,.18);cursor:pointer;background:none}
+.builder-controls textarea{resize:vertical;height:72px}
+.builder-btn{width:100%;margin-top:.6rem;background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:8px;padding:.58rem;font-weight:700;font-size:.8rem;cursor:pointer;font-family:var(--font-b)}
 .builder-btn:hover{opacity:.88}
-.builder-preview{border:1px solid rgba(255,224,102,.2);border-radius:12px;overflow:hidden;background:#fff;min-height:400px}
+.builder-preview{border:1px solid rgba(255,224,102,.18);border-radius:12px;overflow:hidden;background:#fff;min-height:400px}
 .builder-preview iframe{width:100%;height:400px;border:none}
 
-/* ── DASHBOARD BTN ── */
-.dash-btn-wrap{padding:.75rem 2rem;border-top:1px solid var(--border);background:rgba(0,0,0,.2)}
-.dash-btn{display:inline-flex;align-items:center;gap:.5rem;background:rgba(255,224,102,.08);border:1px solid rgba(255,224,102,.25);color:var(--y);border-radius:8px;padding:.5rem 1rem;font-size:.8rem;font-weight:600;text-decoration:none;transition:all .2s;cursor:pointer;font-family:var(--font-body)}
-.dash-btn:hover{background:rgba(255,224,102,.15)}
+/* DASH BTN */
+.dash-btn-wrap{padding:.7rem 2rem;border-top:1px solid var(--border);background:rgba(0,0,0,.2)}
+.dash-btn{display:inline-flex;align-items:center;gap:.45rem;background:rgba(255,224,102,.08);border:1px solid rgba(255,224,102,.22);color:var(--y);border-radius:8px;padding:.48rem .95rem;font-size:.78rem;font-weight:600;text-decoration:none;transition:all .2s;font-family:var(--font-b)}
+.dash-btn:hover{background:rgba(255,224,102,.14)}
 
-/* ── MODAL ── */
+/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:999;background:rgba(0,0,0,.85);backdrop-filter:blur(8px);align-items:center;justify-content:center}
 .modal-overlay.open{display:flex}
-.modal-box{background:#100d1e;border:1px solid rgba(255,224,102,.3);border-radius:18px;padding:2rem;width:90%;max-width:400px;position:relative}
+.modal-box{background:#100d1e;border:1px solid rgba(255,224,102,.28);border-radius:18px;padding:2rem;width:90%;max-width:400px;position:relative}
 .modal-close{position:absolute;top:1rem;right:1rem;background:none;border:none;color:var(--dim);font-size:1.2rem;cursor:pointer}
-.modal-title{font-family:var(--font-display);font-size:1rem;color:var(--y);margin-bottom:1.25rem;letter-spacing:.06em}
-.modal-tabs{display:flex;gap:.5rem;margin-bottom:1.25rem}
-.mtab{flex:1;padding:.5rem;border-radius:8px;font-size:.83rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,224,102,.2);background:transparent;color:var(--dim);transition:all .2s;font-family:var(--font-body)}
+.modal-title{font-family:var(--font-d);font-size:1rem;color:var(--y);margin-bottom:1.2rem;letter-spacing:.06em}
+.modal-tabs{display:flex;gap:.5rem;margin-bottom:1.2rem}
+.mtab{flex:1;padding:.48rem;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;border:1px solid rgba(255,224,102,.18);background:transparent;color:var(--dim);font-family:var(--font-b)}
 .mtab.active{background:var(--y);color:#07050f;border-color:var(--y)}
-.modal-input{width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(255,224,102,.2);border-radius:8px;padding:.72rem 1rem;color:#e8e0f5;font-size:.88rem;margin-bottom:.7rem;outline:none;font-family:var(--font-body)}
+.modal-input{width:100%;background:rgba(0,0,0,.4);border:1px solid rgba(255,224,102,.18);border-radius:8px;padding:.7rem 1rem;color:#e8e0f5;font-size:.87rem;margin-bottom:.65rem;outline:none;font-family:var(--font-b)}
 .modal-input:focus{border-color:var(--y)}
-.modal-submit{width:100%;background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:8px;padding:.78rem;font-weight:700;font-size:.92rem;cursor:pointer;transition:opacity .2s;font-family:var(--font-body)}
+.modal-submit{width:100%;background:linear-gradient(135deg,var(--y),var(--pk));color:#07050f;border:none;border-radius:8px;padding:.75rem;font-weight:700;font-size:.9rem;cursor:pointer;font-family:var(--font-b)}
 .modal-submit:hover{opacity:.88}
-.modal-msg{margin-top:.65rem;font-size:.82rem;color:var(--dim);text-align:center}
+.modal-msg{margin-top:.6rem;font-size:.8rem;color:var(--dim);text-align:center}
 
-/* ── RESPONSIVE ── */
+/* RESPONSIVE */
 @media(max-width:1024px){
-  .hero-wrap{grid-template-columns:1fr;padding:5rem 2rem 3rem;gap:2rem}
-  .hero-right{display:none}
-  .hero-name{font-size:clamp(3rem,10vw,5rem)}
+  .hero-wrap{grid-template-columns:1fr;padding:5rem 2rem 3rem;gap:0}
+  .hero-right{min-height:280px}
+  .char-img{width:220px}
 }
 @media(max-width:768px){
   nav.top-nav .nav-links{display:none}
   .lesson-strip-inner{overflow-x:auto}
-  .ltab{min-width:140px;padding:.85rem 1rem}
+  .ltab{min-width:130px;padding:.8rem .9rem}
   .lesson-layout{grid-template-columns:1fr}
-  .lsidebar{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.35rem;padding:1rem}
+  .lsidebar{position:static;max-height:none;border-right:none;border-bottom:1px solid var(--border);display:flex;flex-wrap:wrap;gap:.3rem;padding:.85rem}
   .lsidebar-label{display:none}
   .editor-wrap{grid-template-columns:1fr}
   .terms-grid{grid-template-columns:1fr}
   .page-builder{grid-template-columns:1fr}
+  .read-card{grid-template-columns:1fr}
+  .read-card-num{display:none}
 }
 </style>
 </head>
@@ -303,7 +294,7 @@ textarea.code-ed:focus{border-color:var(--y)}
     <div class="hero-name"><span>Nova</span></div>
     <div class="hero-role">Builder Bot &nbsp;&#183;&nbsp; HTML Structure</div>
     <p class="hero-slogan">"If you can think it, <strong>you can build it.</strong>"</p>
-    <p class="hero-about">Nova is the builder of the MiM universe. Where others dream, Nova constructs. Master HTML with Nova and you will understand the skeleton behind every website that has ever existed. By the end of Nova's world, you will have built real pages from scratch.</p>
+    <p class="hero-about">Nova is the architect of the MiM universe. Master HTML with Nova and you will understand the skeleton behind every website that has ever existed. By the end of Nova's four lessons, you will have built and downloaded a real webpage of your own.</p>
     <div class="hero-tags">
       <span class="htag htag-y">HTML Structure</span>
       <span class="htag htag-p">Web Architecture</span>
@@ -311,14 +302,27 @@ textarea.code-ed:focus{border-color:var(--y)}
       <span class="htag htag-y">Builder Bot</span>
     </div>
     <div class="hero-ctas">
-      <button class="btn-hero btn-hero-primary" onclick="scrollToLessons()">Start Learning</button>
-      <a href="nova-game.html" class="btn-hero btn-hero-ghost">Play Nova's Game</a>
+      <button class="btn-hero btn-hero-primary" onclick="scrollToLessons()">Start Building</button>
+      <a href="nova-game.html" class="btn-hero btn-hero-ghost">Nova's Game World</a>
     </div>
   </div>
   <div class="hero-right">
     <div class="char-frame">
       <div class="char-glow"></div>
-      <img src="nova-motion.gif" alt="Nova the Builder Bot" class="char-img" onerror="this.style.opacity='.3'">
+      <img
+        src="nova-motion.gif"
+        alt="Nova the Builder Bot"
+        class="char-img"
+        onload="this.style.opacity='1'"
+        onerror="this.style.display='none';document.getElementById('char-fallback').style.display='flex'"
+      >
+      <div class="char-fallback" id="char-fallback">
+        <div>
+          <div style="font-size:2rem;margin-bottom:.5rem">&#9651;</div>
+          <div>nova-motion.gif</div>
+          <div style="font-size:.6rem;margin-top:.3rem;opacity:.6">Upload to repo root</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -330,28 +334,28 @@ textarea.code-ed:focus{border-color:var(--y)}
     <button class="ltab active" data-tab="1" onclick="switchLesson(1)">
       <div class="ltab-num">1</div>
       <div class="ltab-info">
-        <div class="ltab-title">Blueprint Thinking <span class="tbadge tb-sparks">Sparks+</span></div>
+        <div class="ltab-title">Blueprint Thinking</div>
         <div class="ltab-sub">What is HTML? How does the web work?</div>
       </div>
     </button>
     <button class="ltab" data-tab="2" onclick="switchLesson(2)">
       <div class="ltab-num">2</div>
       <div class="ltab-info">
-        <div class="ltab-title">Building Blocks <span class="tbadge tb-builders">Builders+</span></div>
+        <div class="ltab-title">Building Blocks</div>
         <div class="ltab-sub">Tags, elements, attributes, lists</div>
       </div>
     </button>
     <button class="ltab" data-tab="3" onclick="switchLesson(3)">
       <div class="ltab-num">3</div>
       <div class="ltab-info">
-        <div class="ltab-title">Layout &amp; Nesting <span class="tbadge tb-builders">Builders+</span></div>
+        <div class="ltab-title">Layout &amp; Nesting</div>
         <div class="ltab-sub">Divs, containers, semantic HTML</div>
       </div>
     </button>
     <button class="ltab" data-tab="4" onclick="switchLesson(4)">
       <div class="ltab-num">4</div>
       <div class="ltab-info">
-        <div class="ltab-title">Build Your Page <span class="tbadge tb-coders">Coders</span></div>
+        <div class="ltab-title">Build Your Page</div>
         <div class="ltab-sub">Nova's live page builder</div>
       </div>
     </button>
@@ -361,13 +365,12 @@ textarea.code-ed:focus{border-color:var(--y)}
 <!-- LESSON PANELS -->
 <div class="lesson-panels">
 
-  <!-- ===== LESSON 1 ===== -->
+  <!-- ===== L1 ===== -->
   <div class="lpanel active" id="panel-1">
     <div id="gate-1" style="display:none">
       <div class="auth-gate">
-        <span class="auth-gate-icon">&#9651;</span>
         <h3>Sign In to Start Building</h3>
-        <p>Nova's lessons require a free account. Sign up to unlock Lesson 1 and start your HTML journey.</p>
+        <p>Nova's lessons require a free MiM account. Sign up to unlock Lesson 1 and start your HTML journey.</p>
         <div class="auth-btns">
           <button class="btn-prim" onclick="openModal('signup')">Create Free Account</button>
           <button class="btn-sec" onclick="openModal('login')">Log In</button>
@@ -378,32 +381,51 @@ textarea.code-ed:focus{border-color:var(--y)}
       <div class="lesson-layout">
         <nav class="lsidebar">
           <div class="lsidebar-label">Lesson 1</div>
-          <button class="lsidebar-item active" data-block="read" onclick="showBlock(1,'read')"><span class="sidebar-ico">R</span>Reading</button>
-          <button class="lsidebar-item" data-block="terms" onclick="showBlock(1,'terms')"><span class="sidebar-ico">T</span>Terminology</button>
-          <button class="lsidebar-item" data-block="theory" onclick="showBlock(1,'theory')"><span class="sidebar-ico">Th</span>Theory</button>
-          <button class="lsidebar-item" data-block="code" onclick="showBlock(1,'code')"><span class="sidebar-ico">Pr</span>Practical</button>
-          <button class="lsidebar-item" data-block="activity" onclick="showBlock(1,'activity')"><span class="sidebar-ico">Ac</span>Activity</button>
-          <button class="lsidebar-item" data-block="reflect" onclick="showBlock(1,'reflect')"><span class="sidebar-ico">Re</span>Reflect</button>
-          <button class="lsidebar-item" data-block="pdf" onclick="showBlock(1,'pdf')"><span class="sidebar-ico">Pd</span>Offline PDF</button>
-          <button class="lsidebar-item" data-block="game" onclick="showBlock(1,'game')"><span class="sidebar-ico">G</span>Mini Game</button>
+          <button class="lsidebar-item active" data-block="read" onclick="showBlock(1,'read')"><span class="sico">01</span>Read</button>
+          <button class="lsidebar-item" data-block="terms" onclick="showBlock(1,'terms')"><span class="sico">02</span>Terms</button>
+          <button class="lsidebar-item" data-block="code" onclick="showBlock(1,'code')"><span class="sico">03</span>Build</button>
+          <button class="lsidebar-item" data-block="reflect" onclick="showBlock(1,'reflect')"><span class="sico">04</span>Reflect</button>
+          <button class="lsidebar-item" data-block="pdf" onclick="showBlock(1,'pdf')"><span class="sico">05</span>Cheat Sheet</button>
+          <a href="nova-game.html" class="lsidebar-item game-link"><span class="sico">&#9651;</span>Nova's Game</a>
         </nav>
         <div class="lcontent">
           <!-- READ -->
           <div class="cblock active" id="block-1-read">
             <h3>Blueprint Thinking</h3>
-            <div class="nova-quote">"Before a builder picks up a single tool, they study the blueprint. HTML is the blueprint of everything on the web."</div>
-            <p>Every website you have ever visited — social media, games, stores, school portals — was built on the same foundation: <strong>HTML</strong>. It is not magic. It is structure. And once you learn to read it, you will never look at a webpage the same way again.</p>
-            <h4>The Three Layers of Every Website</h4>
-            <ul>
-              <li><strong>HTML</strong> — Structure. The walls, floor, and ceiling of your digital room.</li>
-              <li><strong>CSS</strong> — Style. The paint color, lighting, and furniture.</li>
-              <li><strong>JavaScript</strong> — Behavior. The lights that switch on, the door that opens when you knock.</li>
-            </ul>
-            <p>Nova's world covers HTML completely. You will learn to describe what is on a page, where it lives, and how everything connects. CSS and JavaScript come later with other characters. But nothing works without the structure Nova is about to teach you.</p>
-            <h4>How the Browser Reads Your Code</h4>
-            <p>When you open a website, your browser downloads a file and reads it top to bottom, exactly like reading a book. Every tag you write is an instruction. The browser follows every instruction in order. This predictability is your power as a builder. You are always in control of what appears and where.</p>
+            <div class="nova-pull">"Before a builder picks up a single tool, they study the blueprint. HTML is that blueprint."</div>
+            <p>Every website you have ever used was built on the same foundation: <strong>HTML</strong>. Not magic. Structure. Once you learn to read it, you will never look at a webpage the same way again.</p>
+            <div class="read-cards">
+              <div class="read-card">
+                <div class="read-card-num">01</div>
+                <div class="read-card-body">
+                  <h4>HTML is the Structure</h4>
+                  <p>HTML tells the browser <em>what</em> is on a page and <em>where</em> it belongs. The heading, the image, the paragraph, the button — HTML describes each one.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">02</div>
+                <div class="read-card-body">
+                  <h4>CSS is the Style</h4>
+                  <p>Colors, fonts, spacing, layout — that is all CSS. Nova teaches HTML first because nothing in CSS works without structure underneath it.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">03</div>
+                <div class="read-card-body">
+                  <h4>JavaScript is the Behavior</h4>
+                  <p>Clicks, animations, live data — JavaScript makes pages respond. But it needs HTML elements to interact with. Structure always comes first.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">04</div>
+                <div class="read-card-body">
+                  <h4>The Browser Reads Top to Bottom</h4>
+                  <p>When you open a site, the browser downloads your HTML file and reads every line in order. Your instructions are followed exactly. That predictability is your power.</p>
+                </div>
+              </div>
+            </div>
             <div class="code-block">
-              <div class="code-header"><span>Your First HTML File</span></div>
+              <div class="code-header">A complete HTML page</div>
               <pre><span class="ct">&lt;!DOCTYPE html&gt;</span>
 <span class="ct">&lt;html&gt;</span>
   <span class="ct">&lt;head&gt;</span>
@@ -415,39 +437,26 @@ textarea.code-ed:focus{border-color:var(--y)}
   <span class="ct">&lt;/body&gt;</span>
 <span class="ct">&lt;/html&gt;</span></pre>
             </div>
-            <p>This is a complete, working HTML page. Five minutes from now you will understand every single line of it.</p>
+            <p>This is a real, working HTML page. By the end of Lesson 1 you will understand every single line of it.</p>
           </div>
           <!-- TERMS -->
           <div class="cblock" id="block-1-terms">
-            <h3>Terminology</h3>
-            <p>Lock these in. Every builder needs this vocabulary to read, write, and talk about HTML.</p>
+            <h3>Key Terms</h3>
             <div class="terms-grid">
-              <dl class="term-card"><dt>HTML</dt><dd>HyperText Markup Language. The language used to structure every webpage on the internet.</dd></dl>
-              <dl class="term-card"><dt>Element</dt><dd>A single HTML component. A heading, paragraph, image, or link. Everything on a page is an element.</dd></dl>
-              <dl class="term-card"><dt>Tag</dt><dd>The code that marks where an element starts and ends. Opening: &lt;h1&gt;. Closing: &lt;/h1&gt;.</dd></dl>
-              <dl class="term-card"><dt>Browser</dt><dd>Chrome, Safari, Firefox. The program that reads your HTML and turns it into the visual page a visitor sees.</dd></dl>
-              <dl class="term-card"><dt>&lt;head&gt;</dt><dd>The invisible section. Holds your page title and setup code the browser uses but visitors never see.</dd></dl>
-              <dl class="term-card"><dt>&lt;body&gt;</dt><dd>Everything inside &lt;body&gt; is what your visitors actually see and interact with.</dd></dl>
-              <dl class="term-card"><dt>Structure</dt><dd>The organization of a page. Which things come first, how they are grouped, and how they relate to each other.</dd></dl>
-              <dl class="term-card"><dt>Markup</dt><dd>The act of wrapping content in tags to give it meaning. "Marking up" text as a heading tells the browser it is important.</dd></dl>
+              <dl class="term-card"><dt>HTML</dt><dd>HyperText Markup Language. The code language used to build the structure of every webpage.</dd></dl>
+              <dl class="term-card"><dt>Element</dt><dd>A single HTML component — a heading, paragraph, image, or link. Every visible thing on a page is an element.</dd></dl>
+              <dl class="term-card"><dt>Tag</dt><dd>The code that marks where an element starts and ends. &lt;h1&gt; opens it. &lt;/h1&gt; closes it.</dd></dl>
+              <dl class="term-card"><dt>Browser</dt><dd>Chrome, Safari, Firefox. The program that reads your HTML and turns it into the page a visitor sees.</dd></dl>
+              <dl class="term-card"><dt>&lt;head&gt;</dt><dd>The invisible section. Holds your page title and setup info the browser uses but visitors never see.</dd></dl>
+              <dl class="term-card"><dt>&lt;body&gt;</dt><dd>Everything inside &lt;body&gt; is what visitors actually see and interact with on screen.</dd></dl>
+              <dl class="term-card"><dt>Structure</dt><dd>The organization of a page — what comes first, how things are grouped, how they relate.</dd></dl>
+              <dl class="term-card"><dt>DOM</dt><dd>Document Object Model. The tree structure a browser builds from your HTML so JavaScript can interact with it.</dd></dl>
             </div>
           </div>
-          <!-- THEORY -->
-          <div class="cblock" id="block-1-theory">
-            <h3>Theory</h3>
-            <h4>Why Does Structure Come First?</h4>
-            <p>Imagine building a house by painting the walls before laying the foundation. That is what happens when people try to learn CSS or JavaScript before HTML. Everything breaks. Structure is the only safe starting point because everything else depends on it.</p>
-            <h4>The Document Object Model (DOM)</h4>
-            <p>When your browser reads HTML, it builds a tree called the <strong>DOM</strong> — Document Object Model. Every element becomes a branch of that tree. The title is a branch. The heading is a branch. The paragraph is a branch. This tree is how browsers understand your page and how JavaScript can later reach in and change things live without reloading.</p>
-            <h4>HTML Describes What, Not How</h4>
-            <p>HTML describes <em>what</em> something is, not how it looks. A &lt;h1&gt; tag does not make text large because it is stylish. The browser applies default visual treatment to help users understand hierarchy. Design lives in CSS. Keep these two jobs completely separate in your mind from day one. Mixing them up is the most common beginner mistake.</p>
-            <h4>Every Site You Have Used Was Built This Way</h4>
-            <p>YouTube, Instagram, your school portal, online games — all of them start as HTML files. Professional developers are reading and writing the same tags you are about to learn. The only difference is practice and scale. You are not learning a simplified version of web development. You are learning the real thing.</p>
-          </div>
-          <!-- PRACTICAL -->
+          <!-- BUILD / PRACTICAL -->
           <div class="cblock" id="block-1-code">
-            <h3>Practical</h3>
-            <p>Edit the HTML on the left. Press <strong>Run</strong> to see it in the preview on the right. Try changing the heading to your own name and the paragraph to something about you.</p>
+            <h3>Build It</h3>
+            <p>Edit the HTML on the left. Press <strong>Run</strong> to see your page on the right. Change the heading to your name.</p>
             <div class="editor-wrap">
               <div class="editor-pane">
                 <label>HTML Editor</label>
@@ -462,11 +471,11 @@ textarea.code-ed:focus{border-color:var(--y)}
   <p>Change this to YOUR name!</p>
 </body>
 </html></textarea>
-                <button class="run-btn" onclick="runCode('editor-1','preview-1')">Run Code</button>
+                <button class="run-btn" onclick="runCode('editor-1','preview-1')">Run</button>
               </div>
               <div class="preview-box"><iframe id="preview-1"></iframe></div>
             </div>
-            <h3 style="margin-top:2rem">Check Your Understanding</h3>
+            <h3 style="margin-top:2rem">Quick Check</h3>
             <div class="quiz-card">
               <div class="quiz-q">What does HTML stand for?</div>
               <div class="quiz-opts">
@@ -477,7 +486,7 @@ textarea.code-ed:focus{border-color:var(--y)}
               <div class="quiz-fb" id="qf-1a"></div>
             </div>
             <div class="quiz-card">
-              <div class="quiz-q">Which part of the HTML file do visitors actually see?</div>
+              <div class="quiz-q">Which section do visitors actually see?</div>
               <div class="quiz-opts">
                 <button class="qopt" onclick="checkQ(this,false,'1b')">&lt;head&gt;</button>
                 <button class="qopt" onclick="checkQ(this,true,'1b')">&lt;body&gt;</button>
@@ -485,167 +494,136 @@ textarea.code-ed:focus{border-color:var(--y)}
               </div>
               <div class="quiz-fb" id="qf-1b"></div>
             </div>
-            <div class="quiz-card">
-              <div class="quiz-q">What are the three layers of a website in the correct order?</div>
-              <div class="quiz-opts">
-                <button class="qopt" onclick="checkQ(this,false,'1c')">JavaScript, CSS, HTML</button>
-                <button class="qopt" onclick="checkQ(this,false,'1c')">HTML, Python, JavaScript</button>
-                <button class="qopt" onclick="checkQ(this,true,'1c')">HTML (structure), CSS (style), JavaScript (behavior)</button>
-              </div>
-              <div class="quiz-fb" id="qf-1c"></div>
-            </div>
             <div class="upsell-block">
-              <h3>Keep Building with Nova</h3>
-              <p>Lesson 2 covers every HTML building block: headings, paragraphs, images, links, and lists. Upgrade to Sparks to unlock it.</p>
-              <a href="membership.html" class="upsell-btn">Upgrade to Sparks &rarr;</a>
-            </div>
-          </div>
-          <!-- ACTIVITY -->
-          <div class="cblock" id="block-1-activity">
-            <h3>Suggested Activity</h3>
-            <div class="activity-card">
-              <h4>Blueprint Hunt — Offline Activity</h4>
-              <p>Before you can build on the web, train your brain to see structure everywhere. This offline activity takes 15-20 minutes and builds the same mental skill HTML requires.</p>
-              <ol class="activity-steps">
-                <li>Find a physical magazine, newspaper, or printed flyer near you.</li>
-                <li>Grab a pencil or pen and draw boxes around each section you can identify — headlines, images, body text, captions, footers.</li>
-                <li>Label each box with what you think it would be in HTML: is it a heading? A paragraph? An image? A list?</li>
-                <li>Look for things that repeat. Navigation links. Section titles. Image captions. Repeated patterns in print become reusable components in code.</li>
-                <li>On a separate piece of paper, write out what the HTML skeleton of one page might look like using the tags from your Terminology section.</li>
-              </ol>
-              <p style="margin-top:.75rem;color:var(--cy);font-size:.85rem;font-weight:600">Builder Challenge: Find a website on your computer. Right-click anywhere and choose "View Page Source." You are looking at real HTML. How much of it can you already recognize?</p>
-            </div>
-            <div class="activity-card" style="margin-top:1rem;border-color:rgba(255,224,102,.2)">
-              <h4>Digital Extension — Code Sketch</h4>
-              <p>Open the Practical tab and use the live editor. Build a page that represents your bedroom. Use a heading for the room name, paragraphs to describe items in the room, and a list for your top 5 things in it.</p>
-              <p>Do not worry about how it looks. This is structure only. You are being an architect, not an interior designer.</p>
+              <h3>Keep Building</h3>
+              <p>Lesson 2 covers every core HTML element. Upgrade your membership to unlock it.</p>
+              <a href="membership.html" class="upsell-btn">View Membership Plans</a>
             </div>
           </div>
           <!-- REFLECT -->
           <div class="cblock" id="block-1-reflect">
             <h3>Reflect</h3>
-            <p>Take a few minutes with these prompts. You do not need to write them down — but builders who think about what they learned remember it twice as long.</p>
             <div class="reflect-card">
-              <h4>Reflection Prompts</h4>
+              <h4>Think It Through</h4>
               <div class="reflect-prompts">
-                <div class="rprompt">In your own words, what is HTML? Try to explain it as if you were describing it to a friend who has never heard of it.</div>
-                <div class="rprompt">What is the difference between the &lt;head&gt; and the &lt;body&gt;? Why does that separation matter?</div>
-                <div class="rprompt">You learned that HTML describes what something is, not how it looks. Can you think of a real-life example of something that works the same way — where structure and appearance are separate?</div>
-                <div class="rprompt">What surprised you most about how websites are actually built? Was anything different from what you expected?</div>
-                <div class="rprompt">What do you want to build once you finish all of Nova's lessons? Describe it in 2-3 sentences.</div>
+                <div class="rprompt">In your own words, what is HTML? Explain it like you are describing it to a friend who has never heard of it.</div>
+                <div class="rprompt">What is the difference between &lt;head&gt; and &lt;body&gt;? Why does that separation matter?</div>
+                <div class="rprompt">HTML describes what something is, not how it looks. Can you think of a real-life example where structure and appearance are completely separate things?</div>
+                <div class="rprompt">What do you want to build by the time you finish all of Nova's lessons?</div>
               </div>
             </div>
           </div>
-          <!-- PDF -->
+          <!-- CHEAT SHEET -->
           <div class="cblock" id="block-1-pdf">
-            <h3>Offline PDF</h3>
-            <p>Download and print this cheat sheet. Keep it next to you while you code. The best builders always have reference material within reach.</p>
-            <div class="pdf-card">
-              <div class="pdf-icon">N</div>
-              <div class="pdf-info">
-                <h4>HTML Basics — Nova's Cheat Sheet Vol. 1</h4>
-                <p>Essential tags, the HTML file skeleton, and builder vocabulary.</p>
+            <h3>Cheat Sheet</h3>
+            <p>Download Nova's Lesson 1 cheat sheet. Print it, keep it next to you, or save it to your phone.</p>
+            <div class="cheat-card">
+              <div class="cheat-icon">N1</div>
+              <div class="cheat-info">
+                <h4>HTML Basics — Lesson 1 Reference</h4>
+                <p>Tags, structure, the HTML skeleton, and Lesson 1 vocabulary.</p>
               </div>
-              <a href="pdfs.html" class="pdf-btn">Download</a>
-            </div>
-            <div class="pdf-card">
-              <div class="pdf-icon">N</div>
-              <div class="pdf-info">
-                <h4>Blueprint Hunt — Printable Worksheet</h4>
-                <p>The offline activity from this lesson in printable format with space to sketch your HTML blueprints.</p>
-              </div>
-              <a href="pdfs.html" class="pdf-btn">Download</a>
+              <a href="pdfs.html" class="cheat-btn">Download</a>
             </div>
           </div>
-          <!-- MINI GAME -->
-          <div class="cblock" id="block-1-game">
-            <h3>Mini Game</h3>
-            <p>Test your Lesson 1 knowledge with Nova's tag placement challenge. Match each piece of content to its correct HTML tag before time runs out.</p>
-            <div class="game-cta">
-              <h4>Nova's Tag Placement Challenge</h4>
-              <p>Drag HTML tags into the right positions and watch the page come to life. The faster and more accurately you place them, the higher your builder score.</p>
-              <a href="nova-game.html" class="game-btn">Launch Mini Game</a>
-            </div>
-            <p style="text-align:center;color:var(--dim);font-size:.82rem;margin-top:1rem">This mini game is specific to Lesson 1 content. Nova's full game world has more levels and unlocks as you progress through all lessons.</p>
-          </div>
-        </div><!-- lcontent -->
-      </div><!-- lesson-layout -->
-      <div class="dash-btn-wrap"><a href="dashboard.html" class="dash-btn">View Dashboard</a></div>
-    </div><!-- content-1 -->
-  </div><!-- panel-1 -->
+        </div>
+      </div>
+      <div class="dash-btn-wrap"><a href="dashboard.html" class="dash-btn">Dashboard</a></div>
+    </div>
+  </div>
 
-  <!-- ===== LESSON 2 ===== -->
+  <!-- ===== L2 ===== -->
   <div class="lpanel" id="panel-2">
     <div id="lesson2-locked" style="display:none">
       <div class="lesson-locked">
-        <div class="lock-badge lock-badge-builders">Builders+ Required</div>
+        <div class="lock-badge lb-s">Sparks+ Required</div>
         <h3>Building Blocks</h3>
-        <p>Lesson 2 covers every core HTML element: headings, paragraphs, images, links, and lists. Unlock with a Builders membership.</p>
-        <a href="membership.html" class="unlock-btn">Upgrade to Builders</a>
+        <p>Lesson 2 covers every core HTML element: headings, paragraphs, images, links, and lists. Unlock with Sparks.</p>
+        <a href="membership.html" class="unlock-btn">Upgrade to Sparks</a>
       </div>
     </div>
     <div id="lesson2-content" style="display:none">
       <div class="lesson-layout">
         <nav class="lsidebar">
           <div class="lsidebar-label">Lesson 2</div>
-          <button class="lsidebar-item active" data-block="read" onclick="showBlock(2,'read')"><span class="sidebar-ico">R</span>Reading</button>
-          <button class="lsidebar-item" data-block="terms" onclick="showBlock(2,'terms')"><span class="sidebar-ico">T</span>Terminology</button>
-          <button class="lsidebar-item" data-block="theory" onclick="showBlock(2,'theory')"><span class="sidebar-ico">Th</span>Theory</button>
-          <button class="lsidebar-item" data-block="code" onclick="showBlock(2,'code')"><span class="sidebar-ico">Pr</span>Practical</button>
-          <button class="lsidebar-item" data-block="activity" onclick="showBlock(2,'activity')"><span class="sidebar-ico">Ac</span>Activity</button>
-          <button class="lsidebar-item" data-block="reflect" onclick="showBlock(2,'reflect')"><span class="sidebar-ico">Re</span>Reflect</button>
-          <button class="lsidebar-item" data-block="pdf" onclick="showBlock(2,'pdf')"><span class="sidebar-ico">Pd</span>Offline PDF</button>
-          <button class="lsidebar-item" data-block="game" onclick="showBlock(2,'game')"><span class="sidebar-ico">G</span>Mini Game</button>
+          <button class="lsidebar-item active" data-block="read" onclick="showBlock(2,'read')"><span class="sico">01</span>Read</button>
+          <button class="lsidebar-item" data-block="terms" onclick="showBlock(2,'terms')"><span class="sico">02</span>Terms</button>
+          <button class="lsidebar-item" data-block="code" onclick="showBlock(2,'code')"><span class="sico">03</span>Build</button>
+          <button class="lsidebar-item" data-block="reflect" onclick="showBlock(2,'reflect')"><span class="sico">04</span>Reflect</button>
+          <button class="lsidebar-item" data-block="pdf" onclick="showBlock(2,'pdf')"><span class="sico">05</span>Cheat Sheet</button>
+          <a href="nova-game.html" class="lsidebar-item game-link"><span class="sico">&#9651;</span>Nova's Game</a>
         </nav>
         <div class="lcontent">
           <div class="cblock active" id="block-2-read">
             <h3>Building Blocks</h3>
-            <div class="nova-quote">"Every structure is made of components. Learn each block individually. Then combine them into something real."</div>
-            <p>HTML gives you a toolbox. Each tool does exactly one job. A heading creates hierarchy. A paragraph holds text. An image embeds a visual. A link connects pages. A list organizes items. Learn each block, and you can build anything.</p>
-            <h4>Text: Headings and Paragraphs</h4>
-            <p>Headings run from <strong>&lt;h1&gt;</strong> to <strong>&lt;h6&gt;</strong>. h1 is the most important — use it once per page for the main title. h2 through h6 create sub-levels of organization, like chapters and sub-chapters in a book. The browser applies different sizes by default, but remember: semantic meaning, not visual size, is the real purpose.</p>
-            <div class="code-block"><div class="code-header">Headings and Paragraphs</div><pre><span class="ct">&lt;h1&gt;</span>Page Title<span class="ct">&lt;/h1&gt;</span>
-<span class="ct">&lt;h2&gt;</span>Section Title<span class="ct">&lt;/h2&gt;</span>
-<span class="ct">&lt;h3&gt;</span>Sub-section<span class="ct">&lt;/h3&gt;</span>
-<span class="ct">&lt;p&gt;</span>A paragraph of body text goes here.<span class="ct">&lt;/p&gt;</span></pre></div>
-            <h4>Images</h4>
-            <p>The <strong>&lt;img&gt;</strong> tag is self-closing — no closing tag needed. It uses two key attributes: <strong>src</strong> tells the browser where to find the image file, and <strong>alt</strong> provides a text description for screen readers and when the image fails to load.</p>
-            <div class="code-block"><div class="code-header">Image Tag</div><pre><span class="ct">&lt;img</span> <span class="ca">src</span>=<span class="cv">"nova.png"</span> <span class="ca">alt</span>=<span class="cv">"Nova the Builder Bot"</span><span class="ct">&gt;</span></pre></div>
-            <h4>Links</h4>
-            <p>The <strong>&lt;a&gt;</strong> (anchor) tag creates links. The <strong>href</strong> attribute is where clicking takes the user. You can wrap text or images inside an anchor to make them clickable.</p>
-            <div class="code-block"><div class="code-header">Link Tag</div><pre><span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"https://methodinmotion.org"</span><span class="ct">&gt;</span>Go to MiM<span class="ct">&lt;/a&gt;</span></pre></div>
-            <h4>Lists</h4>
-            <p><strong>&lt;ul&gt;</strong> creates a bullet list. <strong>&lt;ol&gt;</strong> creates a numbered list. Each item inside uses <strong>&lt;li&gt;</strong>. Lists are used for navigation menus, feature lists, step-by-step instructions — almost everything that comes in a group.</p>
-          </div>
-          <div class="cblock" id="block-2-terms">
-            <h3>Terminology</h3>
-            <div class="terms-grid">
-              <dl class="term-card"><dt>&lt;h1&gt; to &lt;h6&gt;</dt><dd>Heading tags. h1 is the main title. Each number down is a smaller sub-heading. Use them in order — never skip levels.</dd></dl>
-              <dl class="term-card"><dt>&lt;p&gt;</dt><dd>Paragraph tag. Every block of body text lives inside a &lt;p&gt;. Never leave text floating without a tag.</dd></dl>
-              <dl class="term-card"><dt>&lt;img&gt;</dt><dd>Image tag. Self-closing. Needs src= to find the image and alt= to describe it.</dd></dl>
-              <dl class="term-card"><dt>&lt;a&gt;</dt><dd>Anchor tag. Creates a clickable link. The href= attribute sets where it goes.</dd></dl>
-              <dl class="term-card"><dt>src=</dt><dd>Source attribute. Used in &lt;img&gt; to point to the image file location.</dd></dl>
-              <dl class="term-card"><dt>href=</dt><dd>HyperReference attribute. Used in &lt;a&gt; to set the link destination.</dd></dl>
-              <dl class="term-card"><dt>alt=</dt><dd>Alternative text. Describes an image for screen readers and when the image cannot load. Required.</dd></dl>
-              <dl class="term-card"><dt>&lt;ul&gt; / &lt;ol&gt; / &lt;li&gt;</dt><dd>Unordered list (bullets), ordered list (numbers), and list item. Always nest &lt;li&gt; inside &lt;ul&gt; or &lt;ol&gt;.</dd></dl>
-              <dl class="term-card"><dt>Attribute</dt><dd>Extra information added inside a tag. Written as name="value". Customizes what the element does.</dd></dl>
-              <dl class="term-card"><dt>Self-closing Tag</dt><dd>A tag that does not need a closing partner. &lt;img&gt; and &lt;br&gt; are self-closing because they contain no text content.</dd></dl>
+            <div class="nova-pull">"Every structure is made of components. Learn each block. Then stack them into something real."</div>
+            <div class="read-cards">
+              <div class="read-card">
+                <div class="read-card-num">01</div>
+                <div class="read-card-body">
+                  <h4>Headings — &lt;h1&gt; to &lt;h6&gt;</h4>
+                  <p>h1 is your main page title. h2 through h6 create sub-levels. Use them in order like chapters in a book. One h1 per page.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">02</div>
+                <div class="read-card-body">
+                  <h4>Paragraphs — &lt;p&gt;</h4>
+                  <p>Every block of body text lives in a &lt;p&gt; tag. Never leave text floating without wrapping it. The browser needs to know what it is.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">03</div>
+                <div class="read-card-body">
+                  <h4>Images — &lt;img&gt;</h4>
+                  <p>Self-closing — no closing tag. Needs <strong>src=</strong> to find the file and <strong>alt=</strong> to describe it. The alt text is read by screen readers and shown when the image fails to load.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">04</div>
+                <div class="read-card-body">
+                  <h4>Links — &lt;a&gt;</h4>
+                  <p>The anchor tag. <strong>href=</strong> sets where clicking takes you. Wrap text or images inside to make them clickable.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">05</div>
+                <div class="read-card-body">
+                  <h4>Lists — &lt;ul&gt; and &lt;ol&gt;</h4>
+                  <p>&lt;ul&gt; gives you bullets. &lt;ol&gt; gives you numbers. Each item inside uses &lt;li&gt;. Lists power nav menus, feature lists, step instructions.</p>
+                </div>
+              </div>
+            </div>
+            <div class="code-block">
+              <div class="code-header">All five blocks in one page</div>
+              <pre><span class="ct">&lt;h1&gt;</span>My Page<span class="ct">&lt;/h1&gt;</span>
+<span class="ct">&lt;p&gt;</span>Welcome to my site.<span class="ct">&lt;/p&gt;</span>
+<span class="ct">&lt;img</span> <span class="ca">src</span>=<span class="cv">"me.png"</span> <span class="ca">alt</span>=<span class="cv">"A photo of me"</span><span class="ct">&gt;</span>
+<span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"about.html"</span><span class="ct">&gt;</span>About Me<span class="ct">&lt;/a&gt;</span>
+<span class="ct">&lt;ul&gt;</span>
+  <span class="ct">&lt;li&gt;</span>Coding<span class="ct">&lt;/li&gt;</span>
+  <span class="ct">&lt;li&gt;</span>Art<span class="ct">&lt;/li&gt;</span>
+<span class="ct">&lt;/ul&gt;</span></pre>
             </div>
           </div>
-          <div class="cblock" id="block-2-theory">
-            <h3>Theory</h3>
-            <h4>Paired Tags vs Self-Closing Tags</h4>
-            <p>Most tags wrap content: there is an opening tag, the content, and a closing tag. But some elements do not wrap content — they are standalone instructions. <strong>&lt;img&gt;</strong> places an image. <strong>&lt;br&gt;</strong> breaks a line. There is nothing to wrap, so there is no closing tag. Understanding which tags are paired and which are self-closing prevents common syntax errors.</p>
-            <h4>Attributes Give Tags Instructions</h4>
-            <p>A tag describes the type of element. Attributes give that element specific instructions. An &lt;a&gt; tag means "this is a link." Adding <strong>href="https://..."</strong> tells the browser where the link goes. Without the attribute, the tag exists but does nothing useful. Think of the tag as the noun and the attribute as the verb.</p>
-            <h4>Alt Text Is Not Optional</h4>
-            <p>Many beginners skip alt text because the page looks the same without it. But alt text is read aloud by screen readers used by people with visual impairments. It also appears when an image fails to load. A page without alt text excludes users and breaks accessibility standards. Professional developers are required to include it. So should you.</p>
-            <h4>Semantic Heading Order</h4>
-            <p>Skipping heading levels — going from h1 directly to h4 — breaks the document's semantic structure. Search engines use heading hierarchy to understand your content. Screen readers use it to navigate. Use headings to create a real outline: one h1, multiple h2s for main sections, h3s inside those sections. It is like writing a proper outline before an essay.</p>
+          <div class="cblock" id="block-2-terms">
+            <h3>Key Terms</h3>
+            <div class="terms-grid">
+              <dl class="term-card"><dt>&lt;h1&gt; to &lt;h6&gt;</dt><dd>Heading tags. h1 is most important. Never skip levels — always go in order.</dd></dl>
+              <dl class="term-card"><dt>&lt;p&gt;</dt><dd>Paragraph tag. Wraps any block of body text. Do not leave text without a tag.</dd></dl>
+              <dl class="term-card"><dt>&lt;img&gt;</dt><dd>Self-closing image tag. Needs src= and alt= to work correctly.</dd></dl>
+              <dl class="term-card"><dt>&lt;a&gt;</dt><dd>Anchor tag. Creates a link. href= sets the destination.</dd></dl>
+              <dl class="term-card"><dt>src=</dt><dd>Source attribute. Points to the image file location on img tags.</dd></dl>
+              <dl class="term-card"><dt>href=</dt><dd>HyperReference. Sets the link destination on anchor tags.</dd></dl>
+              <dl class="term-card"><dt>alt=</dt><dd>Alternative text. Describes images for screen readers. Required.</dd></dl>
+              <dl class="term-card"><dt>&lt;ul&gt; / &lt;ol&gt; / &lt;li&gt;</dt><dd>Unordered (bullets), ordered (numbers), list item. Always nest li inside ul or ol.</dd></dl>
+              <dl class="term-card"><dt>Attribute</dt><dd>Extra information inside a tag. Written as name="value". Like src="photo.jpg".</dd></dl>
+              <dl class="term-card"><dt>Self-closing Tag</dt><dd>A tag with no closing partner because it holds no content. &lt;img&gt; and &lt;br&gt; are self-closing.</dd></dl>
+            </div>
           </div>
           <div class="cblock" id="block-2-code">
-            <h3>Practical</h3>
-            <p>Build a mini profile page below. Use headings, paragraphs, a list, and a link. Make it about yourself.</p>
+            <h3>Build It</h3>
+            <p>Build a profile page using all five building blocks. Make it about yourself.</p>
             <div class="editor-wrap">
               <div class="editor-pane">
                 <label>HTML Editor</label>
@@ -654,7 +632,7 @@ textarea.code-ed:focus{border-color:var(--y)}
 <body>
   <h1>My Name</h1>
   <h2>What I Love</h2>
-  <p>I am a builder who creates things!</p>
+  <p>I am a builder who creates things.</p>
   <ul>
     <li>Coding</li>
     <li>Art</li>
@@ -663,13 +641,13 @@ textarea.code-ed:focus{border-color:var(--y)}
   <a href="#">See My Work</a>
 </body>
 </html></textarea>
-                <button class="run-btn" onclick="runCode('editor-2','preview-2')">Run Code</button>
+                <button class="run-btn" onclick="runCode('editor-2','preview-2')">Run</button>
               </div>
               <div class="preview-box"><iframe id="preview-2"></iframe></div>
             </div>
-            <h3 style="margin-top:2rem">Check Your Understanding</h3>
+            <h3 style="margin-top:2rem">Quick Check</h3>
             <div class="quiz-card">
-              <div class="quiz-q">Which heading tag creates the most important, largest heading?</div>
+              <div class="quiz-q">Which tag creates the most important heading?</div>
               <div class="quiz-opts">
                 <button class="qopt" onclick="checkQ(this,false,'2a')">&lt;h6&gt;</button>
                 <button class="qopt" onclick="checkQ(this,true,'2a')">&lt;h1&gt;</button>
@@ -678,7 +656,7 @@ textarea.code-ed:focus{border-color:var(--y)}
               <div class="quiz-fb" id="qf-2a"></div>
             </div>
             <div class="quiz-card">
-              <div class="quiz-q">What attribute in an &lt;img&gt; tag points to the image file?</div>
+              <div class="quiz-q">What attribute in &lt;img&gt; points to the image file?</div>
               <div class="quiz-opts">
                 <button class="qopt" onclick="checkQ(this,false,'2b')">href=</button>
                 <button class="qopt" onclick="checkQ(this,true,'2b')">src=</button>
@@ -686,75 +664,42 @@ textarea.code-ed:focus{border-color:var(--y)}
               </div>
               <div class="quiz-fb" id="qf-2b"></div>
             </div>
-            <div class="quiz-card">
-              <div class="quiz-q">A &lt;ul&gt; creates which type of list?</div>
-              <div class="quiz-opts">
-                <button class="qopt" onclick="checkQ(this,false,'2c')">Numbered list</button>
-                <button class="qopt" onclick="checkQ(this,true,'2c')">Bullet list</button>
-                <button class="qopt" onclick="checkQ(this,false,'2c')">Definition list</button>
-              </div>
-              <div class="quiz-fb" id="qf-2c"></div>
-            </div>
-          </div>
-          <div class="cblock" id="block-2-activity">
-            <h3>Suggested Activity</h3>
-            <div class="activity-card">
-              <h4>My Profile Page — Offline Draft</h4>
-              <p>Before you code it, plan it. Grab paper and sketch your profile page. Label each section with the HTML tag you would use. This is what professional developers call "wireframing."</p>
-              <ol class="activity-steps">
-                <li>Draw a rectangle representing your browser window.</li>
-                <li>Inside it, mark a section for your name — which heading tag would this be?</li>
-                <li>Add a section for a short bio in your own words — which tag wraps body text?</li>
-                <li>Add a list of three things you love — which list type: ordered or unordered?</li>
-                <li>Add a link at the bottom to your favorite website.</li>
-                <li>Now open the Practical tab and build exactly what you drew.</li>
-              </ol>
-            </div>
           </div>
           <div class="cblock" id="block-2-reflect">
             <h3>Reflect</h3>
             <div class="reflect-card">
-              <h4>Lesson 2 Reflection</h4>
+              <h4>Think It Through</h4>
               <div class="reflect-prompts">
-                <div class="rprompt">What is the difference between a &lt;ul&gt; and an &lt;ol&gt;? When would you choose one over the other?</div>
-                <div class="rprompt">Why do you think alt text on images matters? Can you think of a situation where it would be critical?</div>
-                <div class="rprompt">You now know tags, attributes, and values. Write a sentence that uses all three words correctly to describe how &lt;img src="cat.png" alt="my cat"&gt; works.</div>
-                <div class="rprompt">Look at any website right now. Name five elements on the page and the HTML tag each one probably uses.</div>
+                <div class="rprompt">What is the difference between &lt;ul&gt; and &lt;ol&gt;? Give a real example of when you would use each one.</div>
+                <div class="rprompt">Why is alt text on images important? Think of someone who cannot see the screen.</div>
+                <div class="rprompt">Look at any website right now. Name five elements on the page and guess the HTML tag each one uses.</div>
               </div>
             </div>
           </div>
           <div class="cblock" id="block-2-pdf">
-            <h3>Offline PDF</h3>
-            <div class="pdf-card">
-              <div class="pdf-icon">N</div>
-              <div class="pdf-info">
-                <h4>HTML Building Blocks — Cheat Sheet Vol. 2</h4>
-                <p>All core tags with syntax, attributes, and usage examples.</p>
+            <h3>Cheat Sheet</h3>
+            <div class="cheat-card">
+              <div class="cheat-icon">N2</div>
+              <div class="cheat-info">
+                <h4>Building Blocks — Lesson 2 Reference</h4>
+                <p>All five core HTML elements with syntax, attributes, and usage examples.</p>
               </div>
-              <a href="pdfs.html" class="pdf-btn">Download</a>
-            </div>
-          </div>
-          <div class="cblock" id="block-2-game">
-            <h3>Mini Game</h3>
-            <div class="game-cta">
-              <h4>Nova's Tag Match Challenge — Level 2</h4>
-              <p>Match each piece of content to its correct HTML tag. Images, links, lists, and headings all in one round.</p>
-              <a href="nova-game.html" class="game-btn">Launch Mini Game</a>
+              <a href="pdfs.html" class="cheat-btn">Download</a>
             </div>
           </div>
         </div>
       </div>
-      <div class="dash-btn-wrap"><a href="dashboard.html" class="dash-btn">View Dashboard</a></div>
+      <div class="dash-btn-wrap"><a href="dashboard.html" class="dash-btn">Dashboard</a></div>
     </div>
   </div>
 
-  <!-- ===== LESSON 3 ===== -->
+  <!-- ===== L3 ===== -->
   <div class="lpanel" id="panel-3">
     <div id="lesson3-locked" style="display:none">
       <div class="lesson-locked">
-        <div class="lock-badge lock-badge-builders">Builders+ Required</div>
+        <div class="lock-badge lb-b">Builders+ Required</div>
         <h3>Layout &amp; Nesting</h3>
-        <p>Lesson 3 teaches how to group and organize elements into a real page structure. Unlock with Builders.</p>
+        <p>Lesson 3 teaches grouping, containers, and semantic page structure. Unlock with Builders.</p>
         <a href="membership.html" class="unlock-btn">Upgrade to Builders</a>
       </div>
     </div>
@@ -762,69 +707,79 @@ textarea.code-ed:focus{border-color:var(--y)}
       <div class="lesson-layout">
         <nav class="lsidebar">
           <div class="lsidebar-label">Lesson 3</div>
-          <button class="lsidebar-item active" data-block="read" onclick="showBlock(3,'read')"><span class="sidebar-ico">R</span>Reading</button>
-          <button class="lsidebar-item" data-block="terms" onclick="showBlock(3,'terms')"><span class="sidebar-ico">T</span>Terminology</button>
-          <button class="lsidebar-item" data-block="theory" onclick="showBlock(3,'theory')"><span class="sidebar-ico">Th</span>Theory</button>
-          <button class="lsidebar-item" data-block="code" onclick="showBlock(3,'code')"><span class="sidebar-ico">Pr</span>Practical</button>
-          <button class="lsidebar-item" data-block="activity" onclick="showBlock(3,'activity')"><span class="sidebar-ico">Ac</span>Activity</button>
-          <button class="lsidebar-item" data-block="reflect" onclick="showBlock(3,'reflect')"><span class="sidebar-ico">Re</span>Reflect</button>
-          <button class="lsidebar-item" data-block="pdf" onclick="showBlock(3,'pdf')"><span class="sidebar-ico">Pd</span>Offline PDF</button>
-          <button class="lsidebar-item" data-block="game" onclick="showBlock(3,'game')"><span class="sidebar-ico">G</span>Mini Game</button>
+          <button class="lsidebar-item active" data-block="read" onclick="showBlock(3,'read')"><span class="sico">01</span>Read</button>
+          <button class="lsidebar-item" data-block="terms" onclick="showBlock(3,'terms')"><span class="sico">02</span>Terms</button>
+          <button class="lsidebar-item" data-block="code" onclick="showBlock(3,'code')"><span class="sico">03</span>Build</button>
+          <button class="lsidebar-item" data-block="reflect" onclick="showBlock(3,'reflect')"><span class="sico">04</span>Reflect</button>
+          <button class="lsidebar-item" data-block="pdf" onclick="showBlock(3,'pdf')"><span class="sico">05</span>Cheat Sheet</button>
+          <a href="nova-game.html" class="lsidebar-item game-link"><span class="sico">&#9651;</span>Nova's Game</a>
         </nav>
         <div class="lcontent">
           <div class="cblock active" id="block-3-read">
             <h3>Layout &amp; Nesting</h3>
-            <div class="nova-quote">"Individual bricks do not make a building. You need to group them, stack them, and organize them. That is what layout is."</div>
-            <p>You know the individual building blocks. Now it is time to put them together. Real webpages are not just a list of elements stacked one after another. They are groups of elements organized into sections — and sections nested inside containers. This is how layout works.</p>
-            <h4>The &lt;div&gt; Tag</h4>
-            <p>A <strong>&lt;div&gt;</strong> is a generic container. It has no visual appearance on its own — it is purely structural. You use it to group related elements together so you can position and style them as a single unit with CSS later.</p>
-            <div class="code-block"><div class="code-header">Grouping with Divs</div><pre><span class="ct">&lt;div</span> <span class="ca">class</span>=<span class="cv">"card"</span><span class="ct">&gt;</span>
-  <span class="ct">&lt;h2&gt;</span>Nova<span class="ct">&lt;/h2&gt;</span>
-  <span class="ct">&lt;p&gt;</span>Builder Bot<span class="ct">&lt;/p&gt;</span>
-  <span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"nova.html"</span><span class="ct">&gt;</span>Enter World<span class="ct">&lt;/a&gt;</span>
-<span class="ct">&lt;/div&gt;</span></pre></div>
-            <h4>Semantic Tags</h4>
-            <p>HTML5 introduced tags that describe their purpose: <strong>&lt;header&gt;</strong>, <strong>&lt;nav&gt;</strong>, <strong>&lt;main&gt;</strong>, <strong>&lt;section&gt;</strong>, <strong>&lt;article&gt;</strong>, and <strong>&lt;footer&gt;</strong>. Use these instead of plain divs wherever they fit. They make your code readable, help search engines, and support accessibility tools.</p>
-            <div class="code-block"><div class="code-header">Semantic Page Structure</div><pre><span class="ct">&lt;header&gt;</span>
+            <div class="nova-pull">"Individual bricks do not make a building. Group them. Stack them. Organize them. That is layout."</div>
+            <div class="read-cards">
+              <div class="read-card">
+                <div class="read-card-num">01</div>
+                <div class="read-card-body">
+                  <h4>The &lt;div&gt; — Your Container</h4>
+                  <p>A &lt;div&gt; is a generic box. No visual style on its own. You use it to group elements so CSS can move and style them together as a unit.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">02</div>
+                <div class="read-card-body">
+                  <h4>Nesting — Elements Inside Elements</h4>
+                  <p>When you place an element inside another, the outer is the parent and the inner is the child. Children must close before their parent closes. Breaking this rule causes invisible bugs.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">03</div>
+                <div class="read-card-body">
+                  <h4>Semantic Tags — Meaning Built In</h4>
+                  <p>&lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;footer&gt; — these describe their purpose. Use them instead of &lt;div&gt; when the role is clear. Search engines and screen readers depend on it.</p>
+                </div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">04</div>
+                <div class="read-card-body">
+                  <h4>The Box Model</h4>
+                  <p>Every HTML element is a box with four layers: content, padding (inside space), border, and margin (outside space). This model is the foundation of all CSS layout.</p>
+                </div>
+              </div>
+            </div>
+            <div class="code-block">
+              <div class="code-header">A full semantic page skeleton</div>
+              <pre><span class="ct">&lt;header&gt;</span>
   <span class="ct">&lt;nav&gt;</span><span class="ct">&lt;a</span> <span class="ca">href</span>=<span class="cv">"/"</span><span class="ct">&gt;</span>Home<span class="ct">&lt;/a&gt;&lt;/nav&gt;</span>
 <span class="ct">&lt;/header&gt;</span>
 <span class="ct">&lt;main&gt;</span>
   <span class="ct">&lt;section&gt;</span>
     <span class="ct">&lt;h1&gt;</span>Welcome<span class="ct">&lt;/h1&gt;</span>
-    <span class="ct">&lt;p&gt;</span>Page content here.<span class="ct">&lt;/p&gt;</span>
+    <span class="ct">&lt;p&gt;</span>Main content here.<span class="ct">&lt;/p&gt;</span>
   <span class="ct">&lt;/section&gt;</span>
 <span class="ct">&lt;/main&gt;</span>
-<span class="ct">&lt;footer&gt;</span>Built with MiM<span class="ct">&lt;/footer&gt;</span></pre></div>
-          </div>
-          <div class="cblock" id="block-3-terms">
-            <h3>Terminology</h3>
-            <div class="terms-grid">
-              <dl class="term-card"><dt>&lt;div&gt;</dt><dd>Generic container. Groups elements so they can be styled and positioned together. No visual style by default.</dd></dl>
-              <dl class="term-card"><dt>Nesting</dt><dd>Placing elements inside other elements. The inner element is the child. The outer is the parent.</dd></dl>
-              <dl class="term-card"><dt>&lt;header&gt;</dt><dd>Top section of a page or component. Usually holds the logo, navigation, and page title.</dd></dl>
-              <dl class="term-card"><dt>&lt;nav&gt;</dt><dd>Navigation container. Holds links that help users move around the site. Tells screen readers this is a menu.</dd></dl>
-              <dl class="term-card"><dt>&lt;main&gt;</dt><dd>The primary content of the page. There should only be one &lt;main&gt; per page.</dd></dl>
-              <dl class="term-card"><dt>&lt;section&gt;</dt><dd>A thematic group of content. Use for major page areas like "About," "Projects," or "Contact."</dd></dl>
-              <dl class="term-card"><dt>&lt;footer&gt;</dt><dd>Bottom of a page. Holds copyright info, extra links, and contact details.</dd></dl>
-              <dl class="term-card"><dt>class=</dt><dd>Attribute that gives an element a reusable label. CSS and JavaScript use class names to target elements.</dd></dl>
-              <dl class="term-card"><dt>Parent / Child</dt><dd>An element that contains another is the parent. The element inside is the child. CSS styles can cascade from parent to child.</dd></dl>
-              <dl class="term-card"><dt>The Box Model</dt><dd>Every HTML element is a box with content, padding (inside space), border, and margin (outside space).</dd></dl>
+<span class="ct">&lt;footer&gt;</span>Built with MiM<span class="ct">&lt;/footer&gt;</span></pre>
             </div>
           </div>
-          <div class="cblock" id="block-3-theory">
-            <h3>Theory</h3>
-            <h4>Why Semantic HTML Matters</h4>
-            <p>A screen reader cannot guess that your &lt;div class="header"&gt; is a page header. But &lt;header&gt; communicates its role instantly — to the browser, to accessibility tools, and to search engines. Semantic HTML makes your page smarter without any extra effort. It is the same information with the same visual result, but far more meaningful to the systems that process it.</p>
-            <h4>Nesting Rules — Never Break These</h4>
-            <p>Children must close before their parent closes. If you open a &lt;div&gt;, then open an &lt;h2&gt; inside it, you must close the &lt;h2&gt; before you close the &lt;div&gt;. Breaking nesting rules causes invisible bugs that are incredibly hard to track down. Use indentation — tabbing child elements to the right — to keep your nesting visible and valid.</p>
-            <h4>The Box Model Is Everything in CSS</h4>
-            <p>Every HTML element is a box. That box has four layers: the content itself, padding (space between content and border), the border, and margin (space outside the border). Understanding this is the foundation of all CSS layout. When you move to CSS, you will control every one of these layers precisely. Get comfortable thinking of elements as boxes now.</p>
-            <h4>Divs vs Semantic Tags</h4>
-            <p>A common beginner mistake is using &lt;div&gt; for everything. A better practice: use semantic tags when the purpose is clear (header, nav, main, footer, section), and use &lt;div&gt; when you just need a generic grouping container for styling with CSS. The more semantic your HTML, the more professional and maintainable your code.</p>
+          <div class="cblock" id="block-3-terms">
+            <h3>Key Terms</h3>
+            <div class="terms-grid">
+              <dl class="term-card"><dt>&lt;div&gt;</dt><dd>Generic container. Groups elements for styling. No visual appearance on its own.</dd></dl>
+              <dl class="term-card"><dt>Nesting</dt><dd>Placing elements inside other elements. Inner = child. Outer = parent.</dd></dl>
+              <dl class="term-card"><dt>&lt;header&gt;</dt><dd>Top section of page. Holds logo, nav, and page title.</dd></dl>
+              <dl class="term-card"><dt>&lt;nav&gt;</dt><dd>Navigation container. Holds links for moving around the site.</dd></dl>
+              <dl class="term-card"><dt>&lt;main&gt;</dt><dd>Primary content of the page. Only one per page.</dd></dl>
+              <dl class="term-card"><dt>&lt;section&gt;</dt><dd>A thematic content group. Used for major page areas like About, Projects, Contact.</dd></dl>
+              <dl class="term-card"><dt>&lt;footer&gt;</dt><dd>Bottom of the page. Holds copyright, links, contact info.</dd></dl>
+              <dl class="term-card"><dt>class=</dt><dd>Gives an element a reusable label. CSS uses class names to apply styles.</dd></dl>
+              <dl class="term-card"><dt>Parent / Child</dt><dd>The outer element is the parent. The inner element is the child. CSS can cascade from parent to child.</dd></dl>
+              <dl class="term-card"><dt>Box Model</dt><dd>Every element is a box: content + padding + border + margin. The foundation of CSS layout.</dd></dl>
+            </div>
           </div>
           <div class="cblock" id="block-3-code">
-            <h3>Practical</h3>
-            <p>Build a full page layout with a header, main area, and footer. Use the semantic tags you learned.</p>
+            <h3>Build It</h3>
+            <p>Build a full page layout with a header, main section, and footer using semantic tags.</p>
             <div class="editor-wrap">
               <div class="editor-pane">
                 <label>HTML Editor</label>
@@ -835,37 +790,36 @@ textarea.code-ed:focus{border-color:var(--y)}
     <h1>My Website</h1>
     <nav>
       <a href="#">Home</a> |
-      <a href="#">About</a> |
-      <a href="#">Contact</a>
+      <a href="#">About</a>
     </nav>
   </header>
   <main style="padding:2rem">
     <section>
       <h2>Welcome</h2>
-      <p>This is my main content area.</p>
+      <p>This is my main content.</p>
     </section>
   </main>
   <footer style="background:#333;color:#fff;padding:1rem;text-align:center">
-    Built by me with HTML
+    Built by me
   </footer>
 </body>
 </html></textarea>
-                <button class="run-btn" onclick="runCode('editor-3','preview-3')">Run Code</button>
+                <button class="run-btn" onclick="runCode('editor-3','preview-3')">Run</button>
               </div>
               <div class="preview-box"><iframe id="preview-3"></iframe></div>
             </div>
-            <h3 style="margin-top:2rem">Check Your Understanding</h3>
+            <h3 style="margin-top:2rem">Quick Check</h3>
             <div class="quiz-card">
-              <div class="quiz-q">What does a &lt;div&gt; do on its own with no CSS applied?</div>
+              <div class="quiz-q">What does &lt;div&gt; look like with no CSS applied?</div>
               <div class="quiz-opts">
-                <button class="qopt" onclick="checkQ(this,false,'3a')">Creates a visible box with a border</button>
-                <button class="qopt" onclick="checkQ(this,true,'3a')">Groups elements with no visible appearance</button>
-                <button class="qopt" onclick="checkQ(this,false,'3a')">Adds spacing between elements automatically</button>
+                <button class="qopt" onclick="checkQ(this,false,'3a')">A visible box with a border</button>
+                <button class="qopt" onclick="checkQ(this,true,'3a')">Nothing — it is invisible until CSS is added</button>
+                <button class="qopt" onclick="checkQ(this,false,'3a')">A line break between elements</button>
               </div>
               <div class="quiz-fb" id="qf-3a"></div>
             </div>
             <div class="quiz-card">
-              <div class="quiz-q">Which semantic tag should hold the primary content of a page?</div>
+              <div class="quiz-q">Which tag holds the primary content of a page?</div>
               <div class="quiz-opts">
                 <button class="qopt" onclick="checkQ(this,false,'3b')">&lt;content&gt;</button>
                 <button class="qopt" onclick="checkQ(this,false,'3b')">&lt;body&gt;</button>
@@ -873,74 +827,42 @@ textarea.code-ed:focus{border-color:var(--y)}
               </div>
               <div class="quiz-fb" id="qf-3b"></div>
             </div>
-            <div class="quiz-card">
-              <div class="quiz-q">In nesting, which element is the "parent"?</div>
-              <div class="quiz-opts">
-                <button class="qopt" onclick="checkQ(this,false,'3c')">The element that comes first in the file</button>
-                <button class="qopt" onclick="checkQ(this,true,'3c')">The outer element that contains others</button>
-                <button class="qopt" onclick="checkQ(this,false,'3c')">The element with the most content</button>
-              </div>
-              <div class="quiz-fb" id="qf-3c"></div>
-            </div>
-          </div>
-          <div class="cblock" id="block-3-activity">
-            <h3>Suggested Activity</h3>
-            <div class="activity-card">
-              <h4>Page Skeleton Sketch — Offline</h4>
-              <p>Grab paper. Sketch the skeleton of a website you use regularly — your school site, a game site, or a social platform. Do not draw the design. Draw the structure.</p>
-              <ol class="activity-steps">
-                <li>Draw boxes for the major sections: header, navigation, main content, sidebar (if any), footer.</li>
-                <li>Label each box with the semantic HTML tag it would use.</li>
-                <li>Inside the main content box, draw sub-boxes for sections and articles.</li>
-                <li>Look at how things are nested — what is inside what?</li>
-                <li>Translate your sketch into HTML structure in the Practical editor. No styling needed — structure only.</li>
-              </ol>
-            </div>
           </div>
           <div class="cblock" id="block-3-reflect">
             <h3>Reflect</h3>
             <div class="reflect-card">
-              <h4>Lesson 3 Reflection</h4>
+              <h4>Think It Through</h4>
               <div class="reflect-prompts">
-                <div class="rprompt">What is the difference between a &lt;div&gt; and a &lt;section&gt;? When would you use each one?</div>
+                <div class="rprompt">What is the difference between &lt;div&gt; and &lt;section&gt;? When would you use each one?</div>
                 <div class="rprompt">Why does nesting order matter? What happens if a child element does not close before its parent?</div>
-                <div class="rprompt">You have now learned structure, elements, and layout. What would your own webpage look like? Describe the layout in plain English — header, main sections, footer.</div>
-                <div class="rprompt">The box model says every element is a box. Look at this page right now. Pick three things on screen and describe the box each one lives in.</div>
+                <div class="rprompt">Look at this page right now. Identify three visible areas and name the semantic HTML tag each one would use.</div>
               </div>
             </div>
           </div>
           <div class="cblock" id="block-3-pdf">
-            <h3>Offline PDF</h3>
-            <div class="pdf-card">
-              <div class="pdf-icon">N</div>
-              <div class="pdf-info">
-                <h4>Layout &amp; Structure — Cheat Sheet Vol. 3</h4>
-                <p>Semantic tags, nesting rules, the box model, and page skeleton reference.</p>
+            <h3>Cheat Sheet</h3>
+            <div class="cheat-card">
+              <div class="cheat-icon">N3</div>
+              <div class="cheat-info">
+                <h4>Layout &amp; Nesting — Lesson 3 Reference</h4>
+                <p>Semantic tags, nesting rules, the box model, and page skeleton.</p>
               </div>
-              <a href="pdfs.html" class="pdf-btn">Download</a>
-            </div>
-          </div>
-          <div class="cblock" id="block-3-game">
-            <h3>Mini Game</h3>
-            <div class="game-cta">
-              <h4>Nova's Nesting Puzzle — Level 3</h4>
-              <p>Fix the broken HTML structure. Identify which elements are wrongly nested and drag them into the correct positions to make the page valid.</p>
-              <a href="nova-game.html" class="game-btn">Launch Mini Game</a>
+              <a href="pdfs.html" class="cheat-btn">Download</a>
             </div>
           </div>
         </div>
       </div>
-      <div class="dash-btn-wrap"><a href="dashboard.html" class="dash-btn">View Dashboard</a></div>
+      <div class="dash-btn-wrap"><a href="dashboard.html" class="dash-btn">Dashboard</a></div>
     </div>
   </div>
 
-  <!-- ===== LESSON 4 ===== -->
+  <!-- ===== L4 ===== -->
   <div class="lpanel" id="panel-4">
     <div id="lesson4-locked" style="display:none">
       <div class="lesson-locked">
-        <div class="lock-badge lock-badge-coders">Coders Required</div>
+        <div class="lock-badge lb-c">Coders Required</div>
         <h3>Build Your Page</h3>
-        <p>Lesson 4 is Nova's capstone. Build a real webpage and download it. Upgrade to Coders to unlock it.</p>
+        <p>Nova's capstone lesson. Build and download a real webpage using everything you have learned. Unlock with Coders.</p>
         <a href="membership.html" class="unlock-btn">Upgrade to Coders</a>
       </div>
     </div>
@@ -948,30 +870,40 @@ textarea.code-ed:focus{border-color:var(--y)}
       <div class="lesson-layout">
         <nav class="lsidebar">
           <div class="lsidebar-label">Lesson 4</div>
-          <button class="lsidebar-item active" data-block="read" onclick="showBlock(4,'read')"><span class="sidebar-ico">R</span>Reading</button>
-          <button class="lsidebar-item" data-block="theory" onclick="showBlock(4,'theory')"><span class="sidebar-ico">Th</span>Theory</button>
-          <button class="lsidebar-item" data-block="builder" onclick="showBlock(4,'builder')"><span class="sidebar-ico">Pr</span>Page Builder</button>
-          <button class="lsidebar-item" data-block="activity" onclick="showBlock(4,'activity')"><span class="sidebar-ico">Ac</span>Activity</button>
-          <button class="lsidebar-item" data-block="reflect" onclick="showBlock(4,'reflect')"><span class="sidebar-ico">Re</span>Reflect</button>
-          <button class="lsidebar-item" data-block="pdf" onclick="showBlock(4,'pdf')"><span class="sidebar-ico">Pd</span>Offline PDF</button>
-          <button class="lsidebar-item" data-block="game" onclick="showBlock(4,'game')"><span class="sidebar-ico">G</span>Mini Game</button>
+          <button class="lsidebar-item active" data-block="read" onclick="showBlock(4,'read')"><span class="sico">01</span>Read</button>
+          <button class="lsidebar-item" data-block="builder" onclick="showBlock(4,'builder')"><span class="sico">02</span>Build</button>
+          <button class="lsidebar-item" data-block="reflect" onclick="showBlock(4,'reflect')"><span class="sico">03</span>Reflect</button>
+          <button class="lsidebar-item" data-block="pdf" onclick="showBlock(4,'pdf')"><span class="sico">04</span>Cheat Sheet</button>
+          <a href="nova-game.html" class="lsidebar-item game-link"><span class="sico">&#9651;</span>Nova's Game</a>
         </nav>
         <div class="lcontent">
           <div class="cblock active" id="block-4-read">
             <h3>Build Your Page</h3>
-            <div class="nova-quote">"You have the blueprint. You have the blocks. You know how to structure them. Now it is time to actually build."</div>
-            <p>This is Nova's capstone lesson. Everything from Lessons 1, 2, and 3 comes together here. You will use Nova's Page Builder to create a real, working HTML file. When you are done, you can download it and open it in any browser.</p>
+            <div class="nova-pull">"You have the blueprint. You have the blocks. You know the structure. Now — build."</div>
+            <p>This is Nova's capstone. Everything from Lessons 1, 2, and 3 comes together right here. You will use Nova's Page Builder to create a real, working HTML file. When you are done, you can download it and open it in any browser on any computer.</p>
             <h4>What You Will Build</h4>
-            <ul>
-              <li>A &lt;header&gt; with your page title and a simple navigation</li>
-              <li>A hero &lt;section&gt; with a welcome heading and a description about yourself</li>
-              <li>An "About Me" section with a list of facts</li>
-              <li>A &lt;footer&gt; with your name and a link</li>
-            </ul>
-            <p>This is the first page of the bigger webpage you will keep building across all six MiM characters. By the time you finish all six worlds, you will have a complete personal website built entirely by you.</p>
-            <h3 style="margin-top:2rem">Final Quiz</h3>
+            <div class="read-cards">
+              <div class="read-card">
+                <div class="read-card-num">01</div>
+                <div class="read-card-body"><h4>&lt;header&gt;</h4><p>Your page title and a simple navigation with links.</p></div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">02</div>
+                <div class="read-card-body"><h4>Hero &lt;section&gt;</h4><p>A welcome heading and a description of yourself.</p></div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">03</div>
+                <div class="read-card-body"><h4>About &lt;section&gt;</h4><p>A list of facts about you — your first real content block.</p></div>
+              </div>
+              <div class="read-card">
+                <div class="read-card-num">04</div>
+                <div class="read-card-body"><h4>&lt;footer&gt;</h4><p>Your name and a credit line. The first page of your portfolio.</p></div>
+              </div>
+            </div>
+            <p>Keep this file. When you move to the next MiM character you will add CSS to it. By the time all six characters are complete, you will have a fully styled, interactive personal website built entirely by you.</p>
+            <h3 style="margin-top:2rem">Final Check</h3>
             <div class="quiz-card">
-              <div class="quiz-q">You want to group your header elements. Which tag is most appropriate?</div>
+              <div class="quiz-q">You want to group header elements. Which tag is most appropriate?</div>
               <div class="quiz-opts">
                 <button class="qopt" onclick="checkQ(this,false,'4a')">&lt;group&gt;</button>
                 <button class="qopt" onclick="checkQ(this,true,'4a')">&lt;header&gt; or &lt;div&gt;</button>
@@ -980,36 +912,18 @@ textarea.code-ed:focus{border-color:var(--y)}
               <div class="quiz-fb" id="qf-4a"></div>
             </div>
             <div class="quiz-card">
-              <div class="quiz-q">What is the correct order of the three web layers?</div>
+              <div class="quiz-q">Correct order of the three web layers?</div>
               <div class="quiz-opts">
                 <button class="qopt" onclick="checkQ(this,false,'4b')">CSS, HTML, JavaScript</button>
-                <button class="qopt" onclick="checkQ(this,true,'4b')">HTML (structure), CSS (style), JavaScript (behavior)</button>
+                <button class="qopt" onclick="checkQ(this,true,'4b')">HTML (structure) CSS (style) JavaScript (behavior)</button>
                 <button class="qopt" onclick="checkQ(this,false,'4b')">JavaScript, CSS, HTML</button>
               </div>
               <div class="quiz-fb" id="qf-4b"></div>
             </div>
-            <div class="quiz-card">
-              <div class="quiz-q">Which tag would you NOT use inside a &lt;head&gt;?</div>
-              <div class="quiz-opts">
-                <button class="qopt" onclick="checkQ(this,false,'4c')">&lt;title&gt;</button>
-                <button class="qopt" onclick="checkQ(this,true,'4c')">&lt;h1&gt;</button>
-                <button class="qopt" onclick="checkQ(this,false,'4c')">&lt;link&gt;</button>
-              </div>
-              <div class="quiz-fb" id="qf-4c"></div>
-            </div>
-          </div>
-          <div class="cblock" id="block-4-theory">
-            <h3>Theory</h3>
-            <h4>What Comes After HTML</h4>
-            <p>You have built the foundation. The next character in the MiM universe will teach you <strong>CSS</strong> — how to make everything you just built look exactly the way you picture it in your mind. After that comes JavaScript with Echo, then deeper concepts with Loop, Bug, and Zen.</p>
-            <h4>Your Page Is Already Real</h4>
-            <p>The file you download from the Page Builder is a legitimate HTML file. It will open in any browser on any computer. You have not been using a simplified toy environment. You have been writing real HTML that the browser processes the exact same way it processes any professional website.</p>
-            <h4>Deployment</h4>
-            <p>Once you have a local HTML file, the next step is putting it on the internet. That is called <strong>deployment</strong>. GitHub Pages — the same tool this site runs on — lets you deploy a webpage for free in minutes. That is a skill you will tackle once CSS is complete. For now, download and save your page. It is the first file in your portfolio.</p>
           </div>
           <div class="cblock" id="block-4-builder">
             <h3>Nova's Page Builder</h3>
-            <p>Fill in the fields, set your colors, and hit Preview. When it looks right, download your completed HTML file.</p>
+            <p>Fill in the fields, set your colors, preview, then download your real .html file.</p>
             <div class="page-builder">
               <div class="builder-controls">
                 <label>Page Title</label>
@@ -1017,7 +931,7 @@ textarea.code-ed:focus{border-color:var(--y)}
                 <label>Your Name</label>
                 <input type="text" id="pb-name" placeholder="Your name">
                 <label>Welcome Message</label>
-                <textarea id="pb-welcome" placeholder="Welcome to my page! I built this with HTML."></textarea>
+                <textarea id="pb-welcome" placeholder="Welcome to my page!"></textarea>
                 <label>3 Fun Facts (one per line)</label>
                 <textarea id="pb-facts" placeholder="I love coding&#10;I built this with HTML&#10;HTML is my superpower"></textarea>
                 <label>Background Color</label>
@@ -1025,71 +939,46 @@ textarea.code-ed:focus{border-color:var(--y)}
                 <label>Accent Color</label>
                 <input type="color" id="pb-accent" value="#ffe066">
                 <button class="builder-btn" onclick="buildPreview()">Preview My Page</button>
-                <button class="builder-btn" style="background:linear-gradient(135deg,#00e5ff,#ff6baa);margin-top:.4rem" onclick="downloadPage()">Download .html File</button>
+                <button class="builder-btn" style="background:linear-gradient(135deg,#00e5ff,#ff6baa);margin-top:.4rem" onclick="downloadPage()">Download .html</button>
               </div>
               <div class="builder-preview"><iframe id="pb-preview"></iframe></div>
-            </div>
-          </div>
-          <div class="cblock" id="block-4-activity">
-            <h3>Suggested Activity</h3>
-            <div class="activity-card">
-              <h4>Portfolio Page — Real World Challenge</h4>
-              <p>Now that you can download your page, take it further. This is a real assignment professional developers do when building their first portfolio.</p>
-              <ol class="activity-steps">
-                <li>Download your page from the Page Builder.</li>
-                <li>Open the file in a text editor (Notepad on Windows, TextEdit on Mac, or any code editor).</li>
-                <li>Manually add a second section to the page — a "My Projects" section with a heading and a list of three things you want to build someday.</li>
-                <li>Save the file and open it in your browser by double-clicking it.</li>
-                <li>Add an image tag with a placeholder image URL from the web.</li>
-                <li>Save and refresh. You are editing a real HTML file directly.</li>
-              </ol>
-              <p style="color:var(--cy);font-size:.85rem;font-weight:600;margin-top:.75rem">Keep this file. You will add CSS to it when you move to the next character. This is the beginning of your actual portfolio.</p>
             </div>
           </div>
           <div class="cblock" id="block-4-reflect">
             <h3>Reflect</h3>
             <div class="reflect-card">
-              <h4>Lesson 4 and Nova's World — Final Reflection</h4>
+              <h4>Nova's World — Final Reflection</h4>
               <div class="reflect-prompts">
-                <div class="rprompt">You have now completed all four of Nova's lessons. What is the one concept that changed how you think about websites the most?</div>
-                <div class="rprompt">Open any website and right-click to view source. Find three semantic tags you now recognize. What are they and where are they used?</div>
-                <div class="rprompt">Your downloaded page is the foundation of a real portfolio. Describe in one paragraph what you want your finished site to look like by the time you complete all six characters.</div>
-                <div class="rprompt">HTML describes structure but not style. Now that you understand structure, what styling decisions are you already imagining for your page?</div>
+                <div class="rprompt">You completed all four of Nova's lessons. What changed most about how you see websites?</div>
+                <div class="rprompt">Right-click any webpage and choose View Page Source. Find three semantic tags you recognize. What are they and where are they used?</div>
+                <div class="rprompt">Describe in one paragraph what you want your finished site to look like by the time you finish all six MiM characters.</div>
               </div>
             </div>
           </div>
           <div class="cblock" id="block-4-pdf">
-            <h3>Offline PDF</h3>
-            <div class="pdf-card">
-              <div class="pdf-icon">N</div>
-              <div class="pdf-info">
-                <h4>Complete HTML Reference — Cheat Sheet Vol. 4</h4>
-                <p>Every tag from all four lessons in one master reference sheet.</p>
+            <h3>Cheat Sheet</h3>
+            <div class="cheat-card">
+              <div class="cheat-icon">N4</div>
+              <div class="cheat-info">
+                <h4>Complete HTML Reference — All 4 Lessons</h4>
+                <p>Every tag from Nova's world in one master reference sheet.</p>
               </div>
-              <a href="pdfs.html" class="pdf-btn">Download</a>
-            </div>
-          </div>
-          <div class="cblock" id="block-4-game">
-            <h3>Mini Game</h3>
-            <div class="game-cta">
-              <h4>Nova's Full Build Challenge — Final Level</h4>
-              <p>The ultimate test. Build a complete page structure from a blank slate using everything from Lessons 1 through 4. No hints. Pure builder mode.</p>
-              <a href="nova-game.html" class="game-btn">Launch Nova's Game</a>
+              <a href="pdfs.html" class="cheat-btn">Download</a>
             </div>
           </div>
         </div>
       </div>
-      <div class="dash-btn-wrap"><a href="dashboard.html" class="dash-btn">View Dashboard</a></div>
+      <div class="dash-btn-wrap"><a href="dashboard.html" class="dash-btn">Dashboard</a></div>
     </div>
   </div>
 
 </div><!-- lesson-panels -->
 
-<!-- AUTH MODAL -->
+<!-- MODAL -->
 <div class="modal-overlay" id="auth-modal">
   <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">x</button>
-    <div class="modal-title">Nova's World</div>
+    <button class="modal-close" onclick="closeModal()">&#10005;</button>
+    <div class="modal-title">&#9651; Nova's World</div>
     <div class="modal-tabs">
       <button class="mtab active" id="tab-login" onclick="switchTab('login')">Log In</button>
       <button class="mtab" id="tab-signup" onclick="switchTab('signup')">Sign Up</button>
@@ -1106,26 +995,20 @@ textarea.code-ed:focus{border-color:var(--y)}
 /* ENTRANCE */
 window.addEventListener('load',()=>{
   const o=document.getElementById('entrance-overlay');
-  setTimeout(()=>{
-    o.classList.add('fade-out');
-    setTimeout(()=>{o.style.display='none'},700);
-  },1600);
+  setTimeout(()=>{o.classList.add('fade-out');setTimeout(()=>{o.style.display='none'},700)},1600);
 });
 
-/* SCROLL TO LESSONS */
-function scrollToLessons(){
-  document.getElementById('lessonsAnchor').scrollIntoView({behavior:'smooth'});
-}
+function scrollToLessons(){document.getElementById('lessonsAnchor').scrollIntoView({behavior:'smooth'})}
 
-/* LESSON TAB SWITCHING */
+/* LESSON TABS */
 function switchLesson(num){
   document.querySelectorAll('.ltab').forEach(b=>b.classList.toggle('active',parseInt(b.dataset.tab)===num));
   document.querySelectorAll('.lpanel').forEach(p=>p.classList.remove('active'));
   const panel=document.getElementById('panel-'+num);
-  if(panel){panel.classList.add('active');panel.scrollIntoView({behavior:'smooth',block:'start'});}
+  if(panel){panel.classList.add('active');panel.scrollIntoView({behavior:'smooth',block:'start'})}
 }
 
-/* SIDEBAR BLOCK SWITCHING */
+/* SIDEBAR */
 function showBlock(lessonNum,blockKey){
   const panel=document.getElementById('panel-'+lessonNum);
   if(!panel)return;
@@ -1141,10 +1024,10 @@ function checkQ(btn,correct,qid){
   if(p.querySelector('.correct,.wrong'))return;
   const fb=document.getElementById('qf-'+qid);
   btn.classList.add(correct?'correct':'wrong');
-  if(fb)fb.textContent=correct?'Correct! Great work, builder.':'Not quite. Think it through and try again.';
+  if(fb)fb.textContent=correct?'Correct! Keep building.':'Not quite — think it through and try again.';
 }
 
-/* CODE EDITOR */
+/* EDITOR */
 function runCode(edId,pvId){
   const code=document.getElementById(edId).value;
   const iframe=document.getElementById(pvId);
@@ -1161,61 +1044,31 @@ function getBuilderHTML(){
   const bg=document.getElementById('pb-bg').value||'#0a0812';
   const accent=document.getElementById('pb-accent').value||'#ffe066';
   const facts=factsRaw.split('\n').filter(f=>f.trim()).map(f=>'<li>'+f.trim()+'</li>').join('');
-  return`<!DOCTYPE html>
-<html lang="en">
-<head><meta charset="UTF-8"><title>${title}</title>
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{background:${bg};color:#fff;font-family:sans-serif}
-header{background:${accent};color:#000;padding:1.5rem 2rem}
-header h1{font-size:2rem;font-weight:900}
+  return`<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><title>${title}</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{background:${bg};color:#fff;font-family:sans-serif}
+header{background:${accent};color:#000;padding:1.5rem 2rem}header h1{font-size:2rem;font-weight:900}
 nav a{color:#000;text-decoration:none;margin-right:1rem;font-weight:600}
 main{padding:2rem;max-width:800px;margin:0 auto}
 .hero{background:rgba(255,255,255,.05);border-radius:12px;padding:2rem;margin-bottom:2rem}
 .hero h2{color:${accent};margin-bottom:.75rem;font-size:1.5rem}
-.facts h2{color:${accent};margin-bottom:.75rem}
-.facts ul{padding-left:1.5rem;margin-top:.5rem}
+.facts h2{color:${accent};margin-bottom:.75rem}.facts ul{padding-left:1.5rem;margin-top:.5rem}
 .facts li{margin-bottom:.5rem;line-height:1.6}
 footer{background:rgba(0,0,0,.4);padding:1.25rem 2rem;text-align:center;color:rgba(255,255,255,.6);margin-top:2rem}
-</style>
-</head>
-<body>
-<header>
-<h1>${title}</h1>
-<nav><a href="#">Home</a><a href="#">About</a></nav>
-</header>
-<main>
-<section class="hero">
-<h2>Welcome!</h2>
-<p>${welcome}</p>
-</section>
-<section class="facts">
-<h2>About Me</h2>
-<ul>${facts}</ul>
-</section>
-</main>
-<footer>Built by ${name} with HTML &amp; Method in Motion</footer>
-</body></html>`;
+</style></head><body>
+<header><h1>${title}</h1><nav><a href="#">Home</a><a href="#">About</a></nav></header>
+<main><section class="hero"><h2>Welcome!</h2><p>${welcome}</p></section>
+<section class="facts"><h2>About Me</h2><ul>${facts}</ul></section></main>
+<footer>Built by ${name} with HTML &amp; Method in Motion</footer></body></html>`;
 }
-function buildPreview(){
-  const html=getBuilderHTML();
-  const iframe=document.getElementById('pb-preview');
-  const doc=iframe.contentDocument||iframe.contentWindow.document;
-  doc.open();doc.write(html);doc.close();
-}
+function buildPreview(){const h=getBuilderHTML();const i=document.getElementById('pb-preview');const d=i.contentDocument||i.contentWindow.document;d.open();d.write(h);d.close()}
 function downloadPage(){
-  const html=getBuilderHTML();
-  const blob=new Blob([html],{type:'text/html'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;
-  const title=document.getElementById('pb-title').value||'my-page';
-  a.download=title.toLowerCase().replace(/\s+/g,'-')+'.html';
-  a.click();
-  URL.revokeObjectURL(url);
+  const h=getBuilderHTML();const blob=new Blob([h],{type:'text/html'});const url=URL.createObjectURL(blob);
+  const a=document.createElement('a');a.href=url;
+  const t=document.getElementById('pb-title').value||'my-page';
+  a.download=t.toLowerCase().replace(/\s+/g,'-')+'.html';a.click();URL.revokeObjectURL(url);
 }
 
-/* AUTH MODAL */
+/* MODAL */
 let authMode='login';
 function openModal(mode){authMode=mode||'login';switchTab(authMode);document.getElementById('auth-modal').classList.add('open')}
 function closeModal(){document.getElementById('auth-modal').classList.remove('open');document.getElementById('modal-msg').textContent=''}
@@ -1226,67 +1079,52 @@ function doAuth(){
   const msg=document.getElementById('modal-msg');
   if(!email||!pass){msg.textContent='Please enter your email and password.';return}
   msg.textContent='Working...';
-  if(authMode==='signup'){
-    firebase.auth().createUserWithEmailAndPassword(email,pass).then(()=>closeModal()).catch(e=>{msg.textContent=e.message});
-  }else{
-    firebase.auth().signInWithEmailAndPassword(email,pass).then(()=>closeModal()).catch(e=>{msg.textContent=e.message});
-  }
+  if(authMode==='signup'){firebase.auth().createUserWithEmailAndPassword(email,pass).then(()=>closeModal()).catch(e=>{msg.textContent=e.message})}
+  else{firebase.auth().signInWithEmailAndPassword(email,pass).then(()=>closeModal()).catch(e=>{msg.textContent=e.message})}
 }
 function doLogout(){firebase.auth().signOut()}
 
-/* FIREBASE AUTH — wired to window so auth-init.js module can call it */
+/* AUTH STATE — called by auth-init.js module */
 window.handleTierUnlock=function(tier){
   const loginBtn=document.getElementById('nav-login-btn');
   const signupBtn=document.getElementById('nav-signup-btn');
   const logoutBtn=document.getElementById('nav-logout-btn');
   const userName=document.getElementById('nav-user-name');
-
   if(tier==='logged-out'){
-    loginBtn.style.display='inline-block';
-    signupBtn.style.display='inline-block';
-    logoutBtn.style.display='none';
-    userName.style.display='none';
+    loginBtn.style.display='inline-block';signupBtn.style.display='inline-block';
+    logoutBtn.style.display='none';userName.style.display='none';
     document.getElementById('gate-1').style.display='block';
     document.getElementById('content-1').style.display='none';
-    lockLesson(2);lockLesson(3);lockLesson(4);
-    return;
+    lockLesson(2);lockLesson(3);lockLesson(4);return;
   }
-
-  loginBtn.style.display='none';
-  signupBtn.style.display='none';
-  logoutBtn.style.display='inline-block';
-
-  /* show L1 content */
+  loginBtn.style.display='none';signupBtn.style.display='none';
+  logoutBtn.style.display='inline-block';userName.style.display='inline';
   document.getElementById('gate-1').style.display='none';
   document.getElementById('content-1').style.display='block';
   showBlock(1,'read');
-
   const tiers=['explorer','sparks','builders','coders'];
   const idx=tiers.indexOf((tier||'explorer').toLowerCase());
-
-  /* Nova tier gating: L1=explorer+, L2=builders+, L3=builders+, L4=coders */
-  if(idx>=2){unlockLesson(2)}else{lockLesson(2)}
+  if(idx>=1){unlockLesson(2)}else{lockLesson(2)}
   if(idx>=2){unlockLesson(3)}else{lockLesson(3)}
   if(idx>=3){unlockLesson(4)}else{lockLesson(4)}
 };
+window.setNavUser=function(email){
+  const u=document.getElementById('nav-user-name');
+  if(u&&email){u.textContent=email.split('@')[0];u.style.display='inline'}
+};
 
 function lockLesson(num){
-  const l=document.getElementById('lesson'+num+'-locked');
-  const c=document.getElementById('lesson'+num+'-content');
-  if(l)l.style.display='block';
-  if(c)c.style.display='none';
+  const l=document.getElementById('lesson'+num+'-locked');const c=document.getElementById('lesson'+num+'-content');
+  if(l)l.style.display='block';if(c)c.style.display='none';
 }
 function unlockLesson(num){
-  const l=document.getElementById('lesson'+num+'-locked');
-  const c=document.getElementById('lesson'+num+'-content');
-  if(l)l.style.display='none';
-  if(c){c.style.display='block';showBlock(num,'read')}
+  const l=document.getElementById('lesson'+num+'-locked');const c=document.getElementById('lesson'+num+'-content');
+  if(l)l.style.display='none';if(c){c.style.display='block';showBlock(num,'read')}
 }
 
-/* Init on load */
 document.addEventListener('DOMContentLoaded',()=>{
   switchLesson(1);
-  /* fallback if firebase/auth-init hasn't fired yet */
+  /* fallback: show gate if auth hasn't resolved after 2.5s */
   setTimeout(()=>{
     const gate=document.getElementById('gate-1');
     const content=document.getElementById('content-1');
@@ -1295,7 +1133,7 @@ document.addEventListener('DOMContentLoaded',()=>{
       document.getElementById('nav-login-btn').style.display='inline-block';
       document.getElementById('nav-signup-btn').style.display='inline-block';
     }
-  },2000);
+  },2500);
 });
 </script>
 </body>
