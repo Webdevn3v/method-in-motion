@@ -1087,10 +1087,20 @@ function showBlock(lessonNum,blockKey){
 /* QUIZ */
 function checkQ(btn,correct,qid){
   const p=btn.closest('.quiz-opts');
-  if(p.querySelector('.correct,.wrong'))return;
+  // Lock entire quiz only after a correct answer
+  if(p.querySelector('.correct'))return;
   const fb=document.getElementById('qf-'+qid);
-  btn.classList.add(correct?'correct':'wrong');
-  if(fb)fb.textContent=correct?'Correct! Keep building.':'Not quite — think it through and try again.';
+  if(correct){
+    // Clear any previous wrong highlights, mark this correct, lock
+    p.querySelectorAll('.qopt').forEach(b=>b.classList.remove('wrong'));
+    btn.classList.add('correct');
+    if(fb){fb.textContent='Correct! Keep building.';fb.style.color='#7fffb0'}
+  } else {
+    // Just flash red, remove it after 800ms so they can try again
+    btn.classList.add('wrong');
+    if(fb){fb.textContent='Not quite — try again!';fb.style.color=''}
+    setTimeout(()=>btn.classList.remove('wrong'), 800);
+  }
 }
 
 /* EDITOR */
@@ -1099,6 +1109,21 @@ function runCode(edId,pvId){
   const iframe=document.getElementById(pvId);
   const doc=iframe.contentDocument||iframe.contentWindow.document;
   doc.open();doc.write(code);doc.close();
+}
+
+function saveEditor(id){
+  try{localStorage.setItem('mim-nova-'+id, document.getElementById(id).value);}catch(e){}
+}
+
+function loadAllEditors(){
+  document.querySelectorAll('textarea.code-ed').forEach(el=>{
+    try{
+      const saved=localStorage.getItem('mim-nova-'+el.id);
+      if(saved)el.value=saved;
+    }catch(e){}
+    // Autosave on every change
+    el.addEventListener('input',()=>saveEditor(el.id));
+  });
 }
 
 /* REFLECT SAVE */
@@ -1279,6 +1304,7 @@ function unlockLesson(num){
 document.addEventListener('DOMContentLoaded',()=>{
   switchLesson(1);
   loadAllReflects();
+  loadAllEditors();
   setTimeout(()=>{
     const gate=document.getElementById('gate-1');
     const content=document.getElementById('content-1');
