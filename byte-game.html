@@ -14,7 +14,6 @@
       --glow-pk: 0 0 30px rgba(255,107,170,0.7);
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
-
     body {
       font-family: 'Space Grotesk', sans-serif;
       background: var(--bg);
@@ -26,617 +25,349 @@
 
     /* ── WORLD BACKGROUND ── */
     #worldBg {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0; z-index: 0;
       background-image: url('byte-entrance.png');
       background-size: cover;
       background-position: center top;
-      z-index: 0;
-      filter: brightness(0.45) saturate(1.3);
+      filter: brightness(0.42) saturate(1.3);
     }
     #worldOverlay {
-      position: fixed;
-      inset: 0;
+      position: fixed; inset: 0; z-index: 1;
       background:
-        radial-gradient(ellipse at 50% 0%, rgba(198,107,255,0.2) 0%, transparent 60%),
-        linear-gradient(to bottom, rgba(8,3,15,0.3) 0%, rgba(8,3,15,0.75) 70%, rgba(8,3,15,0.97) 100%);
-      z-index: 1;
+        radial-gradient(ellipse at 50% 0%, rgba(198,107,255,0.18) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(8,3,15,0.25) 0%, rgba(8,3,15,0.7) 70%, rgba(8,3,15,0.96) 100%);
     }
-
-    /* ── MP4 INTRO SCREEN ── */
-    #introScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow: hidden;
-    }
-    #introVideo {
-      position: absolute;
-      inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      mix-blend-mode: screen;
-      transform: scale(1.15);
-    }
-    #introBg {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, #1a0530 0%, #000 70%);
-      z-index: -1;
-    }
-    #introGlow {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at center, rgba(198,107,255,0.25) 0%, transparent 65%);
-      animation: pulseGlow 2s ease-in-out infinite;
-      pointer-events: none;
-    }
-    @keyframes pulseGlow {
-      0%,100% { opacity: 0.6; }
-      50% { opacity: 1; }
-    }
-    #introTitle {
-      position: absolute;
-      bottom: 12%;
-      left: 0; right: 0;
-      text-align: center;
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      color: #fff;
-      text-shadow: 0 0 40px rgba(198,107,255,0.9), 0 0 80px rgba(198,107,255,0.5);
-      letter-spacing: 0.15em;
-      animation: fadeUp 0.8s ease 0.5s both;
-    }
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(20px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    #introSkip {
-      position: absolute;
-      bottom: 5%;
-      right: 5%;
-      background: rgba(198,107,255,0.2);
-      border: 1px solid rgba(198,107,255,0.5);
-      color: rgba(255,255,255,0.7);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.75rem;
-      padding: 0.5rem 1.2rem;
-      border-radius: 4px;
-      cursor: pointer;
-      letter-spacing: 0.1em;
-      transition: all 0.2s;
-    }
-    #introSkip:hover { background: rgba(198,107,255,0.4); color: #fff; }
-    #introProgress {
-      position: absolute;
-      bottom: 0; left: 0;
-      height: 3px;
-      background: linear-gradient(to right, var(--purple), var(--pink));
-      transition: width 0.1s linear;
-      box-shadow: 0 0 10px rgba(198,107,255,0.8);
+    #scanlines {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0,0,0,0.07) 2px, rgba(0,0,0,0.07) 4px);
     }
     .hidden { display: none !important; }
 
     /* ── INSTRUCTIONS SCREEN ── */
     #instructScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 190;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      padding: 2rem;
-      text-align: center;
+      position: fixed; inset: 0; z-index: 180;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1.5rem;
+      background: rgba(8,3,15,0.88);
     }
-    .instruct-char {
-      width: min(340px, 55vw);
+    #instructGif {
+      width: min(300px, 52vw);
       height: auto;
-      filter: drop-shadow(0 0 40px rgba(198,107,255,0.8));
-      animation: floatBig 3s ease-in-out infinite;
-      margin-bottom: 1.5rem;
+      filter: drop-shadow(0 0 40px rgba(198,107,255,0.85));
+      animation: floatIdle 3s ease-in-out infinite;
+      margin-bottom: 1.2rem;
     }
-    @keyframes floatBig {
+    @keyframes floatIdle {
       0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-16px); }
+      50% { transform: translateY(-14px); }
     }
     .instruct-name {
       font-family: 'Orbitron', monospace;
       font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 900;
-      color: #fff;
+      font-weight: 900; color: #fff;
       text-shadow: var(--glow-p);
-      margin-bottom: 0.3rem;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em; margin-bottom: 0.2rem;
     }
     .instruct-sub {
       font-family: 'Orbitron', monospace;
-      font-size: clamp(0.8rem, 2vw, 1.1rem);
-      color: var(--purple);
-      letter-spacing: 0.2em;
-      margin-bottom: 1.5rem;
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      color: var(--purple); letter-spacing: 0.2em; margin-bottom: 1.4rem;
     }
     .how-grid {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-      justify-content: center;
-      max-width: 700px;
-      margin-bottom: 1.5rem;
+      display: flex; gap: 0.8rem; flex-wrap: wrap;
+      justify-content: center; max-width: 680px; margin-bottom: 1.5rem;
     }
     .how-card {
-      background: rgba(198,107,255,0.1);
-      border: 1px solid rgba(198,107,255,0.35);
-      border-radius: 10px;
-      padding: 1rem 1.2rem;
-      width: 160px;
+      background: rgba(198,107,255,0.09);
+      border: 1px solid rgba(198,107,255,0.3);
+      border-radius: 10px; padding: 0.9rem 1rem; width: 148px;
     }
-    .how-icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+    .how-icon { font-size: 1.6rem; margin-bottom: 0.35rem; }
     .how-lbl {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.65rem;
-      color: var(--purple);
-      letter-spacing: 0.12em;
-      margin-bottom: 0.3rem;
-      font-weight: 700;
+      font-family: 'Orbitron', monospace; font-size: 0.6rem;
+      color: var(--purple); letter-spacing: 0.1em;
+      margin-bottom: 0.25rem; font-weight: 700;
     }
-    .how-desc { font-size: 0.8rem; color: rgba(255,255,255,0.65); line-height: 1.4; }
+    .how-desc { font-size: 0.78rem; color: rgba(255,255,255,0.6); line-height: 1.4; }
     .start-btn {
       background: linear-gradient(135deg, var(--purple), var(--pink));
-      color: #fff;
-      border: none;
+      color: #fff; border: none;
       font-family: 'Orbitron', monospace;
-      font-size: clamp(0.9rem, 2vw, 1.2rem);
-      font-weight: 900;
-      padding: 1rem 3rem;
-      border-radius: 8px;
-      cursor: pointer;
-      letter-spacing: 0.15em;
-      box-shadow: var(--glow-p);
-      transition: all 0.2s;
-      animation: pulse 2s ease-in-out infinite;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      font-weight: 900; padding: 0.95rem 3rem;
+      border-radius: 8px; cursor: pointer;
+      letter-spacing: 0.15em; box-shadow: var(--glow-p);
+      animation: pulsBtn 2s ease-in-out infinite; transition: transform 0.2s;
     }
-    @keyframes pulse {
-      0%,100% { transform: scale(1); box-shadow: var(--glow-p); }
-      50% { transform: scale(1.04); box-shadow: 0 0 50px rgba(198,107,255,0.9); }
+    @keyframes pulsBtn {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
     }
-    .start-btn:hover { transform: scale(1.06); }
+    .start-btn:hover { transform: scale(1.07) !important; }
 
     /* ── NAV ── */
     #gameNav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 50;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 1.5rem;
-      height: 52px;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem; height: 52px;
       background: rgba(8,3,15,0.85);
       border-bottom: 1px solid rgba(198,107,255,0.2);
       backdrop-filter: blur(8px);
     }
     .nav-back {
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-      background: none;
-      border: 1px solid rgba(198,107,255,0.3);
+      display: flex; align-items: center; gap: 0.5rem;
+      background: none; border: 1px solid rgba(198,107,255,0.3);
       color: rgba(255,255,255,0.7);
-      font-family: 'Space Mono', monospace;
-      font-size: 0.72rem;
-      padding: 0.4rem 1rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-decoration: none;
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      padding: 0.4rem 1rem; border-radius: 4px;
+      cursor: pointer; transition: all 0.2s; text-decoration: none;
     }
     .nav-back:hover { border-color: var(--purple); color: var(--purple); }
     .nav-game-title {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--purple);
-      letter-spacing: 0.12em;
-      text-shadow: var(--glow-p);
+      font-family: 'Orbitron', monospace; font-size: 0.85rem;
+      font-weight: 700; color: var(--purple);
+      letter-spacing: 0.12em; text-shadow: var(--glow-p);
     }
     .nav-free-badge {
       background: linear-gradient(135deg, var(--purple), var(--pink));
-      color: #fff;
-      font-family: 'Orbitron', monospace;
-      font-size: 0.62rem;
-      font-weight: 700;
-      padding: 0.3rem 0.8rem;
-      border-radius: 4px;
-      letter-spacing: 0.1em;
+      color: #fff; font-family: 'Orbitron', monospace;
+      font-size: 0.6rem; font-weight: 700;
+      padding: 0.28rem 0.75rem; border-radius: 4px; letter-spacing: 0.1em;
     }
 
     /* ── HUD ── */
     #hud {
-      position: fixed;
-      top: 52px; left: 0; right: 0;
-      z-index: 40;
-      display: flex;
-      align-items: center;
-      gap: 0;
-      padding: 0 1.5rem;
-      height: 44px;
+      position: fixed; top: 52px; left: 0; right: 0; z-index: 40;
+      display: flex; align-items: center;
+      padding: 0 1.5rem; height: 44px;
       background: rgba(8,3,15,0.7);
-      border-bottom: 1px solid rgba(198,107,255,0.15);
+      border-bottom: 1px solid rgba(198,107,255,0.12);
     }
     .hud-score {
-      font-family: 'Orbitron', monospace;
-      font-size: 1.3rem;
-      font-weight: 900;
-      color: var(--purple);
-      text-shadow: var(--glow-p);
-      min-width: 80px;
+      font-family: 'Orbitron', monospace; font-size: 1.3rem;
+      font-weight: 900; color: var(--purple);
+      text-shadow: var(--glow-p); min-width: 80px;
     }
-    .hud-sep { width: 1px; height: 24px; background: rgba(198,107,255,0.2); margin: 0 1rem; }
+    .hud-sep { width:1px; height:24px; background: rgba(198,107,255,0.2); margin: 0 1rem; }
     .hud-stat { display: flex; flex-direction: column; align-items: center; }
-    .hud-stat-label { font-family: 'Space Mono', monospace; font-size: 0.55rem; color: rgba(255,255,255,0.4); letter-spacing: 0.1em; }
-    .hud-stat-val { font-family: 'Orbitron', monospace; font-size: 0.9rem; font-weight: 700; color: #fff; }
+    .hud-stat-label { font-family:'Space Mono',monospace; font-size:0.52rem; color:rgba(255,255,255,0.38); letter-spacing:0.1em; }
+    .hud-stat-val { font-family:'Orbitron',monospace; font-size:0.9rem; font-weight:700; color:#fff; }
     .hud-combo {
-      font-family: 'Orbitron', monospace;
-      font-size: 1rem;
-      font-weight: 900;
-      color: var(--pink);
-      text-shadow: var(--glow-pk);
-      min-width: 40px;
+      font-family:'Orbitron',monospace; font-size:1rem;
+      font-weight:900; color:var(--pink);
+      text-shadow:var(--glow-pk); min-width:40px;
     }
-    .hud-spacer { flex: 1; }
-    .hud-lives { display: flex; gap: 0.4rem; }
-    .life { font-size: 1.4rem; transition: all 0.3s; }
-    .life.lost { opacity: 0.15; filter: grayscale(1); }
+    .hud-spacer { flex:1; }
+    .hud-lives { display:flex; gap:0.4rem; }
+    .life { font-size:1.4rem; transition:all 0.3s; }
+    .life.lost { opacity:0.14; filter:grayscale(1); }
 
     /* ── ZONE PILL ── */
     #zonePill {
-      position: fixed;
-      top: 108px; left: 50%; transform: translateX(-50%);
-      z-index: 35;
-      background: rgba(198,107,255,0.15);
-      border: 1px solid rgba(198,107,255,0.4);
-      border-radius: 20px;
-      padding: 0.3rem 1.2rem;
-      font-family: 'Orbitron', monospace;
-      font-size: 0.68rem;
-      color: var(--purple);
-      letter-spacing: 0.15em;
+      position: fixed; top: 108px; left:50%; transform:translateX(-50%); z-index:35;
+      background: rgba(198,107,255,0.13);
+      border: 1px solid rgba(198,107,255,0.38);
+      border-radius: 20px; padding: 0.28rem 1.1rem;
+      font-family:'Orbitron',monospace; font-size:0.65rem;
+      color:var(--purple); letter-spacing:0.15em;
     }
 
     /* ── ARENA ── */
     #arena {
-      position: fixed;
-      top: 96px; left: 0; right: 0; bottom: 0;
-      z-index: 10;
+      position: fixed; top: 96px; left:0; right:0; bottom:0; z-index:10;
     }
 
-    /* ── BYTE CHARACTER (large, right side) ── */
+    /* ── BYTE STATIC CHARACTER (right side) ── */
     #byteCharWrap {
-      position: fixed;
-      right: 0;
-      bottom: 0;
-      z-index: 20;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      pointer-events: none;
-      width: clamp(220px, 28vw, 380px);
+      position: fixed; right:0; bottom:0; z-index:20;
+      display:flex; flex-direction:column; align-items:center;
+      pointer-events:none;
+      width: clamp(200px, 26vw, 360px);
     }
     #byteChar {
-      width: 100%;
-      height: auto;
-      filter: drop-shadow(0 0 40px rgba(198,107,255,0.7));
-      transition: all 0.3s ease;
+      width:100%; height:auto;
+      filter: drop-shadow(0 0 40px rgba(198,107,255,0.65));
     }
     #bytePlatform {
-      width: 85%;
-      height: 12px;
-      background: linear-gradient(to right, transparent, rgba(198,107,255,0.6), transparent);
+      width:80%; height:10px;
+      background: linear-gradient(to right, transparent, rgba(198,107,255,0.55), transparent);
+      border-radius:50%; box-shadow:0 0 28px rgba(198,107,255,0.45);
+      margin-top:-6px;
+    }
+
+    /* ── CENTER FACE POP ── */
+    #facePop {
+      position: fixed;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      z-index: 100;
+      width: clamp(140px, 22vw, 220px);
+      height: auto;
+      filter: drop-shadow(0 0 30px rgba(198,107,255,0.9));
+      pointer-events: none;
+      transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
+      opacity: 0;
       border-radius: 50%;
-      box-shadow: 0 0 30px rgba(198,107,255,0.5);
-      margin-top: -8px;
+    }
+    #facePop.show {
+      transform: translate(-50%, -50%) scale(1);
+      opacity: 1;
     }
 
     /* ── GLITCH CREATURES ── */
     .glitch {
-      position: absolute;
-      cursor: pointer;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      transition: transform 0.1s;
-      z-index: 15;
+      position:absolute; cursor:pointer;
+      display:flex; flex-direction:column; align-items:center;
+      z-index:15; transition:transform 0.1s;
     }
-    .glitch:hover { transform: scale(1.12); }
+    .glitch:hover { transform:scale(1.1); }
     .glitch-body {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      filter: drop-shadow(0 0 12px rgba(198,107,255,0.8));
-      animation: glitchWobble 0.4s ease-in-out infinite alternate;
+      font-size: clamp(2rem, 3.5vw, 3rem);
+      filter: drop-shadow(0 0 10px rgba(198,107,255,0.7));
+      animation: wobble 0.35s ease-in-out infinite alternate;
     }
-    @keyframes glitchWobble {
-      from { transform: skewX(-3deg) skewY(1deg); }
-      to { transform: skewX(3deg) skewY(-1deg); }
+    @keyframes wobble {
+      from { transform:skewX(-3deg); }
+      to   { transform:skewX(3deg); }
     }
+    .glitch.boss .glitch-body { font-size: clamp(3rem, 5.5vw, 4.5rem); }
     .glitch-hp {
-      width: 50px;
-      height: 5px;
-      background: rgba(255,255,255,0.15);
-      border-radius: 3px;
-      margin-top: 4px;
-      overflow: hidden;
+      width:48px; height:5px;
+      background:rgba(255,255,255,0.12); border-radius:3px; margin-top:4px; overflow:hidden;
     }
     .glitch-hp-fill {
-      height: 100%;
+      height:100%;
       background: linear-gradient(to right, var(--purple), var(--pink));
-      border-radius: 3px;
-      transition: width 0.2s;
+      border-radius:3px; transition:width 0.18s;
     }
-    .glitch.boss .glitch-body { font-size: clamp(3rem, 6vw, 5rem); }
-    .glitch.boss .glitch-hp { width: 80px; height: 8px; }
+    .glitch.boss .glitch-hp { width:76px; height:7px; }
 
-    /* ── COMBO BANNER ── */
+    /* ── BANNERS ── */
     #comboBanner {
-      position: fixed;
-      top: 35%;
-      left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      z-index: 60;
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2rem, 5vw, 4rem);
-      font-weight: 900;
-      color: var(--pink);
-      text-shadow: var(--glow-pk);
-      pointer-events: none;
-      opacity: 0;
-      transition: opacity 0.3s;
+      position:fixed; top:32%; left:50%;
+      transform:translateX(-50%) translateY(-50%);
+      z-index:60; pointer-events:none; opacity:0;
+      font-family:'Orbitron',monospace;
+      font-size: clamp(1.8rem,4.5vw,3.5rem);
+      font-weight:900; color:var(--pink);
+      text-shadow:var(--glow-pk);
     }
-    #comboBanner.show {
-      opacity: 1;
-      animation: comboPop 0.8s ease forwards;
-    }
+    #comboBanner.show { animation:comboPop 0.85s ease forwards; }
     @keyframes comboPop {
-      0% { transform: translateX(-50%) translateY(-50%) scale(0.5); opacity: 1; }
-      60% { transform: translateX(-50%) translateY(-50%) scale(1.2); opacity: 1; }
-      100% { transform: translateX(-50%) translateY(-80%) scale(1); opacity: 0; }
+      0%   { opacity:1; transform:translateX(-50%) translateY(-50%) scale(0.5); }
+      60%  { opacity:1; transform:translateX(-50%) translateY(-50%) scale(1.2); }
+      100% { opacity:0; transform:translateX(-50%) translateY(-80%) scale(1); }
     }
-
-    /* ── LEVEL BANNER ── */
     #levelBanner {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: 65;
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2.5rem, 6vw, 5rem);
-      font-weight: 900;
-      color: #fff;
-      text-shadow: var(--glow-p);
-      pointer-events: none;
-      opacity: 0;
-      text-align: center;
+      position:fixed; top:50%; left:50%;
+      transform:translate(-50%,-50%);
+      z-index:65; pointer-events:none; opacity:0;
+      font-family:'Orbitron',monospace;
+      font-size:clamp(2.5rem,6vw,5rem);
+      font-weight:900; color:#fff;
+      text-shadow:var(--glow-p); text-align:center;
     }
-    #levelBanner.show { animation: levelPop 1.5s ease forwards; }
+    #levelBanner.show { animation:levelPop 1.5s ease forwards; }
     @keyframes levelPop {
-      0% { opacity: 0; transform: translate(-50%, -50%) scale(0.6); }
-      20% { opacity: 1; transform: translate(-50%, -50%) scale(1.1); }
-      70% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
-      100% { opacity: 0; transform: translate(-50%, -50%) scale(0.9); }
+      0%   { opacity:0; transform:translate(-50%,-50%) scale(0.6); }
+      20%  { opacity:1; transform:translate(-50%,-50%) scale(1.1); }
+      70%  { opacity:1; transform:translate(-50%,-50%) scale(1); }
+      100% { opacity:0; transform:translate(-50%,-50%) scale(0.9); }
     }
-
-    /* ── BOSS WARNING ── */
     #bossWarn {
-      position: fixed;
-      inset: 0;
-      z-index: 70;
-      background: rgba(198,107,255,0.08);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      pointer-events: none;
-      opacity: 0;
+      position:fixed; inset:0; z-index:70;
+      background:rgba(198,107,255,0.07);
+      display:flex; align-items:center; justify-content:center;
+      pointer-events:none; opacity:0;
     }
-    #bossWarn.show { animation: bossFlash 1.5s ease forwards; }
+    #bossWarn.show { animation:bossFlash 1.5s ease forwards; }
     @keyframes bossFlash {
-      0%,100% { opacity: 0; }
-      20%,40%,60% { opacity: 1; }
-      30%,50% { opacity: 0.3; }
+      0%,100%    { opacity:0; }
+      20%,40%,60%{ opacity:1; }
+      30%,50%    { opacity:0.3; }
     }
     .boss-warn-text {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1.5rem, 4vw, 3rem);
-      font-weight: 900;
-      color: var(--pink);
-      text-shadow: var(--glow-pk);
-      letter-spacing: 0.1em;
+      font-family:'Orbitron',monospace;
+      font-size:clamp(1.4rem,3.5vw,2.8rem);
+      font-weight:900; color:var(--pink);
+      text-shadow:var(--glow-pk); letter-spacing:0.1em;
     }
 
     /* ── QUESTION DRAWER ── */
     #questionDrawer {
-      position: fixed;
-      bottom: -100%;
-      left: 0; right: 0;
-      z-index: 80;
-      transition: bottom 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position:fixed; bottom:-100%; left:0; right:0; z-index:80;
+      transition:bottom 0.38s cubic-bezier(0.34,1.56,0.64,1);
     }
-    #questionDrawer.open { bottom: 0; }
+    #questionDrawer.open { bottom:0; }
     .q-drawer-inner {
-      background: rgba(8,3,15,0.97);
-      border-top: 2px solid var(--purple);
-      padding: 1rem 1.5rem 1.2rem;
-      box-shadow: 0 -10px 40px rgba(198,107,255,0.3);
+      background:rgba(8,3,15,0.97);
+      border-top:2px solid var(--purple);
+      padding:0.9rem 1.5rem 1.1rem;
+      box-shadow:0 -8px 36px rgba(198,107,255,0.28);
     }
-    .q-pull {
-      width: 40px; height: 4px;
-      background: rgba(198,107,255,0.4);
-      border-radius: 2px;
-      margin: 0 auto 0.8rem;
-    }
-    .q-label {
-      font-family: 'Orbitron', monospace;
-      font-size: 0.65rem;
-      color: var(--purple);
-      letter-spacing: 0.15em;
-      margin-bottom: 0.5rem;
-    }
-    .q-timer-wrap { margin-bottom: 0.8rem; }
-    .q-timer-bar {
-      height: 4px;
-      background: rgba(255,255,255,0.1);
-      border-radius: 2px;
-      overflow: hidden;
-    }
-    .q-timer-fill {
-      height: 100%;
-      background: linear-gradient(to right, var(--purple), var(--pink));
-      transition: width 0.1s linear;
-      border-radius: 2px;
-    }
-    .q-text {
-      font-size: clamp(0.9rem, 2vw, 1.1rem);
-      color: #fff;
-      font-weight: 600;
-      margin-bottom: 0.8rem;
-      line-height: 1.4;
-    }
-    .q-opts {
-      display: flex;
-      gap: 0.6rem;
-      flex-wrap: wrap;
-    }
+    .q-pull { width:38px; height:4px; background:rgba(198,107,255,0.35); border-radius:2px; margin:0 auto 0.7rem; }
+    .q-label { font-family:'Orbitron',monospace; font-size:0.62rem; color:var(--purple); letter-spacing:0.14em; margin-bottom:0.4rem; }
+    .q-timer-bar { height:4px; background:rgba(255,255,255,0.09); border-radius:2px; overflow:hidden; margin-bottom:0.75rem; }
+    .q-timer-fill { height:100%; background:linear-gradient(to right,var(--purple),var(--pink)); transition:width 0.1s linear; border-radius:2px; }
+    .q-text { font-size:clamp(0.88rem,2vw,1.08rem); color:#fff; font-weight:600; margin-bottom:0.75rem; line-height:1.4; }
+    .q-opts { display:flex; gap:0.55rem; flex-wrap:wrap; }
     .q-opt {
-      flex: 1;
-      min-width: 120px;
-      background: rgba(198,107,255,0.1);
-      border: 1px solid rgba(198,107,255,0.3);
-      color: rgba(255,255,255,0.85);
-      font-family: 'Space Grotesk', sans-serif;
-      font-size: 0.88rem;
-      padding: 0.6rem 0.8rem;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: center;
+      flex:1; min-width:110px;
+      background:rgba(198,107,255,0.09);
+      border:1px solid rgba(198,107,255,0.28);
+      color:rgba(255,255,255,0.82);
+      font-family:'Space Grotesk',sans-serif; font-size:0.86rem;
+      padding:0.55rem 0.75rem; border-radius:6px;
+      cursor:pointer; transition:all 0.18s; text-align:center;
     }
-    .q-opt:hover { background: rgba(198,107,255,0.25); border-color: var(--purple); color: #fff; }
-    .q-opt.correct { background: rgba(0,245,100,0.2); border-color: #00f564; color: #00f564; }
-    .q-opt.wrong { background: rgba(255,60,60,0.15); border-color: #ff3c3c; color: #ff6b6b; }
+    .q-opt:hover { background:rgba(198,107,255,0.22); border-color:var(--purple); color:#fff; }
+    .q-opt.correct { background:rgba(0,245,100,0.18); border-color:#00f564; color:#00f564; }
+    .q-opt.wrong   { background:rgba(255,60,60,0.13);  border-color:#ff3c3c; color:#ff6b6b; }
 
-    /* ── GAME OVER SCREEN ── */
+    /* ── GAME OVER ── */
     #gameOverScreen {
-      position: fixed;
-      inset: 0;
-      z-index: 150;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 2rem;
-      background: rgba(8,3,15,0.92);
+      position:fixed; inset:0; z-index:150;
+      display:flex; align-items:center; justify-content:center;
+      flex-direction:column; text-align:center; padding:2rem;
+      background:rgba(8,3,15,0.93);
     }
-    .go-char {
-      width: min(280px, 50vw);
-      height: auto;
-      filter: drop-shadow(0 0 30px rgba(198,107,255,0.6));
-      margin-bottom: 1.5rem;
-    }
-    .go-title {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      margin-bottom: 0.5rem;
-      letter-spacing: 0.1em;
-    }
-    .go-title.win { color: var(--purple); text-shadow: var(--glow-p); }
-    .go-title.lose { color: var(--pink); text-shadow: var(--glow-pk); }
-    .go-score {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1rem, 3vw, 1.8rem);
-      color: rgba(255,255,255,0.7);
-      margin-bottom: 0.4rem;
-    }
-    .go-final-score {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2rem, 5vw, 3.5rem);
-      font-weight: 900;
-      color: #fff;
-      text-shadow: var(--glow-p);
-      margin-bottom: 2rem;
-    }
+    .go-char { width:min(260px,46vw); height:auto; filter:drop-shadow(0 0 30px rgba(198,107,255,0.6)); margin-bottom:1.3rem; }
+    .go-title { font-family:'Orbitron',monospace; font-size:clamp(1.8rem,4.5vw,3.2rem); font-weight:900; margin-bottom:0.45rem; letter-spacing:0.1em; }
+    .go-title.win  { color:var(--purple); text-shadow:var(--glow-p); }
+    .go-title.lose { color:var(--pink);   text-shadow:var(--glow-pk); }
+    .go-score-label { font-family:'Orbitron',monospace; font-size:0.75rem; color:rgba(255,255,255,0.45); letter-spacing:0.15em; margin-bottom:0.2rem; }
+    .go-final-score { font-family:'Orbitron',monospace; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; color:#fff; text-shadow:var(--glow-p); margin-bottom:1.8rem; }
     .go-btn {
-      background: linear-gradient(135deg, var(--purple), var(--pink));
-      color: #fff;
-      border: none;
-      font-family: 'Orbitron', monospace;
-      font-size: 1rem;
-      font-weight: 700;
-      padding: 0.9rem 2.5rem;
-      border-radius: 8px;
-      cursor: pointer;
-      letter-spacing: 0.1em;
-      margin: 0.4rem;
-      transition: all 0.2s;
-      box-shadow: var(--glow-p);
+      background:linear-gradient(135deg,var(--purple),var(--pink));
+      color:#fff; border:none;
+      font-family:'Orbitron',monospace; font-size:0.95rem; font-weight:700;
+      padding:0.85rem 2.3rem; border-radius:8px; cursor:pointer;
+      letter-spacing:0.1em; margin:0.35rem;
+      transition:all 0.2s; box-shadow:var(--glow-p);
     }
-    .go-btn:hover { transform: scale(1.04); }
-    .go-btn.outline {
-      background: transparent;
-      border: 1px solid rgba(198,107,255,0.5);
-      color: rgba(255,255,255,0.7);
-      box-shadow: none;
-    }
+    .go-btn:hover { transform:scale(1.04); }
+    .go-btn.outline { background:transparent; border:1px solid rgba(198,107,255,0.45); color:rgba(255,255,255,0.65); box-shadow:none; }
 
-    /* ── SCANLINES ── */
-    #scanlines {
-      position: fixed;
-      inset: 0;
-      z-index: 5;
-      background: repeating-linear-gradient(
-        to bottom,
-        transparent,
-        transparent 2px,
-        rgba(0,0,0,0.08) 2px,
-        rgba(0,0,0,0.08) 4px
-      );
-      pointer-events: none;
-    }
-
-    /* ── HIT EFFECT ── */
+    /* ── HIT EFFECTS ── */
     .hit-effect {
-      position: absolute;
-      font-family: 'Orbitron', monospace;
-      font-size: 1.4rem;
-      font-weight: 900;
-      color: var(--pink);
-      pointer-events: none;
-      z-index: 30;
-      animation: hitFloat 0.8s ease forwards;
+      position:absolute; pointer-events:none; z-index:30;
+      font-family:'Orbitron',monospace; font-size:1.3rem;
+      font-weight:900; color:var(--pink);
+      animation:hitFloat 0.75s ease forwards;
     }
     @keyframes hitFloat {
-      0% { opacity: 1; transform: translateY(0) scale(1); }
-      100% { opacity: 0; transform: translateY(-60px) scale(1.4); }
+      0%   { opacity:1; transform:translateY(0) scale(1); }
+      100% { opacity:0; transform:translateY(-55px) scale(1.35); }
     }
-
-    /* ── PARTICLE ── */
     .particle {
-      position: absolute;
-      width: 6px; height: 6px;
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 28;
-      animation: particleBurst 0.6s ease forwards;
+      position:absolute; width:6px; height:6px; border-radius:50%;
+      pointer-events:none; z-index:28;
+      animation:particleBurst 0.55s ease forwards;
     }
     @keyframes particleBurst {
-      0% { opacity: 1; transform: translate(0,0) scale(1); }
-      100% { opacity: 0; transform: translate(var(--dx), var(--dy)) scale(0); }
+      0%   { opacity:1; transform:translate(0,0) scale(1); }
+      100% { opacity:0; transform:translate(var(--dx),var(--dy)) scale(0); }
     }
   </style>
 </head>
@@ -647,38 +378,27 @@
 <div id="worldOverlay"></div>
 <div id="scanlines"></div>
 
-<!-- ── MP4 INTRO ── -->
-<div id="introScreen">
-  <div id="introBg"></div>
-  <video id="introVideo" autoplay muted playsinline>
-    <source src="byte-entrance.mp4" type="video/mp4" />
-  </video>
-  <div id="introGlow"></div>
-  <div id="introTitle">BYTE'S GLITCH HUNT</div>
-  <button id="introSkip" onclick="skipIntro()">SKIP ›</button>
-  <div id="introProgress" style="width:0%"></div>
-</div>
-
-<!-- ── INSTRUCTIONS ── -->
-<div id="instructScreen" class="hidden">
-  <img class="instruct-char" src="byte-pose.png" alt="Byte" onerror="this.style.display='none'" />
+<!-- ── INSTRUCTIONS SCREEN ── -->
+<div id="instructScreen">
+  <img id="instructGif" src="byte-idle.gif" alt="Byte"
+       onerror="this.src='byte-motion.gif'" />
   <div class="instruct-name">GLITCH HUNT</div>
   <div class="instruct-sub">BYTE'S UNDERGROUND · FREE TO PLAY</div>
   <div class="how-grid">
     <div class="how-card">
       <div class="how-icon">🖱</div>
       <div class="how-lbl">Click Glitches</div>
-      <div class="how-desc">Tap creatures before they escape. Faster clicks = more points.</div>
+      <div class="how-desc">Tap creatures before they escape. Every miss costs a life.</div>
     </div>
     <div class="how-card">
       <div class="how-icon">⚡</div>
       <div class="how-lbl">Answer Fast</div>
-      <div class="how-desc">Questions slide up after catches. Right answers multiply your combo.</div>
+      <div class="how-desc">Questions pop up after catches. Right answers grow your combo.</div>
     </div>
     <div class="how-card">
-      <div class="how-icon">💀</div>
-      <div class="how-lbl">Don't Miss</div>
-      <div class="how-desc">Every glitch that escapes costs a life. 3 lives and you're done.</div>
+      <div class="how-icon">🔥</div>
+      <div class="how-lbl">Build Combos</div>
+      <div class="how-desc">Catch streaks multiply your points. Keep the chain going.</div>
     </div>
     <div class="how-card">
       <div class="how-icon">👾</div>
@@ -725,11 +445,15 @@
 <!-- ── ARENA ── -->
 <div id="arena"></div>
 
-<!-- ── BYTE CHARACTER ── -->
+<!-- ── BYTE STATIC CHARACTER ── -->
 <div id="byteCharWrap">
-  <img id="byteChar" src="byte-pose.png" alt="Byte" onerror="this.src='byte-motion.gif'" />
+  <img id="byteChar" src="byte-pose.png" alt="Byte"
+       onerror="this.src='byte-motion.gif'" />
   <div id="bytePlatform"></div>
 </div>
+
+<!-- ── CENTER FACE POP ── -->
+<img id="facePop" src="byte-pose.png" alt="" />
 
 <!-- ── BANNERS ── -->
 <div id="comboBanner"></div>
@@ -740,12 +464,8 @@
 <div id="questionDrawer">
   <div class="q-drawer-inner">
     <div class="q-pull"></div>
-    <div class="q-top">
-      <div class="q-label">⚡ CATCH BONUS — Answer to multiply your combo</div>
-      <div class="q-timer-wrap">
-        <div class="q-timer-bar"><div class="q-timer-fill" id="qTimer" style="width:100%"></div></div>
-      </div>
-    </div>
+    <div class="q-label">⚡ CATCH BONUS — Answer to multiply your combo</div>
+    <div class="q-timer-bar"><div class="q-timer-fill" id="qTimer" style="width:100%"></div></div>
     <div class="q-text" id="qText"></div>
     <div class="q-opts" id="qOpts"></div>
   </div>
@@ -753,9 +473,10 @@
 
 <!-- ── GAME OVER ── -->
 <div id="gameOverScreen" class="hidden">
-  <img class="go-char" id="goChar" src="byte-victory.png" alt="Byte" onerror="this.src='byte-motion.gif'" />
+  <img class="go-char" id="goChar" src="byte-victory.png" alt="Byte"
+       onerror="this.src='byte-motion.gif'" />
   <div class="go-title" id="goTitle">GLITCHES CLEARED!</div>
-  <div class="go-score">FINAL SCORE</div>
+  <div class="go-score-label">FINAL SCORE</div>
   <div class="go-final-score" id="goScore">0</div>
   <div>
     <button class="go-btn" onclick="restartGame()">▶ PLAY AGAIN</button>
@@ -773,121 +494,81 @@ const QUESTIONS = [
   { q:"Which symbol starts a CSS comment?", opts:["//","#","/*","<!--"], ans:2 },
   { q:"What is a variable?", opts:["A type of bug","A named container that stores a value","A CSS rule","An HTML attribute"], ans:1 },
   { q:"What does 'debugging' mean?", opts:["Writing new code","Finding and fixing errors","Deleting files","Running a program"], ans:1 },
-  { q:"Which of these is a valid JS variable name?", opts:["2name","my-var","_myVar","class"], ans:2 },
+  { q:"Which is a valid JS variable name?", opts:["2name","my-var","_myVar","class"], ans:2 },
   { q:"What does === check in JavaScript?", opts:["Assignment","Value only","Value AND type","Neither"], ans:2 },
   { q:"What tag creates a hyperlink in HTML?", opts:["<link>","<a>","<href>","<url>"], ans:1 },
   { q:"A ReferenceError means...", opts:["Wrong CSS selector","Using an undefined variable","Missing semicolon","Wrong file name"], ans:1 },
   { q:"What does a for loop do?", opts:["Runs code once","Repeats code a set number of times","Stops the program","Declares a variable"], ans:1 },
-  { q:"Which property changes text color in CSS?", opts:["font-color","text-style","color","font-fill"], ans:2 },
-  { q:"What is the DOM?", opts:["A type of CSS property","The browser's representation of your HTML","A JavaScript error","A debugging tool"], ans:1 },
-  { q:"What does innerHTML do?", opts:["Adds CSS","Sets the content inside an element","Creates a new tag","Removes an element"], ans:1 },
+  { q:"Which CSS property changes text color?", opts:["font-color","text-style","color","font-fill"], ans:2 },
+  { q:"What is the DOM?", opts:["A type of CSS property","The browser's HTML representation","A JS error","A debugging tool"], ans:1 },
+  { q:"What does innerHTML do?", opts:["Adds CSS","Sets content inside an element","Creates a new tag","Removes an element"], ans:1 },
   { q:"A logic error means the code...", opts:["Won't run at all","Runs but produces wrong results","Has missing brackets","Is missing a file"], ans:1 },
 ];
 
-// ── GLITCH TYPES ──
 const GLITCH_TYPES = [
-  { emoji: '👾', name: 'Byte Sprite', hp: 1, pts: 10, speed: 1.0 },
-  { emoji: '🐛', name: 'Code Bug',   hp: 1, pts: 15, speed: 1.3 },
-  { emoji: '💾', name: 'Data Shard', hp: 2, pts: 25, speed: 0.8 },
-  { emoji: '⚠️',  name: 'Error Node', hp: 2, pts: 20, speed: 1.5 },
-  { emoji: '🔴', name: 'Null Blob',  hp: 1, pts: 12, speed: 1.1 },
+  { emoji:'👾', hp:1, pts:10, speed:1.0 },
+  { emoji:'🐛', hp:1, pts:15, speed:1.3 },
+  { emoji:'💾', hp:2, pts:25, speed:0.8 },
+  { emoji:'⚠️', hp:2, pts:20, speed:1.5 },
+  { emoji:'🔴', hp:1, pts:12, speed:1.1 },
 ];
-const BOSS_TYPE = { emoji: '💀', name: 'Mega Glitch', hp: 8, pts: 200, speed: 0.6, boss: true };
+const BOSS_TYPE = { emoji:'💀', hp:8, pts:200, speed:0.6, boss:true };
+const ZONES = ['EXPLORE ZONE','GLITCH SECTOR','CORRUPTION CORE','BOSS TERRITORY','ULTRA ZONE'];
 
-// ── STATE ──
-let score = 0, caught = 0, lives = 3, level = 1, combo = 1;
-let spawnInterval = null, questionTimer = null, qtTimerInterval = null;
-let activeQuestion = null, glitches = [], gameRunning = false;
-let catchesSinceQuestion = 0;
-
-// ── INTRO ──
-const introVideo = document.getElementById('introVideo');
-const introProgress = document.getElementById('introProgress');
-
-introVideo.addEventListener('timeupdate', () => {
-  if (introVideo.duration) {
-    introProgress.style.width = (introVideo.currentTime / introVideo.duration * 100) + '%';
-  }
-});
-introVideo.addEventListener('ended', () => showInstructions());
-introVideo.addEventListener('error', () => showInstructions());
-
-function skipIntro() { showInstructions(); }
-
-function showInstructions() {
-  document.getElementById('introScreen').classList.add('hidden');
-  document.getElementById('instructScreen').classList.remove('hidden');
-}
+let score=0, caught=0, lives=3, level=1, combo=1;
+let spawnInterval=null, qtTimerInterval=null;
+let activeQuestion=false, gameRunning=false;
+let catchesSinceQ=0, facepopTimer=null;
 
 // ── START ──
 function startGame() {
   document.getElementById('instructScreen').classList.add('hidden');
-  gameRunning = true;
-  score = 0; caught = 0; lives = 3; level = 1; combo = 1;
-  catchesSinceQuestion = 0;
+  score=0; caught=0; lives=3; level=1; combo=1; catchesSinceQ=0;
+  gameRunning=true;
   updateHUD();
-  setChar('pose');
   startSpawning();
 }
 
 // ── SPAWN ──
 function startSpawning() {
   clearInterval(spawnInterval);
-  const rate = Math.max(600, 1800 - (level * 100));
+  const rate = Math.max(550, 1800 - level * 100);
   spawnInterval = setInterval(spawnGlitch, rate);
 }
 
 function spawnGlitch() {
   if (!gameRunning) return;
   const arena = document.getElementById('arena');
-  const isBoss = (level % 5 === 0 && caught % 8 === 0 && caught > 0);
+  const isBoss = level % 5 === 0 && caught > 0 && caught % 10 === 0;
   const type = isBoss ? BOSS_TYPE : GLITCH_TYPES[Math.floor(Math.random() * GLITCH_TYPES.length)];
-
-  if (isBoss) {
-    showBossWarn();
-    setTimeout(() => spawnGlitchElement(type, arena), 1500);
-  } else {
-    spawnGlitchElement(type, arena);
-  }
+  if (isBoss) { showBossWarn(); setTimeout(() => doSpawn(type, arena), 1500); }
+  else doSpawn(type, arena);
 }
 
-function spawnGlitchElement(type, arena) {
+function doSpawn(type, arena) {
   const el = document.createElement('div');
   el.className = 'glitch' + (type.boss ? ' boss' : '');
-  const maxX = arena.offsetWidth - 80;
-  const maxY = arena.offsetHeight - 100;
-  const startX = Math.random() * maxX;
-  const startY = Math.random() * maxY;
-  el.style.left = startX + 'px';
-  el.style.top = startY + 'px';
-
+  let x = Math.random() * (arena.offsetWidth  - 90);
+  let y = Math.random() * (arena.offsetHeight - 110);
+  el.style.left = x + 'px';
+  el.style.top  = y + 'px';
   let hp = type.hp;
-  el.innerHTML = `
-    <div class="glitch-body">${type.emoji}</div>
-    <div class="glitch-hp"><div class="glitch-hp-fill" style="width:100%"></div></div>
-  `;
+  el.innerHTML = `<div class="glitch-body">${type.emoji}</div>
+    <div class="glitch-hp"><div class="glitch-hp-fill" style="width:100%"></div></div>`;
 
-  // movement
-  let vx = (Math.random() - 0.5) * 3 * type.speed;
-  let vy = (Math.random() - 0.5) * 3 * type.speed;
-  let x = startX, y = startY;
-  const moveTimer = setInterval(() => {
-    if (!gameRunning) { clearInterval(moveTimer); return; }
+  let vx = (Math.random()-0.5)*3*type.speed;
+  let vy = (Math.random()-0.5)*3*type.speed;
+  const moveT = setInterval(() => {
+    if (!gameRunning) { clearInterval(moveT); return; }
     x += vx; y += vy;
-    if (x < 0 || x > arena.offsetWidth - 80) vx *= -1;
+    if (x < 0 || x > arena.offsetWidth  - 80) vx *= -1;
     if (y < 0 || y > arena.offsetHeight - 100) vy *= -1;
-    el.style.left = x + 'px';
-    el.style.top = y + 'px';
+    el.style.left = x + 'px'; el.style.top = y + 'px';
   }, 16);
 
-  // lifespan
-  const lifespan = type.boss ? 12000 : Math.max(2000, 5000 - (level * 200));
-  const timeout = setTimeout(() => {
-    if (el.parentNode) {
-      el.remove();
-      clearInterval(moveTimer);
-      loseLife();
-    }
+  const lifespan = type.boss ? 12000 : Math.max(2000, 5000 - level * 180);
+  const escapeT = setTimeout(() => {
+    if (el.parentNode) { el.remove(); clearInterval(moveT); loseLife(); }
   }, lifespan);
 
   el.addEventListener('click', () => {
@@ -895,90 +576,65 @@ function spawnGlitchElement(type, arena) {
     const fill = el.querySelector('.glitch-hp-fill');
     if (fill) fill.style.width = (hp / type.hp * 100) + '%';
     if (hp <= 0) {
-      clearTimeout(timeout);
-      clearInterval(moveTimer);
-      spawnParticles(x + 30, y + 30);
-      spawnHitEffect(x + 20, y, '+' + (type.pts * combo));
+      clearTimeout(escapeT); clearInterval(moveT);
+      spawnParticles(x+30, y+30);
+      spawnHitEffect(x+20, y, '+' + (type.pts * combo));
       el.remove();
-      addScore(type.pts);
-      caught++;
-      catchesSinceQuestion++;
+      score += type.pts * combo;
+      caught++; catchesSinceQ++;
+      combo = Math.min(combo + 1, 10);
       updateHUD();
-      comboUp();
-      if (catchesSinceQuestion >= 3) {
-        catchesSinceQuestion = 0;
-        showQuestion();
-      }
+      if (combo >= 3) showComboBanner('x' + combo + ' COMBO!');
+      if (combo >= 5) showFace('victory');
+      else showFace('pose');
       checkLevel();
+      if (catchesSinceQ >= 3 && !activeQuestion) { catchesSinceQ = 0; showQuestion(); }
     } else {
-      el.querySelector('.glitch-body').style.filter = 'brightness(2)';
-      setTimeout(() => {
-        if (el.querySelector('.glitch-body'))
-          el.querySelector('.glitch-body').style.filter = '';
-      }, 150);
+      const b = el.querySelector('.glitch-body');
+      if (b) { b.style.filter='brightness(2.5)'; setTimeout(()=>{ if(b) b.style.filter=''; },140); }
     }
   });
 
   arena.appendChild(el);
-  glitches.push({ el, moveTimer, timeout });
 }
 
-// ── SCORE / HUD ──
-function addScore(pts) {
-  score += pts * combo;
-  updateHUD();
-}
-
+// ── HUD ──
 function updateHUD() {
   document.getElementById('scoreVal').textContent = score;
   document.getElementById('caughtVal').textContent = caught;
   document.getElementById('levelVal').textContent = level;
   document.getElementById('comboHud').textContent = 'x' + combo;
-  for (let i = 1; i <= 3; i++) {
-    document.getElementById('life' + i).classList.toggle('lost', i > lives);
-  }
-}
-
-function comboUp() {
-  combo = Math.min(combo + 1, 10);
-  if (combo >= 3) showComboBanner('x' + combo + ' COMBO!');
-  if (combo >= 5) setChar('victory');
+  for (let i=1;i<=3;i++) document.getElementById('life'+i).classList.toggle('lost', i > lives);
+  document.getElementById('zonePill').textContent = ZONES[Math.min(Math.floor(level/3), ZONES.length-1)];
 }
 
 function checkLevel() {
-  const nextLevel = Math.floor(caught / 10) + 1;
-  if (nextLevel > level) {
-    level = nextLevel;
-    showLevelBanner('LEVEL ' + level);
-    startSpawning();
-    if (level % 5 === 0) setChar('scared');
-    updateHUD();
-  }
+  const next = Math.floor(caught / 10) + 1;
+  if (next > level) { level = next; showLevelBanner('LEVEL ' + level); startSpawning(); updateHUD(); }
 }
 
 // ── LIVES ──
 function loseLife() {
   if (!gameRunning) return;
-  lives--;
-  combo = 1;
-  updateHUD();
-  setChar('sad');
-  setTimeout(() => setChar('pose'), 1500);
+  lives--; combo = 1; updateHUD();
+  showFace('scared');
   if (lives <= 0) endGame(false);
 }
 
-// ── CHARACTER EXPRESSIONS ──
-function setChar(expr) {
-  const img = document.getElementById('byteChar');
-  const map = { pose: 'byte-pose.png', victory: 'byte-victory.png', scared: 'byte-scared.png', sad: 'byte-sad.png' };
+// ── FACE POP ──
+function showFace(expr) {
+  const map = { pose:'byte-pose.png', victory:'byte-victory.png', scared:'byte-scared.png' };
+  const img = document.getElementById('facePop');
   img.src = map[expr] || 'byte-pose.png';
+  img.classList.add('show');
+  clearTimeout(facepopTimer);
+  facepopTimer = setTimeout(() => img.classList.remove('show'), 900);
 }
 
 // ── QUESTIONS ──
 function showQuestion() {
-  if (activeQuestion) return;
+  activeQuestion = true;
   const q = QUESTIONS[Math.floor(Math.random() * QUESTIONS.length)];
-  activeQuestion = q;
   document.getElementById('qText').textContent = q.q;
   const opts = document.getElementById('qOpts');
   opts.innerHTML = '';
@@ -986,67 +642,92 @@ function showQuestion() {
     const btn = document.createElement('button');
     btn.className = 'q-opt';
     btn.textContent = opt;
-    btn.onclick = () => answerQuestion(i === q.ans, btn);
+    btn.onclick = () => answerQ(i === q.ans, btn);
     opts.appendChild(btn);
   });
   document.getElementById('questionDrawer').classList.add('open');
-  // timer
-  let timeLeft = 100;
+  let t = 100;
   clearInterval(qtTimerInterval);
   qtTimerInterval = setInterval(() => {
-    timeLeft -= 2;
-    document.getElementById('qTimer').style.width = timeLeft + '%';
-    if (timeLeft <= 0) {
-      clearInterval(qtTimerInterval);
-      closeQuestion();
-    }
+    t -= 2;
+    document.getElementById('qTimer').style.width = t + '%';
+    if (t <= 0) { clearInterval(qtTimerInterval); closeQuestion(); }
   }, 100);
 }
 
-function answerQuestion(correct, btn) {
+function answerQ(correct, btn) {
   clearInterval(qtTimerInterval);
   btn.classList.add(correct ? 'correct' : 'wrong');
   if (correct) {
     combo = Math.min(combo + 2, 10);
-    addScore(50);
-    setChar('victory');
-    setTimeout(() => setChar('pose'), 1500);
+    score += 50 * combo;
+    showFace('victory');
   } else {
     combo = Math.max(1, combo - 1);
-    setChar('sad');
-    setTimeout(() => setChar('pose'), 1000);
+    showFace('scared');
   }
   updateHUD();
-  setTimeout(closeQuestion, 800);
+  setTimeout(closeQuestion, 750);
 }
 
 function closeQuestion() {
-  activeQuestion = null;
+  activeQuestion = false;
   document.getElementById('questionDrawer').classList.remove('open');
   document.getElementById('qTimer').style.width = '100%';
 }
 
-// ── END GAME ──
+// ── EFFECTS ──
+function showComboBanner(text) {
+  const b = document.getElementById('comboBanner');
+  b.textContent = text; b.className = 'show';
+  setTimeout(() => b.className = '', 900);
+}
+function showLevelBanner(text) {
+  const b = document.getElementById('levelBanner');
+  b.textContent = text; b.className = 'show';
+  setTimeout(() => b.className = '', 1600);
+}
+function showBossWarn() {
+  const b = document.getElementById('bossWarn');
+  b.className = 'show'; showFace('scared');
+  setTimeout(() => b.className = '', 1600);
+}
+function spawnParticles(x, y) {
+  const arena = document.getElementById('arena');
+  for (let i=0;i<8;i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const a = (i/8)*Math.PI*2, d = 40+Math.random()*28;
+    p.style.left = x+'px'; p.style.top = y+'px';
+    p.style.background = Math.random()>0.5 ? '#c66bff' : '#ff6baa';
+    p.style.setProperty('--dx', Math.cos(a)*d+'px');
+    p.style.setProperty('--dy', Math.sin(a)*d+'px');
+    arena.appendChild(p);
+    setTimeout(() => p.remove(), 560);
+  }
+}
+function spawnHitEffect(x, y, text) {
+  const arena = document.getElementById('arena');
+  const el = document.createElement('div');
+  el.className = 'hit-effect';
+  el.style.left = x+'px'; el.style.top = y+'px';
+  el.textContent = text;
+  arena.appendChild(el);
+  setTimeout(() => el.remove(), 760);
+}
+
+// ── END ──
 function endGame(won) {
   gameRunning = false;
-  clearInterval(spawnInterval);
-  clearInterval(qtTimerInterval);
+  clearInterval(spawnInterval); clearInterval(qtTimerInterval);
   closeQuestion();
   document.querySelectorAll('.glitch').forEach(g => g.remove());
-  const screen = document.getElementById('gameOverScreen');
+  document.getElementById('goScore').textContent = score;
   const title = document.getElementById('goTitle');
   const goChar = document.getElementById('goChar');
-  document.getElementById('goScore').textContent = score;
-  if (won) {
-    title.textContent = 'GLITCHES CLEARED!';
-    title.className = 'go-title win';
-    goChar.src = 'byte-victory.png';
-  } else {
-    title.textContent = 'SYSTEM COMPROMISED';
-    title.className = 'go-title lose';
-    goChar.src = 'byte-sad.png';
-  }
-  screen.classList.remove('hidden');
+  if (won) { title.textContent='GLITCHES CLEARED!'; title.className='go-title win'; goChar.src='byte-victory.png'; }
+  else      { title.textContent='SYSTEM COMPROMISED'; title.className='go-title lose'; goChar.src='byte-sad.png'; }
+  document.getElementById('gameOverScreen').classList.remove('hidden');
 }
 
 function restartGame() {
@@ -1054,63 +735,6 @@ function restartGame() {
   document.getElementById('arena').innerHTML = '';
   startGame();
 }
-
-// ── EFFECTS ──
-function showComboBanner(text) {
-  const b = document.getElementById('comboBanner');
-  b.textContent = text;
-  b.className = 'show';
-  setTimeout(() => b.className = '', 900);
-}
-
-function showLevelBanner(text) {
-  const b = document.getElementById('levelBanner');
-  b.textContent = text;
-  b.className = 'show';
-  setTimeout(() => b.className = '', 1600);
-}
-
-function showBossWarn() {
-  const b = document.getElementById('bossWarn');
-  b.className = 'show';
-  setChar('scared');
-  setTimeout(() => { b.className = ''; setChar('pose'); }, 1600);
-}
-
-function spawnParticles(x, y) {
-  const arena = document.getElementById('arena');
-  for (let i = 0; i < 8; i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const angle = (i / 8) * Math.PI * 2;
-    const dist = 40 + Math.random() * 30;
-    p.style.left = x + 'px';
-    p.style.top = y + 'px';
-    p.style.background = Math.random() > 0.5 ? '#c66bff' : '#ff6baa';
-    p.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
-    p.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
-    arena.appendChild(p);
-    setTimeout(() => p.remove(), 600);
-  }
-}
-
-function spawnHitEffect(x, y, text) {
-  const arena = document.getElementById('arena');
-  const el = document.createElement('div');
-  el.className = 'hit-effect';
-  el.style.left = x + 'px';
-  el.style.top = y + 'px';
-  el.textContent = text;
-  arena.appendChild(el);
-  setTimeout(() => el.remove(), 800);
-}
-
-// ── ZONE NAMES ──
-function updateZone() {
-  const zones = ['EXPLORE ZONE', 'GLITCH SECTOR', 'CORRUPTION CORE', 'BOSS TERRITORY', 'ULTRA ZONE'];
-  document.getElementById('zonePill').textContent = zones[Math.min(Math.floor(level / 3), zones.length - 1)];
-}
-setInterval(updateZone, 5000);
 </script>
 </body>
 </html>
