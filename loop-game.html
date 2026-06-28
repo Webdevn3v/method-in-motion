@@ -1,968 +1,743 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loop's Flow Chain — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{
-  --void:#050508;--char:#00e8ff;--char2:#7b61ff;--pink:#ff6baa;--green:#a2ff32;--yellow:#ffe066;
-  --grad:linear-gradient(135deg,#00e8ff,#7b61ff);
-  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{width:100%;height:100%;overflow:hidden;background:#050508;font-family:var(--body);}
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loop's Flow Chain | Method in Motion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cyan: #00f5d4;
+      --blue: #4fc3f7;
+      --bg: #040d12;
+      --glow-c: 0 0 30px rgba(0,245,212,0.7);
+      --glow-b: 0 0 30px rgba(79,195,247,0.6);
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      background: var(--bg);
+      color: #fff;
+      height: 100vh;
+      overflow: hidden;
+      user-select: none;
+    }
 
-body::after{content:'';position:fixed;inset:0;z-index:8000;pointer-events:none;
-  background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.06) 2px,rgba(0,0,0,.06) 4px);}
+    /* ── WORLD ── */
+    #worldBg {
+      position: fixed; inset: 0; z-index: 0;
+      background-image: url('loop-entrance.png');
+      background-size: cover; background-position: center top;
+      filter: brightness(0.4) saturate(1.2);
+    }
+    #worldOverlay {
+      position: fixed; inset: 0; z-index: 1;
+      background:
+        radial-gradient(ellipse at 50% 0%, rgba(0,245,212,0.15) 0%, transparent 60%),
+        linear-gradient(to bottom, rgba(4,13,18,0.2) 0%, rgba(4,13,18,0.65) 70%, rgba(4,13,18,0.96) 100%);
+    }
+    #scanlines {
+      position: fixed; inset: 0; z-index: 2; pointer-events: none;
+      background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
+    }
 
-/* WORLD BG */
-#worldBg{position:fixed;inset:0;z-index:0;}
-#worldBg img.bg-img{width:100%;height:100%;object-fit:cover;object-position:center;display:block;}
-.world-overlay{position:absolute;inset:0;
-  background:radial-gradient(ellipse at 50% 50%,rgba(0,232,255,.08) 0%,transparent 60%),
-    linear-gradient(to bottom,rgba(5,5,8,.6) 0%,rgba(5,5,8,.15) 40%,rgba(5,5,8,.7) 100%);}
-.world-vignette{position:absolute;inset:0;box-shadow:inset 0 0 140px rgba(5,5,8,.85);}
+    /* ── SPINNING RINGS (Loop's world signature) ── */
+    .ring {
+      position: fixed; border-radius: 50%;
+      border: 1px solid rgba(0,245,212,0.12);
+      pointer-events: none; z-index: 3;
+      top: 50%; left: 50%;
+    }
+    #ring1 { width: 600px; height: 600px; margin: -300px 0 0 -300px; animation: spinRing 18s linear infinite; }
+    #ring2 { width: 900px; height: 900px; margin: -450px 0 0 -450px; animation: spinRing 28s linear infinite reverse; border-color: rgba(79,195,247,0.08); }
+    #ring3 { width: 1200px; height: 1200px; margin: -600px 0 0 -600px; animation: spinRing 40s linear infinite; border-color: rgba(0,245,212,0.05); }
+    @keyframes spinRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
-/* FLOWING TRAILS */
-.flow-trail{position:absolute;pointer-events:none;border-radius:50%;filter:blur(40px);animation:trail-flow linear infinite;}
-@keyframes trail-flow{0%{transform:translate(var(--sx),var(--sy)) scale(1);opacity:0}
-  10%{opacity:.6}80%{opacity:.4}100%{transform:translate(var(--ex),var(--ey)) scale(.3);opacity:0}}
+    .hidden { display: none !important; }
 
-/* GEOMETRIC RINGS */
-.geo-ring{position:fixed;border-radius:50%;border:1px solid rgba(0,232,255,.12);pointer-events:none;
-  top:50%;left:50%;transform:translate(-50%,-50%);
-  animation:ring-spin linear infinite;}
-@keyframes ring-spin{from{transform:translate(-50%,-50%) rotate(0deg)}to{transform:translate(-50%,-50%) rotate(360deg)}}
+    /* ── INSTRUCTIONS ── */
+    #instructScreen {
+      position: fixed; inset: 0; z-index: 180;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center;
+      text-align: center; padding: 1.5rem;
+      background: rgba(4,13,18,0.88);
+    }
+    #instructGif {
+      width: min(280px, 50vw); height: auto;
+      filter: drop-shadow(0 0 40px rgba(0,245,212,0.85));
+      animation: floatIdle 3s ease-in-out infinite;
+      margin-bottom: 1.1rem;
+    }
+    @keyframes floatIdle {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-14px); }
+    }
+    .instruct-name {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 900; color: #fff;
+      text-shadow: var(--glow-c); letter-spacing: 0.12em; margin-bottom: 0.2rem;
+    }
+    .instruct-sub {
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
+      color: var(--cyan); letter-spacing: 0.2em; margin-bottom: 1.4rem;
+    }
+    .how-grid {
+      display: flex; gap: 0.8rem; flex-wrap: wrap;
+      justify-content: center; max-width: 680px; margin-bottom: 1.5rem;
+    }
+    .how-card {
+      background: rgba(0,245,212,0.08);
+      border: 1px solid rgba(0,245,212,0.28);
+      border-radius: 10px; padding: 0.9rem 1rem; width: 148px;
+    }
+    .how-icon { font-size: 1.6rem; margin-bottom: 0.35rem; }
+    .how-lbl {
+      font-family: 'Orbitron', monospace; font-size: 0.6rem;
+      color: var(--cyan); letter-spacing: 0.1em; margin-bottom: 0.25rem; font-weight: 700;
+    }
+    .how-desc { font-size: 0.78rem; color: rgba(255,255,255,0.6); line-height: 1.4; }
+    .start-btn {
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: var(--bg); border: none;
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(0.9rem, 2vw, 1.15rem);
+      font-weight: 900; padding: 0.95rem 3rem;
+      border-radius: 8px; cursor: pointer;
+      letter-spacing: 0.15em; box-shadow: var(--glow-c);
+      animation: pulsBtn 2s ease-in-out infinite; transition: transform 0.2s;
+    }
+    @keyframes pulsBtn {
+      0%,100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+    .start-btn:hover { transform: scale(1.07) !important; }
 
-/* GRID TUNNEL */
-.tunnel-grid{position:fixed;inset:0;z-index:1;pointer-events:none;
-  background-image:linear-gradient(rgba(0,232,255,.05) 1px,transparent 1px),
-    linear-gradient(90deg,rgba(0,232,255,.05) 1px,transparent 1px);
-  background-size:50px 50px;
-  mask-image:radial-gradient(ellipse 60% 80% at 50% 50%,black 0%,transparent 80%);
-  animation:tunnel-pulse 4s ease-in-out infinite alternate;}
-@keyframes tunnel-pulse{0%{opacity:.4}100%{opacity:.9}}
+    /* ── NAV ── */
+    #gameNav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 0 1.5rem; height: 52px;
+      background: rgba(4,13,18,0.85);
+      border-bottom: 1px solid rgba(0,245,212,0.18);
+      backdrop-filter: blur(8px);
+    }
+    .nav-back {
+      display: flex; align-items: center; gap: 0.5rem;
+      background: none; border: 1px solid rgba(0,245,212,0.28);
+      color: rgba(255,255,255,0.7);
+      font-family: 'Space Mono', monospace; font-size: 0.72rem;
+      padding: 0.4rem 1rem; border-radius: 4px;
+      cursor: pointer; transition: all 0.2s; text-decoration: none;
+    }
+    .nav-back:hover { border-color: var(--cyan); color: var(--cyan); }
+    .nav-game-title {
+      font-family: 'Orbitron', monospace; font-size: 0.85rem;
+      font-weight: 700; color: var(--cyan);
+      letter-spacing: 0.12em; text-shadow: var(--glow-c);
+    }
+    .nav-tier-badge {
+      background: rgba(0,245,212,0.12);
+      border: 1px solid rgba(0,245,212,0.35);
+      color: var(--cyan); font-family: 'Orbitron', monospace;
+      font-size: 0.6rem; font-weight: 700;
+      padding: 0.28rem 0.75rem; border-radius: 4px; letter-spacing: 0.1em;
+    }
 
-/* STATIC */
-.static-burst{position:fixed;inset:0;z-index:7999;pointer-events:none;opacity:0;
-  background:repeating-linear-gradient(90deg,rgba(0,232,255,.1),transparent 2px,transparent 8px);
-  transition:opacity .08s;}
-.static-burst.fire{opacity:1;}
+    /* ── HUD ── */
+    #hud {
+      position: fixed; top: 52px; left: 0; right: 0; z-index: 40;
+      display: flex; align-items: center;
+      padding: 0 1.5rem; height: 44px;
+      background: rgba(4,13,18,0.7);
+      border-bottom: 1px solid rgba(0,245,212,0.1);
+    }
+    .hud-score {
+      font-family: 'Orbitron', monospace; font-size: 1.3rem;
+      font-weight: 900; color: var(--cyan);
+      text-shadow: var(--glow-c); min-width: 80px;
+    }
+    .hud-sep { width:1px; height:24px; background:rgba(0,245,212,0.18); margin:0 1rem; }
+    .hud-stat { display:flex; flex-direction:column; align-items:center; }
+    .hud-stat-label { font-family:'Space Mono',monospace; font-size:0.52rem; color:rgba(255,255,255,0.35); letter-spacing:0.1em; }
+    .hud-stat-val { font-family:'Orbitron',monospace; font-size:0.9rem; font-weight:700; color:#fff; }
+    .hud-combo {
+      font-family:'Orbitron',monospace; font-size:1rem;
+      font-weight:900; color:var(--blue); text-shadow:var(--glow-b); min-width:40px;
+    }
+    .hud-spacer { flex:1; }
+    .hud-lives { display:flex; gap:0.4rem; }
+    .life { font-size:1.4rem; transition:all 0.3s; }
+    .life.lost { opacity:0.14; filter:grayscale(1); }
 
-/* NAV */
-#gameNav{position:fixed;top:0;left:0;right:0;z-index:500;
-  padding:10px 24px;display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(to bottom,rgba(5,5,8,.9),transparent);pointer-events:none;}
-#gameNav *{pointer-events:all;}
-.nav-back-btn{display:flex;align-items:center;gap:8px;font-family:var(--display);font-size:.55rem;
-  letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5);
-  transition:color .2s;cursor:pointer;border:none;background:none;padding:8px 0;}
-.nav-back-btn:hover{color:var(--char)}
-.nav-back-btn svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;}
-.nav-game-title{font-family:var(--display);font-size:.72rem;letter-spacing:.14em;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 12px rgba(0,232,255,.6));}
-.nav-user{font-family:var(--display);font-size:.5rem;letter-spacing:.1em;color:rgba(255,255,255,.35);}
+    /* ── CHAIN PROGRESS ── */
+    #chainBar {
+      position: fixed; top: 96px; left: 0; right: 0; z-index: 35;
+      display: flex; align-items: center; justify-content: center;
+      gap: 0.5rem; padding: 0.4rem 1rem;
+      background: rgba(4,13,18,0.6);
+      border-bottom: 1px solid rgba(0,245,212,0.08);
+    }
+    .chain-node {
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid rgba(0,245,212,0.25);
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'Orbitron', monospace; font-size: 0.65rem;
+      font-weight: 700; color: rgba(255,255,255,0.35);
+      transition: all 0.3s;
+    }
+    .chain-node.done {
+      border-color: var(--cyan); color: var(--cyan);
+      background: rgba(0,245,212,0.12);
+      box-shadow: 0 0 12px rgba(0,245,212,0.5);
+    }
+    .chain-node.next {
+      border-color: var(--cyan); color: #fff;
+      background: rgba(0,245,212,0.06);
+      animation: chainPulse 0.8s ease-in-out infinite;
+    }
+    @keyframes chainPulse {
+      0%,100% { box-shadow: 0 0 8px rgba(0,245,212,0.4); }
+      50% { box-shadow: 0 0 20px rgba(0,245,212,0.8); }
+    }
+    .chain-connector {
+      width: 20px; height: 2px;
+      background: rgba(0,245,212,0.15); border-radius: 1px;
+      transition: background 0.3s;
+    }
+    .chain-connector.done { background: var(--cyan); box-shadow: 0 0 6px rgba(0,245,212,0.5); }
 
-/* HUD */
-#hud{position:fixed;top:44px;left:0;right:0;z-index:400;
-  padding:8px 24px;display:flex;align-items:center;gap:16px;
-  background:linear-gradient(to bottom,rgba(5,5,8,.75),transparent);pointer-events:none;}
-.hud-score{font-family:var(--display);font-size:1.1rem;font-weight:900;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 12px rgba(0,232,255,.7));transition:transform .15s;}
-.hud-score.pop{transform:scale(1.25);}
-.hud-sep{width:1px;height:20px;background:rgba(255,255,255,.1);}
-.hud-stat{display:flex;flex-direction:column;gap:1px;}
-.hud-stat-label{font-family:var(--display);font-size:.32rem;letter-spacing:.18em;text-transform:uppercase;color:rgba(255,255,255,.3);}
-.hud-stat-val{font-family:var(--display);font-size:.72rem;font-weight:700;color:#fff;}
-.hud-spacer{flex:1;}
-.hud-lives{display:flex;gap:6px;align-items:center;}
-.life{width:20px;height:20px;border-radius:50%;background:var(--grad);
-  box-shadow:0 0 10px rgba(0,232,255,.6);transition:all .3s;}
-.life.lost{background:rgba(255,255,255,.1);box-shadow:none;transform:scale(.7);}
+    /* ── ARENA ── */
+    #arena {
+      position: fixed; top: 140px; left: 0; right: 0; bottom: 0; z-index: 10;
+    }
 
-/* ZONE PILL */
-#zonePill{position:fixed;top:44px;right:24px;z-index:400;
-  font-family:var(--display);font-size:.42rem;letter-spacing:.16em;text-transform:uppercase;
-  padding:5px 14px;border-radius:100px;border:1px solid rgba(0,232,255,.5);
-  color:var(--char);background:rgba(0,232,255,.08);backdrop-filter:blur(8px);transition:all .4s;}
+    /* ── LOOP CHARACTER ── */
+    #loopCharWrap {
+      position: fixed; right: 0; bottom: 0; z-index: 20;
+      display: flex; flex-direction: column; align-items: center;
+      pointer-events: none;
+      width: clamp(200px, 26vw, 360px);
+    }
+    #loopChar {
+      width: 100%; height: auto;
+      filter: drop-shadow(0 0 40px rgba(0,245,212,0.6));
+    }
+    #loopPlatform {
+      width: 80%; height: 10px;
+      background: linear-gradient(to right, transparent, rgba(0,245,212,0.5), transparent);
+      border-radius: 50%; box-shadow: 0 0 26px rgba(0,245,212,0.4);
+      margin-top: -6px;
+    }
 
-/* CHAIN PROGRESS */
-#chainProgress{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);z-index:400;
-  display:flex;gap:10px;align-items:center;pointer-events:none;}
-.chain-dot{width:12px;height:12px;border-radius:50%;border:2px solid rgba(0,232,255,.3);
-  background:transparent;transition:all .3s;}
-.chain-dot.hit{background:var(--char);border-color:var(--char);box-shadow:0 0 12px rgba(0,232,255,.8);}
-.chain-dot.active{border-color:var(--char);animation:dot-pulse .6s ease-in-out infinite;}
-@keyframes dot-pulse{0%,100%{box-shadow:0 0 6px rgba(0,232,255,.4)}50%{box-shadow:0 0 16px rgba(0,232,255,.9)}}
-.chain-connector{width:20px;height:2px;background:rgba(0,232,255,.2);border-radius:1px;transition:background .3s;}
-.chain-connector.lit{background:var(--char);box-shadow:0 0 8px rgba(0,232,255,.6);}
+    /* ── ORB ── */
+    .orb {
+      position: absolute; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; z-index: 15;
+      transition: transform 0.1s;
+      font-family: 'Orbitron', monospace;
+      font-weight: 900;
+    }
+    .orb:hover { transform: scale(1.1); }
+    .orb.correct {
+      background: radial-gradient(circle at 35% 35%, rgba(0,245,212,0.9), rgba(0,180,160,0.7));
+      border: 2px solid var(--cyan);
+      box-shadow: 0 0 20px rgba(0,245,212,0.7), inset 0 0 10px rgba(255,255,255,0.2);
+      color: #fff; font-size: clamp(0.65rem, 1.5vw, 0.9rem);
+      animation: orbFloat 2s ease-in-out infinite;
+    }
+    .orb.decoy {
+      background: radial-gradient(circle at 35% 35%, rgba(255,60,60,0.7), rgba(180,20,20,0.5));
+      border: 2px solid rgba(255,80,80,0.5);
+      box-shadow: 0 0 12px rgba(255,60,60,0.4);
+      color: rgba(255,255,255,0.6); font-size: clamp(0.6rem, 1.3vw, 0.8rem);
+      animation: orbFloat 2.5s ease-in-out infinite reverse;
+    }
+    @keyframes orbFloat {
+      0%,100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.03); }
+    }
+    .orb-label { text-align: center; line-height: 1.1; }
 
-/* ARENA */
-#arena{position:fixed;top:96px;left:0;right:0;bottom:0;z-index:100;overflow:hidden;}
+    /* ── CENTER FACE POP ── */
+    #facePop {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%, -50%) scale(0);
+      z-index: 100;
+      width: clamp(130px, 20vw, 200px); height: auto;
+      filter: drop-shadow(0 0 28px rgba(0,245,212,0.9));
+      pointer-events: none;
+      transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
+      opacity: 0;
+    }
+    #facePop.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 
-/* ORBS */
-.flow-orb{position:absolute;cursor:pointer;user-select:none;
-  display:flex;flex-direction:column;align-items:center;gap:4px;
-  animation:orb-enter .25s cubic-bezier(.34,1.56,.64,1) both;
-  transition:transform .1s;}
-@keyframes orb-enter{from{transform:scale(0)}to{transform:scale(1)}}
-.orb-body{border-radius:50%;display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);font-weight:900;letter-spacing:.06em;
-  border:2px solid;position:relative;
-  animation:orb-float 2s ease-in-out infinite;
-  box-shadow:0 0 20px currentColor,0 0 40px rgba(0,0,0,.5);
-  transition:transform .1s,box-shadow .2s;}
-@keyframes orb-float{0%,100%{transform:translateY(0) scale(1)}50%{transform:translateY(-8px) scale(1.04)}}
-.flow-orb:hover .orb-body{transform:scale(1.15);}
-.flow-orb.correct-hit .orb-body{animation:orb-hit .4s cubic-bezier(.34,1.56,.64,1) forwards;}
-@keyframes orb-hit{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(0);opacity:0}}
-.flow-orb.wrong-hit .orb-body{animation:orb-wrong .4s ease forwards;}
-@keyframes orb-wrong{0%,100%{transform:translateX(0)}25%{transform:translateX(-8px)}75%{transform:translateX(8px)}}
-.orb-label{font-family:var(--display);font-size:.35rem;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--char);opacity:.8;}
+    /* ── BANNERS ── */
+    #comboBanner {
+      position: fixed; top: 32%; left: 50%;
+      transform: translateX(-50%) translateY(-50%);
+      z-index: 60; pointer-events: none; opacity: 0;
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(1.8rem,4.5vw,3.5rem);
+      font-weight: 900; color: var(--cyan); text-shadow: var(--glow-c);
+    }
+    #comboBanner.show { animation: comboPop 0.85s ease forwards; }
+    @keyframes comboPop {
+      0%   { opacity:1; transform:translateX(-50%) translateY(-50%) scale(0.5); }
+      60%  { opacity:1; transform:translateX(-50%) translateY(-50%) scale(1.2); }
+      100% { opacity:0; transform:translateX(-50%) translateY(-80%) scale(1); }
+    }
+    #levelBanner {
+      position: fixed; top: 50%; left: 50%;
+      transform: translate(-50%,-50%);
+      z-index: 65; pointer-events: none; opacity: 0;
+      font-family: 'Orbitron', monospace;
+      font-size: clamp(2rem,5vw,4.5rem);
+      font-weight: 900; color: #fff; text-shadow: var(--glow-c); text-align: center;
+    }
+    #levelBanner.show { animation: levelPop 1.5s ease forwards; }
+    @keyframes levelPop {
+      0%   { opacity:0; transform:translate(-50%,-50%) scale(0.6); }
+      20%  { opacity:1; transform:translate(-50%,-50%) scale(1.1); }
+      70%  { opacity:1; transform:translate(-50%,-50%) scale(1); }
+      100% { opacity:0; transform:translate(-50%,-50%) scale(0.9); }
+    }
 
-/* orb types */
-.orb-start  .orb-body{background:rgba(162,255,50,.12); border-color:rgba(162,255,50,.8); color:#a2ff32;}
-.orb-step   .orb-body{background:rgba(0,232,255,.12);  border-color:rgba(0,232,255,.8);  color:#00e8ff;}
-.orb-end    .orb-body{background:rgba(255,107,170,.12);border-color:rgba(255,107,170,.8);color:#ff6baa;}
-.orb-decoy  .orb-body{background:rgba(255,107,107,.1); border-color:rgba(255,107,107,.5);color:#ff6b6b;opacity:.8;}
-.orb-boss   .orb-body{background:rgba(123,97,255,.2);  border-color:rgba(123,97,255,.9);  color:#7b61ff;
-  animation:orb-boss-pulse .8s ease-in-out infinite;}
-@keyframes orb-boss-pulse{0%,100%{box-shadow:0 0 30px #7b61ff,0 0 60px rgba(123,97,255,.4)}
-  50%{box-shadow:0 0 50px #7b61ff,0 0 100px rgba(123,97,255,.6)}}
+    /* ── WRONG FLASH ── */
+    #wrongFlash {
+      position: fixed; inset: 0; z-index: 70;
+      background: rgba(255,40,40,0.15);
+      pointer-events: none; opacity: 0;
+    }
+    #wrongFlash.show { animation: wrongPulse 0.4s ease forwards; }
+    @keyframes wrongPulse {
+      0%   { opacity:1; }
+      100% { opacity:0; }
+    }
 
-/* CHAIN BEAM — visual connection between orbs */
-.chain-beam{position:absolute;pointer-events:none;z-index:50;
-  transform-origin:0 50%;background:linear-gradient(90deg,rgba(0,232,255,.6),rgba(0,232,255,.1));
-  height:2px;border-radius:1px;
-  animation:beam-pulse 1s ease-in-out infinite;}
-@keyframes beam-pulse{0%,100%{opacity:.6}50%{opacity:1}}
+    /* ── HIT EFFECTS ── */
+    .hit-effect {
+      position: absolute; pointer-events: none; z-index: 30;
+      font-family: 'Orbitron', monospace; font-size: 1.3rem;
+      font-weight: 900; color: var(--cyan);
+      animation: hitFloat 0.75s ease forwards;
+    }
+    .hit-effect.bad { color: #ff4444; }
+    @keyframes hitFloat {
+      0%   { opacity:1; transform:translateY(0) scale(1); }
+      100% { opacity:0; transform:translateY(-55px) scale(1.3); }
+    }
+    .particle {
+      position: absolute; width: 6px; height: 6px; border-radius: 50%;
+      pointer-events: none; z-index: 28;
+      animation: particleBurst 0.55s ease forwards;
+    }
+    @keyframes particleBurst {
+      0%   { opacity:1; transform:translate(0,0) scale(1); }
+      100% { opacity:0; transform:translate(var(--dx),var(--dy)) scale(0); }
+    }
 
-/* LOOP CHARACTER */
-#loopCharWrap{position:fixed;right:-10px;bottom:0;z-index:200;
-  width:min(280px,30vw);pointer-events:none;
-  display:flex;flex-direction:column;align-items:center;}
-#loopPlatform{width:80%;height:14px;
-  background:linear-gradient(90deg,transparent,rgba(0,232,255,.5),rgba(123,97,255,.4),transparent);
-  border-radius:50%;filter:blur(10px);margin-bottom:-4px;
-  animation:platform-pulse 3s ease-in-out infinite;}
-@keyframes platform-pulse{0%,100%{opacity:.5;transform:scaleX(1)}50%{opacity:1;transform:scaleX(1.1)}}
-#loopChar{width:100%;
-  filter:drop-shadow(0 0 30px rgba(0,232,255,.8)) drop-shadow(0 0 60px rgba(123,97,255,.4));
-  animation:loop-hover 5s ease-in-out infinite;transition:filter .3s;}
-@keyframes loop-hover{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-14px) rotate(2deg)}}
-#loopChar.happy{filter:drop-shadow(0 0 50px rgba(162,255,50,.9)) drop-shadow(0 0 80px rgba(162,255,50,.5));}
-#loopChar.scared{filter:drop-shadow(0 0 40px rgba(255,107,107,.9));animation:loop-shake .3s ease infinite;}
-@keyframes loop-shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
-
-/* LOOP FACE */
-#loopFaceWrap{position:fixed;left:20px;bottom:20px;z-index:700;
-  width:90px;height:90px;border-radius:50%;overflow:hidden;
-  border:2px solid rgba(0,232,255,.5);
-  box-shadow:0 0 30px rgba(0,232,255,.4);
-  transition:all .3s cubic-bezier(.34,1.56,.64,1);
-  background:rgba(5,5,8,.6);}
-#loopFaceWrap.react{transform:scale(1.2);border-color:var(--char);box-shadow:0 0 50px rgba(0,232,255,.7);}
-#loopFaceWrap.scared{border-color:#ff6b6b;box-shadow:0 0 40px rgba(255,107,107,.6);}
-#loopFaceImg{width:100%;height:100%;object-fit:cover;object-position:top center;display:block;}
-
-/* COMBO / CHAIN BANNER */
-#chainBanner{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
-  z-index:700;pointer-events:none;font-family:var(--display);font-weight:900;
-  letter-spacing:.1em;text-transform:uppercase;text-align:center;
-  transition:transform .22s cubic-bezier(.34,1.56,.64,1),opacity .2s;opacity:0;}
-#chainBanner.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
-
-/* LEVEL BANNER */
-#levelBanner{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);
-  z-index:800;font-family:var(--display);font-size:clamp(2rem,6vw,4rem);font-weight:900;
-  letter-spacing:.1em;background:var(--grad);-webkit-background-clip:text;
-  -webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 40px rgba(0,232,255,.8));pointer-events:none;text-align:center;
-  transition:transform .3s cubic-bezier(.34,1.56,.64,1),opacity .3s;opacity:0;}
-#levelBanner.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
-
-/* QUESTION DRAWER */
-#questionDrawer{position:fixed;bottom:-200px;left:0;right:0;z-index:600;
-  transition:bottom .35s cubic-bezier(.34,1.56,.64,1);}
-#questionDrawer.open{bottom:0;}
-.q-drawer-inner{margin:0 auto;max-width:700px;padding:0 20px 20px;
-  background:linear-gradient(to top,rgba(5,5,8,.98),rgba(5,5,8,.92));
-  border-top:1px solid rgba(0,232,255,.3);border-radius:20px 20px 0 0;
-  backdrop-filter:blur(20px);}
-.q-pull{width:40px;height:3px;background:rgba(255,255,255,.15);border-radius:2px;margin:10px auto 12px;}
-.q-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.q-label{font-family:var(--display);font-size:.42rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char);}
-.q-timer-bar{width:120px;height:4px;background:rgba(255,255,255,.08);border-radius:2px;overflow:hidden;}
-.q-timer-fill{height:100%;background:var(--grad);border-radius:2px;transition:width .1s linear;}
-.q-text{font-family:var(--heading);font-size:clamp(.85rem,2vw,1rem);font-weight:700;color:#fff;margin-bottom:10px;line-height:1.4;}
-.q-opts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
-.q-opt{padding:9px 14px;border-radius:10px;border:1px solid rgba(255,255,255,.1);
-  background:rgba(255,255,255,.04);font-family:var(--display);font-size:.48rem;
-  letter-spacing:.07em;color:rgba(255,255,255,.7);cursor:pointer;transition:all .18s;text-align:left;}
-.q-opt:hover{border-color:var(--char);background:rgba(0,232,255,.1);color:#fff;transform:translateY(-1px);}
-.q-opt.correct{border-color:var(--green);background:rgba(162,255,50,.1);color:var(--green);pointer-events:none;}
-.q-opt.wrong{border-color:#ff6b6b;background:rgba(255,107,107,.1);color:#ff6b6b;pointer-events:none;}
-.q-opt.reveal{border-color:var(--green);background:rgba(162,255,50,.06);pointer-events:none;}
-
-/* SCORE FLOAT */
-.score-float{position:fixed;pointer-events:none;z-index:650;
-  font-family:var(--display);font-weight:900;font-size:1.1rem;
-  animation:score-up .8s ease forwards;}
-@keyframes score-up{0%{opacity:1;transform:translate(-50%,-50%) scale(.8)}
-  100%{opacity:0;transform:translate(-50%,-180%) scale(1)}}
-
-/* MISS FLASH */
-.miss-flash{position:fixed;pointer-events:none;z-index:650;
-  font-family:var(--display);font-size:.65rem;letter-spacing:.12em;color:#ff6b6b;
-  animation:miss-up .7s ease forwards;}
-@keyframes miss-up{0%{opacity:1;transform:translate(-50%,-50%)}100%{opacity:0;transform:translate(-50%,-130%)}}
-
-/* PARTICLES */
-.particle{position:fixed;border-radius:50%;pointer-events:none;animation:p-fly linear forwards;}
-@keyframes p-fly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--px),var(--py)) scale(0)}}
-
-/* SCREENS */
-.screen{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  background:rgba(5,5,8,.96);backdrop-filter:blur(20px);padding:28px 20px;text-align:center;}
-.screen.hidden{display:none;}
-.screen-eyebrow{font-family:var(--display);font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;
-  color:var(--char);margin-bottom:10px;opacity:.8;}
-.screen-title{font-family:var(--display);font-size:clamp(2.2rem,7vw,5rem);font-weight:900;letter-spacing:.08em;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
-  filter:drop-shadow(0 0 40px rgba(0,232,255,.6));margin-bottom:8px;line-height:1;}
-.screen-sub{font-family:var(--heading);font-size:clamp(.85rem,2vw,1.1rem);color:rgba(255,255,255,.5);
-  margin-bottom:28px;line-height:1.6;max-width:500px;}
-.screen-score{font-family:var(--display);font-size:clamp(1.8rem,5vw,3.5rem);font-weight:900;
-  background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:4px;}
-.screen-best{font-family:var(--display);font-size:.52rem;letter-spacing:.16em;color:rgba(255,255,255,.25);margin-bottom:24px;}
-.screen-stats{display:flex;gap:28px;justify-content:center;margin-bottom:24px;flex-wrap:wrap;}
-.sstat .snum{font-family:var(--display);font-size:1.5rem;font-weight:900;color:#fff;}
-.sstat .slbl{font-family:var(--display);font-size:.36rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);}
-.screen-btn{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;
-  padding:13px 34px;background:var(--grad);color:#000;font-weight:900;border-radius:100px;
-  border:none;cursor:pointer;transition:transform .2s,box-shadow .2s;
-  box-shadow:0 8px 30px rgba(0,232,255,.4);margin:5px;}
-.screen-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(0,232,255,.6);}
-.screen-btn.outline{background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.65);box-shadow:none;}
-.screen-btn.outline:hover{border-color:#fff;color:#fff;}
-.screen-loop-img{width:110px;height:110px;object-fit:contain;margin-bottom:14px;
-  animation:loop-bounce .8s ease-in-out infinite alternate;
-  filter:drop-shadow(0 0 20px rgba(0,232,255,.6));}
-@keyframes loop-bounce{from{transform:translateY(0) rotate(-3deg)}to{transform:translateY(-14px) rotate(3deg)}}
-
-.how-row{display:flex;gap:14px;justify-content:center;margin-bottom:28px;flex-wrap:wrap;}
-.how-card{background:rgba(0,232,255,.05);border:1px solid rgba(0,232,255,.2);
-  border-radius:14px;padding:14px 16px;text-align:center;width:150px;}
-.how-icon{font-size:1.6rem;margin-bottom:6px;}
-.how-lbl{font-family:var(--display);font-size:.4rem;letter-spacing:.14em;text-transform:uppercase;color:var(--char);margin-bottom:3px;}
-.how-desc{font-size:.72rem;color:rgba(255,255,255,.4);line-height:1.5;}
-
-#bootScreen .boot-line{font-family:monospace;font-size:.75rem;padding:3px 0;opacity:0;transition:opacity .3s;}
-#bootScreen .boot-line.show{opacity:1;}
-#bootScreen .boot-line.ok{color:rgba(162,255,50,.8);}
-#bootScreen .boot-line.ok::after{content:' ✓';}
-#bootScreen .boot-line.err{color:#ff6b6b;}
-#bootScreen .boot-line.err::after{content:' ✗';}
-</style>
+    /* ── GAME OVER ── */
+    #gameOverScreen {
+      position: fixed; inset: 0; z-index: 150;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; text-align: center; padding: 2rem;
+      background: rgba(4,13,18,0.93);
+    }
+    .go-char { width: min(260px,46vw); height: auto; filter: drop-shadow(0 0 30px rgba(0,245,212,0.6)); margin-bottom: 1.3rem; }
+    .go-title { font-family:'Orbitron',monospace; font-size:clamp(1.8rem,4.5vw,3.2rem); font-weight:900; margin-bottom:0.45rem; letter-spacing:0.1em; }
+    .go-title.win  { color:var(--cyan); text-shadow:var(--glow-c); }
+    .go-title.lose { color:#ff6b6b; text-shadow:0 0 20px rgba(255,60,60,0.6); }
+    .go-score-label { font-family:'Orbitron',monospace; font-size:0.72rem; color:rgba(255,255,255,0.4); letter-spacing:0.15em; margin-bottom:0.2rem; }
+    .go-final-score { font-family:'Orbitron',monospace; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; color:#fff; text-shadow:var(--glow-c); margin-bottom:1.8rem; }
+    .go-btn {
+      background: linear-gradient(135deg, var(--cyan), var(--blue));
+      color: var(--bg); border: none;
+      font-family: 'Orbitron', monospace; font-size: 0.95rem; font-weight: 700;
+      padding: 0.85rem 2.3rem; border-radius: 8px; cursor: pointer;
+      letter-spacing: 0.1em; margin: 0.35rem;
+      transition: all 0.2s; box-shadow: var(--glow-c);
+    }
+    .go-btn:hover { transform: scale(1.04); }
+    .go-btn.outline {
+      background: transparent; border: 1px solid rgba(0,245,212,0.4);
+      color: rgba(255,255,255,0.65); box-shadow: none;
+    }
+  </style>
 </head>
 <body>
 
-<div id="worldBg">
-  <img class="bg-img" src="loop-entrance.png" alt="Loop World"
-    onerror="this.style.display='none'">
-  <div class="world-overlay"></div>
-  <div class="world-vignette"></div>
+<div id="worldBg"></div>
+<div id="worldOverlay"></div>
+<div id="scanlines"></div>
+<div class="ring" id="ring1"></div>
+<div class="ring" id="ring2"></div>
+<div class="ring" id="ring3"></div>
+
+<!-- ── INSTRUCTIONS ── -->
+<div id="instructScreen">
+  <img id="instructGif" src="loop-idle.gif" alt="Loop" onerror="this.src='loop-motion.gif'" />
+  <div class="instruct-name">FLOW CHAIN</div>
+  <div class="instruct-sub">LOOP'S FLOW LAB · SPARKS+</div>
+  <div class="how-grid">
+    <div class="how-card">
+      <div class="how-icon">∞</div>
+      <div class="how-lbl">Follow the Flow</div>
+      <div class="how-desc">Click orbs in order: START → 1 → 2 → 3 → END. Don't skip.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">🔴</div>
+      <div class="how-lbl">Avoid Decoys</div>
+      <div class="how-desc">Red orbs are traps. Clicking one breaks your chain and costs a life.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">⚡</div>
+      <div class="how-lbl">Build Speed</div>
+      <div class="how-desc">Complete chains faster for bonus points. Chains get longer each level.</div>
+    </div>
+    <div class="how-card">
+      <div class="how-icon">🔥</div>
+      <div class="how-lbl">Chain Combos</div>
+      <div class="how-desc">Complete multiple chains in a row without mistakes to multiply your score.</div>
+    </div>
+  </div>
+  <button class="start-btn" onclick="startGame()">▶ START FLOW</button>
 </div>
-<div class="tunnel-grid"></div>
 
-<!-- Geometric rings -->
-<div class="geo-ring" style="width:300px;height:300px;animation-duration:12s;"></div>
-<div class="geo-ring" style="width:500px;height:500px;animation-duration:20s;animation-direction:reverse;border-color:rgba(123,97,255,.08);"></div>
-<div class="geo-ring" style="width:700px;height:700px;animation-duration:30s;border-color:rgba(0,232,255,.05);"></div>
-<div class="geo-ring" style="width:900px;height:900px;animation-duration:45s;animation-direction:reverse;border-color:rgba(123,97,255,.04);"></div>
-
-<div class="static-burst" id="staticBurst"></div>
-
-<!-- NAV -->
+<!-- ── NAV ── -->
 <nav id="gameNav">
-  <button class="nav-back-btn" onclick="window.location.href='games.html'">
-    <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
-    Game Universe
-  </button>
+  <a href="games.html" class="nav-back">← Game Universe</a>
   <div class="nav-game-title">Loop's Flow Chain</div>
-  <div class="nav-user" id="navUser">—</div>
+  <div class="nav-tier-badge">SPARKS+</div>
 </nav>
 
-<!-- HUD -->
+<!-- ── HUD ── -->
 <div id="hud">
   <div class="hud-score" id="scoreVal">0</div>
   <div class="hud-sep"></div>
-  <div class="hud-stat"><div class="hud-stat-label">Chains</div><div class="hud-stat-val" id="chainVal">0</div></div>
+  <div class="hud-stat">
+    <div class="hud-stat-label">CHAINS</div>
+    <div class="hud-stat-val" id="chainsVal">0</div>
+  </div>
   <div class="hud-sep"></div>
-  <div class="hud-stat"><div class="hud-stat-label">Level</div><div class="hud-stat-val" id="levelVal">1</div></div>
+  <div class="hud-stat">
+    <div class="hud-stat-label">LEVEL</div>
+    <div class="hud-stat-val" id="levelVal">1</div>
+  </div>
   <div class="hud-sep"></div>
-  <div class="hud-stat"><div class="hud-stat-label">Best Chain</div><div class="hud-stat-val" id="bestChainVal">0</div></div>
+  <div class="hud-combo" id="comboHud">x1</div>
   <div class="hud-spacer"></div>
   <div class="hud-lives">
-    <div class="life" id="life1"></div>
-    <div class="life" id="life2"></div>
-    <div class="life" id="life3"></div>
+    <div class="life" id="life1">∞</div>
+    <div class="life" id="life2">∞</div>
+    <div class="life" id="life3">∞</div>
   </div>
 </div>
 
-<div id="zonePill">FLOW ZONE</div>
+<!-- ── CHAIN PROGRESS BAR ── -->
+<div id="chainBar"></div>
 
-<!-- CHAIN PROGRESS -->
-<div id="chainProgress"></div>
-
-<!-- ARENA -->
+<!-- ── ARENA ── -->
 <div id="arena"></div>
 
-<!-- LOOP CHARACTER -->
+<!-- ── LOOP CHARACTER ── -->
 <div id="loopCharWrap">
-  <img id="loopChar" src="loop-pose-2.png" alt="Loop"
-    onerror="this.style.fontSize='4rem';this.style.textAlign='center';this.outerHTML='<div id=\'loopChar\' style=\'font-size:4rem;text-align:center;padding-bottom:10px;\'>♾️</div>'">
+  <img id="loopChar" src="loop-pose.png" alt="Loop" onerror="this.src='loop-motion.gif'" />
   <div id="loopPlatform"></div>
 </div>
 
-<!-- LOOP FACE -->
-<div id="loopFaceWrap">
-  <img id="loopFaceImg" src="loop-happy.png" alt="Loop">
-</div>
+<!-- ── FACE POP ── -->
+<img id="facePop" src="loop-happy.png" alt="" />
 
-<div id="chainBanner"></div>
+<!-- ── BANNERS ── -->
+<div id="comboBanner"></div>
 <div id="levelBanner"></div>
+<div id="wrongFlash"></div>
 
-<!-- QUESTION DRAWER -->
-<div id="questionDrawer">
-  <div class="q-drawer-inner">
-    <div class="q-pull"></div>
-    <div class="q-top">
-      <div class="q-label">⚡ Chain Bonus — Answer to multiply points</div>
-      <div class="q-timer-bar"><div class="q-timer-fill" id="qTimer" style="width:100%"></div></div>
-    </div>
-    <div class="q-text" id="qText"></div>
-    <div class="q-opts" id="qOpts"></div>
+<!-- ── GAME OVER ── -->
+<div id="gameOverScreen" class="hidden">
+  <img class="go-char" id="goChar" src="loop-victory.png" alt="Loop" onerror="this.src='loop-motion.gif'" />
+  <div class="go-title" id="goTitle">FLOW COMPLETE!</div>
+  <div class="go-score-label">FINAL SCORE</div>
+  <div class="go-final-score" id="goScore">0</div>
+  <div>
+    <button class="go-btn" onclick="restartGame()">▶ PLAY AGAIN</button>
+    <button class="go-btn outline" onclick="location.href='games.html'">← Game Universe</button>
   </div>
 </div>
-
-<!-- BOOT -->
-<div class="screen" id="bootScreen">
-  <div class="screen-eyebrow">Entering the Flow Tunnel</div>
-  <div class="screen-title">FLOW CHAIN</div>
-  <div style="max-width:380px;width:100%;text-align:left;margin:0 auto 20px;" id="bootLines"></div>
-</div>
-
-<!-- START -->
-<div class="screen hidden" id="startScreen">
-  <img class="screen-loop-img" src="loop-happy.png" alt="Loop">
-  <div class="screen-eyebrow">Loop's Underground Tunnel</div>
-  <div class="screen-title">FLOW CHAIN</div>
-  <div class="screen-sub">Orbs stream through the tunnel in sequences.<br>Click them in the correct order to complete each loop.<br>Break the chain and lose a life. Keep the flow going.</div>
-  <div class="how-row">
-    <div class="how-card"><div class="how-icon">🟢</div><div class="how-lbl">Start Orb</div><div class="how-desc">Always click the green START orb first.</div></div>
-    <div class="how-card"><div class="how-icon">🔵</div><div class="how-lbl">Step Orbs</div><div class="how-desc">Click numbered steps in order: 1, 2, 3...</div></div>
-    <div class="how-card"><div class="how-icon">🔴</div><div class="how-lbl">End Orb</div><div class="how-desc">Click END to complete the chain and score.</div></div>
-    <div class="how-card"><div class="how-icon">⚠️</div><div class="how-lbl">Decoys</div><div class="how-desc">Wrong orbs break the flow. Don't click them.</div></div>
-  </div>
-  <button class="screen-btn" onclick="startGame()">Enter the Flow →</button>
-  <button class="screen-btn outline" onclick="window.location.href='games.html'">← Back to Universe</button>
-</div>
-
-<!-- GAME OVER -->
-<div class="screen hidden" id="gameOverScreen">
-  <img class="screen-loop-img" id="gameOverLoopImg" src="loop-sad.png" alt="Loop">
-  <div class="screen-eyebrow" id="gameOverEyebrow">Flow Interrupted</div>
-  <div class="screen-title" id="gameOverTitle">CHAIN BROKEN</div>
-  <div class="screen-sub" id="gameOverSub">The flow was interrupted. Loop says: the flow never stops — it just resets.</div>
-  <div class="screen-score" id="finalScore">0</div>
-  <div class="screen-best" id="finalBest">Best: 0</div>
-  <div class="screen-stats">
-    <div class="sstat"><div class="snum" id="stChains">0</div><div class="slbl">Chains</div></div>
-    <div class="sstat"><div class="snum" id="stLevel">1</div><div class="slbl">Level</div></div>
-    <div class="sstat"><div class="snum" id="stBestChain">0</div><div class="slbl">Best Chain</div></div>
-    <div class="sstat"><div class="snum" id="stAcc">0%</div><div class="slbl">Accuracy</div></div>
-  </div>
-  <button class="screen-btn" onclick="startGame()">Restart Flow →</button>
-  <button class="screen-btn outline" onclick="window.location.href='games.html'">← Back to Universe</button>
-</div>
-
-<script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, doc, getDoc, setDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-const firebaseConfig={
-  apiKey:"AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
-  authDomain:"method-in-motion.firebaseapp.com",
-  projectId:"method-in-motion",
-  storageBucket:"method-in-motion.firebasestorage.app",
-  messagingSenderId:"1067937974009",
-  appId:"1:1067937974009:web:5b21e6abe84e0b28234428"
-};
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-let currentUser=null;
-onAuthStateChanged(auth,async user=>{
-  currentUser=user;
-  if(user){
-    document.getElementById('navUser').textContent=user.displayName||user.email.split('@')[0];
-    try{
-      const snap=await getDoc(doc(db,'users',user.uid));
-      if(snap.exists()){
-        const saved=snap.data().loopGameBest||0;
-        if(saved>(parseInt(localStorage.getItem('loopGameBest'))||0))
-          localStorage.setItem('loopGameBest',saved);
-      }
-    }catch(e){}
-  }
-});
-window._saveScore=async function(score){
-  const local=parseInt(localStorage.getItem('loopGameBest'))||0;
-  if(score>local)localStorage.setItem('loopGameBest',score);
-  if(currentUser&&score>local){
-    try{await setDoc(doc(db,'users',currentUser.uid),{loopGameBest:score},{merge:true});}catch(e){}
-  }
-};
-</script>
 
 <script>
-// ── QUESTIONS ─────────────────────────────────────────────
-const QUESTIONS=[
-  {q:"What is a loop in programming?",opts:["A type of variable","Code that repeats until a condition is met","A CSS property","A broken function"],ans:1},
-  {q:"What does a 'for' loop do?",opts:["Runs code forever","Runs code a set number of times","Deletes variables","Opens a file"],ans:1},
-  {q:"What stops an infinite loop?",opts:["A semicolon","Nothing — it runs forever","A break condition becoming true","Closing the browser"],ans:2},
-  {q:"What is iteration?",opts:["A type of error","One pass through a loop","A JavaScript variable","A CSS animation"],ans:1},
-  {q:"What does 'while' mean in a while loop?",opts:["Run once","Keep running as long as condition is true","Skip to next line","End the program"],ans:1},
-  {q:"What is the loop variable 'i' used for?",opts:["Naming the loop","Tracking the current count or index","Storing text","Setting colors"],ans:1},
-  {q:"What happens if a loop condition is never false?",opts:["Loop ends normally","Loop skips","Infinite loop — runs forever","Error appears"],ans:2},
-  {q:"What does 'break' do inside a loop?",opts:["Pauses the loop","Exits the loop immediately","Resets the counter","Skips one iteration"],ans:1},
-  {q:"What is a nested loop?",opts:["A loop inside another loop","A broken loop","A loop with no condition","A CSS loop"],ans:0},
-  {q:"What does 'continue' do in a loop?",opts:["Ends the loop","Skips the rest of the current iteration","Resets to zero","Pauses execution"],ans:1},
-  {q:"Which is a valid for loop in JS?",opts:["for i in range(10)","for(let i=0;i<10;i++)","loop(10 times)","repeat 10"],ans:1},
-  {q:"What does forEach do in JavaScript?",opts:["Loops through each item in an array","Creates a new array","Deletes items","Counts items"],ans:0},
-  {q:"What is the starting value of i in: for(let i=0;...)?",opts:["1","undefined","0","-1"],ans:2},
-  {q:"What does i++ mean in a for loop?",opts:["Subtract 1 from i","Add 1 to i","Multiply i by 2","Reset i to 0"],ans:1},
-  {q:"What type of loop checks condition AFTER running?",opts:["for loop","while loop","do...while loop","forEach loop"],ans:2},
-  {q:"What is an array in JavaScript?",opts:["A type of loop","A list of values stored in one variable","A CSS selector","A type of error"],ans:1},
-  {q:"What does .length return on an array?",opts:["The first item","The last item","The number of items","The sum of items"],ans:2},
-  {q:"What is a function in JavaScript?",opts:["A type of loop","A reusable block of code","A CSS property","An HTML tag"],ans:1},
-];
+// ── STATE ──
+let score=0, chains=0, lives=3, level=1, combo=1;
+let chainLength=4, currentStep=0, orbCount=0;
+let gameRunning=false, spawnTimer=null, facepopTimer=null;
+let chainNodes=[];
 
-// ── ZONES ─────────────────────────────────────────────────
-const ZONES=[
-  {level:1,name:'FLOW ZONE',   color:'#00e8ff',chainLen:3,decoys:0,orbSize:72,speed:1.0,spawnDelay:600,moveSpeed:.8},
-  {level:2,name:'CURRENT ZONE',color:'#7b61ff',chainLen:4,decoys:1,orbSize:66,speed:1.3,spawnDelay:500,moveSpeed:1.2},
-  {level:3,name:'SURGE ZONE',  color:'#ff6baa',chainLen:5,decoys:2,orbSize:60,speed:1.6,spawnDelay:420,moveSpeed:1.6},
-  {level:4,name:'INFINITE ZONE',color:'#ffe066',chainLen:6,decoys:3,orbSize:54,speed:2.0,spawnDelay:350,moveSpeed:2.1},
-  {level:5,name:'FULL LOOP',   color:'#a2ff32',chainLen:7,decoys:4,orbSize:50,speed:2.5,spawnDelay:280,moveSpeed:2.7},
-];
-
-// ── STATE ─────────────────────────────────────────────────
-let G={
-  running:false,score:0,lives:3,level:1,chains:0,
-  totalClicks:0,correctClicks:0,maxChain:0,
-  currentChain:[],nextExpected:0,
-  orbs:[],spawnTimeout:null,
-  qActive:false,qTimer:null,unusedQ:[],
-  chainComplete:false,
-};
-
-function zone(){return ZONES[Math.min(G.level-1,ZONES.length-1)];}
-
-// ── BOOT ──────────────────────────────────────────────────
-const BOOT_LINES=[
-  {t:'> Initializing LOOP.exe',cls:'ok',d:200},
-  {t:'> Loading flow tunnel...',cls:'ok',d:550},
-  {t:'> Calibrating chain sequences...',cls:'ok',d:900},
-  {t:'> WARNING: Decoy orbs detected',cls:'err',d:1250},
-  {t:'> Flow systems: ONLINE',cls:'ok',d:1600},
-  {t:'> The flow never stops.',cls:'ok',d:2000},
-];
-
-window.addEventListener('DOMContentLoaded',()=>{
-  document.getElementById('finalBest').textContent='Best: '+(localStorage.getItem('loopGameBest')||0);
-  const c=document.getElementById('bootLines');
-  BOOT_LINES.forEach(({t,cls,d})=>{
-    const el=document.createElement('div');
-    el.className='boot-line '+cls;
-    el.textContent=t;
-    c.appendChild(el);
-    setTimeout(()=>el.classList.add('show'),d);
-  });
-  setTimeout(()=>{
-    document.getElementById('bootScreen').classList.add('hidden');
-    document.getElementById('startScreen').classList.remove('hidden');
-    spawnFlowTrails();
-  },2700);
-});
-
-// ── AMBIENT FLOW TRAILS ───────────────────────────────────
-function spawnFlowTrails(){
-  const colors=['rgba(0,232,255,.3)','rgba(123,97,255,.25)','rgba(0,232,255,.2)'];
-  for(let i=0;i<8;i++){
-    const el=document.createElement('div');
-    el.className='flow-trail';
-    const c=colors[Math.floor(Math.random()*colors.length)];
-    const size=20+Math.random()*40;
-    const sx=Math.random()*100+'vw', sy=Math.random()*100+'vh';
-    const ex=(Math.random()*200-100)+'px', ey=(Math.random()*200-100)+'px';
-    el.style.cssText=`width:${size}px;height:${size}px;background:${c};left:0;top:0;--sx:${sx};--sy:${sy};--ex:${ex};--ey:${ey};animation-duration:${6+Math.random()*8}s;animation-delay:${Math.random()*6}s;position:fixed;z-index:2;`;
-    document.body.appendChild(el);
-  }
+// ── CHAIN SEQUENCES ──
+// Each level adds one more step to the chain
+function getChainLabels() {
+  const base = ['START','1','2','3','4','5','6','7','8','END'];
+  const len = Math.min(3 + level, 8); // starts at 4 nodes, max 8
+  return base.slice(0, len).concat(['END']).slice(0, len + 1);
 }
 
-// ── START ─────────────────────────────────────────────────
-window.startGame=function(){
-  document.getElementById('startScreen').classList.add('hidden');
-  document.getElementById('gameOverScreen').classList.add('hidden');
-  document.getElementById('arena').innerHTML='';
-  closeQuestion();
-  G={running:true,score:0,lives:3,level:1,chains:0,
-    totalClicks:0,correctClicks:0,maxChain:0,
-    currentChain:[],nextExpected:0,
-    orbs:[],spawnTimeout:null,
-    qActive:false,qTimer:null,unusedQ:[],
-    chainComplete:false};
-  resetLives();
+// ── START ──
+function startGame() {
+  document.getElementById('instructScreen').classList.add('hidden');
+  score=0; chains=0; lives=3; level=1; combo=1;
+  gameRunning=true;
   updateHUD();
-  updateZone();
-  loopExpr('idle');
-  generateChain();
-};
+  newChain();
+}
 
-// ── CHAIN GENERATION ──────────────────────────────────────
-function generateChain(){
-  if(!G.running)return;
-  G.chainComplete=false;
-  G.nextExpected=0;
-  const z=zone();
-  document.getElementById('arena').innerHTML='';
-  G.orbs=[];
+// ── NEW CHAIN ──
+function newChain() {
+  if (!gameRunning) return;
+  currentStep = 0;
+  const labels = getChainLabels();
+  chainLength = labels.length;
+  buildChainBar(labels);
+  spawnOrbs(labels);
+}
 
-  // Build the correct sequence
-  const sequence=[];
-  sequence.push({type:'start',label:'START',step:-1});
-  for(let i=1;i<=z.chainLen-2;i++) sequence.push({type:'step',label:String(i),step:i});
-  sequence.push({type:'end',label:'END',step:z.chainLen-1});
-  G.currentChain=sequence;
+function buildChainBar(labels) {
+  const bar = document.getElementById('chainBar');
+  bar.innerHTML = '';
+  labels.forEach((lbl, i) => {
+    const node = document.createElement('div');
+    node.className = 'chain-node' + (i === 0 ? ' next' : '');
+    node.textContent = lbl;
+    node.id = 'cn-' + i;
+    bar.appendChild(node);
+    if (i < labels.length - 1) {
+      const conn = document.createElement('div');
+      conn.className = 'chain-connector';
+      conn.id = 'cc-' + i;
+      bar.appendChild(conn);
+    }
+  });
+  chainNodes = labels;
+}
 
-  // Build chain progress dots
-  buildChainProgress(sequence.length);
-
-  // Spawn all orbs including decoys
-  const allOrbs=[...sequence];
-  for(let d=0;d<z.decoys;d++){
-    const decoyStep=Math.floor(Math.random()*9)+1;
-    allOrbs.push({type:'decoy',label:String(decoyStep),step:-99});
-  }
-  // Shuffle positions
-  shuffle(allOrbs);
-
-  // Spawn with staggered delay
-  allOrbs.forEach((orb,i)=>{
-    setTimeout(()=>{if(G.running)spawnOrb(orb,i,z);},(i*z.spawnDelay));
+function updateChainBar() {
+  chainNodes.forEach((lbl, i) => {
+    const node = document.getElementById('cn-' + i);
+    const conn = document.getElementById('cc-' + i);
+    if (!node) return;
+    node.className = 'chain-node';
+    if (i < currentStep) node.classList.add('done');
+    else if (i === currentStep) node.classList.add('next');
+    if (conn) {
+      conn.className = 'chain-connector';
+      if (i < currentStep) conn.classList.add('done');
+    }
   });
 }
 
-function shuffle(arr){
-  for(let i=arr.length-1;i>0;i--){
-    const j=Math.floor(Math.random()*(i+1));
-    [arr[i],arr[j]]=[arr[j],arr[i]];
+// ── SPAWN ORBS ──
+function spawnOrbs(labels) {
+  const arena = document.getElementById('arena');
+  arena.innerHTML = '';
+  orbCount = 0;
+
+  const decoyCount = Math.min(2 + level, 6);
+  const decoyLabels = ['X','?','ERR','NULL','NaN','VOID','SKIP','BREAK'];
+
+  // Correct orbs
+  labels.forEach((lbl, i) => {
+    spawnOrb(arena, lbl, 'correct', i);
+  });
+
+  // Decoy orbs
+  for (let d = 0; d < decoyCount; d++) {
+    const dlbl = decoyLabels[d % decoyLabels.length];
+    spawnOrb(arena, dlbl, 'decoy', -1);
   }
 }
 
-function spawnOrb(orbData,index,z){
-  const arena=document.getElementById('arena');
-  const aw=arena.clientWidth,ah=arena.clientHeight;
-  const size=z.orbSize;
+function spawnOrb(arena, label, type, step) {
+  const size = type === 'correct' ? clamp(60, 9, 90) : clamp(50, 8, 75);
+  const el = document.createElement('div');
+  el.className = 'orb ' + type;
+  el.style.width = size + 'px';
+  el.style.height = size + 'px';
 
-  const el=document.createElement('div');
-  el.className=`flow-orb orb-${orbData.type}`;
-  const id='orb_'+Date.now()+'_'+Math.random();
-  el.dataset.id=id;
-  el.dataset.type=orbData.type;
-  el.dataset.step=orbData.step;
+  // Random position avoiding edges
+  const maxX = arena.offsetWidth - size - 20;
+  const maxY = arena.offsetHeight - size - 20;
+  let x = 20 + Math.random() * maxX;
+  let y = 20 + Math.random() * maxY;
+  el.style.left = x + 'px';
+  el.style.top = y + 'px';
 
-  const x=60+Math.random()*(aw-size-220);
-  const y=40+Math.random()*(ah-size-100);
-  el.style.cssText=`left:${x}px;top:${y}px;`;
+  el.innerHTML = `<div class="orb-label">${label}</div>`;
 
-  const labelMap={start:'START',end:'END',step:orbData.label,decoy:orbData.label};
-  const sizeMap={start:size*.38,step:size*.44,end:size*.38,decoy:size*.38};
+  // Gentle movement
+  let vx = (Math.random() - 0.5) * (1.5 + level * 0.2);
+  let vy = (Math.random() - 0.5) * (1.5 + level * 0.2);
+  const moveT = setInterval(() => {
+    if (!gameRunning) { clearInterval(moveT); return; }
+    x += vx; y += vy;
+    if (x < 10 || x > arena.offsetWidth - size - 10) vx *= -1;
+    if (y < 10 || y > arena.offsetHeight - size - 10) vy *= -1;
+    el.style.left = x + 'px';
+    el.style.top = y + 'px';
+  }, 16);
 
-  el.innerHTML=`
-    <div class="orb-body" style="width:${size}px;height:${size}px;font-size:${sizeMap[orbData.type]}rem;">
-      ${labelMap[orbData.type]}
-    </div>
-    <div class="orb-label">${orbData.type==='decoy'?'DECOY?':orbData.type.toUpperCase()}</div>
-  `;
+  el.addEventListener('click', () => {
+    if (!gameRunning) return;
+    if (type === 'correct') {
+      if (chainNodes[currentStep] === label) {
+        // Correct step
+        spawnParticles(x + size/2, y + size/2);
+        spawnHitEffect(x + size/2, y, '+' + (10 * combo * level));
+        score += 10 * combo * level;
+        currentStep++;
+        updateChainBar();
+        updateHUD();
+        showFace('happy');
 
-  el.addEventListener('click',()=>clickOrb(el,orbData));
+        if (currentStep >= chainLength) {
+          // Chain complete
+          clearInterval(moveT);
+          combo = Math.min(combo + 1, 8);
+          chains++;
+          score += 50 * combo;
+          updateHUD();
+          if (combo >= 3) showComboBanner('x' + combo + ' CHAIN!');
+          if (combo >= 4) showFace('victory');
+          checkLevel();
+          setTimeout(() => newChain(), 600);
+        }
+      } else {
+        // Wrong order
+        wrongClick(el, x, y, size);
+      }
+    } else {
+      // Decoy
+      wrongClick(el, x, y, size);
+    }
+  });
+
   arena.appendChild(el);
-  G.orbs.push({id,el,data:orbData});
-
-  // Move orb around
-  moveOrb(el,aw,ah,size,z.moveSpeed);
+  el._moveT = moveT;
 }
 
-function moveOrb(el,aw,ah,size,spd){
-  const step=()=>{
-    if(!el.parentNode)return;
-    const nx=60+Math.random()*(aw-size-220);
-    const ny=40+Math.random()*(ah-size-100);
-    const dx=nx-parseFloat(el.style.left);
-    const dy=ny-parseFloat(el.style.top);
-    const dist=Math.sqrt(dx*dx+dy*dy);
-    const dur=Math.max(600,dist/(spd*0.2));
-    el.style.transition=`left ${dur}ms ease-in-out,top ${dur}ms ease-in-out`;
-    el.style.left=nx+'px';
-    el.style.top=ny+'px';
-    setTimeout(step,dur+Math.random()*500+300);
-  };
-  setTimeout(step,500+Math.random()*400);
+function clamp(base, perLevel, max) {
+  return Math.min(base + level * perLevel * 0, max); // fixed size for clarity
 }
 
-// ── CHAIN PROGRESS UI ─────────────────────────────────────
-function buildChainProgress(len){
-  const el=document.getElementById('chainProgress');
-  el.innerHTML='';
-  for(let i=0;i<len;i++){
-    const dot=document.createElement('div');
-    dot.className='chain-dot'+(i===0?' active':'');
-    dot.id='cdot_'+i;
-    el.appendChild(dot);
-    if(i<len-1){
-      const conn=document.createElement('div');
-      conn.className='chain-connector';
-      conn.id='cconn_'+i;
-      el.appendChild(conn);
-    }
-  }
-}
-
-function updateChainProgress(step){
-  const dot=document.getElementById('cdot_'+step);
-  if(dot){dot.classList.remove('active');dot.classList.add('hit');}
-  const conn=document.getElementById('cconn_'+step);
-  if(conn)conn.classList.add('lit');
-  const nextDot=document.getElementById('cdot_'+(step+1));
-  if(nextDot)nextDot.classList.add('active');
-}
-
-// ── CLICK ORB ─────────────────────────────────────────────
-function clickOrb(el,orbData){
-  if(!G.running||G.chainComplete||G.qActive)return;
-  G.totalClicks++;
-
-  const isCorrect=orbData.type!=='decoy'&&orbData.step===G.nextExpected-1||
-    (G.nextExpected===0&&orbData.type==='start')||
-    (G.nextExpected>0&&G.nextExpected<G.currentChain.length-1&&orbData.type==='step'&&parseInt(orbData.label)===G.nextExpected)||
-    (G.nextExpected===G.currentChain.length-1&&orbData.type==='end');
-
-  if(isCorrect){
-    G.correctClicks++;
-    updateChainProgress(G.nextExpected);
-    G.nextExpected++;
-
-    const rect=el.getBoundingClientRect();
-    const cx=rect.left+rect.width/2,cy=rect.top+rect.height/2;
-    spawnParticles(cx,cy,'#00e8ff');
-    spawnScoreFloat(cx,cy,50*G.level,'#00e8ff');
-    G.score+=50*G.level;
-    playCorrect();
-    loopExpr('happy');
-
-    el.classList.add('correct-hit');
-    setTimeout(()=>el.remove(),400);
-
-    updateHUD();
-
-    // Chain complete!
-    if(G.nextExpected>=G.currentChain.length){
-      chainComplete();
-    }
-  } else {
-    // Wrong click — decoy or out of order
-    el.classList.add('wrong-hit');
-    G.score=Math.max(0,G.score-20);
-    triggerStatic();
-    loopExpr('scared');
-    playWrong();
-    spawnMissText(
-      parseFloat(el.style.left)+35,
-      parseFloat(el.style.top),
-      orbData.type==='decoy'?'DECOY!':'WRONG ORDER!'
-    );
-    loseLife();
-    updateHUD();
-    setTimeout(()=>el.remove(),400);
-  }
-}
-
-function chainComplete(){
-  G.chainComplete=true;
-  G.chains++;
-  const chainBonus=200*G.level;
-  G.score+=chainBonus;
-  if(G.chains>G.maxChain)G.maxChain=G.chains;
-
-  // Clear remaining orbs
-  G.orbs.forEach(o=>{if(o.el.parentNode)o.el.remove();});
-  G.orbs=[];
-
-  loopExpr('happy');
-  playChainComplete();
-  showChainBanner();
+function wrongClick(el, x, y, size) {
+  lives--;
+  combo = 1;
   updateHUD();
+  showFace('scared');
+  flashWrong();
+  spawnHitEffect(x + size/2, y, '✕', true);
+  el.style.animation = 'none';
+  el.style.opacity = '0.3';
+  setTimeout(() => { if (el.parentNode) el.remove(); }, 400);
+  if (lives <= 0) endGame(false);
+}
 
-  // Level up every 5 chains
-  if(G.chains%5===0&&G.level<ZONES.length){
-    setTimeout(()=>levelUp(),800);
-  } else if(G.chains%3===0&&!G.qActive){
-    // Question bonus every 3 chains
-    setTimeout(()=>showQuestion(),600);
+// ── LEVEL ──
+function checkLevel() {
+  const next = Math.floor(chains / 5) + 1;
+  if (next > level) {
+    level = next;
+    showLevelBanner('LEVEL ' + level);
+    updateHUD();
+  }
+}
+
+// ── HUD ──
+function updateHUD() {
+  document.getElementById('scoreVal').textContent = score;
+  document.getElementById('chainsVal').textContent = chains;
+  document.getElementById('levelVal').textContent = level;
+  document.getElementById('comboHud').textContent = 'x' + combo;
+  for (let i=1;i<=3;i++) document.getElementById('life'+i).classList.toggle('lost', i > lives);
+}
+
+// ── FACE POP ──
+function showFace(expr) {
+  const map = { happy:'loop-happy.png', victory:'loop-victory.png', scared:'loop-scared.png' };
+  const img = document.getElementById('facePop');
+  img.src = map[expr] || 'loop-happy.png';
+  img.classList.add('show');
+  clearTimeout(facepopTimer);
+  facepopTimer = setTimeout(() => img.classList.remove('show'), 900);
+}
+
+// ── EFFECTS ──
+function flashWrong() {
+  const f = document.getElementById('wrongFlash');
+  f.className = 'show';
+  setTimeout(() => f.className = '', 420);
+}
+function showComboBanner(text) {
+  const b = document.getElementById('comboBanner');
+  b.textContent = text; b.className = 'show';
+  setTimeout(() => b.className = '', 900);
+}
+function showLevelBanner(text) {
+  const b = document.getElementById('levelBanner');
+  b.textContent = text; b.className = 'show';
+  setTimeout(() => b.className = '', 1600);
+}
+function spawnParticles(x, y) {
+  const arena = document.getElementById('arena');
+  for (let i=0;i<8;i++) {
+    const p = document.createElement('div');
+    p.className = 'particle';
+    const a = (i/8)*Math.PI*2, d = 38+Math.random()*26;
+    p.style.left = x+'px'; p.style.top = y+'px';
+    p.style.background = Math.random()>0.5 ? '#00f5d4' : '#4fc3f7';
+    p.style.setProperty('--dx', Math.cos(a)*d+'px');
+    p.style.setProperty('--dy', Math.sin(a)*d+'px');
+    arena.appendChild(p);
+    setTimeout(() => p.remove(), 560);
+  }
+}
+function spawnHitEffect(x, y, text, bad=false) {
+  const arena = document.getElementById('arena');
+  const el = document.createElement('div');
+  el.className = 'hit-effect' + (bad ? ' bad' : '');
+  el.style.left = x+'px'; el.style.top = y+'px';
+  el.textContent = text;
+  arena.appendChild(el);
+  setTimeout(() => el.remove(), 760);
+}
+
+// ── END ──
+function endGame(won) {
+  gameRunning = false;
+  document.getElementById('arena').innerHTML = '';
+  document.getElementById('goScore').textContent = score;
+  const title = document.getElementById('goTitle');
+  const goChar = document.getElementById('goChar');
+  if (won) {
+    title.textContent = 'FLOW COMPLETE!';
+    title.className = 'go-title win';
+    goChar.src = 'loop-victory.png';
   } else {
-    setTimeout(()=>generateChain(),900);
+    title.textContent = 'CHAIN BROKEN';
+    title.className = 'go-title lose';
+    goChar.src = 'loop-sad.png';
   }
+  document.getElementById('gameOverScreen').classList.remove('hidden');
 }
 
-function showChainBanner(){
-  const labels={1:'FLOW!',2:'FLOWING!',3:'IN THE ZONE!',5:'UNSTOPPABLE!',8:'LOOP MASTER!',10:'INFINITE!'};
-  const colors={1:'#00e8ff',2:'#7b61ff',3:'#ff6baa',5:'#ffe066',8:'#a2ff32',10:'#ff6baa'};
-  const c=G.chains;
-  const el=document.getElementById('chainBanner');
-  const label=Object.keys(labels).reverse().find(k=>c>=parseInt(k));
-  el.textContent=labels[label]||`CHAIN x${c}!`;
-  el.style.color=colors[label]||'#00e8ff';
-  el.style.fontSize=`clamp(1.4rem,${2+Math.min(c,.5)*0.4}vw,3rem)`;
-  el.style.textShadow=`0 0 40px ${colors[label]||'#00e8ff'}`;
-  el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),1000);
-}
-
-// ── LIVES ─────────────────────────────────────────────────
-function resetLives(){
-  G.lives=3;
-  ['life1','life2','life3'].forEach(id=>{
-    document.getElementById(id).classList.remove('lost');
-  });
-}
-
-function loseLife(){
-  G.lives--;
-  const el=document.getElementById('life'+(G.lives+1));
-  if(el)el.classList.add('lost');
-  if(G.lives<=0)endGame();
-}
-
-// ── HUD ──────────────────────────────────────────────────
-function updateHUD(){
-  const sv=document.getElementById('scoreVal');
-  sv.textContent=G.score.toLocaleString();
-  sv.classList.remove('pop');void sv.offsetWidth;sv.classList.add('pop');
-  setTimeout(()=>sv.classList.remove('pop'),200);
-  document.getElementById('chainVal').textContent=G.chains;
-  document.getElementById('levelVal').textContent=G.level;
-  document.getElementById('bestChainVal').textContent=G.maxChain;
-}
-
-function updateZone(){
-  const z=zone();
-  const el=document.getElementById('zonePill');
-  el.textContent=z.name;
-  el.style.color=z.color;
-  el.style.borderColor=z.color+'88';
-  el.style.background=z.color+'18';
-}
-
-// ── LEVEL UP ─────────────────────────────────────────────
-function levelUp(){
-  G.level=Math.min(G.level+1,ZONES.length);
-  updateZone();updateHUD();
-  showLevelBanner('LEVEL '+G.level);
-  loopExpr('happy');
-  triggerStatic();playLevelUp();
-  setTimeout(()=>{if(G.running)generateChain();},1800);
-}
-
-function showLevelBanner(txt){
-  const el=document.getElementById('levelBanner');
-  el.textContent=txt;el.classList.add('show');
-  setTimeout(()=>el.classList.remove('show'),1600);
-}
-
-// ── QUESTION ─────────────────────────────────────────────
-function getQ(){
-  if(G.unusedQ.length===0){
-    G.unusedQ=QUESTIONS.map((_,i)=>i);
-    for(let i=G.unusedQ.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[G.unusedQ[i],G.unusedQ[j]]=[G.unusedQ[j],G.unusedQ[i]];}
-  }
-  return QUESTIONS[G.unusedQ.pop()];
-}
-
-function showQuestion(){
-  G.qActive=true;
-  const q=getQ();
-  document.getElementById('qText').textContent=q.q;
-  const opts=document.getElementById('qOpts');
-  opts.innerHTML='';
-  q.opts.forEach((o,i)=>{
-    const btn=document.createElement('div');
-    btn.className='q-opt';btn.textContent=o;
-    btn.addEventListener('click',()=>answerQ(i,q.ans,btn,opts));
-    opts.appendChild(btn);
-  });
-  document.getElementById('questionDrawer').classList.add('open');
-  startQTimer(10);
-}
-
-function startQTimer(secs){
-  const fill=document.getElementById('qTimer');
-  fill.style.transition='none';fill.style.width='100%';
-  void fill.offsetWidth;
-  fill.style.transition=`width ${secs}s linear`;fill.style.width='0%';
-  if(G.qTimer)clearInterval(G.qTimer);
-  let t=secs;
-  G.qTimer=setInterval(()=>{t--;if(t<=0){clearInterval(G.qTimer);timeoutQ();}},1000);
-}
-
-function answerQ(chosen,correct,btn,opts){
-  clearInterval(G.qTimer);
-  opts.querySelectorAll('.q-opt').forEach(o=>o.style.pointerEvents='none');
-  if(chosen===correct){
-    btn.classList.add('correct');
-    const bonus=300*G.level;
-    G.score+=bonus;
-    spawnScoreFloat(window.innerWidth/2,window.innerHeight*.4,bonus,'#a2ff32');
-    loopExpr('happy');updateHUD();
-  } else {
-    btn.classList.add('wrong');
-    opts.querySelectorAll('.q-opt')[correct].classList.add('reveal');
-    loseLife();loopExpr('scared');triggerStatic();updateHUD();
-  }
-  setTimeout(()=>{closeQuestion();if(G.running)generateChain();},1100);
-}
-
-function timeoutQ(){loseLife();loopExpr('scared');triggerStatic();updateHUD();closeQuestion();if(G.running)generateChain();}
-
-function closeQuestion(){
-  G.qActive=false;
-  document.getElementById('questionDrawer').classList.remove('open');
-  if(G.qTimer)clearInterval(G.qTimer);
-}
-
-// ── LOOP EXPRESSIONS ─────────────────────────────────────
-const LOOP_IMGS={
-  idle:   {src:'loop-happy.png',  border:'rgba(0,232,255,.5)', glow:'rgba(0,232,255,.4)'},
-  happy:  {src:'loop-victory.png',border:'rgba(162,255,50,.7)', glow:'rgba(162,255,50,.6)'},
-  scared: {src:'loop-scared.png', border:'rgba(255,107,107,.7)',glow:'rgba(255,107,107,.6)'},
-  sad:    {src:'loop-sad.png',    border:'rgba(255,107,107,.7)',glow:'rgba(255,107,107,.5)'},
-};
-let exprTimer=null;
-
-function loopExpr(mood){
-  const wrap=document.getElementById('loopFaceWrap');
-  const img=document.getElementById('loopFaceImg');
-  const lc=document.getElementById('loopChar');
-  const f=LOOP_IMGS[mood]||LOOP_IMGS.idle;
-  if(img)img.src=f.src;
-  if(wrap){
-    wrap.style.borderColor=f.border;
-    wrap.style.boxShadow=`0 0 30px ${f.glow}`;
-    wrap.classList.add('react');
-    wrap.classList.remove('scared','sad');
-    if(mood==='scared')wrap.classList.add('scared');
-  }
-  if(lc){
-    lc.className='';
-    if(mood==='happy')lc.classList.add('happy');
-    if(mood==='scared')lc.classList.add('scared');
-  }
-  if(exprTimer)clearTimeout(exprTimer);
-  exprTimer=setTimeout(()=>{
-    if(wrap){wrap.classList.remove('react','scared');wrap.style.borderColor=LOOP_IMGS.idle.border;wrap.style.boxShadow=`0 0 30px ${LOOP_IMGS.idle.glow}`;}
-    if(img)img.src=LOOP_IMGS.idle.src;
-    if(lc)lc.className='';
-  },1200);
-}
-
-// ── FX ───────────────────────────────────────────────────
-function triggerStatic(){
-  const el=document.getElementById('staticBurst');
-  el.classList.add('fire');setTimeout(()=>el.classList.remove('fire'),130);
-}
-
-function spawnScoreFloat(x,y,pts,color){
-  const el=document.createElement('div');
-  el.className='score-float';
-  el.textContent='+'+pts;
-  el.style.cssText=`left:${x}px;top:${y}px;color:${color};font-family:var(--display);font-weight:900;font-size:1.1rem;pointer-events:none;z-index:650;`;
-  document.body.appendChild(el);setTimeout(()=>el.remove(),800);
-}
-
-function spawnMissText(x,y,msg){
-  const el=document.createElement('div');
-  el.className='miss-flash';
-  el.textContent=msg;
-  el.style.cssText=`left:${x}px;top:${y}px;`;
-  document.body.appendChild(el);setTimeout(()=>el.remove(),700);
-}
-
-function spawnParticles(cx,cy,color){
-  for(let i=0;i<10;i++){
-    const angle=(i/10)*Math.PI*2;
-    const dist=40+Math.random()*50;
-    const p=document.createElement('div');
-    p.className='particle';
-    p.style.cssText=`left:${cx}px;top:${cy}px;width:${3+Math.random()*5}px;height:${3+Math.random()*5}px;background:${color};--px:${Math.cos(angle)*dist}px;--py:${Math.sin(angle)*dist}px;animation-duration:${.35+Math.random()*.3}s;z-index:300;`;
-    document.body.appendChild(p);setTimeout(()=>p.remove(),650);
-  }
-}
-
-// ── SOUND ─────────────────────────────────────────────────
-let ac=null;
-function getAC(){if(!ac)ac=new(window.AudioContext||window.webkitAudioContext)();return ac;}
-function tone(f,type,g,start,dur){
-  try{const a=getAC(),o=a.createOscillator(),gn=a.createGain();
-    o.connect(gn);gn.connect(a.destination);
-    o.type=type;o.frequency.value=f;const t=a.currentTime+start;
-    gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(g,t+.02);gn.gain.exponentialRampToValueAtTime(.001,t+dur);
-    o.start(t);o.stop(t+dur);}catch(e){}
-}
-function playCorrect(){[660,880].forEach((f,i)=>tone(f,'sine',.06,i*.06,.2));}
-function playWrong(){[200,160].forEach((f,i)=>tone(f,'sawtooth',.08,i*.08,.25));}
-function playChainComplete(){[440,554,659,880,1108].forEach((f,i)=>tone(f,'sine',.08,i*.08,.35));}
-function playLevelUp(){[440,550,660,880,1108].forEach((f,i)=>tone(f,'sine',.07,i*.1,.4));}
-
-// ── GAME OVER ────────────────────────────────────────────
-function endGame(){
-  G.running=false;
-  document.getElementById('arena').innerHTML='';
-  G.orbs=[];closeQuestion();
-  if(window._saveScore)window._saveScore(G.score);
-  const best=Math.max(G.score,parseInt(localStorage.getItem('loopGameBest'))||0);
-  document.getElementById('finalScore').textContent=G.score.toLocaleString();
-  document.getElementById('finalBest').textContent='Best: '+best.toLocaleString();
-  document.getElementById('stChains').textContent=G.chains;
-  document.getElementById('stLevel').textContent=G.level;
-  document.getElementById('stBestChain').textContent=G.maxChain;
-  const acc=G.totalClicks>0?Math.round((G.correctClicks/G.totalClicks)*100)+'%':'0%';
-  document.getElementById('stAcc').textContent=acc;
-  const won=G.score>=2000;
-  document.getElementById('gameOverTitle').textContent=won?'FLOW MASTERED!':'CHAIN BROKEN';
-  document.getElementById('gameOverEyebrow').textContent=won?'Flow Complete':'Flow Interrupted';
-  document.getElementById('gameOverSub').textContent=won
-    ?`Level ${G.level} — ${G.chains} chains completed. The flow never stopped.`
-    :'The flow was interrupted. Loop says: the flow never stops — it just resets.';
-  document.getElementById('gameOverLoopImg').src=won?'loop-victory.png':'loop-sad.png';
-  setTimeout(()=>document.getElementById('gameOverScreen').classList.remove('hidden'),500);
+function restartGame() {
+  document.getElementById('gameOverScreen').classList.add('hidden');
+  document.getElementById('arena').innerHTML = '';
+  score=0; chains=0; lives=3; level=1; combo=1;
+  gameRunning=true;
+  updateHUD();
+  newChain();
 }
 </script>
 </body>
