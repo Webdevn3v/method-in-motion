@@ -1,1188 +1,1941 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loop's Flow Lab | Method in Motion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cyan: #00f5d4;
+      --cyan-dim: #00c4a8;
+      --cyan-dark: #007a69;
+      --blue: #4fc3f7;
+      --blue-dim: #0288d1;
+      --bg: #050d12;
+      --bg-mid: #0a1a22;
+      --bg-card: #0d2030;
+      --bg-panel: #071520;
+      --text: #e0f7fa;
+      --text-dim: #80cbc4;
+      --text-muted: #4a8a84;
+      --border: rgba(0, 245, 212, 0.18);
+      --border-bright: rgba(0, 245, 212, 0.45);
+      --glow: 0 0 18px rgba(0, 245, 212, 0.35);
+      --glow-strong: 0 0 32px rgba(0, 245, 212, 0.6);
+      --font-display: 'Orbitron', monospace;
+      --font-body: 'Space Grotesk', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
 
-  gtag('config', 'G-DJ3Q488K7W');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Loop's World — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --void: #050508; --deep: #080b14; --navy: #0d1020; --card: #0f1525;
-  --border: rgba(255,255,255,.06); --border-md: rgba(255,255,255,.12);
-  --white: #ffffff; --off: #c8cce0; --muted: #5a6080;
-  --char: #00e8ff; --char2: #6bb5ff;
-  --grad: linear-gradient(135deg, #00e8ff, #6bb5ff);
-  --display: 'Orbitron', monospace; --heading: 'Syne', sans-serif; --body: 'DM Sans', sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em;color:var(--white)}
-.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
-.nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;transition:color .2s}
-.nav-back:hover{color:var(--char)}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(0,232,255,.4);color:var(--char);border-radius:100px}
-#nav-user-menu{display:none;align-items:center;gap:12px}
-#nav-username{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.7)}
-#nav-logout-btn{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:20px;cursor:pointer;transition:border-color .2s,color .2s}
-#nav-logout-btn:hover{border-color:rgba(0,232,255,.5);color:var(--char)}
-#nav-login{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(0,232,255,.4);color:var(--char);padding:6px 14px;border-radius:20px;cursor:pointer;transition:background .2s}
-#nav-login:hover{background:rgba(0,232,255,.1)}
-.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;z-index:0}
-.hero-bg-gradient{position:absolute;inset:0;background:radial-gradient(ellipse at 30% 50%, rgba(0,232,255,.07) 0%, transparent 60%), radial-gradient(ellipse at 70% 20%, rgba(107,181,255,.05) 0%, transparent 50%)}
-.flow-line{position:absolute;font-family:var(--display);font-size:.6rem;color:rgba(0,232,255,.1);white-space:nowrap;animation:flowDrift linear infinite}
-@keyframes flowDrift{from{transform:translateX(-100%)}to{transform:translateX(100vw)}}
-.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;position:relative;z-index:1}
-.flow-wrap{display:flex;align-items:center;gap:6px;margin-bottom:14px;height:20px}
-.flow-label{font-family:var(--display);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(0,232,255,.5)}
-.flow-text{font-family:var(--display);font-size:.58rem;letter-spacing:.2em;text-transform:uppercase;color:var(--char);animation:flowPulse 4s ease-in-out infinite}
-@keyframes flowPulse{0%,100%{opacity:1}50%{opacity:.5}}
-.hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
-.hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
-.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
-.hero-tag{padding:5px 14px;border:1px solid rgba(0,232,255,.3);border-radius:100px;font-family:var(--display);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--char)}
-.hero-start{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s,box-shadow .2s}
-.hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,232,255,.3)}
-.hero-char{position:relative;display:flex;align-items:center;justify-content:center;min-height:540px;}
-.hero-char-ring{position:absolute;border-radius:50%;border:1px solid rgba(0,232,255,.15);animation:ringPulse 3s ease-in-out infinite;pointer-events:none;}
-.hero-char-ring:nth-child(1){width:380px;height:380px;}
-.hero-char-ring:nth-child(2){width:480px;height:480px;animation-delay:.6s;border-color:rgba(107,181,255,.08);}
-.hero-char-ring:nth-child(3){width:560px;height:560px;animation-delay:1.2s;border-color:rgba(0,232,255,.04);}
-@keyframes ringPulse{0%,100%{transform:scale(1);opacity:.7}50%{transform:scale(1.04);opacity:1}}
-.char-floor-glow{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:300px;height:50px;border-radius:50%;background:radial-gradient(ellipse, rgba(0,232,255,.4) 0%, transparent 70%);filter:blur(12px);animation:floorPulse 3s ease-in-out infinite;pointer-events:none;}
-@keyframes floorPulse{0%,100%{opacity:.5;transform:translateX(-50%) scaleX(1)}50%{opacity:.9;transform:translateX(-50%) scaleX(1.1)}}
-.sparkle{position:absolute;border-radius:50%;pointer-events:none;animation:sparklePop 2.5s ease-in-out infinite;}
-.sparkle:nth-child(4){width:6px;height:6px;top:12%;left:10%;animation-delay:0s;background:#00e8ff}
-.sparkle:nth-child(5){width:4px;height:4px;top:6%;right:16%;animation-delay:.7s;background:#6bb5ff}
-.sparkle:nth-child(6){width:5px;height:5px;bottom:26%;left:6%;animation-delay:1.3s;background:#00e8ff}
-.sparkle:nth-child(7){width:3px;height:3px;bottom:30%;right:8%;animation-delay:1s;background:#6bb5ff}
-.sparkle:nth-child(8){width:5px;height:5px;top:36%;right:5%;animation-delay:1.9s;background:#00e8ff}
-.sparkle:nth-child(9){width:4px;height:4px;top:52%;left:4%;animation-delay:2.3s;background:#6bb5ff}
-.sparkle:nth-child(10){width:3px;height:3px;top:22%;right:22%;animation-delay:.4s;background:#00e8ff}
-.sparkle:nth-child(11){width:5px;height:5px;bottom:15%;left:18%;animation-delay:1.6s;background:#6bb5ff}
-.sparkle:nth-child(12){width:4px;height:4px;top:70%;right:20%;animation-delay:2.9s;background:#00e8ff}
-.sparkle:nth-child(13){width:6px;height:6px;top:80%;left:25%;animation-delay:.8s;background:#6bb5ff}
-@keyframes sparklePop{0%,100%{opacity:0;transform:scale(0)}20%{opacity:1;transform:scale(1)}80%{opacity:1;transform:scale(1)}}
-.char-img{position:relative;z-index:2;width:100%;max-width:460px;mix-blend-mode:screen;filter:drop-shadow(0 0 36px rgba(0,232,255,.7)) drop-shadow(0 0 90px rgba(0,232,255,.3)) drop-shadow(0 0 140px rgba(107,181,255,.2));animation:charFloat 5s ease-in-out infinite;cursor:pointer;transition:filter .3s;}
-.char-img:hover{filter:drop-shadow(0 0 50px rgba(0,232,255,1)) drop-shadow(0 0 120px rgba(0,232,255,.5)) drop-shadow(0 0 180px rgba(107,181,255,.4));}
-@keyframes charFloat{0%,100%{transform:translateY(0) rotate(0deg)}25%{transform:translateY(-10px) rotate(1deg)}75%{transform:translateY(-6px) rotate(-1deg)}}
-.progress-bar{background:var(--deep);border-bottom:1px solid var(--border);padding:20px 48px;position:sticky;top:65px;z-index:50}
-.progress-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;}
-.prog-step{display:flex;align-items:center;flex:1}
-.prog-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.48rem;color:var(--muted);transition:all .3s;flex-shrink:0}
-.prog-dot.active{border-color:var(--char);background:rgba(0,232,255,.15);color:var(--char)}
-.prog-dot.done{border-color:var(--char);background:var(--char);color:#000}
-.prog-label{font-family:var(--display);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:8px;transition:color .3s}
-.prog-label.active{color:var(--char)}
-.prog-line{flex:1;height:1px;background:var(--border);margin:0 8px;transition:background .5s}
-.prog-line.done{background:var(--char)}
-.lessons{max-width:800px;margin:0 auto;padding:80px 48px}
-.lesson{margin-bottom:120px}
-.lesson-header{margin-bottom:48px}
-.lesson-num{font-family:var(--display);font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--char);opacity:.7;margin-bottom:10px}
-.lesson-title{font-family:var(--heading);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:12px}
-.lesson-desc{font-size:.95rem;color:var(--off);line-height:1.9}
-.content-block{margin-bottom:32px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-.block-header{padding:18px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-.block-icon{width:32px;height:32px;border-radius:8px;background:rgba(0,232,255,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem;flex-shrink:0}
-.block-label{font-family:var(--display);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char)}
-.block-body{padding:28px}
-.block-body p{font-size:.95rem;color:var(--off);line-height:1.9;margin-bottom:14px}
-.block-body p:last-child{margin-bottom:0}
-.loop-quote{font-family:var(--heading);font-size:1.05rem;font-weight:700;color:var(--white);border-left:3px solid var(--char);padding-left:18px;margin:20px 0;line-height:1.6}
-.definition-box{background:rgba(0,232,255,.04);border:1px solid rgba(0,232,255,.18);border-radius:12px;padding:20px 24px;margin:16px 0}
-.definition-term{font-family:var(--display);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--char);margin-bottom:8px}
-.definition-text{font-size:.92rem;color:var(--off);line-height:1.8}
-.definition-example{margin-top:10px;font-size:.82rem;color:var(--muted);font-style:italic}
-.summary-box{background:linear-gradient(135deg,rgba(0,232,255,.05),rgba(107,181,255,.05));border:1px solid rgba(0,232,255,.18);border-radius:12px;padding:24px;margin:16px 0}
-.summary-title{font-family:var(--display);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char);margin-bottom:14px}
-.summary-list{list-style:none;display:flex;flex-direction:column;gap:8px}
-.summary-list li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--off);line-height:1.7}
-.summary-list li::before{content:'↻';color:var(--char);font-size:.7rem;margin-top:3px;flex-shrink:0}
-.code-demo{background:var(--void);border-radius:12px;padding:24px;font-family:monospace;font-size:.82rem;line-height:1.9;overflow:hidden;border:1px solid var(--border)}
-.code-demo .line{opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .5s}
-.code-demo .line.visible{opacity:1;transform:none}
-.code-cyan{color:#00e8ff}.code-blue{color:#6bb5ff}.code-green{color:#a2ff32}.code-muted{color:rgba(255,255,255,.3)}.code-yellow{color:#ffe066}.code-purple{color:#c66bff}
-.run-btn{margin-top:16px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(0,232,255,.1);border:1px solid rgba(0,232,255,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
-.run-btn:hover{background:rgba(0,232,255,.2)}
-.code-output{margin-top:16px;padding:16px;background:rgba(0,232,255,.04);border:1px solid rgba(0,232,255,.15);border-radius:8px;font-size:.85rem;display:none;line-height:1.8}
-.code-output.show{display:block}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-/* PATTERN ACTIVITY */
-.pattern-sequence{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:16px 0;padding:16px;background:var(--void);border:1px solid var(--border);border-radius:12px}
-.pat-item{width:44px;height:44px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:1.1rem;font-weight:700;border:1px solid var(--border-md);background:rgba(0,232,255,.06);color:var(--char);font-family:var(--display);font-size:.7rem}
-.pat-item.blank{background:rgba(255,255,255,.03);border:2px dashed rgba(0,232,255,.3);color:var(--muted);cursor:pointer;transition:all .2s}
-.pat-item.blank:hover{background:rgba(0,232,255,.08);border-color:var(--char)}
-.pat-item.filled{background:rgba(0,232,255,.15);border-color:var(--char);color:var(--char)}
-.pat-item.wrong{background:rgba(255,107,107,.1);border-color:#ff6b6b;color:#ff6b6b}
-.pat-options{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
-.pat-option{padding:8px 16px;background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);border-radius:8px;font-family:var(--display);font-size:.6rem;letter-spacing:.1em;color:var(--char);cursor:pointer;transition:all .2s}
-.pat-option:hover{background:rgba(0,232,255,.14);border-color:var(--char)}
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-/* SEQUENCE BUILDER */
-.seq-builder{display:flex;flex-direction:column;gap:10px;margin:16px 0}
-.seq-step{display:flex;align-items:center;gap:12px;padding:12px 16px;background:var(--void);border:1px solid var(--border);border-radius:10px}
-.seq-num{width:28px;height:28px;border-radius:50%;background:rgba(0,232,255,.12);border:1px solid rgba(0,232,255,.3);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.5rem;color:var(--char);flex-shrink:0}
-.seq-arrow{color:rgba(0,232,255,.4);font-size:.8rem;flex-shrink:0}
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(5, 13, 18, 0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-user {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--cyan);
+      display: none;
+    }
+    .nav-logout {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none;
+    }
+    .nav-logout:hover { border-color: var(--cyan); color: var(--cyan); }
 
-/* LOOP VISUALIZER */
-.loop-viz{background:var(--void);border:1px solid var(--border);border-radius:12px;padding:20px;margin:16px 0;font-family:monospace;font-size:.82rem}
-.loop-counter{display:flex;align-items:center;gap:12px;margin-top:12px;flex-wrap:wrap}
-.loop-bubble{width:36px;height:36px;border-radius:50%;background:rgba(0,232,255,.08);border:1px solid rgba(0,232,255,.2);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.55rem;color:var(--char);transition:all .4s}
-.loop-bubble.active{background:rgba(0,232,255,.25);border-color:var(--char);transform:scale(1.15)}
-.loop-bubble.done{background:rgba(162,255,50,.12);border-color:#a2ff32;color:#a2ff32}
+    /* ── HERO ── */
+    .hero {
+      margin-top: 60px;
+      min-height: 480px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('loop-entrance.png');
+      background-size: cover;
+      background-position: center;
+      filter: blur(3px) brightness(0.3);
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(5,13,18,0.85) 0%, rgba(0,245,212,0.04) 100%);
+      z-index: 1;
+    }
+    .hero-left {
+      position: relative;
+      z-index: 2;
+      padding: 3rem 2.5rem 3rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0.85;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 0.95;
+      text-shadow: var(--glow-strong);
+      margin-bottom: 0.5rem;
+    }
+    .hero-role {
+      font-family: var(--font-display);
+      font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+      font-weight: 600;
+      color: var(--cyan);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-quote {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      max-width: 420px;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .hero-quote span {
+      color: var(--cyan);
+      font-style: normal;
+      font-weight: 600;
+    }
+    .hero-tiles {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .hero-tile {
+      background: rgba(0, 245, 212, 0.08);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: block;
+    }
+    .hero-tile:hover, .hero-tile.active {
+      background: rgba(0, 245, 212, 0.18);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: var(--glow);
+    }
+    .hero-right {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .hero-gif {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      border-radius: 12px;
+      animation: float 4s ease-in-out infinite;
+      filter: drop-shadow(0 0 30px rgba(0,245,212,0.5));
+      object-fit: contain;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-14px); }
+    }
 
-/* QUIZ */
-.quiz-question{font-size:.92rem;color:var(--off);margin-bottom:14px;line-height:1.7;font-weight:500}
-.quiz-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.quiz-option{padding:12px 18px;background:rgba(255,255,255,.03);border:1px solid var(--border-md);border-radius:10px;cursor:pointer;font-size:.88rem;color:var(--off);transition:all .2s;display:flex;align-items:center;gap:10px}
-.quiz-option:hover{background:rgba(0,232,255,.06);border-color:rgba(0,232,255,.3);color:var(--white)}
-.quiz-option.correct{background:rgba(162,255,50,.08);border-color:rgba(162,255,50,.4);color:#a2ff32;pointer-events:none}
-.quiz-option.wrong{background:rgba(255,107,107,.08);border-color:rgba(255,107,107,.4);color:#ff6b6b;pointer-events:none}
-.quiz-option-letter{width:22px;height:22px;border-radius:50%;background:var(--border-md);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.45rem;flex-shrink:0}
-.quiz-result{margin-top:12px;padding:14px;border-radius:10px;font-size:.85rem;display:none}
-.quiz-result.show{display:block}
-.quiz-result.correct{background:rgba(162,255,50,.06);border:1px solid rgba(162,255,50,.2);color:#a2ff32}
-.quiz-result.wrong{background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);color:#ff6b6b}
-.check-btn{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 24px;background:var(--grad);color:#000;font-weight:700;border:none;border-radius:100px;cursor:pointer;transition:transform .2s;margin-top:16px}
-.check-btn:hover{transform:translateY(-1px)}
-.activity-result{margin-top:16px;padding:16px;border-radius:10px;font-size:.88rem;display:none}
-.activity-result.show{display:block}
-.activity-result.correct{background:rgba(162,255,50,.06);border:1px solid rgba(162,255,50,.2);color:#a2ff32}
-.activity-result.wrong{background:rgba(255,107,107,.06);border:1px solid rgba(255,107,107,.2);color:#ff6b6b}
-.reflect-prompt{font-size:.95rem;color:var(--off);margin-bottom:16px;line-height:1.8}
-.reflect-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);border-radius:10px;color:var(--white);font-family:var(--body);font-size:.9rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s;box-sizing:border-box}
-.reflect-input:focus{border-color:var(--char)}
-.reflect-submit{margin-top:12px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(0,232,255,.1);border:1px solid rgba(0,232,255,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
-.reflect-submit:hover{background:rgba(0,232,255,.2)}
-.reflect-response{margin-top:14px;padding:16px;background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);border-radius:10px;font-size:.88rem;color:var(--char);display:none;line-height:1.7}
-.reflect-response.show{display:block}
-.lesson-complete{display:none;text-align:center;padding:48px 28px;background:linear-gradient(135deg,rgba(0,232,255,.06),rgba(107,181,255,.06));border:1px solid rgba(0,232,255,.2);border-radius:16px;margin-top:32px}
-.lesson-complete.show{display:block;animation:fadeIn .6s ease}
-@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
-.complete-icon{font-size:2.5rem;margin-bottom:16px}
-.complete-title{font-family:var(--heading);font-size:1.6rem;font-weight:800;margin-bottom:8px}
-.complete-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.complete-desc{font-size:.9rem;color:var(--off);margin-bottom:24px}
-.next-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;cursor:pointer;border:none;transition:transform .2s}
-.next-btn:hover{transform:translateY(-2px)}
-.cheat-sheet{display:none;margin-top:24px;background:linear-gradient(135deg,rgba(0,232,255,.04),rgba(107,181,255,.04));border:1px solid rgba(0,232,255,.22);border-radius:16px;overflow:hidden}
-.cheat-sheet.unlocked{display:block;animation:fadeIn .6s ease}
-.cheat-sheet-header{padding:16px 24px;background:rgba(0,232,255,.07);border-bottom:1px solid rgba(0,232,255,.14);display:flex;align-items:center;justify-content:space-between}
-.cheat-sheet-title{font-family:var(--display);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char)}
-.cheat-download{font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s}
-.cheat-download:hover{transform:translateY(-1px)}
-.cheat-body{padding:24px}
-.cheat-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-@media(max-width:560px){.cheat-grid{grid-template-columns:1fr}}
-.cheat-item{background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:10px;padding:14px 16px}
-.cheat-term{font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--char);margin-bottom:5px}
-.cheat-def{font-size:.8rem;color:var(--off);line-height:1.6}
-.cheat-code{margin-top:16px;background:var(--void);border-radius:10px;padding:16px;font-family:monospace;font-size:.78rem;color:#00e8ff;line-height:2;border:1px solid var(--border)}
-.lesson-gate{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:48px 36px;text-align:center;margin-bottom:120px}
-.gate-lock{font-size:2rem;margin-bottom:16px}
-.gate-title{font-family:var(--heading);font-size:1.4rem;font-weight:800;margin-bottom:8px;color:var(--white)}
-.gate-desc{font-size:.9rem;color:var(--muted);margin-bottom:24px;line-height:1.8;max-width:400px;margin-left:auto;margin-right:auto}
-.gate-badge{display:inline-block;font-family:var(--display);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:20px;background:var(--grad);color:#000;font-weight:700}
-.gate-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s}
-.gate-btn:hover{transform:translateY(-2px)}
-.lesson-teaser{position:relative;overflow:hidden;border-radius:16px;margin-bottom:0;pointer-events:none;user-select:none}
-.teaser-content{filter:blur(3px);opacity:.45;transform:scale(.99)}
-.teaser-fade{position:absolute;bottom:0;left:0;right:0;height:140px;background:linear-gradient(to bottom,transparent,var(--void));pointer-events:none}
-.lesson-teaser .content-block{margin-bottom:0}
-.trial-upsell{margin-top:32px;animation:fadeIn .6s ease}
-.trial-upsell-inner{background:linear-gradient(135deg,rgba(0,232,255,.05),rgba(107,181,255,.08));border:1px solid rgba(0,232,255,.28);border-radius:20px;padding:40px 36px;text-align:center}
-.trial-icon{font-size:2rem;margin-bottom:12px}
-.trial-title{font-family:var(--heading);font-size:1.6rem;font-weight:800;margin-bottom:10px;color:var(--white)}
-.trial-desc{font-size:.92rem;color:var(--off);line-height:1.8;margin-bottom:28px;max-width:480px;margin-left:auto;margin-right:auto}
-.trial-tiers{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:20px}
-@media(max-width:600px){.trial-tiers{grid-template-columns:1fr}}
-.trial-tier{display:block;background:var(--card);border:1px solid var(--border-md);border-radius:14px;padding:20px 16px;text-decoration:none;transition:all .3s;position:relative}
-.trial-tier:hover{border-color:rgba(0,232,255,.5);transform:translateY(-3px);box-shadow:0 12px 40px rgba(0,0,0,.3)}
-.trial-tier.featured{border-color:rgba(0,232,255,.35);background:linear-gradient(145deg,rgba(0,232,255,.07),var(--card))}
-.trial-tier-badge{font-family:var(--display);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;background:var(--grad);color:#000;font-weight:700;padding:3px 10px;border-radius:100px;display:inline-block;margin-bottom:10px}
-.trial-tier-name{font-family:var(--display);font-size:.65rem;letter-spacing:.16em;text-transform:uppercase;color:var(--char);margin-bottom:6px}
-.trial-tier-price{font-family:var(--display);font-size:1.8rem;font-weight:900;color:var(--white);line-height:1;margin-bottom:8px}
-.trial-tier-price span{font-size:.75rem;color:var(--muted);font-weight:300}
-.trial-tier-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
-.trial-fine{font-size:.72rem;color:var(--muted);margin-top:4px}
-.reveal{opacity:0;transform:translateY(20px);transition:opacity .6s,transform .6s}
-.reveal.visible{opacity:1;transform:none}
-@media(max-width:768px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.lessons{padding:60px 24px}nav{padding:14px 24px}.progress-bar{padding:16px 24px}.nav-char{display:none}}
-@media(prefers-reduced-motion:reduce){.char-img{animation:none}.hero-char-ring{animation:none;opacity:.6}.sparkle{animation:none;opacity:.4}}
-</style>
+    /* ── LESSON STRIP ── */
+    .lesson-strip {
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+      background: rgba(5, 13, 18, 0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .lesson-strip::-webkit-scrollbar { display: none; }
+    .lesson-tab {
+      flex-shrink: 0;
+      padding: 0.9rem 1.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+      user-select: none;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .lesson-tab:hover { color: var(--cyan); }
+    .lesson-tab.active {
+      color: var(--cyan);
+      border-bottom-color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,245,212,0.5);
+    }
+
+    /* ── LESSON PANELS ── */
+    .lesson-panel {
+      display: none;
+    }
+    .lesson-panel.open {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: 80vh;
+    }
+
+    /* ── SIDEBAR ── */
+    .lesson-sidebar {
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1.2rem;
+      position: sticky;
+      top: calc(60px + 42px);
+      height: calc(100vh - 102px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .sidebar-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-nav-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0.65rem 0.8rem;
+      margin-bottom: 0.2rem;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sidebar-nav-btn:hover {
+      background: rgba(0, 245, 212, 0.08);
+      color: var(--cyan);
+    }
+    .sidebar-nav-btn.active {
+      background: rgba(0, 245, 212, 0.12);
+      color: var(--cyan);
+      font-weight: 600;
+    }
+    .sidebar-icon { font-size: 0.9rem; }
+    .sidebar-divider {
+      height: 1px;
+      background: var(--border);
+      margin: 1rem 0;
+    }
+    .sidebar-game-link {
+      display: block;
+      margin-top: 1rem;
+      padding: 0.65rem 0.8rem;
+      background: rgba(0, 245, 212, 0.06);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--cyan-dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .sidebar-game-link:hover {
+      background: rgba(0, 245, 212, 0.14);
+      border-color: var(--cyan);
+      color: var(--cyan);
+    }
+
+    /* ── CONTENT AREA ── */
+    .lesson-content {
+      padding: 2.5rem 3rem;
+      max-width: 900px;
+    }
+
+    .content-block { display: none; }
+    .content-block.active { display: block; }
+
+    /* ── READING CARDS ── */
+    .read-intro {
+      font-family: var(--font-display);
+      font-size: 1.05rem;
+      color: var(--cyan);
+      margin-bottom: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .read-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .read-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--cyan);
+    }
+    .read-card-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.6rem;
+      opacity: 0.7;
+    }
+    .read-card h3 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+    .read-card p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .read-card p strong {
+      color: var(--cyan);
+      font-weight: 600;
+    }
+    .read-card code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      background: rgba(0, 245, 212, 0.1);
+      color: var(--cyan);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
+
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #040e14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #a0e4db;
+      overflow-x: auto;
+    }
+    .code-block .kw { color: #00f5d4; font-weight: 700; }
+    .code-block .str { color: #ffe066; }
+    .code-block .cm { color: #4a8a84; font-style: italic; }
+    .code-block .num { color: #ff9a9a; }
+    .code-block .fn { color: #4fc3f7; }
+
+    /* ── TERMS ── */
+    .terms-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.8rem;
+      margin-top: 1rem;
+    }
+    .term-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .term-card:hover { border-color: var(--cyan); }
+    .term-card.open { border-color: var(--cyan); }
+    .term-name {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--cyan);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .term-arrow { transition: transform 0.2s; color: var(--text-muted); }
+    .term-card.open .term-arrow { transform: rotate(90deg); }
+    .term-def {
+      display: none;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border);
+    }
+    .term-card.open .term-def { display: block; }
+
+    /* ── BUILD / EDITOR ── */
+    .build-section h3 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .editor-wrap {
+      background: #040e14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .editor-toolbar {
+      background: rgba(0,245,212,0.06);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .editor-run-btn {
+      background: var(--cyan);
+      color: var(--bg);
+      border: none;
+      padding: 0.25rem 0.8rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      transition: opacity 0.2s;
+    }
+    .editor-run-btn:hover { opacity: 0.85; }
+    .code-editor {
+      width: 100%;
+      min-height: 160px;
+      background: transparent;
+      border: none;
+      padding: 1rem 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #a0e4db;
+      resize: vertical;
+      outline: none;
+      line-height: 1.7;
+    }
+    .preview-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+    }
+    .preview-box {
+      background: #040e14;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      color: var(--cyan);
+      min-height: 80px;
+      white-space: pre-wrap;
+    }
+    .console-output {
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #00f5d4;
+      min-height: 80px;
+      white-space: pre-wrap;
+    }
+
+    /* ── QUIZ ── */
+    .quiz-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .quiz-q {
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 1rem;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+    .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .quiz-opt {
+      background: rgba(0,245,212,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.7rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--font-body);
+    }
+    .quiz-opt:hover { border-color: var(--cyan); color: var(--cyan); }
+    .quiz-opt.correct { border-color: #00f5d4; background: rgba(0,245,212,0.12); color: #00f5d4; }
+    .quiz-opt.wrong { border-color: #ff6b6b; background: rgba(255,107,107,0.1); color: #ff6b6b; animation: shake 0.3s ease; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    .quiz-feedback {
+      font-size: 0.82rem;
+      margin-top: 0.6rem;
+      padding: 0.5rem 0.8rem;
+      border-radius: 5px;
+      display: none;
+    }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: rgba(0,245,212,0.1); color: #00f5d4; border: 1px solid rgba(0,245,212,0.25); }
+    .quiz-feedback.wrong { background: rgba(255,107,107,0.08); color: #ff9a9a; border: 1px solid rgba(255,107,107,0.2); }
+
+    /* ── REFLECT ── */
+    .reflect-prompt {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .reflect-q {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 0.8rem;
+      line-height: 1.5;
+    }
+    .reflect-input {
+      width: 100%;
+      background: rgba(0,245,212,0.04);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text);
+      resize: vertical;
+      min-height: 80px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .reflect-input:focus { border-color: var(--cyan); }
+    .reflect-save-btn {
+      margin-top: 0.5rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.08em;
+    }
+    .reflect-save-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    .reflect-saved {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--cyan);
+      margin-top: 0.4rem;
+      display: none;
+    }
+
+    /* ── CHEAT SHEET ── */
+    .cheat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .cheat-card h3 {
+      font-family: var(--font-display);
+      font-size: 0.88rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .cheat-items { display: flex; flex-direction: column; gap: 0.7rem; }
+    .cheat-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid rgba(0,245,212,0.06);
+    }
+    .cheat-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .cheat-term {
+      font-family: var(--font-mono);
+      font-size: 0.78rem;
+      color: var(--cyan);
+      min-width: 130px;
+      font-weight: 700;
+    }
+    .cheat-desc {
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.5;
+    }
+    .cheat-download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+      background: rgba(0,245,212,0.08);
+      border: 1px solid var(--border-bright);
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.08em;
+    }
+    .cheat-download-btn:hover {
+      background: rgba(0,245,212,0.18);
+      box-shadow: var(--glow);
+    }
+
+    /* ── GATE CARD ── */
+    .gate-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem;
+      text-align: center;
+      margin: 2rem 0;
+    }
+    .gate-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .gate-card h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 0.6rem;
+      font-weight: 700;
+    }
+    .gate-card p {
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      margin-bottom: 1.5rem;
+      line-height: 1.6;
+    }
+    .gate-btn {
+      display: inline-block;
+      background: var(--cyan);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: opacity 0.2s;
+    }
+    .gate-btn:hover { opacity: 0.85; }
+    .gate-btn-outline {
+      display: inline-block;
+      background: none;
+      color: var(--cyan);
+      border: 1px solid var(--border-bright);
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      margin-left: 0.8rem;
+      transition: all 0.2s;
+    }
+    .gate-btn-outline:hover { background: rgba(0,245,212,0.08); }
+
+    /* ── LESSON COMPLETE ── */
+    .lesson-complete {
+      background: linear-gradient(135deg, rgba(0,245,212,0.08), rgba(79,195,247,0.06));
+      border: 1px solid var(--border-bright);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .lesson-complete h3 {
+      font-family: var(--font-display);
+      font-size: 1rem;
+      color: var(--cyan);
+      margin-bottom: 0.5rem;
+    }
+    .lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
+
+    /* ── LOCKED PANEL ── */
+    .locked-panel {
+      padding: 4rem 3rem;
+      text-align: center;
+    }
+    .locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.5; }
+    .locked-panel h2 {
+      font-family: var(--font-display);
+      font-size: 1.2rem;
+      color: var(--text-dim);
+      margin-bottom: 0.6rem;
+    }
+    .locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+
+    /* ── SECTION HEADERS ── */
+    .section-header {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .section-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+    }
+
+    /* ── LOOP ACCENT ── */
+    .loop-mark {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 1.2rem;
+      color: var(--cyan);
+      margin-right: 0.4rem;
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .lesson-panel.open { grid-template-columns: 1fr; }
+      .lesson-sidebar { display: none; }
+      .lesson-content { padding: 1.5rem; }
+      .terms-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── DISCOVERY OVERLAY ── */
+    .discovery-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(5, 13, 18, 0.96);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem;
+    }
+    .discovery-overlay.hidden { display: none; }
+    .discovery-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 900;
+      color: var(--cyan);
+      text-shadow: var(--glow-strong);
+      margin-bottom: 0.8rem;
+    }
+    .discovery-sub {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 480px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .discovery-enter-btn {
+      background: var(--cyan);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      transition: all 0.2s;
+      box-shadow: var(--glow-strong);
+    }
+    .discovery-enter-btn:hover { transform: scale(1.03); }
+  </style>
 </head>
 <body>
 
+<!-- DISCOVERY OVERLAY -->
+<div class="discovery-overlay" id="discoveryOverlay">
+  <div class="loop-mark">∞</div>
+  <div class="discovery-title">Loop's Flow Lab</div>
+  <div class="discovery-sub">Patterns. Repetition. Logic.<br>This is where code starts thinking for itself.</div>
+  <button class="discovery-enter-btn" onclick="enterLab()">Enter the Lab</button>
+</div>
+
+<!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-back">← Back to Universe</a>
-  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
-  <div class="nav-right">
-    <div class="nav-char">Loop · Pattern Master</div>
-    <div id="nav-user-menu"><span id="nav-username"></span><button id="nav-logout-btn">LOG OUT</button></div>
-    <button id="nav-login" onclick="openModal('signup')">JOIN / LOG IN</button>
-  </div>
+  <a href="index.html" class="nav-logo">MiM</a>
+  <ul class="nav-links">
+    <li><a href="games.html">Games</a></li>
+    <li><a href="pdfs.html">PDFs</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="index.html#membership">Membership</a></li>
+  </ul>
+  <span class="nav-user" id="navUser"></span>
+  <button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg">
-    <div class="hero-bg-gradient"></div>
-    <div class="flow-line" style="top:20%;animation-duration:20s">↻ repeat · pattern · sequence · loop · iterate · flow · repeat · pattern</div>
-    <div class="flow-line" style="top:45%;animation-duration:25s;animation-delay:5s">for i in range(∞): think · plan · execute · loop · for i in range(∞)</div>
-    <div class="flow-line" style="top:70%;animation-duration:18s;animation-delay:9s">↻ 1 2 3 1 2 3 1 2 3 · find the pattern · follow the flow · ↻</div>
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">∞ &nbsp; Flow Guide &nbsp; · &nbsp; JavaScript</div>
+    <div class="hero-name">Loop</div>
+    <div class="hero-role">The Flow Guide</div>
+    <div class="hero-quote">"<span>Every pattern has a reason.</span> Learn to see it, and you'll know what to build next."</div>
+    <div class="hero-tiles">
+      <a class="hero-tile" onclick="jumpToLesson(1)">01 Thinking in Patterns</a>
+      <a class="hero-tile" onclick="jumpToLesson(2)">02 For Loops</a>
+      <a class="hero-tile" onclick="jumpToLesson(3)">03 Conditionals</a>
+      <a class="hero-tile" onclick="jumpToLesson(4)">04 Flow Challenge</a>
+    </div>
   </div>
-  <div class="hero-inner">
-    <div class="hero-content">
-      <div class="flow-wrap">
-        <span class="flow-label">LOOP SAYS →</span>
-        <span class="flow-text" id="flowText"></span>
-      </div>
-      <h1 class="hero-title">Welcome to<br><span>Loop's World.</span></h1>
-      <p class="hero-desc">Everything in code repeats. Patterns are the backbone of every algorithm ever written. Loop will teach you to see them, build them, and use them to make computers do the heavy lifting.</p>
-      <div class="hero-tags">
-        <span class="hero-tag">Patterns</span>
-        <span class="hero-tag">Sequences</span>
-        <span class="hero-tag">Algorithms</span>
-      </div>
-      <button class="hero-start" onclick="openModal('signup')">Start Lesson 1 — Free →</button>
-    </div>
-    <div class="hero-char">
-      <div class="hero-char-ring"></div>
-      <div class="hero-char-ring"></div>
-      <div class="hero-char-ring"></div>
-      <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
-      <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
-      <div class="sparkle"></div><div class="sparkle"></div><div class="sparkle"></div>
-      <div class="sparkle"></div>
-      <div class="char-floor-glow"></div>
-      <img id="loopChar" class="char-img" src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/loop-pose-1.png" alt="Loop">
-    </div>
+  <div class="hero-right">
+    <img src="loop-motion.gif" alt="Loop" class="hero-gif" onerror="this.style.opacity='0.3'" />
   </div>
 </section>
 
-<div class="progress-bar">
-  <div class="progress-inner">
-    <div class="prog-step"><div class="prog-dot active" id="dot1">1</div><div class="prog-label active" id="lbl1">What is a Pattern?</div><div class="prog-line" id="line1"></div></div>
-    <div class="prog-step"><div class="prog-dot" id="dot2">2</div><div class="prog-label" id="lbl2">Sequences & Order</div><div class="prog-line" id="line2"></div></div>
-    <div class="prog-step"><div class="prog-dot" id="dot3">3</div><div class="prog-label" id="lbl3">Loops in Code</div><div class="prog-line" id="line3"></div></div>
-    <div class="prog-step"><div class="prog-dot" id="dot4">4</div><div class="prog-label" id="lbl4">Pattern Algorithm</div></div>
+<!-- LESSON STRIP -->
+<div class="lesson-strip">
+  <button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — Thinking in Patterns</button>
+  <button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — For Loops</button>
+  <button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Conditionals</button>
+  <button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Flow Challenge</button>
+</div>
+
+<!-- ===================== LESSON 1 ===================== -->
+<div class="lesson-panel" id="lesson-1">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 01</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'cheat')" id="sb-1-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="loop-game.html" class="sidebar-game-link">⚡ Loop's Game World</a>
+  </aside>
+  <div class="lesson-content">
+
+    <!-- READ -->
+    <div class="content-block active" id="block-1-read">
+      <div class="section-header">Thinking in Patterns</div>
+      <div class="section-sub">LESSON 01 · FREE</div>
+
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>What Is a Pattern?</h3>
+        <p>A pattern is something that <strong>repeats in a predictable way</strong>. Stripes on a shirt. Steps in a dance. The way your day has a routine — wake, eat, learn, sleep. Computers are pattern machines. When you recognize a pattern, you know what to automate.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>Why Computers Love Repetition</h3>
+        <p>Humans get bored and tired doing the same thing 1,000 times. Computers don't. A <strong>loop</strong> is the tool that lets you tell a computer: "Do this action, over and over, until I say stop." It's one of the most powerful ideas in all of programming.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>Sequences Come First</h3>
+        <p>Before loops, there are <strong>sequences</strong> — a list of steps in order. Code runs top to bottom, one line at a time. Think of a recipe: first you crack eggs, then you mix, then you cook. Skipping a step or going out of order changes the result.</p>
+        <div class="code-block"><span class="cm">// A sequence — each step in order</span>
+<span class="kw">let</span> egg = <span class="str">"cracked"</span>;
+<span class="kw">let</span> batter = <span class="str">"mixed"</span>;
+<span class="kw">let</span> result = <span class="str">"cooked"</span>;</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>Loops Are Patterns in Code</h3>
+        <p>Instead of writing the same line 10 times, you write it <strong>once inside a loop</strong>. The loop counts for you, repeats for you, and stops when you tell it to. Less code. More power.</p>
+        <div class="code-block"><span class="cm">// Without a loop — messy</span>
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Step 1"</span>);
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Step 2"</span>);
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Step 3"</span>);
+
+<span class="cm">// With a loop — clean</span>
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Step "</span> + i);
+}</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>Flow Is the Big Idea</h3>
+        <p>Programming isn't just about commands — it's about <strong>controlling the flow</strong> of those commands. Which lines run? In what order? How many times? You're not just writing instructions. You're designing the path the computer follows.</p>
+      </div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="content-block" id="block-1-terms">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Pattern <span class="term-arrow">›</span></div>
+          <div class="term-def">Something that repeats in a predictable way. In coding, patterns are opportunities to use loops instead of writing the same code over and over.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Sequence <span class="term-arrow">›</span></div>
+          <div class="term-def">Steps in a specific order. Code runs as a sequence — line by line, top to bottom, unless a loop or condition changes the flow.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Loop <span class="term-arrow">›</span></div>
+          <div class="term-def">A block of code that runs repeatedly until a condition tells it to stop. Loops save you from writing the same lines over and over.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Flow <span class="term-arrow">›</span></div>
+          <div class="term-def">The path a program follows as it runs. Controlling flow means deciding which lines execute, how many times, and in what order.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Iteration <span class="term-arrow">›</span></div>
+          <div class="term-def">One single pass through a loop. If a loop runs 5 times, it completes 5 iterations.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Automate <span class="term-arrow">›</span></div>
+          <div class="term-def">To make a computer do a task without doing it manually each time. Loops are one of the main tools for automation.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUILD -->
+    <div class="content-block" id="block-1-build">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 01 · SPOT THE PATTERN</div>
+      <div class="build-section">
+        <h3>Pattern Spotter</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">Look at this sequence. What pattern do you see? Edit the code to make it print numbers 1 through 8 instead of 1 through 5.</p>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span>JAVASCRIPT · FLOW LAB</span>
+            <button class="editor-run-btn" onclick="runEditor('l1')">▶ RUN</button>
+          </div>
+          <textarea class="code-editor" id="editor-l1">// Change the loop to count 1 through 8
+for (let i = 1; i <= 5; i++) {
+  console.log("Count: " + i);
+}</textarea>
+        </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l1">Output will appear here...</div>
+      </div>
+
+      <br>
+
+      <!-- QUIZ -->
+      <div class="quiz-card">
+        <div class="quiz-q">What does a loop let you do that writing each line manually doesn't?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Not quite — a loop doesn\'t change what the code does, just how many times.')">Change what the code does</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Exactly right. Loops run the same block as many times as you tell them to, without repeating your code.')">Repeat the same block of code automatically</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Loops don\'t make code faster to read on their own — they make it shorter to write.')">Make code run faster</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-0"></div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-q">In a sequence, code runs...</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Code doesn\'t jump around by default — it follows a top-to-bottom sequence.')">In random order</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Sequences run top to bottom, not bottom to top.')">Bottom to top</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. Every sequence runs top to bottom, one line at a time.')">Top to bottom, one line at a time</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-1"></div>
+      </div>
+    </div>
+
+    <!-- REFLECT -->
+    <div class="content-block" id="block-1-reflect">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
+
+      <div class="reflect-prompt">
+        <div class="reflect-q">Think of something in your daily life that is a pattern. How could a loop automate it?</div>
+        <textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
+          <span class="reflect-saved" id="saved-1-1">✓ Saved</span>
+        </div>
+      </div>
+
+      <div class="reflect-prompt">
+        <div class="reflect-q">Why do you think controlling "flow" matters in programming? What could go wrong if code ran in the wrong order?</div>
+        <textarea class="reflect-input" id="ref-1-2" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-1-2','saved-1-2')">Save</button>
+          <span class="reflect-saved" id="saved-1-2">✓ Saved</span>
+        </div>
+      </div>
+
+      <div class="lesson-complete">
+        <h3>∞ &nbsp; Lesson 1 Complete</h3>
+        <p>Patterns. Sequences. Flow. The foundation is set. Ready for the next layer?</p>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="content-block" id="block-1-cheat">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 01 · PATTERNS &amp; SEQUENCES</div>
+      <div class="cheat-card">
+        <h3>∞ Lesson 1 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item">
+            <div class="cheat-term">Pattern</div>
+            <div class="cheat-desc">Something that repeats predictably — the signal to use a loop</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Sequence</div>
+            <div class="cheat-desc">Code executes top to bottom, one line at a time</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Loop</div>
+            <div class="cheat-desc">Repeats a block of code without rewriting it</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Iteration</div>
+            <div class="cheat-desc">One single pass through a loop</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Flow</div>
+            <div class="cheat-desc">The path a program follows — you control it</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">for loop syntax</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">for (let i = 0; i &lt; n; i++) { }</code></div>
+          </div>
+        </div>
+        <a href="loop-cheat-1.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
+      </div>
+    </div>
+
   </div>
 </div>
 
-<div class="lessons">
-
-  <!-- ============ LESSON 1 ============ -->
-  <div class="lesson" id="lesson-1">
-    <div class="lesson-header reveal">
-      <div class="lesson-num">Lesson 01 · Free</div>
-      <h2 class="lesson-title">What is a Pattern?</h2>
-      <p class="lesson-desc">Before you can write a loop, you need to see what's worth looping. Patterns are everywhere — and once you start looking, you can't stop.</p>
+<!-- ===================== LESSON 2 ===================== -->
+<div class="lesson-panel" id="lesson-2">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 02</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'cheat')" id="sb-2-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="loop-game.html" class="sidebar-game-link">⚡ Loop's Game World</a>
+  </aside>
+  <div class="lesson-content" id="lesson-2-content">
+    <div class="locked-panel" id="lock-2">
+      <div class="locked-icon">🔒</div>
+      <h2>Sparks Membership Required</h2>
+      <p>Lesson 2 is available to Sparks members and above.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
     </div>
 
-    <div class="lesson-teaser" id="lesson1-teaser">
-      <div class="teaser-content">
-        <div class="content-block">
-          <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
-          <div class="block-body">
-            <p class="loop-quote">"I don't rush. I watch. Every system has a rhythm — a set of steps that repeats. Find the pattern and you find the shortcut."</p>
-            <p>A pattern is something that repeats in a predictable way. Stripes on a shirt. The days of the week. The way traffic lights cycle...</p>
+    <!-- READ -->
+    <div class="content-block" id="block-2-read" style="display:none">
+      <div class="section-header">For Loops</div>
+      <div class="section-sub">LESSON 02 · SPARKS+</div>
+
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>Anatomy of a For Loop</h3>
+        <p>A <strong>for loop</strong> has three parts inside its parentheses: where to <strong>start</strong>, when to <strong>stop</strong>, and how to <strong>step</strong> forward. Each part is separated by a semicolon.</p>
+        <div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
+  <span class="cm">// runs 5 times: i = 0, 1, 2, 3, 4</span>
+  <span class="fn">console</span>.<span class="fn">log</span>(i);
+}</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>The Counter Variable</h3>
+        <p>The variable <code>i</code> is a <strong>counter</strong>. It starts at a number you choose, changes with every iteration, and the loop checks it against your stop condition before each pass. When the condition is false, the loop exits.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>Using i Inside the Loop</h3>
+        <p>Because <code>i</code> changes each time, you can use it inside the loop body to create <strong>dynamic output</strong>. That's what makes loops so powerful — the same line of code produces different results each iteration.</p>
+        <div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">5</span>; i++) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Lap "</span> + i + <span class="str">" complete!"</span>);
+}
+<span class="cm">// Lap 1 complete!</span>
+<span class="cm">// Lap 2 complete! ...</span></div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>Looping Over an Array</h3>
+        <p>One of the most common uses of a for loop is <strong>going through every item in a list</strong> (called an array). Use <code>i</code> as the index to access each item one at a time.</p>
+        <div class="code-block"><span class="kw">let</span> crew = [<span class="str">"Loop"</span>, <span class="str">"Zen"</span>, <span class="str">"Nova"</span>, <span class="str">"Byte"</span>];
+
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; crew.length; i++) {
+  <span class="fn">console</span>.<span class="fn">log</span>(crew[i] + <span class="str">" is in the crew."</span>);
+}</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>Counting Down</h3>
+        <p>Loops don't have to go up. You can count <strong>backwards</strong> by starting high and subtracting from <code>i</code> each time using <code>i--</code>.</p>
+        <div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">5</span>; i >= <span class="num">1</span>; i--) {
+  <span class="fn">console</span>.<span class="fn">log</span>(i + <span class="str">"..."</span>);
+}
+<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Launch!"</span>);</div>
+      </div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="content-block" id="block-2-terms" style="display:none">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">for loop <span class="term-arrow">›</span></div>
+          <div class="term-def">A loop with a built-in counter. You define the start, stop, and step — the loop handles the rest.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Counter variable <span class="term-arrow">›</span></div>
+          <div class="term-def">Usually named <code>i</code>, this variable tracks which iteration the loop is on. It changes with each pass.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Array <span class="term-arrow">›</span></div>
+          <div class="term-def">A list of values stored in one variable. Example: <code>["Zen", "Loop", "Nova"]</code>. Arrays are zero-indexed — the first item is at position 0.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Index <span class="term-arrow">›</span></div>
+          <div class="term-def">The position of an item in an array. Arrays start at index 0. So <code>crew[0]</code> is the first item.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">i++ / i-- <span class="term-arrow">›</span></div>
+          <div class="term-def">Shorthand for "add 1 to i" or "subtract 1 from i." These are the step expressions in a for loop.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">.length <span class="term-arrow">›</span></div>
+          <div class="term-def">A property of arrays that tells you how many items are inside. Using <code>array.length</code> as your stop condition means the loop always covers every item.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUILD -->
+    <div class="content-block" id="block-2-build" style="display:none">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 02 · LOOP THE CREW</div>
+      <div class="build-section">
+        <h3>Crew Roll Call</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">The crew array already has four names. Add two more names to the array, then make the loop say "Hello, [name]!" for each one.</p>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span>JAVASCRIPT · FOR LOOPS</span>
+            <button class="editor-run-btn" onclick="runEditor('l2')">▶ RUN</button>
           </div>
+          <textarea class="code-editor" id="editor-l2">let crew = ["Loop", "Zen", "Nova", "Byte"];
+// Add two more names above ↑
+
+for (let i = 0; i < crew.length; i++) {
+  console.log("Present: " + crew[i]);
+}
+// Change "Present" to "Hello," above ↑</textarea>
         </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l2">Output will appear here...</div>
       </div>
-      <div class="teaser-fade"></div>
-    </div>
 
-    <div id="lesson1-gate" class="lesson-gate reveal">
-      <div class="gate-lock">↻</div>
-      <div class="gate-badge">Free Account</div>
-      <div class="gate-title">Create a free account to start</div>
-      <div class="gate-desc">Lesson 1 is completely free. No card needed. Just create an account and start finding patterns.</div>
-      <button class="gate-btn" onclick="openModal('signup')">Create Free Account →</button>
-      <p style="margin-top:14px;font-size:.75rem;color:var(--muted)">Already have an account? <button onclick="openModal('login')" style="background:none;border:none;color:#00e8ff;cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Log in</button></p>
-    </div>
+      <br>
 
-    <div id="lesson1-content" style="display:none">
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
-      <div class="block-body">
-        <p class="loop-quote">"I don't rush. I watch. Every system has a rhythm — a set of steps that repeats. Find the pattern and you find the shortcut."</p>
-        <p>A pattern is something that repeats in a predictable way. Stripes on a shirt. The days of the week. The way traffic lights cycle through red, yellow, green. Your morning routine. The chorus of a song.</p>
-        <p>In coding, patterns are everything. When a computer does the same thing over and over, it's following a pattern. When you write code that repeats, you're creating a pattern on purpose. The ability to spot patterns — and build them — is one of the most powerful skills in all of programming.</p>
-        <p>Loop sees patterns in everything. Not because they're magic, but because they <strong style="color:var(--char)">slow down and look</strong>. That's the whole skill. You can learn it too.</p>
+      <div class="quiz-card">
+        <div class="quiz-q">In <code>for (let i = 0; i &lt; 5; i++)</code>, what does <code>i &lt; 5</code> do?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The start value is set by the first part: let i = 0.')">Sets the starting value</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Right. The condition is checked before each iteration. When i reaches 5, it\'s no longer less than 5, so the loop stops.')">Checks if the loop should keep going</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The step is handled by i++, not the condition.')">Adds 1 to i each time</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-2"></div>
       </div>
-    </div>
 
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
-      <div class="block-body">
-        <div class="definition-box">
-          <div class="definition-term">Pattern</div>
-          <div class="definition-text">A set of elements that repeats in a predictable, consistent way.</div>
-          <div class="definition-example">Example: 1, 2, 3, 1, 2, 3, 1, 2, 3 — the numbers 1-2-3 repeat as a pattern.</div>
+      <div class="quiz-card">
+        <div class="quiz-q">If an array has 4 items, what are its valid index numbers?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Arrays are zero-indexed, so the first item is always at index 0, not 1.')">1, 2, 3, 4</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. Arrays start at 0. A 4-item array goes from index 0 to 3.')">0, 1, 2, 3</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Only 4 valid indices exist for a 4-item array: 0 through 3.')">0, 1, 2, 3, 4</button>
         </div>
-        <div class="definition-box">
-          <div class="definition-term">Repetition</div>
-          <div class="definition-text">Doing the same thing more than once. In coding, repetition is powerful — you write instructions once and the computer can follow them a million times.</div>
-          <div class="definition-example">Example: A website loading the same card layout for every product in a store.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Rule</div>
-          <div class="definition-text">The logic behind a pattern — what makes it repeat the way it does. Finding the rule is the same as understanding the pattern.</div>
-          <div class="definition-example">Example: In 2, 4, 6, 8 — the rule is "add 2 each time."</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Algorithm</div>
-          <div class="definition-text">A step-by-step set of instructions for solving a problem. Algorithms often use patterns to work efficiently.</div>
-          <div class="definition-example">Example: The steps you follow every morning to get ready — that's an algorithm.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- PATTERN ACTIVITY -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">🔍</div><div class="block-label">Activity · Complete the Pattern</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">Loop found a pattern with a missing piece. Figure out the rule and fill in the blank. Click the right answer.</p>
-        <div class="pattern-sequence" id="patSeq1">
-          <div class="pat-item">2</div>
-          <div class="pat-item">4</div>
-          <div class="pat-item">6</div>
-          <div class="pat-item blank" id="patBlank1">?</div>
-          <div class="pat-item">10</div>
-        </div>
-        <p style="font-size:.78rem;color:var(--muted);margin:8px 0">Choose the missing number:</p>
-        <div class="pat-options">
-          <div class="pat-option" onclick="checkPattern(1,'7','8')">7</div>
-          <div class="pat-option" onclick="checkPattern(1,'8','8')">8</div>
-          <div class="pat-option" onclick="checkPattern(1,'9','8')">9</div>
-          <div class="pat-option" onclick="checkPattern(1,'12','8')">12</div>
-        </div>
-        <div class="activity-result" id="pat1Result"></div>
-
-        <hr style="border:none;border-top:1px solid var(--border);margin:24px 0">
-
-        <p class="reflect-prompt">One more. Find the rule and complete this pattern:</p>
-        <div class="pattern-sequence" id="patSeq2">
-          <div class="pat-item">↑</div>
-          <div class="pat-item">→</div>
-          <div class="pat-item">↓</div>
-          <div class="pat-item">↑</div>
-          <div class="pat-item">→</div>
-          <div class="pat-item blank" id="patBlank2">?</div>
-        </div>
-        <p style="font-size:.78rem;color:var(--muted);margin:8px 0">What comes next?</p>
-        <div class="pat-options">
-          <div class="pat-option" onclick="checkPattern(2,'↑','↓')">↑</div>
-          <div class="pat-option" onclick="checkPattern(2,'→','↓')">→</div>
-          <div class="pat-option" onclick="checkPattern(2,'↓','↓')">↓</div>
-          <div class="pat-option" onclick="checkPattern(2,'←','↓')">←</div>
-        </div>
-        <div class="activity-result" id="pat2Result"></div>
-      </div>
-    </div>
-
-    <!-- QUIZ -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
-      <div class="block-body">
-        <p class="quiz-question">What is the rule for this pattern: 5, 10, 15, 20, 25?</p>
-        <div class="quiz-options" id="quiz1">
-          <div class="quiz-option" onclick="answerQuiz('quiz1','a','b')"><span class="quiz-option-letter">A</span>Add 4 each time</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz1','b','b')"><span class="quiz-option-letter">B</span>Add 5 each time</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz1','c','b')"><span class="quiz-option-letter">C</span>Multiply by 2 each time</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz1','d','b')"><span class="quiz-option-letter">D</span>Add 10 each time</div>
-        </div>
-        <div class="quiz-result" id="quiz1Result"></div>
+        <div class="quiz-feedback" id="qfb-3"></div>
       </div>
     </div>
 
     <!-- REFLECT -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">↻</div><div class="block-label">Reflect · Your Turn</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">Think of a pattern you follow every single day without realizing it. What's the rule behind it? What would happen if someone or something interrupted it?</p>
-        <textarea class="reflect-input" id="reflect1" placeholder="A pattern I follow every day..."></textarea>
-        <button class="reflect-submit" onclick="submitReflect('reflect1','reflect1Response','complete1')">Save My Thought →</button>
-        <div class="reflect-response" id="reflect1Response"></div>
+    <div class="content-block" id="block-2-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">What real-world list (array) would you want to loop through in a program? What would you do with each item?</div>
+        <textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
+          <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">What would happen if you forgot <code>i++</code> in a for loop? What kind of problem would that create?</div>
+        <textarea class="reflect-input" id="ref-2-2" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-2-2','saved-2-2')">Save</button>
+          <span class="reflect-saved" id="saved-2-2">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete">
+        <h3>∞ &nbsp; Lesson 2 Complete</h3>
+        <p>For loops mastered. Arrays looped. Counting in both directions. You're building real control.</p>
       </div>
     </div>
 
-    <div class="lesson-complete" id="complete1">
-      <div class="complete-icon">↻</div>
-      <h3 class="complete-title">Lesson 1 <span>Complete!</span></h3>
-      <p class="complete-desc">You can now spot patterns, identify their rules, and understand why repetition is one of the most powerful ideas in all of coding.</p>
-      <button class="next-btn" onclick="scrollToLesson('lesson-2')">Next Lesson →</button>
-    </div>
-
-    <div class="trial-upsell" id="trialUpsell" style="display:none">
-      <div class="trial-upsell-inner">
-        <div class="trial-icon">↻</div>
-        <h3 class="trial-title">Keep the flow going.</h3>
-        <p class="trial-desc">Start your <strong>3-day free trial</strong> and unlock all of Loop's lessons — plus every character world on the platform. Cancel anytime before day 3 and you won't be charged.</p>
-        <div class="trial-tiers">
-          <a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="trial-tier">
-            <div class="trial-tier-name">Sparks</div>
-            <div class="trial-tier-price">$5<span>/mo</span></div>
-            <div class="trial-tier-desc">Lessons 1 & 2 for all 6 characters</div>
-          </a>
-          <a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="trial-tier featured">
-            <div class="trial-tier-badge">Most Popular</div>
-            <div class="trial-tier-name">Builders</div>
-            <div class="trial-tier-price">$9<span>/mo</span></div>
-            <div class="trial-tier-desc">Lessons 1–3 for all 6 characters</div>
-          </a>
-          <a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="trial-tier">
-            <div class="trial-tier-name">Coders</div>
-            <div class="trial-tier-price">$15<span>/mo</span></div>
-            <div class="trial-tier-desc">All 4 lessons + all 6 workbooks</div>
-          </a>
-        </div>
-        <p class="trial-fine">3-day free trial. Card required. Cancel anytime.</p>
-      </div>
-    </div>
-
-    </div><!-- end lesson1-content -->
-  </div>
-
-  <!-- ============ LESSON 2 ============ -->
-  <div class="lesson" id="lesson-2">
-    <div class="lesson-header reveal">
-      <div class="lesson-num">Lesson 02 · Sparks+</div>
-      <h2 class="lesson-title">Sequences & Order</h2>
-      <p class="lesson-desc">Order matters. A sequence is a pattern where each step only makes sense because of what came before it.</p>
-    </div>
-
-    <div id="lesson2-gate" class="lesson-gate reveal">
-      <div class="gate-lock">↻</div>
-      <div class="gate-badge">Sparks · Builders · Coders</div>
-      <div class="gate-title">This lesson is for members</div>
-      <div class="gate-desc">Join the crew to unlock Lesson 2 and keep flowing with Loop.</div>
-      <button class="gate-btn" onclick="goUpgrade()">Join the Crew →</button>
-    </div>
-
-    <div id="lesson2-content" style="display:none">
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 3 min</div></div>
-      <div class="block-body">
-        <p class="loop-quote">"A sequence isn't just a list. It's a list where order is everything. Change the order and you change the result — or break it completely."</p>
-        <p>A sequence is a set of steps that must happen in a specific order to get the right result. Making breakfast is a sequence — you don't eat the eggs before you cook them. Getting dressed is a sequence — you put on socks before shoes.</p>
-        <p>In code, sequences are the backbone of everything. Every program is, at its core, a sequence of instructions the computer follows one after another. The computer is extremely literal — it does exactly what you tell it, in exactly the order you tell it.</p>
-        <p>Understanding sequences means understanding that <strong style="color:var(--char)">order is logic</strong>. When something doesn't work, often the problem is that you have the right steps in the wrong order.</p>
-      </div>
-    </div>
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
-      <div class="block-body">
-        <div class="definition-box">
-          <div class="definition-term">Sequence</div>
-          <div class="definition-text">A set of steps or instructions that must be followed in a specific order to produce the correct result.</div>
-          <div class="definition-example">Example: Log in → open app → find lesson → start learning. That's a sequence.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Order of Operations</div>
-          <div class="definition-text">The rule that determines which steps happen first when multiple things could happen at once.</div>
-          <div class="definition-example">Example: In math, multiplication happens before addition: 2 + 3 × 4 = 14, not 20.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Step</div>
-          <div class="definition-text">One single instruction in a sequence. Each step does exactly one thing and sets up the next step.</div>
-          <div class="definition-example">Example: "Open the file" is one step. "Read the file" is the next step.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Dependency</div>
-          <div class="definition-text">When one step requires a previous step to have happened first. Dependencies are why order matters.</div>
-          <div class="definition-example">Example: You can't read a file you haven't opened yet — reading depends on opening.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEE IT LIVE -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Order Matters</div></div>
-      <div class="block-body">
-        <p>Watch what happens when the same steps run in different orders. Hit Run to see Loop demonstrate.</p>
-        <div class="code-demo" id="codeDemo2">
-          <div class="line" id="c2l1"><span class="code-muted">// ✓ Correct sequence</span></div>
-          <div class="line" id="c2l2"><span class="code-cyan">openFile</span>(<span class="code-yellow">"mywork.txt"</span>);</div>
-          <div class="line" id="c2l3"><span class="code-cyan">readFile</span>(<span class="code-yellow">"mywork.txt"</span>);</div>
-          <div class="line" id="c2l4"><span class="code-cyan">closeFile</span>(<span class="code-yellow">"mywork.txt"</span>);</div>
-          <div class="line" id="c2l5"><span class="code-green">// ↻ Result: file read successfully</span></div>
-          <div class="line" id="c2l6">&nbsp;</div>
-          <div class="line" id="c2l7"><span class="code-muted">// ✗ Wrong sequence</span></div>
-          <div class="line" id="c2l8"><span class="code-cyan">readFile</span>(<span class="code-yellow">"mywork.txt"</span>); <span class="code-muted">// ERROR: file not open yet</span></div>
-          <div class="line" id="c2l9"><span class="code-cyan">openFile</span>(<span class="code-yellow">"mywork.txt"</span>);</div>
-        </div>
-        <button class="run-btn" onclick="runCode2()">▶ See the Difference</button>
-        <div class="code-output" id="output2" style="color:var(--off)">
-          <div style="color:#a2ff32;margin-bottom:8px">↻ Correct order: open → read → close</div>
-          File opens. Contents are available. File closes cleanly.<br><br>
-          <div style="color:#ff6b6b;margin-bottom:8px">✗ Wrong order: read before open</div>
-          Error: Cannot read file that hasn't been opened. The dependency isn't met.
-        </div>
-      </div>
-    </div>
-
-    <!-- SEQUENCE SORT ACTIVITY -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">🔢</div><div class="block-label">Activity · Sort the Sequence</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">Loop needs to post a photo online. These steps are out of order. What's the correct sequence? Choose 1–5 in the right order.</p>
-        <div class="seq-builder" id="seqBuilder">
-          <div class="seq-step"><div class="seq-num" id="sn1">?</div><span class="seq-arrow">→</span><span>Click the "Post" button</span></div>
-          <div class="seq-step"><div class="seq-num" id="sn2">?</div><span class="seq-arrow">→</span><span>Open the app</span></div>
-          <div class="seq-step"><div class="seq-num" id="sn3">?</div><span class="seq-arrow">→</span><span>Write a caption</span></div>
-          <div class="seq-step"><div class="seq-num" id="sn4">?</div><span class="seq-arrow">→</span><span>Select your photo from the library</span></div>
-          <div class="seq-step"><div class="seq-num" id="sn5">?</div><span class="seq-arrow">→</span><span>Log into your account</span></div>
-        </div>
-        <button class="check-btn" onclick="checkSequence()">Check My Sequence →</button>
-        <div class="activity-result" id="seq2Result"></div>
-        <div style="margin-top:16px;display:flex;gap:8px;flex-wrap:wrap" id="seqButtons">
-          <button onclick="assignSeq(0,1)" style="padding:8px 14px;background:rgba(0,232,255,.08);border:1px solid rgba(0,232,255,.2);color:var(--char);border-radius:8px;cursor:pointer;font-family:var(--display);font-size:.55rem;letter-spacing:.1em">Step 1: Post Button</button>
-          <button onclick="assignSeq(1,2)" style="padding:8px 14px;background:rgba(0,232,255,.08);border:1px solid rgba(0,232,255,.2);color:var(--char);border-radius:8px;cursor:pointer;font-family:var(--display);font-size:.55rem;letter-spacing:.1em">Step 2: Open App</button>
-          <button onclick="assignSeq(2,3)" style="padding:8px 14px;background:rgba(0,232,255,.08);border:1px solid rgba(0,232,255,.2);color:var(--char);border-radius:8px;cursor:pointer;font-family:var(--display);font-size:.55rem;letter-spacing:.1em">Step 3: Caption</button>
-          <button onclick="assignSeq(3,4)" style="padding:8px 14px;background:rgba(0,232,255,.08);border:1px solid rgba(0,232,255,.2);color:var(--char);border-radius:8px;cursor:pointer;font-family:var(--display);font-size:.55rem;letter-spacing:.1em">Step 4: Select Photo</button>
-          <button onclick="assignSeq(4,5)" style="padding:8px 14px;background:rgba(0,232,255,.08);border:1px solid rgba(0,232,255,.2);color:var(--char);border-radius:8px;cursor:pointer;font-family:var(--display);font-size:.55rem;letter-spacing:.1em">Step 5: Log In</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- QUIZ -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
-      <div class="block-body">
-        <p class="quiz-question">Why does order matter in a sequence?</p>
-        <div class="quiz-options" id="quiz2">
-          <div class="quiz-option" onclick="answerQuiz('quiz2','a','c')"><span class="quiz-option-letter">A</span>It doesn't — computers can figure out the right order on their own</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz2','b','c')"><span class="quiz-option-letter">B</span>Only the first step matters</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz2','c','c')"><span class="quiz-option-letter">C</span>Each step often depends on the previous one — wrong order breaks the dependency</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz2','d','c')"><span class="quiz-option-letter">D</span>Order only matters in math, not in code</div>
-        </div>
-        <div class="quiz-result" id="quiz2Result"></div>
-      </div>
-    </div>
-
-    <!-- REFLECT -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">↻</div><div class="block-label">Reflect · Your Turn</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">Think of a time when you did steps in the wrong order and it caused a problem. What was the dependency you missed? What did you learn from it?</p>
-        <textarea class="reflect-input" id="reflect2" placeholder="I once did steps out of order when..."></textarea>
-        <button class="reflect-submit" onclick="submitReflect('reflect2','reflect2Response','complete2')">Save My Thought →</button>
-        <div class="reflect-response" id="reflect2Response"></div>
-      </div>
-    </div>
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
-      <div class="block-body">
-        <div class="summary-box">
-          <div class="summary-title">What you learned in Lesson 2</div>
-          <ul class="summary-list">
-            <li>A sequence is a set of steps that must happen in a specific order</li>
-            <li>Computers follow instructions exactly as written — no guessing</li>
-            <li>Dependencies are why order matters — each step sets up the next</li>
-            <li>Order of operations determines what happens first when multiple things compete</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="lesson-complete" id="complete2">
-      <div class="complete-icon">↻</div>
-      <h3 class="complete-title">Lesson 2 <span>Complete!</span></h3>
-      <p class="complete-desc">You understand sequences and why order is logic. You know what dependencies are and how wrong order breaks them. Loop approves.</p>
-      <button class="next-btn" onclick="scrollToLesson('lesson-3')">Next Lesson →</button>
-    </div>
-    <div class="cheat-sheet" id="cheat2">
-      <div class="cheat-sheet-header"><span class="cheat-sheet-title">↻ Lesson 2 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(2)">Download →</button></div>
-      <div class="cheat-body">
-        <div class="cheat-grid">
-          <div class="cheat-item"><div class="cheat-term">Sequence</div><div class="cheat-def">Steps that must happen in a specific order for the right result.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Dependency</div><div class="cheat-def">When one step requires a previous step to have already happened.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Order of Operations</div><div class="cheat-def">The rule for which step happens first when multiple steps compete.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Step</div><div class="cheat-def">One single instruction. Does one thing. Sets up the next.</div></div>
-        </div>
-        <div class="cheat-code">open → read → close<br><span style="color:rgba(255,255,255,.3)">↻ Each step depends on the one before it</span></div>
-      </div>
-    </div>
-    </div><!-- end lesson2-content -->
-  </div>
-
-  <!-- ============ LESSON 3 ============ -->
-  <div class="lesson" id="lesson-3">
-    <div class="lesson-header reveal">
-      <div class="lesson-num">Lesson 03 · Builders+</div>
-      <h2 class="lesson-title">Loops in Code</h2>
-      <p class="lesson-desc">A loop lets you write instructions once and run them as many times as you need. It's the most efficient idea in programming.</p>
-    </div>
-
-    <div id="lesson3-gate" class="lesson-gate reveal">
-      <div class="gate-lock">↻</div>
-      <div class="gate-badge">Builders · Coders</div>
-      <div class="gate-title">This lesson is for Builders and up</div>
-      <div class="gate-desc">Upgrade to unlock Lesson 3 — where patterns become actual code loops.</div>
-      <button class="gate-btn" onclick="goUpgrade()">Upgrade →</button>
-    </div>
-
-    <div id="lesson3-content" style="display:none">
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 3 min</div></div>
-      <div class="block-body">
-        <p class="loop-quote">"Why do the same thing 100 times when you can write it once and tell the computer to repeat it? That's not laziness. That's efficiency. That's a loop."</p>
-        <p>A loop is a block of code that runs over and over until a condition is met. Instead of writing the same line 10 times, you write it once and tell the computer "do this 10 times." The computer handles the rest.</p>
-        <p>The most common type is a <strong style="color:var(--char)">for loop</strong> — it repeats a block of code a specific number of times. You set a counter, tell it where to start, when to stop, and how to count. Then it runs.</p>
-        <p>Loops are used everywhere — loading posts in a social media feed, processing items in a shopping cart, drawing every pixel on a screen. Almost everything you interact with online was built with loops at its core.</p>
-      </div>
-    </div>
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
-      <div class="block-body">
-        <div class="definition-box">
-          <div class="definition-term">Loop</div>
-          <div class="definition-text">A block of code that repeats automatically until a specified condition is no longer true.</div>
-          <div class="definition-example">Example: for (let i = 0; i &lt; 5; i++) — runs the code inside 5 times.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">For Loop</div>
-          <div class="definition-text">The most common loop. Has three parts: a starting value, a condition to keep running, and an update that happens each time.</div>
-          <div class="definition-example">Example: for (let i = 1; i &lt;= 3; i++) runs when i is 1, 2, and 3.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Counter / Iterator</div>
-          <div class="definition-text">A variable that tracks how many times the loop has run. Usually named i, j, or count.</div>
-          <div class="definition-example">Example: In for (let i = 0; ...), i starts at 0 and increases each loop.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Condition</div>
-          <div class="definition-text">The rule that determines whether the loop runs again. When the condition becomes false, the loop stops.</div>
-          <div class="definition-example">Example: i &lt; 5 — keep looping as long as i is less than 5.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Infinite Loop</div>
-          <div class="definition-text">A loop whose condition never becomes false — so it runs forever. Usually a bug, not intentional.</div>
-          <div class="definition-example">Example: while (true) — runs forever unless you have a break inside.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- LOOP VISUALIZER -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Loop Visualizer</div></div>
-      <div class="block-body">
-        <p>Watch this loop run step by step. Each bubble lights up as the counter increases. Hit Run.</p>
-        <div class="loop-viz">
-          <div class="code-demo" style="border:none;padding:0;margin-bottom:12px">
-            <div class="line visible"><span class="code-purple">for</span> (<span class="code-purple">let</span> i = <span class="code-cyan">1</span>; i &lt;= <span class="code-cyan">5</span>; i++) {</div>
-            <div class="line visible">&nbsp;&nbsp;<span class="code-blue">console</span>.log(<span class="code-yellow">"Loop #"</span> + i);</div>
-            <div class="line visible">}</div>
+    <!-- CHEAT SHEET -->
+    <div class="content-block" id="block-2-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 02 · FOR LOOPS</div>
+      <div class="cheat-card">
+        <h3>∞ Lesson 2 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item">
+            <div class="cheat-term">For loop</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">for (let i = 0; i &lt; n; i++) { }</code></div>
           </div>
-          <div class="loop-counter" id="loopCounter">
-            <div class="loop-bubble" id="lb1">1</div>
-            <div class="loop-bubble" id="lb2">2</div>
-            <div class="loop-bubble" id="lb3">3</div>
-            <div class="loop-bubble" id="lb4">4</div>
-            <div class="loop-bubble" id="lb5">5</div>
-            <span style="color:var(--muted);font-size:.75rem;margin-left:8px" id="loopStatus">Press Run to watch the loop</span>
+          <div class="cheat-item">
+            <div class="cheat-term">Count up</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">i++</code> — adds 1 each iteration</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Count down</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">i--</code> — subtracts 1 each iteration</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Loop an array</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">for (let i = 0; i &lt; arr.length; i++) { arr[i] }</code></div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Array index</div>
+            <div class="cheat-desc">Starts at 0. A 5-item array has indices 0 through 4.</div>
           </div>
         </div>
-        <button class="run-btn" onclick="runLoopViz()">▶ Run the Loop</button>
-        <div class="code-output" id="output3" style="color:var(--off)">
-          Loop #1<br>Loop #2<br>Loop #3<br>Loop #4<br>Loop #5<br>
-          <span style="color:#a2ff32">↻ Loop finished. Ran 5 times.</span>
-        </div>
+        <a href="loop-cheat-2.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
       </div>
-    </div>
-
-    <!-- LOOP BUILD ACTIVITY -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">🔨</div><div class="block-label">Activity · Build the Loop</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">Fill in the blanks to build a loop that counts from 1 to 4.</p>
-        <div style="background:var(--void);border:1px solid var(--border);border-radius:12px;padding:20px;font-family:monospace;font-size:.82rem;line-height:2.2;margin:16px 0">
-          <span style="color:#c66bff">for</span> (<span style="color:#c66bff">let</span> i =
-          <select id="loopStart" style="background:var(--card);border:1px solid rgba(0,232,255,.3);color:#00e8ff;padding:4px 8px;border-radius:6px;font-family:monospace;font-size:.8rem;cursor:pointer;outline:none">
-            <option value="0">0</option><option value="1" selected>1</option><option value="2">2</option><option value="5">5</option>
-          </select>
-          ; i &lt;=
-          <select id="loopEnd" style="background:var(--card);border:1px solid rgba(0,232,255,.3);color:#00e8ff;padding:4px 8px;border-radius:6px;font-family:monospace;font-size:.8rem;cursor:pointer;outline:none">
-            <option value="2">2</option><option value="3">3</option><option value="4" selected>4</option><option value="10">10</option>
-          </select>
-          ; i++) {<br>
-          &nbsp;&nbsp;<span style="color:#6bb5ff">console</span>.log(<span style="color:#ffe066">"Count: "</span> + i);<br>
-          }
-        </div>
-        <button class="check-btn" onclick="checkLoopBuild()">▶ Test My Loop</button>
-        <div class="activity-result" id="loop3Result"></div>
-      </div>
-    </div>
-
-    <!-- QUIZ -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
-      <div class="block-body">
-        <p class="quiz-question">What stops a for loop from running forever?</p>
-        <div class="quiz-options" id="quiz3">
-          <div class="quiz-option" onclick="answerQuiz('quiz3','a','b')"><span class="quiz-option-letter">A</span>The computer automatically stops it after 10 times</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz3','b','b')"><span class="quiz-option-letter">B</span>The condition — when it becomes false, the loop stops</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz3','c','b')"><span class="quiz-option-letter">C</span>The counter resets itself back to zero</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz3','d','b')"><span class="quiz-option-letter">D</span>Nothing — all for loops run forever</div>
-        </div>
-        <div class="quiz-result" id="quiz3Result"></div>
-      </div>
-    </div>
-
-    <!-- REFLECT -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">↻</div><div class="block-label">Reflect · Your Turn</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">Think of something in your life that feels like a loop — something that repeats on a cycle. How many "iterations" does it run? What's the condition that stops it?</p>
-        <textarea class="reflect-input" id="reflect3" placeholder="Something in my life that loops is..."></textarea>
-        <button class="reflect-submit" onclick="submitReflect('reflect3','reflect3Response','complete3')">Save My Thought →</button>
-        <div class="reflect-response" id="reflect3Response"></div>
-      </div>
-    </div>
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
-      <div class="block-body">
-        <div class="summary-box">
-          <div class="summary-title">What you learned in Lesson 3</div>
-          <ul class="summary-list">
-            <li>A loop runs a block of code repeatedly until a condition is false</li>
-            <li>A for loop has three parts: start, condition, and update</li>
-            <li>The counter tracks how many times the loop has run</li>
-            <li>When the condition becomes false, the loop stops</li>
-            <li>An infinite loop runs forever — usually a bug</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="lesson-complete" id="complete3">
-      <div class="complete-icon">↻</div>
-      <h3 class="complete-title">Lesson 3 <span>Complete!</span></h3>
-      <p class="complete-desc">You can now write loops, understand how they count, and know what stops them. Repetition is officially in your toolkit.</p>
-      <button class="next-btn" onclick="scrollToLesson('lesson-4')">Final Lesson →</button>
-    </div>
-    <div class="cheat-sheet" id="cheat3">
-      <div class="cheat-sheet-header"><span class="cheat-sheet-title">↻ Lesson 3 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(3)">Download →</button></div>
-      <div class="cheat-body">
-        <div class="cheat-grid">
-          <div class="cheat-item"><div class="cheat-term">Loop</div><div class="cheat-def">Code that repeats until the condition becomes false.</div></div>
-          <div class="cheat-item"><div class="cheat-term">For Loop</div><div class="cheat-def">for (start; condition; update) { code to repeat }</div></div>
-          <div class="cheat-item"><div class="cheat-term">Counter (i)</div><div class="cheat-def">Tracks how many times the loop has run. Usually i.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Infinite Loop</div><div class="cheat-def">Condition never becomes false. Runs forever. Usually a bug.</div></div>
-        </div>
-        <div class="cheat-code">for (let i = 1; i &lt;= 5; i++) {<br>&nbsp;&nbsp;console.log("Loop #" + i);<br>}<br><span style="color:rgba(255,255,255,.3)">↻ Runs 5 times: i = 1, 2, 3, 4, 5</span></div>
-      </div>
-    </div>
-    </div><!-- end lesson3-content -->
-  </div>
-
-  <!-- ============ LESSON 4 ============ -->
-  <div class="lesson" id="lesson-4">
-    <div class="lesson-header reveal">
-      <div class="lesson-num">Lesson 04 · Coders Only</div>
-      <h2 class="lesson-title">Build a Pattern Algorithm</h2>
-      <p class="lesson-desc">You know patterns. You know sequences. You know loops. Now build something real — an algorithm that generates a pattern using all three.</p>
-    </div>
-
-    <div id="lesson4-gate" class="lesson-gate reveal">
-      <div class="gate-lock">↻</div>
-      <div class="gate-badge">Coders</div>
-      <div class="gate-title">This lesson is for Coders</div>
-      <div class="gate-desc">The final lesson is reserved for Coders. Upgrade to build a real pattern algorithm from scratch.</div>
-      <button class="gate-btn" onclick="goUpgrade()">Upgrade to Coders →</button>
-    </div>
-
-    <div id="lesson4-content" style="display:none">
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
-      <div class="block-body">
-        <p class="loop-quote">"An algorithm isn't magic. It's just a plan. Step by step. With a loop at the heart of it."</p>
-        <p>An algorithm is a complete, step-by-step plan for solving a problem. Every algorithm has three things: inputs (what it starts with), a process (what it does, usually with loops), and outputs (what it produces).</p>
-        <p>In this lesson, you're going to build an algorithm that generates a number pattern. You'll define the starting point, write the loop, and decide the rule. By the end, you'll have created something that produces infinite patterns — just by changing the numbers.</p>
-        <p>This is how real programmers think. Not "how do I write this line" — but "what's the pattern, what's the loop, what's the output." Step back. See the flow. Let Loop guide you.</p>
-      </div>
-    </div>
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
-      <div class="block-body">
-        <div class="definition-box">
-          <div class="definition-term">Input</div>
-          <div class="definition-text">The starting data an algorithm receives to work with.</div>
-          <div class="definition-example">Example: A starting number like 2, and a rule like "multiply by 2 each time."</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Output</div>
-          <div class="definition-text">The result the algorithm produces after processing the input.</div>
-          <div class="definition-example">Example: 2, 4, 8, 16, 32 — the pattern the algorithm generates.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Iteration</div>
-          <div class="definition-text">One single pass through a loop. Each iteration does the work once and updates the counter.</div>
-          <div class="definition-example">Example: If a loop runs 5 times, it has 5 iterations.</div>
-        </div>
-        <div class="definition-box">
-          <div class="definition-term">Accumulator</div>
-          <div class="definition-text">A variable that collects or builds up a result across multiple iterations of a loop.</div>
-          <div class="definition-example">Example: A variable that adds up all numbers in a list as the loop runs.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- ALGORITHM BUILDER -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">🚀</div><div class="block-label">Build It · Pattern Algorithm</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">Design your own pattern algorithm. Choose a starting number, a rule, and how many steps. Watch the pattern generate.</p>
-        <div style="display:flex;flex-direction:column;gap:14px;margin:16px 0">
-          <div style="display:flex;align-items:center;gap:12px">
-            <label style="font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:130px">Start number</label>
-            <input type="number" id="algoStart" value="1" min="1" max="100" oninput="generatePattern()" style="background:var(--card);border:1px solid rgba(0,232,255,.3);color:var(--white);padding:8px 12px;border-radius:8px;font-family:monospace;font-size:.85rem;width:80px;outline:none">
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <label style="font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:130px">Rule</label>
-            <select id="algoRule" oninput="generatePattern()" style="background:var(--card);border:1px solid rgba(0,232,255,.3);color:var(--white);padding:8px 12px;border-radius:8px;font-family:var(--body);font-size:.85rem;cursor:pointer;outline:none">
-              <option value="add1">Add 1 each time</option>
-              <option value="add2">Add 2 each time</option>
-              <option value="add5">Add 5 each time</option>
-              <option value="add10">Add 10 each time</option>
-              <option value="double">Double each time (×2)</option>
-              <option value="triple">Triple each time (×3)</option>
-            </select>
-          </div>
-          <div style="display:flex;align-items:center;gap:12px">
-            <label style="font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:130px">Steps</label>
-            <input type="range" id="algoSteps" value="6" min="3" max="10" oninput="generatePattern()" style="width:120px;cursor:pointer">
-            <span id="algoStepsVal" style="font-family:monospace;font-size:.8rem;color:var(--muted)">6</span>
-          </div>
-        </div>
-        <div style="background:var(--void);border:1px solid var(--border);border-radius:12px;padding:20px;margin-top:8px">
-          <div style="font-family:var(--display);font-size:.52rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Your Pattern Output:</div>
-          <div id="algoOutput" style="display:flex;gap:8px;flex-wrap:wrap"></div>
-          <div id="algoCode" style="margin-top:16px;font-family:monospace;font-size:.75rem;color:rgba(255,255,255,.4);line-height:1.8"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- QUIZ -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
-      <div class="block-body">
-        <p class="quiz-question">What are the three core parts of every algorithm?</p>
-        <div class="quiz-options" id="quiz4">
-          <div class="quiz-option" onclick="answerQuiz('quiz4','a','b')"><span class="quiz-option-letter">A</span>Variables, functions, and classes</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz4','b','b')"><span class="quiz-option-letter">B</span>Input, process, and output</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz4','c','b')"><span class="quiz-option-letter">C</span>Start, middle, and end</div>
-          <div class="quiz-option" onclick="answerQuiz('quiz4','d','b')"><span class="quiz-option-letter">D</span>Loop, condition, and counter</div>
-        </div>
-        <div class="quiz-result" id="quiz4Result"></div>
-      </div>
-    </div>
-
-    <!-- REFLECT -->
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">↻</div><div class="block-label">Reflect · Final Thought</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">You just built an algorithm that generates patterns using loops. How does understanding patterns and loops change the way you think about how apps and websites work?</p>
-        <textarea class="reflect-input" id="reflect4" placeholder="Now when I use an app, I think..."></textarea>
-        <button class="reflect-submit" onclick="submitReflect('reflect4','reflect4Response','complete4')">Save My Reflection →</button>
-        <div class="reflect-response" id="reflect4Response"></div>
-      </div>
-    </div>
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
-      <div class="block-body">
-        <div class="summary-box">
-          <div class="summary-title">What you learned in Lesson 4</div>
-          <ul class="summary-list">
-            <li>An algorithm has three parts: input, process, and output</li>
-            <li>Loops are at the heart of most algorithms</li>
-            <li>An iteration is one single pass through a loop</li>
-            <li>An accumulator builds up a result across multiple iterations</li>
-            <li>Changing the start, rule, or steps changes the entire pattern</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-
-    <div class="lesson-complete" id="complete4">
-      <div class="complete-icon">🌀</div>
-      <h3 class="complete-title">Loop's World <span>Complete!</span></h3>
-      <p class="complete-desc">You finished all four lessons. You can spot patterns, build sequences, write loops, and construct algorithms. That's real programming thinking — and it will show up in every character world from here.</p>
-      <button class="next-btn" onclick="window.location.href='index.html'">Back to the Universe →</button>
-    </div>
-    <div class="cheat-sheet" id="cheat4">
-      <div class="cheat-sheet-header"><span class="cheat-sheet-title">↻ Lesson 4 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(4)">Download →</button></div>
-      <div class="cheat-body">
-        <div class="cheat-grid">
-          <div class="cheat-item"><div class="cheat-term">Algorithm</div><div class="cheat-def">A step-by-step plan for solving a problem. Input → Process → Output.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Iteration</div><div class="cheat-def">One single pass through a loop. 5 iterations = ran 5 times.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Accumulator</div><div class="cheat-def">A variable that builds up a result across iterations.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Input → Output</div><div class="cheat-def">Change the input, change the output. The algorithm stays the same.</div></div>
-        </div>
-        <div class="cheat-code">let num = 1;<br>for (let i = 0; i &lt; 5; i++) {<br>&nbsp;&nbsp;console.log(num);<br>&nbsp;&nbsp;num = num * 2;<br>}<br><span style="color:rgba(255,255,255,.3)">↻ Output: 1, 2, 4, 8, 16</span></div>
-      </div>
-    </div>
-    </div><!-- end lesson4-content -->
-  </div>
-
-</div>
-
-<!-- AUTH MODAL -->
-<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
-  <div class="auth-modal-box">
-    <button class="auth-close" id="auth-close-btn">&times;</button>
-    <div class="auth-modal-header"><div class="auth-logo-mark">MiM</div><p class="auth-tagline">Create. Don't Consume.</p></div>
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="login">Log In</button>
-      <button class="auth-tab" data-tab="signup">Join the Crew</button>
-    </div>
-    <div id="login-form" class="auth-form active">
-      <div class="auth-field"><label for="login-email">Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" /></div>
-      <div class="auth-field"><label for="login-password">Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" /></div>
-      <p class="auth-error" id="login-error"></p>
-      <button class="auth-submit" id="login-submit-btn">Log In</button>
-      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
-    </div>
-    <div id="signup-form" class="auth-form">
-      <div class="auth-field"><label for="signup-name">Display Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname" /></div>
-      <div class="auth-field"><label for="signup-email">Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email" /></div>
-      <div class="auth-field"><label for="signup-password">Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password" /></div>
-      <p class="auth-error" id="signup-error"></p>
-      <button class="auth-submit" id="signup-submit-btn">Create Account</button>
-      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
     </div>
   </div>
 </div>
 
-<style>
-.auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
-.auth-modal-box{background:#0a0a1a;border:1px solid rgba(0,240,255,.2);border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:420px;position:relative;box-shadow:0 0 60px rgba(0,240,255,.08)}
-.auth-close{position:absolute;top:1rem;right:1.25rem;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.5rem;cursor:pointer;line-height:1}
-.auth-close:hover{color:#fff}
-.auth-modal-header{text-align:center;margin-bottom:1.75rem}
-.auth-logo-mark{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(135deg,#00f0ff,#ff6ec7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.25rem}
-.auth-tagline{font-family:'Syne',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin:0}
-.auth-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.75rem}
-.auth-tab{flex:1;background:none;border:none;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 0;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
-.auth-tab.active{color:#00f0ff;border-bottom-color:#00f0ff}
-.auth-form{display:none}
-.auth-form.active{display:block}
-.auth-field{margin-bottom:1.1rem}
-.auth-field label{display:block;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.4rem}
-.auth-field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.7rem .9rem;color:#fff;font-family:'Syne',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s;box-sizing:border-box}
-.auth-field input:focus{border-color:rgba(0,240,255,.5)}
-.auth-field input::placeholder{color:rgba(255,255,255,.2)}
-.auth-error{font-family:'Syne',sans-serif;font-size:.78rem;color:#ff6ec7;min-height:1.2em;margin:.25rem 0 .75rem}
-.auth-submit{width:100%;background:linear-gradient(135deg,#00f0ff,#7b61ff);border:none;border-radius:8px;padding:.85rem;color:#000;font-family:'Orbitron',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:opacity .2s,transform .15s;margin-bottom:1rem}
-.auth-submit:hover{opacity:.9;transform:translateY(-1px)}
-.auth-switch{text-align:center;font-family:'Syne',sans-serif;font-size:.78rem;color:rgba(255,255,255,.35);margin:0}
-.auth-link{background:none;border:none;color:#00f0ff;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
-.auth-link:hover{color:#fff}
-</style>
+<!-- ===================== LESSON 3 ===================== -->
+<div class="lesson-panel" id="lesson-3">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 03</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'cheat')" id="sb-3-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="loop-game.html" class="sidebar-game-link">⚡ Loop's Game World</a>
+  </aside>
+  <div class="lesson-content" id="lesson-3-content">
+    <div class="locked-panel" id="lock-3">
+      <div class="locked-icon">🔒</div>
+      <h2>Builders Membership Required</h2>
+      <p>Lesson 3 is available to Builders members and above.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
 
-<script>
-// FLOW TEXT
-const phrases=['FIND THE PATTERN','FOLLOW THE FLOW','REPEAT · REFINE','↻ ITERATE','SEQUENCE LOCKED IN'];
-let pIdx=0,cIdx=0,deleting=false;
-function flowType(){const el=document.getElementById('flowText');const p=phrases[pIdx];if(!deleting){el.textContent=p.slice(0,cIdx+1);cIdx++;if(cIdx===p.length){setTimeout(()=>{deleting=true;flowType()},2200);return;}}else{el.textContent=p.slice(0,cIdx-1);cIdx--;if(cIdx===0){deleting=false;pIdx=(pIdx+1)%phrases.length;}}setTimeout(flowType,deleting?55:105);}
-flowType();
+    <!-- READ -->
+    <div class="content-block" id="block-3-read" style="display:none">
+      <div class="section-header">Conditionals &amp; Flow Control</div>
+      <div class="section-sub">LESSON 03 · BUILDERS+</div>
 
-// LOOP SOUND
-let audioCtx=null,lastPlay=0;
-function getAudio(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
-function playLoopSound(){const now=Date.now();if(now-lastPlay<2000)return;lastPlay=now;try{const ac=getAudio();[523.2,523.2,659.3,523.2].forEach((f,i)=>{const o=ac.createOscillator(),g=ac.createGain();o.connect(g);g.connect(ac.destination);o.type='triangle';o.frequency.value=f;const t=ac.currentTime+i*.15;g.gain.setValueAtTime(0,t);g.gain.linearRampToValueAtTime(.07,t+.04);g.gain.exponentialRampToValueAtTime(.001,t+.22);o.start(t);o.stop(t+.22);});}catch(e){}}
-document.getElementById('loopChar').addEventListener('mouseenter',playLoopSound);
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>Making Decisions in Code</h3>
+        <p>Code doesn't just run in a straight line. Sometimes you need it to <strong>make a choice</strong>. An <code>if</code> statement checks whether something is true, and only runs a block of code if it is.</p>
+        <div class="code-block"><span class="kw">if</span> (temperature > <span class="num">80</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Wear sunscreen!"</span>);
+}</div>
+      </div>
 
-// REVEAL
-const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target)}});},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>if / else</h3>
+        <p>Add an <code>else</code> block to handle the case when the condition is <strong>false</strong>. Now your code has two possible paths — it picks one depending on the situation.</p>
+        <div class="code-block"><span class="kw">if</span> (score >= <span class="num">70</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"You passed!"</span>);
+} <span class="kw">else</span> {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Try again."</span>);
+}</div>
+      </div>
 
-// PROGRESS
-function updateProgress(n){for(let i=1;i<=n;i++){const dot=document.getElementById('dot'+i);const lbl=document.getElementById('lbl'+i);if(i<n){dot.classList.add('done');dot.textContent='↻';}else dot.classList.add('active');if(lbl)lbl.classList.add('active');if(i<4){const line=document.getElementById('line'+i);if(line&&i<n)line.classList.add('done');}}}
-updateProgress(1);
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>else if — More Than Two Paths</h3>
+        <p>Use <code>else if</code> to add more branches. Code checks each condition <strong>in order</strong> and runs the first block where the condition is true. If nothing matches, the final <code>else</code> runs (if you have one).</p>
+        <div class="code-block"><span class="kw">if</span> (score >= <span class="num">90</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"A"</span>);
+} <span class="kw">else if</span> (score >= <span class="num">80</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"B"</span>);
+} <span class="kw">else if</span> (score >= <span class="num">70</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"C"</span>);
+} <span class="kw">else</span> {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Below passing"</span>);
+}</div>
+      </div>
 
-function scrollToLesson(id){document.getElementById(id).scrollIntoView({behavior:'smooth',block:'start'});}
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>Conditionals Inside Loops</h3>
+        <p>You can put an <code>if</code> statement <strong>inside a loop</strong>. This lets you check a condition on every item as the loop runs — filtering, sorting, or responding differently to different values.</p>
+        <div class="code-block"><span class="kw">let</span> scores = [<span class="num">82</span>, <span class="num">55</span>, <span class="num">91</span>, <span class="num">68</span>];
 
-// MODAL
-function openModal(tab){document.getElementById('auth-modal').style.display='flex';document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');document.getElementById(tab+'-form').classList.add('active');}
-document.querySelectorAll('.auth-tab').forEach(tab=>{tab.addEventListener('click',()=>openModal(tab.dataset.tab));});
-document.querySelectorAll('.auth-link').forEach(link=>{link.addEventListener('click',()=>openModal(link.dataset.tab));});
-document.getElementById('auth-close-btn').addEventListener('click',()=>document.getElementById('auth-modal').style.display='none');
-document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').style.display='none';});
-
-function goUpgrade(){const u=document.getElementById('nav-user-menu');if(u&&u.style.display!=='none')window.location.href='membership.html';else openModal('signup');}
-
-// CODE DEMO L2
-function runCode2(){['c2l1','c2l2','c2l3','c2l4','c2l5','c2l6','c2l7','c2l8','c2l9'].forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('visible'),i*280));setTimeout(()=>document.getElementById('output2').classList.add('show'),9*280+200);}
-
-// PATTERN ACTIVITIES
-function checkPattern(num,chosen,correct){
-  const blank=document.getElementById('patBlank'+num);
-  const res=document.getElementById('pat'+num+'Result');
-  if(chosen===correct){blank.textContent=chosen;blank.classList.remove('blank');blank.classList.add('filled');res.className='activity-result show correct';res.innerHTML='↻ Correct! You found the rule.';}
-  else{blank.classList.add('wrong');blank.textContent='?';setTimeout(()=>blank.classList.remove('wrong'),600);res.className='activity-result show wrong';res.innerHTML='Not quite — look at the gap between each number. What rule connects them?';}
-}
-
-// SEQUENCE ACTIVITY
-const seqAnswers=[5,2,3,4,1]; // correct order for each step
-const userSeq=[null,null,null,null,null];
-function assignSeq(stepIdx,orderNum){
-  userSeq[stepIdx]=orderNum;
-  document.getElementById('sn'+(stepIdx+1)).textContent=orderNum;
-  document.getElementById('sn'+(stepIdx+1)).style.background='rgba(0,232,255,.2)';
-  document.getElementById('sn'+(stepIdx+1)).style.borderColor='var(--char)';
-}
-function checkSequence(){
-  const correct=[2,5,4,3,1]; // log in, open app, select photo, write caption, post
-  const res=document.getElementById('seq2Result');
-  const isCorrect=userSeq.every((v,i)=>v===correct[i]);
-  if(userSeq.includes(null)){res.className='activity-result show wrong';res.innerHTML='Assign a step number to each action first.';return;}
-  res.className='activity-result show '+(isCorrect?'correct':'wrong');
-  res.innerHTML=isCorrect?'↻ Perfect sequence! Log in → Open app → Select photo → Write caption → Post.':'Not quite. Think about what has to happen before each step can work. What\'s the first dependency?';
-}
-
-// LOOP VISUALIZER
-let loopRunning=false;
-function runLoopViz(){
-  if(loopRunning)return;loopRunning=true;
-  const bubbles=[1,2,3,4,5];
-  const status=document.getElementById('loopStatus');
-  bubbles.forEach((_,i)=>{
-    setTimeout(()=>{
-      if(i>0)document.getElementById('lb'+i).classList.replace('active','done');
-      document.getElementById('lb'+(i+1)).classList.add('active');
-      status.textContent='Running iteration '+(i+1)+' of 5...';
-      status.style.color='var(--char)';
-      if(i===4){setTimeout(()=>{document.getElementById('lb5').classList.replace('active','done');status.textContent='↻ Loop complete! Ran 5 times.';status.style.color='#a2ff32';document.getElementById('output3').classList.add('show');loopRunning=false;},600);}
-    },i*700);
-  });
-}
-
-// LOOP BUILD
-function checkLoopBuild(){
-  const start=parseInt(document.getElementById('loopStart').value);
-  const end=parseInt(document.getElementById('loopEnd').value);
-  const res=document.getElementById('loop3Result');
-  if(start===1&&end===4){res.className='activity-result show correct';res.innerHTML='↻ Perfect! Your loop starts at 1, runs while i ≤ 4, and counts: 1, 2, 3, 4.';}
-  else if(start>=end){res.className='activity-result show wrong';res.innerHTML='The start value must be less than the end value, or the loop will never run.';}
-  else{res.className='activity-result show correct';res.innerHTML=`↻ Loop runs! Counts from ${start} to ${end}: ${Array.from({length:end-start+1},(_,i)=>start+i).join(', ')}.`;}
-}
-
-// PATTERN ALGORITHM
-function generatePattern(){
-  const start=parseInt(document.getElementById('algoStart').value)||1;
-  const rule=document.getElementById('algoRule').value;
-  const steps=parseInt(document.getElementById('algoSteps').value);
-  document.getElementById('algoStepsVal').textContent=steps;
-  const vals=[start];
-  for(let i=1;i<steps;i++){
-    const prev=vals[vals.length-1];
-    if(rule==='add1')vals.push(prev+1);
-    else if(rule==='add2')vals.push(prev+2);
-    else if(rule==='add5')vals.push(prev+5);
-    else if(rule==='add10')vals.push(prev+10);
-    else if(rule==='double')vals.push(prev*2);
-    else if(rule==='triple')vals.push(prev*3);
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; scores.length; i++) {
+  <span class="kw">if</span> (scores[i] >= <span class="num">70</span>) {
+    <span class="fn">console</span>.<span class="fn">log</span>(scores[i] + <span class="str">": Pass"</span>);
+  } <span class="kw">else</span> {
+    <span class="fn">console</span>.<span class="fn">log</span>(scores[i] + <span class="str">": Fail"</span>);
   }
-  const out=document.getElementById('algoOutput');
-  out.innerHTML=vals.map(v=>`<div style="padding:8px 14px;background:rgba(0,232,255,.08);border:1px solid rgba(0,232,255,.2);border-radius:8px;font-family:var(--display);font-size:.7rem;color:var(--char)">${v}</div>`).join('<span style="color:rgba(0,232,255,.3);align-self:center;font-size:.8rem">→</span>');
-  const ruleText={add1:'+1',add2:'+2',add5:'+5',add10:'+10',double:'×2',triple:'×3'}[rule];
-  document.getElementById('algoCode').innerHTML=`<span style="color:#c66bff">let</span> num = ${start};<br><span style="color:#c66bff">for</span> (<span style="color:#c66bff">let</span> i = 0; i &lt; ${steps}; i++) {<br>&nbsp;&nbsp;<span style="color:#6bb5ff">console</span>.log(num);<br>&nbsp;&nbsp;num = num ${ruleText};<br>}`;
-}
-generatePattern();
+}</div>
+      </div>
 
-// QUIZ
-function answerQuiz(quizId,chosen,correct){
-  const opts=document.querySelectorAll('#'+quizId+' .quiz-option');
-  opts.forEach(o=>o.style.pointerEvents='none');
-  const letters=['a','b','c','d'];
-  opts[letters.indexOf(chosen)].classList.add(chosen===correct?'correct':'wrong');
-  if(chosen!==correct&&letters.indexOf(correct)<opts.length)opts[letters.indexOf(correct)].classList.add('correct');
-  const res=document.getElementById(quizId+'Result');
-  if(res){res.className='quiz-result show '+(chosen===correct?'correct':'wrong');res.innerHTML=chosen===correct?'↻ Correct!':'Not quite — the correct answer is highlighted.';}
-}
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>Comparison Operators</h3>
+        <p>Conditions use <strong>comparison operators</strong> to evaluate relationships. These are the building blocks of every decision in your code.</p>
+        <div class="code-block"><span class="kw">===</span>  <span class="cm">// strictly equal</span>
+<span class="kw">!==</span>  <span class="cm">// not equal</span>
+<span class="kw">&gt;</span>    <span class="cm">// greater than</span>
+<span class="kw">&lt;</span>    <span class="cm">// less than</span>
+<span class="kw">&gt;=</span>   <span class="cm">// greater than or equal</span>
+<span class="kw">&lt;=</span>   <span class="cm">// less than or equal</span></div>
+      </div>
+    </div>
 
-// REFLECT
-function submitReflect(inputId,responseId,completeId){
-  const val=document.getElementById(inputId).value.trim();
-  if(!val)return;
-  const res=document.getElementById(responseId);
-  res.className='reflect-response show';
-  const responses={
-    reflect1:'↻ "'+val+'" — Loop says: once you see a pattern, you can build a system around it.',
-    reflect2:'↻ "'+val+'" — Dependencies are the hidden logic behind every sequence. Now you see them.',
-    reflect3:'↻ "'+val+'" — Everything that repeats has a condition that ends it. Even seasons.',
-    reflect4:'↻ "'+val+'" — That\'s systems thinking. Every feed, every list, every gallery — loops. All the way down.'
-  };
-  res.innerHTML=responses[inputId]||'↻ "'+val+'" — Saved.';
-  setTimeout(()=>{
-    const complete=document.getElementById(completeId);
-    complete.classList.add('show');
-    const num=completeId.replace('complete','');
-    const cheat=document.getElementById('cheat'+num);
-    if(cheat)cheat.classList.add('unlocked');
-    updateProgress(parseInt(num));
-    if(num==='1'){const upsell=document.getElementById('trialUpsell');if(upsell){upsell.style.display='block';setTimeout(()=>upsell.scrollIntoView({behavior:'smooth',block:'center'}),400);}}
-  },600);
-}
+    <!-- TERMS -->
+    <div class="content-block" id="block-3-terms" style="display:none">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Conditional <span class="term-arrow">›</span></div>
+          <div class="term-def">A statement that only runs if a condition is true. The most common is <code>if</code>.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">if statement <span class="term-arrow">›</span></div>
+          <div class="term-def">Checks a condition. If it's true, runs the block of code inside the curly braces. If false, skips it.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">else <span class="term-arrow">›</span></div>
+          <div class="term-def">The block that runs when the if condition is false. Gives code a second path to follow.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">else if <span class="term-arrow">›</span></div>
+          <div class="term-def">Adds more branches between if and else. Each one is checked in order until one is true.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Boolean <span class="term-arrow">›</span></div>
+          <div class="term-def">A value that is either <code>true</code> or <code>false</code>. Conditions always evaluate to a boolean.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">=== vs == <span class="term-arrow">›</span></div>
+          <div class="term-def"><code>===</code> checks value AND type (recommended). <code>==</code> only checks value and can cause unexpected results. Always use <code>===</code>.</div>
+        </div>
+      </div>
+    </div>
 
-// CHEAT SHEET DOWNLOAD
-function downloadCheat(num){
-  const content={
-    2:`LOOP'S WORLD — CHEAT SHEET\nLesson 2 — Sequences & Order\n\nSEQUENCE\nSteps that must happen in a specific order for the right result.\n\nDEPENDENCY\nWhen one step requires a previous step to have already happened.\n\nORDER OF OPERATIONS\nThe rule for which step happens first when multiple steps compete.\n\nSTEP\nOne single instruction. Does one thing. Sets up the next.\n\nopen → read → close\n↻ Each step depends on the one before it`,
-    3:`LOOP'S WORLD — CHEAT SHEET\nLesson 3 — Loops in Code\n\nLOOP\nCode that repeats until the condition becomes false.\n\nFOR LOOP\nfor (start; condition; update) { code to repeat }\n\nCOUNTER (i)\nTracks how many times the loop has run. Usually i.\n\nINFINITE LOOP\nCondition never becomes false. Runs forever. Usually a bug.\n\nfor (let i = 1; i <= 5; i++) {\n  console.log("Loop #" + i);\n}\n↻ Runs 5 times: i = 1, 2, 3, 4, 5`,
-    4:`LOOP'S WORLD — CHEAT SHEET\nLesson 4 — Pattern Algorithm\n\nALGORITHM\nA step-by-step plan for solving a problem. Input → Process → Output.\n\nITERATION\nOne single pass through a loop. 5 iterations = ran 5 times.\n\nACCUMULATOR\nA variable that builds up a result across iterations.\n\nINPUT → OUTPUT\nChange the input, change the output. The algorithm stays the same.\n\nlet num = 1;\nfor (let i = 0; i < 5; i++) {\n  console.log(num);\n  num = num * 2;\n}\n↻ Output: 1, 2, 4, 8, 16`
-  };
-  if(!content[num])return;
-  const blob=new Blob([content[num]],{type:'text/plain'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
-  a.href=url;a.download=`loop-cheatsheet-lesson${num}.txt`;
-  document.body.appendChild(a);a.click();
-  document.body.removeChild(a);URL.revokeObjectURL(url);
-}
+    <!-- BUILD -->
+    <div class="content-block" id="block-3-build" style="display:none">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 03 · GRADE THE CREW</div>
+      <div class="build-section">
+        <h3>Score Classifier</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">Loop through the scores array and print a grade (A/B/C/Fail) for each one. The grading scale is already in the comments.</p>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span>JAVASCRIPT · CONDITIONALS</span>
+            <button class="editor-run-btn" onclick="runEditor('l3')">▶ RUN</button>
+          </div>
+          <textarea class="code-editor" id="editor-l3">let scores = [95, 82, 74, 58, 88];
+// A = 90+, B = 80+, C = 70+, Fail = below 70
 
-// TIER UNLOCK
-window.handleTierUnlock=function(tier){
-  const t=(tier||'').toLowerCase();
-  const gate1=document.getElementById('lesson1-gate');
-  const content1=document.getElementById('lesson1-content');
-  const teaser1=document.getElementById('lesson1-teaser');
-  if(gate1)gate1.style.display='none';
-  if(content1)content1.style.display='block';
-  if(teaser1)teaser1.style.display='none';
-  if(!t||t==='none')return;
-  if(['sparks','builders','coders'].includes(t)){document.getElementById('lesson2-gate').style.display='none';document.getElementById('lesson2-content').style.display='block';}
-  if(['builders','coders'].includes(t)){document.getElementById('lesson3-gate').style.display='none';document.getElementById('lesson3-content').style.display='block';}
-  if(t==='coders'){document.getElementById('lesson4-gate').style.display='none';document.getElementById('lesson4-content').style.display='block';}
-};
-</script>
+for (let i = 0; i < scores.length; i++) {
+  // Write your if / else if / else here
+  console.log(scores[i]);
+}</textarea>
+        </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l3">Output will appear here...</div>
+      </div>
+
+      <br>
+
+      <div class="quiz-card">
+        <div class="quiz-q">What does <code>===</code> check that <code>==</code> does not?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Neither operator checks spelling.')">Spelling of the value</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. === checks that both the value and the type match. 5 === "5" is false because one is a number and one is a string.')">Both the value and the data type</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, '== and === both compare values. The difference is type checking.')">Which variable was declared first</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-4"></div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-q">If multiple <code>else if</code> conditions are true, which one runs?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Right. JavaScript checks conditions top to bottom and runs the first one that is true, then skips the rest.')">The first one that is true</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'All true conditions do not run — only the first match.')">All of them</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The last true condition does not win — the first match does.')">The last one that is true</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-5"></div>
+      </div>
+    </div>
+
+    <!-- REFLECT -->
+    <div class="content-block" id="block-3-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Think of a decision you make every day. How would you write it as an if / else if / else chain in code?</div>
+        <textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
+          <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">What could go wrong if conditions are checked in the wrong order in an else if chain? Can you think of an example?</div>
+        <textarea class="reflect-input" id="ref-3-2" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-3-2','saved-3-2')">Save</button>
+          <span class="reflect-saved" id="saved-3-2">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete">
+        <h3>∞ &nbsp; Lesson 3 Complete</h3>
+        <p>Conditionals unlocked. Code now makes decisions. That changes everything.</p>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="content-block" id="block-3-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 03 · CONDITIONALS</div>
+      <div class="cheat-card">
+        <h3>∞ Lesson 3 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item">
+            <div class="cheat-term">if</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">if (condition) { }</code> — runs only when true</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">else</div>
+            <div class="cheat-desc">Runs when all if / else if conditions are false</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">else if</div>
+            <div class="cheat-desc">Adds a branch — checked in order, first true match wins</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">=== (strict equal)</div>
+            <div class="cheat-desc">Checks value AND type — always prefer over ==</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Boolean</div>
+            <div class="cheat-desc">A condition always evaluates to true or false</div>
+          </div>
+        </div>
+        <a href="loop-cheat-3.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 4 ===================== -->
+<div class="lesson-panel" id="lesson-4">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 04</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'cheat')" id="sb-4-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="loop-game.html" class="sidebar-game-link">⚡ Loop's Game World</a>
+  </aside>
+  <div class="lesson-content" id="lesson-4-content">
+    <div class="locked-panel" id="lock-4">
+      <div class="locked-icon">🔒</div>
+      <h2>Coders Membership Required</h2>
+      <p>Lesson 4 is available to Coders members only.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+
+    <!-- READ -->
+    <div class="content-block" id="block-4-read" style="display:none">
+      <div class="section-header">Flow Challenge</div>
+      <div class="section-sub">LESSON 04 · CODERS</div>
+
+      <div class="read-card">
+        <div class="read-card-num">01 / 04</div>
+        <h3>Putting It All Together</h3>
+        <p>You know sequences, loops, and conditionals. Now it's time to <strong>combine them</strong>. Real programs aren't one concept at a time — they layer loops inside loops, conditions inside loops, and conditions that decide whether a loop even runs.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">02 / 04</div>
+        <h3>While Loops</h3>
+        <p>A <strong>while loop</strong> keeps running as long as a condition stays true. Unlike a for loop, there's no built-in counter — you manage it yourself. Use while loops when you don't know exactly how many times the loop needs to run.</p>
+        <div class="code-block"><span class="kw">let</span> energy = <span class="num">10</span>;
+
+<span class="kw">while</span> (energy > <span class="num">0</span>) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Energy: "</span> + energy);
+  energy -= <span class="num">3</span>; <span class="cm">// decrease by 3 each time</span>
+}</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">03 / 04</div>
+        <h3>Nested Loops</h3>
+        <p>A loop inside another loop is called a <strong>nested loop</strong>. The inner loop runs all the way through for every single step of the outer loop. This is how you work with grids, tables, and multi-dimensional data.</p>
+        <div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> row = <span class="num">1</span>; row &lt;= <span class="num">3</span>; row++) {
+  <span class="kw">for</span> (<span class="kw">let</span> col = <span class="num">1</span>; col &lt;= <span class="num">3</span>; col++) {
+    <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Row "</span> + row + <span class="str">" Col "</span> + col);
+  }
+}</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">04 / 04</div>
+        <h3>break and continue</h3>
+        <p><strong>break</strong> exits a loop immediately. <strong>continue</strong> skips the rest of the current iteration and moves to the next one. These give you precise control inside loops — stop when you find what you're looking for, or skip items that don't qualify.</p>
+        <div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">10</span>; i++) {
+  <span class="kw">if</span> (i === <span class="num">5</span>) <span class="kw">break</span>;    <span class="cm">// stop at 5</span>
+  <span class="kw">if</span> (i % <span class="num">2</span> === <span class="num">0</span>) <span class="kw">continue</span>; <span class="cm">// skip even numbers</span>
+  <span class="fn">console</span>.<span class="fn">log</span>(i); <span class="cm">// prints: 1, 3</span>
+}</div>
+      </div>
+    </div>
+
+    <!-- BUILD -->
+    <div class="content-block" id="block-4-build" style="display:none">
+      <div class="section-header">Flow Challenge</div>
+      <div class="section-sub">LESSON 04 · BUILD THE FLOW</div>
+
+      <div class="build-section">
+        <h3>The Multiplication Grid</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">Use a nested for loop to print a 3x3 multiplication grid. For each row and column, print <code>row × col = result</code>.</p>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span>JAVASCRIPT · NESTED LOOPS</span>
+            <button class="editor-run-btn" onclick="runEditor('l4a')">▶ RUN</button>
+          </div>
+          <textarea class="code-editor" id="editor-l4a">// Build a 3x3 multiplication grid
+// Hint: use two for loops, one inside the other
+
+for (let row = 1; row <= 3; row++) {
+  // Add the inner loop here
+}</textarea>
+        </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l4a">Output will appear here...</div>
+      </div>
+
+      <br>
+
+      <div class="build-section">
+        <h3>Number Filter</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">Loop through numbers 1–20. Use <code>continue</code> to skip even numbers. Use <code>break</code> to stop when you hit a number divisible by 7.</p>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span>JAVASCRIPT · break &amp; continue</span>
+            <button class="editor-run-btn" onclick="runEditor('l4b')">▶ RUN</button>
+          </div>
+          <textarea class="code-editor" id="editor-l4b">for (let i = 1; i <= 20; i++) {
+  // Skip even numbers with continue
+  // Stop at multiples of 7 with break
+  console.log(i);
+}</textarea>
+        </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l4b">Output will appear here...</div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-q">What is the difference between <code>break</code> and <code>continue</code>?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Both are used inside loops — they\'re not limited to conditionals.')">break is for conditionals, continue is for loops</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. break exits the loop entirely. continue skips the rest of the current iteration and moves to the next one.')">break exits the loop; continue skips to the next iteration</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'They have different effects — break exits and continue skips forward.')">They do the same thing</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-6"></div>
+      </div>
+    </div>
+
+    <!-- REFLECT -->
+    <div class="content-block" id="block-4-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 04 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">When would you choose a while loop over a for loop? Describe a situation where you don't know how many times something will repeat.</div>
+        <textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
+          <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">You've now learned sequences, loops, and conditionals. How do these three ideas work together? What can you build with all three?</div>
+        <textarea class="reflect-input" id="ref-4-2" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-4-2','saved-4-2')">Save</button>
+          <span class="reflect-saved" id="saved-4-2">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete">
+        <h3>∞ &nbsp; Flow Challenge Complete</h3>
+        <p>Sequences. Loops. Conditionals. Nested logic. You think in flow now. That's the Loop way.</p>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="content-block" id="block-4-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 04 · FLOW CONTROL</div>
+      <div class="cheat-card">
+        <h3>∞ Lesson 4 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item">
+            <div class="cheat-term">while loop</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">while (condition) { }</code> — runs until condition is false</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Nested loop</div>
+            <div class="cheat-desc">A loop inside another loop — inner loop completes fully for each outer iteration</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">break</div>
+            <div class="cheat-desc">Exits the loop immediately</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">continue</div>
+            <div class="cheat-desc">Skips the rest of the current iteration, moves to the next</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">i % 2 === 0</div>
+            <div class="cheat-desc">Checks if a number is even using the modulo (remainder) operator</div>
+          </div>
+        </div>
+        <a href="loop-cheat-4.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ==================== FIREBASE + SCRIPTS ==================== -->
 <script type="module" src="auth-init.js"></script>
+<script>
+  // ── GLOBALS ──
+  let currentLesson = null;
+  let currentTier = null;
+  const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
+
+  function tierLevel(t) {
+    return TIER_ORDER.indexOf((t || '').toLowerCase());
+  }
+
+  // ── CALLED BY auth-init.js ──
+  window.setNavUser = function(email) {
+    const u = document.getElementById('navUser');
+    const b = document.getElementById('navLogout');
+    if (u) { u.textContent = email; u.style.display = 'inline'; }
+    if (b) b.style.display = 'inline-block';
+  };
+
+  window.handleTierUnlock = function(tier) {
+    currentTier = tier;
+    const lvl = tierLevel(tier);
+
+    // L2: sparks+
+    if (lvl >= tierLevel('sparks')) {
+      const lock2 = document.getElementById('lock-2');
+      if (lock2) lock2.style.display = 'none';
+      ['read','terms','build','reflect','cheat'].forEach(b => {
+        const el = document.getElementById('block-2-' + b);
+        if (el) el.style.removeProperty('display');
+      });
+    }
+    // L3: builders+
+    if (lvl >= tierLevel('builders')) {
+      const lock3 = document.getElementById('lock-3');
+      if (lock3) lock3.style.display = 'none';
+      ['read','terms','build','reflect','cheat'].forEach(b => {
+        const el = document.getElementById('block-3-' + b);
+        if (el) el.style.removeProperty('display');
+      });
+    }
+    // L4: coders
+    if (lvl >= tierLevel('coders')) {
+      const lock4 = document.getElementById('lock-4');
+      if (lock4) lock4.style.display = 'none';
+      ['read','build','reflect','cheat'].forEach(b => {
+        const el = document.getElementById('block-4-' + b);
+        if (el) el.style.removeProperty('display');
+      });
+    }
+
+    openLesson(1);
+    showBlock(1, 'read');
+    loadReflects();
+  };
+
+  // ── OVERLAY ──
+  function enterLab() {
+    document.getElementById('discoveryOverlay').classList.add('hidden');
+    openLesson(1);
+    showBlock(1, 'read');
+  }
+
+  // ── LESSON OPEN (always opens, never toggles) ──
+  function openLesson(n) {
+    document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+    document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+    const panel = document.getElementById('lesson-' + n);
+    const tab = document.getElementById('tab-' + n);
+    if (panel) panel.classList.add('open');
+    if (tab) tab.classList.add('active');
+    currentLesson = n;
+    panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // ── TOGGLE (for future accordion-style use if needed) ──
+  function toggleLesson(n) {
+    const panel = document.getElementById('lesson-' + n);
+    if (panel && panel.classList.contains('open')) {
+      panel.classList.remove('open');
+      document.getElementById('tab-' + n)?.classList.remove('active');
+      currentLesson = null;
+    } else {
+      openLesson(n);
+    }
+  }
+
+  // ── HERO TILE CLICK ──
+  function jumpToLesson(n) {
+    openLesson(n);
+    showBlock(n, 'read');
+  }
+
+  // ── SIDEBAR BLOCK SWITCHER ──
+  function showBlock(lesson, block) {
+    const panel = document.getElementById('lesson-' + lesson);
+    if (!panel) return;
+    panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+    panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+    const target = document.getElementById('block-' + lesson + '-' + block);
+    if (target) target.classList.add('active');
+    const btn = document.getElementById('sb-' + lesson + '-' + block);
+    if (btn) btn.classList.add('active');
+  }
+
+  // ── TERMS TOGGLE ──
+  function toggleTerm(card) {
+    card.classList.toggle('open');
+  }
+
+  // ── QUIZ ──
+  let quizCounter = 0;
+  function checkQuiz(btn, correct, feedback) {
+    const opts = btn.closest('.quiz-options');
+    if (opts.querySelector('.correct')) return;
+    const idx = quizCounter++;
+    const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+    if (correct) {
+      btn.classList.add('correct');
+      if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
+    } else {
+      btn.classList.add('wrong');
+      if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
+      setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
+    }
+  }
+
+  // ── REFLECT SAVE ──
+  function saveReflect(inputId, savedId) {
+    const val = document.getElementById(inputId)?.value;
+    if (val !== undefined) {
+      localStorage.setItem('loop_' + inputId, val);
+      const saved = document.getElementById(savedId);
+      if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
+    }
+  }
+
+  function loadReflects() {
+    document.querySelectorAll('.reflect-input').forEach(el => {
+      const stored = localStorage.getItem('loop_' + el.id);
+      if (stored) el.value = stored;
+    });
+  }
+
+  // ── CODE EDITORS ──
+  function runEditor(id) {
+    const code = document.getElementById('editor-' + id)?.value || '';
+    const outputEl = document.getElementById('output-' + id);
+    if (!outputEl) return;
+    const logs = [];
+    const fakeCon = { log: (...a) => logs.push(a.join(' ')) };
+    try {
+      const fn = new Function('console', code);
+      fn(fakeCon);
+      outputEl.textContent = logs.join('\n') || '(no output)';
+      outputEl.style.color = '#00f5d4';
+    } catch(e) {
+      outputEl.textContent = 'Error: ' + e.message;
+      outputEl.style.color = '#ff6b6b';
+    }
+  }
+
+  // ── LOGOUT ──
+  function handleLogout() {
+    if (window.firebaseAuth) {
+      window.firebaseAuth.signOut().then(() => location.reload());
+    }
+  }
+
+  function goUpgrade() {
+    if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+      window.location.href = 'membership.html';
+    } else {
+      document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
+    }
+  }
+
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', () => {
+    openLesson(1);
+    showBlock(1, 'read');
+    loadReflects();
+  });
+</script>
 </body>
 </html>
