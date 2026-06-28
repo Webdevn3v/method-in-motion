@@ -453,7 +453,7 @@
 </div>
 
 <!-- ── CENTER FACE POP ── -->
-<img id="facePop" src="byte-pose.png" alt="" />
+<img id="facePop" src="byte-happy.png" alt="" />
 
 <!-- ── BANNERS ── -->
 <div id="comboBanner"></div>
@@ -586,7 +586,7 @@ function doSpawn(type, arena) {
       updateHUD();
       if (combo >= 3) showComboBanner('x' + combo + ' COMBO!');
       if (combo >= 5) showFace('victory');
-      else showFace('pose');
+      else showFace('happy');
       checkLevel();
       if (catchesSinceQ >= 3 && !activeQuestion) { catchesSinceQ = 0; showQuestion(); }
     } else {
@@ -623,9 +623,9 @@ function loseLife() {
 
 // ── FACE POP ──
 function showFace(expr) {
-  const map = { pose:'byte-pose.png', victory:'byte-victory.png', scared:'byte-scared.png' };
+  const map = { happy:'byte-happy.png', victory:'byte-victory.png', scared:'byte-scared.png' };
   const img = document.getElementById('facePop');
-  img.src = map[expr] || 'byte-pose.png';
+  img.src = map[expr] || 'byte-happy.png';
   img.classList.add('show');
   clearTimeout(facepopTimer);
   facepopTimer = setTimeout(() => img.classList.remove('show'), 900);
