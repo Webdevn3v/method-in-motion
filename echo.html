@@ -1,552 +1,1956 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Echo's Signal Studio | Method in Motion</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --cyan: #00e5ff;
+      --cyan-dim: #00b8d4;
+      --blue: #448aff;
+      --blue-dim: #2962ff;
+      --purple: #7c4dff;
+      --bg: #04060f;
+      --bg-mid: #080d1e;
+      --bg-card: #0b1228;
+      --bg-panel: #060a18;
+      --text: #e0f0ff;
+      --text-dim: #7ba7cc;
+      --text-muted: #3a5a7a;
+      --border: rgba(0, 229, 255, 0.15);
+      --border-bright: rgba(0, 229, 255, 0.4);
+      --glow: 0 0 18px rgba(0, 229, 255, 0.3);
+      --glow-strong: 0 0 36px rgba(0, 229, 255, 0.55);
+      --font-display: 'Orbitron', monospace;
+      --font-body: 'Space Grotesk', sans-serif;
+      --font-mono: 'Space Mono', monospace;
+    }
 
-  gtag('config', 'G-DJ3Q488K7W');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Echo's World — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{--void:#050508;--deep:#080b14;--navy:#0d1020;--card:#0f1525;--border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);--white:#ffffff;--off:#c8cce0;--muted:#5a6080;--char:#00e8ff;--char2:#6bb5ff;--char3:#c66bff;--grad:linear-gradient(135deg,#00e8ff,#c66bff);--display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7}
-a{color:inherit;text-decoration:none}img{display:block;max-width:100%}
+    * { box-sizing: border-box; margin: 0; padding: 0; }
 
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.9);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em}
-.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
-.nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);transition:color .2s}
-.nav-back:hover{color:var(--char)}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(0,232,255,.4);color:var(--char);border-radius:100px}
-#nav-user-menu{display:none;align-items:center;gap:12px}
-#nav-user-name{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.14em;color:rgba(255,255,255,.6)}
-#nav-logout-btn{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:8px 16px;border:1px solid rgba(255,255,255,.2);background:none;color:rgba(255,255,255,.5);border-radius:100px;cursor:pointer;transition:border-color .2s,color .2s}
-#nav-logout-btn:hover{border-color:rgba(0,232,255,.5);color:var(--char)}
-#nav-login{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(0,232,255,.4);color:var(--char);padding:6px 14px;border-radius:20px;cursor:pointer;transition:background .2s}
-#nav-login:hover{background:rgba(0,232,255,.1)}
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-.hero{min-height:100vh;display:flex;align-items:center;padding:120px 48px 80px;position:relative;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:radial-gradient(ellipse at 35% 50%,rgba(0,232,255,.07) 0%,transparent 50%),radial-gradient(ellipse at 75% 30%,rgba(198,107,255,.06) 0%,transparent 45%)}
-.wave-bar{position:absolute;bottom:0;width:3px;border-radius:2px 2px 0 0;background:linear-gradient(to top,rgba(0,232,255,.06),rgba(198,107,255,.06));animation:wavePulse ease-in-out infinite alternate;pointer-events:none}
-@keyframes wavePulse{from{transform:scaleY(.2)}to{transform:scaleY(1)}}
-.hero-inner{max-width:1100px;margin:0 auto;width:100%;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;position:relative;z-index:1}
-.wave-eyebrow{display:flex;align-items:center;gap:10px;margin-bottom:14px}
-.wave-bars{display:flex;gap:3px;align-items:center;height:16px}
-.wave-bar-sm{width:3px;border-radius:2px;background:var(--char);animation:waveBar ease-in-out infinite alternate}
-@keyframes waveBar{from{height:3px;opacity:.4}to{height:14px;opacity:1}}
-.wave-eyebrow-text{font-family:var(--display);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--char);animation:wavePulseText 2s ease-in-out infinite;transition:opacity .3s}
-@keyframes wavePulseText{0%,100%{opacity:.7;letter-spacing:.2em}50%{opacity:1;letter-spacing:.28em}}
-.hero-title{font-family:var(--heading);font-size:clamp(2.4rem,5vw,4.2rem);font-weight:800;line-height:1.05;margin-bottom:16px}
-.hero-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.hero-desc{font-size:1rem;color:var(--off);line-height:1.9;margin-bottom:32px;max-width:420px}
-.hero-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:36px}
-.hero-tag{padding:5px 14px;border:1px solid rgba(0,232,255,.3);border-radius:100px;font-family:var(--display);font-size:.52rem;letter-spacing:.1em;text-transform:uppercase;color:var(--char)}
-.hero-start{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform .2s,box-shadow .2s}
-.hero-start:hover{transform:translateY(-2px);box-shadow:0 12px 40px rgba(0,232,255,.25)}
-.hero-char img{width:100%;max-width:380px;filter:drop-shadow(0 0 60px rgba(0,232,255,.35));animation:echoFloat 4s ease-in-out infinite}
-@keyframes echoFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 2rem;
+      height: 60px;
+      background: rgba(4, 6, 15, 0.95);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--cyan);
+      text-decoration: none;
+      letter-spacing: 0.1em;
+    }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      font-weight: 500;
+      color: var(--text-dim);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cyan); }
+    .nav-user { font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan); display: none; }
+    .nav-logout {
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-dim);
+      font-family: var(--font-body);
+      font-size: 0.78rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: none;
+    }
+    .nav-logout:hover { border-color: var(--cyan); color: var(--cyan); }
 
-.progress-bar{background:var(--deep);border-bottom:1px solid var(--border);padding:20px 48px;position:sticky;top:65px;z-index:50}
-.progress-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center}
-.prog-step{display:flex;align-items:center;flex:1}
-.prog-dot{width:28px;height:28px;border-radius:50%;border:2px solid var(--border-md);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.48rem;color:var(--muted);transition:all .3s;flex-shrink:0}
-.prog-dot.active{border-color:var(--char);background:rgba(0,232,255,.1);color:var(--char)}
-.prog-line{flex:1;height:1px;background:var(--border);margin:0 8px}
-.prog-label{font-family:var(--display);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-left:8px}
-.prog-label.active{color:var(--char)}
+    /* ── HERO ── */
+    .hero {
+      margin-top: 60px;
+      min-height: 480px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('echo-entrance.png');
+      background-size: cover;
+      background-position: center;
+      filter: blur(3px) brightness(0.25);
+      z-index: 0;
+    }
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(4,6,15,0.88) 0%, rgba(0,229,255,0.03) 100%);
+      z-index: 1;
+    }
+    .hero-left {
+      position: relative;
+      z-index: 2;
+      padding: 3rem 2.5rem 3rem 3rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0.85;
+    }
+    .hero-name {
+      font-family: var(--font-display);
+      font-size: clamp(2.8rem, 6vw, 4.5rem);
+      font-weight: 900;
+      color: #fff;
+      line-height: 0.95;
+      text-shadow: var(--glow-strong);
+      margin-bottom: 0.5rem;
+    }
+    .hero-role {
+      font-family: var(--font-display);
+      font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+      font-weight: 600;
+      color: var(--cyan);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1.5rem;
+    }
+    .hero-quote {
+      font-size: 1.05rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      max-width: 420px;
+      margin-bottom: 2rem;
+      font-style: italic;
+    }
+    .hero-quote span { color: var(--cyan); font-style: normal; font-weight: 600; }
+    .hero-tiles {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+    .hero-tile {
+      background: rgba(0, 229, 255, 0.07);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: block;
+    }
+    .hero-tile:hover {
+      background: rgba(0, 229, 255, 0.16);
+      border-color: var(--cyan);
+      color: var(--cyan);
+      box-shadow: var(--glow);
+    }
+    .hero-right {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+    }
+    .hero-gif {
+      width: 100%;
+      max-width: 360px;
+      height: auto;
+      border-radius: 12px;
+      animation: float 3.5s ease-in-out infinite;
+      filter: drop-shadow(0 0 28px rgba(0,229,255,0.5));
+      object-fit: contain;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-12px); }
+    }
 
-.lessons{max-width:800px;margin:0 auto;padding:80px 48px}
-.lesson-header{margin-bottom:48px}
-.lesson-num{font-family:var(--display);font-size:.55rem;letter-spacing:.24em;text-transform:uppercase;color:var(--char);opacity:.7;margin-bottom:10px}
-.lesson-title{font-family:var(--heading);font-size:clamp(1.8rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:12px}
-.lesson-desc{font-size:.95rem;color:var(--off);line-height:1.9}
-.content-block{margin-bottom:40px;background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
-.block-header{padding:20px 28px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
-.block-icon{width:32px;height:32px;border-radius:8px;background:rgba(0,232,255,.1);display:flex;align-items:center;justify-content:center;font-size:.9rem}
-.block-label{font-family:var(--display);font-size:.55rem;letter-spacing:.18em;text-transform:uppercase;color:var(--char)}
-.block-body{padding:28px}
-.block-body p{font-size:.95rem;color:var(--off);line-height:1.9;margin-bottom:14px}
-.block-body p:last-child{margin-bottom:0}
-.echo-quote{font-family:var(--heading);font-size:1.1rem;font-weight:700;color:var(--white);border-left:3px solid var(--char);padding-left:18px;margin:20px 0;line-height:1.6}
+    /* ── LESSON STRIP ── */
+    .lesson-strip {
+      position: sticky;
+      top: 60px;
+      z-index: 90;
+      background: rgba(4, 6, 15, 0.97);
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(10px);
+      display: flex;
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .lesson-strip::-webkit-scrollbar { display: none; }
+    .lesson-tab {
+      flex-shrink: 0;
+      padding: 0.9rem 1.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      cursor: pointer;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+      white-space: nowrap;
+      user-select: none;
+      background: none;
+      border-top: none;
+      border-left: none;
+      border-right: none;
+    }
+    .lesson-tab:hover { color: var(--cyan); }
+    .lesson-tab.active {
+      color: var(--cyan);
+      border-bottom-color: var(--cyan);
+      text-shadow: 0 0 8px rgba(0,229,255,0.5);
+    }
 
-.beat-grid{display:grid;grid-template-rows:repeat(3,1fr);gap:8px;margin-bottom:20px}
-.beat-row{display:flex;align-items:center;gap:8px}
-.beat-label{font-family:var(--display);font-size:.5rem;letter-spacing:.1em;color:var(--muted);width:50px;flex-shrink:0;text-align:right}
-.beat-cells{display:flex;gap:4px;flex:1}
-.beat-cell{width:100%;aspect-ratio:1;border-radius:4px;border:1px solid var(--border);background:rgba(255,255,255,.02);cursor:pointer;transition:all .15s}
-.beat-cell.active{background:var(--char);border-color:var(--char);box-shadow:0 0 10px rgba(0,232,255,.4)}
-.beat-cell.active.purple{background:var(--char3);border-color:var(--char3);box-shadow:0 0 10px rgba(198,107,255,.4)}
-.beat-cell.active.pink{background:#ff6baa;border-color:#ff6baa;box-shadow:0 0 10px rgba(255,107,170,.4)}
-.beat-cell:hover:not(.active){background:rgba(0,232,255,.08);border-color:rgba(0,232,255,.2)}
-.beat-controls{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
-.beat-play{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:var(--grad);color:#000;font-weight:700;border:none;border-radius:100px;cursor:pointer;transition:transform .2s}
-.beat-play:hover{transform:translateY(-1px)}
-.beat-clear{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);color:var(--muted);border-radius:100px;cursor:pointer;transition:all .2s}
-.beat-clear:hover{border-color:var(--white);color:var(--white)}
-.beat-indicator{width:8px;height:8px;border-radius:50%;background:var(--char);opacity:0;transition:opacity .1s;box-shadow:0 0 8px var(--char)}
-.beat-indicator.on{opacity:1}
-.beat-result{margin-top:14px;padding:14px;border-radius:10px;font-size:.88rem;line-height:1.7;background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);color:var(--char);display:none}
-.beat-result.show{display:block}
+    /* ── LESSON PANELS ── */
+    .lesson-panel { display: none; }
+    .lesson-panel.open {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      min-height: 80vh;
+    }
 
-.event-items{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
-.event-item{display:flex;align-items:center;gap:12px;padding:14px 16px;background:rgba(0,232,255,.04);border:1px solid rgba(0,232,255,.15);border-radius:10px}
-.event-trigger{font-family:var(--display);font-size:.58rem;letter-spacing:.08em;color:var(--char);flex:1}
-.event-arrow{color:var(--muted);flex-shrink:0}
-.event-select{background:rgba(5,5,8,.8);border:1px solid var(--border-md);color:var(--off);padding:8px 12px;border-radius:8px;font-family:var(--display);font-size:.52rem;letter-spacing:.06em;cursor:pointer;flex:1;outline:none}
-.event-select:focus{border-color:var(--char)}
-.event-check{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(0,232,255,.1);border:1px solid rgba(0,232,255,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
-.event-result{margin-top:14px;padding:14px;border-radius:10px;font-size:.88rem;display:none;line-height:1.7}
-.event-result.show{display:block}
-.event-result.correct{background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);color:var(--char)}
-.event-result.wrong{background:rgba(255,107,170,.06);border:1px solid rgba(255,107,170,.2);color:#ff6baa}
+    /* ── SIDEBAR ── */
+    .lesson-sidebar {
+      background: var(--bg-panel);
+      border-right: 1px solid var(--border);
+      padding: 2rem 1.2rem;
+      position: sticky;
+      top: calc(60px + 42px);
+      height: calc(100vh - 102px);
+      overflow-y: auto;
+      scrollbar-width: thin;
+      scrollbar-color: var(--border) transparent;
+    }
+    .sidebar-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      padding-bottom: 0.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-nav-btn {
+      width: 100%;
+      background: none;
+      border: none;
+      text-align: left;
+      padding: 0.65rem 0.8rem;
+      margin-bottom: 0.2rem;
+      border-radius: 6px;
+      font-family: var(--font-body);
+      font-size: 0.82rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .sidebar-nav-btn:hover { background: rgba(0,229,255,0.07); color: var(--cyan); }
+    .sidebar-nav-btn.active { background: rgba(0,229,255,0.11); color: var(--cyan); font-weight: 600; }
+    .sidebar-icon { font-size: 0.9rem; }
+    .sidebar-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+    .sidebar-game-link {
+      display: block;
+      margin-top: 1rem;
+      padding: 0.65rem 0.8rem;
+      background: rgba(0,229,255,0.05);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--cyan-dim);
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: all 0.2s;
+      text-align: center;
+    }
+    .sidebar-game-link:hover { background: rgba(0,229,255,0.13); border-color: var(--cyan); color: var(--cyan); }
 
-.reflect-prompt{font-size:.95rem;color:var(--off);margin-bottom:16px;line-height:1.8}
-.reflect-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);border-radius:10px;color:var(--white);font-family:var(--body);font-size:.9rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s}
-.reflect-input:focus{border-color:var(--char)}
-.reflect-submit{margin-top:12px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;padding:10px 22px;background:rgba(0,232,255,.1);border:1px solid rgba(0,232,255,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s}
-.reflect-response{margin-top:14px;padding:16px;background:rgba(198,107,255,.06);border:1px solid rgba(198,107,255,.2);border-radius:10px;font-size:.88rem;color:var(--char3);display:none;line-height:1.7}
-.reflect-response.show{display:block}
+    /* ── CONTENT AREA ── */
+    .lesson-content { padding: 2.5rem 3rem; max-width: 900px; }
+    .content-block { display: none; }
+    .content-block.active { display: block; }
 
-.lesson-complete{text-align:center;padding:48px 28px;background:linear-gradient(135deg,rgba(0,232,255,.06),rgba(198,107,255,.06));border:1px solid rgba(0,232,255,.2);border-radius:16px;margin-bottom:40px}
-.complete-icon{font-size:2.5rem;margin-bottom:16px}
-.complete-title{font-family:var(--heading);font-size:1.6rem;font-weight:800;margin-bottom:8px}
-.complete-title span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
-.complete-desc{font-size:.9rem;color:var(--off);margin-bottom:24px}
-.next-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;cursor:pointer;border:none;transition:transform .2s}
-.next-btn:hover{transform:translateY(-2px)}
+    /* ── READ CARDS ── */
+    .section-header {
+      font-family: var(--font-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+    .section-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-family: var(--font-mono);
+      letter-spacing: 0.05em;
+    }
+    .read-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.8rem 2rem;
+      margin-bottom: 1.2rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .read-card::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: linear-gradient(to bottom, var(--cyan), var(--blue));
+    }
+    .read-card-num {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--cyan);
+      letter-spacing: 0.2em;
+      margin-bottom: 0.6rem;
+      opacity: 0.7;
+    }
+    .read-card h3 {
+      font-family: var(--font-display);
+      font-size: 0.95rem;
+      color: #fff;
+      margin-bottom: 0.8rem;
+      font-weight: 700;
+    }
+    .read-card p {
+      font-size: 0.95rem;
+      color: var(--text-dim);
+      line-height: 1.7;
+    }
+    .read-card p strong { color: var(--cyan); font-weight: 600; }
+    .read-card code {
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      background: rgba(0,229,255,0.1);
+      color: var(--cyan);
+      padding: 0.15em 0.4em;
+      border-radius: 4px;
+    }
 
-.locked-section{margin-top:80px;border-top:1px solid var(--border);padding-top:60px}
-.locked-label{font-family:var(--display);font-size:.6rem;letter-spacing:.22em;text-transform:uppercase;color:var(--muted);margin-bottom:24px;display:flex;align-items:center;gap:10px}
-.locked-label::after{content:'';flex:1;height:1px;background:var(--border)}
-.locked-cards{display:flex;flex-direction:column;gap:12px}
-.locked-card{padding:20px 24px;background:var(--card);border:1px solid var(--border);border-radius:12px;opacity:.5;position:relative;transition:opacity .4s,border-color .4s}
-.locked-card::after{content:'🔒';position:absolute;right:20px;top:50%;transform:translateY(-50%);transition:opacity .4s}
-.locked-card.unlocked{opacity:1;border-color:rgba(0,232,255,.3)}
-.locked-card.unlocked::after{content:'♪';color:var(--char)}
-.locked-card-num{font-family:var(--display);font-size:.5rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:4px}
-.locked-card-title{font-family:var(--heading);font-size:.95rem;font-weight:700;color:var(--white)}
-.locked-card-desc{font-size:.78rem;color:var(--muted)}
-.lesson-link{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--char);margin-top:8px;opacity:0;transition:opacity .4s;pointer-events:none}
-.locked-card.unlocked .lesson-link{opacity:1;pointer-events:auto}
+    /* ── CODE BLOCK ── */
+    .code-block {
+      background: #02040c;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1.4rem;
+      margin: 1rem 0;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      line-height: 1.7;
+      color: #90caf9;
+      overflow-x: auto;
+    }
+    .code-block .kw { color: #00e5ff; font-weight: 700; }
+    .code-block .str { color: #ffe066; }
+    .code-block .cm { color: #3a5a7a; font-style: italic; }
+    .code-block .num { color: #ff9a9a; }
+    .code-block .fn { color: #80deea; }
+    .code-block .prop { color: #b39ddb; }
 
-.join-prompt{margin-top:32px;text-align:center;padding:36px;background:linear-gradient(135deg,rgba(0,232,255,.04),rgba(198,107,255,.04));border:1px solid rgba(0,232,255,.15);border-radius:16px}
-.join-prompt p{font-size:.9rem;color:var(--off);margin-bottom:18px;line-height:1.8}
-.join-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s}
-.join-btn:hover{transform:translateY(-2px)}
+    /* ── TERMS ── */
+    .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
+    .term-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .term-card:hover { border-color: var(--cyan); }
+    .term-card.open { border-color: var(--cyan); }
+    .term-name {
+      font-family: var(--font-mono);
+      font-size: 0.8rem;
+      color: var(--cyan);
+      font-weight: 700;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .term-arrow { transition: transform 0.2s; color: var(--text-muted); }
+    .term-card.open .term-arrow { transform: rotate(90deg); }
+    .term-def {
+      display: none;
+      font-size: 0.85rem;
+      color: var(--text-dim);
+      line-height: 1.6;
+      margin-top: 0.6rem;
+      padding-top: 0.6rem;
+      border-top: 1px solid var(--border);
+    }
+    .term-card.open .term-def { display: block; }
 
-.member-banner{display:none;margin-top:32px;text-align:center;padding:28px 36px;background:linear-gradient(135deg,rgba(0,232,255,.08),rgba(198,107,255,.08));border:1px solid rgba(0,232,255,.3);border-radius:16px}
-.member-banner p{font-size:.9rem;color:var(--off);line-height:1.8}
-.member-banner strong{color:var(--char)}
+    /* ── EDITOR ── */
+    .build-section h3 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+      font-weight: 700;
+    }
+    .editor-wrap {
+      background: #02040c;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      overflow: hidden;
+      margin-bottom: 1rem;
+    }
+    .editor-toolbar {
+      background: rgba(0,229,255,0.05);
+      border-bottom: 1px solid var(--border);
+      padding: 0.5rem 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      letter-spacing: 0.12em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .editor-run-btn {
+      background: var(--cyan);
+      color: var(--bg);
+      border: none;
+      padding: 0.25rem 0.8rem;
+      border-radius: 4px;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      transition: opacity 0.2s;
+    }
+    .editor-run-btn:hover { opacity: 0.85; }
+    .code-editor {
+      width: 100%;
+      min-height: 160px;
+      background: transparent;
+      border: none;
+      padding: 1rem 1.2rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: #90caf9;
+      resize: vertical;
+      outline: none;
+      line-height: 1.7;
+    }
+    .preview-label {
+      font-family: var(--font-mono);
+      font-size: 0.62rem;
+      color: var(--text-muted);
+      letter-spacing: 0.15em;
+      margin-bottom: 0.4rem;
+      text-transform: uppercase;
+    }
+    .console-output {
+      background: #02040c;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 1rem;
+      font-family: var(--font-mono);
+      font-size: 0.82rem;
+      color: var(--cyan);
+      min-height: 80px;
+      white-space: pre-wrap;
+    }
 
-.reveal{opacity:1;transform:none;transition:opacity .6s,transform .6s}
-.reveal.visible{opacity:1;transform:none}
-@media(max-width:768px){.hero-inner{grid-template-columns:1fr}.hero-char{display:none}.lessons{padding:60px 24px}nav{padding:14px 24px}.nav-char{display:none}}
-</style>
+    /* ── BEAT MACHINE (L4 capstone) ── */
+    .beat-machine {
+      background: var(--bg-card);
+      border: 1px solid var(--border-bright);
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin: 1rem 0;
+    }
+    .beat-machine h3 {
+      font-family: var(--font-display);
+      font-size: 0.9rem;
+      color: var(--cyan);
+      margin-bottom: 1.2rem;
+      font-weight: 700;
+    }
+    .beat-grid {
+      display: grid;
+      grid-template-columns: 80px repeat(16, 1fr);
+      gap: 3px;
+      margin-bottom: 1rem;
+    }
+    .beat-row-label {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      padding-right: 0.5rem;
+    }
+    .beat-btn {
+      aspect-ratio: 1;
+      border-radius: 3px;
+      border: 1px solid var(--border);
+      background: rgba(0,229,255,0.04);
+      cursor: pointer;
+      transition: all 0.1s;
+      min-height: 24px;
+    }
+    .beat-btn:hover { border-color: var(--cyan); background: rgba(0,229,255,0.1); }
+    .beat-btn.active { background: var(--cyan); border-color: var(--cyan); box-shadow: 0 0 8px rgba(0,229,255,0.6); }
+    .beat-btn.playing { background: #fff; }
+    .beat-controls {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .beat-play-btn {
+      background: var(--cyan);
+      color: var(--bg);
+      border: none;
+      padding: 0.6rem 1.5rem;
+      border-radius: 6px;
+      font-family: var(--font-display);
+      font-size: 0.75rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 0.08em;
+      transition: opacity 0.2s;
+    }
+    .beat-play-btn:hover { opacity: 0.85; }
+    .beat-tempo {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--text-dim);
+    }
+    .beat-tempo input[type=range] {
+      accent-color: var(--cyan);
+      width: 100px;
+    }
+    .beat-tempo span { color: var(--cyan); min-width: 50px; }
+    .beat-step-indicator {
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      color: var(--text-muted);
+    }
+
+    /* ── QUIZ ── */
+    .quiz-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .quiz-q { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; }
+    .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+    .quiz-opt {
+      background: rgba(0,229,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.7rem 1rem;
+      font-size: 0.88rem;
+      color: var(--text-dim);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-align: left;
+      font-family: var(--font-body);
+    }
+    .quiz-opt:hover { border-color: var(--cyan); color: var(--cyan); }
+    .quiz-opt.correct { border-color: #00e5ff; background: rgba(0,229,255,0.1); color: #00e5ff; }
+    .quiz-opt.wrong { border-color: #ff6b6b; background: rgba(255,107,107,0.08); color: #ff6b6b; animation: shake 0.3s ease; }
+    @keyframes shake {
+      0%,100% { transform: translateX(0); }
+      25% { transform: translateX(-6px); }
+      75% { transform: translateX(6px); }
+    }
+    .quiz-feedback { font-size: 0.82rem; margin-top: 0.6rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; }
+    .quiz-feedback.show { display: block; }
+    .quiz-feedback.correct { background: rgba(0,229,255,0.08); color: #00e5ff; border: 1px solid rgba(0,229,255,0.2); }
+    .quiz-feedback.wrong { background: rgba(255,107,107,0.06); color: #ff9a9a; border: 1px solid rgba(255,107,107,0.18); }
+
+    /* ── REFLECT ── */
+    .reflect-prompt {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+    .reflect-q { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.8rem; line-height: 1.5; }
+    .reflect-input {
+      width: 100%;
+      background: rgba(0,229,255,0.03);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 0.8rem 1rem;
+      font-family: var(--font-body);
+      font-size: 0.88rem;
+      color: var(--text);
+      resize: vertical;
+      min-height: 80px;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+    .reflect-input:focus { border-color: var(--cyan); }
+    .reflect-save-btn {
+      margin-top: 0.5rem;
+      background: none;
+      border: 1px solid var(--border);
+      color: var(--text-muted);
+      font-family: var(--font-mono);
+      font-size: 0.68rem;
+      padding: 0.35rem 0.8rem;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: all 0.2s;
+      letter-spacing: 0.08em;
+    }
+    .reflect-save-btn:hover { border-color: var(--cyan); color: var(--cyan); }
+    .reflect-saved { font-family: var(--font-mono); font-size: 0.68rem; color: var(--cyan); margin-top: 0.4rem; display: none; }
+
+    /* ── CHEAT SHEET ── */
+    .cheat-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 1.5rem 1.8rem;
+      margin-bottom: 1rem;
+    }
+    .cheat-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--cyan); margin-bottom: 1rem; font-weight: 700; }
+    .cheat-items { display: flex; flex-direction: column; gap: 0.7rem; }
+    .cheat-item {
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      padding-bottom: 0.7rem;
+      border-bottom: 1px solid rgba(0,229,255,0.06);
+    }
+    .cheat-item:last-child { border-bottom: none; padding-bottom: 0; }
+    .cheat-term { font-family: var(--font-mono); font-size: 0.78rem; color: var(--cyan); min-width: 140px; font-weight: 700; }
+    .cheat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
+    .cheat-download-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 1.2rem;
+      background: rgba(0,229,255,0.07);
+      border: 1px solid var(--border-bright);
+      color: var(--cyan);
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      padding: 0.6rem 1.2rem;
+      border-radius: 6px;
+      cursor: pointer;
+      text-decoration: none;
+      transition: all 0.2s;
+      letter-spacing: 0.08em;
+    }
+    .cheat-download-btn:hover { background: rgba(0,229,255,0.16); box-shadow: var(--glow); }
+
+    /* ── GATE / LOCK ── */
+    .locked-panel { padding: 4rem 3rem; text-align: center; }
+    .locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.45; }
+    .locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; }
+    .locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .gate-btn {
+      display: inline-block;
+      background: var(--cyan);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-size: 0.78rem;
+      font-weight: 700;
+      padding: 0.8rem 2rem;
+      border-radius: 6px;
+      border: none;
+      cursor: pointer;
+      text-decoration: none;
+      letter-spacing: 0.08em;
+      transition: opacity 0.2s;
+    }
+    .gate-btn:hover { opacity: 0.85; }
+
+    /* ── LESSON COMPLETE ── */
+    .lesson-complete {
+      background: linear-gradient(135deg, rgba(0,229,255,0.07), rgba(68,138,255,0.05));
+      border: 1px solid var(--border-bright);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: center;
+      margin-top: 2rem;
+    }
+    .lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--cyan); margin-bottom: 0.5rem; }
+    .lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
+
+    /* ── DISCOVERY OVERLAY ── */
+    .discovery-overlay {
+      position: fixed;
+      inset: 0;
+      z-index: 200;
+      background: rgba(4, 6, 15, 0.97);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 2rem;
+    }
+    .discovery-overlay.hidden { display: none; }
+    .echo-mark {
+      font-family: var(--font-mono);
+      font-size: 2rem;
+      color: var(--cyan);
+      margin-bottom: 1rem;
+      letter-spacing: 0.3em;
+      text-shadow: var(--glow-strong);
+      animation: pulse 2s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    .discovery-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.5rem, 4vw, 2.5rem);
+      font-weight: 900;
+      color: var(--cyan);
+      text-shadow: var(--glow-strong);
+      margin-bottom: 0.8rem;
+    }
+    .discovery-sub {
+      font-size: 1rem;
+      color: var(--text-dim);
+      max-width: 460px;
+      line-height: 1.6;
+      margin-bottom: 2rem;
+    }
+    .discovery-enter-btn {
+      background: var(--cyan);
+      color: var(--bg);
+      font-family: var(--font-display);
+      font-size: 0.85rem;
+      font-weight: 700;
+      padding: 1rem 2.5rem;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      letter-spacing: 0.1em;
+      transition: all 0.2s;
+      box-shadow: var(--glow-strong);
+    }
+    .discovery-enter-btn:hover { transform: scale(1.03); }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-right { display: none; }
+      .lesson-panel.open { grid-template-columns: 1fr; }
+      .lesson-sidebar { display: none; }
+      .lesson-content { padding: 1.5rem; }
+      .terms-grid { grid-template-columns: 1fr; }
+      .beat-grid { grid-template-columns: 60px repeat(8, 1fr); }
+    }
+  </style>
 </head>
 <body>
 
+<!-- DISCOVERY OVERLAY -->
+<div class="discovery-overlay" id="discoveryOverlay">
+  <div class="echo-mark">◈ ◈ ◈</div>
+  <div class="discovery-title">Echo's Signal Studio</div>
+  <div class="discovery-sub">Sound. Timing. Events.<br>Code that listens, responds, and plays on beat.</div>
+  <button class="discovery-enter-btn" onclick="enterStudio()">Enter the Studio</button>
+</div>
+
+<!-- NAV -->
 <nav>
-  <a href="index.html" class="nav-back">← Back to Universe</a>
-  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
-  <div class="nav-right">
-    <div class="nav-char">Echo · Signal DJ</div>
-    <div id="nav-user-menu">
-      <span id="nav-user-name"></span>
-      <button id="nav-logout-btn">LOG OUT</button>
-    </div>
-    <button id="nav-login" onclick="document.getElementById('auth-modal').style.display='flex'">JOIN / LOG IN</button>
-  </div>
+  <a href="index.html" class="nav-logo">MiM</a>
+  <ul class="nav-links">
+    <li><a href="games.html">Games</a></li>
+    <li><a href="pdfs.html">PDFs</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="index.html#membership">Membership</a></li>
+  </ul>
+  <span class="nav-user" id="navUser"></span>
+  <button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg"></div>
-  <div id="wave-bars-bg"></div>
-  <div class="hero-inner">
-    <div>
-      <div class="wave-eyebrow">
-        <div class="wave-bars">
-          <div class="wave-bar-sm" style="animation-duration:.4s;animation-delay:0s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.6s;animation-delay:.1s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.3s;animation-delay:.2s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.5s;animation-delay:.05s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.45s;animation-delay:.15s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.35s;animation-delay:.25s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.55s;animation-delay:.08s"></div>
-        </div>
-        <span class="wave-eyebrow-text" id="waveText">ECHO · SIGNAL DJ · SOUND CODER</span>
-        <div class="wave-bars">
-          <div class="wave-bar-sm" style="animation-duration:.55s;animation-delay:.08s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.35s;animation-delay:.25s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.45s;animation-delay:.15s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.5s;animation-delay:.05s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.3s;animation-delay:.2s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.6s;animation-delay:.1s"></div>
-          <div class="wave-bar-sm" style="animation-duration:.4s;animation-delay:0s"></div>
-        </div>
-      </div>
-      <h1 class="hero-title">Welcome to<br><span>Echo's Studio.</span></h1>
-      <p class="hero-desc">Code is rhythm. Events are triggers. Echo teaches you how programs listen, respond, and flow — and how music and code are more alike than you think.</p>
-      <div class="hero-tags">
-        <span class="hero-tag">Event-Driven Code</span>
-        <span class="hero-tag">Sound & Rhythm</span>
-        <span class="hero-tag">Audio Logic</span>
-      </div>
-      <a href="#lesson-1" class="hero-start">Start Lesson 1 — Free ↓</a>
+  <div class="hero-overlay"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">◈ &nbsp; Signal DJ &nbsp; · &nbsp; Web Audio API</div>
+    <div class="hero-name">Echo</div>
+    <div class="hero-role">The Signal DJ</div>
+    <div class="hero-quote">"<span>Every click is a cue.</span> Every timer is a beat. Code doesn't just run -- it responds."</div>
+    <div class="hero-tiles">
+      <a class="hero-tile" onclick="jumpToLesson(1)">01 Events &amp; Listeners</a>
+      <a class="hero-tile" onclick="jumpToLesson(2)">02 Timers &amp; Timing</a>
+      <a class="hero-tile" onclick="jumpToLesson(3)">03 The Web Audio API</a>
+      <a class="hero-tile" onclick="jumpToLesson(4)">04 Beat Machine</a>
     </div>
-    <div class="hero-char">
-      <img src="https://raw.githubusercontent.com/Webdevn3v/method-in-motion/main/echo-pose-4.png" alt="Echo">
-    </div>
+  </div>
+  <div class="hero-right">
+    <img src="echo-motion.gif" alt="Echo" class="hero-gif" onerror="this.style.opacity='0.3'" />
   </div>
 </section>
 
-<div class="progress-bar">
-  <div class="progress-inner">
-    <div class="prog-step"><div class="prog-dot active">1</div><div class="prog-label active">Events & Triggers</div><div class="prog-line"></div></div>
-    <div class="prog-step"><div class="prog-dot" id="dot2">🔒</div><div class="prog-label">Write an Event</div><div class="prog-line"></div></div>
-    <div class="prog-step"><div class="prog-dot" id="dot3">🔒</div><div class="prog-label">Chain Reactions</div><div class="prog-line"></div></div>
-    <div class="prog-step"><div class="prog-dot" id="dot4">🔒</div><div class="prog-label">Echo's Full Mix</div></div>
-  </div>
+<!-- LESSON STRIP -->
+<div class="lesson-strip">
+  <button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — Events &amp; Listeners</button>
+  <button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Timers &amp; Timing</button>
+  <button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Web Audio API</button>
+  <button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Beat Machine</button>
 </div>
 
-<div class="lessons">
-  <div class="lesson" id="lesson-1">
-    <div class="lesson-header reveal">
-      <div class="lesson-num">Lesson 01 · Free</div>
-      <h2 class="lesson-title">Events & Triggers</h2>
-      <p class="lesson-desc">Most code doesn't just run — it waits. It waits for something to happen. A click, a keypress, a moment in time. Echo calls these triggers.</p>
-    </div>
+<!-- ===================== LESSON 1 ===================== -->
+<div class="lesson-panel" id="lesson-1">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 01</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'cheat')" id="sb-1-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="echo-game.html" class="sidebar-game-link">◈ Echo's Game World</a>
+  </aside>
+  <div class="lesson-content">
 
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
-      <div class="block-body">
-        <p class="echo-quote">"Yo. I'm Echo. I'm a DJ — which means I don't just play music, I respond to the crowd. When the energy drops, I change the beat. That's event-driven thinking."</p>
-        <p>In music, a DJ listens for signals and responds in real time. In code, we do the same thing — we write instructions that say <strong style="color:var(--char)">when something happens, do this.</strong></p>
-        <p>This is called <strong style="color:var(--char3)">event-driven programming</strong>. Almost every app you've ever used is built this way. When you tap a button → the app responds. When you scroll down → something animates. When a timer hits zero → an alert appears.</p>
-        <p>Echo's rule: <strong style="color:var(--char)">Every event has a trigger and a response.</strong> Learn to hear both.</p>
+    <!-- READ -->
+    <div class="content-block active" id="block-1-read">
+      <div class="section-header">Events &amp; Listeners</div>
+      <div class="section-sub">LESSON 01 · FREE</div>
+
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>Code That Waits</h3>
+        <p>Most of the code you've learned so far runs immediately. But real web pages do something different -- they <strong>wait</strong>. They wait for a click, a keystroke, a scroll. This kind of code is called <strong>event-driven</strong>, and it's how the web actually works.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>What Is an Event?</h3>
+        <p>An <strong>event</strong> is anything that happens in the browser -- a user clicking a button, moving the mouse, pressing a key, or a page finishing loading. The browser tracks all of these moments automatically. Your job is to tell it what to do when one occurs.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>addEventListener</h3>
+        <p>The method <code>addEventListener</code> connects an element to a function. When the event fires, the function runs. The function is called an <strong>event handler</strong> or <strong>callback</strong> -- a function that gets called later, not right now.</p>
+        <div class="code-block"><span class="kw">const</span> btn = <span class="fn">document</span>.<span class="fn">getElementById</span>(<span class="str">"myBtn"</span>);
+
+btn.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, <span class="kw">function</span>() {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Button was clicked!"</span>);
+});</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>The Event Object</h3>
+        <p>When an event fires, the browser passes an <strong>event object</strong> to your handler. It contains information about what happened -- which key was pressed, where the mouse was, which element triggered it. You access it by adding a parameter to your function.</p>
+        <div class="code-block">btn.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, <span class="kw">function</span>(e) {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Clicked at X: "</span> + e.<span class="prop">clientX</span>);
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Clicked at Y: "</span> + e.<span class="prop">clientY</span>);
+});</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>Common Event Types</h3>
+        <p>The browser supports dozens of event types. These are the ones you'll use most often when building interactive pages:</p>
+        <div class="code-block"><span class="str">"click"</span>      <span class="cm">// user clicks an element</span>
+<span class="str">"keydown"</span>    <span class="cm">// user presses a key</span>
+<span class="str">"keyup"</span>      <span class="cm">// user releases a key</span>
+<span class="str">"mouseover"</span>  <span class="cm">// mouse enters an element</span>
+<span class="str">"input"</span>      <span class="cm">// value in a text field changes</span>
+<span class="str">"submit"</span>     <span class="cm">// a form is submitted</span>
+<span class="str">"load"</span>       <span class="cm">// page or resource finishes loading</span></div>
       </div>
     </div>
 
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">♪</div><div class="block-label">Build a Beat · Interactive Grid</div></div>
-      <div class="block-body">
-        <p style="font-size:.88rem;color:var(--off);margin-bottom:20px">This is Echo's beat machine. Click the cells to turn them on — each one is an event that fires when the playhead hits it. Hit Play to hear your pattern.</p>
-        <div class="beat-grid" id="beatGrid">
-          <div class="beat-row"><div class="beat-label">Kick</div><div class="beat-cells" id="row0"></div></div>
-          <div class="beat-row"><div class="beat-label">Snare</div><div class="beat-cells" id="row1"></div></div>
-          <div class="beat-row"><div class="beat-label">Hi-Hat</div><div class="beat-cells" id="row2"></div></div>
+    <!-- TERMS -->
+    <div class="content-block" id="block-1-terms">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Event <span class="term-arrow">›</span></div>
+          <div class="term-def">Something that happens in the browser -- a click, keypress, scroll, or page load. The browser tracks these automatically.</div>
         </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Event listener <span class="term-arrow">›</span></div>
+          <div class="term-def">A piece of code that "listens" for a specific event on a specific element and runs a function when it detects it.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">addEventListener <span class="term-arrow">›</span></div>
+          <div class="term-def">The method used to attach a listener to an element. Takes the event type as a string and a function to call.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Callback function <span class="term-arrow">›</span></div>
+          <div class="term-def">A function passed to another function to be called later. Event handlers are callbacks -- they run only when the event fires.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Event object <span class="term-arrow">›</span></div>
+          <div class="term-def">The object the browser passes to your handler when an event fires. Contains details about the event -- position, key pressed, target element, etc.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Event-driven <span class="term-arrow">›</span></div>
+          <div class="term-def">A style of programming where code waits for user actions or system events before running. This is how all interactive web pages work.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUILD -->
+    <div class="content-block" id="block-1-build">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 01 · EVENT TRACKER</div>
+      <div class="build-section">
+        <h3>Click Counter</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">This code tracks clicks on a button. Edit it to also log the X and Y position of the click using the event object <code>e</code>.</p>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span>JAVASCRIPT · EVENTS</span>
+            <button class="editor-run-btn" onclick="runEditor('l1')">▶ RUN</button>
+          </div>
+          <textarea class="code-editor" id="editor-l1">let clicks = 0;
+
+// Simulating a click event
+function handleClick(e) {
+  clicks++;
+  console.log("Click #" + clicks);
+  // Add: log e.clientX and e.clientY
+}
+
+// Simulating 3 clicks
+handleClick({ clientX: 120, clientY: 340 });
+handleClick({ clientX: 88,  clientY: 200 });
+handleClick({ clientX: 305, clientY: 77  });</textarea>
+        </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l1">Output will appear here...</div>
+      </div>
+
+      <br>
+
+      <div class="quiz-card">
+        <div class="quiz-q">What does <code>addEventListener("click", myFn)</code> do?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'addEventListener doesn\'t run the function immediately -- it registers it to run later when the event fires.')">Runs myFn immediately</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. It registers myFn to be called whenever a click event occurs on that element.')">Registers myFn to run when the element is clicked</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'addEventListener attaches to a specific element, not the whole page.')">Listens for clicks anywhere on the page</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-0"></div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-q">What is the event object?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The event object is passed by the browser, not created by you.')">An object you create to describe an event</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The event object comes from the browser, not the HTML element itself.')">The HTML element that was clicked</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Right. The browser automatically creates and passes the event object to your handler with details about what happened.')">An object the browser passes to your handler with event details</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-1"></div>
+      </div>
+    </div>
+
+    <!-- REFLECT -->
+    <div class="content-block" id="block-1-reflect">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Think of a website you use often. What events do you think are being listened for -- clicks, hovers, key presses? Pick one feature and describe the event behind it.</div>
+        <textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
+          <span class="reflect-saved" id="saved-1-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Why is event-driven programming important for the web? What would websites be like if code only ran once when the page loaded?</div>
+        <textarea class="reflect-input" id="ref-1-2" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-1-2','saved-1-2')">Save</button>
+          <span class="reflect-saved" id="saved-1-2">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete">
+        <h3>◈ &nbsp; Lesson 1 Complete</h3>
+        <p>Events. Listeners. Callbacks. The web is always listening. Now you know how to respond.</p>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="content-block" id="block-1-cheat">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 01 · EVENTS &amp; LISTENERS</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 1 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item">
+            <div class="cheat-term">addEventListener</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">el.addEventListener("click", fn)</code></div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Event object</div>
+            <div class="cheat-desc">Passed to handler automatically -- <code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">function(e) { e.clientX }</code></div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">click</div>
+            <div class="cheat-desc">Fires when user clicks an element</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">keydown / keyup</div>
+            <div class="cheat-desc">Fires when a key is pressed / released</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">input</div>
+            <div class="cheat-desc">Fires each time a text field value changes</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">load</div>
+            <div class="cheat-desc">Fires when the page or an asset finishes loading</div>
+          </div>
+        </div>
+        <a href="echo-cheat-1.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 2 ===================== -->
+<div class="lesson-panel" id="lesson-2">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 02</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'cheat')" id="sb-2-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="echo-game.html" class="sidebar-game-link">◈ Echo's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-2">
+      <div class="locked-icon">🔒</div>
+      <h2>Sparks Membership Required</h2>
+      <p>Lesson 2 is available to Sparks members and above.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+
+    <!-- READ -->
+    <div class="content-block" id="block-2-read" style="display:none">
+      <div class="section-header">Timers &amp; Timing</div>
+      <div class="section-sub">LESSON 02 · SPARKS+</div>
+
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>Time Is an Event Too</h3>
+        <p>Not all events come from users. Some come from <strong>time itself</strong>. JavaScript has built-in functions that let you schedule code to run after a delay, or on a repeating interval. This is how animations, countdowns, and beat machines work.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>setTimeout -- Run Once After a Delay</h3>
+        <p><code>setTimeout</code> runs a function <strong>one time</strong>, after a specified number of milliseconds. 1000ms = 1 second. It's perfect for delayed effects, loading states, and timed messages.</p>
+        <div class="code-block"><span class="fn">setTimeout</span>(<span class="kw">function</span>() {
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"3 seconds later..."</span>);
+}, <span class="num">3000</span>); <span class="cm">// 3000ms = 3 seconds</span></div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>setInterval -- Run Repeatedly</h3>
+        <p><code>setInterval</code> runs a function <strong>over and over</strong> at a fixed interval. It keeps going until you stop it. This is the foundation of beat machines, clocks, and game loops.</p>
+        <div class="code-block"><span class="kw">let</span> count = <span class="num">0</span>;
+
+<span class="kw">const</span> timer = <span class="fn">setInterval</span>(<span class="kw">function</span>() {
+  count++;
+  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Beat: "</span> + count);
+}, <span class="num">500</span>); <span class="cm">// runs every 500ms</span></div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>clearInterval -- Stopping the Loop</h3>
+        <p>A <code>setInterval</code> that runs forever is a bug. Use <code>clearInterval</code> to stop it. Always save the return value of <code>setInterval</code> to a variable -- that's the ID you need to clear it.</p>
+        <div class="code-block"><span class="kw">const</span> timer = <span class="fn">setInterval</span>(myFn, <span class="num">500</span>);
+
+<span class="cm">// Later, stop it:</span>
+<span class="fn">clearInterval</span>(timer);</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>Milliseconds and the DJ's Grid</h3>
+        <p>At 120 BPM (beats per minute), one beat lasts <strong>500ms</strong>. At 90 BPM, one beat is ~667ms. Changing your interval time changes the tempo. This is exactly how digital audio workstations schedule sound -- a loop running on a timer.</p>
+        <div class="code-block"><span class="cm">// Formula: ms per beat = 60000 / BPM</span>
+<span class="kw">const</span> bpm = <span class="num">120</span>;
+<span class="kw">const</span> msPerBeat = <span class="num">60000</span> / bpm; <span class="cm">// = 500ms</span></div>
+      </div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="content-block" id="block-2-terms" style="display:none">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">setTimeout <span class="term-arrow">›</span></div>
+          <div class="term-def">Runs a function once, after a delay in milliseconds. <code>setTimeout(fn, 1000)</code> runs fn after 1 second.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">setInterval <span class="term-arrow">›</span></div>
+          <div class="term-def">Runs a function repeatedly at a fixed time interval until stopped. Returns an ID you can use to cancel it.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">clearInterval <span class="term-arrow">›</span></div>
+          <div class="term-def">Stops a setInterval from running. Takes the interval ID as its argument.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Milliseconds (ms) <span class="term-arrow">›</span></div>
+          <div class="term-def">1/1000th of a second. All timing functions in JavaScript use milliseconds. 1000ms = 1 second.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">BPM <span class="term-arrow">›</span></div>
+          <div class="term-def">Beats Per Minute -- the tempo of music. Convert to ms with: 60000 / BPM. At 120 BPM, one beat = 500ms.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Interval ID <span class="term-arrow">›</span></div>
+          <div class="term-def">The value returned by setInterval. Store it in a variable so you can pass it to clearInterval when you need to stop.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUILD -->
+    <div class="content-block" id="block-2-build" style="display:none">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 02 · TEMPO CALCULATOR</div>
+      <div class="build-section">
+        <h3>BPM to Milliseconds</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">Complete the function to calculate ms per beat. Then print the interval for 3 different BPM values.</p>
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span>JAVASCRIPT · TIMERS</span>
+            <button class="editor-run-btn" onclick="runEditor('l2')">▶ RUN</button>
+          </div>
+          <textarea class="code-editor" id="editor-l2">function bpmToMs(bpm) {
+  // Return 60000 divided by bpm
+  return 0; // replace this
+}
+
+let tempos = [80, 120, 160];
+
+for (let i = 0; i < tempos.length; i++) {
+  let ms = bpmToMs(tempos[i]);
+  console.log(tempos[i] + " BPM = " + ms + "ms per beat");
+}</textarea>
+        </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l2">Output will appear here...</div>
+      </div>
+
+      <br>
+
+      <div class="quiz-card">
+        <div class="quiz-q">At 120 BPM, how many milliseconds is one beat?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Close but not right. 60000 / 120 = 500, not 600.')">600ms</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. 60000ms ÷ 120 BPM = 500ms per beat.')">500ms</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, '120ms would be nearly 500 BPM -- way too fast.')">120ms</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-2"></div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-q">What happens if you never call <code>clearInterval</code>?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'setInterval doesn\'t stop itself -- it needs clearInterval.')">The interval stops automatically after 10 seconds</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. setInterval runs forever until you stop it with clearInterval. This can cause memory leaks and unexpected behavior.')">The interval runs forever, which can cause bugs</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The page won\'t crash from a running interval -- but it will keep consuming resources.')">The page crashes immediately</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-3"></div>
+      </div>
+    </div>
+
+    <!-- REFLECT -->
+    <div class="content-block" id="block-2-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Where else on the web do you see timers in action -- countdowns, auto-playing content, loading spinners? Pick one example and describe what the timer is probably doing in the code.</div>
+        <textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
+          <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Why would a game loop use <code>setInterval</code> instead of <code>setTimeout</code>? What would change if you used the wrong one?</div>
+        <textarea class="reflect-input" id="ref-2-2" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-2-2','saved-2-2')">Save</button>
+          <span class="reflect-saved" id="saved-2-2">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete">
+        <h3>◈ &nbsp; Lesson 2 Complete</h3>
+        <p>setTimeout. setInterval. clearInterval. You control time now. The beat is yours to set.</p>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="content-block" id="block-2-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 02 · TIMERS &amp; TIMING</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 2 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item">
+            <div class="cheat-term">setTimeout</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">setTimeout(fn, ms)</code> -- runs once after delay</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">setInterval</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">const id = setInterval(fn, ms)</code> -- repeating</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">clearInterval</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">clearInterval(id)</code> -- stops the interval</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">BPM formula</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">60000 / BPM = ms per beat</code></div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">1000ms</div>
+            <div class="cheat-desc">= 1 second. All JS timing uses milliseconds.</div>
+          </div>
+        </div>
+        <a href="echo-cheat-2.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 3 ===================== -->
+<div class="lesson-panel" id="lesson-3">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 03</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'cheat')" id="sb-3-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="echo-game.html" class="sidebar-game-link">◈ Echo's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-3">
+      <div class="locked-icon">🔒</div>
+      <h2>Builders Membership Required</h2>
+      <p>Lesson 3 is available to Builders members and above.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+
+    <!-- READ -->
+    <div class="content-block" id="block-3-read" style="display:none">
+      <div class="section-header">The Web Audio API</div>
+      <div class="section-sub">LESSON 03 · BUILDERS+</div>
+
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>Browsers Can Make Sound</h3>
+        <p>The <strong>Web Audio API</strong> is a built-in browser tool for creating, processing, and controlling audio with JavaScript. No plugins. No downloads. Just code. It's the same technology behind browser-based DAWs, games, and visualizers.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>AudioContext -- The Studio</h3>
+        <p>Everything in Web Audio happens inside an <strong>AudioContext</strong>. Think of it as the mixing board. You create one AudioContext, and all your sound nodes connect through it.</p>
+        <div class="code-block"><span class="kw">const</span> ctx = <span class="kw">new</span> <span class="fn">AudioContext</span>();
+<span class="cm">// ctx.currentTime gives you the current time in seconds
+// ctx.destination is the output (your speakers)</span></div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>OscillatorNode -- Generating Tone</h3>
+        <p>An <strong>OscillatorNode</strong> generates a pure tone at a set frequency. Frequency is measured in Hz -- 440 Hz is the note A4 (concert A). Connect it to the destination and start it to hear sound.</p>
+        <div class="code-block"><span class="kw">const</span> osc = ctx.<span class="fn">createOscillator</span>();
+osc.<span class="prop">frequency</span>.<span class="prop">value</span> = <span class="num">440</span>; <span class="cm">// A4</span>
+osc.<span class="prop">type</span> = <span class="str">"sine"</span>; <span class="cm">// sine, square, sawtooth, triangle</span>
+osc.<span class="fn">connect</span>(ctx.<span class="prop">destination</span>);
+osc.<span class="fn">start</span>();
+osc.<span class="fn">stop</span>(ctx.<span class="prop">currentTime</span> + <span class="num">0.3</span>); <span class="cm">// stop after 0.3s</span></div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>GainNode -- Controlling Volume</h3>
+        <p>A <strong>GainNode</strong> controls the volume of a signal. Connect your oscillator through a GainNode before it reaches the destination. Gain 1 = full volume, 0 = silent.</p>
+        <div class="code-block"><span class="kw">const</span> gain = ctx.<span class="fn">createGain</span>();
+gain.<span class="prop">gain</span>.<span class="prop">value</span> = <span class="num">0.5</span>; <span class="cm">// 50% volume</span>
+
+osc.<span class="fn">connect</span>(gain);
+gain.<span class="fn">connect</span>(ctx.<span class="prop">destination</span>);</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>The Audio Signal Chain</h3>
+        <p>Web Audio works like real audio gear -- signals flow through a <strong>chain of nodes</strong>. Source nodes generate sound. Processing nodes shape it. The destination node outputs it. You connect them like wires.</p>
+        <div class="code-block"><span class="cm">// Signal chain: oscillator → gain → output</span>
+osc.<span class="fn">connect</span>(gain);
+gain.<span class="fn">connect</span>(ctx.<span class="prop">destination</span>);
+
+<span class="cm">// You can add effects nodes in between:
+// osc → filter → reverb → gain → output</span></div>
+      </div>
+    </div>
+
+    <!-- TERMS -->
+    <div class="content-block" id="block-3-terms" style="display:none">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Web Audio API <span class="term-arrow">›</span></div>
+          <div class="term-def">A browser-built-in system for creating and controlling audio with JavaScript. No plugins needed.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">AudioContext <span class="term-arrow">›</span></div>
+          <div class="term-def">The main object you create to use Web Audio. All audio nodes are created from it and connect through it.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">OscillatorNode <span class="term-arrow">›</span></div>
+          <div class="term-def">Generates a pure tone at a set frequency. Types include sine, square, sawtooth, and triangle waves.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">GainNode <span class="term-arrow">›</span></div>
+          <div class="term-def">Controls the volume (amplitude) of a signal. Value of 1 = full, 0 = silent.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Frequency (Hz) <span class="term-arrow">›</span></div>
+          <div class="term-def">How many times per second a sound wave oscillates. Higher Hz = higher pitch. A4 = 440 Hz.</div>
+        </div>
+        <div class="term-card" onclick="toggleTerm(this)">
+          <div class="term-name">Signal chain <span class="term-arrow">›</span></div>
+          <div class="term-def">The path audio travels through connected nodes -- from source, through processing, to output (destination).</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BUILD -->
+    <div class="content-block" id="block-3-build" style="display:none">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 03 · PLAY A NOTE</div>
+      <div class="build-section">
+        <h3>Tone Generator</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">Click the button below to play a tone using the Web Audio API. The code runs live in your browser -- no simulation.</p>
+
+        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+          <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;" onclick="playNote(261.6,'sine',0.4)">C4 · Sine</button>
+          <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--blue);" onclick="playNote(329.6,'square',0.3)">E4 · Square</button>
+          <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--purple);" onclick="playNote(392,'sawtooth',0.25)">G4 · Sawtooth</button>
+          <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:rgba(0,229,255,0.2);color:var(--cyan);border:1px solid var(--cyan);" onclick="playNote(523.2,'triangle',0.4)">C5 · Triangle</button>
+        </div>
+
+        <div class="editor-wrap">
+          <div class="editor-toolbar">
+            <span>JAVASCRIPT · WEB AUDIO</span>
+            <button class="editor-run-btn" onclick="runAudioEditor()">▶ PLAY</button>
+          </div>
+          <textarea class="code-editor" id="editor-l3" style="min-height:120px;">// Change frequency and type, then hit PLAY
+// Types: "sine" "square" "sawtooth" "triangle"
+playNote(440, "sine", 0.5); // A4</textarea>
+        </div>
+        <div id="audio-status" style="font-family:var(--font-mono);font-size:0.75rem;color:var(--cyan);min-height:24px;margin-top:0.5rem;"></div>
+      </div>
+
+      <br>
+
+      <div class="quiz-card">
+        <div class="quiz-q">What does a GainNode control?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Frequency (pitch) is controlled on the OscillatorNode, not the GainNode.')">The pitch of the sound</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. GainNode controls amplitude -- how loud the signal is. 0 = silent, 1 = full volume.')">The volume (amplitude) of the signal</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Wave type is set on the OscillatorNode with the type property.')">The wave shape (sine vs square)</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-4"></div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-q">In a Web Audio signal chain, where does the audio signal end up?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The AudioContext is the environment, not the final destination.')">The AudioContext</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The OscillatorNode is the source -- where audio starts, not ends.')">The OscillatorNode</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. ctx.destination represents the audio output -- your speakers or headphones. Everything connects there.')">ctx.destination (the speaker output)</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-5"></div>
+      </div>
+    </div>
+
+    <!-- REFLECT -->
+    <div class="content-block" id="block-3-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">The Web Audio API uses a "signal chain" -- nodes connected like wires. How does this compare to how you'd describe audio gear like a microphone going into a mixer going into speakers?</div>
+        <textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
+          <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">What kind of web project would you want to build using the Web Audio API? Describe it.</div>
+        <textarea class="reflect-input" id="ref-3-2" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-3-2','saved-3-2')">Save</button>
+          <span class="reflect-saved" id="saved-3-2">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete">
+        <h3>◈ &nbsp; Lesson 3 Complete</h3>
+        <p>AudioContext. Oscillators. Gain. Signal chains. The studio is open. Let's build the beat.</p>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="content-block" id="block-3-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 03 · WEB AUDIO API</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 3 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item">
+            <div class="cheat-term">AudioContext</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">const ctx = new AudioContext()</code></div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">OscillatorNode</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">ctx.createOscillator()</code> -- set .frequency.value and .type</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">GainNode</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">ctx.createGain()</code> -- set .gain.value (0–1)</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Signal chain</div>
+            <div class="cheat-desc">osc.connect(gain) → gain.connect(ctx.destination)</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">A4 = 440 Hz</div>
+            <div class="cheat-desc">Concert A. Common musical frequencies: C4=261, E4=329, G4=392</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Wave types</div>
+            <div class="cheat-desc">sine (smooth), square (buzzy), sawtooth (bright), triangle (soft)</div>
+          </div>
+        </div>
+        <a href="echo-cheat-3.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 4 ===================== -->
+<div class="lesson-panel" id="lesson-4">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 04</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'cheat')" id="sb-4-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="echo-game.html" class="sidebar-game-link">◈ Echo's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-4">
+      <div class="locked-icon">🔒</div>
+      <h2>Coders Membership Required</h2>
+      <p>Lesson 4 is available to Coders members only.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+
+    <!-- READ -->
+    <div class="content-block" id="block-4-read" style="display:none">
+      <div class="section-header">Beat Machine</div>
+      <div class="section-sub">LESSON 04 · CODERS</div>
+
+      <div class="read-card">
+        <div class="read-card-num">01 / 04</div>
+        <h3>What Is a Beat Machine?</h3>
+        <p>A <strong>step sequencer</strong> (beat machine) divides time into equal steps -- usually 16 per bar -- and plays a sound at each step that is turned on. Every DAW on earth uses this concept. Now you're going to build one with JavaScript.</p>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">02 / 04</div>
+        <h3>The Data Behind the Grid</h3>
+        <p>Each row in the beat machine is an <strong>array of booleans</strong> -- 16 values, each either true (on) or false (off). When the sequencer reaches a step, it checks: is this step on? If yes, play a sound.</p>
+        <div class="code-block"><span class="cm">// 4 rows × 16 steps</span>
+<span class="kw">const</span> grid = [
+  [<span class="kw">true</span>,<span class="kw">false</span>,<span class="kw">false</span>,<span class="kw">false</span>, ...], <span class="cm">// kick</span>
+  [<span class="kw">false</span>,<span class="kw">false</span>,<span class="kw">true</span>,<span class="kw">false</span>, ...], <span class="cm">// snare</span>
+  [<span class="kw">true</span>,<span class="kw">true</span>,<span class="kw">true</span>,<span class="kw">true</span>, ...],  <span class="cm">// hihat</span>
+  [<span class="kw">false</span>,<span class="kw">true</span>,<span class="kw">false</span>,<span class="kw">true</span>, ...], <span class="cm">// clap</span>
+];</div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">03 / 04</div>
+        <h3>The Sequencer Loop</h3>
+        <p>A <code>setInterval</code> advances a <strong>step counter</strong> on every tick. At each step, the sequencer loops through all rows and checks if that step is active. Events + Timers + Audio -- all three concepts working together.</p>
+        <div class="code-block"><span class="kw">let</span> step = <span class="num">0</span>;
+
+<span class="fn">setInterval</span>(<span class="kw">function</span>() {
+  <span class="kw">for</span> (<span class="kw">let</span> row = <span class="num">0</span>; row &lt; grid.length; row++) {
+    <span class="kw">if</span> (grid[row][step]) {
+      <span class="fn">playSound</span>(row); <span class="cm">// play that row's sound</span>
+    }
+  }
+  step = (step + <span class="num">1</span>) % <span class="num">16</span>; <span class="cm">// wrap back to 0</span>
+}, msPerBeat / <span class="num">4</span>); <span class="cm">// 16th notes</span></div>
+      </div>
+
+      <div class="read-card">
+        <div class="read-card-num">04 / 04</div>
+        <h3>Click Events Toggle the Grid</h3>
+        <p>Each button in the grid has a click event. Clicking a step <strong>toggles its boolean</strong> from false to true or back. The grid data drives the sound, and the visual reflects the data. That's the connection between events and audio.</p>
+        <div class="code-block">btn.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, <span class="kw">function</span>() {
+  grid[row][col] = !grid[row][col]; <span class="cm">// flip it</span>
+  btn.<span class="prop">classList</span>.<span class="fn">toggle</span>(<span class="str">"active"</span>);
+});</div>
+      </div>
+    </div>
+
+    <!-- BUILD -->
+    <div class="content-block" id="block-4-build" style="display:none">
+      <div class="section-header">Beat Machine</div>
+      <div class="section-sub">LESSON 04 · BUILD THE BEAT</div>
+
+      <div class="beat-machine">
+        <h3>◈ Echo's Step Sequencer</h3>
+        <div class="beat-grid" id="beatGrid"></div>
         <div class="beat-controls">
-          <button class="beat-play" id="beatBtn" onclick="toggleBeat()">▶ Play Beat</button>
-          <button class="beat-clear" onclick="clearBeat()">Clear</button>
-          <div class="beat-indicator" id="beatIndicator"></div>
-          <span style="font-family:var(--display);font-size:.5rem;color:var(--muted);letter-spacing:.1em">STEP</span>
-        </div>
-        <div class="beat-result" id="beatResult"></div>
-      </div>
-    </div>
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">♪</div><div class="block-label">Match the Event · Trigger → Response</div></div>
-      <div class="block-body">
-        <p style="font-size:.88rem;color:var(--off);margin-bottom:20px">Match each trigger to what should happen. This is what event-driven code looks like in real apps.</p>
-        <div class="event-items">
-          <div class="event-item">
-            <div class="event-trigger">User clicks Play button</div>
-            <div class="event-arrow">→</div>
-            <select class="event-select" id="ev1">
-              <option value="">Choose response...</option>
-              <option value="a">Music starts playing</option>
-              <option value="b">Page reloads</option>
-              <option value="c">Volume goes to zero</option>
-            </select>
+          <button class="beat-play-btn" id="beatPlayBtn" onclick="toggleBeat()">▶ PLAY</button>
+          <div class="beat-tempo">
+            <span>BPM</span>
+            <input type="range" id="tempoSlider" min="60" max="180" value="120" oninput="updateTempo(this.value)" />
+            <span id="tempoVal">120</span>
           </div>
-          <div class="event-item">
-            <div class="event-trigger">Timer reaches 0:00</div>
-            <div class="event-arrow">→</div>
-            <select class="event-select" id="ev2">
-              <option value="">Choose response...</option>
-              <option value="a">Alert sounds and time is up message shows</option>
-              <option value="b">Nothing happens</option>
-              <option value="c">Timer resets to 10:00</option>
-            </select>
+          <button class="beat-play-btn" style="background:rgba(0,229,255,0.15);color:var(--cyan);border:1px solid var(--cyan);" onclick="clearBeat()">✕ CLEAR</button>
+          <div class="beat-step-indicator" id="stepIndicator">STEP: --</div>
+        </div>
+      </div>
+
+      <div class="quiz-card">
+        <div class="quiz-q">In the beat machine, what does toggling a grid button actually change in the code?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The button CSS changes as a visual indicator, but the actual data change is in the grid array.')">The button's CSS class only</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The boolean in the grid array is flipped (true to false or false to true). The CSS class just reflects that data.')">A boolean in the grid data array</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The sound plays on the next sequencer tick, not directly when you click.')">A sound plays immediately</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-6"></div>
+      </div>
+    </div>
+
+    <!-- REFLECT -->
+    <div class="content-block" id="block-4-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 04 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">The beat machine uses events, timers, and audio all at once. Describe how these three concepts work together in this project.</div>
+        <textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
+          <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">What would you add to this beat machine if you could extend it? More rows? Effects? A way to save patterns?</div>
+        <textarea class="reflect-input" id="ref-4-2" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-4-2','saved-4-2')">Save</button>
+          <span class="reflect-saved" id="saved-4-2">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete">
+        <h3>◈ &nbsp; Echo's Studio Complete</h3>
+        <p>Events. Timers. Audio. Beat machines. You heard the signal. Now you know how to send one.</p>
+      </div>
+    </div>
+
+    <!-- CHEAT SHEET -->
+    <div class="content-block" id="block-4-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 04 · BEAT MACHINE</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 4 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item">
+            <div class="cheat-term">Step sequencer</div>
+            <div class="cheat-desc">A grid of on/off steps; a timer advances through them, playing sounds at active steps</div>
           </div>
-          <div class="event-item">
-            <div class="event-trigger">User scrolls to bottom of page</div>
-            <div class="event-arrow">→</div>
-            <select class="event-select" id="ev3">
-              <option value="">Choose response...</option>
-              <option value="a">Page goes back to top</option>
-              <option value="b">New content loads automatically</option>
-              <option value="c">All text disappears</option>
-            </select>
+          <div class="cheat-item">
+            <div class="cheat-term">Grid data</div>
+            <div class="cheat-desc">A 2D array of booleans: grid[row][step] = true means play that sound</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Step wrap</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">step = (step + 1) % 16</code> -- resets to 0 after step 15</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">Toggle boolean</div>
+            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--cyan)">grid[r][s] = !grid[r][s]</code> -- flips true/false</div>
+          </div>
+          <div class="cheat-item">
+            <div class="cheat-term">16th notes</div>
+            <div class="cheat-desc">interval = (60000 / BPM) / 4 -- four steps per beat</div>
           </div>
         </div>
-        <button class="event-check" onclick="checkEvents()">Check My Answers →</button>
-        <div class="event-result" id="eventResult"></div>
+        <a href="echo-cheat-4.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
       </div>
-    </div>
-
-    <div class="content-block reveal">
-      <div class="block-header"><div class="block-icon">♪</div><div class="block-label">Reflect · Echo's Question</div></div>
-      <div class="block-body">
-        <p class="reflect-prompt">Think about an app or game you use all the time. What are three things that happen when you do something — three "when X happens, Y happens" moments?</p>
-        <textarea class="reflect-input" id="reflectInput" placeholder="When I..., then..."></textarea>
-        <button class="reflect-submit" onclick="submitReflect()">Tell Echo →</button>
-        <div class="reflect-response" id="reflectResponse"></div>
-      </div>
-    </div>
-
-    <div class="lesson-complete reveal" id="lessonComplete" style="display:none">
-      <div class="complete-icon">♪</div>
-      <h3 class="complete-title">Lesson 1 <span>Complete!</span></h3>
-      <p class="complete-desc">You built a beat, matched events to responses, and started hearing the triggers in everything. Echo is locked in.</p>
-      <button class="next-btn" onclick="document.getElementById('locked-section').scrollIntoView({behavior:'smooth'})">See What's Next →</button>
-    </div>
-  </div>
-
-  <!-- LOCKED LESSONS -->
-  <div class="locked-section reveal" id="locked-section">
-    <div class="locked-label" id="locked-label">Members Only — Unlock All Lessons</div>
-    <div class="locked-cards">
-      <div class="locked-card" id="locked-card-2">
-        <div>
-          <div class="locked-card-num">Lesson 02</div>
-          <div class="locked-card-title">Write Your First Event Listener</div>
-          <div class="locked-card-desc">Turn a button click into real code. Make something happen when a user interacts.</div>
-          <span class="lesson-link">Start Lesson 2 →</span>
-        </div>
-      </div>
-      <div class="locked-card" id="locked-card-3">
-        <div>
-          <div class="locked-card-num">Lesson 03</div>
-          <div class="locked-card-title">Chain Reactions</div>
-          <div class="locked-card-desc">One event triggers another. Build a sequence of responses that flow like a track.</div>
-          <span class="lesson-link">Start Lesson 3 →</span>
-        </div>
-      </div>
-      <div class="locked-card" id="locked-card-4">
-        <div>
-          <div class="locked-card-num">Lesson 04</div>
-          <div class="locked-card-title">Echo's Full Mix</div>
-          <div class="locked-card-desc">Build a fully interactive mini-app that responds to clicks, keys, and timers all at once.</div>
-          <span class="lesson-link">Start Lesson 4 →</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="join-prompt" id="join-prompt">
-      <p>Echo has a full interactive beat builder, event coding challenges, and a final project that's genuinely fun to play with. Join the crew to unlock everything.</p>
-      <button class="join-btn" onclick="document.getElementById('auth-modal').style.display='flex'">Join the Crew →</button>
-    </div>
-
-    <div class="member-banner" id="member-banner">
-      <p>You're in the crew. <strong>All of Echo's lessons are unlocked</strong> — keep the signal going.</p>
     </div>
   </div>
 </div>
 
-<!-- AUTH MODAL -->
-<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true" aria-label="Sign in or create account">
-  <div class="auth-modal-box">
-    <button class="auth-close" id="auth-close-btn" aria-label="Close">&times;</button>
-    <div class="auth-modal-header">
-      <div class="auth-logo-mark">MiM</div>
-      <p class="auth-tagline">Create. Don't Consume.</p>
-    </div>
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="login">Log In</button>
-      <button class="auth-tab" data-tab="signup">Join the Crew</button>
-    </div>
-    <div id="login-form" class="auth-form active">
-      <div class="auth-field"><label for="login-email">Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" /></div>
-      <div class="auth-field"><label for="login-password">Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" /></div>
-      <p class="auth-error" id="login-error"></p>
-      <button class="auth-submit" id="login-submit-btn">Log In</button>
-      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
-    </div>
-    <div id="signup-form" class="auth-form">
-      <div class="auth-field"><label for="signup-name">Display Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname" /></div>
-      <div class="auth-field"><label for="signup-email">Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email" /></div>
-      <div class="auth-field"><label for="signup-password">Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password" /></div>
-      <p class="auth-error" id="signup-error"></p>
-      <button class="auth-submit" id="signup-submit-btn">Create Account</button>
-      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
-    </div>
-  </div>
-</div>
-
-<style>
-.auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
-.auth-modal-overlay.active{display:flex}
-.auth-modal-box{background:#0a0a1a;border:1px solid rgba(0,240,255,.2);border-radius:16px;padding:2.5rem 2rem;width:100%;max-width:420px;position:relative;box-shadow:0 0 60px rgba(0,240,255,.08),0 0 0 1px rgba(255,255,255,.04)}
-.auth-close{position:absolute;top:1rem;right:1.25rem;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.5rem;cursor:pointer;line-height:1;transition:color .2s}
-.auth-close:hover{color:#fff}
-.auth-modal-header{text-align:center;margin-bottom:1.75rem}
-.auth-logo-mark{font-family:'Orbitron',sans-serif;font-size:1.5rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(135deg,#00f0ff,#ff6ec7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:.25rem}
-.auth-tagline{font-family:'Syne',sans-serif;font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.35);margin:0}
-.auth-tabs{display:flex;gap:0;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.75rem}
-.auth-tab{flex:1;background:none;border:none;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;font-size:.8rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.75rem 0;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
-.auth-tab.active{color:#00f0ff;border-bottom-color:#00f0ff}
-.auth-tab:hover:not(.active){color:rgba(255,255,255,.7)}
-.auth-form{display:none}
-.auth-form.active{display:block}
-.auth-field{margin-bottom:1.1rem}
-.auth-field label{display:block;font-family:'Syne',sans-serif;font-size:.7rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.4rem}
-.auth-field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.7rem .9rem;color:#fff;font-family:'Syne',sans-serif;font-size:.9rem;outline:none;transition:border-color .2s,background .2s;box-sizing:border-box}
-.auth-field input:focus{border-color:rgba(0,240,255,.5);background:rgba(0,240,255,.04)}
-.auth-field input::placeholder{color:rgba(255,255,255,.2)}
-.auth-error{font-family:'Syne',sans-serif;font-size:.78rem;color:#ff6ec7;min-height:1.2em;margin:.25rem 0 .75rem}
-.auth-submit{width:100%;background:linear-gradient(135deg,#00f0ff,#7b61ff);border:none;border-radius:8px;padding:.85rem;color:#000;font-family:'Orbitron',sans-serif;font-size:.8rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;transition:opacity .2s,transform .15s;margin-bottom:1rem}
-.auth-submit:hover{opacity:.9;transform:translateY(-1px)}
-.auth-submit:active{transform:translateY(0)}
-.auth-switch{text-align:center;font-family:'Syne',sans-serif;font-size:.78rem;color:rgba(255,255,255,.35);margin:0}
-.auth-link{background:none;border:none;color:#00f0ff;font-family:'Syne',sans-serif;font-size:.78rem;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
-.auth-link:hover{color:#fff}
-@media(max-width:480px){.auth-modal-box{padding:2rem 1.25rem}}
-</style>
-
-<script>
-// WAVE BARS BG
-const bgContainer = document.getElementById('wave-bars-bg');
-for(let i=0;i<20;i++){
-  const bar = document.createElement('div');
-  bar.className = 'wave-bar';
-  bar.style.cssText = `left:${i*5+2}%;height:${40+Math.random()*40}%;animation-duration:${0.4+Math.random()*0.6}s;animation-delay:${Math.random()*0.5}s`;
-  bgContainer.appendChild(bar);
-}
-
-// WAVE TEXT CYCLE
-const waveTexts=['ECHO · SIGNAL DJ · SOUND CODER','♪ EVENTS · TRIGGERS · RHYTHM ♪','CODE IS MUSIC · MUSIC IS CODE','AGES 10–12 · TUNE IN · DROP IN'];
-let wtIdx=0;
-setInterval(()=>{
-  const el=document.getElementById('waveText');
-  el.style.opacity='0';
-  setTimeout(()=>{wtIdx=(wtIdx+1)%waveTexts.length;el.textContent=waveTexts[wtIdx];el.style.opacity='1'},300);
-},3000);
-
-const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting){x.target.classList.add('visible');obs.unobserve(x.target)}})},{threshold:.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-
-// BEAT MACHINE
-const colors=['','purple','pink'];
-const steps=8;
-const grid=[[],[],[]];
-[0,1,2].forEach(r=>{
-  const row=document.getElementById('row'+r);
-  for(let c=0;c<steps;c++){
-    const cell=document.createElement('div');
-    cell.className='beat-cell';
-    cell.onclick=()=>{
-      cell.classList.toggle('active');
-      if(cell.classList.contains('active')&&colors[r]) cell.classList.add(colors[r]);
-      else cell.classList.remove(colors[r]);
-      grid[r][c]=cell.classList.contains('active');
-      checkBeatResult();
-    };
-    row.appendChild(cell);
-    grid[r].push(false);
-  }
-});
-
-let playing=false,step=0,interval=null;
-function toggleBeat(){
-  playing=!playing;
-  document.getElementById('beatBtn').textContent=playing?'⏹ Stop':'▶ Play Beat';
-  if(playing){
-    interval=setInterval(()=>{
-      [0,1,2].forEach(r=>{document.getElementById('row'+r).querySelectorAll('.beat-cell').forEach((c,i)=>{c.style.outline=i===step?'2px solid rgba(0,232,255,.6)':'none'})});
-      [0,1,2].forEach(r=>{if(grid[r][step])playTone(r)});
-      document.getElementById('beatIndicator').classList.toggle('on');
-      step=(step+1)%steps;
-    },200);
-  } else {
-    clearInterval(interval);step=0;
-    [0,1,2].forEach(r=>{document.getElementById('row'+r).querySelectorAll('.beat-cell').forEach(c=>c.style.outline='none')});
-    document.getElementById('beatIndicator').classList.remove('on');
-  }
-}
-
-let audioCtx=null;
-function playTone(row){
-  try{
-    if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();
-    const freqs=[80,200,800],types=['sine','square','triangle'];
-    const osc=audioCtx.createOscillator(),gain=audioCtx.createGain();
-    osc.connect(gain);gain.connect(audioCtx.destination);
-    osc.type=types[row];osc.frequency.value=freqs[row];
-    gain.gain.setValueAtTime(.08,audioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.15);
-    osc.start(audioCtx.currentTime);osc.stop(audioCtx.currentTime+.15);
-  }catch(e){}
-}
-
-function clearBeat(){
-  if(playing)toggleBeat();
-  [0,1,2].forEach(r=>{document.getElementById('row'+r).querySelectorAll('.beat-cell').forEach((c,i)=>{c.classList.remove('active','purple','pink');grid[r][i]=false})});
-}
-
-function checkBeatResult(){
-  const hasAny=grid.some(r=>r.some(v=>v));
-  if(hasAny){
-    const res=document.getElementById('beatResult');
-    res.className='beat-result show';
-    res.innerHTML='♪ You\'re programming events — each active cell is a trigger that fires when the playhead hits it. That\'s event-driven code, in music form.';
-    checkComplete();
-  }
-}
-
-function checkEvents(){
-  const answers={ev1:'a',ev2:'a',ev3:'b'};
-  let correct=0;
-  Object.entries(answers).forEach(([id,ans])=>{if(document.getElementById(id).value===ans)correct++});
-  const res=document.getElementById('eventResult');
-  if(correct===3){res.className='event-result show correct';res.innerHTML='♪ Perfect! Every app works this way. Trigger → Response. Once you see it, you can\'t unsee it.';checkComplete();}
-  else{res.className='event-result show wrong';res.innerHTML=`${correct}/3 correct. Think about what makes sense — what would a user actually expect to happen?`}
-}
-
-function submitReflect(){
-  const val=document.getElementById('reflectInput').value.trim();
-  if(!val)return;
-  document.getElementById('reflectResponse').className='reflect-response show';
-  document.getElementById('reflectResponse').innerHTML=`♪ <strong style="color:var(--char)">"${val}"</strong><br><br>Those are real event listeners. Every one of those "when X happens" moments is code running in response to a trigger. You already think in events — now you just need the syntax.`;
-  checkComplete();
-}
-
-function checkComplete(){const c=document.getElementById('lessonComplete');c.style.display='block';setTimeout(()=>c.classList.add('visible'),100)}
-
-// AUTH TABS
-document.querySelectorAll('.auth-tab').forEach(tab=>{
-  tab.addEventListener('click',()=>{const t=tab.dataset.tab;document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));tab.classList.add('active');document.getElementById(t+'-form').classList.add('active')});
-});
-document.querySelectorAll('.auth-link').forEach(link=>{
-  link.addEventListener('click',()=>{const t=link.dataset.tab;document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));document.querySelector(`.auth-tab[data-tab="${t}"]`).classList.add('active');document.getElementById(t+'-form').classList.add('active')});
-});
-document.getElementById('auth-close-btn').addEventListener('click',()=>{document.getElementById('auth-modal').style.display='none'});
-document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').style.display='none'});
-
-// TIER UNLOCK
-window.handleTierUnlock=function(tier){
-  const hasTier=tier&&['sparks','builders','coders'].includes(tier.toLowerCase());
-  if(hasTier){
-    ['locked-card-2','locked-card-3','locked-card-4'].forEach(id=>document.getElementById(id).classList.add('unlocked'));
-    document.getElementById('join-prompt').style.display='none';
-    document.getElementById('member-banner').style.display='block';
-    ['dot2','dot3','dot4'].forEach(id=>{const dot=document.getElementById(id);dot.textContent='♪';dot.classList.add('active')});
-    document.getElementById('locked-label').textContent='Your Lessons — Keep the Signal Going';
-  }
-};
-</script>
-
+<!-- ==================== FIREBASE + SCRIPTS ==================== -->
 <script type="module" src="auth-init.js"></script>
+<script>
+  // ── GLOBALS ──
+  let currentLesson = null;
+  let currentTier = null;
+  const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
+  function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
+
+  // ── AUTH HOOKS ──
+  window.setNavUser = function(email) {
+    const u = document.getElementById('navUser');
+    const b = document.getElementById('navLogout');
+    if (u) { u.textContent = email; u.style.display = 'inline'; }
+    if (b) b.style.display = 'inline-block';
+  };
+
+  window.handleTierUnlock = function(tier) {
+    currentTier = tier;
+    const lvl = tierLevel(tier);
+    if (lvl >= tierLevel('sparks')) {
+      document.getElementById('lock-2').style.display = 'none';
+      ['read','terms','build','reflect','cheat'].forEach(b => {
+        const el = document.getElementById('block-2-' + b);
+        if (el) el.style.removeProperty('display');
+      });
+    }
+    if (lvl >= tierLevel('builders')) {
+      document.getElementById('lock-3').style.display = 'none';
+      ['read','terms','build','reflect','cheat'].forEach(b => {
+        const el = document.getElementById('block-3-' + b);
+        if (el) el.style.removeProperty('display');
+      });
+    }
+    if (lvl >= tierLevel('coders')) {
+      document.getElementById('lock-4').style.display = 'none';
+      ['read','build','reflect','cheat'].forEach(b => {
+        const el = document.getElementById('block-4-' + b);
+        if (el) el.style.removeProperty('display');
+      });
+    }
+    openLesson(1);
+    showBlock(1, 'read');
+    loadReflects();
+  };
+
+  // ── OVERLAY ──
+  function enterStudio() {
+    document.getElementById('discoveryOverlay').classList.add('hidden');
+    openLesson(1);
+    showBlock(1, 'read');
+  }
+
+  // ── LESSON CONTROL ──
+  function openLesson(n) {
+    document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+    document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+    const panel = document.getElementById('lesson-' + n);
+    const tab = document.getElementById('tab-' + n);
+    if (panel) panel.classList.add('open');
+    if (tab) tab.classList.add('active');
+    currentLesson = n;
+    panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
+
+  function showBlock(lesson, block) {
+    const panel = document.getElementById('lesson-' + lesson);
+    if (!panel) return;
+    panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+    panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+    const target = document.getElementById('block-' + lesson + '-' + block);
+    if (target) target.classList.add('active');
+    const btn = document.getElementById('sb-' + lesson + '-' + block);
+    if (btn) btn.classList.add('active');
+  }
+
+  // ── TERMS ──
+  function toggleTerm(card) { card.classList.toggle('open'); }
+
+  // ── QUIZ ──
+  function checkQuiz(btn, correct, feedback) {
+    const opts = btn.closest('.quiz-options');
+    if (opts.querySelector('.correct')) return;
+    const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+    if (correct) {
+      btn.classList.add('correct');
+      if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
+    } else {
+      btn.classList.add('wrong');
+      if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
+      setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
+    }
+  }
+
+  // ── REFLECT ──
+  function saveReflect(inputId, savedId) {
+    const val = document.getElementById(inputId)?.value;
+    if (val !== undefined) {
+      localStorage.setItem('echo_' + inputId, val);
+      const saved = document.getElementById(savedId);
+      if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
+    }
+  }
+  function loadReflects() {
+    document.querySelectorAll('.reflect-input').forEach(el => {
+      const stored = localStorage.getItem('echo_' + el.id);
+      if (stored) el.value = stored;
+    });
+  }
+
+  // ── JS EDITOR ──
+  function runEditor(id) {
+    const code = document.getElementById('editor-' + id)?.value || '';
+    const outputEl = document.getElementById('output-' + id);
+    if (!outputEl) return;
+    const logs = [];
+    const fakeCon = { log: (...a) => logs.push(a.join(' ')) };
+    try {
+      const fn = new Function('console', code);
+      fn(fakeCon);
+      outputEl.textContent = logs.join('\n') || '(no output)';
+      outputEl.style.color = '#00e5ff';
+    } catch(e) {
+      outputEl.textContent = 'Error: ' + e.message;
+      outputEl.style.color = '#ff6b6b';
+    }
+  }
+
+  // ── WEB AUDIO ──
+  let audioCtx = null;
+
+  function getAudioCtx() {
+    if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    if (audioCtx.state === 'suspended') audioCtx.resume();
+    return audioCtx;
+  }
+
+  function playNote(freq, type, duration) {
+    try {
+      const ctx = getAudioCtx();
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.frequency.value = freq;
+      osc.type = type || 'sine';
+      gain.gain.setValueAtTime(0.4, ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (duration || 0.3));
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(ctx.currentTime);
+      osc.stop(ctx.currentTime + (duration || 0.3));
+    } catch(e) { console.warn('Audio error:', e); }
+  }
+
+  function runAudioEditor() {
+    const code = document.getElementById('editor-l3')?.value || '';
+    const status = document.getElementById('audio-status');
+    try {
+      const fn = new Function('playNote', code);
+      fn(playNote);
+      if (status) { status.textContent = '◈ Playing...'; setTimeout(() => status.textContent = '', 1500); }
+    } catch(e) {
+      if (status) { status.textContent = 'Error: ' + e.message; status.style.color = '#ff6b6b'; }
+    }
+  }
+
+  // ── BEAT MACHINE ──
+  const ROWS = [
+    { label: 'KICK',  freq: 80,  type: 'sine',     dur: 0.2 },
+    { label: 'SNARE', freq: 250, type: 'square',    dur: 0.1 },
+    { label: 'HIHAT', freq: 800, type: 'sawtooth',  dur: 0.06 },
+    { label: 'CLAP',  freq: 400, type: 'triangle',  dur: 0.12 },
+  ];
+  const STEPS = 16;
+  let beatGrid = Array.from({ length: ROWS.length }, () => new Array(STEPS).fill(false));
+  let beatPlaying = false;
+  let beatInterval = null;
+  let beatStep = 0;
+  let beatBpm = 120;
+
+  function buildBeatGrid() {
+    const container = document.getElementById('beatGrid');
+    if (!container) return;
+    container.innerHTML = '';
+    ROWS.forEach((row, r) => {
+      const label = document.createElement('div');
+      label.className = 'beat-row-label';
+      label.textContent = row.label;
+      container.appendChild(label);
+      for (let s = 0; s < STEPS; s++) {
+        const btn = document.createElement('button');
+        btn.className = 'beat-btn';
+        btn.dataset.row = r;
+        btn.dataset.step = s;
+        btn.onclick = function() {
+          beatGrid[r][s] = !beatGrid[r][s];
+          btn.classList.toggle('active', beatGrid[r][s]);
+        };
+        container.appendChild(btn);
+      }
+    });
+  }
+
+  function playBeatSound(row) {
+    const r = ROWS[row];
+    playNote(r.freq, r.type, r.dur);
+  }
+
+  function tickBeat() {
+    // clear previous step highlight
+    document.querySelectorAll('.beat-btn.playing').forEach(b => b.classList.remove('playing'));
+    // play active steps
+    for (let r = 0; r < ROWS.length; r++) {
+      if (beatGrid[r][beatStep]) playBeatSound(r);
+      const btn = document.querySelector(`.beat-btn[data-row="${r}"][data-step="${beatStep}"]`);
+      if (btn) btn.classList.add('playing');
+    }
+    const ind = document.getElementById('stepIndicator');
+    if (ind) ind.textContent = 'STEP: ' + (beatStep + 1);
+    beatStep = (beatStep + 1) % STEPS;
+  }
+
+  function toggleBeat() {
+    const btn = document.getElementById('beatPlayBtn');
+    if (beatPlaying) {
+      clearInterval(beatInterval);
+      beatInterval = null;
+      beatPlaying = false;
+      beatStep = 0;
+      document.querySelectorAll('.beat-btn.playing').forEach(b => b.classList.remove('playing'));
+      if (btn) btn.textContent = '▶ PLAY';
+      const ind = document.getElementById('stepIndicator');
+      if (ind) ind.textContent = 'STEP: --';
+    } else {
+      getAudioCtx();
+      beatPlaying = true;
+      const ms = (60000 / beatBpm) / 4;
+      beatInterval = setInterval(tickBeat, ms);
+      if (btn) btn.textContent = '■ STOP';
+    }
+  }
+
+  function updateTempo(val) {
+    beatBpm = parseInt(val);
+    document.getElementById('tempoVal').textContent = val;
+    if (beatPlaying) {
+      clearInterval(beatInterval);
+      const ms = (60000 / beatBpm) / 4;
+      beatInterval = setInterval(tickBeat, ms);
+    }
+  }
+
+  function clearBeat() {
+    beatGrid = Array.from({ length: ROWS.length }, () => new Array(STEPS).fill(false));
+    document.querySelectorAll('.beat-btn').forEach(b => {
+      b.classList.remove('active');
+      b.classList.remove('playing');
+    });
+  }
+
+  // ── UPGRADE ──
+  function goUpgrade() {
+    if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+      window.location.href = 'membership.html';
+    } else {
+      document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
+    }
+  }
+
+  function handleLogout() {
+    if (window.firebaseAuth) {
+      window.firebaseAuth.signOut().then(() => location.reload());
+    }
+  }
+
+  // ── INIT ──
+  document.addEventListener('DOMContentLoaded', () => {
+    buildBeatGrid();
+    openLesson(1);
+    showBlock(1, 'read');
+    loadReflects();
+  });
+</script>
 </body>
 </html>
