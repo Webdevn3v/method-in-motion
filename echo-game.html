@@ -1,605 +1,978 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-DJ3Q488K7W');
-</script>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Echo's Signal Lab — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Syne:wght@400;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --bg:#050508;
-  --surface:#0f0f1a;
-  --card:#131324;
-  --border:#1e1e35;
-  --text:#e8e8f5;
-  --muted:#5a5a80;
-  --cyan:#00f5d4;
-  --blue:#38bdf8;
-  --purple:#a855f7;
-  --green:#4ade80;
-  --red:#f87171;
-  --yellow:#fbbf24;
-  --orange:#fb923c;
+:root {
+  --echo-cyan: #38bdf8;
+  --echo-blue: #6366f1;
+  --echo-purple: #a855f7;
+  --echo-glow: #00f0ff;
+  --bg: #04050f;
+  --panel: rgba(10,14,30,0.82);
+  --border: rgba(56,189,248,0.18);
+  --text: #e2f0ff;
+  --muted: rgba(226,240,255,0.55);
 }
-body{background:#38bdf811;color:var(--text);font-family:'Syne',sans-serif;min-height:100vh;overflow-x:hidden;}
 
-nav{display:flex;align-items:center;justify-content:space-between;padding:14px 28px;border-bottom:1px solid var(--border);background:var(--surface);}
-.nav-left{display:flex;align-items:center;gap:16px;}
-.nav-back{font-size:0.7rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
-.nav-back:hover{color:var(--cyan);}
-.nav-title{font-family:'Orbitron',monospace;font-size:0.75rem;letter-spacing:0.15em;color:var(--cyan);}
-.nav-tier{font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--purple);border:1px solid var(--purple);padding:3px 10px;border-radius:4px;opacity:0.8;}
+* { margin:0; padding:0; box-sizing:border-box; }
 
-.game-shell{max-width:1000px;margin:0 auto;padding:28px 24px;}
+body {
+  font-family: 'Space Grotesk', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
 
-/* ECHO QUOTE */
-.echo-quote{background:linear-gradient(135deg,rgba(0,245,212,0.06),rgba(56,189,248,0.05));border:1px solid rgba(0,245,212,0.18);border-radius:10px;padding:14px 20px;margin-bottom:20px;display:flex;align-items:center;gap:14px;}
-.echo-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--cyan),var(--blue));display:flex;align-items:center;justify-content:center;font-size:1rem;flex-shrink:0;font-weight:900;color:#000;}
-.echo-text{font-size:0.82rem;color:var(--muted);line-height:1.6;font-style:italic;}
-.echo-text strong{color:var(--cyan);font-style:normal;}
+/* ── WORLD BACKGROUND ── */
+#world-bg {
+  position: fixed; inset: 0; z-index: 0;
+  background-image: url('echo-entrance.png');
+  background-size: cover;
+  background-position: center top;
+}
+#world-overlay {
+  position: fixed; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(4,5,15,0.60) 0%, rgba(4,5,15,0.78) 50%, rgba(4,5,15,0.96) 100%);
+}
+#world-glow {
+  position: fixed; inset: 0; z-index: 1;
+  background: radial-gradient(ellipse at 50% 0%, rgba(56,189,248,0.18) 0%, transparent 60%);
+  pointer-events: none;
+}
 
-/* LEVEL HEADER */
-.level-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;flex-wrap:wrap;gap:12px;}
-.level-badge{font-family:'Orbitron',monospace;font-size:0.65rem;letter-spacing:0.15em;color:var(--cyan);border:1px solid rgba(0,245,212,0.3);padding:5px 14px;border-radius:4px;}
-.level-title{font-size:1.1rem;font-weight:800;}
-.level-desc{font-size:0.8rem;color:var(--muted);margin-top:2px;}
-.score-bar{display:flex;align-items:center;gap:20px;}
-.score-item{text-align:center;}
-.score-val{font-family:'Orbitron',monospace;font-size:1.1rem;font-weight:900;color:var(--cyan);}
-.score-label{font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
-#timer-val.warning{color:var(--yellow);}
-#timer-val.danger{color:var(--red);animation:pulse 0.5s infinite;}
-@keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+/* ── NAV ── */
+nav {
+  position: fixed; top:0; left:0; right:0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 24px; height: 62px;
+  background: rgba(4,5,15,0.85);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+.nav-logo { font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700; letter-spacing:2px; color:var(--echo-cyan); text-decoration:none; }
+.nav-back { font-size:13px; color:var(--muted); text-decoration:none; transition:color .2s; }
+.nav-back:hover { color:var(--echo-cyan); }
+.nav-right { display:flex; align-items:center; gap:16px; }
+#nav-user { font-size:12px; color:var(--muted); font-family:'Space Mono',monospace; }
 
-.progress-dots{display:flex;gap:8px;align-items:center;}
-.dot{width:8px;height:8px;border-radius:50%;background:var(--border);transition:background 0.3s;}
-.dot.active{background:var(--cyan);}
-.dot.done{background:var(--green);}
+/* ── SCREEN SYSTEM ── */
+.screen { position:relative; z-index:10; min-height:100vh; display:none; flex-direction:column; align-items:center; justify-content:center; padding:80px 24px 40px; }
+.screen.active { display:flex; }
 
-/* SIGNAL VISUALIZER */
-.signal-bar{display:flex;align-items:center;gap:6px;margin-bottom:20px;padding:14px 18px;background:var(--surface);border:1px solid var(--border);border-radius:10px;}
-.signal-label{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted);margin-right:4px;}
-.signal-beats{display:flex;gap:4px;align-items:flex-end;flex:1;}
-.beat{width:14px;border-radius:3px 3px 0 0;background:var(--border);transition:height 0.2s,background 0.2s;}
-.beat.active{background:var(--cyan);box-shadow:0 0 8px rgba(0,245,212,0.5);}
-.beat.done{background:rgba(0,245,212,0.3);}
-.signal-score{font-family:'Orbitron',monospace;font-size:0.75rem;color:var(--cyan);margin-left:auto;}
+/* ── INSTRUCTIONS SCREEN ── */
+#screen-instructions { text-align:center; }
+.inst-character {
+  width: 180px; height: 180px;
+  object-fit: contain;
+  margin: 0 auto 24px;
+  filter: drop-shadow(0 0 24px rgba(56,189,248,0.5));
+  animation: float 3s ease-in-out infinite;
+}
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
 
-/* GAME AREA */
-.game-area{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px;}
+.inst-title {
+  font-family:'Orbitron',sans-serif;
+  font-size: clamp(22px,4vw,36px);
+  font-weight: 900;
+  color: var(--echo-cyan);
+  text-shadow: 0 0 30px rgba(56,189,248,0.6);
+  letter-spacing: 3px;
+  margin-bottom: 8px;
+}
+.inst-subtitle {
+  font-size:14px; color:var(--muted); letter-spacing:2px; text-transform:uppercase;
+  margin-bottom:32px; font-family:'Space Mono',monospace;
+}
+.inst-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 28px 32px;
+  max-width: 520px;
+  margin: 0 auto 28px;
+  backdrop-filter: blur(16px);
+  text-align: left;
+}
+.inst-card h3 {
+  font-family:'Orbitron',sans-serif; font-size:12px; letter-spacing:3px; color:var(--echo-cyan);
+  text-transform:uppercase; margin-bottom:16px;
+}
+.inst-step {
+  display:flex; gap:14px; margin-bottom:14px; align-items:flex-start;
+}
+.inst-num {
+  width:28px; height:28px; border-radius:50%;
+  background: linear-gradient(135deg, var(--echo-cyan), var(--echo-blue));
+  display:flex; align-items:center; justify-content:center;
+  font-family:'Orbitron',sans-serif; font-size:11px; font-weight:700;
+  flex-shrink:0; margin-top:1px;
+}
+.inst-step p { font-size:14px; color:var(--text); line-height:1.6; }
+.inst-step p strong { color:var(--echo-cyan); }
 
-/* EVENT CARDS POOL */
-.pool-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-.panel-header{padding:12px 18px;border-bottom:1px solid var(--border);}
-.panel-label{font-family:'Orbitron',monospace;font-size:0.6rem;letter-spacing:0.15em;text-transform:uppercase;color:var(--muted);}
-.panel-label span{color:var(--cyan);}
-.events-pool{padding:12px;display:flex;flex-direction:column;gap:8px;min-height:320px;}
+.btn-start {
+  font-family:'Orbitron',sans-serif; font-size:14px; font-weight:700;
+  letter-spacing:2px; padding:16px 48px;
+  background: linear-gradient(135deg, var(--echo-cyan), var(--echo-blue));
+  color:#04050f; border:none; border-radius:50px; cursor:pointer;
+  box-shadow: 0 0 30px rgba(56,189,248,0.4);
+  transition: all .2s;
+}
+.btn-start:hover { transform:scale(1.05); box-shadow:0 0 45px rgba(56,189,248,0.6); }
 
-/* CHAIN PANEL */
-.chain-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;}
-.chain-zone{padding:12px;display:flex;flex-direction:column;gap:6px;min-height:320px;position:relative;}
+/* ── GAME SCREEN ── */
+#screen-game { justify-content:flex-start; padding-top:80px; }
 
-/* EVENT CARD */
-.event-card{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:11px 14px;cursor:pointer;transition:all 0.15s;display:flex;align-items:center;gap:10px;user-select:none;}
-.event-card:hover{border-color:var(--cyan);transform:translateX(2px);}
-.event-card.used{opacity:0.3;pointer-events:none;}
-.event-card.in-chain{cursor:pointer;border-color:rgba(0,245,212,0.2);}
-.event-card.in-chain:hover{border-color:var(--cyan);}
-.event-card.firing{border-color:var(--cyan);background:rgba(0,245,212,0.08);box-shadow:0 0 16px rgba(0,245,212,0.2);}
-.event-card.fired-correct{border-color:var(--green);background:rgba(74,222,128,0.07);}
-.event-card.fired-wrong{border-color:var(--red);background:rgba(248,113,113,0.07);}
+.game-layout {
+  width:100%; max-width:900px; margin:0 auto;
+  display:grid; grid-template-columns:1fr 260px;
+  gap:20px; align-items:start;
+}
 
-.event-type{font-size:0.55rem;letter-spacing:0.1em;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:3px;flex-shrink:0;}
-.type-event{background:rgba(0,245,212,0.12);color:var(--cyan);}
-.type-dom{background:rgba(56,189,248,0.12);color:var(--blue);}
-.type-timer{background:rgba(168,85,247,0.12);color:var(--purple);}
-.type-async{background:rgba(251,191,36,0.12);color:var(--yellow);}
-.event-name{font-family:'DM Mono',monospace;font-size:0.78rem;color:var(--text);flex:1;}
-.event-desc{font-size:0.68rem;color:var(--muted);}
-.card-pos{font-family:'Orbitron',monospace;font-size:0.6rem;color:var(--muted);min-width:18px;text-align:center;}
-.card-remove{background:none;border:none;color:var(--muted);cursor:pointer;padding:2px 6px;font-size:0.85rem;transition:color 0.2s;flex-shrink:0;}
-.card-remove:hover{color:var(--red);}
+/* HUD */
+.game-hud {
+  display:flex; align-items:center; justify-content:space-between;
+  width:100%; max-width:900px; margin:0 auto 16px;
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:12px; padding:12px 20px;
+  backdrop-filter:blur(12px);
+}
+.hud-stat { text-align:center; }
+.hud-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; }
+.hud-val { font-family:'Orbitron',sans-serif; font-size:22px; font-weight:700; color:var(--echo-cyan); }
+.level-badge {
+  background: linear-gradient(135deg, rgba(56,189,248,0.15), rgba(99,102,241,0.15));
+  border:1px solid var(--echo-cyan); border-radius:8px;
+  padding:6px 16px; font-family:'Orbitron',sans-serif; font-size:11px;
+  letter-spacing:2px; color:var(--echo-cyan);
+}
 
-.chain-placeholder{border:2px dashed rgba(0,245,212,0.15);border-radius:8px;height:48px;display:flex;align-items:center;justify-content:center;font-size:0.72rem;color:rgba(0,245,212,0.25);letter-spacing:0.1em;text-transform:uppercase;}
+/* SIGNAL METER */
+.signal-meter-wrap { display:flex; flex-direction:column; gap:4px; }
+.signal-label { font-family:'Space Mono',monospace; font-size:9px; color:var(--muted); letter-spacing:1px; }
+.signal-bar {
+  width:160px; height:8px; border-radius:4px;
+  background:rgba(56,189,248,0.12); border:1px solid var(--border); overflow:hidden;
+}
+.signal-fill {
+  height:100%; border-radius:4px;
+  background:linear-gradient(90deg,var(--echo-blue),var(--echo-cyan),var(--echo-glow));
+  transition:width .4s ease;
+  box-shadow: 0 0 8px var(--echo-glow);
+}
 
-/* SIGNAL OUTPUT */
-.output-panel{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:20px;}
-.output-body{padding:16px;min-height:100px;display:flex;flex-direction:column;gap:6px;}
-.output-line{font-family:'DM Mono',monospace;font-size:0.8rem;color:var(--muted);display:flex;align-items:center;gap:10px;opacity:0;transition:opacity 0.3s;}
-.output-line.show{opacity:1;}
-.output-line.correct{color:var(--green);}
-.output-line.wrong{color:var(--red);}
-.output-beat{width:8px;height:8px;border-radius:50%;background:var(--muted);flex-shrink:0;}
-.output-beat.correct{background:var(--green);box-shadow:0 0 6px var(--green);}
-.output-beat.wrong{background:var(--red);}
-.output-empty{color:var(--muted);font-size:0.8rem;font-style:italic;font-family:'DM Mono',monospace;}
+/* MAIN PANEL */
+.main-panel {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:24px;
+  backdrop-filter:blur(16px);
+}
+.level-title {
+  font-family:'Orbitron',sans-serif; font-size:16px; font-weight:700;
+  color:var(--echo-cyan); margin-bottom:4px; letter-spacing:1px;
+}
+.level-desc { font-size:13px; color:var(--muted); margin-bottom:20px; line-height:1.5; }
 
-/* ACTION ROW */
-.action-row{display:flex;gap:12px;justify-content:space-between;flex-wrap:wrap;align-items:center;}
-.action-left{font-size:0.78rem;color:var(--muted);}
-.action-right{display:flex;gap:10px;}
-.btn{font-family:'Orbitron',monospace;font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;padding:10px 20px;border-radius:6px;cursor:pointer;border:none;transition:all 0.2s;}
-.btn-primary{background:var(--cyan);color:#000;font-weight:700;}
-.btn-primary:hover{opacity:0.85;transform:translateY(-1px);}
-.btn-secondary{background:transparent;border:1px solid var(--border);color:var(--muted);}
-.btn-secondary:hover{border-color:var(--cyan);color:var(--cyan);}
-.btn-next{background:var(--green);color:#000;font-weight:700;display:none;}
-.btn-next:hover{opacity:0.85;}
+/* POOL */
+.pool-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.event-pool {
+  display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px;
+  min-height:48px;
+}
+.event-token {
+  padding:8px 14px; border-radius:8px; cursor:pointer;
+  font-family:'Space Mono',monospace; font-size:12px;
+  border:1px solid var(--border); background:rgba(56,189,248,0.08);
+  color:var(--text); transition:all .2s; user-select:none;
+}
+.event-token:hover { background:rgba(56,189,248,0.2); border-color:var(--echo-cyan); color:var(--echo-cyan); transform:translateY(-2px); }
+.event-token.used { opacity:0.3; pointer-events:none; }
+
+/* CHAIN */
+.chain-label { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); letter-spacing:2px; text-transform:uppercase; margin-bottom:10px; }
+.chain-area {
+  min-height:64px; border:1px dashed rgba(56,189,248,0.3);
+  border-radius:12px; padding:12px; display:flex; flex-wrap:wrap; gap:8px;
+  background:rgba(56,189,248,0.03); margin-bottom:20px;
+  transition:border-color .2s;
+}
+.chain-area:empty::after { content:'Click events above to build your signal chain...'; color:rgba(56,189,248,0.25); font-size:12px; font-family:'Space Mono',monospace; }
+.chain-token {
+  padding:8px 14px; border-radius:8px;
+  font-family:'Space Mono',monospace; font-size:12px;
+  background:linear-gradient(135deg,rgba(56,189,248,0.2),rgba(99,102,241,0.2));
+  border:1px solid var(--echo-cyan); color:var(--echo-cyan);
+  display:flex; align-items:center; gap:8px;
+  animation:tokenPop .2s ease;
+}
+@keyframes tokenPop { from{transform:scale(0.8);opacity:0} to{transform:scale(1);opacity:1} }
+.chain-token .remove-btn { background:none; border:none; color:rgba(56,189,248,0.5); cursor:pointer; font-size:14px; padding:0; line-height:1; }
+.chain-token .remove-btn:hover { color:#ff6b8a; }
+
+.chain-token.correct { border-color:#4ade80; color:#4ade80; background:rgba(74,222,128,0.15); }
+.chain-token.wrong { border-color:#ff6b8a; color:#ff6b8a; background:rgba(255,107,138,0.15); animation:shake .3s ease; }
+@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
+
+.chain-connector { color:var(--echo-cyan); font-size:18px; align-self:center; opacity:0.5; }
+
+/* BUTTONS */
+.btn-row { display:flex; gap:10px; }
+.btn-fire {
+  flex:1; font-family:'Orbitron',sans-serif; font-size:13px; font-weight:700;
+  letter-spacing:2px; padding:14px; border:none; border-radius:10px; cursor:pointer;
+  background:linear-gradient(135deg,var(--echo-cyan),var(--echo-blue));
+  color:#04050f; transition:all .2s;
+  box-shadow:0 0 20px rgba(56,189,248,0.3);
+}
+.btn-fire:hover { transform:scale(1.02); box-shadow:0 0 35px rgba(56,189,248,0.5); }
+.btn-clear {
+  font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:1px; padding:14px 20px; border-radius:10px; cursor:pointer;
+  background:transparent; border:1px solid var(--border); color:var(--muted);
+  transition:all .2s;
+}
+.btn-clear:hover { border-color:var(--echo-cyan); color:var(--echo-cyan); }
+
+/* SIDE PANEL */
+.side-panel { display:flex; flex-direction:column; gap:16px; }
+
+/* CHARACTER */
+.char-panel {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:16px; text-align:center;
+  backdrop-filter:blur(16px); position:relative; overflow:hidden;
+}
+.char-pose {
+  width:100%; max-width:160px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 16px rgba(56,189,248,0.4));
+}
+
+/* FACE POP */
+#face-pop {
+  position:fixed; top:50%; left:50%; transform:translate(-50%,-50%) scale(0);
+  z-index:200; pointer-events:none;
+  transition:transform .25s cubic-bezier(.34,1.56,.64,1), opacity .25s;
+  opacity:0;
+}
+#face-pop img { width:160px; height:160px; object-fit:contain; filter:drop-shadow(0 0 30px rgba(56,189,248,0.7)); }
+#face-pop.show { transform:translate(-50%,-50%) scale(1); opacity:1; }
+
+/* VISUALIZER */
+.viz-panel {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:16px;
+  backdrop-filter:blur(16px);
+}
+.viz-title { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-bottom:10px; }
+.viz-bars {
+  display:flex; gap:4px; align-items:flex-end; height:60px;
+}
+.viz-bar {
+  flex:1; border-radius:3px 3px 0 0;
+  background:linear-gradient(to top,var(--echo-blue),var(--echo-cyan));
+  transition:height .1s ease;
+  box-shadow:0 0 6px rgba(56,189,248,0.4);
+}
+
+/* COMBO PANEL */
+.combo-panel {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:16px;
+  backdrop-filter:blur(16px); text-align:center;
+}
+.combo-label { font-family:'Space Mono',monospace; font-size:9px; letter-spacing:2px; color:var(--muted); text-transform:uppercase; margin-bottom:6px; }
+.combo-val {
+  font-family:'Orbitron',sans-serif; font-size:28px; font-weight:900;
+  color:var(--echo-cyan);
+  text-shadow:0 0 20px rgba(56,189,248,0.5);
+  transition:transform .15s;
+}
+.combo-val.bump { animation:comboBump .2s ease; }
+@keyframes comboBump { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
+.combo-suffix { font-family:'Space Mono',monospace; font-size:10px; color:var(--muted); margin-top:2px; }
+
+/* QUOTE */
+.quote-panel {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:16px;
+  backdrop-filter:blur(16px);
+}
+.quote-text { font-size:12px; color:var(--muted); line-height:1.6; font-style:italic; }
+.quote-attr { font-family:'Space Mono',monospace; font-size:10px; color:var(--echo-cyan); margin-top:8px; }
+
+/* ── RESULT SCREEN ── */
+#screen-result { text-align:center; }
+.result-face { width:140px; height:140px; object-fit:contain; margin:0 auto 20px; filter:drop-shadow(0 0 24px rgba(56,189,248,0.5)); animation:float 3s ease-in-out infinite; }
+.result-title { font-family:'Orbitron',sans-serif; font-size:clamp(24px,5vw,42px); font-weight:900; letter-spacing:3px; margin-bottom:8px; }
+.result-title.win { color:var(--echo-cyan); text-shadow:0 0 30px rgba(56,189,248,0.6); }
+.result-title.lose { color:#ff6b8a; text-shadow:0 0 30px rgba(255,107,138,0.5); }
+.result-score { font-family:'Orbitron',sans-serif; font-size:48px; font-weight:900; color:var(--echo-cyan); margin-bottom:4px; }
+.result-sub { font-size:13px; color:var(--muted); margin-bottom:28px; }
+.result-card {
+  background:var(--panel); border:1px solid var(--border);
+  border-radius:16px; padding:24px 28px; max-width:420px; margin:0 auto 24px;
+  backdrop-filter:blur(16px);
+}
+.result-msg { font-size:14px; color:var(--text); line-height:1.7; }
+.result-btns { display:flex; gap:12px; justify-content:center; flex-wrap:wrap; }
+.btn-secondary {
+  font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:1px; padding:14px 28px; border-radius:50px; cursor:pointer;
+  background:transparent; border:1px solid var(--border); color:var(--muted);
+  transition:all .2s;
+}
+.btn-secondary:hover { border-color:var(--echo-cyan); color:var(--echo-cyan); }
+.btn-primary {
+  font-family:'Orbitron',sans-serif; font-size:12px; font-weight:700;
+  letter-spacing:1px; padding:14px 28px; border-radius:50px; cursor:pointer;
+  background:linear-gradient(135deg,var(--echo-cyan),var(--echo-blue));
+  border:none; color:#04050f; transition:all .2s;
+}
+.btn-primary:hover { transform:scale(1.04); box-shadow:0 0 25px rgba(56,189,248,0.4); }
+
+/* PARTICLES */
+#particles { position:fixed; inset:0; z-index:5; pointer-events:none; }
+.particle {
+  position:absolute; border-radius:50%;
+  background:var(--echo-cyan); opacity:0;
+  animation:particleFly 1.2s ease-out forwards;
+}
+@keyframes particleFly {
+  0%{opacity:1;transform:translate(0,0) scale(1)}
+  100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}
+}
 
 /* TOAST */
-.toast{position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:var(--card);border:1px solid var(--border);border-radius:8px;padding:12px 24px;font-size:0.82rem;font-weight:700;letter-spacing:0.06em;opacity:0;transition:opacity 0.3s;z-index:50;pointer-events:none;}
-.toast.show{opacity:1;}
-.toast.good{border-color:var(--green);color:var(--green);}
-.toast.bad{border-color:var(--red);color:var(--red);}
-.toast.info{border-color:var(--cyan);color:var(--cyan);}
+#toast {
+  position:fixed; bottom:32px; left:50%; transform:translateX(-50%) translateY(80px);
+  background:rgba(10,14,30,0.95); border:1px solid var(--echo-cyan);
+  border-radius:50px; padding:12px 28px;
+  font-family:'Orbitron',sans-serif; font-size:13px; color:var(--echo-cyan);
+  letter-spacing:1px; z-index:300;
+  transition:transform .3s ease, opacity .3s ease; opacity:0;
+}
+#toast.show { transform:translateX(-50%) translateY(0); opacity:1; }
 
-/* RESULT */
-.result-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.85);z-index:100;align-items:center;justify-content:center;}
-.result-overlay.show{display:flex;}
-.result-box{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:40px;max-width:480px;width:90%;text-align:center;}
-.result-icon{font-size:3rem;margin-bottom:16px;}
-.result-title{font-family:'Orbitron',monospace;font-size:1.1rem;letter-spacing:0.1em;margin-bottom:8px;}
-.result-title.win{color:var(--green);}
-.result-title.fail{color:var(--red);}
-.result-score{font-family:'Orbitron',monospace;font-size:2rem;font-weight:900;color:var(--cyan);margin-bottom:12px;}
-.result-msg{font-size:0.88rem;color:var(--muted);line-height:1.7;margin-bottom:24px;}
-.result-actions{display:flex;gap:12px;justify-content:center;}
-
-@media(max-width:700px){.game-area{grid-template-columns:1fr;}}
+@media(max-width:700px){
+  .game-layout{grid-template-columns:1fr;}
+  .side-panel{flex-direction:row;flex-wrap:wrap;}
+  .char-panel,.viz-panel,.combo-panel,.quote-panel{flex:1;min-width:140px;}
+}
 </style>
 </head>
 <body>
 
-<div style="position:fixed;inset:0;background-image:url('echo-entrance.png');background-size:cover;background-position:center top;z-index:0;"></div>
-<div style="position:fixed;inset:0;background:linear-gradient(to bottom,rgba(5,5,8,0.55) 0%,rgba(5,5,8,0.72) 50%,rgba(5,5,8,0.94) 100%);z-index:1;"></div>
-<div style="position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,#38bdf822 0%,transparent 60%);z-index:1;pointer-events:none;"></div>
+<!-- WORLD -->
+<div id="world-bg"></div>
+<div id="world-overlay"></div>
+<div id="world-glow"></div>
 
+<!-- FACE POP -->
+<div id="face-pop"><img id="face-img" src="echo-happy.png" alt=""></div>
 
-<div style="position:relative;z-index:10;">
+<!-- PARTICLES -->
+<div id="particles"></div>
+
+<!-- TOAST -->
+<div id="toast"></div>
+
+<!-- NAV -->
+<div style="position:relative;z-index:100;">
 <nav>
-  <div class="nav-left">
-    <a href='games.html'>← Game Universe</a>
-    <span class="nav-title">Signal Lab</span>
-  </div>
-  <div style="display:flex;align-items:center;gap:12px;">
-    <div class="progress-dots" id="progress-dots">
-      <div class="dot active" id="dot-0"></div>
-      <div class="dot" id="dot-1"></div>
-      <div class="dot" id="dot-2"></div>
-    </div>
-    <span class="nav-tier">Coders</span>
-  </div>
+  <a href="games.html" class="nav-back">← Game Universe</a>
+  <a href="index.html" class="nav-logo">MiM</a>
+  <div class="nav-right"><span id="nav-user"></span></div>
 </nav>
+</div>
 
-<div class="game-shell">
-  <div class="echo-quote">
-    <div class="echo-avatar">♫</div>
-    <div class="echo-text" id="echo-text">Loading signal...</div>
+<!-- ══ INSTRUCTIONS ══ -->
+<div id="screen-instructions" class="screen active">
+  <img src="echo-idle.gif" alt="Echo" class="inst-character" onerror="this.src='echo-happy.png'">
+  <div class="inst-title">ECHO'S SIGNAL LAB</div>
+  <div class="inst-subtitle">Web Audio &nbsp;·&nbsp; Event Chains &nbsp;·&nbsp; Signal Flow</div>
+
+  <div class="inst-card">
+    <h3>How to Play</h3>
+    <div class="inst-step">
+      <div class="inst-num">1</div>
+      <p>Read the <strong>signal challenge</strong> — each level shows you a real JavaScript event chain you need to wire.</p>
+    </div>
+    <div class="inst-step">
+      <div class="inst-num">2</div>
+      <p><strong>Click events</strong> from the pool in the correct order to build your signal chain.</p>
+    </div>
+    <div class="inst-step">
+      <div class="inst-num">3</div>
+      <p>Hit <strong>Fire Signal</strong> to test your chain. Every correct link scores points. A wrong order costs you.</p>
+    </div>
+    <div class="inst-step">
+      <div class="inst-num">4</div>
+      <p>Build combos by nailing levels back-to-back. Echo watches — <strong>keep the signal clean.</strong></p>
+    </div>
   </div>
 
-  <div class="level-header">
-    <div style="display:flex;align-items:center;gap:16px;">
-      <div class="level-badge" id="level-badge">LEVEL 1</div>
-      <div>
-        <div class="level-title" id="level-title"></div>
-        <div class="level-desc" id="level-desc"></div>
+  <button class="btn-start" onclick="startGame()">LOCK IN &nbsp;→</button>
+</div>
+
+<!-- ══ GAME ══ -->
+<div id="screen-game" class="screen">
+  <!-- HUD -->
+  <div class="game-hud">
+    <div class="hud-stat">
+      <div class="hud-label">Score</div>
+      <div class="hud-val" id="hud-score">0</div>
+    </div>
+    <div class="signal-meter-wrap">
+      <div class="signal-label">Signal Strength</div>
+      <div class="signal-bar"><div class="signal-fill" id="signal-fill" style="width:0%"></div></div>
+    </div>
+    <div class="level-badge" id="hud-level">LEVEL 1 / 5</div>
+    <div class="hud-stat">
+      <div class="hud-label">Lives</div>
+      <div class="hud-val" id="hud-lives">♦♦♦</div>
+    </div>
+  </div>
+
+  <div class="game-layout">
+    <!-- MAIN -->
+    <div class="main-panel">
+      <div class="level-title" id="level-title"></div>
+      <div class="level-desc" id="level-desc"></div>
+
+      <div class="pool-label">Event Pool — pick in order</div>
+      <div class="event-pool" id="event-pool"></div>
+
+      <div class="chain-label">Your Signal Chain</div>
+      <div class="chain-area" id="chain-area"></div>
+
+      <div class="btn-row">
+        <button class="btn-fire" onclick="fireSignal()">⚡ FIRE SIGNAL</button>
+        <button class="btn-clear" onclick="clearChain()">RESET</button>
       </div>
     </div>
-    <div class="score-bar">
-      <div class="score-item"><div class="score-val" id="timer-val" style="color:var(--cyan)">90</div><div class="score-label">Seconds</div></div>
-      <div class="score-item"><div class="score-val" id="score-val">0</div><div class="score-label">Score</div></div>
-    </div>
-  </div>
 
-  <!-- SIGNAL VISUALIZER -->
-  <div class="signal-bar">
-    <span class="signal-label">Signal</span>
-    <div class="signal-beats" id="signal-beats"></div>
-    <span class="signal-score" id="signal-pct">0% in sync</span>
-  </div>
-
-  <div class="game-area">
-    <div class="pool-panel">
-      <div class="panel-header"><div class="panel-label"><span>EVENTS</span> — Click to add to chain</div></div>
-      <div class="events-pool" id="events-pool"></div>
-    </div>
-
-    <div class="chain-panel">
-      <div class="panel-header"><div class="panel-label"><span>CHAIN</span> — Wire events in order</div></div>
-      <div class="chain-zone" id="chain-zone">
-        <div class="chain-placeholder">← Add events in the right order</div>
+    <!-- SIDE -->
+    <div class="side-panel">
+      <div class="char-panel">
+        <img src="echo-pose.png" alt="Echo" class="char-pose" onerror="this.src='echo-happy.png'">
       </div>
-    </div>
-  </div>
-
-  <div class="output-panel">
-    <div class="panel-header"><div class="panel-label"><span>SIGNAL OUTPUT</span> — See events fire in sequence</div></div>
-    <div class="output-body" id="output-body">
-      <span class="output-empty">Fire the chain to see the signal output...</span>
-    </div>
-  </div>
-
-  <div class="action-row">
-    <div class="action-left" id="action-msg">Click events to add them to the chain in the correct order, then fire the signal.</div>
-    <div class="action-right">
-      <button class="btn btn-secondary" onclick="resetLevel()">Reset</button>
-      <button class="btn btn-primary" id="fire-btn" onclick="fireChain()">▶ Fire Signal</button>
-      <button class="btn btn-next" id="btn-next" onclick="nextLevel()">Next Level →</button>
+      <div class="viz-panel">
+        <div class="viz-title">Signal Visualizer</div>
+        <div class="viz-bars" id="viz-bars"></div>
+      </div>
+      <div class="combo-panel">
+        <div class="combo-label">Combo</div>
+        <div class="combo-val" id="combo-val">0</div>
+        <div class="combo-suffix">signal locks</div>
+      </div>
+      <div class="quote-panel">
+        <div class="quote-text" id="quote-text">"Every app is just events talking to each other. Learn the language."</div>
+        <div class="quote-attr">— Echo</div>
+      </div>
     </div>
   </div>
 </div>
 
-<div class="toast" id="toast"></div>
-
-<div class="result-overlay" id="result-overlay">
-  <div class="result-box">
-    <div class="result-icon" id="result-icon"></div>
-    <div class="result-title" id="result-title"></div>
-    <div class="result-score" id="result-score"></div>
+<!-- ══ RESULT ══ -->
+<div id="screen-result" class="screen">
+  <img id="result-face" src="echo-victory.png" alt="Echo" class="result-face" onerror="this.src='echo-happy.png'">
+  <div class="result-title" id="result-title">SIGNAL LOCKED</div>
+  <div class="result-score" id="result-score">0</div>
+  <div class="result-sub" id="result-sub">pts</div>
+  <div class="result-card">
     <div class="result-msg" id="result-msg"></div>
-    <div class="result-actions" id="result-actions"></div>
+  </div>
+  <div class="result-btns">
+    <button class="btn-secondary" onclick="restartGame()">Play Again</button>
+    <button class="btn-primary" onclick="window.location.href='echo.html'">Back to Echo</button>
   </div>
 </div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey:"AIzaSyBvZGnMFBhEMqLJOF0P8RmzLGaNxDvhP7c",
+  authDomain:"method-in-motion-7e8bf.firebaseapp.com",
+  projectId:"method-in-motion-7e8bf",
+  storageBucket:"method-in-motion-7e8bf.appspot.com",
+  messagingSenderId:"216656898928",
+  appId:"1:216656898928:web:af5a44d49c5f07f2e65ca8"
+};
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+onAuthStateChanged(auth, async (user) => {
+  if (!user) { window.location.href='index.html'; return; }
+  const snap = await getDoc(doc(db,'users',user.uid));
+  const tier = snap.exists() ? (snap.data().tier||'free').toLowerCase() : 'free';
+  if (!['coders'].includes(tier)) { window.location.href='echo.html'; return; }
+  const name = user.displayName || user.email.split('@')[0];
+  document.getElementById('nav-user').textContent = name;
+});
+</script>
 
 <script>
-// ─── LEVELS ───────────────────────────────────────────────────────────────────
+// ══════════════════════════════════
+//  WEB AUDIO ENGINE
+// ══════════════════════════════════
+let audioCtx = null;
+
+function getCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  return audioCtx;
+}
+
+function playTone(freq, type='sine', duration=0.18, vol=0.3, delay=0) {
+  const ctx = getCtx();
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.connect(gain); gain.connect(ctx.destination);
+  osc.type = type;
+  osc.frequency.setValueAtTime(freq, ctx.currentTime + delay);
+  gain.gain.setValueAtTime(0, ctx.currentTime + delay);
+  gain.gain.linearRampToValueAtTime(vol, ctx.currentTime + delay + 0.01);
+  gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + delay + duration);
+  osc.start(ctx.currentTime + delay);
+  osc.stop(ctx.currentTime + delay + duration + 0.02);
+}
+
+function playChord(freqs, type='sine', duration=0.2, vol=0.2) {
+  freqs.forEach(f => playTone(f, type, duration, vol));
+}
+
+function sfxTokenPick() { playTone(880, 'sine', 0.1, 0.25); }
+function sfxTokenRemove() { playTone(220, 'sawtooth', 0.08, 0.15); }
+
+function sfxCorrectLink() {
+  playTone(660, 'sine', 0.12, 0.25);
+  playTone(880, 'sine', 0.12, 0.2, 0.08);
+}
+
+function sfxWrongChain() {
+  playTone(180, 'sawtooth', 0.15, 0.3);
+  playTone(160, 'sawtooth', 0.2, 0.25, 0.1);
+}
+
+function sfxLevelComplete() {
+  const notes = [523, 659, 784, 1047];
+  notes.forEach((f,i) => playTone(f, 'sine', 0.18, 0.28, i*0.1));
+}
+
+function sfxCombo(n) {
+  const base = 440 + n * 80;
+  playChord([base, base*1.25, base*1.5], 'sine', 0.15, 0.22);
+}
+
+function sfxGameWin() {
+  [523,659,784,1047,1319,1568].forEach((f,i) => playTone(f,'sine',0.2,0.3,i*0.08));
+  setTimeout(()=>playChord([523,659,784,1047],'sine',0.4,0.2),600);
+}
+
+function sfxGameLose() {
+  [400,300,200,120].forEach((f,i) => playTone(f,'sawtooth',0.22,0.25,i*0.12));
+}
+
+function sfxFireButton() {
+  playTone(440,'square',0.06,0.2);
+  playTone(550,'square',0.06,0.15,0.04);
+}
+
+function sfxSignalFire(index, total) {
+  const freq = 300 + (index/total)*700;
+  playTone(freq,'sine',0.14,0.3);
+}
+
+function sfxReset() { playTone(330,'triangle',0.08,0.18); }
+
+function sfxPulse(index) {
+  const freqs = [261,294,330,349,392,440,494,523];
+  playTone(freqs[index % freqs.length],'sine',0.1,0.2);
+}
+
+// ══════════════════════════════════
+//  VISUALIZER
+// ══════════════════════════════════
+const VIZ_COUNT = 12;
+let vizBars = [];
+let vizInterval = null;
+
+function buildViz() {
+  const el = document.getElementById('viz-bars');
+  el.innerHTML = '';
+  vizBars = [];
+  for(let i=0;i<VIZ_COUNT;i++){
+    const b = document.createElement('div');
+    b.className='viz-bar';
+    b.style.height='4px';
+    el.appendChild(b);
+    vizBars.push(b);
+  }
+}
+
+function pulseViz(intense=false) {
+  vizBars.forEach((b,i)=>{
+    const h = intense
+      ? Math.random()*52+8
+      : Math.random()*18+4;
+    b.style.height = h+'px';
+    sfxPulse(i);
+  });
+}
+
+function idleViz() {
+  if(vizInterval) clearInterval(vizInterval);
+  vizInterval = setInterval(()=>{
+    vizBars.forEach(b=>{ b.style.height=(Math.random()*10+4)+'px'; });
+  }, 180);
+}
+
+function stopViz() {
+  if(vizInterval) clearInterval(vizInterval);
+  vizBars.forEach(b=>{ b.style.height='4px'; });
+}
+
+// ══════════════════════════════════
+//  LEVELS DATA
+// ══════════════════════════════════
 const LEVELS = [
   {
-    title: 'The Click Sequence',
-    desc: 'Wire the events in the correct order so clicking a button shows a message',
-    quote: '<strong>Echo says:</strong> Every program is a playlist. Events fire in sequence — DOM loads, listeners attach, user acts, response fires. Get the order right and the signal drops.',
-    time: 90,
-    points: 350,
-    events: [
-      { id: 'a', type: 'dom',   name: 'DOMContentLoaded',       desc: 'Page HTML is fully parsed and ready' },
-      { id: 'b', type: 'event', name: 'addEventListener(click)', desc: 'Attach click listener to the button' },
-      { id: 'c', type: 'event', name: 'click fires',             desc: 'User clicks the button' },
-      { id: 'd', type: 'dom',   name: 'innerHTML updates',       desc: 'Message appears on the page' },
-      { id: 'e', type: 'event', name: 'mouseover fires',         desc: 'User hovers over the button' },
-      { id: 'f', type: 'dom',   name: 'createElement()',         desc: 'A new element is created in memory' },
-    ],
-    correctChain: ['a', 'b', 'c', 'd'],
-    outputs: [
-      { text: 'DOM ready — page loaded', correct: true },
-      { text: 'Listener attached to button', correct: true },
-      { text: 'Click event fired!', correct: true },
-      { text: 'Message displayed on page', correct: true },
-    ]
+    title: "Level 1 — The Click Chain",
+    desc: "A user taps a button. What's the correct JavaScript signal chain? Wire the events in order.",
+    quote: "Every interaction starts with a trigger. Find it first.",
+    correct: ["DOM loads","Event listener added","User clicks button","Click event fires","Handler runs","DOM updates"],
+    pool: ["Handler runs","User clicks button","DOM loads","DOM updates","Click event fires","Event listener added","setTimeout fires","fetch() called"]
   },
   {
-    title: 'The Async Download',
-    desc: 'Wire the async events in the correct order so data loads and displays properly',
-    quote: '<strong>Echo says:</strong> Async code is like a delayed drop in a track. The beat doesn\'t hit until the data arrives — you have to wire the waiting into the sequence.',
-    time: 110,
-    points: 450,
-    events: [
-      { id: 'a', type: 'dom',   name: 'DOMContentLoaded',        desc: 'Page is ready' },
-      { id: 'b', type: 'event', name: 'button click fires',      desc: 'User triggers the data load' },
-      { id: 'c', type: 'async', name: 'fetch() called',          desc: 'HTTP request sent to server' },
-      { id: 'd', type: 'async', name: 'Promise resolves',        desc: 'Server responds with data' },
-      { id: 'e', type: 'async', name: 'response.json() called',  desc: 'Raw response parsed into data' },
-      { id: 'f', type: 'dom',   name: 'DOM updated with data',   desc: 'Page shows the loaded content' },
-      { id: 'g', type: 'event', name: 'keydown fires',           desc: 'User presses a key' },
-      { id: 'h', type: 'async', name: 'setTimeout() called',     desc: 'A delay timer is started' },
-    ],
-    correctChain: ['a', 'b', 'c', 'd', 'e', 'f'],
-    outputs: [
-      { text: 'Page ready', correct: true },
-      { text: 'Load button clicked', correct: true },
-      { text: 'Fetching data from server...', correct: true },
-      { text: 'Response received — 200 OK', correct: true },
-      { text: 'Parsing JSON data', correct: true },
-      { text: 'Data rendered to page', correct: true },
-    ]
+    title: "Level 2 — The Async Download",
+    desc: "The page fetches data from a server. Wire the async signal chain from page load to rendered content.",
+    quote: "Async code doesn't wait — it signals when it's ready.",
+    correct: ["Page loads","fetch() called","Promise pending","Server responds","Promise resolves",".then() runs","Data parsed","DOM renders"],
+    pool: [".then() runs","Data parsed","fetch() called","DOM renders","Server responds","Page loads","Promise pending","Promise resolves","Error caught","Event listener added"]
   },
   {
-    title: 'The Full App Loop',
-    desc: 'Wire the complete event chain for a real-time search filter — 7 events in precise order',
-    quote: '<strong>Echo says:</strong> This is the full track. Input event, debounce timer, fetch, parse, filter, render, done. Every modern app runs on this chain. Wire it perfectly.',
-    time: 130,
-    points: 600,
-    events: [
-      { id: 'a', type: 'dom',   name: 'DOMContentLoaded',         desc: 'App initializes' },
-      { id: 'b', type: 'event', name: 'input event fires',        desc: 'User types in search box' },
-      { id: 'c', type: 'timer', name: 'debounce setTimeout',      desc: 'Wait 300ms before searching (avoid spam)' },
-      { id: 'd', type: 'async', name: 'fetch() called',           desc: 'Search query sent to API' },
-      { id: 'e', type: 'async', name: 'await response.json()',    desc: 'Results parsed from response' },
-      { id: 'f', type: 'event', name: 'filter() runs on results', desc: 'Results filtered client-side' },
-      { id: 'g', type: 'dom',   name: 'DOM renders results',      desc: 'Matching results shown on page' },
-      { id: 'h', type: 'event', name: 'scroll event fires',       desc: 'User scrolls the page' },
-      { id: 'i', type: 'timer', name: 'setInterval fires',        desc: 'Repeated timer ticks every second' },
-      { id: 'j', type: 'async', name: 'Promise.all() resolves',   desc: 'Multiple parallel fetches complete' },
-    ],
-    correctChain: ['a', 'b', 'c', 'd', 'e', 'f', 'g'],
-    outputs: [
-      { text: 'App initialized', correct: true },
-      { text: 'Input detected: "meth..."', correct: true },
-      { text: 'Debounce started — waiting 300ms', correct: true },
-      { text: 'Searching API for "method"', correct: true },
-      { text: 'Results received and parsed', correct: true },
-      { text: 'Filtering 24 results', correct: true },
-      { text: '6 matches rendered to DOM', correct: true },
-    ]
+    title: "Level 3 — The Audio Signal",
+    desc: "Echo's beat machine fires a sound. Wire the Web Audio API signal chain correctly.",
+    quote: "Sound is just data moving through nodes — same as any signal.",
+    correct: ["AudioContext created","OscillatorNode created","GainNode created","Nodes connected","Oscillator started","Gain envelope set","Sound plays","Oscillator stopped"],
+    pool: ["Gain envelope set","AudioContext created","Sound plays","GainNode created","Oscillator stopped","Nodes connected","OscillatorNode created","Oscillator started","Buffer loaded","Analyser tapped"]
+  },
+  {
+    title: "Level 4 — The Input Loop",
+    desc: "A user types in a search box and results appear. Wire the full event-driven chain.",
+    quote: "Debounce is discipline — wait for the signal to settle.",
+    correct: ["User types","input event fires","Debounce timer starts","Timer fires","fetch() called","Results returned","Array filtered","List renders"],
+    pool: ["Array filtered","fetch() called","User types","List renders","Debounce timer starts","Results returned","input event fires","Timer fires","keydown fires","State saved"]
+  },
+  {
+    title: "Level 5 — The Full App Loop",
+    desc: "A full interactive app: user logs in, data loads, UI updates, user acts, state saves. Wire the complete cycle.",
+    quote: "An app is just one long signal chain — start to finish.",
+    correct: ["App initializes","Auth state checked","User signed in","Firestore queried","Data returned","UI rendered","User interacts","State updated","Data saved"],
+    pool: ["State updated","Data saved","User interacts","App initializes","UI rendered","Data returned","User signed in","Auth state checked","Firestore queried","Event bubbles","DOM ready","Error handled"]
   }
 ];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let currentLevel = 0;
+// ══════════════════════════════════
+//  GAME STATE
+// ══════════════════════════════════
 let score = 0;
-let timer = null;
-let timeLeft = 0;
-let chain = [];
-let levelDone = false;
-let attempts = 0;
-let firing = false;
+let lives = 3;
+let combo = 0;
+let currentLevel = 0;
+let playerChain = [];
+let gameActive = false;
+let signalStrength = 0;
 
-// ─── INIT ─────────────────────────────────────────────────────────────────────
-function initLevel(idx) {
-  const lvl = LEVELS[idx];
-  levelDone = false;
-  chain = [];
-  attempts = 0;
-  firing = false;
+const QUOTES = [
+  "Every app is just events talking to each other.",
+  "Sound is data. Data is sound. Everything is signal.",
+  "A clean chain is a clean mind.",
+  "Debug the signal, not the noise.",
+  "Rhythm isn't music — it's logic with feeling."
+];
 
-  document.getElementById('level-badge').textContent = `LEVEL ${idx + 1}`;
-  document.getElementById('level-title').textContent = lvl.title;
-  document.getElementById('level-desc').textContent = lvl.desc;
-  document.getElementById('echo-text').innerHTML = lvl.quote;
+// ══════════════════════════════════
+//  SCREENS
+// ══════════════════════════════════
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
 
-  LEVELS.forEach((_, i) => {
-    const dot = document.getElementById(`dot-${i}`);
-    if(dot) dot.className = 'dot' + (i < idx ? ' done' : i === idx ? ' active' : '');
+// ══════════════════════════════════
+//  START
+// ══════════════════════════════════
+function startGame() {
+  getCtx(); // unlock audio on first interaction
+  score=0; lives=3; combo=0; currentLevel=0; signalStrength=0;
+  gameActive=true;
+  buildViz();
+  idleViz();
+  showScreen('screen-game');
+  loadLevel(0);
+}
+window.startGame = startGame;
+
+// ══════════════════════════════════
+//  LOAD LEVEL
+// ══════════════════════════════════
+function loadLevel(idx) {
+  if(idx >= LEVELS.length){ endGame(true); return; }
+  currentLevel = idx;
+  playerChain = [];
+
+  const lv = LEVELS[idx];
+  document.getElementById('level-title').textContent = lv.title;
+  document.getElementById('level-desc').textContent = lv.desc;
+  document.getElementById('hud-level').textContent = `LEVEL ${idx+1} / ${LEVELS.length}`;
+  document.getElementById('quote-text').textContent = `"${lv.quote}"`;
+
+  // shuffle pool
+  const shuffled = [...lv.pool].sort(()=>Math.random()-0.5);
+  const pool = document.getElementById('event-pool');
+  pool.innerHTML='';
+  shuffled.forEach(ev=>{
+    const t = document.createElement('div');
+    t.className='event-token';
+    t.textContent=ev;
+    t.dataset.event=ev;
+    t.onclick=()=>addToken(t,ev);
+    pool.appendChild(t);
   });
 
-  // Signal beats
-  const beatsEl = document.getElementById('signal-beats');
-  beatsEl.innerHTML = lvl.correctChain.map((_, i) =>
-    `<div class="beat" id="beat-${i}" style="height:${20 + i*6}px"></div>`
-  ).join('');
-  document.getElementById('signal-pct').textContent = '0% in sync';
+  document.getElementById('chain-area').innerHTML='';
+  updateHUD();
+  pulseViz(false);
+}
 
-  document.getElementById('output-body').innerHTML = '<span class="output-empty">Fire the chain to see the signal output...</span>';
-  document.getElementById('btn-next').style.display = 'none';
-  document.getElementById('fire-btn').style.display = 'block';
-  document.getElementById('action-msg').textContent = 'Click events to add them to the chain in the correct order, then fire the signal.';
-
-  renderPool();
+// ══════════════════════════════════
+//  CHAIN BUILDING
+// ══════════════════════════════════
+function addToken(el, ev) {
+  playerChain.push(ev);
+  el.classList.add('used');
+  sfxTokenPick();
   renderChain();
-
-  clearInterval(timer);
-  timeLeft = lvl.time;
-  updateTimer();
-  timer = setInterval(tick, 1000);
+  pulseViz(false);
 }
 
-// ─── RENDER POOL ──────────────────────────────────────────────────────────────
-function renderPool() {
-  const lvl = LEVELS[currentLevel];
-  const usedIds = chain.map(c => c.id);
-  document.getElementById('events-pool').innerHTML = lvl.events.map(ev =>
-    `<div class="event-card ${usedIds.includes(ev.id) ? 'used' : ''}" onclick="addToChain('${ev.id}')">
-      <span class="event-type type-${ev.type}">${ev.type}</span>
-      <div style="flex:1">
-        <div class="event-name">${ev.name}</div>
-        <div class="event-desc">${ev.desc}</div>
-      </div>
-    </div>`
-  ).join('');
+function removeToken(ev, el) {
+  const i = playerChain.lastIndexOf(ev);
+  if(i!==-1) playerChain.splice(i,1);
+  // restore pool token
+  document.querySelectorAll('.event-token').forEach(t=>{
+    if(t.dataset.event===ev && t.classList.contains('used')){
+      t.classList.remove('used');
+    }
+  });
+  sfxTokenRemove();
+  renderChain();
 }
+window.removeToken = removeToken;
 
-// ─── RENDER CHAIN ─────────────────────────────────────────────────────────────
 function renderChain() {
-  const zone = document.getElementById('chain-zone');
-  if (chain.length === 0) {
-    zone.innerHTML = '<div class="chain-placeholder">← Add events in the right order</div>';
-    return;
-  }
-  zone.innerHTML = chain.map((ev, i) =>
-    `<div class="event-card in-chain" id="chain-card-${i}">
-      <span class="card-pos">${i + 1}</span>
-      <span class="event-type type-${ev.type}">${ev.type}</span>
-      <div style="flex:1">
-        <div class="event-name">${ev.name}</div>
-        <div class="event-desc">${ev.desc}</div>
-      </div>
-      <button class="card-remove" onclick="removeFromChain(${i})">✕</button>
-    </div>`
-  ).join('');
-}
-
-// ─── ADD / REMOVE ─────────────────────────────────────────────────────────────
-function addToChain(id) {
-  if (firing || levelDone) return;
-  const lvl = LEVELS[currentLevel];
-  if (chain.find(c => c.id === id)) return;
-  const ev = lvl.events.find(e => e.id === id);
-  chain.push(ev);
-  renderPool();
-  renderChain();
-  updateSyncMeter();
-}
-
-function removeFromChain(idx) {
-  if (firing || levelDone) return;
-  chain.splice(idx, 1);
-  renderPool();
-  renderChain();
-  updateSyncMeter();
-}
-
-// ─── SYNC METER ───────────────────────────────────────────────────────────────
-function updateSyncMeter() {
-  const lvl = LEVELS[currentLevel];
-  const correct = lvl.correctChain;
-  let matching = 0;
-  chain.forEach((ev, i) => {
-    if (correct[i] && ev.id === correct[i]) matching++;
+  const area = document.getElementById('chain-area');
+  area.innerHTML='';
+  playerChain.forEach((ev,i)=>{
+    if(i>0){
+      const conn=document.createElement('span');
+      conn.className='chain-connector'; conn.textContent='→';
+      area.appendChild(conn);
+    }
+    const t=document.createElement('div');
+    t.className='chain-token';
+    t.innerHTML=`${ev}<button class="remove-btn" onclick="removeToken('${ev}',this)">✕</button>`;
+    area.appendChild(t);
   });
-  const pct = chain.length === 0 ? 0 : Math.round((matching / correct.length) * 100);
-  document.getElementById('signal-pct').textContent = `${pct}% in sync`;
 }
 
-// ─── FIRE CHAIN ───────────────────────────────────────────────────────────────
-async function fireChain() {
-  if (firing || levelDone) return;
-  const lvl = LEVELS[currentLevel];
+function clearChain() {
+  playerChain=[];
+  sfxReset();
+  document.getElementById('chain-area').innerHTML='';
+  document.querySelectorAll('.event-token').forEach(t=>t.classList.remove('used'));
+  pulseViz(false);
+}
+window.clearChain = clearChain;
 
-  if (chain.length === 0) { showToast('Add some events first', 'info'); return; }
-  if (chain.length !== lvl.correctChain.length) {
-    showToast(`Need ${lvl.correctChain.length} events — you have ${chain.length}`, 'bad');
-    return;
-  }
+// ══════════════════════════════════
+//  FIRE SIGNAL
+// ══════════════════════════════════
+function fireSignal() {
+  if(!gameActive) return;
+  if(playerChain.length===0){ showToast("Build your chain first!"); return; }
+  sfxFireButton();
+  const correct = LEVELS[currentLevel].correct;
 
-  attempts++;
-  firing = true;
-  document.getElementById('fire-btn').style.display = 'none';
+  // Animate each link
+  const tokens = document.querySelectorAll('#chain-area .chain-token');
+  let allCorrect=true;
+  let delay=0;
 
-  // Check correctness
-  const correct = lvl.correctChain;
-  const isCorrect = chain.every((ev, i) => ev.id === correct[i]);
+  tokens.forEach((tok,i)=>{
+    setTimeout(()=>{
+      sfxSignalFire(i, tokens.length);
+      pulseViz(true);
+      if(playerChain[i]===correct[i]){
+        tok.classList.add('correct');
+        sfxCorrectLink();
+      } else {
+        tok.classList.add('wrong');
+        allCorrect=false;
+      }
+    }, delay);
+    delay+=220;
+  });
 
-  // Animate firing
-  const outputBody = document.getElementById('output-body');
-  outputBody.innerHTML = '';
+  // Evaluate after animation
+  setTimeout(()=>{
+    const matchCount = playerChain.filter((ev,i)=>ev===correct[i]).length;
+    const isFullChain = playerChain.length===correct.length;
+    const isPerfect = isFullChain && allCorrect;
 
-  let allCorrect = true;
-  for (let i = 0; i < chain.length; i++) {
-    await delay(500);
-
-    // Beat animation
-    const beat = document.getElementById(`beat-${i}`);
-    if (beat) {
-      beat.classList.add('active');
-      await delay(200);
-      beat.classList.remove('active');
-      beat.classList.add('done');
+    if(isPerfect){
+      // Perfect chain
+      combo++;
+      const pts = 100 + (combo>1?combo*25:0);
+      score += pts;
+      signalStrength = Math.min(100, signalStrength + 20);
+      updateHUD();
+      updateCombo();
+      sfxLevelComplete();
+      if(combo>=3) sfxCombo(combo);
+      showFace('echo-victory.png', 1400);
+      spawnParticles(12);
+      showToast(isPerfect && combo>1 ? `🔥 ${combo}x COMBO — +${pts} pts!` : `Signal locked! +${pts} pts`);
+      setTimeout(()=>loadLevel(currentLevel+1), 1600);
+    } else {
+      // Wrong
+      lives--;
+      combo=0;
+      signalStrength=Math.max(0,signalStrength-15);
+      updateHUD();
+      updateCombo();
+      sfxWrongChain();
+      showFace('echo-scared.png', 1200);
+      showToast(lives>0?"Wrong order — signals crossed!":"Signal lost!");
+      if(lives<=0){ setTimeout(()=>endGame(false),1300); return; }
+      setTimeout(()=>clearChain(),900);
     }
+  }, delay+200);
+}
+window.fireSignal = fireSignal;
 
-    const ev = chain[i];
-    const expectedId = correct[i];
-    const lineCorrect = ev.id === expectedId;
-    if (!lineCorrect) allCorrect = false;
+// ══════════════════════════════════
+//  HUD
+// ══════════════════════════════════
+function updateHUD() {
+  document.getElementById('hud-score').textContent = score;
+  const livesStr = '♦'.repeat(Math.max(0,lives)) + '◇'.repeat(Math.max(0,3-lives));
+  document.getElementById('hud-lives').textContent = livesStr;
+  document.getElementById('signal-fill').style.width = signalStrength+'%';
+}
 
-    const output = lvl.outputs[i];
-    const line = document.createElement('div');
-    line.className = `output-line ${lineCorrect ? 'correct' : 'wrong'}`;
-    const beatDot = document.createElement('div');
-    beatDot.className = `output-beat ${lineCorrect ? 'correct' : 'wrong'}`;
-    line.appendChild(beatDot);
-    line.appendChild(document.createTextNode(lineCorrect ? output.text : `✗ Wrong: "${ev.name}" fired here`));
-    outputBody.appendChild(line);
-    setTimeout(() => line.classList.add('show'), 50);
+function updateCombo() {
+  const el=document.getElementById('combo-val');
+  el.textContent=combo;
+  el.classList.remove('bump');
+  void el.offsetWidth;
+  el.classList.add('bump');
+}
 
-    // Highlight chain card
-    const card = document.getElementById(`chain-card-${i}`);
-    if (card) {
-      card.classList.add(lineCorrect ? 'fired-correct' : 'fired-wrong');
-    }
+// ══════════════════════════════════
+//  FACE POP
+// ══════════════════════════════════
+let facePopTimer=null;
+function showFace(src,duration=1000){
+  const pop=document.getElementById('face-pop');
+  const img=document.getElementById('face-img');
+  img.src=src;
+  pop.classList.add('show');
+  if(facePopTimer) clearTimeout(facePopTimer);
+  facePopTimer=setTimeout(()=>pop.classList.remove('show'),duration);
+}
+
+// ══════════════════════════════════
+//  PARTICLES
+// ══════════════════════════════════
+function spawnParticles(n) {
+  const container=document.getElementById('particles');
+  for(let i=0;i<n;i++){
+    const p=document.createElement('div');
+    p.className='particle';
+    const size=Math.random()*8+4;
+    p.style.cssText=`
+      width:${size}px;height:${size}px;
+      left:${Math.random()*100}vw;
+      top:${Math.random()*60+20}vh;
+      --tx:${(Math.random()-0.5)*200}px;
+      --ty:${(Math.random()-0.5)*200}px;
+      background:${Math.random()>.5?'#38bdf8':'#a855f7'};
+      animation-duration:${Math.random()*0.6+0.8}s;
+    `;
+    container.appendChild(p);
+    setTimeout(()=>p.remove(),1400);
   }
+}
 
-  await delay(600);
+// ══════════════════════════════════
+//  TOAST
+// ══════════════════════════════════
+let toastTimer=null;
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;
+  t.classList.add('show');
+  if(toastTimer) clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
+}
 
-  if (allCorrect) {
-    clearInterval(timer);
-    levelDone = true;
-    const timeBonus = Math.floor(timeLeft * 2);
-    const attemptPenalty = Math.max(0, (attempts - 1) * 50);
-    const pts = Math.max(50, lvl.points + timeBonus - attemptPenalty);
-    score += pts;
-    document.getElementById('score-val').textContent = score;
-    document.getElementById('signal-pct').textContent = '100% in sync';
-    document.getElementById('action-msg').textContent = `Perfect signal! +${pts} pts (time bonus: +${timeBonus})`;
-    document.getElementById('btn-next').style.display = 'block';
-    showToast('Signal locked in!', 'good');
-    if (currentLevel === LEVELS.length - 1) setTimeout(() => showResult(true), 1200);
+// ══════════════════════════════════
+//  END GAME
+// ══════════════════════════════════
+function endGame(win){
+  gameActive=false;
+  stopViz();
+  if(win){
+    sfxGameWin();
+    showFace('echo-victory.png',99999);
+    spawnParticles(20);
   } else {
-    score = Math.max(0, score - 40);
-    document.getElementById('score-val').textContent = score;
-    document.getElementById('action-msg').textContent = `Signal broken — fix the order and try again (−40pts)`;
-    showToast('Signal out of sync — retry', 'bad');
-    await delay(1500);
-    // Reset for retry
-    firing = false;
-    document.getElementById('fire-btn').style.display = 'block';
-    // Clear chain card styles
-    chain.forEach((_, i) => {
-      const card = document.getElementById(`chain-card-${i}`);
-      if (card) { card.classList.remove('fired-correct', 'fired-wrong'); }
-    });
-    // Reset beats
-    lvl.correctChain.forEach((_, i) => {
-      const beat = document.getElementById(`beat-${i}`);
-      if (beat) beat.className = 'beat';
-    });
+    sfxGameLose();
+    showFace('echo-sad.png',99999);
   }
-
-  if (!allCorrect) firing = false;
+  setTimeout(()=>{
+    document.getElementById('face-pop').classList.remove('show');
+    showScreen('screen-result');
+    document.getElementById('result-title').textContent = win?'SIGNAL LOCKED':'SIGNAL LOST';
+    document.getElementById('result-title').className = 'result-title '+(win?'win':'lose');
+    document.getElementById('result-face').src = win?'echo-victory.png':'echo-sad.png';
+    document.getElementById('result-score').textContent = score;
+    document.getElementById('result-sub').textContent = 'pts — '+LEVELS.length+' levels';
+    document.getElementById('result-msg').textContent = win
+      ? `You wired every signal chain clean. ${score >= 600 ? 'Perfect run — Echo is locked in.' : 'Solid work — your signals are getting stronger.'}`
+      : `The chain broke before the signal got through. Every bug is a clue — go back and listen.`;
+  }, win?1800:1400);
 }
 
-function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
-
-// ─── TIMER ────────────────────────────────────────────────────────────────────
-function tick() {
-  timeLeft--;
-  updateTimer();
-  if (timeLeft <= 0) { clearInterval(timer); if (!levelDone) showResult(false); }
+function restartGame(){
+  showScreen('screen-instructions');
+  sfxReset();
 }
-function updateTimer() {
-  const el = document.getElementById('timer-val');
-  el.textContent = timeLeft;
-  el.className = timeLeft <= 10 ? 'danger' : timeLeft <= 25 ? 'warning' : '';
-}
+window.restartGame = restartGame;
 
-let toastTimer = null;
-function showToast(msg, type) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.className = `toast show ${type}`;
-  clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { t.className = 'toast'; }, 2000);
-}
-
-function resetLevel() { clearInterval(timer); initLevel(currentLevel); }
-
-function nextLevel() {
-  if (currentLevel < LEVELS.length - 1) { currentLevel++; initLevel(currentLevel); }
-  else showResult(true);
-}
-
-function showResult(win) {
-  clearInterval(timer);
-  document.getElementById('result-icon').textContent = win ? '🎵' : '📡';
-  document.getElementById('result-title').textContent = win ? 'SIGNAL LOCKED' : 'SIGNAL LOST';
-  document.getElementById('result-title').className = `result-title ${win ? 'win' : 'fail'}`;
-  document.getElementById('result-score').textContent = score + ' pts';
-  document.getElementById('result-msg').textContent = win
-    ? `All three signal chains wired perfectly! You now understand how JavaScript events, async operations, and the DOM connect in real apps. Echo is locked in.`
-    : `The signal dropped before you got the chain right. Every app runs on event sequences — timing is everything. Try again!`;
-  document.getElementById('result-actions').innerHTML = `
-    <button class="btn btn-secondary" onclick="restartGame()">Play Again</button>
-    <button class="btn btn-primary" onclick="window.location.href='echo.html'">Back to Echo</button>
-  `;
-  document.getElementById('result-overlay').classList.add('show');
-}
-
-function restartGame() {
-  score = 0; currentLevel = 0;
-  document.getElementById('score-val').textContent = '0';
-  document.getElementById('result-overlay').classList.remove('show');
-  initLevel(0);
-}
-
-initLevel(0);
+// init viz bars on page load
+buildViz();
 </script>
-</div>
 </body>
 </html>
