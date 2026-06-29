@@ -6,276 +6,192 @@
 <title>Nova's Tag Architect — Method in Motion</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root {
-  --nova-yellow: #fbbf24;
-  --nova-pink: #fb923c;
-  --nova-glow: #ffe066;
-  --bg: #080600;
-  --panel: rgba(18,14,4,0.85);
-  --border: rgba(251,191,36,0.18);
-  --text: #fff8e8;
-  --muted: rgba(255,248,232,0.52);
-}
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Space Grotesk',sans-serif; background:var(--bg); color:var(--text); min-height:100vh; overflow-x:hidden; }
-
-/* WORLD */
-#world-bg { position:fixed;inset:0;z-index:0;background-image:url('nova-entrance.png');background-size:cover;background-position:center top; }
-#world-overlay { position:fixed;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(8,6,0,0.58) 0%,rgba(8,6,0,0.78) 50%,rgba(8,6,0,0.97) 100%); }
-#world-glow { position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 0%,rgba(251,191,36,0.16) 0%,transparent 60%);pointer-events:none; }
-
-/* NAV */
-nav { position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:62px;background:rgba(8,6,0,0.88);border-bottom:1px solid var(--border);backdrop-filter:blur(12px); }
-.nav-logo { font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;color:var(--nova-yellow);text-decoration:none; }
-.nav-back { font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s; }
-.nav-back:hover { color:var(--nova-yellow); }
-#nav-user { font-size:12px;color:var(--muted);font-family:'Space Mono',monospace; }
-
-/* SCREENS */
-.screen { position:relative;z-index:10;min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 40px; }
-.screen.active { display:flex; }
-
-/* INSTRUCTIONS */
-#screen-instructions { text-align:center; }
-.inst-char { width:170px;height:170px;object-fit:contain;margin:0 auto 20px;filter:drop-shadow(0 0 24px rgba(251,191,36,0.5));animation:float 3s ease-in-out infinite; }
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-12px)} }
-.inst-title { font-family:'Orbitron',sans-serif;font-size:clamp(20px,4vw,34px);font-weight:900;color:var(--nova-yellow);text-shadow:0 0 30px rgba(251,191,36,0.6);letter-spacing:3px;margin-bottom:6px; }
-.inst-sub { font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;font-family:'Space Mono',monospace; }
-.inst-card { background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:26px 30px;max-width:500px;margin:0 auto 24px;backdrop-filter:blur(16px);text-align:left; }
-.inst-card h3 { font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:3px;color:var(--nova-yellow);text-transform:uppercase;margin-bottom:14px; }
-.inst-step { display:flex;gap:14px;margin-bottom:12px;align-items:flex-start; }
-.inst-num { width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--nova-yellow),var(--nova-pink));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#080600;flex-shrink:0;margin-top:2px; }
-.inst-step p { font-size:13px;color:var(--text);line-height:1.6; }
-.inst-step p strong { color:var(--nova-yellow); }
-.btn-start { font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;padding:16px 48px;background:linear-gradient(135deg,var(--nova-yellow),var(--nova-pink));color:#080600;border:none;border-radius:50px;cursor:pointer;box-shadow:0 0 30px rgba(251,191,36,0.4);transition:all .2s; }
-.btn-start:hover { transform:scale(1.05);box-shadow:0 0 45px rgba(251,191,36,0.6); }
-
-/* GAME HUD */
-.game-hud { display:flex;align-items:center;justify-content:space-between;width:100%;max-width:960px;margin:0 auto 14px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 20px;backdrop-filter:blur(12px); }
-.hud-stat { text-align:center; }
-.hud-label { font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase; }
-.hud-val { font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:var(--nova-yellow); }
-.level-badge { background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,146,60,0.15));border:1px solid var(--nova-yellow);border-radius:8px;padding:6px 16px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;color:var(--nova-yellow); }
-.progress-bar-wrap { display:flex;flex-direction:column;gap:4px; }
-.progress-label { font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px; }
-.progress-bar { width:140px;height:8px;border-radius:4px;background:rgba(251,191,36,0.1);border:1px solid var(--border);overflow:hidden; }
-.progress-fill { height:100%;border-radius:4px;background:linear-gradient(90deg,var(--nova-pink),var(--nova-yellow),var(--nova-glow));transition:width .4s ease;box-shadow:0 0 8px var(--nova-glow); }
-
-/* GAME LAYOUT */
-#screen-game { justify-content:flex-start;padding-top:78px; }
-.game-layout { width:100%;max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 220px;gap:16px;align-items:start; }
-
-/* TAG PANEL */
-.tag-panel { background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;backdrop-filter:blur(16px); }
-.panel-title { font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:3px;color:var(--nova-yellow);text-transform:uppercase;margin-bottom:14px; }
-.level-goal { font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;padding:12px;background:rgba(251,191,36,0.06);border-radius:10px;border-left:3px solid var(--nova-yellow); }
-
-.tag-grid { display:flex;flex-wrap:wrap;gap:8px; }
-.tag-chip {
-  padding:8px 12px;border-radius:8px;cursor:grab;
-  font-family:'Space Mono',monospace;font-size:12px;
-  border:1px solid var(--border);background:rgba(251,191,36,0.08);
-  color:var(--nova-yellow);transition:all .2s;user-select:none;
-  display:flex;align-items:center;gap:6px;
-}
-.tag-chip:hover { background:rgba(251,191,36,0.2);border-color:var(--nova-yellow);transform:translateY(-2px);box-shadow:0 4px 16px rgba(251,191,36,0.2); }
-.tag-chip:active { cursor:grabbing;transform:scale(0.97); }
-.tag-chip.used { opacity:0.3;pointer-events:none; }
-.tag-chip .tag-icon { font-size:14px; }
-
-/* BLUEPRINT */
-.blueprint-panel { background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;backdrop-filter:blur(16px); }
-.slot-list { display:flex;flex-direction:column;gap:8px; }
-.slot {
-  min-height:46px;border-radius:10px;border:1.5px dashed rgba(251,191,36,0.3);
-  background:rgba(251,191,36,0.03);padding:10px 14px;
-  display:flex;align-items:center;gap:10px;
-  transition:all .2s;position:relative;cursor:pointer;
-}
-.slot:hover { border-color:var(--nova-yellow);background:rgba(251,191,36,0.08); }
-.slot.drag-over { border-color:var(--nova-yellow);background:rgba(251,191,36,0.14);box-shadow:0 0 16px rgba(251,191,36,0.2); }
-.slot.filled { border-style:solid;border-color:rgba(251,191,36,0.5);background:rgba(251,191,36,0.1); }
-.slot.correct { border-color:#4ade80;background:rgba(74,222,128,0.1);animation:correctPulse .4s ease; }
-.slot.wrong { border-color:#ff6b8a;background:rgba(255,107,138,0.1);animation:shake .3s ease; }
-@keyframes correctPulse { 0%{box-shadow:0 0 0 0 rgba(74,222,128,0.5)} 100%{box-shadow:0 0 0 12px rgba(74,222,128,0)} }
-@keyframes shake { 0%,100%{transform:translateX(0)} 25%{transform:translateX(-6px)} 75%{transform:translateX(6px)} }
-
-.slot-label { font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);min-width:90px;flex-shrink:0; }
-.slot-content { font-family:'Space Mono',monospace;font-size:12px;color:var(--nova-yellow);flex:1; }
-.slot-hint { font-size:11px;color:rgba(251,191,36,0.3);flex:1;font-style:italic; }
-.slot-remove { background:none;border:none;color:rgba(251,146,60,0.5);cursor:pointer;font-size:16px;padding:0;line-height:1;margin-left:auto; }
-.slot-remove:hover { color:#ff6b8a; }
-
-/* PREVIEW */
-.preview-panel { background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;backdrop-filter:blur(16px); }
-.preview-header { padding:10px 14px;background:rgba(251,191,36,0.08);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px; }
-.preview-dots { display:flex;gap:5px; }
-.preview-dot { width:9px;height:9px;border-radius:50%; }
-.preview-title-bar { font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);flex:1;text-align:center; }
-#live-preview { width:100%;min-height:220px;background:#fff;border:none;display:block; }
-
-/* SIDE */
-.side-col { display:flex;flex-direction:column;gap:14px; }
-.char-panel { background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:center;backdrop-filter:blur(16px); }
-.char-pose { width:100%;max-width:150px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(251,191,36,0.4)); }
-.combo-panel { background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:center;backdrop-filter:blur(16px); }
-.combo-label { font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px; }
-.combo-val { font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:var(--nova-yellow);text-shadow:0 0 16px rgba(251,191,36,0.5); }
-.combo-val.bump { animation:comboBump .2s ease; }
-@keyframes comboBump { 0%{transform:scale(1)} 50%{transform:scale(1.4)} 100%{transform:scale(1)} }
-.quote-panel { background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px;backdrop-filter:blur(16px); }
-.quote-text { font-size:12px;color:var(--muted);line-height:1.6;font-style:italic; }
-.quote-attr { font-family:'Space Mono',monospace;font-size:10px;color:var(--nova-yellow);margin-top:8px; }
-.btn-check { width:100%;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:14px;background:linear-gradient(135deg,var(--nova-yellow),var(--nova-pink));color:#080600;border:none;border-radius:10px;cursor:pointer;transition:all .2s;box-shadow:0 0 20px rgba(251,191,36,0.25);margin-top:4px; }
-.btn-check:hover { transform:scale(1.02);box-shadow:0 0 32px rgba(251,191,36,0.45); }
-.btn-reset-sm { width:100%;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:10px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;cursor:pointer;transition:all .2s; }
-.btn-reset-sm:hover { border-color:var(--nova-yellow);color:var(--nova-yellow); }
-
-/* FACE POP */
-#face-pop { position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:200;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .25s;opacity:0; }
-#face-pop img { width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 0 28px rgba(251,191,36,0.7)); }
-#face-pop.show { transform:translate(-50%,-50%) scale(1);opacity:1; }
-
-/* PARTICLES */
-#particles { position:fixed;inset:0;z-index:5;pointer-events:none; }
-.particle { position:absolute;border-radius:50%;background:var(--nova-yellow);opacity:0;animation:particleFly 1.2s ease-out forwards; }
-@keyframes particleFly { 0%{opacity:1;transform:translate(0,0) scale(1)} 100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)} }
-
-/* TOAST */
-#toast { position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(8,6,0,0.95);border:1px solid var(--nova-yellow);border-radius:50px;padding:12px 28px;font-family:'Orbitron',sans-serif;font-size:13px;color:var(--nova-yellow);letter-spacing:1px;z-index:300;transition:transform .3s ease,opacity .3s ease;opacity:0; }
-#toast.show { transform:translateX(-50%) translateY(0);opacity:1; }
-
-/* RESULT */
-#screen-result { text-align:center; }
-.result-face { width:140px;height:140px;object-fit:contain;margin:0 auto 18px;filter:drop-shadow(0 0 24px rgba(251,191,36,0.5));animation:float 3s ease-in-out infinite; }
-.result-title { font-family:'Orbitron',sans-serif;font-size:clamp(22px,4vw,38px);font-weight:900;letter-spacing:3px;margin-bottom:6px; }
-.result-title.win { color:var(--nova-yellow);text-shadow:0 0 30px rgba(251,191,36,0.6); }
-.result-title.lose { color:#ff6b8a;text-shadow:0 0 30px rgba(255,107,138,0.5); }
-.result-score { font-family:'Orbitron',sans-serif;font-size:46px;font-weight:900;color:var(--nova-yellow);margin-bottom:4px; }
-.result-sub { font-size:13px;color:var(--muted);margin-bottom:24px; }
-.result-card { background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;max-width:420px;margin:0 auto 22px;backdrop-filter:blur(16px); }
-.result-msg { font-size:14px;color:var(--text);line-height:1.7; }
-.result-btns { display:flex;gap:12px;justify-content:center;flex-wrap:wrap; }
-.btn-secondary { font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:14px 28px;border-radius:50px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);transition:all .2s; }
-.btn-secondary:hover { border-color:var(--nova-yellow);color:var(--nova-yellow); }
-.btn-primary { font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:14px 28px;border-radius:50px;cursor:pointer;background:linear-gradient(135deg,var(--nova-yellow),var(--nova-pink));border:none;color:#080600;transition:all .2s; }
-.btn-primary:hover { transform:scale(1.04);box-shadow:0 0 25px rgba(251,191,36,0.4); }
-
-@media(max-width:780px){ .game-layout{grid-template-columns:1fr;} }
+:root{--nova-yellow:#fbbf24;--nova-pink:#fb923c;--nova-glow:#ffe066;--bg:#080600;--panel:rgba(18,14,4,0.85);--border:rgba(251,191,36,0.18);--text:#fff8e8;--muted:rgba(255,248,232,0.52);}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Space Grotesk',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+#world-bg{position:fixed;inset:0;z-index:0;background-image:url('nova-entrance.png');background-size:cover;background-position:center top;}
+#world-overlay{position:fixed;inset:0;z-index:1;background:linear-gradient(to bottom,rgba(8,6,0,0.58) 0%,rgba(8,6,0,0.78) 50%,rgba(8,6,0,0.97) 100%);}
+#world-glow{position:fixed;inset:0;z-index:1;background:radial-gradient(ellipse at 50% 0%,rgba(251,191,36,0.16) 0%,transparent 60%);pointer-events:none;}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:62px;background:rgba(8,6,0,0.88);border-bottom:1px solid var(--border);backdrop-filter:blur(12px);}
+.nav-logo{font-family:'Orbitron',sans-serif;font-size:13px;font-weight:700;letter-spacing:2px;color:var(--nova-yellow);text-decoration:none;}
+.nav-back{font-size:13px;color:var(--muted);text-decoration:none;transition:color .2s;}
+.nav-back:hover{color:var(--nova-yellow);}
+#nav-user{font-size:12px;color:var(--muted);font-family:'Space Mono',monospace;}
+.screen{position:relative;z-index:10;min-height:100vh;display:none;flex-direction:column;align-items:center;justify-content:center;padding:80px 24px 40px;}
+.screen.active{display:flex;}
+#screen-instructions{text-align:center;}
+.inst-char{width:170px;height:170px;object-fit:contain;margin:0 auto 20px;filter:drop-shadow(0 0 24px rgba(251,191,36,0.5));animation:float 3s ease-in-out infinite;}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.inst-title{font-family:'Orbitron',sans-serif;font-size:clamp(20px,4vw,34px);font-weight:900;color:var(--nova-yellow);text-shadow:0 0 30px rgba(251,191,36,0.6);letter-spacing:3px;margin-bottom:6px;}
+.inst-sub{font-size:13px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;font-family:'Space Mono',monospace;}
+.inst-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:26px 30px;max-width:500px;margin:0 auto 24px;backdrop-filter:blur(16px);text-align:left;}
+.inst-card h3{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:3px;color:var(--nova-yellow);text-transform:uppercase;margin-bottom:14px;}
+.inst-step{display:flex;gap:14px;margin-bottom:12px;align-items:flex-start;}
+.inst-num{width:26px;height:26px;border-radius:50%;background:linear-gradient(135deg,var(--nova-yellow),var(--nova-pink));display:flex;align-items:center;justify-content:center;font-family:'Orbitron',sans-serif;font-size:10px;font-weight:700;color:#080600;flex-shrink:0;margin-top:2px;}
+.inst-step p{font-size:13px;color:var(--text);line-height:1.6;}
+.inst-step p strong{color:var(--nova-yellow);}
+.btn-start{font-family:'Orbitron',sans-serif;font-size:14px;font-weight:700;letter-spacing:2px;padding:16px 48px;background:linear-gradient(135deg,var(--nova-yellow),var(--nova-pink));color:#080600;border:none;border-radius:50px;cursor:pointer;box-shadow:0 0 30px rgba(251,191,36,0.4);transition:all .2s;}
+.btn-start:hover{transform:scale(1.05);box-shadow:0 0 45px rgba(251,191,36,0.6);}
+.game-hud{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:960px;margin:0 auto 14px;background:var(--panel);border:1px solid var(--border);border-radius:12px;padding:12px 20px;backdrop-filter:blur(12px);}
+.hud-stat{text-align:center;}
+.hud-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);letter-spacing:2px;text-transform:uppercase;}
+.hud-val{font-family:'Orbitron',sans-serif;font-size:22px;font-weight:700;color:var(--nova-yellow);}
+.level-badge{background:linear-gradient(135deg,rgba(251,191,36,0.15),rgba(251,146,60,0.15));border:1px solid var(--nova-yellow);border-radius:8px;padding:6px 16px;font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:2px;color:var(--nova-yellow);}
+.progress-bar-wrap{display:flex;flex-direction:column;gap:4px;}
+.progress-label{font-family:'Space Mono',monospace;font-size:9px;color:var(--muted);letter-spacing:1px;}
+.progress-bar{width:140px;height:8px;border-radius:4px;background:rgba(251,191,36,0.1);border:1px solid var(--border);overflow:hidden;}
+.progress-fill{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--nova-pink),var(--nova-yellow),var(--nova-glow));transition:width .4s ease;box-shadow:0 0 8px var(--nova-glow);}
+#screen-game{justify-content:flex-start;padding-top:78px;}
+.game-layout{width:100%;max-width:960px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr 220px;gap:16px;align-items:start;}
+.tag-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;backdrop-filter:blur(16px);}
+.panel-title{font-family:'Orbitron',sans-serif;font-size:11px;letter-spacing:3px;color:var(--nova-yellow);text-transform:uppercase;margin-bottom:14px;}
+.level-goal{font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:16px;padding:12px;background:rgba(251,191,36,0.06);border-radius:10px;border-left:3px solid var(--nova-yellow);}
+.tag-grid{display:flex;flex-wrap:wrap;gap:8px;}
+.tag-chip{padding:8px 12px;border-radius:8px;cursor:grab;font-family:'Space Mono',monospace;font-size:12px;border:1px solid var(--border);background:rgba(251,191,36,0.08);color:var(--nova-yellow);transition:all .2s;user-select:none;display:flex;align-items:center;gap:6px;}
+.tag-chip:hover{background:rgba(251,191,36,0.2);border-color:var(--nova-yellow);transform:translateY(-2px);box-shadow:0 4px 16px rgba(251,191,36,0.2);}
+.tag-chip:active{cursor:grabbing;transform:scale(0.97);}
+.tag-chip.used{opacity:0.3;pointer-events:none;}
+.tag-chip .tag-icon{font-size:14px;}
+.blueprint-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:20px;backdrop-filter:blur(16px);}
+.slot-list{display:flex;flex-direction:column;gap:8px;}
+.slot{min-height:46px;border-radius:10px;border:1.5px dashed rgba(251,191,36,0.3);background:rgba(251,191,36,0.03);padding:10px 14px;display:flex;align-items:center;gap:10px;transition:all .2s;position:relative;cursor:pointer;}
+.slot:hover{border-color:var(--nova-yellow);background:rgba(251,191,36,0.08);}
+.slot.drag-over{border-color:var(--nova-yellow);background:rgba(251,191,36,0.14);box-shadow:0 0 16px rgba(251,191,36,0.2);}
+.slot.filled{border-style:solid;border-color:rgba(251,191,36,0.5);background:rgba(251,191,36,0.1);}
+.slot.correct{border-color:#4ade80;background:rgba(74,222,128,0.1);animation:correctPulse .4s ease;}
+.slot.wrong{border-color:#ff6b8a;background:rgba(255,107,138,0.1);animation:shake .3s ease;}
+@keyframes correctPulse{0%{box-shadow:0 0 0 0 rgba(74,222,128,0.5)}100%{box-shadow:0 0 0 12px rgba(74,222,128,0)}}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+.slot-label{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);min-width:90px;flex-shrink:0;}
+.slot-content{font-family:'Space Mono',monospace;font-size:12px;color:var(--nova-yellow);flex:1;}
+.slot-hint{font-size:11px;color:rgba(251,191,36,0.3);flex:1;font-style:italic;}
+.slot-remove{background:none;border:none;color:rgba(251,146,60,0.5);cursor:pointer;font-size:16px;padding:0;line-height:1;margin-left:auto;}
+.slot-remove:hover{color:#ff6b8a;}
+.preview-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;overflow:hidden;backdrop-filter:blur(16px);}
+.preview-header{padding:10px 14px;background:rgba(251,191,36,0.08);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;}
+.preview-dots{display:flex;gap:5px;}
+.preview-dot{width:9px;height:9px;border-radius:50%;}
+.preview-title-bar{font-family:'Space Mono',monospace;font-size:10px;color:var(--muted);flex:1;text-align:center;}
+#live-preview{width:100%;min-height:220px;background:#fff;border:none;display:block;}
+.side-col{display:flex;flex-direction:column;gap:14px;}
+.char-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:center;backdrop-filter:blur(16px);}
+.char-pose{width:100%;max-width:150px;object-fit:contain;filter:drop-shadow(0 0 14px rgba(251,191,36,0.4));}
+.combo-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px;text-align:center;backdrop-filter:blur(16px);}
+.combo-label{font-family:'Space Mono',monospace;font-size:9px;letter-spacing:2px;color:var(--muted);text-transform:uppercase;margin-bottom:4px;}
+.combo-val{font-family:'Orbitron',sans-serif;font-size:26px;font-weight:900;color:var(--nova-yellow);text-shadow:0 0 16px rgba(251,191,36,0.5);}
+.combo-val.bump{animation:comboBump .2s ease;}
+@keyframes comboBump{0%{transform:scale(1)}50%{transform:scale(1.4)}100%{transform:scale(1)}}
+.quote-panel{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:14px;backdrop-filter:blur(16px);}
+.quote-text{font-size:12px;color:var(--muted);line-height:1.6;font-style:italic;}
+.quote-attr{font-family:'Space Mono',monospace;font-size:10px;color:var(--nova-yellow);margin-top:8px;}
+.btn-check{width:100%;font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:2px;padding:14px;background:linear-gradient(135deg,var(--nova-yellow),var(--nova-pink));color:#080600;border:none;border-radius:10px;cursor:pointer;transition:all .2s;box-shadow:0 0 20px rgba(251,191,36,0.25);margin-top:4px;}
+.btn-check:hover{transform:scale(1.02);box-shadow:0 0 32px rgba(251,191,36,0.45);}
+.btn-reset-sm{width:100%;font-family:'Orbitron',sans-serif;font-size:11px;font-weight:700;letter-spacing:1px;padding:10px;background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:10px;cursor:pointer;transition:all .2s;}
+.btn-reset-sm:hover{border-color:var(--nova-yellow);color:var(--nova-yellow);}
+#face-pop{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%) scale(0);z-index:200;pointer-events:none;transition:transform .25s cubic-bezier(.34,1.56,.64,1),opacity .25s;opacity:0;}
+#face-pop img{width:150px;height:150px;object-fit:contain;filter:drop-shadow(0 0 28px rgba(251,191,36,0.7));}
+#face-pop.show{transform:translate(-50%,-50%) scale(1);opacity:1;}
+#particles{position:fixed;inset:0;z-index:5;pointer-events:none;}
+.particle{position:absolute;border-radius:50%;background:var(--nova-yellow);opacity:0;animation:particleFly 1.2s ease-out forwards;}
+@keyframes particleFly{0%{opacity:1;transform:translate(0,0) scale(1)}100%{opacity:0;transform:translate(var(--tx),var(--ty)) scale(0)}}
+#toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(80px);background:rgba(8,6,0,0.95);border:1px solid var(--nova-yellow);border-radius:50px;padding:12px 28px;font-family:'Orbitron',sans-serif;font-size:13px;color:var(--nova-yellow);letter-spacing:1px;z-index:300;transition:transform .3s ease,opacity .3s ease;opacity:0;}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1;}
+#screen-result{text-align:center;}
+.result-face{width:140px;height:140px;object-fit:contain;margin:0 auto 18px;filter:drop-shadow(0 0 24px rgba(251,191,36,0.5));animation:float 3s ease-in-out infinite;}
+.result-title{font-family:'Orbitron',sans-serif;font-size:clamp(22px,4vw,38px);font-weight:900;letter-spacing:3px;margin-bottom:6px;}
+.result-title.win{color:var(--nova-yellow);text-shadow:0 0 30px rgba(251,191,36,0.6);}
+.result-title.lose{color:#ff6b8a;text-shadow:0 0 30px rgba(255,107,138,0.5);}
+.result-score{font-family:'Orbitron',sans-serif;font-size:46px;font-weight:900;color:var(--nova-yellow);margin-bottom:4px;}
+.result-sub{font-size:13px;color:var(--muted);margin-bottom:24px;}
+.result-card{background:var(--panel);border:1px solid var(--border);border-radius:16px;padding:22px 26px;max-width:420px;margin:0 auto 22px;backdrop-filter:blur(16px);}
+.result-msg{font-size:14px;color:var(--text);line-height:1.7;}
+.result-btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;}
+.btn-secondary{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:14px 28px;border-radius:50px;cursor:pointer;background:transparent;border:1px solid var(--border);color:var(--muted);transition:all .2s;}
+.btn-secondary:hover{border-color:var(--nova-yellow);color:var(--nova-yellow);}
+.btn-primary{font-family:'Orbitron',sans-serif;font-size:12px;font-weight:700;letter-spacing:1px;padding:14px 28px;border-radius:50px;cursor:pointer;background:linear-gradient(135deg,var(--nova-yellow),var(--nova-pink));border:none;color:#080600;transition:all .2s;}
+.btn-primary:hover{transform:scale(1.04);box-shadow:0 0 25px rgba(251,191,36,0.4);}
+@media(max-width:780px){.game-layout{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
-
 <div id="world-bg"></div>
 <div id="world-overlay"></div>
 <div id="world-glow"></div>
 <div id="face-pop"><img id="face-img" src="nova-happy.png" alt=""></div>
 <div id="particles"></div>
 <div id="toast"></div>
-
 <div style="position:relative;z-index:100;">
 <nav>
-  <a href="games.html" class="nav-back">← Game Universe</a>
-  <a href="index.html" class="nav-logo">MiM</a>
-  <div><span id="nav-user"></span></div>
+<a href="games.html" class="nav-back">← Game Universe</a>
+<a href="index.html" class="nav-logo">MiM</a>
+<div><span id="nav-user"></span></div>
 </nav>
 </div>
-
-<!-- INSTRUCTIONS -->
 <div id="screen-instructions" class="screen active">
-  <img src="nova-idle.gif" alt="Nova" class="inst-char" onerror="this.src='nova-happy.png'">
-  <div class="inst-title">NOVA'S TAG ARCHITECT</div>
-  <div class="inst-sub">HTML Structure &nbsp;·&nbsp; Blueprint Thinking &nbsp;·&nbsp; Tag Placement</div>
-  <div class="inst-card">
-    <h3>How to Play</h3>
-    <div class="inst-step"><div class="inst-num">1</div><p>Read the <strong>blueprint goal</strong> — what kind of page are you building?</p></div>
-    <div class="inst-step"><div class="inst-num">2</div><p><strong>Drag or click tags</strong> from the tag panel onto the correct blueprint slots.</p></div>
-    <div class="inst-step"><div class="inst-num">3</div><p>Watch the <strong>live preview</strong> update as you place each tag.</p></div>
-    <div class="inst-step"><div class="inst-num">4</div><p>Hit <strong>Check Blueprint</strong> when your structure looks right. Every correct slot scores points.</p></div>
-  </div>
-  <button class="btn-start" onclick="startGame()">BUILD NOW &nbsp;→</button>
+<img src="nova-idle.gif" alt="Nova" class="inst-char" onerror="this.src='nova-happy.png'">
+<div class="inst-title">NOVA'S TAG ARCHITECT</div>
+<div class="inst-sub">HTML Structure &nbsp;·&nbsp; Blueprint Thinking &nbsp;·&nbsp; Tag Placement</div>
+<div class="inst-card">
+<h3>How to Play</h3>
+<div class="inst-step"><div class="inst-num">1</div><p>Read the <strong>blueprint goal</strong> — what kind of page are you building?</p></div>
+<div class="inst-step"><div class="inst-num">2</div><p><strong>Drag or click tags</strong> from the tag panel onto the correct blueprint slots.</p></div>
+<div class="inst-step"><div class="inst-num">3</div><p>Watch the <strong>live preview</strong> update as you place each tag.</p></div>
+<div class="inst-step"><div class="inst-num">4</div><p>Hit <strong>Check Blueprint</strong> when your structure looks right. Every correct slot scores points.</p></div>
 </div>
-
-<!-- GAME -->
+<button class="btn-start" onclick="startGame()">BUILD NOW &nbsp;→</button>
+</div>
 <div id="screen-game" class="screen">
-  <div class="game-hud">
-    <div class="hud-stat"><div class="hud-label">Score</div><div class="hud-val" id="hud-score">0</div></div>
-    <div class="progress-bar-wrap">
-      <div class="progress-label">Build Progress</div>
-      <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
-    </div>
-    <div class="level-badge" id="hud-level">LEVEL 1 / 5</div>
-    <div class="hud-stat"><div class="hud-label">Lives</div><div class="hud-val" id="hud-lives">♦♦♦</div></div>
-  </div>
-
-  <div class="game-layout">
-    <!-- TAGS -->
-    <div class="tag-panel">
-      <div class="panel-title">Tag Toolkit</div>
-      <div class="level-goal" id="level-goal"></div>
-      <div class="tag-grid" id="tag-grid"></div>
-    </div>
-
-    <!-- BLUEPRINT -->
-    <div class="blueprint-panel">
-      <div class="panel-title">Blueprint Slots</div>
-      <div class="slot-list" id="slot-list"></div>
-    </div>
-
-    <!-- SIDE -->
-    <div class="side-col">
-      <div class="char-panel">
-        <img src="nova-pose.png" alt="Nova" class="char-pose" onerror="this.src='nova-happy.png'">
-      </div>
-      <div class="preview-panel">
-        <div class="preview-header">
-          <div class="preview-dots">
-            <div class="preview-dot" style="background:#ff5f57"></div>
-            <div class="preview-dot" style="background:#ffc400"></div>
-            <div class="preview-dot" style="background:#28ca41"></div>
-          </div>
-          <div class="preview-title-bar">live preview</div>
-        </div>
-        <iframe id="live-preview" title="Live Preview" sandbox="allow-same-origin"></iframe>
-      </div>
-      <div class="combo-panel">
-        <div class="combo-label">Combo</div>
-        <div class="combo-val" id="combo-val">0</div>
-      </div>
-      <div class="quote-panel">
-        <div class="quote-text" id="quote-text">"Every page starts with a blueprint. Build the bones first."</div>
-        <div class="quote-attr">— Nova</div>
-      </div>
-      <button class="btn-check" onclick="checkBlueprint()">⚡ CHECK BLUEPRINT</button>
-      <button class="btn-reset-sm" onclick="resetLevel()">RESET LEVEL</button>
-    </div>
-  </div>
+<div class="game-hud">
+<div class="hud-stat"><div class="hud-label">Score</div><div class="hud-val" id="hud-score">0</div></div>
+<div class="progress-bar-wrap"><div class="progress-label">Build Progress</div><div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div></div>
+<div class="level-badge" id="hud-level">LEVEL 1 / 5</div>
+<div class="hud-stat"><div class="hud-label">Lives</div><div class="hud-val" id="hud-lives">♦♦♦</div></div>
 </div>
-
-<!-- RESULT -->
+<div class="game-layout">
+<div class="tag-panel">
+<div class="panel-title">Tag Toolkit</div>
+<div class="level-goal" id="level-goal"></div>
+<div class="tag-grid" id="tag-grid"></div>
+</div>
+<div class="blueprint-panel">
+<div class="panel-title">Blueprint Slots</div>
+<div class="slot-list" id="slot-list"></div>
+</div>
+<div class="side-col">
+<div class="char-panel"><img src="nova-pose.png" alt="Nova" class="char-pose" onerror="this.src='nova-happy.png'"></div>
+<div class="preview-panel">
+<div class="preview-header"><div class="preview-dots"><div class="preview-dot" style="background:#ff5f57"></div><div class="preview-dot" style="background:#ffc400"></div><div class="preview-dot" style="background:#28ca41"></div></div><div class="preview-title-bar">live preview</div></div>
+<iframe id="live-preview" title="Live Preview" sandbox="allow-same-origin"></iframe>
+</div>
+<div class="combo-panel"><div class="combo-label">Combo</div><div class="combo-val" id="combo-val">0</div></div>
+<div class="quote-panel"><div class="quote-text" id="quote-text">"Every page starts with a blueprint. Build the bones first."</div><div class="quote-attr">— Nova</div></div>
+<button class="btn-check" onclick="checkBlueprint()">⚡ CHECK BLUEPRINT</button>
+<button class="btn-reset-sm" onclick="resetLevel()">RESET LEVEL</button>
+</div>
+</div>
+</div>
 <div id="screen-result" class="screen">
-  <img id="result-face" src="nova-victory.png" alt="Nova" class="result-face" onerror="this.src='nova-happy.png'">
-  <div class="result-title" id="result-title">BLUEPRINT COMPLETE</div>
-  <div class="result-score" id="result-score">0</div>
-  <div class="result-sub">pts</div>
-  <div class="result-card"><div class="result-msg" id="result-msg"></div></div>
-  <div class="result-btns">
-    <button class="btn-secondary" onclick="restartGame()">Play Again</button>
-    <button class="btn-primary" onclick="window.location.href='nova.html'">Back to Nova</button>
-  </div>
+<img id="result-face" src="nova-victory.png" alt="Nova" class="result-face" onerror="this.src='nova-happy.png'">
+<div class="result-title" id="result-title">BLUEPRINT COMPLETE</div>
+<div class="result-score" id="result-score">0</div>
+<div class="result-sub">pts</div>
+<div class="result-card"><div class="result-msg" id="result-msg"></div></div>
+<div class="result-btns">
+<button class="btn-secondary" onclick="restartGame()">Play Again</button>
+<button class="btn-primary" onclick="window.location.href='nova.html'">Back to Nova</button>
 </div>
-
+</div>
 <script type="module">
-import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
+import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
+import { getFirestore, doc, getDoc } from 'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
 const firebaseConfig = {
-  apiKey:"AIzaSyBvZGnMFBhEMqLJOF0P8RmzLGaNxDvhP7c",
-  authDomain:"method-in-motion-7e8bf.firebaseapp.com",
-  projectId:"method-in-motion-7e8bf",
-  storageBucket:"method-in-motion-7e8bf.appspot.com",
-  messagingSenderId:"216656898928",
-  appId:"1:216656898928:web:af5a44d49c5f07f2e65ca8"
+  apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
+  authDomain: "method-in-motion.firebaseapp.com",
+  projectId: "method-in-motion",
+  storageBucket: "method-in-motion.appspot.com",
+  messagingSenderId: "1067937974009",
+  appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
 };
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
@@ -288,464 +204,53 @@ onAuthStateChanged(auth, async (user) => {
   document.getElementById('nav-user').textContent = user.displayName || user.email.split('@')[0];
 });
 </script>
-
 <script>
-// ══════════════════════════════════
-//  WEB AUDIO
-// ══════════════════════════════════
-let audioCtx = null;
-function getCtx(){ if(!audioCtx) audioCtx=new(window.AudioContext||window.webkitAudioContext)(); return audioCtx; }
-function playTone(freq,type='sine',dur=0.15,vol=0.28,delay=0){
-  const ctx=getCtx(),osc=ctx.createOscillator(),g=ctx.createGain();
-  osc.connect(g);g.connect(ctx.destination);
-  osc.type=type;osc.frequency.setValueAtTime(freq,ctx.currentTime+delay);
-  g.gain.setValueAtTime(0,ctx.currentTime+delay);
-  g.gain.linearRampToValueAtTime(vol,ctx.currentTime+delay+0.01);
-  g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+delay+dur);
-  osc.start(ctx.currentTime+delay);osc.stop(ctx.currentTime+delay+dur+0.02);
-}
-function sfxPlace(){ playTone(660,'sine',0.1,0.22); }
-function sfxRemove(){ playTone(220,'sawtooth',0.07,0.15); }
-function sfxCorrect(){ playTone(784,'sine',0.12,0.28); playTone(988,'sine',0.12,0.2,0.1); }
-function sfxWrong(){ playTone(160,'sawtooth',0.18,0.3); }
-function sfxLevelWin(){
-  [523,659,784,988,1047].forEach((f,i)=>playTone(f,'sine',0.18,0.28,i*0.09));
-}
-function sfxGameWin(){
-  [523,659,784,1047,1319,1568].forEach((f,i)=>playTone(f,'sine',0.2,0.3,i*0.08));
-  setTimeout(()=>[523,659,784,1047].forEach(f=>playTone(f,'sine',0.4,0.2)),700);
-}
-function sfxGameLose(){ [350,250,180,110].forEach((f,i)=>playTone(f,'sawtooth',0.22,0.25,i*0.12)); }
-function sfxCombo(n){ const b=440+n*60; [b,b*1.2,b*1.5].forEach(f=>playTone(f,'sine',0.14,0.2)); }
-function sfxReset(){ playTone(330,'triangle',0.08,0.18); }
-function sfxCheck(){ playTone(440,'square',0.06,0.18); }
-
-// ══════════════════════════════════
-//  LEVELS
-// ══════════════════════════════════
-const LEVELS = [
-  {
-    title:"Level 1 — Basic Page Skeleton",
-    goal:"Build a basic HTML page. Every web page needs these core tags to exist.",
-    quote:"Every architect starts with the same bones. Learn them first.",
-    slots:[
-      {label:"Opening",hint:"Declares this is HTML",answer:"<!DOCTYPE html>",icon:"📄"},
-      {label:"Root open",hint:"Wraps the whole page",answer:"<html>",icon:"🌐"},
-      {label:"Head open",hint:"Where metadata lives",answer:"<head>",icon:"🧠"},
-      {label:"Head close",hint:"Closes the head section",answer:"</head>",icon:"🧠"},
-      {label:"Body open",hint:"Visible content goes here",answer:"<body>",icon:"📦"},
-      {label:"Body close",hint:"Closes the body",answer:"</body>",icon:"📦"},
-      {label:"Root close",hint:"Closes the whole page",answer:"</html>",icon:"🌐"},
-    ],
-    tags:["<!DOCTYPE html>","<html>","<head>","</head>","<body>","</body>","</html>","<div>","<span>","<main>"],
-    preview:(slots)=>{
-      const filled=slots.filter(s=>s.placed).map(s=>s.placed);
-      return `<div style="font-family:monospace;padding:12px;font-size:11px;line-height:1.8;color:#333">
-        ${filled.map(t=>`<div><span style="color:#e06c75">${escHtml(t)}</span></div>`).join('')}
-        ${filled.length>0?`<p style="color:#555;font-size:10px;margin-top:8px">✓ ${filled.length} of 7 tags placed</p>`:'<p style="color:#aaa;font-size:10px">Place tags to build the page...</p>'}
-      </div>`;
-    }
-  },
-  {
-    title:"Level 2 — Page With Content",
-    goal:"Add a heading, a paragraph, and a link. These are the most common HTML tags on any real website.",
-    quote:"Structure first. Style later. Content always.",
-    slots:[
-      {label:"Page title",hint:"Appears in the browser tab",answer:"<title>",icon:"🏷️"},
-      {label:"Main heading",hint:"The biggest heading tag",answer:"<h1>",icon:"📢"},
-      {label:"Paragraph",hint:"A block of text",answer:"<p>",icon:"📝"},
-      {label:"Link",hint:"Makes clickable text",answer:"<a>",icon:"🔗"},
-      {label:"Close link",hint:"Closes the anchor tag",answer:"</a>",icon:"🔗"},
-      {label:"Close paragraph",hint:"Closes the paragraph",answer:"</p>",icon:"📝"},
-      {label:"Close heading",hint:"Closes the h1",answer:"</h1>",icon:"📢"},
-    ],
-    tags:["<title>","<h1>","</h1>","<p>","</p>","<a>","</a>","<h2>","<section>","<span>","<div>","<br>"],
-    preview:(slots)=>{
-      const map={};
-      slots.forEach(s=>{ if(s.placed) map[s.label]=true; });
-      return `<div style="font-family:sans-serif;padding:14px;font-size:13px;line-height:1.7;color:#222">
-        ${map['Main heading']?'<h1 style="font-size:18px;margin-bottom:8px;color:#c07a00">My First Page</h1>':''}
-        ${map['Paragraph']?'<p style="color:#444;margin-bottom:8px">This is my first paragraph of content. HTML makes the web.</p>':''}
-        ${map['Link']?'<p><a href="#" style="color:#0066cc">Click here to learn more</a></p>':''}
-        ${slots.filter(s=>s.placed).length===0?'<p style="color:#aaa;font-size:11px">Place tags to see the page...</p>':''}
-      </div>`;
-    }
-  },
-  {
-    title:"Level 3 — Lists and Images",
-    goal:"Add an image and an unordered list. These tags make pages visual and organized.",
-    quote:"A list is just repeated structure. That's all code ever is.",
-    slots:[
-      {label:"Image tag",hint:"Displays a picture — self-closing",answer:"<img>",icon:"🖼️"},
-      {label:"List wrapper",hint:"Unordered — bullet points",answer:"<ul>",icon:"📋"},
-      {label:"First item",hint:"A single list item",answer:"<li>",icon:"•"},
-      {label:"Close item",hint:"Closes the list item",answer:"</li>",icon:"•"},
-      {label:"Second item",hint:"Another list item",answer:"<li>",icon:"•"},
-      {label:"Close second",hint:"Closes it",answer:"</li>",icon:"•"},
-      {label:"Close list",hint:"Closes the ul",answer:"</ul>",icon:"📋"},
-    ],
-    tags:["<img>","<ul>","<ol>","<li>","</li>","</ul>","</ol>","<figure>","<caption>","<picture>","<div>","<span>"],
-    preview:(slots)=>{
-      const map={};let liCount=0;
-      slots.forEach(s=>{if(s.placed){map[s.label]=true;if(s.placed==='<li>')liCount++;}});
-      return `<div style="font-family:sans-serif;padding:14px;font-size:13px;color:#222">
-        ${map['Image tag']?'<div style="width:80px;height:50px;background:linear-gradient(135deg,#fbbf24,#fb923c);border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:20px">🖼️</div>':''}
-        ${map['List wrapper']?`<ul style="padding-left:20px;color:#444">${liCount>=1?'<li style="margin-bottom:4px">HTML is structure</li>':''}${liCount>=2?'<li>CSS is style</li>':''}</ul>`:''}
-        ${slots.filter(s=>s.placed).length===0?'<p style="color:#aaa;font-size:11px">Place tags to see the page...</p>':''}
-      </div>`;
-    }
-  },
-  {
-    title:"Level 4 — Semantic Layout",
-    goal:"Use semantic HTML tags to lay out a page correctly. These tell browsers — and screen readers — what each section means.",
-    quote:"Semantic tags aren't optional. They're the language the web speaks.",
-    slots:[
-      {label:"Site header",hint:"Top section with logo/nav",answer:"<header>",icon:"🔝"},
-      {label:"Navigation",hint:"Holds the nav links",answer:"<nav>",icon:"🧭"},
-      {label:"Close nav",hint:"Closes the nav",answer:"</nav>",icon:"🧭"},
-      {label:"Main content",hint:"The primary content area",answer:"<main>",icon:"📌"},
-      {label:"Article",hint:"A self-contained piece of content",answer:"<article>",icon:"📰"},
-      {label:"Close article",hint:"Closes the article",answer:"</article>",icon:"📰"},
-      {label:"Close main",hint:"Closes main",answer:"</main>",icon:"📌"},
-      {label:"Footer",hint:"Bottom section",answer:"<footer>",icon:"🔚"},
-      {label:"Close footer",hint:"Closes the footer",answer:"</footer>",icon:"🔚"},
-    ],
-    tags:["<header>","<nav>","</nav>","<main>","<article>","</article>","</main>","<footer>","</footer>","<aside>","<section>","<div>","<span>","<details>"],
-    preview:(slots)=>{
-      const map={};
-      slots.forEach(s=>{if(s.placed)map[s.label]=true;});
-      const colors={header:'#fbbf24',nav:'#fb923c',main:'#4ade80',article:'#60a5fa',footer:'#a78bfa'};
-      return `<div style="font-family:sans-serif;font-size:11px;padding:8px;display:flex;flex-direction:column;gap:3px">
-        ${map['Site header']?`<div style="background:${colors.header}33;border:1px solid ${colors.header};border-radius:4px;padding:5px 8px;color:#333">header</div>`:''}
-        ${map['Navigation']?`<div style="background:${colors.nav}33;border:1px solid ${colors.nav};border-radius:4px;padding:5px 8px;color:#333">nav</div>`:''}
-        ${map['Main content']?`<div style="background:${colors.main}33;border:1px solid ${colors.main};border-radius:4px;padding:5px 8px;color:#333">main ${map['Article']?`<span style="background:${colors.article}33;border:1px solid ${colors.article};border-radius:3px;padding:2px 6px">article</span>`:''}
-        </div>`:''}
-        ${map['Footer']?`<div style="background:#a78bfa33;border:1px solid #a78bfa;border-radius:4px;padding:5px 8px;color:#333">footer</div>`:''}
-        ${slots.filter(s=>s.placed).length===0?'<p style="color:#aaa">Place tags to see layout...</p>':''}
-      </div>`;
-    }
-  },
-  {
-    title:"Level 5 — Full Page Blueprint",
-    goal:"Wire up a complete, real-world page structure from scratch. This is how every professional HTML document is built.",
-    quote:"You just built the internet. One tag at a time.",
-    slots:[
-      {label:"Doctype",hint:"First line of every HTML file",answer:"<!DOCTYPE html>",icon:"📄"},
-      {label:"Open html",hint:"Root element",answer:"<html>",icon:"🌐"},
-      {label:"Open head",hint:"Metadata container",answer:"<head>",icon:"🧠"},
-      {label:"Charset meta",hint:"Tells browser encoding",answer:'<meta charset="UTF-8">',icon:"⚙️"},
-      {label:"Page title",hint:"Browser tab label",answer:"<title>",icon:"🏷️"},
-      {label:"Close head",hint:"End of metadata",answer:"</head>",icon:"🧠"},
-      {label:"Open body",hint:"Visible content starts",answer:"<body>",icon:"📦"},
-      {label:"Header",hint:"Site top section",answer:"<header>",icon:"🔝"},
-      {label:"Main",hint:"Core content area",answer:"<main>",icon:"📌"},
-      {label:"Footer",hint:"Page bottom",answer:"<footer>",icon:"🔚"},
-      {label:"Close body",hint:"End of content",answer:"</body>",icon:"📦"},
-      {label:"Close html",hint:"End of document",answer:"</html>",icon:"🌐"},
-    ],
-    tags:["<!DOCTYPE html>","<html>","</html>","<head>","</head>","<body>","</body>","<title>","</title>",'<meta charset="UTF-8">','<meta name="viewport">','<link>','<script>','<header>','</header>','<main>','</main>','<footer>','</footer>','<nav>','<div>'],
-    preview:(slots)=>{
-      const filled=slots.filter(s=>s.placed);
-      const pct=Math.round((filled.length/slots.length)*100);
-      return `<div style="font-family:monospace;padding:10px;font-size:10px;line-height:1.9;color:#333">
-        ${filled.map(s=>`<div><span style="color:#e06c75">${escHtml(s.placed)}</span></div>`).join('')}
-        <div style="margin-top:8px;background:#f0f0f0;border-radius:4px;height:6px;overflow:hidden">
-          <div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#fbbf24,#fb923c);transition:width .3s"></div>
-        </div>
-        <p style="color:#888;font-size:9px;margin-top:4px">${pct}% complete</p>
-      </div>`;
-    }
-  }
+let audioCtx=null;
+function getCtx(){if(!audioCtx)audioCtx=new(window.AudioContext||window.webkitAudioContext)();return audioCtx;}
+function playTone(freq,type='sine',dur=0.15,vol=0.28,delay=0){const ctx=getCtx(),osc=ctx.createOscillator(),g=ctx.createGain();osc.connect(g);g.connect(ctx.destination);osc.type=type;osc.frequency.setValueAtTime(freq,ctx.currentTime+delay);g.gain.setValueAtTime(0,ctx.currentTime+delay);g.gain.linearRampToValueAtTime(vol,ctx.currentTime+delay+0.01);g.gain.exponentialRampToValueAtTime(0.001,ctx.currentTime+delay+dur);osc.start(ctx.currentTime+delay);osc.stop(ctx.currentTime+delay+dur+0.02);}
+function sfxPlace(){playTone(660,'sine',0.1,0.22);}
+function sfxRemove(){playTone(220,'sawtooth',0.07,0.15);}
+function sfxCorrect(){playTone(784,'sine',0.12,0.28);playTone(988,'sine',0.12,0.2,0.1);}
+function sfxWrong(){playTone(160,'sawtooth',0.18,0.3);}
+function sfxLevelWin(){[523,659,784,988,1047].forEach((f,i)=>playTone(f,'sine',0.18,0.28,i*0.09));}
+function sfxGameWin(){[523,659,784,1047,1319,1568].forEach((f,i)=>playTone(f,'sine',0.2,0.3,i*0.08));setTimeout(()=>[523,659,784,1047].forEach(f=>playTone(f,'sine',0.4,0.2)),700);}
+function sfxGameLose(){[350,250,180,110].forEach((f,i)=>playTone(f,'sawtooth',0.22,0.25,i*0.12));}
+function sfxCombo(n){const b=440+n*60;[b,b*1.2,b*1.5].forEach(f=>playTone(f,'sine',0.14,0.2));}
+function sfxReset(){playTone(330,'triangle',0.08,0.18);}
+function sfxCheck(){playTone(440,'square',0.06,0.18);}
+const LEVELS=[
+{title:"Level 1 — Basic Page Skeleton",goal:"Build a basic HTML page. Every web page needs these core tags to exist.",quote:"Every architect starts with the same bones. Learn them first.",slots:[{label:"Opening",hint:"Declares this is HTML",answer:"<!DOCTYPE html>",icon:"📄"},{label:"Root open",hint:"Wraps the whole page",answer:"<html>",icon:"🌐"},{label:"Head open",hint:"Where metadata lives",answer:"<head>",icon:"🧠"},{label:"Head close",hint:"Closes the head section",answer:"</head>",icon:"🧠"},{label:"Body open",hint:"Visible content goes here",answer:"<body>",icon:"📦"},{label:"Body close",hint:"Closes the body",answer:"</body>",icon:"📦"},{label:"Root close",hint:"Closes the whole page",answer:"</html>",icon:"🌐"}],tags:["<!DOCTYPE html>","<html>","<head>","</head>","<body>","</body>","</html>","<div>","<span>","<main>"],preview:(slots)=>{const filled=slots.filter(s=>s.placed).map(s=>s.placed);return `<div style="font-family:monospace;padding:12px;font-size:11px;line-height:1.8;color:#333">${filled.map(t=>`<div><span style="color:#e06c75">${escHtml(t)}</span></div>`).join('')}${filled.length>0?`<p style="color:#555;font-size:10px;margin-top:8px">✓ ${filled.length} of 7 tags placed</p>`:'<p style="color:#aaa;font-size:10px">Place tags to build the page...</p>'}</div>`;}},
+{title:"Level 2 — Page With Content",goal:"Add a heading, a paragraph, and a link. These are the most common HTML tags on any real website.",quote:"Structure first. Style later. Content always.",slots:[{label:"Page title",hint:"Appears in the browser tab",answer:"<title>",icon:"🏷️"},{label:"Main heading",hint:"The biggest heading tag",answer:"<h1>",icon:"📢"},{label:"Paragraph",hint:"A block of text",answer:"<p>",icon:"📝"},{label:"Link",hint:"Makes clickable text",answer:"<a>",icon:"🔗"},{label:"Close link",hint:"Closes the anchor tag",answer:"</a>",icon:"🔗"},{label:"Close paragraph",hint:"Closes the paragraph",answer:"</p>",icon:"📝"},{label:"Close heading",hint:"Closes the h1",answer:"</h1>",icon:"📢"}],tags:["<title>","<h1>","</h1>","<p>","</p>","<a>","</a>","<h2>","<section>","<span>","<div>","<br>"],preview:(slots)=>{const map={};slots.forEach(s=>{if(s.placed)map[s.label]=true;});return `<div style="font-family:sans-serif;padding:14px;font-size:13px;line-height:1.7;color:#222">${map['Main heading']?'<h1 style="font-size:18px;margin-bottom:8px;color:#c07a00">My First Page</h1>':''}${map['Paragraph']?'<p style="color:#444;margin-bottom:8px">This is my first paragraph of content. HTML makes the web.</p>':''}${map['Link']?'<p><a href="#" style="color:#0066cc">Click here to learn more</a></p>':''}${slots.filter(s=>s.placed).length===0?'<p style="color:#aaa;font-size:11px">Place tags to see the page...</p>':''}</div>`;}},
+{title:"Level 3 — Lists and Images",goal:"Add an image and an unordered list. These tags make pages visual and organized.",quote:"A list is just repeated structure. That's all code ever is.",slots:[{label:"Image tag",hint:"Displays a picture — self-closing",answer:"<img>",icon:"🖼️"},{label:"List wrapper",hint:"Unordered — bullet points",answer:"<ul>",icon:"📋"},{label:"First item",hint:"A single list item",answer:"<li>",icon:"•"},{label:"Close item",hint:"Closes the list item",answer:"</li>",icon:"•"},{label:"Second item",hint:"Another list item",answer:"<li>",icon:"•"},{label:"Close second",hint:"Closes it",answer:"</li>",icon:"•"},{label:"Close list",hint:"Closes the ul",answer:"</ul>",icon:"📋"}],tags:["<img>","<ul>","<ol>","<li>","</li>","</ul>","</ol>","<figure>","<caption>","<picture>","<div>","<span>"],preview:(slots)=>{const map={};let liCount=0;slots.forEach(s=>{if(s.placed){map[s.label]=true;if(s.placed==='<li>')liCount++;}});return `<div style="font-family:sans-serif;padding:14px;font-size:13px;color:#222">${map['Image tag']?'<div style="width:80px;height:50px;background:linear-gradient(135deg,#fbbf24,#fb923c);border-radius:6px;margin-bottom:10px;display:flex;align-items:center;justify-content:center;font-size:20px">🖼️</div>':''}${map['List wrapper']?`<ul style="padding-left:20px;color:#444">${liCount>=1?'<li style="margin-bottom:4px">HTML is structure</li>':''}${liCount>=2?'<li>CSS is style</li>':''}</ul>`:''}</div>`;}},
+{title:"Level 4 — Semantic Layout",goal:"Use semantic HTML tags to lay out a page correctly. These tell browsers — and screen readers — what each section means.",quote:"Semantic tags aren't optional. They're the language the web speaks.",slots:[{label:"Site header",hint:"Top section with logo/nav",answer:"<header>",icon:"🔝"},{label:"Navigation",hint:"Holds the nav links",answer:"<nav>",icon:"🧭"},{label:"Close nav",hint:"Closes the nav",answer:"</nav>",icon:"🧭"},{label:"Main content",hint:"The primary content area",answer:"<main>",icon:"📌"},{label:"Article",hint:"A self-contained piece of content",answer:"<article>",icon:"📰"},{label:"Close article",hint:"Closes the article",answer:"</article>",icon:"📰"},{label:"Close main",hint:"Closes main",answer:"</main>",icon:"📌"},{label:"Footer",hint:"Bottom section",answer:"<footer>",icon:"🔚"},{label:"Close footer",hint:"Closes the footer",answer:"</footer>",icon:"🔚"}],tags:["<header>","<nav>","</nav>","<main>","<article>","</article>","</main>","<footer>","</footer>","<aside>","<section>","<div>","<span>","<details>"],preview:(slots)=>{const map={};slots.forEach(s=>{if(s.placed)map[s.label]=true;});const colors={header:'#fbbf24',nav:'#fb923c',main:'#4ade80',article:'#60a5fa',footer:'#a78bfa'};return `<div style="font-family:sans-serif;font-size:11px;padding:8px;display:flex;flex-direction:column;gap:3px">${map['Site header']?`<div style="background:${colors.header}33;border:1px solid ${colors.header};border-radius:4px;padding:5px 8px;color:#333">header</div>`:''}${map['Navigation']?`<div style="background:${colors.nav}33;border:1px solid ${colors.nav};border-radius:4px;padding:5px 8px;color:#333">nav</div>`:''}${map['Main content']?`<div style="background:${colors.main}33;border:1px solid ${colors.main};border-radius:4px;padding:5px 8px;color:#333">main ${map['Article']?`<span style="background:${colors.article}33;border:1px solid ${colors.article};border-radius:3px;padding:2px 6px">article</span>`:''}</div>`:''}${map['Footer']?`<div style="background:#a78bfa33;border:1px solid #a78bfa;border-radius:4px;padding:5px 8px;color:#333">footer</div>`:''}${slots.filter(s=>s.placed).length===0?'<p style="color:#aaa">Place tags to see layout...</p>':''}</div>`;}},
+{title:"Level 5 — Full Page Blueprint",goal:"Wire up a complete, real-world page structure from scratch. This is how every professional HTML document is built.",quote:"You just built the internet. One tag at a time.",slots:[{label:"Doctype",hint:"First line of every HTML file",answer:"<!DOCTYPE html>",icon:"📄"},{label:"Open html",hint:"Root element",answer:"<html>",icon:"🌐"},{label:"Open head",hint:"Metadata container",answer:"<head>",icon:"🧠"},{label:"Charset meta",hint:"Tells browser encoding",answer:'<meta charset="UTF-8">',icon:"⚙️"},{label:"Page title",hint:"Browser tab label",answer:"<title>",icon:"🏷️"},{label:"Close head",hint:"End of metadata",answer:"</head>",icon:"🧠"},{label:"Open body",hint:"Visible content starts",answer:"<body>",icon:"📦"},{label:"Header",hint:"Site top section",answer:"<header>",icon:"🔝"},{label:"Main",hint:"Core content area",answer:"<main>",icon:"📌"},{label:"Footer",hint:"Page bottom",answer:"<footer>",icon:"🔚"},{label:"Close body",hint:"End of content",answer:"</body>",icon:"📦"},{label:"Close html",hint:"End of document",answer:"</html>",icon:"🌐"}],tags:["<!DOCTYPE html>","<html>","</html>","<head>","</head>","<body>","</body>","<title>","</title>",'<meta charset="UTF-8">','<meta name="viewport">','<link>','<script>','<header>','</header>','<main>','</main>','<footer>','</footer>','<nav>','<div>'],preview:(slots)=>{const filled=slots.filter(s=>s.placed);const pct=Math.round((filled.length/slots.length)*100);return `<div style="font-family:monospace;padding:10px;font-size:10px;line-height:1.9;color:#333">${filled.map(s=>`<div><span style="color:#e06c75">${escHtml(s.placed)}</span></div>`).join('')}<div style="margin-top:8px;background:#f0f0f0;border-radius:4px;height:6px;overflow:hidden"><div style="width:${pct}%;height:100%;background:linear-gradient(90deg,#fbbf24,#fb923c);transition:width .3s"></div></div><p style="color:#888;font-size:9px;margin-top:4px">${pct}% complete</p></div>`;}}
 ];
-
-function escHtml(s){ return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-
-// ══════════════════════════════════
-//  STATE
-// ══════════════════════════════════
-let score=0,lives=3,combo=0,currentLevel=0;
-let slots=[];
-let dragTag=null;
-let progress=0;
-
-// ══════════════════════════════════
-//  SCREENS
-// ══════════════════════════════════
-function showScreen(id){
-  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
-}
-
-// ══════════════════════════════════
-//  START
-// ══════════════════════════════════
-function startGame(){
-  getCtx();
-  score=0;lives=3;combo=0;currentLevel=0;progress=0;
-  showScreen('screen-game');
-  loadLevel(0);
-}
+function escHtml(s){return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+let score=0,lives=3,combo=0,currentLevel=0,slots=[],dragTag=null,progress=0;
+function showScreen(id){document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function startGame(){getCtx();score=0;lives=3;combo=0;currentLevel=0;progress=0;showScreen('screen-game');loadLevel(0);}
 window.startGame=startGame;
-
-// ══════════════════════════════════
-//  LOAD LEVEL
-// ══════════════════════════════════
-function loadLevel(idx){
-  if(idx>=LEVELS.length){ endGame(true); return; }
-  currentLevel=idx;
-  const lv=LEVELS[idx];
-  slots=lv.slots.map(s=>({...s,placed:null}));
-
-  document.getElementById('hud-level').textContent=`LEVEL ${idx+1} / ${LEVELS.length}`;
-  document.getElementById('level-goal').textContent=lv.goal;
-  document.getElementById('quote-text').textContent=`"${lv.quote}"`;
-
-  // Tags
-  const shuffled=[...lv.tags].sort(()=>Math.random()-0.5);
-  const grid=document.getElementById('tag-grid');
-  grid.innerHTML='';
-  shuffled.forEach(tag=>{
-    const el=document.createElement('div');
-    el.className='tag-chip';
-    el.draggable=true;
-    el.dataset.tag=tag;
-    el.innerHTML=`<span class="tag-icon">🏷️</span>${escHtml(tag)}`;
-    el.addEventListener('dragstart',e=>{dragTag=tag;e.dataTransfer.effectAllowed='copy';});
-    el.addEventListener('dragend',()=>dragTag=null);
-    el.addEventListener('click',()=>clickTag(tag,el));
-    grid.appendChild(el);
-  });
-
-  renderSlots();
-  updateHUD();
-  updatePreview();
-}
-
-// ══════════════════════════════════
-//  RENDER SLOTS
-// ══════════════════════════════════
-function renderSlots(){
-  const list=document.getElementById('slot-list');
-  list.innerHTML='';
-  slots.forEach((slot,i)=>{
-    const el=document.createElement('div');
-    el.className='slot'+(slot.placed?' filled':'');
-    el.dataset.idx=i;
-    el.innerHTML=`
-      <div class="slot-label">${slot.icon} ${slot.label}</div>
-      ${slot.placed
-        ?`<div class="slot-content">${escHtml(slot.placed)}</div><button class="slot-remove" onclick="removeFromSlot(${i})">✕</button>`
-        :`<div class="slot-hint">${slot.hint}</div>`}
-    `;
-    el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('drag-over');});
-    el.addEventListener('dragleave',()=>el.classList.remove('drag-over'));
-    el.addEventListener('drop',e=>{e.preventDefault();el.classList.remove('drag-over');if(dragTag) placeTag(dragTag,i);});
-    el.addEventListener('click',()=>{ if(!slot.placed && window._selectedTag) placeTag(window._selectedTag,i); });
-    list.appendChild(el);
-  });
-}
-
-// ══════════════════════════════════
-//  PLACE / REMOVE
-// ══════════════════════════════════
-let _selectedTag=null;
-window._selectedTag=null;
-
-function clickTag(tag,el){
-  sfxPlace();
-  // Find first empty slot
-  const emptyIdx=slots.findIndex(s=>!s.placed);
-  if(emptyIdx!==-1){
-    placeTag(tag,emptyIdx);
-  } else {
-    // highlight slots
-    document.querySelectorAll('.slot').forEach(s=>{ s.style.borderColor='rgba(251,191,36,0.6)'; setTimeout(()=>s.style.borderColor='',600); });
-    showToast("All slots filled — remove one first");
-  }
-}
-
-function placeTag(tag,slotIdx){
-  if(slots[slotIdx].placed) return;
-  slots[slotIdx].placed=tag;
-  // Mark chip as used
-  document.querySelectorAll('.tag-chip').forEach(c=>{
-    if(c.dataset.tag===tag && !c.classList.contains('used')){
-      c.classList.add('used');
-    }
-  });
-  sfxPlace();
-  renderSlots();
-  updatePreview();
-  progress=Math.min(100,(slots.filter(s=>s.placed).length/slots.length)*100);
-  document.getElementById('progress-fill').style.width=progress+'%';
-}
-
-function removeFromSlot(idx){
-  const tag=slots[idx].placed;
-  slots[idx].placed=null;
-  // Restore chip
-  document.querySelectorAll('.tag-chip').forEach(c=>{
-    if(c.dataset.tag===tag && c.classList.contains('used')){
-      c.classList.remove('used');
-    }
-  });
-  sfxRemove();
-  renderSlots();
-  updatePreview();
-}
+function loadLevel(idx){if(idx>=LEVELS.length){endGame(true);return;}currentLevel=idx;const lv=LEVELS[idx];slots=lv.slots.map(s=>({...s,placed:null}));document.getElementById('hud-level').textContent=`LEVEL ${idx+1} / ${LEVELS.length}`;document.getElementById('level-goal').textContent=lv.goal;document.getElementById('quote-text').textContent=`"${lv.quote}"`;const shuffled=[...lv.tags].sort(()=>Math.random()-0.5);const grid=document.getElementById('tag-grid');grid.innerHTML='';shuffled.forEach(tag=>{const el=document.createElement('div');el.className='tag-chip';el.draggable=true;el.dataset.tag=tag;el.innerHTML=`<span class="tag-icon">🏷️</span>${escHtml(tag)}`;el.addEventListener('dragstart',e=>{dragTag=tag;e.dataTransfer.effectAllowed='copy';});el.addEventListener('dragend',()=>dragTag=null);el.addEventListener('click',()=>clickTag(tag,el));grid.appendChild(el);});renderSlots();updateHUD();updatePreview();}
+function renderSlots(){const list=document.getElementById('slot-list');list.innerHTML='';slots.forEach((slot,i)=>{const el=document.createElement('div');el.className='slot'+(slot.placed?' filled':'');el.dataset.idx=i;el.innerHTML=`<div class="slot-label">${slot.icon} ${slot.label}</div>${slot.placed?`<div class="slot-content">${escHtml(slot.placed)}</div><button class="slot-remove" onclick="removeFromSlot(${i})">✕</button>`:`<div class="slot-hint">${slot.hint}</div>`}`;el.addEventListener('dragover',e=>{e.preventDefault();el.classList.add('drag-over');});el.addEventListener('dragleave',()=>el.classList.remove('drag-over'));el.addEventListener('drop',e=>{e.preventDefault();el.classList.remove('drag-over');if(dragTag)placeTag(dragTag,i);});el.addEventListener('click',()=>{if(!slot.placed&&window._selectedTag)placeTag(window._selectedTag,i);});list.appendChild(el);});}
+let _selectedTag=null;window._selectedTag=null;
+function clickTag(tag,el){sfxPlace();const emptyIdx=slots.findIndex(s=>!s.placed);if(emptyIdx!==-1){placeTag(tag,emptyIdx);}else{document.querySelectorAll('.slot').forEach(s=>{s.style.borderColor='rgba(251,191,36,0.6)';setTimeout(()=>s.style.borderColor='',600);});showToast("All slots filled — remove one first");}}
+function placeTag(tag,slotIdx){if(slots[slotIdx].placed)return;slots[slotIdx].placed=tag;document.querySelectorAll('.tag-chip').forEach(c=>{if(c.dataset.tag===tag&&!c.classList.contains('used')){c.classList.add('used');}});sfxPlace();renderSlots();updatePreview();progress=Math.min(100,(slots.filter(s=>s.placed).length/slots.length)*100);document.getElementById('progress-fill').style.width=progress+'%';}
+function removeFromSlot(idx){const tag=slots[idx].placed;slots[idx].placed=null;document.querySelectorAll('.tag-chip').forEach(c=>{if(c.dataset.tag===tag&&c.classList.contains('used')){c.classList.remove('used');}});sfxRemove();renderSlots();updatePreview();}
 window.removeFromSlot=removeFromSlot;
-
-// ══════════════════════════════════
-//  LIVE PREVIEW
-// ══════════════════════════════════
-function updatePreview(){
-  const lv=LEVELS[currentLevel];
-  const iframe=document.getElementById('live-preview');
-  try { iframe.srcdoc=lv.preview(slots); } catch(e){}
-}
-
-// ══════════════════════════════════
-//  CHECK
-// ══════════════════════════════════
-function checkBlueprint(){
-  sfxCheck();
-  const lv=LEVELS[currentLevel];
-  let correct=0;
-  const slotEls=document.querySelectorAll('.slot');
-
-  slots.forEach((slot,i)=>{
-    const el=slotEls[i];
-    if(!slot.placed) return;
-    if(slot.placed===slot.answer){
-      correct++;
-      el.classList.add('correct');
-      setTimeout(()=>el.classList.remove('correct'),800);
-      sfxCorrect();
-    } else {
-      el.classList.add('wrong');
-      setTimeout(()=>el.classList.remove('wrong'),600);
-    }
-  });
-
-  const total=lv.slots.length;
-  const allFilled=slots.every(s=>s.placed);
-  const perfect=correct===total&&allFilled;
-
-  if(perfect){
-    combo++;
-    const pts=150+(combo>1?combo*30:0);
-    score+=pts;
-    updateHUD();
-    updateComboDisplay();
-    sfxLevelWin();
-    if(combo>=3) sfxCombo(combo);
-    showFace('nova-victory.png',1500);
-    spawnParticles(14);
-    showToast(combo>1?`🔥 ${combo}x COMBO — +${pts} pts!`:`Blueprint locked! +${pts} pts`);
-    setTimeout(()=>loadLevel(currentLevel+1),1700);
-  } else {
-    const wrongCount=slots.filter((s,i)=>s.placed&&s.placed!==lv.slots[i].answer).length;
-    const missing=slots.filter(s=>!s.placed).length;
-    if(missing>0){
-      showToast(`${missing} slot${missing>1?'s':''} still empty`);
-    } else {
-      lives--;
-      combo=0;
-      updateHUD();
-      updateComboDisplay();
-      sfxWrong();
-      showFace('nova-scared.png',1100);
-      showToast(lives>0?`${wrongCount} tag${wrongCount>1?'s':''} in the wrong slot`:'Blueprint failed!');
-      if(lives<=0){ setTimeout(()=>endGame(false),1200); }
-    }
-  }
-}
+function updatePreview(){const lv=LEVELS[currentLevel];const iframe=document.getElementById('live-preview');try{iframe.srcdoc=lv.preview(slots);}catch(e){}}
+function checkBlueprint(){sfxCheck();const lv=LEVELS[currentLevel];let correct=0;const slotEls=document.querySelectorAll('.slot');slots.forEach((slot,i)=>{const el=slotEls[i];if(!slot.placed)return;if(slot.placed===slot.answer){correct++;el.classList.add('correct');setTimeout(()=>el.classList.remove('correct'),800);sfxCorrect();}else{el.classList.add('wrong');setTimeout(()=>el.classList.remove('wrong'),600);}});const total=lv.slots.length;const allFilled=slots.every(s=>s.placed);const perfect=correct===total&&allFilled;if(perfect){combo++;const pts=150+(combo>1?combo*30:0);score+=pts;updateHUD();updateComboDisplay();sfxLevelWin();if(combo>=3)sfxCombo(combo);showFace('nova-victory.png',1500);spawnParticles(14);showToast(combo>1?`🔥 ${combo}x COMBO — +${pts} pts!`:`Blueprint locked! +${pts} pts`);setTimeout(()=>loadLevel(currentLevel+1),1700);}else{const wrongCount=slots.filter((s,i)=>s.placed&&s.placed!==lv.slots[i].answer).length;const missing=slots.filter(s=>!s.placed).length;if(missing>0){showToast(`${missing} slot${missing>1?'s':''} still empty`);}else{lives--;combo=0;updateHUD();updateComboDisplay();sfxWrong();showFace('nova-scared.png',1100);showToast(lives>0?`${wrongCount} tag${wrongCount>1?'s':''} in the wrong slot`:'Blueprint failed!');if(lives<=0){setTimeout(()=>endGame(false),1200);}}}}
 window.checkBlueprint=checkBlueprint;
-
-function resetLevel(){
-  sfxReset();
-  slots.forEach(s=>s.placed=null);
-  document.querySelectorAll('.tag-chip').forEach(c=>c.classList.remove('used'));
-  renderSlots();
-  updatePreview();
-  progress=0;
-  document.getElementById('progress-fill').style.width='0%';
-}
+function resetLevel(){sfxReset();slots.forEach(s=>s.placed=null);document.querySelectorAll('.tag-chip').forEach(c=>c.classList.remove('used'));renderSlots();updatePreview();progress=0;document.getElementById('progress-fill').style.width='0%';}
 window.resetLevel=resetLevel;
-
-// ══════════════════════════════════
-//  HUD
-// ══════════════════════════════════
-function updateHUD(){
-  document.getElementById('hud-score').textContent=score;
-  document.getElementById('hud-lives').textContent='♦'.repeat(Math.max(0,lives))+'◇'.repeat(Math.max(0,3-lives));
-}
-function updateComboDisplay(){
-  const el=document.getElementById('combo-val');
-  el.textContent=combo;
-  el.classList.remove('bump');
-  void el.offsetWidth;
-  el.classList.add('bump');
-}
-
-// ══════════════════════════════════
-//  FACE POP
-// ══════════════════════════════════
+function updateHUD(){document.getElementById('hud-score').textContent=score;document.getElementById('hud-lives').textContent='♦'.repeat(Math.max(0,lives))+'◇'.repeat(Math.max(0,3-lives));}
+function updateComboDisplay(){const el=document.getElementById('combo-val');el.textContent=combo;el.classList.remove('bump');void el.offsetWidth;el.classList.add('bump');}
 let faceTimer=null;
-function showFace(src,dur=1000){
-  const pop=document.getElementById('face-pop');
-  document.getElementById('face-img').src=src;
-  pop.classList.add('show');
-  if(faceTimer) clearTimeout(faceTimer);
-  faceTimer=setTimeout(()=>pop.classList.remove('show'),dur);
-}
-
-// ══════════════════════════════════
-//  PARTICLES
-// ══════════════════════════════════
-function spawnParticles(n){
-  const c=document.getElementById('particles');
-  for(let i=0;i<n;i++){
-    const p=document.createElement('div');
-    p.className='particle';
-    const sz=Math.random()*8+4;
-    p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;top:${Math.random()*60+20}vh;--tx:${(Math.random()-.5)*200}px;--ty:${(Math.random()-.5)*200}px;background:${Math.random()>.5?'#fbbf24':'#fb923c'};animation-duration:${Math.random()*.6+.8}s;`;
-    c.appendChild(p);
-    setTimeout(()=>p.remove(),1500);
-  }
-}
-
-// ══════════════════════════════════
-//  TOAST
-// ══════════════════════════════════
+function showFace(src,dur=1000){const pop=document.getElementById('face-pop');document.getElementById('face-img').src=src;pop.classList.add('show');if(faceTimer)clearTimeout(faceTimer);faceTimer=setTimeout(()=>pop.classList.remove('show'),dur);}
+function spawnParticles(n){const c=document.getElementById('particles');for(let i=0;i<n;i++){const p=document.createElement('div');p.className='particle';const sz=Math.random()*8+4;p.style.cssText=`width:${sz}px;height:${sz}px;left:${Math.random()*100}vw;top:${Math.random()*60+20}vh;--tx:${(Math.random()-.5)*200}px;--ty:${(Math.random()-.5)*200}px;background:${Math.random()>.5?'#fbbf24':'#fb923c'};animation-duration:${Math.random()*.6+.8}s;`;c.appendChild(p);setTimeout(()=>p.remove(),1500);}}
 let toastTimer=null;
-function showToast(msg){
-  const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
-  if(toastTimer) clearTimeout(toastTimer);
-  toastTimer=setTimeout(()=>t.classList.remove('show'),2200);
-}
-
-// ══════════════════════════════════
-//  END GAME
-// ══════════════════════════════════
-function endGame(win){
-  if(win){sfxGameWin();showFace('nova-victory.png',99999);spawnParticles(20);}
-  else{sfxGameLose();showFace('nova-sad.png',99999);}
-  setTimeout(()=>{
-    document.getElementById('face-pop').classList.remove('show');
-    showScreen('screen-result');
-    document.getElementById('result-title').textContent=win?'BLUEPRINT COMPLETE':'BLUEPRINT FAILED';
-    document.getElementById('result-title').className='result-title '+(win?'win':'lose');
-    document.getElementById('result-face').src=win?'nova-victory.png':'nova-sad.png';
-    document.getElementById('result-score').textContent=score;
-    document.getElementById('result-msg').textContent=win
-      ?`Every tag in the right place. ${score>=700?'Perfect architecture — Nova approves.':'Solid structure. You think like a builder.'}`
-      :`The blueprint broke before it was done. Tags matter — go back and rebuild.`;
-  },win?1900:1400);
-}
-
-function restartGame(){ showScreen('screen-instructions'); sfxReset(); }
+function showToast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');if(toastTimer)clearTimeout(toastTimer);toastTimer=setTimeout(()=>t.classList.remove('show'),2200);}
+function endGame(win){if(win){sfxGameWin();showFace('nova-victory.png',99999);spawnParticles(20);}else{sfxGameLose();showFace('nova-sad.png',99999);}setTimeout(()=>{document.getElementById('face-pop').classList.remove('show');showScreen('screen-result');document.getElementById('result-title').textContent=win?'BLUEPRINT COMPLETE':'BLUEPRINT FAILED';document.getElementById('result-title').className='result-title '+(win?'win':'lose');document.getElementById('result-face').src=win?'nova-victory.png':'nova-sad.png';document.getElementById('result-score').textContent=score;document.getElementById('result-msg').textContent=win?`Every tag in the right place. ${score>=700?'Perfect architecture — Nova approves.':'Solid structure. You think like a builder.'}`:`The blueprint broke before it was done. Tags matter — go back and rebuild.`;},win?1900:1400);}
+function restartGame(){showScreen('screen-instructions');sfxReset();}
 window.restartGame=restartGame;
 </script>
 </body>
