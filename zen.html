@@ -1,72 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-DJ3Q488K7W');
-</script>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zen's World — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root {
-  --void: #050508;
-  --deep: #080b14;
-  --navy: #0d1020;
-  --card: #0f1525;
-  --border: rgba(255,255,255,.06);
-  --border-md: rgba(255,255,255,.12);
-  --white: #ffffff;
-  --off: #c8cce0;
-  --muted: #5a6080;
-  --pink: #ff6baa;
-  --purple: #c66bff;
-  --cyan: #00e8ff;
-  --char: #ff6baa;
-  --char2: #c66bff;
-  --grad: linear-gradient(135deg, #ff6baa, #c66bff);
-  --display: 'Orbitron', monospace;
-  --heading: 'Syne', sans-serif;
-  --body: 'DM Sans', sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth;font-size:16px}
-body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
+<!DOCTYPE html> <html lang="en"> <head> <!-- Google tag (gtag.js) --> <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script> <script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-DJ3Q488K7W'); </script> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Zen's Coding Realm — Method in Motion</title> <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"> <style> :root { --void: #050508; --deep: #080b14; --navy: #0d1020; --card: #0f1525; --border: rgba(255,255,255,.06); --border-md: rgba(255,255,255,.12); --white: #ffffff; --off: #c8cce0; --muted: #5a6080; --pink: #ff6baa; --purple: #c66bff; --cyan: #00e8ff; --char: #ff6baa; --char2: #c66bff; --grad: linear-gradient(135deg, #ff6baa, #c66bff); --display: 'Orbitron', monospace; --heading: 'Syne', sans-serif; --body: 'DM Sans', sans-serif; } *,*::before,*::after{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth;font-size:16px} body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7} a{color:inherit;text-decoration:none} img{display:block;max-width:100%} /* NAV */ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)} .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em;color:var(--white)} .nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000} .nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;transition:color .2s} .nav-back:hover{color:var(--char)} .nav-right{display:flex;align-items:center;gap:10px} .nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(255,107,170,.4);color:var(--char);border-radius:100px} .nav-dashboard{font-family:var(--display);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;background:rgba(255,107,170,.1);border:1px solid rgba(255,107,170,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s;display:none} .nav-dashboard:hover{background:rgba(255,107,170,.2)} .nav-dashboard.visible{display:inline-flex;align-items:center;gap:6px} #nav-user-menu{display:none;align-items:center;gap:12px} #nav-username{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.7)} #nav-logout-btn{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:20px;cursor:pointer;transition:border-color .2s,color .2s} #nav-logout-btn:hover{border-color:rgba(255,107,170,.5);color:var(--char)} #nav-login{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,107,170,.4);color:var(--char);padding:6px 14px;border-radius:20px;cursor:pointer;transition:background .2s} #nav-login:hover{background:rgba(255,107,170,.1)}
 
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em;color:var(--white)}
-.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
-.nav-back{font-family:var(--display);font-size:.6rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:8px;transition:color .2s}
-.nav-back:hover{color:var(--char)}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-char{font-family:var(--display);font-size:.65rem;letter-spacing:.14em;padding:8px 18px;border:1px solid rgba(255,107,170,.4);color:var(--char);border-radius:100px}
-.nav-dashboard{font-family:var(--display);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;background:rgba(255,107,170,.1);border:1px solid rgba(255,107,170,.3);color:var(--char);border-radius:100px;cursor:pointer;transition:all .2s;display:none}
-.nav-dashboard:hover{background:rgba(255,107,170,.2)}
-.nav-dashboard.visible{display:inline-flex;align-items:center;gap:6px}
-#nav-user-menu{display:none;align-items:center;gap:12px}
-#nav-username{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;color:rgba(255,255,255,.7)}
-#nav-logout-btn{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.7);padding:6px 14px;border-radius:20px;cursor:pointer;transition:border-color .2s,color .2s}
-#nav-logout-btn:hover{border-color:rgba(255,107,170,.5);color:var(--char)}
-#nav-login{font-family:'Orbitron',monospace;font-size:.6rem;letter-spacing:.1em;background:none;border:1px solid rgba(255,107,170,.4);color:var(--char);padding:6px 14px;border-radius:20px;cursor:pointer;transition:background .2s}
-#nav-login:hover{background:rgba(255,107,170,.1)}
-
-/* =====================
-   HERO — GLOWING IMMERSIVE
-   ===================== */
+/* ===================== HERO ===================== */
 .hero{
   position:relative;
   min-height:100vh;
   display:flex;
-  align-items:center;
-  justify-content:center;
+  align-items:flex-end;
+  justify-content:flex-start;
   overflow:hidden;
   padding:0;
 }
@@ -85,22 +25,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   from{transform:scale(1.04) translate(0,0)}
   to{transform:scale(1.08) translate(-1%,1%)}
 }
-/* very subtle vignette at edges only — not a dark overlay */
 .hero-vignette{
   position:absolute;
   inset:0;
   z-index:1;
   background:
-    radial-gradient(ellipse at center, transparent 30%, rgba(5,5,8,.55) 100%),
-    linear-gradient(to bottom, rgba(5,5,8,.6) 0%, transparent 18%, transparent 75%, rgba(5,5,8,.9) 100%);
+    radial-gradient(ellipse at center, transparent 30%, rgba(5,5,8,.45) 100%),
+    linear-gradient(to bottom, rgba(5,5,8,.5) 0%, transparent 20%, transparent 50%, rgba(5,5,8,.97) 100%),
+    linear-gradient(to right, rgba(5,5,8,.85) 0%, rgba(5,5,8,.4) 45%, transparent 100%);
 }
-/* floating ambient color glow — character's colors bleeding into air */
 .hero-glow-pink{
   position:absolute;
-  width:600px;height:600px;
+  width:500px;height:500px;
   border-radius:50%;
-  background:radial-gradient(ellipse, rgba(255,107,170,.22) 0%, transparent 70%);
-  top:10%;left:5%;
+  background:radial-gradient(ellipse, rgba(255,107,170,.18) 0%, transparent 70%);
+  bottom:10%;left:0;
   z-index:2;
   filter:blur(60px);
   animation:glowDrift1 8s ease-in-out infinite alternate;
@@ -108,29 +47,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 }
 .hero-glow-purple{
   position:absolute;
-  width:500px;height:500px;
+  width:400px;height:400px;
   border-radius:50%;
-  background:radial-gradient(ellipse, rgba(198,107,255,.18) 0%, transparent 70%);
-  bottom:15%;right:8%;
+  background:radial-gradient(ellipse, rgba(198,107,255,.14) 0%, transparent 70%);
+  bottom:20%;right:20%;
   z-index:2;
   filter:blur(50px);
   animation:glowDrift2 10s ease-in-out infinite alternate;
   pointer-events:none;
 }
-@keyframes glowDrift1{from{transform:translate(0,0) scale(1)}to{transform:translate(40px,-30px) scale(1.1)}}
-@keyframes glowDrift2{from{transform:translate(0,0) scale(1)}to{transform:translate(-30px,20px) scale(1.05)}}
+@keyframes glowDrift1{from{transform:translate(0,0) scale(1)}to{transform:translate(30px,-20px) scale(1.1)}}
+@keyframes glowDrift2{from{transform:translate(0,0) scale(1)}to{transform:translate(-20px,15px) scale(1.05)}}
 
 .hero-inner{
   position:relative;
   z-index:3;
-  text-align:center;
-  padding:140px 48px 80px;
-  max-width:860px;
-  margin:0 auto;
+  text-align:left;
+  padding:0 64px 72px;
+  max-width:580px;
   width:100%;
 }
-
-/* eyebrow */
 .hero-eyebrow{
   display:inline-flex;
   align-items:center;
@@ -140,282 +76,86 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   letter-spacing:.28em;
   text-transform:uppercase;
   color:var(--char);
-  margin-bottom:20px;
-  /* glow halo behind text */
+  margin-bottom:16px;
   text-shadow:0 0 20px rgba(255,107,170,.8), 0 0 40px rgba(255,107,170,.4);
 }
 .hero-eyebrow-line{width:32px;height:1px;background:var(--char);opacity:.6}
-
-/* main title */
 .hero-title{
   font-family:var(--heading);
-  font-size:clamp(3rem,8vw,6.5rem);
+  font-size:clamp(2rem,3.5vw,3rem);
   font-weight:800;
-  line-height:1;
-  letter-spacing:-.02em;
-  margin-bottom:20px;
-  /* layered glow makes text feel lit from behind */
+  line-height:1.1;
+  letter-spacing:-.01em;
+  margin-bottom:16px;
   text-shadow:
-    0 0 40px rgba(255,107,170,.9),
-    0 0 80px rgba(255,107,170,.5),
-    0 0 160px rgba(198,107,255,.3),
-    0 2px 4px rgba(0,0,0,.8);
+    0 0 40px rgba(255,107,170,.7),
+    0 0 80px rgba(255,107,170,.3),
+    0 2px 4px rgba(0,0,0,.9);
 }
 .hero-title span{
   background:var(--grad);
   -webkit-background-clip:text;
   -webkit-text-fill-color:transparent;
   background-clip:text;
-  filter:drop-shadow(0 0 30px rgba(255,107,170,.7));
+  filter:drop-shadow(0 0 20px rgba(255,107,170,.6));
 }
-
-/* subtitle */
 .hero-sub{
-  font-size:1rem;
+  font-size:.95rem;
   color:var(--off);
   line-height:1.8;
-  max-width:520px;
-  margin:0 auto 40px;
+  max-width:420px;
+  margin:0 0 32px;
   text-shadow:0 1px 12px rgba(0,0,0,.9), 0 0 30px rgba(0,0,0,.7);
 }
-
-/* LESSON TILES — the 1/2/3/4 clickable anchors */
 .lesson-tiles{
   display:flex;
   align-items:center;
-  justify-content:center;
-  gap:12px;
-  margin-bottom:40px;
+  justify-content:flex-start;
+  gap:10px;
+  margin-bottom:32px;
   flex-wrap:wrap;
 }
-.lesson-tile{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  cursor:pointer;
-  text-decoration:none;
-  transition:transform .2s;
-}
+.lesson-tile{display:flex;flex-direction:column;align-items:center;gap:6px;cursor:pointer;text-decoration:none;transition:transform .2s;}
 .lesson-tile:hover{transform:translateY(-3px)}
-.lesson-tile-num{
-  width:52px;height:52px;
-  border-radius:14px;
-  border:1px solid rgba(255,107,170,.4);
-  background:rgba(5,5,8,.6);
-  backdrop-filter:blur(8px);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);
-  font-size:.9rem;
-  font-weight:700;
-  color:var(--char);
-  transition:all .25s;
-  box-shadow:0 0 20px rgba(255,107,170,.2), inset 0 1px 0 rgba(255,255,255,.06);
-}
-.lesson-tile:hover .lesson-tile-num{
-  background:rgba(255,107,170,.15);
-  border-color:rgba(255,107,170,.7);
-  box-shadow:0 0 30px rgba(255,107,170,.4);
-  color:var(--white);
-}
-.lesson-tile-label{
-  font-family:var(--display);
-  font-size:.44rem;
-  letter-spacing:.14em;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-align:center;
-  max-width:64px;
-  line-height:1.4;
-  text-shadow:0 1px 8px rgba(0,0,0,.9);
-}
-.lesson-tile.locked .lesson-tile-num{
-  border-color:rgba(255,255,255,.1);
-  color:var(--muted);
-  box-shadow:none;
-}
+.lesson-tile-num{width:48px;height:48px;border-radius:14px;border:1px solid rgba(255,107,170,.4);background:rgba(5,5,8,.6);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.85rem;font-weight:700;color:var(--char);transition:all .25s;box-shadow:0 0 20px rgba(255,107,170,.2), inset 0 1px 0 rgba(255,255,255,.06);}
+.lesson-tile:hover .lesson-tile-num{background:rgba(255,107,170,.15);border-color:rgba(255,107,170,.7);box-shadow:0 0 30px rgba(255,107,170,.4);color:var(--white);}
+.lesson-tile-label{font-family:var(--display);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);text-align:center;max-width:60px;line-height:1.4;text-shadow:0 1px 8px rgba(0,0,0,.9);}
+.lesson-tile.locked .lesson-tile-num{border-color:rgba(255,255,255,.1);color:var(--muted);box-shadow:none;}
 .lesson-tile.locked .lesson-tile-num::after{content:' 🔒';font-size:.5rem;position:relative;top:-2px}
-
-.tile-divider{
-  width:24px;height:1px;
-  background:rgba(255,107,170,.2);
-}
-
-/* scroll hint */
-.hero-scroll{
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:6px;
-  color:var(--muted);
-  font-family:var(--display);
-  font-size:.45rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  animation:scrollBounce 2s ease-in-out infinite;
-  cursor:pointer;
-}
+.tile-divider{width:20px;height:1px;background:rgba(255,107,170,.2);}
+.hero-scroll{display:flex;flex-direction:column;align-items:flex-start;gap:6px;color:var(--muted);font-family:var(--display);font-size:.45rem;letter-spacing:.2em;text-transform:uppercase;animation:scrollBounce 2s ease-in-out infinite;cursor:pointer;}
 .hero-scroll svg{opacity:.5}
 @keyframes scrollBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
 
-/* =====================
-   LESSON ACCORDION NAV
-   ===================== */
-.lesson-nav{
-  background:var(--deep);
-  border-bottom:1px solid var(--border);
-  position:sticky;
-  top:65px;
-  z-index:50;
-}
-.lesson-nav-inner{
-  max-width:860px;
-  margin:0 auto;
-  display:flex;
-  align-items:stretch;
-}
-.lesson-nav-item{
-  flex:1;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:14px 8px;
-  gap:4px;
-  cursor:pointer;
-  border-right:1px solid var(--border);
-  transition:background .2s;
-  text-decoration:none;
-}
+/* ===================== LESSON ACCORDION NAV ===================== */
+.lesson-nav{background:var(--deep);border-bottom:1px solid var(--border);position:sticky;top:65px;z-index:50;}
+.lesson-nav-inner{max-width:860px;margin:0 auto;display:flex;align-items:stretch;}
+.lesson-nav-item{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:14px 8px;gap:4px;cursor:pointer;border-right:1px solid var(--border);transition:background .2s;text-decoration:none;}
 .lesson-nav-item:last-child{border-right:none}
 .lesson-nav-item:hover{background:rgba(255,107,170,.05)}
 .lesson-nav-item.active{background:rgba(255,107,170,.08);border-bottom:2px solid var(--char)}
-.lesson-nav-num{
-  font-family:var(--display);
-  font-size:.6rem;
-  font-weight:700;
-  color:var(--char);
-}
+.lesson-nav-num{font-family:var(--display);font-size:.6rem;font-weight:700;color:var(--char);}
 .lesson-nav-item.locked .lesson-nav-num{color:var(--muted)}
-.lesson-nav-title{
-  font-family:var(--display);
-  font-size:.42rem;
-  letter-spacing:.1em;
-  text-transform:uppercase;
-  color:var(--muted);
-  text-align:center;
-}
-.lesson-nav-badge{
-  font-size:.38rem;
-  font-family:var(--display);
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  padding:2px 8px;
-  border-radius:100px;
-  background:rgba(255,107,170,.12);
-  color:rgba(255,107,170,.7);
-  border:1px solid rgba(255,107,170,.2);
-}
-.lesson-nav-item.locked .lesson-nav-badge{
-  background:rgba(255,255,255,.04);
-  color:var(--muted);
-  border-color:var(--border);
-}
+.lesson-nav-title{font-family:var(--display);font-size:.42rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);text-align:center;}
+.lesson-nav-badge{font-size:.38rem;font-family:var(--display);letter-spacing:.08em;text-transform:uppercase;padding:2px 8px;border-radius:100px;background:rgba(255,107,170,.12);color:rgba(255,107,170,.7);border:1px solid rgba(255,107,170,.2);}
+.lesson-nav-item.locked .lesson-nav-badge{background:rgba(255,255,255,.04);color:var(--muted);border-color:var(--border);}
 
-/* =====================
-   LESSONS WRAPPER
-   ===================== */
+/* ===================== LESSONS WRAPPER ===================== */
 .lessons{max-width:800px;margin:0 auto;padding:80px 48px}
-.lesson{margin-bottom:80px}
-
-/* ACCORDION HEADER */
-.lesson-accordion-header{
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:24px 28px;
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
-  cursor:pointer;
-  transition:background .2s, border-color .2s;
-  margin-bottom:0;
-  user-select:none;
-}
-.lesson-accordion-header:hover{
-  background:rgba(255,107,170,.05);
-  border-color:rgba(255,107,170,.2);
-}
-.lesson-accordion-header.open{
-  border-bottom-left-radius:0;
-  border-bottom-right-radius:0;
-  border-color:rgba(255,107,170,.3);
-  background:rgba(255,107,170,.05);
-}
-.accordion-num{
-  width:40px;height:40px;
-  border-radius:10px;
-  background:rgba(255,107,170,.12);
-  border:1px solid rgba(255,107,170,.3);
-  display:flex;align-items:center;justify-content:center;
-  font-family:var(--display);
-  font-size:.75rem;
-  font-weight:700;
-  color:var(--char);
-  flex-shrink:0;
-}
-.accordion-num.locked-num{
-  background:rgba(255,255,255,.04);
-  border-color:var(--border);
-  color:var(--muted);
-}
+.lesson{margin-bottom:80px;scroll-margin-top:130px;}
+.lesson-accordion-header{display:flex;align-items:center;gap:16px;padding:24px 28px;background:var(--card);border:1px solid var(--border);border-radius:16px;cursor:pointer;transition:background .2s, border-color .2s;margin-bottom:0;user-select:none;}
+.lesson-accordion-header:hover{background:rgba(255,107,170,.05);border-color:rgba(255,107,170,.2);}
+.lesson-accordion-header.open{border-bottom-left-radius:0;border-bottom-right-radius:0;border-color:rgba(255,107,170,.3);background:rgba(255,107,170,.05);}
+.accordion-num{width:40px;height:40px;border-radius:10px;background:rgba(255,107,170,.12);border:1px solid rgba(255,107,170,.3);display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:.75rem;font-weight:700;color:var(--char);flex-shrink:0;}
+.accordion-num.locked-num{background:rgba(255,255,255,.04);border-color:var(--border);color:var(--muted);}
 .accordion-meta{flex:1}
-.accordion-title{
-  font-family:var(--heading);
-  font-size:1.1rem;
-  font-weight:700;
-  color:var(--white);
-  margin-bottom:3px;
-}
-.accordion-desc{
-  font-size:.8rem;
-  color:var(--muted);
-  line-height:1.5;
-}
-.accordion-tier{
-  font-family:var(--display);
-  font-size:.45rem;
-  letter-spacing:.12em;
-  text-transform:uppercase;
-  padding:4px 12px;
-  border-radius:100px;
-  background:rgba(255,107,170,.1);
-  color:var(--char);
-  border:1px solid rgba(255,107,170,.2);
-  flex-shrink:0;
-}
-.accordion-tier.locked-tier{
-  background:rgba(255,255,255,.04);
-  color:var(--muted);
-  border-color:var(--border);
-}
-.accordion-arrow{
-  font-size:.8rem;
-  color:var(--muted);
-  transition:transform .3s;
-  flex-shrink:0;
-}
+.accordion-title{font-family:var(--heading);font-size:1.1rem;font-weight:700;color:var(--white);margin-bottom:3px;}
+.accordion-desc{font-size:.8rem;color:var(--muted);line-height:1.5;}
+.accordion-tier{font-family:var(--display);font-size:.45rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:100px;background:rgba(255,107,170,.1);color:var(--char);border:1px solid rgba(255,107,170,.2);flex-shrink:0;}
+.accordion-tier.locked-tier{background:rgba(255,255,255,.04);color:var(--muted);border-color:var(--border);}
+.accordion-arrow{font-size:.8rem;color:var(--muted);transition:transform .3s;flex-shrink:0;}
 .lesson-accordion-header.open .accordion-arrow{transform:rotate(180deg)}
-
-/* ACCORDION BODY */
-.lesson-accordion-body{
-  display:none;
-  border:1px solid rgba(255,107,170,.3);
-  border-top:none;
-  border-bottom-left-radius:16px;
-  border-bottom-right-radius:16px;
-  overflow:hidden;
-}
+.lesson-accordion-body{display:none;border:1px solid rgba(255,107,170,.3);border-top:none;border-bottom-left-radius:16px;border-bottom-right-radius:16px;overflow:hidden;}
 .lesson-accordion-body.open{display:block}
 .lesson-body-inner{padding:32px 28px 28px}
 
@@ -428,21 +168,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .block-body p{font-size:.95rem;color:var(--off);line-height:1.9;margin-bottom:14px}
 .block-body p:last-child{margin-bottom:0}
 .zen-quote{font-family:var(--heading);font-size:1.05rem;font-weight:700;color:var(--white);border-left:3px solid var(--char);padding-left:18px;margin:20px 0;line-height:1.6}
-
-/* DEFINITION BLOCK */
 .definition-box{background:rgba(255,107,170,.05);border:1px solid rgba(255,107,170,.2);border-radius:12px;padding:20px 24px;margin:16px 0}
 .definition-term{font-family:var(--display);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--char);margin-bottom:8px}
 .definition-text{font-size:.92rem;color:var(--off);line-height:1.8}
 .definition-example{margin-top:10px;font-size:.82rem;color:var(--muted);font-style:italic}
-
-/* SUMMARY BLOCK */
 .summary-box{background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(198,107,255,.06));border:1px solid rgba(198,107,255,.2);border-radius:12px;padding:24px;margin:16px 0}
 .summary-title{font-family:var(--display);font-size:.58rem;letter-spacing:.18em;text-transform:uppercase;color:var(--purple);margin-bottom:14px}
 .summary-list{list-style:none;display:flex;flex-direction:column;gap:8px}
 .summary-list li{display:flex;align-items:flex-start;gap:10px;font-size:.88rem;color:var(--off);line-height:1.7}
 .summary-list li::before{content:'✦';color:var(--char);font-size:.55rem;margin-top:5px;flex-shrink:0}
-
-/* CODE DEMO */
 .code-demo{background:var(--void);border-radius:12px;padding:24px;font-family:var(--display);font-size:.72rem;line-height:2;overflow:hidden;border:1px solid var(--border)}
 .code-demo .line{display:flex;gap:12px;opacity:0;transform:translateX(-8px);transition:opacity .5s,transform .5s}
 .code-demo .line.visible{opacity:1;transform:none}
@@ -451,8 +185,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .run-btn:hover{background:rgba(255,107,170,.2)}
 .code-output{margin-top:16px;padding:16px;background:rgba(0,232,255,.04);border:1px solid rgba(0,232,255,.1);border-radius:8px;font-size:.85rem;color:var(--white);display:none;line-height:1.8}
 .code-output.show{display:block}
-
-/* QUIZ */
 .quiz-question{font-size:.92rem;color:var(--off);margin-bottom:14px;line-height:1.7;font-weight:500}
 .quiz-options{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
 .quiz-option{padding:12px 18px;background:rgba(255,255,255,.03);border:1px solid var(--border-md);border-radius:10px;cursor:pointer;font-size:.88rem;color:var(--off);transition:all .2s;display:flex;align-items:center;gap:10px}
@@ -464,8 +196,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .quiz-result.show{display:block}
 .quiz-result.correct{background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);color:var(--cyan)}
 .quiz-result.wrong{background:rgba(255,107,170,.06);border:1px solid rgba(255,107,170,.2);color:var(--pink)}
-
-/* DRAG ACTIVITY */
 .drag-activity{user-select:none}
 .drag-prompt{font-size:.88rem;color:var(--off);margin-bottom:20px;line-height:1.7}
 .drag-blocks{display:flex;flex-direction:column;gap:10px;margin-bottom:24px}
@@ -480,8 +210,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .activity-result.show{display:block}
 .activity-result.correct{background:rgba(0,232,255,.06);border:1px solid rgba(0,232,255,.2);color:var(--cyan)}
 .activity-result.wrong{background:rgba(255,107,170,.06);border:1px solid rgba(255,107,170,.2);color:var(--pink)}
-
-/* BUILD ACTIVITY */
 .build-slots{display:flex;flex-direction:column;gap:10px;margin:16px 0}
 .build-slot{display:flex;align-items:center;gap:10px;font-size:.85rem;color:var(--off)}
 .build-slot select{background:var(--card);border:1px solid var(--border-md);color:var(--white);padding:8px 12px;border-radius:8px;font-family:var(--body);font-size:.82rem;cursor:pointer;outline:none;transition:border-color .2s}
@@ -491,8 +219,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .build-slot input::placeholder{color:var(--muted)}
 .build-preview{margin-top:16px;padding:16px;background:rgba(0,232,255,.04);border:1px solid rgba(0,232,255,.1);border-radius:8px;display:none}
 .build-preview.show{display:block}
-
-/* REFLECT */
 .reflect-prompt{font-size:.95rem;color:var(--off);margin-bottom:16px;line-height:1.8}
 .reflect-input{width:100%;padding:14px 18px;background:rgba(255,255,255,.04);border:1px solid var(--border-md);border-radius:10px;color:var(--white);font-family:var(--body);font-size:.9rem;resize:vertical;min-height:100px;outline:none;transition:border-color .2s;box-sizing:border-box}
 .reflect-input:focus{border-color:var(--char)}
@@ -500,8 +226,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .reflect-submit:hover{background:rgba(255,107,170,.2)}
 .reflect-response{margin-top:14px;padding:16px;background:rgba(198,107,255,.06);border:1px solid rgba(198,107,255,.2);border-radius:10px;font-size:.88rem;color:var(--purple);display:none;line-height:1.7}
 .reflect-response.show{display:block}
-
-/* CHEAT SHEET */
 .cheat-sheet{display:none;margin-top:24px;background:linear-gradient(135deg,rgba(255,107,170,.04),rgba(198,107,255,.04));border:1px solid rgba(255,107,170,.25);border-radius:16px;overflow:hidden}
 .cheat-sheet.unlocked{display:block;animation:fadeIn .6s ease}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
@@ -516,8 +240,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .cheat-term{font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:var(--char);margin-bottom:5px}
 .cheat-def{font-size:.8rem;color:var(--off);line-height:1.6}
 .cheat-code{margin-top:16px;background:var(--void);border-radius:10px;padding:16px;font-family:monospace;font-size:.78rem;color:var(--cyan);line-height:2;border:1px solid var(--border)}
-
-/* LESSON COMPLETE */
 .lesson-complete{display:none;text-align:center;padding:48px 28px;background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(198,107,255,.06));border:1px solid rgba(255,107,170,.2);border-radius:16px;margin-top:32px}
 .lesson-complete.show{display:block;animation:fadeIn .6s ease}
 .complete-icon{font-size:2.5rem;margin-bottom:16px}
@@ -526,8 +248,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .complete-desc{font-size:.9rem;color:var(--off);margin-bottom:24px}
 .next-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:.65rem;letter-spacing:.14em;text-transform:uppercase;padding:13px 28px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;cursor:pointer;border:none;transition:transform .2s}
 .next-btn:hover{transform:translateY(-2px)}
-
-/* LOCKED LESSON GATE */
 .lesson-gate{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:48px 36px;text-align:center;margin-bottom:0}
 .gate-lock{font-size:2rem;margin-bottom:16px}
 .gate-title{font-family:var(--heading);font-size:1.4rem;font-weight:800;margin-bottom:8px;color:var(--white)}
@@ -535,8 +255,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .gate-badge{display:inline-block;font-family:var(--display);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;padding:6px 16px;border-radius:100px;margin-bottom:20px;background:var(--grad);color:#000;font-weight:700}
 .gate-btn{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 26px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s}
 .gate-btn:hover{transform:translateY(-2px)}
-
-/* TRIAL UPSELL */
 .trial-upsell{margin-top:32px;animation:fadeIn .6s ease}
 .trial-upsell-inner{background:linear-gradient(135deg,rgba(255,107,170,.06),rgba(198,107,255,.08));border:1px solid rgba(198,107,255,.3);border-radius:20px;padding:40px 36px;text-align:center}
 .trial-icon{font-size:2rem;margin-bottom:12px}
@@ -553,27 +271,53 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 .trial-tier-price span{font-size:.75rem;color:var(--muted);font-weight:300}
 .trial-tier-desc{font-size:.75rem;color:var(--muted);line-height:1.5}
 .trial-fine{font-size:.72rem;color:var(--muted);margin-top:4px}
-
 .reveal{opacity:1}
 
+/* CLIPPY COMPANION */
+.zen-companion{
+  position:fixed;
+  bottom:24px;
+  right:24px;
+  z-index:200;
+  width:80px;
+  height:80px;
+  pointer-events:none;
+  opacity:0;
+  transition:opacity .6s ease;
+}
+.zen-companion.visible{opacity:1;pointer-events:auto;}
+.zen-companion img{
+  width:80px;
+  height:80px;
+  object-fit:contain;
+  filter:drop-shadow(0 0 16px rgba(255,107,170,.5));
+  animation:companionFloat 3s ease-in-out infinite;
+}
+@keyframes companionFloat{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+
 @media(max-width:768px){
-  .hero-inner{padding:120px 24px 60px}
-  .hero-title{font-size:clamp(2.4rem,10vw,4rem)}
+  .hero-inner{padding:0 28px 60px;max-width:100%;}
+  .hero-title{font-size:clamp(1.8rem,7vw,2.4rem);}
   .lesson-tiles{gap:8px}
-  .lesson-tile-num{width:44px;height:44px;font-size:.75rem}
+  .lesson-tile-num{width:42px;height:42px;font-size:.75rem}
   .lessons{padding:60px 24px}
   nav{padding:14px 24px}
   .lesson-nav-title{display:none}
   .nav-char{display:none}
+  .zen-companion{width:60px;height:60px;bottom:16px;right:16px;}
+  .zen-companion img{width:60px;height:60px;}
 }
 @media(prefers-reduced-motion:reduce){
   .hero-bg-image{animation:none}
   .hero-glow-pink,.hero-glow-purple{animation:none}
+  .zen-companion img{animation:none}
 }
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="nav-back">← Universe</a>
   <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
@@ -585,27 +329,20 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   </div>
 </nav>
 
-<!-- ========================
-     HERO — GLOWING IMMERSIVE
-     ======================== -->
+<!-- HERO -->
 <section class="hero">
   <div class="hero-bg-image"></div>
   <div class="hero-vignette"></div>
   <div class="hero-glow-pink"></div>
   <div class="hero-glow-purple"></div>
-
   <div class="hero-inner">
     <div class="hero-eyebrow">
       <span class="hero-eyebrow-line"></span>
       Creative Coder · HTML &amp; CSS
       <span class="hero-eyebrow-line"></span>
     </div>
-
     <h1 class="hero-title"><span>Zen's Coding Realm</span></h1>
-
     <p class="hero-sub">She teaches you how to turn ideas into real things on a screen — using HTML to build structure and CSS to make it yours.</p>
-
-    <!-- CLICKABLE LESSON TILES -->
     <div class="lesson-tiles" id="heroLessonTiles">
       <a class="lesson-tile" id="tile1" href="#lesson-1">
         <div class="lesson-tile-num">1</div>
@@ -627,7 +364,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
         <div class="lesson-tile-label">Build Your Page</div>
       </a>
     </div>
-
     <div class="hero-scroll" onclick="document.getElementById('lesson-nav').scrollIntoView({behavior:'smooth'})">
       <svg width="16" height="20" viewBox="0 0 16 20" fill="none"><path d="M8 2v16M2 12l6 6 6-6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
       Start Learning
@@ -635,9 +371,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   </div>
 </section>
 
-<!-- ========================
-     STICKY LESSON NAV
-     ======================== -->
+<!-- STICKY LESSON NAV -->
 <div class="lesson-nav" id="lesson-nav">
   <div class="lesson-nav-inner">
     <a class="lesson-nav-item active" id="nav1" href="#lesson-1">
@@ -663,597 +397,569 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
   </div>
 </div>
 
-<!-- ========================
-     LESSONS
-     ======================== -->
+<!-- LESSONS -->
 <div class="lessons">
 
-  <!-- ============ LESSON 1 ============ -->
-  <div class="lesson" id="lesson-1">
-    <div class="lesson-accordion-header open" onclick="toggleAccordion(1)">
-      <div class="accordion-num">1</div>
-      <div class="accordion-meta">
-        <div class="accordion-title">What is Code?</div>
-        <div class="accordion-desc">Before you build anything, you need to understand what you're actually doing. Spoiler: simpler than you think.</div>
-      </div>
-      <div class="accordion-tier">Open</div>
-      <div class="accordion-arrow">▼</div>
+<!-- LESSON 1 -->
+<div class="lesson" id="lesson-1">
+  <div class="lesson-accordion-header open" onclick="toggleAccordion(1)">
+    <div class="accordion-num">1</div>
+    <div class="accordion-meta">
+      <div class="accordion-title">What is Code?</div>
+      <div class="accordion-desc">Before you build anything, you need to understand what you're actually doing. Spoiler: simpler than you think.</div>
     </div>
-    <div class="lesson-accordion-body open" id="accordion-body-1">
-      <div class="lesson-body-inner">
-
-        <!-- Gate for logged-out users -->
-        <div id="lesson1-gate" style="display:none" class="lesson-gate">
-          <div class="gate-lock">✦</div>
-          <div class="gate-badge">Free Account</div>
-          <div class="gate-title">Create a free account to start</div>
-          <div class="gate-desc">Lesson 1 is completely free. No card needed. Just create an account and start building.</div>
-          <button class="gate-btn" onclick="openModal('signup')">Create Free Account →</button>
-          <p style="margin-top:14px;font-size:.75rem;color:var(--muted)">Already have an account? <button onclick="openModal('login')" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Log in</button></p>
-        </div>
-
-        <div id="lesson1-content">
-          <!-- READ -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
-            <div class="block-body">
-              <p class="zen-quote">"Hey, I'm Zen. I build things with code — websites, animations, digital art. Before I learned how, I had one question: what even IS this stuff?"</p>
-              <p>Code is just a set of instructions. That's it. When you tell your little sibling how to make a sandwich — get bread, add peanut butter, put it together — that's basically code. You're giving step-by-step instructions to make something happen.</p>
-              <p>Computers are the same. They follow instructions really, really fast. The language we use to write instructions for websites is called <strong style="color:var(--cyan)">HTML</strong>. It's made of things called <strong style="color:var(--pink)">tags</strong> — labels that tell the browser what to do with your content.</p>
-              <p>A browser is just reading your instructions and turning them into something visual. You're the one writing the instructions. That makes you the coder.</p>
-            </div>
-          </div>
-
-          <!-- DEFINITIONS -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
-            <div class="block-body">
-              <div class="definition-box"><div class="definition-term">Code</div><div class="definition-text">A set of step-by-step instructions written in a language a computer can understand.</div><div class="definition-example">Example: Telling a browser "make this text a heading" is code.</div></div>
-              <div class="definition-box"><div class="definition-term">HTML</div><div class="definition-text">HyperText Markup Language. The language used to build the structure of every webpage on the internet.</div><div class="definition-example">Example: Every website you've ever visited was built with HTML.</div></div>
-              <div class="definition-box"><div class="definition-term">Tag</div><div class="definition-text">A label wrapped in angle brackets that tells the browser what a piece of content is. Tags come in pairs — an opening tag and a closing tag.</div><div class="definition-example">Example: &lt;h1&gt;This is a heading&lt;/h1&gt;</div></div>
-              <div class="definition-box"><div class="definition-term">Browser</div><div class="definition-text">The program that reads your HTML and turns it into a visual webpage. Chrome, Safari, and Firefox are all browsers.</div><div class="definition-example">Example: When you visit a website, your browser is reading code and showing it to you as a page.</div></div>
-            </div>
-          </div>
-
-          <!-- SEE IT LIVE -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Interactive</div></div>
-            <div class="block-body">
-              <p>Watch how HTML tags turn plain text into a real webpage. Hit Run when you're ready.</p>
-              <div class="code-demo" id="codeDemo1">
-                <div class="line" id="c1l1"><span class="code-comment">/* HTML tells the browser what things are */</span></div>
-                <div class="line" id="c1l2"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Hello, I'm Zen.</span><span class="code-tag">&lt;/h1&gt;</span></div>
-                <div class="line" id="c1l3"><span class="code-tag">&lt;p&gt;</span><span class="code-str">I build things with code.</span><span class="code-tag">&lt;/p&gt;</span></div>
-                <div class="line" id="c1l4"><span class="code-tag">&lt;p&gt;</span><span class="code-str">What will YOU build?</span><span class="code-tag">&lt;/p&gt;</span></div>
-              </div>
-              <button class="run-btn" onclick="runCode1()">▶ Run the Code</button>
-              <div class="code-output" id="output1">
-                <strong style="font-size:1.2rem;display:block;margin-bottom:6px;color:var(--white)">Hello, I'm Zen.</strong>
-                <span style="color:var(--off)">I build things with code.</span><br>
-                <span style="color:var(--off)">What will YOU build?</span>
-              </div>
-            </div>
-          </div>
-
-          <!-- ACTIVITY: DRAG -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">🎯</div><div class="block-label">Activity · Drag to Sort</div></div>
-            <div class="block-body">
-              <div class="drag-activity">
-                <p class="drag-prompt">Zen is building her first webpage. Put these steps in the right order — from first to last.</p>
-                <div class="drag-blocks" id="dragList1">
-                  <div class="drag-item" draggable="true" data-order="3"><span class="drag-handle">⠿</span><span class="drag-num">?</span>Add HTML tags to label each piece of content</div>
-                  <div class="drag-item" draggable="true" data-order="1"><span class="drag-handle">⠿</span><span class="drag-num">?</span>Have an idea for what to build</div>
-                  <div class="drag-item" draggable="true" data-order="4"><span class="drag-handle">⠿</span><span class="drag-num">?</span>Open your browser and see it appear</div>
-                  <div class="drag-item" draggable="true" data-order="2"><span class="drag-handle">⠿</span><span class="drag-num">?</span>Write your content — words, titles, sentences</div>
-                </div>
-                <button class="check-btn" onclick="checkDrag1()">Check My Answer →</button>
-                <div class="activity-result" id="drag1Result"></div>
-              </div>
-            </div>
-          </div>
-
-          <!-- QUIZ -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
-            <div class="block-body">
-              <p class="quiz-question">What does HTML stand for?</p>
-              <div class="quiz-options" id="quiz1">
-                <div class="quiz-option" onclick="answerQuiz('quiz1','a','b')"><span class="quiz-option-letter">A</span>HyperText Making Language</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz1','b','b')"><span class="quiz-option-letter">B</span>HyperText Markup Language</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz1','c','b')"><span class="quiz-option-letter">C</span>High Tech Markup Logic</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz1','d','b')"><span class="quiz-option-letter">D</span>HyperText Main Layout</div>
-              </div>
-              <div class="quiz-result" id="quiz1Result"></div>
-            </div>
-          </div>
-
-          <!-- REFLECT -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Your Turn</div></div>
-            <div class="block-body">
-              <p class="reflect-prompt">If you could build one thing on the internet — anything at all — what would it be? Don't think about how. Just dream it.</p>
-              <textarea class="reflect-input" id="reflect1" placeholder="I would build..."></textarea>
-              <button class="reflect-submit" onclick="submitReflect('reflect1','reflect1Response','complete1')">Save My Idea →</button>
-              <div class="reflect-response" id="reflect1Response"></div>
-            </div>
-          </div>
-
-          <!-- LESSON 1 COMPLETE -->
-          <div class="lesson-complete" id="complete1">
-            <div class="complete-icon">✦</div>
-            <h3 class="complete-title">Lesson 1 <span>Complete!</span></h3>
-            <p class="complete-desc">You now know what code is, what HTML stands for, and how tags work. That's the foundation everything else builds on.</p>
-            <button class="next-btn" onclick="openLesson(2)">Next Lesson →</button>
-          </div>
-
-          <!-- CHEAT SHEET 1 -->
-          <div class="cheat-sheet" id="cheat1">
-            <div class="cheat-sheet-header">
-              <span class="cheat-sheet-title">✦ Lesson 1 Cheat Sheet — Unlocked</span>
-              <button class="cheat-download" onclick="downloadCheat(1)">Download PDF →</button>
-            </div>
-            <div class="cheat-body">
-              <div class="cheat-grid">
-                <div class="cheat-item"><div class="cheat-term">Code</div><div class="cheat-def">Step-by-step instructions a computer can read and follow.</div></div>
-                <div class="cheat-item"><div class="cheat-term">HTML</div><div class="cheat-def">HyperText Markup Language — the language of web pages.</div></div>
-                <div class="cheat-item"><div class="cheat-term">Tag</div><div class="cheat-def">Labels in angle brackets that tell the browser what content is.</div></div>
-                <div class="cheat-item"><div class="cheat-term">Browser</div><div class="cheat-def">The program that reads HTML and displays it as a webpage.</div></div>
-              </div>
-              <div class="cheat-code">
-                &lt;h1&gt;Big Heading&lt;/h1&gt;<br>
-                &lt;h2&gt;Smaller Heading&lt;/h2&gt;<br>
-                &lt;p&gt;A paragraph of text.&lt;/p&gt;
-              </div>
-            </div>
-          </div>
-
-          <!-- TRIAL UPSELL -->
-          <div class="trial-upsell" id="trialUpsell" style="display:none">
-            <div class="trial-upsell-inner">
-              <div class="trial-icon">🚀</div>
-              <h3 class="trial-title">Ready for Lesson 2?</h3>
-              <p class="trial-desc">Start your <strong>3-day free trial</strong> and unlock all of Zen's lessons — plus every character world on the platform. Cancel anytime before day 3 and you won't be charged.</p>
-              <div class="trial-tiers">
-                <a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="trial-tier">
-                  <div class="trial-tier-name">Sparks</div>
-                  <div class="trial-tier-price">$5<span>/mo</span></div>
-                  <div class="trial-tier-desc">Lessons 1 &amp; 2 for all 6 characters</div>
-                </a>
-                <a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="trial-tier featured">
-                  <div class="trial-tier-badge">Most Popular</div>
-                  <div class="trial-tier-name">Builders</div>
-                  <div class="trial-tier-price">$9<span>/mo</span></div>
-                  <div class="trial-tier-desc">Lessons 1–3 for all 6 characters</div>
-                </a>
-                <a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="trial-tier">
-                  <div class="trial-tier-name">Coders</div>
-                  <div class="trial-tier-price">$15<span>/mo</span></div>
-                  <div class="trial-tier-desc">All 4 lessons + all 6 games</div>
-                </a>
-              </div>
-              <p class="trial-fine">3-day free trial. Card required. Cancel anytime.</p>
-            </div>
-          </div>
-        </div><!-- end lesson1-content -->
-      </div>
-    </div>
+    <div class="accordion-tier">Open</div>
+    <div class="accordion-arrow">▼</div>
   </div>
-
-  <!-- ============ LESSON 2 ============ -->
-  <div class="lesson" id="lesson-2">
-    <div class="lesson-accordion-header" onclick="toggleAccordion(2)" id="accordion-header-2">
-      <div class="accordion-num locked-num" id="accordion-num-2">2</div>
-      <div class="accordion-meta">
-        <div class="accordion-title">Your First HTML Tag</div>
-        <div class="accordion-desc">Tags are the building blocks of every webpage. Learn how they work and write your first real HTML.</div>
+  <div class="lesson-accordion-body open" id="accordion-body-1">
+    <div class="lesson-body-inner">
+      <div id="lesson1-gate" style="display:none" class="lesson-gate">
+        <div class="gate-lock">✦</div>
+        <div class="gate-badge">Free Account</div>
+        <div class="gate-title">Create a free account to start</div>
+        <div class="gate-desc">Lesson 1 is completely free. No card needed. Just create an account and start building.</div>
+        <button class="gate-btn" onclick="openModal('signup')">Create Free Account →</button>
+        <p style="margin-top:14px;font-size:.75rem;color:var(--muted)">Already have an account? <button onclick="openModal('login')" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Log in</button></p>
       </div>
-      <div class="accordion-tier locked-tier" id="accordion-tier-2">Sparks+</div>
-      <div class="accordion-arrow">▼</div>
-    </div>
-    <div class="lesson-accordion-body" id="accordion-body-2">
-      <div class="lesson-body-inner">
-        <div id="lesson2-gate" class="lesson-gate">
-          <div class="gate-lock">🔒</div>
-          <div class="gate-badge">Sparks · Builders · Coders</div>
-          <div class="gate-title">This lesson is for members</div>
-          <div class="gate-desc">Join the crew to unlock Lesson 2 and everything that comes after it. No experience needed — just bring your ideas.</div>
-          <button class="gate-btn" onclick="goUpgrade()">Join the Crew →</button>
+      <div id="lesson1-content">
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
+          <div class="block-body">
+            <p class="zen-quote">"Hey, I'm Zen. I build things with code — websites, animations, digital art. Before I learned how, I had one question: what even IS this stuff?"</p>
+            <p>Code is just a set of instructions. That's it. When you tell your little sibling how to make a sandwich — get bread, add peanut butter, put it together — that's basically code. You're giving step-by-step instructions to make something happen.</p>
+            <p>Computers are the same. They follow instructions really, really fast. The language we use to write instructions for websites is called <strong style="color:var(--cyan)">HTML</strong>. It's made of things called <strong style="color:var(--pink)">tags</strong> — labels that tell the browser what to do with your content.</p>
+            <p>A browser is just reading your instructions and turning them into something visual. You're the one writing the instructions. That makes you the coder.</p>
+          </div>
         </div>
-        <div id="lesson2-content" style="display:none">
-          <!-- READ -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 3 min</div></div>
-            <div class="block-body">
-              <p class="zen-quote">"Once I understood what a tag was, everything clicked. It's like putting a label on a box so the browser knows what's inside."</p>
-              <p>Every HTML tag follows the same pattern. An <strong style="color:var(--cyan)">opening tag</strong> tells the browser where something starts. A <strong style="color:var(--pink)">closing tag</strong> (with a slash) tells it where it ends. Everything in between is the content.</p>
-              <p>Some tags are for structure — like headings and paragraphs. Some are for links. Some are for images. Each one has a job, and once you know a tag's job, you own it forever.</p>
-              <p>The most important thing to remember: browsers are forgiving. If you make a mistake, nothing breaks permanently. You just fix it and try again. That's what coders do.</p>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
+          <div class="block-body">
+            <div class="definition-box"><div class="definition-term">Code</div><div class="definition-text">A set of step-by-step instructions written in a language a computer can understand.</div><div class="definition-example">Example: Telling a browser "make this text a heading" is code.</div></div>
+            <div class="definition-box"><div class="definition-term">HTML</div><div class="definition-text">HyperText Markup Language. The language used to build the structure of every webpage on the internet.</div><div class="definition-example">Example: Every website you've ever visited was built with HTML.</div></div>
+            <div class="definition-box"><div class="definition-term">Tag</div><div class="definition-text">A label wrapped in angle brackets that tells the browser what a piece of content is. Tags come in pairs — an opening tag and a closing tag.</div><div class="definition-example">Example: &lt;h1&gt;This is a heading&lt;/h1&gt;</div></div>
+            <div class="definition-box"><div class="definition-term">Browser</div><div class="definition-text">The program that reads your HTML and turns it into a visual webpage. Chrome, Safari, and Firefox are all browsers.</div><div class="definition-example">Example: When you visit a website, your browser is reading code and showing it to you as a page.</div></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Interactive</div></div>
+          <div class="block-body">
+            <p>Watch how HTML tags turn plain text into a real webpage. Hit Run when you're ready.</p>
+            <div class="code-demo" id="codeDemo1">
+              <div class="line" id="c1l1"><span class="code-comment">/* HTML tells the browser what things are */</span></div>
+              <div class="line" id="c1l2"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Hello, I'm Zen.</span><span class="code-tag">&lt;/h1&gt;</span></div>
+              <div class="line" id="c1l3"><span class="code-tag">&lt;p&gt;</span><span class="code-str">I build things with code.</span><span class="code-tag">&lt;/p&gt;</span></div>
+              <div class="line" id="c1l4"><span class="code-tag">&lt;p&gt;</span><span class="code-str">What will YOU build?</span><span class="code-tag">&lt;/p&gt;</span></div>
+            </div>
+            <button class="run-btn" onclick="runCode1()">▶ Run the Code</button>
+            <div class="code-output" id="output1">
+              <strong style="font-size:1.2rem;display:block;margin-bottom:6px;color:var(--white)">Hello, I'm Zen.</strong>
+              <span style="color:var(--off)">I build things with code.</span><br>
+              <span style="color:var(--off)">What will YOU build?</span>
             </div>
           </div>
-          <!-- DEFINITIONS -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
-            <div class="block-body">
-              <div class="definition-box"><div class="definition-term">Opening Tag</div><div class="definition-text">The start of an HTML element. Written as the tag name inside angle brackets.</div><div class="definition-example">Example: &lt;p&gt; opens a paragraph.</div></div>
-              <div class="definition-box"><div class="definition-term">Closing Tag</div><div class="definition-text">The end of an HTML element. Same as the opening tag but with a forward slash before the name.</div><div class="definition-example">Example: &lt;/p&gt; closes a paragraph.</div></div>
-              <div class="definition-box"><div class="definition-term">Element</div><div class="definition-text">The complete unit — opening tag, content, and closing tag together.</div><div class="definition-example">Example: &lt;h1&gt;My Title&lt;/h1&gt; is one element.</div></div>
-              <div class="definition-box"><div class="definition-term">Attribute</div><div class="definition-text">Extra information added inside an opening tag to modify how it works.</div><div class="definition-example">Example: &lt;a href="https://..."&gt; — href is the attribute that sets the link destination.</div></div>
-              <div class="definition-box"><div class="definition-term">Anchor Tag (&lt;a&gt;)</div><div class="definition-text">The HTML tag that creates a clickable link. Uses the href attribute to set the destination.</div><div class="definition-example">Example: &lt;a href="https://google.com"&gt;Click here&lt;/a&gt;</div></div>
-            </div>
-          </div>
-          <!-- SEE IT LIVE -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Interactive</div></div>
-            <div class="block-body">
-              <p>Watch how different tags create different things. Hit Run to see it all appear.</p>
-              <div class="code-demo" id="codeDemo2">
-                <div class="line" id="c2l1"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Zen's World</span><span class="code-tag">&lt;/h1&gt;</span></div>
-                <div class="line" id="c2l2"><span class="code-tag">&lt;h2&gt;</span><span class="code-str">Welcome, Coder</span><span class="code-tag">&lt;/h2&gt;</span></div>
-                <div class="line" id="c2l3"><span class="code-tag">&lt;p&gt;</span><span class="code-str">This is a paragraph. It holds longer text.</span><span class="code-tag">&lt;/p&gt;</span></div>
-                <div class="line" id="c2l4"><span class="code-tag">&lt;a </span><span class="code-attr">href=</span><span class="code-val">"#"</span><span class="code-tag">&gt;</span><span class="code-str">This is a link</span><span class="code-tag">&lt;/a&gt;</span></div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">🎯</div><div class="block-label">Activity · Drag to Sort</div></div>
+          <div class="block-body">
+            <div class="drag-activity">
+              <p class="drag-prompt">Zen is building her first webpage. Put these steps in the right order — from first to last.</p>
+              <div class="drag-blocks" id="dragList1">
+                <div class="drag-item" draggable="true" data-order="3"><span class="drag-handle">⠿</span><span class="drag-num">?</span>Add HTML tags to label each piece of content</div>
+                <div class="drag-item" draggable="true" data-order="1"><span class="drag-handle">⠿</span><span class="drag-num">?</span>Have an idea for what to build</div>
+                <div class="drag-item" draggable="true" data-order="4"><span class="drag-handle">⠿</span><span class="drag-num">?</span>Open your browser and see it appear</div>
+                <div class="drag-item" draggable="true" data-order="2"><span class="drag-handle">⠿</span><span class="drag-num">?</span>Write your content — words, titles, sentences</div>
               </div>
-              <button class="run-btn" onclick="runCode2()">▶ Run the Code</button>
-              <div class="code-output" id="output2">
-                <strong style="font-size:1.3rem;display:block;margin-bottom:4px;color:var(--white)">Zen's World</strong>
-                <strong style="font-size:1rem;display:block;margin-bottom:8px;color:var(--off)">Welcome, Coder</strong>
-                <p style="color:var(--off);margin-bottom:8px">This is a paragraph. It holds longer text.</p>
-                <a href="#" style="color:var(--cyan);text-decoration:underline">This is a link</a>
-              </div>
+              <button class="check-btn" onclick="checkDrag1()">Check My Answer →</button>
+              <div class="activity-result" id="drag1Result"></div>
             </div>
           </div>
-          <!-- BUILD ACTIVITY -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">🔨</div><div class="block-label">Activity · Build It</div></div>
-            <div class="block-body">
-              <p class="drag-prompt">Use what you know to build a mini webpage about yourself. Choose a tag, then type your content.</p>
-              <div class="build-slots">
-                <div class="build-slot"><select id="tag1"><option value="h1">h1 — Big Heading</option><option value="h2">h2 — Smaller Heading</option><option value="p">p — Paragraph</option></select><input type="text" id="content1" placeholder="Your name or title..."></div>
-                <div class="build-slot"><select id="tag2"><option value="p">p — Paragraph</option><option value="h2">h2 — Smaller Heading</option><option value="h1">h1 — Big Heading</option></select><input type="text" id="content2" placeholder="Something about you..."></div>
-                <div class="build-slot"><select id="tag3"><option value="p">p — Paragraph</option><option value="h2">h2 — Smaller Heading</option><option value="h1">h1 — Big Heading</option></select><input type="text" id="content3" placeholder="What you want to build..."></div>
-              </div>
-              <button class="run-btn" onclick="previewBuild()">▶ Preview My Page</button>
-              <div class="build-preview" id="buildPreview"></div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
+          <div class="block-body">
+            <p class="quiz-question">What does HTML stand for?</p>
+            <div class="quiz-options" id="quiz1">
+              <div class="quiz-option" onclick="answerQuiz('quiz1','a','b')"><span class="quiz-option-letter">A</span>HyperText Making Language</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz1','b','b')"><span class="quiz-option-letter">B</span>HyperText Markup Language</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz1','c','b')"><span class="quiz-option-letter">C</span>High Tech Markup Logic</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz1','d','b')"><span class="quiz-option-letter">D</span>HyperText Main Layout</div>
             </div>
+            <div class="quiz-result" id="quiz1Result"></div>
           </div>
-          <!-- QUIZ -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
-            <div class="block-body">
-              <p class="quiz-question">Which of these is a correctly written HTML element?</p>
-              <div class="quiz-options" id="quiz2">
-                <div class="quiz-option" onclick="answerQuiz('quiz2','a','c')"><span class="quiz-option-letter">A</span>&lt;p Hello World /p&gt;</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz2','b','c')"><span class="quiz-option-letter">B</span>(p)Hello World(/p)</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz2','c','c')"><span class="quiz-option-letter">C</span>&lt;p&gt;Hello World&lt;/p&gt;</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz2','d','c')"><span class="quiz-option-letter">D</span>&lt;p&gt;Hello World&lt;p&gt;</div>
-              </div>
-              <div class="quiz-result" id="quiz2Result"></div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Your Turn</div></div>
+          <div class="block-body">
+            <p class="reflect-prompt">If you could build one thing on the internet — anything at all — what would it be? Don't think about how. Just dream it.</p>
+            <textarea class="reflect-input" id="reflect1" placeholder="I would build..."></textarea>
+            <button class="reflect-submit" onclick="submitReflect('reflect1','reflect1Response','complete1')">Save My Idea →</button>
+            <div class="reflect-response" id="reflect1Response"></div>
+          </div>
+        </div>
+        <div class="lesson-complete" id="complete1">
+          <div class="complete-icon">✦</div>
+          <h3 class="complete-title">Lesson 1 <span>Complete!</span></h3>
+          <p class="complete-desc">You now know what code is, what HTML stands for, and how tags work. That's the foundation everything else builds on.</p>
+          <button class="next-btn" onclick="openLesson(2)">Next Lesson →</button>
+        </div>
+        <div class="cheat-sheet" id="cheat1">
+          <div class="cheat-sheet-header">
+            <span class="cheat-sheet-title">✦ Lesson 1 Cheat Sheet — Unlocked</span>
+            <button class="cheat-download" onclick="downloadCheat(1)">Download PDF →</button>
+          </div>
+          <div class="cheat-body">
+            <div class="cheat-grid">
+              <div class="cheat-item"><div class="cheat-term">Code</div><div class="cheat-def">Step-by-step instructions a computer can read and follow.</div></div>
+              <div class="cheat-item"><div class="cheat-term">HTML</div><div class="cheat-def">HyperText Markup Language — the language of web pages.</div></div>
+              <div class="cheat-item"><div class="cheat-term">Tag</div><div class="cheat-def">Labels in angle brackets that tell the browser what content is.</div></div>
+              <div class="cheat-item"><div class="cheat-term">Browser</div><div class="cheat-def">The program that reads HTML and displays it as a webpage.</div></div>
             </div>
+            <div class="cheat-code">&lt;h1&gt;Big Heading&lt;/h1&gt;<br>&lt;h2&gt;Smaller Heading&lt;/h2&gt;<br>&lt;p&gt;A paragraph of text.&lt;/p&gt;</div>
           </div>
-          <!-- REFLECT -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Your Turn</div></div>
-            <div class="block-body">
-              <p class="reflect-prompt">Think about a website you use every day. What do you think it's made of? What tags might be on that page right now?</p>
-              <textarea class="reflect-input" id="reflect2" placeholder="I think..."></textarea>
-              <button class="reflect-submit" onclick="submitReflect('reflect2','reflect2Response','complete2')">Save My Thought →</button>
-              <div class="reflect-response" id="reflect2Response"></div>
+        </div>
+        <div class="trial-upsell" id="trialUpsell" style="display:none">
+          <div class="trial-upsell-inner">
+            <div class="trial-icon">🚀</div>
+            <h3 class="trial-title">Ready for Lesson 2?</h3>
+            <p class="trial-desc">Start your <strong>3-day free trial</strong> and unlock all of Zen's lessons — plus every character world on the platform. Cancel anytime before day 3 and you won't be charged.</p>
+            <div class="trial-tiers">
+              <a href="https://buy.stripe.com/fZu00jcVE4X81ui6yaa3u00" target="_blank" class="trial-tier">
+                <div class="trial-tier-name">Sparks</div>
+                <div class="trial-tier-price">$5<span>/mo</span></div>
+                <div class="trial-tier-desc">Lessons 1 &amp; 2 for all 6 characters</div>
+              </a>
+              <a href="https://buy.stripe.com/8x228r5tc1KWa0ObSua3u05" target="_blank" class="trial-tier featured">
+                <div class="trial-tier-badge">Most Popular</div>
+                <div class="trial-tier-name">Builders</div>
+                <div class="trial-tier-price">$9<span>/mo</span></div>
+                <div class="trial-tier-desc">Lessons 1–3 for all 6 characters</div>
+              </a>
+              <a href="https://buy.stripe.com/3cI7sLf3M89k4Gu3lYa3u04" target="_blank" class="trial-tier">
+                <div class="trial-tier-name">Coders</div>
+                <div class="trial-tier-price">$15<span>/mo</span></div>
+                <div class="trial-tier-desc">All 4 lessons + all 6 games</div>
+              </a>
             </div>
-          </div>
-          <!-- SUMMARY -->
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
-            <div class="block-body">
-              <div class="summary-box">
-                <div class="summary-title">What you learned in Lesson 2</div>
-                <ul class="summary-list">
-                  <li>Every HTML element has an opening tag and a closing tag</li>
-                  <li>The closing tag has a forward slash: &lt;/tagname&gt;</li>
-                  <li>h1, h2, p, and a are some of the most common tags</li>
-                  <li>Attributes go inside the opening tag to add extra info</li>
-                  <li>The href attribute tells a link where to go</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="lesson-complete" id="complete2">
-            <div class="complete-icon">✦</div>
-            <h3 class="complete-title">Lesson 2 <span>Complete!</span></h3>
-            <p class="complete-desc">You just wrote real HTML. You know what tags are, how elements work, and how to build a basic structure. Keep going.</p>
-            <button class="next-btn" onclick="openLesson(3)">Next Lesson →</button>
-          </div>
-          <div class="cheat-sheet" id="cheat2">
-            <div class="cheat-sheet-header"><span class="cheat-sheet-title">✦ Lesson 2 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(2)">Download PDF →</button></div>
-            <div class="cheat-body">
-              <div class="cheat-grid">
-                <div class="cheat-item"><div class="cheat-term">Opening Tag</div><div class="cheat-def">Starts an element. Written as &lt;tagname&gt;</div></div>
-                <div class="cheat-item"><div class="cheat-term">Closing Tag</div><div class="cheat-def">Ends an element. Written as &lt;/tagname&gt;</div></div>
-                <div class="cheat-item"><div class="cheat-term">Element</div><div class="cheat-def">Opening tag + content + closing tag together.</div></div>
-                <div class="cheat-item"><div class="cheat-term">Attribute</div><div class="cheat-def">Extra info inside an opening tag. Like href for links.</div></div>
-              </div>
-              <div class="cheat-code">&lt;h1&gt;Big Title&lt;/h1&gt;<br>&lt;h2&gt;Smaller Title&lt;/h2&gt;<br>&lt;p&gt;A paragraph.&lt;/p&gt;<br>&lt;a href="https://..."&gt;A link&lt;/a&gt;</div>
-            </div>
+            <p class="trial-fine">3-day free trial. Card required. Cancel anytime.</p>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ============ LESSON 3 ============ -->
-  <div class="lesson" id="lesson-3">
-    <div class="lesson-accordion-header" onclick="toggleAccordion(3)" id="accordion-header-3">
-      <div class="accordion-num locked-num" id="accordion-num-3">3</div>
-      <div class="accordion-meta">
-        <div class="accordion-title">Colors &amp; Style with CSS</div>
-        <div class="accordion-desc">HTML builds the structure. CSS makes it beautiful. Add color, fonts, and style to everything you build.</div>
-      </div>
-      <div class="accordion-tier locked-tier" id="accordion-tier-3">Builders+</div>
-      <div class="accordion-arrow">▼</div>
+<!-- LESSON 2 -->
+<div class="lesson" id="lesson-2">
+  <div class="lesson-accordion-header" onclick="toggleAccordion(2)" id="accordion-header-2">
+    <div class="accordion-num locked-num" id="accordion-num-2">2</div>
+    <div class="accordion-meta">
+      <div class="accordion-title">Your First HTML Tag</div>
+      <div class="accordion-desc">Tags are the building blocks of every webpage. Learn how they work and write your first real HTML.</div>
     </div>
-    <div class="lesson-accordion-body" id="accordion-body-3">
-      <div class="lesson-body-inner">
-        <div id="lesson3-gate" class="lesson-gate">
-          <div class="gate-lock">🔒</div>
-          <div class="gate-badge">Builders · Coders</div>
-          <div class="gate-title">This lesson is for Builders and up</div>
-          <div class="gate-desc">Upgrade your membership to unlock Lesson 3 — where your pages start to actually look like something.</div>
-          <button class="gate-btn" onclick="goUpgrade()">Upgrade →</button>
+    <div class="accordion-tier locked-tier" id="accordion-tier-2">Sparks+</div>
+    <div class="accordion-arrow">▼</div>
+  </div>
+  <div class="lesson-accordion-body" id="accordion-body-2">
+    <div class="lesson-body-inner">
+      <div id="lesson2-gate" class="lesson-gate">
+        <div class="gate-lock">🔒</div>
+        <div class="gate-badge">Sparks · Builders · Coders</div>
+        <div class="gate-title">This lesson is for members</div>
+        <div class="gate-desc">Join the crew to unlock Lesson 2 and everything that comes after it. No experience needed — just bring your ideas.</div>
+        <button class="gate-btn" onclick="goUpgrade()">Join the Crew →</button>
+      </div>
+      <div id="lesson2-content" style="display:none">
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 3 min</div></div>
+          <div class="block-body">
+            <p class="zen-quote">"Once I understood what a tag was, everything clicked. It's like putting a label on a box so the browser knows what's inside."</p>
+            <p>Every HTML tag follows the same pattern. An <strong style="color:var(--cyan)">opening tag</strong> tells the browser where something starts. A <strong style="color:var(--pink)">closing tag</strong> (with a slash) tells it where it ends. Everything in between is the content.</p>
+            <p>Some tags are for structure — like headings and paragraphs. Some are for links. Some are for images. Each one has a job, and once you know a tag's job, you own it forever.</p>
+            <p>The most important thing to remember: browsers are forgiving. If you make a mistake, nothing breaks permanently. You just fix it and try again. That's what coders do.</p>
+          </div>
         </div>
-        <div id="lesson3-content" style="display:none">
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 3 min</div></div>
-            <div class="block-body">
-              <p class="zen-quote">"HTML is the skeleton. CSS is everything that makes it look alive — the colors, the fonts, the spacing, all of it."</p>
-              <p>CSS stands for <strong style="color:var(--cyan)">Cascading Style Sheets</strong>. It's a separate language from HTML, but the two work together. While HTML says "this is a heading," CSS says "make that heading pink and use this font."</p>
-              <p>CSS works by <strong style="color:var(--pink)">selecting</strong> an element and then telling it how to look. You write a selector (like h1), then inside curly braces you write properties and values — each one changing something about how that element appears.</p>
-              <p>The word "cascading" means styles flow down from parent to child. If you set a color on the body, everything inside inherits it unless you override it. This makes it powerful and efficient once you get the feel for it.</p>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
+          <div class="block-body">
+            <div class="definition-box"><div class="definition-term">Opening Tag</div><div class="definition-text">The start of an HTML element. Written as the tag name inside angle brackets.</div><div class="definition-example">Example: &lt;p&gt; opens a paragraph.</div></div>
+            <div class="definition-box"><div class="definition-term">Closing Tag</div><div class="definition-text">The end of an HTML element. Same as the opening tag but with a forward slash before the name.</div><div class="definition-example">Example: &lt;/p&gt; closes a paragraph.</div></div>
+            <div class="definition-box"><div class="definition-term">Element</div><div class="definition-text">The complete unit — opening tag, content, and closing tag together.</div><div class="definition-example">Example: &lt;h1&gt;My Title&lt;/h1&gt; is one element.</div></div>
+            <div class="definition-box"><div class="definition-term">Attribute</div><div class="definition-text">Extra information added inside an opening tag to modify how it works.</div><div class="definition-example">Example: &lt;a href="https://..."&gt; — href is the attribute that sets the link destination.</div></div>
+            <div class="definition-box"><div class="definition-term">Anchor Tag (&lt;a&gt;)</div><div class="definition-text">The HTML tag that creates a clickable link. Uses the href attribute to set the destination.</div><div class="definition-example">Example: &lt;a href="https://google.com"&gt;Click here&lt;/a&gt;</div></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Interactive</div></div>
+          <div class="block-body">
+            <p>Watch how different tags create different things. Hit Run to see it all appear.</p>
+            <div class="code-demo" id="codeDemo2">
+              <div class="line" id="c2l1"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Zen's World</span><span class="code-tag">&lt;/h1&gt;</span></div>
+              <div class="line" id="c2l2"><span class="code-tag">&lt;h2&gt;</span><span class="code-str">Welcome, Coder</span><span class="code-tag">&lt;/h2&gt;</span></div>
+              <div class="line" id="c2l3"><span class="code-tag">&lt;p&gt;</span><span class="code-str">This is a paragraph. It holds longer text.</span><span class="code-tag">&lt;/p&gt;</span></div>
+              <div class="line" id="c2l4"><span class="code-tag">&lt;a </span><span class="code-attr">href=</span><span class="code-val">"#"</span><span class="code-tag">&gt;</span><span class="code-str">This is a link</span><span class="code-tag">&lt;/a&gt;</span></div>
+            </div>
+            <button class="run-btn" onclick="runCode2()">▶ Run the Code</button>
+            <div class="code-output" id="output2">
+              <strong style="font-size:1.3rem;display:block;margin-bottom:4px;color:var(--white)">Zen's World</strong>
+              <strong style="font-size:1rem;display:block;margin-bottom:8px;color:var(--off)">Welcome, Coder</strong>
+              <p style="color:var(--off);margin-bottom:8px">This is a paragraph. It holds longer text.</p>
+              <a href="#" style="color:var(--cyan);text-decoration:underline">This is a link</a>
             </div>
           </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
-            <div class="block-body">
-              <div class="definition-box"><div class="definition-term">CSS</div><div class="definition-text">Cascading Style Sheets. The language that controls how HTML elements look — colors, fonts, spacing, layout.</div><div class="definition-example">Example: color: pink; makes text pink.</div></div>
-              <div class="definition-box"><div class="definition-term">Selector</div><div class="definition-text">The part of a CSS rule that targets which HTML element to style.</div><div class="definition-example">Example: h1 { } targets all h1 headings.</div></div>
-              <div class="definition-box"><div class="definition-term">Property</div><div class="definition-text">What you want to change about an element — like color, font-size, or background.</div><div class="definition-example">Example: color is the property in color: red;</div></div>
-              <div class="definition-box"><div class="definition-term">Value</div><div class="definition-text">What you set the property to.</div><div class="definition-example">Example: red is the value in color: red;</div></div>
-              <div class="definition-box"><div class="definition-term">Hex Color</div><div class="definition-text">A six-character code starting with # that represents an exact color.</div><div class="definition-example">Example: #ff6baa is Zen's pink.</div></div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">🔨</div><div class="block-label">Activity · Build It</div></div>
+          <div class="block-body">
+            <p class="drag-prompt">Use what you know to build a mini webpage about yourself. Choose a tag, then type your content.</p>
+            <div class="build-slots">
+              <div class="build-slot"><select id="tag1"><option value="h1">h1 — Big Heading</option><option value="h2">h2 — Smaller Heading</option><option value="p">p — Paragraph</option></select><input type="text" id="content1" placeholder="Your name or title..."></div>
+              <div class="build-slot"><select id="tag2"><option value="p">p — Paragraph</option><option value="h2">h2 — Smaller Heading</option><option value="h1">h1 — Big Heading</option></select><input type="text" id="content2" placeholder="Something about you..."></div>
+              <div class="build-slot"><select id="tag3"><option value="p">p — Paragraph</option><option value="h2">h2 — Smaller Heading</option><option value="h1">h1 — Big Heading</option></select><input type="text" id="content3" placeholder="What you want to build..."></div>
+            </div>
+            <button class="run-btn" onclick="previewBuild()">▶ Preview My Page</button>
+            <div class="build-preview" id="buildPreview"></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
+          <div class="block-body">
+            <p class="quiz-question">Which of these is a correctly written HTML element?</p>
+            <div class="quiz-options" id="quiz2">
+              <div class="quiz-option" onclick="answerQuiz('quiz2','a','c')"><span class="quiz-option-letter">A</span>&lt;p Hello World /p&gt;</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz2','b','c')"><span class="quiz-option-letter">B</span>(p)Hello World(/p)</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz2','c','c')"><span class="quiz-option-letter">C</span>&lt;p&gt;Hello World&lt;/p&gt;</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz2','d','c')"><span class="quiz-option-letter">D</span>&lt;p&gt;Hello World&lt;p&gt;</div>
+            </div>
+            <div class="quiz-result" id="quiz2Result"></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Your Turn</div></div>
+          <div class="block-body">
+            <p class="reflect-prompt">Think about a website you use every day. What do you think it's made of? What tags might be on that page right now?</p>
+            <textarea class="reflect-input" id="reflect2" placeholder="I think..."></textarea>
+            <button class="reflect-submit" onclick="submitReflect('reflect2','reflect2Response','complete2')">Save My Thought →</button>
+            <div class="reflect-response" id="reflect2Response"></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
+          <div class="block-body">
+            <div class="summary-box">
+              <div class="summary-title">What you learned in Lesson 2</div>
+              <ul class="summary-list">
+                <li>Every HTML element has an opening tag and a closing tag</li>
+                <li>The closing tag has a forward slash: &lt;/tagname&gt;</li>
+                <li>h1, h2, p, and a are some of the most common tags</li>
+                <li>Attributes go inside the opening tag to add extra info</li>
+                <li>The href attribute tells a link where to go</li>
+              </ul>
             </div>
           </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Interactive</div></div>
-            <div class="block-body">
-              <p>Watch CSS transform plain HTML into something that actually looks designed.</p>
-              <div class="code-demo" id="codeDemo3">
-                <div class="line" id="c3l1"><span class="code-tag">h1</span> <span class="code-comment">{</span></div>
-                <div class="line" id="c3l2">&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">#ff6baa</span>;</div>
-                <div class="line" id="c3l3">&nbsp;&nbsp;<span class="code-attr">font-size</span>: <span class="code-val">2rem</span>;</div>
-                <div class="line" id="c3l4"><span class="code-comment">}</span></div>
-                <div class="line" id="c3l5"><span class="code-tag">p</span> <span class="code-comment">{</span></div>
-                <div class="line" id="c3l6">&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">#c8cce0</span>;</div>
-                <div class="line" id="c3l7">&nbsp;&nbsp;<span class="code-attr">font-size</span>: <span class="code-val">1rem</span>;</div>
-                <div class="line" id="c3l8"><span class="code-comment">}</span></div>
-              </div>
-              <button class="run-btn" onclick="runCode3()">▶ Run the Code</button>
-              <div class="code-output" id="output3">
-                <strong style="font-size:1.6rem;display:block;margin-bottom:8px;color:#ff6baa">This heading is now pink.</strong>
-                <p style="color:#c8cce0">And this paragraph is styled too. CSS changed everything.</p>
-              </div>
+        </div>
+        <div class="lesson-complete" id="complete2">
+          <div class="complete-icon">✦</div>
+          <h3 class="complete-title">Lesson 2 <span>Complete!</span></h3>
+          <p class="complete-desc">You just wrote real HTML. You know what tags are, how elements work, and how to build a basic structure. Keep going.</p>
+          <button class="next-btn" onclick="openLesson(3)">Next Lesson →</button>
+        </div>
+        <div class="cheat-sheet" id="cheat2">
+          <div class="cheat-sheet-header"><span class="cheat-sheet-title">✦ Lesson 2 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(2)">Download PDF →</button></div>
+          <div class="cheat-body">
+            <div class="cheat-grid">
+              <div class="cheat-item"><div class="cheat-term">Opening Tag</div><div class="cheat-def">Starts an element. Written as &lt;tagname&gt;</div></div>
+              <div class="cheat-item"><div class="cheat-term">Closing Tag</div><div class="cheat-def">Ends an element. Written as &lt;/tagname&gt;</div></div>
+              <div class="cheat-item"><div class="cheat-term">Element</div><div class="cheat-def">Opening tag + content + closing tag together.</div></div>
+              <div class="cheat-item"><div class="cheat-term">Attribute</div><div class="cheat-def">Extra info inside an opening tag. Like href for links.</div></div>
             </div>
-          </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">🎨</div><div class="block-label">Activity · Style Your Page</div></div>
-            <div class="block-body">
-              <p class="drag-prompt">Pick colors and a font size to style your own heading. See the preview update live.</p>
-              <div class="build-slots">
-                <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:120px">Heading Color</label><input type="color" id="colorPicker" value="#ff6baa" oninput="updatePreview3()" style="width:48px;height:36px;border-radius:8px;border:1px solid var(--border-md);cursor:pointer;background:none;padding:2px"><span id="colorHex" style="font-family:monospace;font-size:.8rem;color:var(--muted)">#ff6baa</span></div>
-                <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:120px">Font Size</label><input type="range" id="sizeSlider" min="16" max="64" value="32" oninput="updatePreview3()" style="width:140px;cursor:pointer"><span id="sizeVal" style="font-family:monospace;font-size:.8rem;color:var(--muted)">32px</span></div>
-                <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:120px">Your Text</label><input type="text" id="styleText" placeholder="Type something..." oninput="updatePreview3()" style="width:200px"></div>
-              </div>
-              <div class="build-preview show" id="stylePreview" style="margin-top:16px">
-                <div id="styleOutput" style="font-size:32px;color:#ff6baa;font-weight:800;font-family:'Syne',sans-serif">Your styled heading</div>
-                <div style="margin-top:8px;font-family:monospace;font-size:.72rem;color:var(--muted)">h1 { color: <span id="previewColor">#ff6baa</span>; font-size: <span id="previewSize">32px</span>; }</div>
-              </div>
-            </div>
-          </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
-            <div class="block-body">
-              <p class="quiz-question">In CSS, what does a selector do?</p>
-              <div class="quiz-options" id="quiz3">
-                <div class="quiz-option" onclick="answerQuiz('quiz3','a','b')"><span class="quiz-option-letter">A</span>It writes the HTML for the page</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz3','b','b')"><span class="quiz-option-letter">B</span>It targets which HTML element to style</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz3','c','b')"><span class="quiz-option-letter">C</span>It sets the color of the background</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz3','d','b')"><span class="quiz-option-letter">D</span>It downloads the fonts</div>
-              </div>
-              <div class="quiz-result" id="quiz3Result"></div>
-            </div>
-          </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Your Turn</div></div>
-            <div class="block-body">
-              <p class="reflect-prompt">What colors would you use if you were designing your own website? Describe your vibe — what feeling do you want people to get when they land on your page?</p>
-              <textarea class="reflect-input" id="reflect3" placeholder="My site would feel..."></textarea>
-              <button class="reflect-submit" onclick="submitReflect('reflect3','reflect3Response','complete3')">Save My Vision →</button>
-              <div class="reflect-response" id="reflect3Response"></div>
-            </div>
-          </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
-            <div class="block-body">
-              <div class="summary-box">
-                <div class="summary-title">What you learned in Lesson 3</div>
-                <ul class="summary-list">
-                  <li>CSS controls how HTML elements look</li>
-                  <li>A CSS rule has a selector, then properties and values in curly braces</li>
-                  <li>Properties are what you change — like color or font-size</li>
-                  <li>Values are what you set them to — like red or 2rem</li>
-                  <li>Hex codes like #ff6baa represent exact colors</li>
-                  <li>Styles cascade from parent elements to child elements</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="lesson-complete" id="complete3">
-            <div class="complete-icon">✦</div>
-            <h3 class="complete-title">Lesson 3 <span>Complete!</span></h3>
-            <p class="complete-desc">Your pages are no longer plain. You can now add color, control fonts, and start making things look exactly how you imagine them.</p>
-            <button class="next-btn" onclick="openLesson(4)">Final Lesson →</button>
-          </div>
-          <div class="cheat-sheet" id="cheat3">
-            <div class="cheat-sheet-header"><span class="cheat-sheet-title">✦ Lesson 3 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(3)">Download PDF →</button></div>
-            <div class="cheat-body">
-              <div class="cheat-grid">
-                <div class="cheat-item"><div class="cheat-term">CSS</div><div class="cheat-def">The language that styles HTML — colors, fonts, spacing.</div></div>
-                <div class="cheat-item"><div class="cheat-term">Selector</div><div class="cheat-def">Targets which element to style. Example: h1 { }</div></div>
-                <div class="cheat-item"><div class="cheat-term">Property</div><div class="cheat-def">What to change. Example: color, font-size, background.</div></div>
-                <div class="cheat-item"><div class="cheat-term">Value</div><div class="cheat-def">What to set it to. Example: pink, 2rem, #ff6baa.</div></div>
-              </div>
-              <div class="cheat-code">h1 { color: #ff6baa; font-size: 2rem; }<br>p { color: #c8cce0; font-size: 1rem; }<br>body { background: #050508; }</div>
-            </div>
+            <div class="cheat-code">&lt;h1&gt;Big Title&lt;/h1&gt;<br>&lt;h2&gt;Smaller Title&lt;/h2&gt;<br>&lt;p&gt;A paragraph.&lt;/p&gt;<br>&lt;a href="https://..."&gt;A link&lt;/a&gt;</div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ============ LESSON 4 ============ -->
-  <div class="lesson" id="lesson-4">
-    <div class="lesson-accordion-header" onclick="toggleAccordion(4)" id="accordion-header-4">
-      <div class="accordion-num locked-num" id="accordion-num-4">4</div>
-      <div class="accordion-meta">
-        <div class="accordion-title">Build Your Own Page</div>
-        <div class="accordion-desc">Everything you've learned comes together here. Build a real webpage from scratch — about something you actually care about.</div>
-      </div>
-      <div class="accordion-tier locked-tier" id="accordion-tier-4">Coders</div>
-      <div class="accordion-arrow">▼</div>
+<!-- LESSON 3 -->
+<div class="lesson" id="lesson-3">
+  <div class="lesson-accordion-header" onclick="toggleAccordion(3)" id="accordion-header-3">
+    <div class="accordion-num locked-num" id="accordion-num-3">3</div>
+    <div class="accordion-meta">
+      <div class="accordion-title">Colors &amp; Style with CSS</div>
+      <div class="accordion-desc">HTML builds the structure. CSS makes it beautiful. Add color, fonts, and style to everything you build.</div>
     </div>
-    <div class="lesson-accordion-body" id="accordion-body-4">
-      <div class="lesson-body-inner">
-        <div id="lesson4-gate" class="lesson-gate">
-          <div class="gate-lock">🔒</div>
-          <div class="gate-badge">Coders</div>
-          <div class="gate-title">This lesson is for Coders</div>
-          <div class="gate-desc">The final lesson is reserved for Coders — our most dedicated members. Upgrade to build your own real webpage from scratch.</div>
-          <button class="gate-btn" onclick="goUpgrade()">Upgrade to Coders →</button>
+    <div class="accordion-tier locked-tier" id="accordion-tier-3">Builders+</div>
+    <div class="accordion-arrow">▼</div>
+  </div>
+  <div class="lesson-accordion-body" id="accordion-body-3">
+    <div class="lesson-body-inner">
+      <div id="lesson3-gate" class="lesson-gate">
+        <div class="gate-lock">🔒</div>
+        <div class="gate-badge">Builders · Coders</div>
+        <div class="gate-title">This lesson is for Builders and up</div>
+        <div class="gate-desc">Upgrade your membership to unlock Lesson 3 — where your pages start to actually look like something.</div>
+        <button class="gate-btn" onclick="goUpgrade()">Upgrade →</button>
+      </div>
+      <div id="lesson3-content" style="display:none">
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 3 min</div></div>
+          <div class="block-body">
+            <p class="zen-quote">"HTML is the skeleton. CSS is everything that makes it look alive — the colors, the fonts, the spacing, all of it."</p>
+            <p>CSS stands for <strong style="color:var(--cyan)">Cascading Style Sheets</strong>. It's a separate language from HTML, but the two work together. While HTML says "this is a heading," CSS says "make that heading pink and use this font."</p>
+            <p>CSS works by <strong style="color:var(--pink)">selecting</strong> an element and then telling it how to look. You write a selector (like h1), then inside curly braces you write properties and values — each one changing something about how that element appears.</p>
+            <p>The word "cascading" means styles flow down from parent to child. If you set a color on the body, everything inside inherits it unless you override it. This makes it powerful and efficient once you get the feel for it.</p>
+          </div>
         </div>
-        <div id="lesson4-content" style="display:none">
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
-            <div class="block-body">
-              <p class="zen-quote">"The first page I ever built was about my favorite song. It was simple. But it was MINE. I made it. That feeling never goes away."</p>
-              <p>Every real webpage on the internet starts with the same thing: an HTML file. Inside that file, there's a structure — a head section that holds settings, and a body section that holds everything you actually see.</p>
-              <p>In this lesson, you're going to build that structure, add your own content, and style it with CSS. By the time you're done, you'll have a complete webpage — something you actually built, from scratch, with your own hands.</p>
-              <p>There's no wrong way to do this. Pick a topic you care about. Use what you've learned. And remember — every single website you've ever visited started exactly like this.</p>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
+          <div class="block-body">
+            <div class="definition-box"><div class="definition-term">CSS</div><div class="definition-text">Cascading Style Sheets. The language that controls how HTML elements look — colors, fonts, spacing, layout.</div><div class="definition-example">Example: color: pink; makes text pink.</div></div>
+            <div class="definition-box"><div class="definition-term">Selector</div><div class="definition-text">The part of a CSS rule that targets which HTML element to style.</div><div class="definition-example">Example: h1 { } targets all h1 headings.</div></div>
+            <div class="definition-box"><div class="definition-term">Property</div><div class="definition-text">What you want to change about an element — like color, font-size, or background.</div><div class="definition-example">Example: color is the property in color: red;</div></div>
+            <div class="definition-box"><div class="definition-term">Value</div><div class="definition-text">What you set the property to.</div><div class="definition-example">Example: red is the value in color: red;</div></div>
+            <div class="definition-box"><div class="definition-term">Hex Color</div><div class="definition-text">A six-character code starting with # that represents an exact color.</div><div class="definition-example">Example: #ff6baa is Zen's pink.</div></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Interactive</div></div>
+          <div class="block-body">
+            <p>Watch CSS transform plain HTML into something that actually looks designed.</p>
+            <div class="code-demo" id="codeDemo3">
+              <div class="line" id="c3l1"><span class="code-tag">h1</span> <span class="code-comment">{</span></div>
+              <div class="line" id="c3l2">&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">#ff6baa</span>;</div>
+              <div class="line" id="c3l3">&nbsp;&nbsp;<span class="code-attr">font-size</span>: <span class="code-val">2rem</span>;</div>
+              <div class="line" id="c3l4"><span class="code-comment">}</span></div>
+              <div class="line" id="c3l5"><span class="code-tag">p</span> <span class="code-comment">{</span></div>
+              <div class="line" id="c3l6">&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">#c8cce0</span>;</div>
+              <div class="line" id="c3l7">&nbsp;&nbsp;<span class="code-attr">font-size</span>: <span class="code-val">1rem</span>;</div>
+              <div class="line" id="c3l8"><span class="code-comment">}</span></div>
+            </div>
+            <button class="run-btn" onclick="runCode3()">▶ Run the Code</button>
+            <div class="code-output" id="output3">
+              <strong style="font-size:1.6rem;display:block;margin-bottom:8px;color:#ff6baa">This heading is now pink.</strong>
+              <p style="color:#c8cce0">And this paragraph is styled too. CSS changed everything.</p>
             </div>
           </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
-            <div class="block-body">
-              <div class="definition-box"><div class="definition-term">HTML Document</div><div class="definition-text">A complete HTML file that a browser can read and display as a webpage. It starts with &lt;!DOCTYPE html&gt; and contains head and body sections.</div></div>
-              <div class="definition-box"><div class="definition-term">&lt;head&gt;</div><div class="definition-text">The section of an HTML document that contains settings and information about the page — like the title that shows in the browser tab. The head is not visible on the page itself.</div><div class="definition-example">Example: &lt;title&gt;My Page&lt;/title&gt; goes inside the head.</div></div>
-              <div class="definition-box"><div class="definition-term">&lt;body&gt;</div><div class="definition-text">The section of an HTML document that contains everything visible on the page — headings, paragraphs, links, images.</div></div>
-              <div class="definition-box"><div class="definition-term">&lt;style&gt;</div><div class="definition-text">A tag that lets you write CSS directly inside your HTML file, inside the head section.</div></div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">🎨</div><div class="block-label">Activity · Style Your Page</div></div>
+          <div class="block-body">
+            <p class="drag-prompt">Pick colors and a font size to style your own heading. See the preview update live.</p>
+            <div class="build-slots">
+              <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:120px">Heading Color</label><input type="color" id="colorPicker" value="#ff6baa" oninput="updatePreview3()" style="width:48px;height:36px;border-radius:8px;border:1px solid var(--border-md);cursor:pointer;background:none;padding:2px"><span id="colorHex" style="font-family:monospace;font-size:.8rem;color:var(--muted)">#ff6baa</span></div>
+              <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:120px">Font Size</label><input type="range" id="sizeSlider" min="16" max="64" value="32" oninput="updatePreview3()" style="width:140px;cursor:pointer"><span id="sizeVal" style="font-family:monospace;font-size:.8rem;color:var(--muted)">32px</span></div>
+              <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:120px">Your Text</label><input type="text" id="styleText" placeholder="Type something..." oninput="updatePreview3()" style="width:200px"></div>
+            </div>
+            <div class="build-preview show" id="stylePreview" style="margin-top:16px">
+              <div id="styleOutput" style="font-size:32px;color:#ff6baa;font-weight:800;font-family:'Syne',sans-serif">Your styled heading</div>
+              <div style="margin-top:8px;font-family:monospace;font-size:.72rem;color:var(--muted)">h1 { color: <span id="previewColor">#ff6baa</span>; font-size: <span id="previewSize">32px</span>; }</div>
             </div>
           </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Full Page Structure</div></div>
-            <div class="block-body">
-              <p>This is what a complete HTML document looks like. Every webpage you've ever visited has this skeleton underneath.</p>
-              <div class="code-demo" id="codeDemo4">
-                <div class="line" id="c4l1"><span class="code-comment">&lt;!DOCTYPE html&gt;</span></div>
-                <div class="line" id="c4l2"><span class="code-tag">&lt;html&gt;</span></div>
-                <div class="line" id="c4l3">&nbsp;&nbsp;<span class="code-tag">&lt;head&gt;</span></div>
-                <div class="line" id="c4l4">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;title&gt;</span><span class="code-str">My First Page</span><span class="code-tag">&lt;/title&gt;</span></div>
-                <div class="line" id="c4l5">&nbsp;&nbsp;<span class="code-tag">&lt;/head&gt;</span></div>
-                <div class="line" id="c4l6">&nbsp;&nbsp;<span class="code-tag">&lt;body&gt;</span></div>
-                <div class="line" id="c4l7">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;h1&gt;</span><span class="code-str">Welcome to My Page</span><span class="code-tag">&lt;/h1&gt;</span></div>
-                <div class="line" id="c4l8">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;p&gt;</span><span class="code-str">This is my first webpage. I built it.</span><span class="code-tag">&lt;/p&gt;</span></div>
-                <div class="line" id="c4l9">&nbsp;&nbsp;<span class="code-tag">&lt;/body&gt;</span></div>
-                <div class="line" id="c4l10"><span class="code-tag">&lt;/html&gt;</span></div>
-              </div>
-              <button class="run-btn" onclick="runCode4()">▶ Run the Code</button>
-              <div class="code-output" id="output4">
-                <strong style="font-size:1.3rem;display:block;margin-bottom:8px;color:var(--white)">Welcome to My Page</strong>
-                <p style="color:var(--off)">This is my first webpage. I built it.</p>
-              </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
+          <div class="block-body">
+            <p class="quiz-question">In CSS, what does a selector do?</p>
+            <div class="quiz-options" id="quiz3">
+              <div class="quiz-option" onclick="answerQuiz('quiz3','a','b')"><span class="quiz-option-letter">A</span>It writes the HTML for the page</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz3','b','b')"><span class="quiz-option-letter">B</span>It targets which HTML element to style</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz3','c','b')"><span class="quiz-option-letter">C</span>It sets the color of the background</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz3','d','b')"><span class="quiz-option-letter">D</span>It downloads the fonts</div>
+            </div>
+            <div class="quiz-result" id="quiz3Result"></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Your Turn</div></div>
+          <div class="block-body">
+            <p class="reflect-prompt">What colors would you use if you were designing your own website? Describe your vibe — what feeling do you want people to get when they land on your page?</p>
+            <textarea class="reflect-input" id="reflect3" placeholder="My site would feel..."></textarea>
+            <button class="reflect-submit" onclick="submitReflect('reflect3','reflect3Response','complete3')">Save My Vision →</button>
+            <div class="reflect-response" id="reflect3Response"></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
+          <div class="block-body">
+            <div class="summary-box">
+              <div class="summary-title">What you learned in Lesson 3</div>
+              <ul class="summary-list">
+                <li>CSS controls how HTML elements look</li>
+                <li>A CSS rule has a selector, then properties and values in curly braces</li>
+                <li>Properties are what you change — like color or font-size</li>
+                <li>Values are what you set them to — like red or 2rem</li>
+                <li>Hex codes like #ff6baa represent exact colors</li>
+                <li>Styles cascade from parent elements to child elements</li>
+              </ul>
             </div>
           </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">🚀</div><div class="block-label">Capstone · Build Your Page</div></div>
-            <div class="block-body">
-              <p class="drag-prompt">Now it's your turn. Fill in the blanks to build your own webpage. Choose your topic, write your content, and pick your colors.</p>
-              <div class="build-slots">
-                <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:140px">Page Title</label><input type="text" id="cap-title" placeholder="My page is about..." oninput="updateCapstone()"></div>
-                <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:140px">Heading</label><input type="text" id="cap-h1" placeholder="Welcome to..." oninput="updateCapstone()"></div>
-                <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:140px">Paragraph</label><input type="text" id="cap-p" placeholder="This page is about..." oninput="updateCapstone()"></div>
-                <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:140px">Heading Color</label><input type="color" id="cap-color" value="#ff6baa" oninput="updateCapstone()" style="width:48px;height:36px;border-radius:8px;border:1px solid var(--border-md);cursor:pointer;background:none;padding:2px"></div>
-              </div>
-              <div class="build-preview show" id="capPreview" style="margin-top:16px;min-height:80px">
-                <div id="capOutput" style="line-height:1.8"><div style="font-size:.65rem;font-family:var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Your page preview</div></div>
-              </div>
+        </div>
+        <div class="lesson-complete" id="complete3">
+          <div class="complete-icon">✦</div>
+          <h3 class="complete-title">Lesson 3 <span>Complete!</span></h3>
+          <p class="complete-desc">Your pages are no longer plain. You can now add color, control fonts, and start making things look exactly how you imagine them.</p>
+          <button class="next-btn" onclick="openLesson(4)">Final Lesson →</button>
+        </div>
+        <div class="cheat-sheet" id="cheat3">
+          <div class="cheat-sheet-header"><span class="cheat-sheet-title">✦ Lesson 3 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(3)">Download PDF →</button></div>
+          <div class="cheat-body">
+            <div class="cheat-grid">
+              <div class="cheat-item"><div class="cheat-term">CSS</div><div class="cheat-def">The language that styles HTML — colors, fonts, spacing.</div></div>
+              <div class="cheat-item"><div class="cheat-term">Selector</div><div class="cheat-def">Targets which element to style. Example: h1 { }</div></div>
+              <div class="cheat-item"><div class="cheat-term">Property</div><div class="cheat-def">What to change. Example: color, font-size, background.</div></div>
+              <div class="cheat-item"><div class="cheat-term">Value</div><div class="cheat-def">What to set it to. Example: pink, 2rem, #ff6baa.</div></div>
             </div>
-          </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
-            <div class="block-body">
-              <p class="quiz-question">Which section of an HTML document contains the content that visitors actually see on the page?</p>
-              <div class="quiz-options" id="quiz4">
-                <div class="quiz-option" onclick="answerQuiz('quiz4','a','c')"><span class="quiz-option-letter">A</span>The &lt;head&gt; section</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz4','b','c')"><span class="quiz-option-letter">B</span>The &lt;title&gt; tag</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz4','c','c')"><span class="quiz-option-letter">C</span>The &lt;body&gt; section</div>
-                <div class="quiz-option" onclick="answerQuiz('quiz4','d','c')"><span class="quiz-option-letter">D</span>The &lt;style&gt; tag</div>
-              </div>
-              <div class="quiz-result" id="quiz4Result"></div>
-            </div>
-          </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Final Thought</div></div>
-            <div class="block-body">
-              <p class="reflect-prompt">You just built a webpage from scratch. How does it feel to know that the same code structure is underneath every site on the internet — and now you understand it?</p>
-              <textarea class="reflect-input" id="reflect4" placeholder="It feels..."></textarea>
-              <button class="reflect-submit" onclick="submitReflect('reflect4','reflect4Response','complete4')">Save My Reflection →</button>
-              <div class="reflect-response" id="reflect4Response"></div>
-            </div>
-          </div>
-          <div class="content-block">
-            <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
-            <div class="block-body">
-              <div class="summary-box">
-                <div class="summary-title">What you learned in Lesson 4</div>
-                <ul class="summary-list">
-                  <li>Every webpage is an HTML document with a head and body</li>
-                  <li>The head holds settings like the page title — not visible content</li>
-                  <li>The body holds everything the visitor sees</li>
-                  <li>You can write CSS inside a &lt;style&gt; tag in the head</li>
-                  <li>Building a page from scratch uses everything from Lessons 1–3</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-          <div class="lesson-complete" id="complete4">
-            <div class="complete-icon">🌟</div>
-            <h3 class="complete-title">Zen's World <span>Complete!</span></h3>
-            <p class="complete-desc">You finished all four lessons. You know what code is, how tags work, how CSS styles things, and how to build a full HTML page from scratch. That's real. Keep building.</p>
-            <button class="next-btn" onclick="window.location.href='index.html'">Back to the Universe →</button>
-          </div>
-          <div class="cheat-sheet" id="cheat4">
-            <div class="cheat-sheet-header"><span class="cheat-sheet-title">✦ Lesson 4 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(4)">Download PDF →</button></div>
-            <div class="cheat-body">
-              <div class="cheat-grid">
-                <div class="cheat-item"><div class="cheat-term">&lt;!DOCTYPE html&gt;</div><div class="cheat-def">Tells the browser this is an HTML5 document. Always goes first.</div></div>
-                <div class="cheat-item"><div class="cheat-term">&lt;head&gt;</div><div class="cheat-def">Settings section. Not visible. Holds title, styles, fonts.</div></div>
-                <div class="cheat-item"><div class="cheat-term">&lt;body&gt;</div><div class="cheat-def">Everything the visitor sees goes here.</div></div>
-                <div class="cheat-item"><div class="cheat-term">&lt;style&gt;</div><div class="cheat-def">Write CSS inside this tag, inside the head.</div></div>
-              </div>
-              <div class="cheat-code">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&nbsp;&nbsp;&lt;head&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;My Page&lt;/title&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;style&gt;h1{color:#ff6baa}&lt;/style&gt;<br>&nbsp;&nbsp;&lt;/head&gt;<br>&nbsp;&nbsp;&lt;body&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Hello!&lt;/h1&gt;<br>&nbsp;&nbsp;&lt;/body&gt;<br>&lt;/html&gt;</div>
-            </div>
+            <div class="cheat-code">h1 { color: #ff6baa; font-size: 2rem; }<br>p { color: #c8cce0; font-size: 1rem; }<br>body { background: #050508; }</div>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+<!-- LESSON 4 -->
+<div class="lesson" id="lesson-4">
+  <div class="lesson-accordion-header" onclick="toggleAccordion(4)" id="accordion-header-4">
+    <div class="accordion-num locked-num" id="accordion-num-4">4</div>
+    <div class="accordion-meta">
+      <div class="accordion-title">Build Your Own Page</div>
+      <div class="accordion-desc">Everything you've learned comes together here. Build a real webpage from scratch — about something you actually care about.</div>
+    </div>
+    <div class="accordion-tier locked-tier" id="accordion-tier-4">Coders</div>
+    <div class="accordion-arrow">▼</div>
+  </div>
+  <div class="lesson-accordion-body" id="accordion-body-4">
+    <div class="lesson-body-inner">
+      <div id="lesson4-gate" class="lesson-gate">
+        <div class="gate-lock">🔒</div>
+        <div class="gate-badge">Coders</div>
+        <div class="gate-title">This lesson is for Coders</div>
+        <div class="gate-desc">The final lesson is reserved for Coders — our most dedicated members. Upgrade to build your own real webpage from scratch.</div>
+        <button class="gate-btn" onclick="goUpgrade()">Upgrade to Coders →</button>
+      </div>
+      <div id="lesson4-content" style="display:none">
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📖</div><div class="block-label">Read · 2 min</div></div>
+          <div class="block-body">
+            <p class="zen-quote">"The first page I ever built was about my favorite song. It was simple. But it was MINE. I made it. That feeling never goes away."</p>
+            <p>Every real webpage on the internet starts with the same thing: an HTML file. Inside that file, there's a structure — a head section that holds settings, and a body section that holds everything you actually see.</p>
+            <p>In this lesson, you're going to build that structure, add your own content, and style it with CSS. By the time you're done, you'll have a complete webpage — something you actually built, from scratch, with your own hands.</p>
+            <p>There's no wrong way to do this. Pick a topic you care about. Use what you've learned. And remember — every single website you've ever visited started exactly like this.</p>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📚</div><div class="block-label">Key Terms</div></div>
+          <div class="block-body">
+            <div class="definition-box"><div class="definition-term">HTML Document</div><div class="definition-text">A complete HTML file that a browser can read and display as a webpage. It starts with &lt;!DOCTYPE html&gt; and contains head and body sections.</div></div>
+            <div class="definition-box"><div class="definition-term">&lt;head&gt;</div><div class="definition-text">The section of an HTML document that contains settings and information about the page — like the title that shows in the browser tab. The head is not visible on the page itself.</div><div class="definition-example">Example: &lt;title&gt;My Page&lt;/title&gt; goes inside the head.</div></div>
+            <div class="definition-box"><div class="definition-term">&lt;body&gt;</div><div class="definition-text">The section of an HTML document that contains everything visible on the page — headings, paragraphs, links, images.</div></div>
+            <div class="definition-box"><div class="definition-term">&lt;style&gt;</div><div class="definition-text">A tag that lets you write CSS directly inside your HTML file, inside the head section.</div></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">⚡</div><div class="block-label">See It Live · Full Page Structure</div></div>
+          <div class="block-body">
+            <p>This is what a complete HTML document looks like. Every webpage you've ever visited has this skeleton underneath.</p>
+            <div class="code-demo" id="codeDemo4">
+              <div class="line" id="c4l1"><span class="code-comment">&lt;!DOCTYPE html&gt;</span></div>
+              <div class="line" id="c4l2"><span class="code-tag">&lt;html&gt;</span></div>
+              <div class="line" id="c4l3">&nbsp;&nbsp;<span class="code-tag">&lt;head&gt;</span></div>
+              <div class="line" id="c4l4">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;title&gt;</span><span class="code-str">My First Page</span><span class="code-tag">&lt;/title&gt;</span></div>
+              <div class="line" id="c4l5">&nbsp;&nbsp;<span class="code-tag">&lt;/head&gt;</span></div>
+              <div class="line" id="c4l6">&nbsp;&nbsp;<span class="code-tag">&lt;body&gt;</span></div>
+              <div class="line" id="c4l7">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;h1&gt;</span><span class="code-str">Welcome to My Page</span><span class="code-tag">&lt;/h1&gt;</span></div>
+              <div class="line" id="c4l8">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;p&gt;</span><span class="code-str">This is my first webpage. I built it.</span><span class="code-tag">&lt;/p&gt;</span></div>
+              <div class="line" id="c4l9">&nbsp;&nbsp;<span class="code-tag">&lt;/body&gt;</span></div>
+              <div class="line" id="c4l10"><span class="code-tag">&lt;/html&gt;</span></div>
+            </div>
+            <button class="run-btn" onclick="runCode4()">▶ Run the Code</button>
+            <div class="code-output" id="output4">
+              <strong style="font-size:1.3rem;display:block;margin-bottom:8px;color:var(--white)">Welcome to My Page</strong>
+              <p style="color:var(--off)">This is my first webpage. I built it.</p>
+            </div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">🚀</div><div class="block-label">Capstone · Build Your Page</div></div>
+          <div class="block-body">
+            <p class="drag-prompt">Now it's your turn. Fill in the blanks to build your own webpage. Choose your topic, write your content, and pick your colors.</p>
+            <div class="build-slots">
+              <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:140px">Page Title</label><input type="text" id="cap-title" placeholder="My page is about..." oninput="updateCapstone()"></div>
+              <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:140px">Heading</label><input type="text" id="cap-h1" placeholder="Welcome to..." oninput="updateCapstone()"></div>
+              <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:140px">Paragraph</label><input type="text" id="cap-p" placeholder="This page is about..." oninput="updateCapstone()"></div>
+              <div class="build-slot"><label style="font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);width:140px">Heading Color</label><input type="color" id="cap-color" value="#ff6baa" oninput="updateCapstone()" style="width:48px;height:36px;border-radius:8px;border:1px solid var(--border-md);cursor:pointer;background:none;padding:2px"></div>
+            </div>
+            <div class="build-preview show" id="capPreview" style="margin-top:16px;min-height:80px">
+              <div id="capOutput" style="line-height:1.8"><div style="font-size:.65rem;font-family:var(--display);letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:12px">Your page preview</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">❓</div><div class="block-label">Quick Check</div></div>
+          <div class="block-body">
+            <p class="quiz-question">Which section of an HTML document contains the content that visitors actually see on the page?</p>
+            <div class="quiz-options" id="quiz4">
+              <div class="quiz-option" onclick="answerQuiz('quiz4','a','c')"><span class="quiz-option-letter">A</span>The &lt;head&gt; section</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz4','b','c')"><span class="quiz-option-letter">B</span>The &lt;title&gt; tag</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz4','c','c')"><span class="quiz-option-letter">C</span>The &lt;body&gt; section</div>
+              <div class="quiz-option" onclick="answerQuiz('quiz4','d','c')"><span class="quiz-option-letter">D</span>The &lt;style&gt; tag</div>
+            </div>
+            <div class="quiz-result" id="quiz4Result"></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">✦</div><div class="block-label">Reflect · Final Thought</div></div>
+          <div class="block-body">
+            <p class="reflect-prompt">You just built a webpage from scratch. How does it feel to know that the same code structure is underneath every site on the internet — and now you understand it?</p>
+            <textarea class="reflect-input" id="reflect4" placeholder="It feels..."></textarea>
+            <button class="reflect-submit" onclick="submitReflect('reflect4','reflect4Response','complete4')">Save My Reflection →</button>
+            <div class="reflect-response" id="reflect4Response"></div>
+          </div>
+        </div>
+        <div class="content-block">
+          <div class="block-header"><div class="block-icon">📋</div><div class="block-label">Lesson Summary</div></div>
+          <div class="block-body">
+            <div class="summary-box">
+              <div class="summary-title">What you learned in Lesson 4</div>
+              <ul class="summary-list">
+                <li>Every webpage is an HTML document with a head and body</li>
+                <li>The head holds settings like the page title — not visible content</li>
+                <li>The body holds everything the visitor sees</li>
+                <li>You can write CSS inside a &lt;style&gt; tag in the head</li>
+                <li>Building a page from scratch uses everything from Lessons 1–3</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="lesson-complete" id="complete4">
+          <div class="complete-icon">🌟</div>
+          <h3 class="complete-title">Zen's World <span>Complete!</span></h3>
+          <p class="complete-desc">You finished all four lessons. You know what code is, how tags work, how CSS styles things, and how to build a full HTML page from scratch. That's real. Keep building.</p>
+          <button class="next-btn" onclick="window.location.href='index.html'">Back to the Universe →</button>
+        </div>
+        <div class="cheat-sheet" id="cheat4">
+          <div class="cheat-sheet-header"><span class="cheat-sheet-title">✦ Lesson 4 Cheat Sheet — Unlocked</span><button class="cheat-download" onclick="downloadCheat(4)">Download PDF →</button></div>
+          <div class="cheat-body">
+            <div class="cheat-grid">
+              <div class="cheat-item"><div class="cheat-term">&lt;!DOCTYPE html&gt;</div><div class="cheat-def">Tells the browser this is an HTML5 document. Always goes first.</div></div>
+              <div class="cheat-item"><div class="cheat-term">&lt;head&gt;</div><div class="cheat-def">Settings section. Not visible. Holds title, styles, fonts.</div></div>
+              <div class="cheat-item"><div class="cheat-term">&lt;body&gt;</div><div class="cheat-def">Everything the visitor sees goes here.</div></div>
+              <div class="cheat-item"><div class="cheat-term">&lt;style&gt;</div><div class="cheat-def">Write CSS inside this tag, inside the head.</div></div>
+            </div>
+            <div class="cheat-code">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&nbsp;&nbsp;&lt;head&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;title&gt;My Page&lt;/title&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;style&gt;h1{color:#ff6baa}&lt;/style&gt;<br>&nbsp;&nbsp;&lt;/head&gt;<br>&nbsp;&nbsp;&lt;body&gt;<br>&nbsp;&nbsp;&nbsp;&nbsp;&lt;h1&gt;Hello!&lt;/h1&gt;<br>&nbsp;&nbsp;&lt;/body&gt;<br>&lt;/html&gt;</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div><!-- end .lessons -->
+
+<!-- ZEN COMPANION (Clippy-style) -->
+<div class="zen-companion" id="zenCompanion">
+  <img src="zen-idle.gif" alt="Zen" title="Zen is here if you need help!">
+</div>
 
 <!-- AUTH MODAL -->
 <div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
@@ -1309,7 +1015,17 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 48px;display:fl
 </style>
 
 <script>
-// ===== ACCORDION =====
+// COMPANION — show after scrolling past hero
+window.addEventListener('scroll', function(){
+  const companion = document.getElementById('zenCompanion');
+  if(window.scrollY > window.innerHeight * 0.6){
+    companion.classList.add('visible');
+  } else {
+    companion.classList.remove('visible');
+  }
+}, {passive:true});
+
+// ACCORDION
 function toggleAccordion(num) {
   const header = document.querySelector(`#lesson-${num} .lesson-accordion-header`);
   const body = document.getElementById(`accordion-body-${num}`);
@@ -1325,7 +1041,7 @@ function openLesson(num) {
   setTimeout(() => document.getElementById(`lesson-${num}`).scrollIntoView({behavior:'smooth', block:'start'}), 100);
 }
 
-// ===== MODAL =====
+// MODAL
 function openModal(tab) {
   document.getElementById('auth-modal').style.display='flex';
   document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));
@@ -1338,14 +1054,14 @@ document.querySelectorAll('.auth-link').forEach(link=>{link.addEventListener('cl
 document.getElementById('auth-close-btn').addEventListener('click',()=>document.getElementById('auth-modal').style.display='none');
 document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').style.display='none';});
 
-// ===== CODE DEMOS =====
+// CODE DEMOS
 function revealLines(ids,then){ids.forEach((id,i)=>setTimeout(()=>document.getElementById(id).classList.add('visible'),i*280));if(then)setTimeout(then,ids.length*280+200);}
 function runCode1(){revealLines(['c1l1','c1l2','c1l3','c1l4'],()=>document.getElementById('output1').classList.add('show'));}
 function runCode2(){revealLines(['c2l1','c2l2','c2l3','c2l4'],()=>document.getElementById('output2').classList.add('show'));}
 function runCode3(){revealLines(['c3l1','c3l2','c3l3','c3l4','c3l5','c3l6','c3l7','c3l8'],()=>document.getElementById('output3').classList.add('show'));}
 function runCode4(){revealLines(['c4l1','c4l2','c4l3','c4l4','c4l5','c4l6','c4l7','c4l8','c4l9','c4l10'],()=>document.getElementById('output4').classList.add('show'));}
 
-// ===== DRAG =====
+// DRAG
 function setupDrag(listId){
   let dragSrc=null;
   const list=document.getElementById(listId);
@@ -1367,7 +1083,7 @@ function checkDrag1(){
   res.innerHTML=correct?'✦ Perfect! That\'s exactly how Zen thinks through building.':'Not quite — try again. Hint: you need the idea before anything else.';
 }
 
-// ===== QUIZ =====
+// QUIZ
 function answerQuiz(quizId,chosen,correct){
   const opts=document.querySelectorAll('#'+quizId+' .quiz-option');
   opts.forEach(o=>o.style.pointerEvents='none');
@@ -1383,7 +1099,7 @@ function getQuizExplain(id){
   return map[id]||'';
 }
 
-// ===== BUILD ACTIVITY L2 =====
+// BUILD L2
 function previewBuild(){
   const slots=[[document.getElementById('tag1').value,document.getElementById('content1').value],[document.getElementById('tag2').value,document.getElementById('content2').value],[document.getElementById('tag3').value,document.getElementById('content3').value]];
   const sizes={h1:'1.4rem',h2:'1.1rem',p:'.9rem'};
@@ -1396,7 +1112,7 @@ function previewBuild(){
   }).join('');
 }
 
-// ===== STYLE ACTIVITY L3 =====
+// STYLE L3
 function updatePreview3(){
   const color=document.getElementById('colorPicker').value;
   const size=document.getElementById('sizeSlider').value;
@@ -1410,7 +1126,7 @@ function updatePreview3(){
   document.getElementById('previewSize').textContent=size+'px';
 }
 
-// ===== CAPSTONE L4 =====
+// CAPSTONE L4
 function updateCapstone(){
   const title=document.getElementById('cap-title').value||'My Page';
   const h1=document.getElementById('cap-h1').value;
@@ -1425,7 +1141,7 @@ function updateCapstone(){
   `;
 }
 
-// ===== REFLECT =====
+// REFLECT
 function submitReflect(inputId,responseId,completeId){
   const val=document.getElementById(inputId).value.trim();
   if(!val)return;
@@ -1451,14 +1167,14 @@ function submitReflect(inputId,responseId,completeId){
   },600);
 }
 
-// ===== CHEAT SHEET DOWNLOAD =====
+// CHEAT SHEET DOWNLOAD
 function downloadCheat(num){
   const titles={1:'Lesson 1 — What is Code?',2:'Lesson 2 — Your First HTML Tag',3:'Lesson 3 — Colors & Style with CSS',4:'Lesson 4 — Build Your Own Page'};
   const content={
-    1:`ZEN'S WORLD — CHEAT SHEET\n${titles[1]}\n\nCODE\nStep-by-step instructions a computer can read and follow.\n\nHTML\nHyperText Markup Language — the language of web pages.\n\nTAG\nLabels in angle brackets. Come in pairs: <tag> and </tag>\n\nBROWSER\nReads your HTML and displays it as a webpage.\n\nQUICK REFERENCE:\n<h1>Big Heading</h1>\n<h2>Smaller Heading</h2>\n<p>A paragraph.</p>`,
-    2:`ZEN'S WORLD — CHEAT SHEET\n${titles[2]}\n\nOPENING TAG\nStarts an element. Written as <tagname>\n\nCLOSING TAG\nEnds an element. Written as </tagname>\n\nELEMENT\nOpening tag + content + closing tag together.\n\nATTRIBUTE\nExtra info inside an opening tag.\n\nQUICK REFERENCE:\n<h1>Big Title</h1>\n<h2>Smaller Title</h2>\n<p>A paragraph.</p>\n<a href="...">A link</a>`,
-    3:`ZEN'S WORLD — CHEAT SHEET\n${titles[3]}\n\nCSS\nThe language that styles HTML.\n\nSELECTOR\nh1 { } targets all h1 headings.\n\nPROPERTY\nWhat to change: color, font-size, background.\n\nVALUE\nWhat to set it to: pink, 2rem, #ff6baa.\n\nQUICK REFERENCE:\nh1 { color: #ff6baa; font-size: 2rem; }\np { color: #c8cce0; }\nbody { background: #050508; }`,
-    4:`ZEN'S WORLD — CHEAT SHEET\n${titles[4]}\n\n<!DOCTYPE html> — Always first.\n<head> — Settings. Not visible.\n<body> — Everything the visitor sees.\n<style> — Write CSS inside here.\n\nFULL STRUCTURE:\n<!DOCTYPE html>\n<html>\n  <head>\n    <title>My Page</title>\n    <style>h1{color:#ff6baa}</style>\n  </head>\n  <body>\n    <h1>Hello!</h1>\n  </body>\n</html>`
+    1:`ZEN'S CODING REALM — CHEAT SHEET\n${titles[1]}\n\nCODE\nStep-by-step instructions a computer can read and follow.\n\nHTML\nHyperText Markup Language — the language of web pages.\n\nTAG\nLabels in angle brackets. Come in pairs: <tag> and </tag>\n\nBROWSER\nReads your HTML and displays it as a webpage.\n\nQUICK REFERENCE:\n<h1>Big Heading</h1>\n<h2>Smaller Heading</h2>\n<p>A paragraph.</p>`,
+    2:`ZEN'S CODING REALM — CHEAT SHEET\n${titles[2]}\n\nOPENING TAG\nStarts an element. Written as <tagname>\n\nCLOSING TAG\nEnds an element. Written as </tagname>\n\nELEMENT\nOpening tag + content + closing tag together.\n\nATTRIBUTE\nExtra info inside an opening tag.\n\nQUICK REFERENCE:\n<h1>Big Title</h1>\n<h2>Smaller Title</h2>\n<p>A paragraph.</p>\n<a href="...">A link</a>`,
+    3:`ZEN'S CODING REALM — CHEAT SHEET\n${titles[3]}\n\nCSS\nThe language that styles HTML.\n\nSELECTOR\nh1 { } targets all h1 headings.\n\nPROPERTY\nWhat to change: color, font-size, background.\n\nVALUE\nWhat to set it to: pink, 2rem, #ff6baa.\n\nQUICK REFERENCE:\nh1 { color: #ff6baa; font-size: 2rem; }\np { color: #c8cce0; }\nbody { background: #050508; }`,
+    4:`ZEN'S CODING REALM — CHEAT SHEET\n${titles[4]}\n\n<!DOCTYPE html> — Always first.\n<head> — Settings. Not visible.\n<body> — Everything the visitor sees.\n<style> — Write CSS inside here.\n\nFULL STRUCTURE:\n<!DOCTYPE html>\n<html>\n <head>\n <title>My Page</title>\n <style>h1{color:#ff6baa}</style>\n </head>\n <body>\n <h1>Hello!</h1>\n </body>\n</html>`
   };
   const blob=new Blob([content[num]],{type:'text/plain'});
   const url=URL.createObjectURL(blob);
@@ -1468,7 +1184,7 @@ function downloadCheat(num){
   document.body.removeChild(a);URL.revokeObjectURL(url);
 }
 
-// ===== UPGRADE =====
+// UPGRADE
 function goUpgrade(){
   const userMenu=document.getElementById('nav-user-menu');
   const isLoggedIn=userMenu&&userMenu.style.display!=='none';
@@ -1476,20 +1192,13 @@ function goUpgrade(){
   else{openModal('signup');}
 }
 
-// ===== TIER UNLOCK =====
+// TIER UNLOCK
 window.handleTierUnlock=function(tier){
-  // Show dashboard button
   const dashBtn=document.getElementById('nav-dashboard-btn');
   if(dashBtn)dashBtn.classList.add('visible');
-
-  // Lesson 1 always open for logged-in users — hide gate
   const gate1=document.getElementById('lesson1-gate');
   if(gate1)gate1.style.display='none';
-
   const t=(tier||'').toLowerCase();
-  const noTier=!t||t==='none';
-
-  // Unlock hero tiles and nav items based on tier
   function unlockTile(num){
     const tile=document.getElementById('tile'+num);
     if(tile)tile.classList.remove('locked');
@@ -1500,26 +1209,12 @@ window.handleTierUnlock=function(tier){
     const accTier=document.getElementById('accordion-tier-'+num);
     if(accTier)accTier.classList.remove('locked-tier');
   }
-
   const sparksPlus=['sparks','builders','coders'].includes(t);
   const buildersPlus=['builders','coders'].includes(t);
   const codersOnly=t==='coders';
-
-  if(sparksPlus){
-    document.getElementById('lesson2-gate').style.display='none';
-    document.getElementById('lesson2-content').style.display='block';
-    unlockTile(2);
-  }
-  if(buildersPlus){
-    document.getElementById('lesson3-gate').style.display='none';
-    document.getElementById('lesson3-content').style.display='block';
-    unlockTile(3);
-  }
-  if(codersOnly){
-    document.getElementById('lesson4-gate').style.display='none';
-    document.getElementById('lesson4-content').style.display='block';
-    unlockTile(4);
-  }
+  if(sparksPlus){document.getElementById('lesson2-gate').style.display='none';document.getElementById('lesson2-content').style.display='block';unlockTile(2);}
+  if(buildersPlus){document.getElementById('lesson3-gate').style.display='none';document.getElementById('lesson3-content').style.display='block';unlockTile(3);}
+  if(codersOnly){document.getElementById('lesson4-gate').style.display='none';document.getElementById('lesson4-content').style.display='block';unlockTile(4);}
 };
 </script>
 <script type="module" src="auth-init.js"></script>
