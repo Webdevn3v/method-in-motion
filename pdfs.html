@@ -1,14 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <!-- Google tag (gtag.js) -->
+<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
 <script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-DJ3Q488K7W');
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-DJ3Q488K7W');
 </script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,12 +15,12 @@
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
---void:#050508;--deep:#080b14;--card:#0f1525;
---border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
---white:#fff;--off:#c8cce0;--muted:#5a6080;
---pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
---grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
---display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+  --void:#050508;--deep:#080b14;--card:#0f1525;
+  --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
+  --white:#fff;--off:#c8cce0;--muted:#5a6080;
+  --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
+  --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -112,7 +111,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 </style>
 </head>
 <body>
-
 <nav>
   <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
   <ul class="nav-links">
@@ -142,16 +140,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 
 <section class="pdfs-section">
   <div class="pdfs__inner">
-
     <span class="pdfs-label">Think Like a Programmer</span>
     <h2 class="pdfs-section-title">Premium Cheat Sheets</h2>
     <p class="pdfs-section-desc">Three quick-reference guides designed for young coders. Print them, stick them up, reference them forever. $3 each.</p>
-
     <div class="cheatsheet-premium-grid">
 
       <div class="cs-card" style="--cc:#c66bff">
         <div class="cs-cover">
-          <img src="vol_1_cover.png" alt="Think Like a Programmer Vol. 1">
+          <img src="vol_1-think-cover.png" alt="Think Like a Programmer Vol. 1">
         </div>
         <div class="cs-body">
           <span class="cs-tag">Vol. 1 · Foundations</span>
@@ -166,7 +162,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 
       <div class="cs-card" style="--cc:#00e8ff">
         <div class="cs-cover">
-          <img src="vol_2_cover.png" alt="How Computers Think Vol. 2">
+          <img src="vol_2-think-cover.png" alt="How Computers Think Vol. 2">
         </div>
         <div class="cs-body">
           <span class="cs-tag">Vol. 2 · Systems & Logic</span>
@@ -181,7 +177,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 
       <div class="cs-card" style="--cc:#ff6baa">
         <div class="cs-cover">
-          <img src="vol_3_cover.png" alt="Building Digital Worlds Vol. 3">
+          <img src="vol_3-think-cover.png" alt="Building Digital Worlds Vol. 3">
         </div>
         <div class="cs-body">
           <span class="cs-tag">Vol. 3 · The Big Picture</span>
@@ -199,7 +195,6 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
     <span class="pdfs-label">Character Workbooks</span>
     <h2 class="pdfs-section-title">Six characters. Six workbooks.</h2>
     <p class="pdfs-section-desc">50-page printable curriculum packs. Designed for kids, built by creators. Coming soon.</p>
-
     <div class="workbooks-grid">
 
       <div class="wb-card" style="--wc:#f472b6;">
@@ -269,14 +264,16 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
       <div class="coming-strip-title">More Cheat Sheets + Full Workbooks</div>
       <div class="coming-strip-desc">More printable packs are in production. Stay in orbit — the universe is always expanding.</div>
     </div>
-
   </div>
 </section>
 
 <div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
   <div class="auth-modal-box">
     <button class="auth-close" id="auth-close-btn">&times;</button>
-    <div class="auth-modal-header"><div class="auth-logo-mark">MiM</div><p class="auth-tagline">Create. Don't Consume.</p></div>
+    <div class="auth-modal-header">
+      <div class="auth-logo-mark">MiM</div>
+      <p class="auth-tagline">Create. Don't Consume.</p>
+    </div>
     <div class="auth-tabs">
       <button class="auth-tab active" data-tab="login">Log In</button>
       <button class="auth-tab" data-tab="signup">Join the Crew</button>
