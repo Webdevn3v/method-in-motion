@@ -109,18 +109,7 @@ nav{position:sticky;top:0;z-index:100;padding:16px 48px;display:flex;align-items
 .wc-btn-game{border-color:var(--wc-accent,var(--pink));color:var(--wc-accent,var(--pink));background:rgba(0,0,0,0.3);}
 .wc-btn-game:hover{background:var(--wc-accent,var(--pink));color:#000;}
 .wc-free-badge{position:absolute;top:10px;right:10px;z-index:10;font-family:var(--display);font-size:0.45rem;letter-spacing:0.12em;text-transform:uppercase;background:var(--cyan);color:#000;padding:4px 10px;border-radius:999px;font-weight:700;box-shadow:0 0 12px rgba(0,245,212,0.5);}
-.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.wb-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;align-items:center;gap:16px;transition:all 0.2s;}
-.wb-card:hover{border-color:var(--wb-accent,var(--pink));transform:translateY(-2px);}
-.wb-initial{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.1rem;font-weight:900;flex-shrink:0;border:1px solid;background:rgba(0,0,0,0.4);}
-.wb-info{flex:1;}
-.wb-title{font-size:0.88rem;font-weight:700;margin-bottom:3px;}
-.wb-sub{font-size:0.72rem;color:var(--muted);}
-.wb-tag{font-family:var(--display);font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid;white-space:nowrap;flex-shrink:0;}
-.wb-tag.available{border-color:var(--cyan);color:var(--cyan);background:rgba(0,245,212,0.06);}
-.wb-tag.soon{border-color:var(--border-md);color:var(--muted);}
-
-/* PDF VOLUMES SECTION */
+/* PDF VOLUMES */
 .pdf-vol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
 .pdf-vol-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;}
 .pdf-vol-card.unlocked:hover{transform:translateY(-4px);border-color:var(--purple);box-shadow:0 16px 40px rgba(168,85,247,0.15);}
@@ -131,13 +120,26 @@ nav{position:sticky;top:0;z-index:100;padding:16px 48px;display:flex;align-items
 .pdf-vol-tag{font-family:var(--display);font-size:0.44rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--purple);margin-bottom:6px;display:block;}
 .pdf-vol-title{font-family:var(--head);font-size:0.95rem;font-weight:800;margin-bottom:4px;}
 .pdf-vol-sub{font-size:0.74rem;color:var(--muted);line-height:1.6;margin-bottom:14px;}
-.pdf-vol-btn{display:block;width:100%;font-family:var(--display);font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;padding:10px;border-radius:8px;border:1px solid;text-align:center;transition:all 0.2s;cursor:pointer;font-weight:700;}
-.pdf-vol-btn.unlock{border-color:var(--purple);color:var(--purple);background:rgba(168,85,247,0.06);}
-.pdf-vol-btn.unlock:hover{background:var(--purple);color:#000;}
-.pdf-vol-btn.locked{border-color:rgba(255,255,255,0.08);color:var(--muted);background:none;cursor:default;}
-.pdf-vol-lock-badge{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-size:0.44rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-.pdf-vol-lock-badge::before{content:'⬡';font-size:0.6rem;color:var(--cyan);}
-
+.pdf-vol-btn{display:block;width:100%;font-family:var(--display);font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;padding:10px;border-radius:8px;border:1px solid;text-align:center;transition:all 0.2s;font-weight:700;}
+.pdf-vol-btn.unlock{border-color:var(--cyan);color:var(--cyan);background:rgba(0,245,212,0.06);cursor:pointer;}
+.pdf-vol-btn.unlock:hover{background:var(--cyan);color:#000;}
+.pdf-vol-btn.locked{border-color:rgba(255,255,255,0.08);color:var(--muted);background:none;cursor:pointer;}
+.pdf-vol-btn.locked:hover{border-color:var(--purple);color:var(--purple);}
+.pdf-vol-perk{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-size:0.44rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;}
+.pdf-vol-perk::before{content:'★';font-size:0.6rem;}
+.pdf-vol-lock-note{font-family:var(--display);font-size:0.44rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;display:block;}
+/* WORKBOOKS */
+.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.wb-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;align-items:center;gap:16px;transition:all 0.2s;}
+.wb-card:hover{border-color:var(--wb-accent,var(--pink));transform:translateY(-2px);}
+.wb-initial{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.1rem;font-weight:900;flex-shrink:0;border:1px solid;background:rgba(0,0,0,0.4);}
+.wb-info{flex:1;}
+.wb-title{font-size:0.88rem;font-weight:700;margin-bottom:3px;}
+.wb-sub{font-size:0.72rem;color:var(--muted);}
+.wb-tag{font-family:var(--display);font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid;white-space:nowrap;flex-shrink:0;}
+.wb-tag.available{border-color:var(--cyan);color:var(--cyan);background:rgba(0,245,212,0.06);}
+.wb-tag.soon{border-color:var(--border-md);color:var(--muted);}
+/* STATS */
 .stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;max-width:1300px;margin-left:auto;margin-right:auto;padding:0 48px;}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;}
 .stat-val{font-family:var(--display);font-size:1.6rem;font-weight:900;line-height:1;margin-bottom:4px;}
@@ -212,8 +214,7 @@ footer a{color:var(--cyan);}
     <div class="world-grid" id="world-grid"></div>
   </div>
 
-  <!-- PDF VOLUMES SECTION -->
-  <div class="dash-section" id="pdf-section">
+  <div class="dash-section">
     <div class="section-header">
       <div class="section-title">Think Like a Programmer</div>
       <a href="pdfs.html" class="section-link">All PDFs →</a>
@@ -251,12 +252,12 @@ const auth=getAuth(app);
 const db=getFirestore(app);
 
 const CHARS=[
-  {id:'zen',name:'Zen',role:'Creative Coder',accent:'#f472b6',deep:'#0e0510',glowColor:'rgba(244,114,182,0.35)',image:'zen-entrance.png',world:'zen.html',game:'zen-game.html',gameName:'CSS Challenge',free:true},
-  {id:'byte',name:'Byte',role:'Glitch Cat',accent:'#a855f7',deep:'#080514',glowColor:'rgba(168,85,247,0.35)',image:'byte-entrance.png',world:'byte.html',game:'byte-game.html',gameName:'Glitch Hunt',free:true},
-  {id:'loop',name:'Loop',role:'Flow Guide',accent:'#00f5d4',deep:'#03100e',glowColor:'rgba(0,245,212,0.3)',image:'loop-entrance.png',world:'loop.html',game:'loop-game.html',gameName:'Logic Quest',free:false},
-  {id:'nova',name:'Nova',role:'Builder Bot',accent:'#fbbf24',deep:'#0d0a00',glowColor:'rgba(251,191,36,0.3)',image:'nova-entrance.png',world:'nova.html',game:'nova-game.html',gameName:'Build Lab',free:false},
-  {id:'bug',name:'Bug',role:'Debug Gremlin',accent:'#84cc16',deep:'#060a00',glowColor:'rgba(132,204,22,0.3)',image:'bug-entrance.png',world:'bug.html',game:'bug-game.html',gameName:'Chaos Code',free:false},
-  {id:'echo',name:'Echo',role:'Signal DJ',accent:'#38bdf8',deep:'#030d12',glowColor:'rgba(56,189,248,0.3)',image:'echo-entrance.png',world:'echo.html',game:'echo-game.html',gameName:'Signal Lab',free:false}
+  {id:'zen',name:'Zen',role:'Creative Coder',accent:'#f472b6',deep:'#0e0510',glowColor:'rgba(244,114,182,0.35)',image:'zen-entrance.png',world:'zen.html',game:'zen-game.html',gameName:'CSS Challenge'},
+  {id:'byte',name:'Byte',role:'Glitch Cat',accent:'#a855f7',deep:'#080514',glowColor:'rgba(168,85,247,0.35)',image:'byte-entrance.png',world:'byte.html',game:'byte-game.html',gameName:'Glitch Hunt'},
+  {id:'loop',name:'Loop',role:'Flow Guide',accent:'#00f5d4',deep:'#03100e',glowColor:'rgba(0,245,212,0.3)',image:'loop-entrance.png',world:'loop.html',game:'loop-game.html',gameName:'Logic Quest'},
+  {id:'nova',name:'Nova',role:'Builder Bot',accent:'#fbbf24',deep:'#0d0a00',glowColor:'rgba(251,191,36,0.3)',image:'nova-entrance.png',world:'nova.html',game:'nova-game.html',gameName:'Build Lab'},
+  {id:'bug',name:'Bug',role:'Debug Gremlin',accent:'#84cc16',deep:'#060a00',glowColor:'rgba(132,204,22,0.3)',image:'bug-entrance.png',world:'bug.html',game:'bug-game.html',gameName:'Chaos Code'},
+  {id:'echo',name:'Echo',role:'Signal DJ',accent:'#38bdf8',deep:'#030d12',glowColor:'rgba(56,189,248,0.3)',image:'echo-entrance.png',world:'echo.html',game:'echo-game.html',gameName:'Signal Lab'}
 ];
 
 const WORKBOOKS=[
@@ -270,28 +271,25 @@ const WORKBOOKS=[
 
 const PDF_VOLS=[
   {
-    vol:'Vol. 1',
     tag:'Vol. 1 · Foundations',
     title:'Think Like a Programmer',
     sub:'Problem-solving, pattern recognition, sequencing, and the coder mindset.',
     cover:'vol_1-think-cover.png',
-    buyUrl:'https://buy.stripe.com/8x2aEX7Bk4X8fl83lYa3u0a'
+    file:'Vol.1_Think_Like_a_Programmer.pdf'
   },
   {
-    vol:'Vol. 2',
     tag:'Vol. 2 · Systems & Logic',
     title:'How Computers Think',
     sub:'Systems, input & output, conditions, and loops — how computers process the world.',
     cover:'vol_2-think-cover.png',
-    buyUrl:'https://buy.stripe.com/dRmaEXcVE9do1ui3lYa3u0b'
+    file:'Vol.2_Think_Like_a_Programmer.pdf'
   },
   {
-    vol:'Vol. 3',
     tag:'Vol. 3 · The Big Picture',
     title:'Building Digital Worlds',
     sub:'Websites, apps, games, digital design, and emerging tech for young creators.',
     cover:'vol_3-think-cover.png',
-    buyUrl:'https://buy.stripe.com/00w8wPaNwexIc8W6yaa3u0c'
+    file:'Vol.3_Think_Like_a_Programmer.pdf'
   }
 ];
 
@@ -323,12 +321,36 @@ function canPlayGame(charId,tier){
 
 function buildWorldGrid(tier){
   const grid=document.getElementById('world-grid');
+  const isFreeGame=(id)=>id==='byte';
   grid.innerHTML=CHARS.map(c=>{
     const status=getStatus(tier);
     const statusLabel=getStatusLabel(c,tier);
     const gameAccess=canPlayGame(c.id,tier);
-    const isFreeGame=c.id==='byte';
-    return`<div class="world-card" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor};"><div class="wc-image" style="background-image:url('${c.image}');"><div class="wc-glow"></div>${isFreeGame?'<div class="wc-free-badge">Free Game</div>':''}</div><div class="wc-body"><div class="wc-char-label">${c.role}</div><div class="wc-name">${c.name}</div><div class="wc-role">${c.gameName}</div><div class="wc-status status-${status}"><div class="wc-status-dot"></div><div class="wc-status-text">${statusLabel}</div></div><div class="wc-actions"><a href="${c.world}" class="wc-btn wc-btn-lesson">Lessons →</a>${gameAccess?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Game →</a>`:isFreeGame?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Free →</a>`:`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,0.06);">Unlock Game</a>`}</div></div></div>`;
+    const freeGame=isFreeGame(c.id);
+    return`<div class="world-card" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor};">
+      <div class="wc-image" style="background-image:url('${c.image}');">
+        <div class="wc-glow"></div>
+        ${freeGame?'<div class="wc-free-badge">Free Game</div>':''}
+      </div>
+      <div class="wc-body">
+        <div class="wc-char-label">${c.role}</div>
+        <div class="wc-name">${c.name}</div>
+        <div class="wc-role">${c.gameName}</div>
+        <div class="wc-status status-${status}">
+          <div class="wc-status-dot"></div>
+          <div class="wc-status-text">${statusLabel}</div>
+        </div>
+        <div class="wc-actions">
+          <a href="${c.world}" class="wc-btn wc-btn-lesson">Lessons →</a>
+          ${gameAccess
+            ?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Game →</a>`
+            :freeGame
+              ?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Free →</a>`
+              :`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,0.06);">Unlock Game</a>`
+          }
+        </div>
+      </div>
+    </div>`;
   }).join('');
 }
 
@@ -345,8 +367,10 @@ function buildPdfVolGrid(tier){
         <div class="pdf-vol-title">${v.title}</div>
         <div class="pdf-vol-sub">${v.sub}</div>
         ${isCoders
-          ? `<a href="${v.buyUrl}" target="_blank" class="pdf-vol-btn unlock">Download PDF →</a>`
-          : `<div class="pdf-vol-lock-badge">Coders Tier</div><a href="membership.html" class="pdf-vol-btn locked">Upgrade to Unlock</a>`
+          ?`<div class="pdf-vol-perk">Coders Perk — Included</div>
+            <a href="${v.file}" download target="_blank" class="pdf-vol-btn unlock">Download PDF →</a>`
+          :`<span class="pdf-vol-lock-note">Coders tier perk</span>
+            <a href="membership.html" class="pdf-vol-btn locked">Upgrade to Access →</a>`
         }
       </div>
     </div>
