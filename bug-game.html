@@ -5,118 +5,86 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bug's Chaos Code · Method in Motion</title>
 <style>
-  :root {
-    --lime: #84cc16;
-    --orange: #fb923c;
-    --bg: #05080a;
-    --panel: rgba(8,12,5,0.88);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monospace;background:var(--bg);}
-
-  /* WORLD */
-  #world-bg{position:fixed;inset:0;background-image:url('bug-entrance.png');background-size:cover;background-position:center top;z-index:0;}
-  #world-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(5,8,3,0.55) 0%,rgba(5,8,3,0.78) 50%,rgba(5,8,3,0.97) 100%);z-index:1;}
-  #world-glow{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(132,204,22,0.15) 0%,transparent 60%);z-index:1;pointer-events:none;}
-  #scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.1) 3px,rgba(0,0,0,0.1) 4px);z-index:2;pointer-events:none;}
-
-  /* glitch flicker */
-  @keyframes glitch-flicker{0%,97%,100%{opacity:1;}98%{opacity:0.4;}99%{opacity:0.8;}}
-  body{animation:glitch-flicker 4s infinite;}
-
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;padding:0 20px;background:rgba(5,8,3,0.92);border-bottom:1px solid rgba(132,204,22,0.25);z-index:100;gap:16px;}
-  .nav-back{color:var(--lime);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;}
-  .nav-back:hover{opacity:1;}
-  .nav-title{color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;flex:1;text-align:center;}
-  #nav-score{color:var(--orange);font-size:14px;font-weight:700;}
-
-  /* GAME SHELL */
-  #game-shell{position:fixed;inset:52px 0 0 0;display:flex;z-index:10;}
-
-  /* BUG PANEL */
-  #bug-panel{width:300px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 24px 20px;position:relative;}
-  #bug-img{width:280px;height:auto;filter:drop-shadow(0 0 40px rgba(132,204,22,0.65));transition:all .3s;position:relative;z-index:2;}
-  #bug-face{position:absolute;top:16px;left:50%;transform:translateX(-50%);width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(132,204,22,0.8));transition:all .4s;z-index:3;border-radius:50%;background:rgba(5,8,3,0.6);padding:8px;}
-  #bug-name{color:var(--lime);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-top:12px;text-align:center;}
-  #bug-quote{color:rgba(255,255,255,0.5);font-size:12px;text-align:center;max-width:220px;margin-top:6px;font-style:italic;line-height:1.5;}
-
-  /* CODE PANEL - middle */
-  #code-panel{flex:1;display:flex;flex-direction:column;padding:16px 12px;min-width:0;}
-  #code-label{color:rgba(255,255,255,0.35);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;display:flex;justify-content:space-between;}
-  #code-box{flex:1;background:rgba(5,10,3,0.9);border:1.5px solid rgba(132,204,22,0.25);border-radius:12px;overflow-y:auto;padding:16px;position:relative;}
-  .code-line{display:flex;align-items:flex-start;padding:5px 8px;border-radius:6px;cursor:pointer;transition:all .2s;gap:12px;font-size:13px;line-height:1.6;}
-  .code-line:hover{background:rgba(132,204,22,0.07);}
-  .code-line.buggy{border-left:3px solid var(--orange);background:rgba(251,146,60,0.06);}
-  .code-line.buggy:hover{background:rgba(251,146,60,0.12);}
-  .code-line.found{border-left:3px solid var(--lime);background:rgba(132,204,22,0.1);}
-  .code-line.found .line-code{text-decoration:line-through;opacity:.5;}
-  .code-line.wrong-pick{animation:shake .3s ease;}
-  .line-num{color:rgba(255,255,255,0.2);min-width:24px;text-align:right;font-size:11px;margin-top:2px;}
-  .line-code{color:#e2e8f0;white-space:pre-wrap;word-break:break-all;}
-  .line-code .kw{color:#a78bfa;}
-  .line-code .str{color:#34d399;}
-  .line-code .num{color:#fb923c;}
-  .line-code .op{color:#f472b6;}
-  .found-badge{color:var(--lime);font-size:10px;font-weight:700;margin-left:auto;white-space:nowrap;}
-
-  #chaos-bar-wrap{margin-top:10px;}
-  #chaos-bar-label{display:flex;justify-content:space-between;color:rgba(255,255,255,0.4);font-size:11px;margin-bottom:5px;}
-  #chaos-bar{height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;}
-  #chaos-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--lime),var(--orange));border-radius:4px;transition:width .5s;}
-
-  /* MISSION PANEL - right */
-  #mission-panel{width:340px;flex-shrink:0;display:flex;flex-direction:column;padding:16px 20px 16px 12px;}
-  #zone-badge{display:inline-block;background:rgba(132,204,22,0.12);border:1px solid rgba(132,204,22,0.35);color:var(--lime);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
-  #mission-card{background:var(--panel);border:1px solid rgba(132,204,22,0.2);border-radius:16px;padding:20px;flex:1;display:flex;flex-direction:column;backdrop-filter:blur(16px);}
-  #mission-title{color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-  #mission-desc{color:#fff;font-size:15px;font-weight:700;line-height:1.5;margin-bottom:12px;}
-  #bugs-left{color:var(--orange);font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:16px;}
-  #hint-box{background:rgba(132,204,22,0.06);border:1px solid rgba(132,204,22,0.2);border-radius:8px;padding:12px;font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:16px;}
-  #hint-box strong{color:var(--lime);}
-  #progress-dots{display:flex;gap:6px;justify-content:center;margin-top:auto;}
-  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all .3s;}
-  .dot.done{background:var(--lime);}
-  .dot.current{background:var(--orange);box-shadow:0 0 8px var(--orange);}
-  #timer-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:12px;overflow:hidden;}
-  #timer-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--lime),var(--orange));transition:width .1s linear;}
-  #feedback-text{text-align:center;font-size:13px;font-weight:700;min-height:20px;margin-bottom:8px;letter-spacing:1px;}
-
-  /* SCORE FLOAT */
-  .score-float{position:fixed;font-size:22px;font-weight:900;pointer-events:none;z-index:999;animation:floatUp .9s ease forwards;}
-  @keyframes floatUp{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px);}}
-  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-7px);}75%{transform:translateX(7px);}}
-
-  /* GLITCH burst */
-  .glitch-burst{position:fixed;pointer-events:none;z-index:50;font-size:48px;animation:burstOut .6s ease forwards;}
-  @keyframes burstOut{0%{opacity:1;transform:scale(0.5);}100%{opacity:0;transform:scale(2.5) rotate(20deg);}}
-
-  /* INTRO */
-  #introScreen{position:fixed;inset:0;background:rgba(5,8,3,0.98);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
-  #introScreen.hidden{display:none;}
-  #intro-bug{width:280px;height:auto;filter:drop-shadow(0 0 50px rgba(132,204,22,0.7));animation:float 2.5s ease-in-out infinite;}
-  @keyframes float{0%,100%{transform:translateY(0) rotate(-2deg);}50%{transform:translateY(-14px) rotate(2deg);}}
-  .intro-eyebrow{color:var(--lime);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
-  #intro-title{color:#fff;font-size:42px;font-weight:900;letter-spacing:-1px;text-align:center;}
-  #intro-sub{color:rgba(255,255,255,0.45);font-size:14px;max-width:360px;text-align:center;line-height:1.7;}
-  #intro-start{background:linear-gradient(135deg,var(--lime),var(--orange));color:#000;font-size:15px;font-weight:800;padding:16px 48px;border-radius:30px;border:none;cursor:pointer;letter-spacing:2px;text-transform:uppercase;margin-top:8px;transition:transform .2s;}
-  #intro-start:hover{transform:scale(1.06);}
-
-  /* GAME OVER */
-  #gameOverScreen{position:fixed;inset:0;background:rgba(5,8,3,0.97);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
-  #gameOverScreen.hidden{display:none;}
-  #gameOverEyebrow{color:var(--lime);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
-  #gameOverTitle{color:#fff;font-size:52px;font-weight:900;}
-  #gameOverSub{color:rgba(255,255,255,0.45);font-size:15px;max-width:420px;text-align:center;line-height:1.6;}
-  #gameOverScore{color:var(--orange);font-size:36px;font-weight:900;}
-  #gameOverBug{width:200px;height:200px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(132,204,22,0.7));}
-  .over-btn{background:linear-gradient(135deg,var(--lime),var(--orange));color:#000;font-size:14px;font-weight:800;padding:14px 36px;border-radius:30px;border:none;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-top:4px;transition:transform .2s;}
-  .over-btn:hover{transform:scale(1.05);}
-  .over-btn.ghost{background:rgba(255,255,255,0.07);color:#fff;}
+:root{--lime:#84cc16;--orange:#fb923c;--bg:#05080a;--panel:rgba(8,12,5,0.88);}
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'Courier New',monospace;background:var(--bg);}
+#world-bg{position:fixed;inset:0;background-image:url('bug-entrance.png');background-size:cover;background-position:center top;z-index:0;}
+#world-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(5,8,3,0.55) 0%,rgba(5,8,3,0.78) 50%,rgba(5,8,3,0.97) 100%);z-index:1;}
+#world-glow{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(132,204,22,0.15) 0%,transparent 60%);z-index:1;pointer-events:none;}
+#scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.1) 3px,rgba(0,0,0,0.1) 4px);z-index:2;pointer-events:none;}
+@keyframes glitch-flicker{0%,97%,100%{opacity:1;}98%{opacity:0.4;}99%{opacity:0.8;}}
+body{animation:glitch-flicker 4s infinite;}
+nav{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;padding:0 20px;background:rgba(5,8,3,0.92);border-bottom:1px solid rgba(132,204,22,0.25);z-index:100;gap:16px;}
+.nav-back{color:var(--lime);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;}
+.nav-back:hover{opacity:1;}
+.nav-title{color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;flex:1;text-align:center;}
+#nav-score{color:var(--orange);font-size:14px;font-weight:700;}
+#game-shell{position:fixed;inset:52px 0 0 0;display:flex;z-index:10;}
+#bug-panel{width:300px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 24px 20px;position:relative;}
+#bug-img{width:280px;height:auto;filter:drop-shadow(0 0 40px rgba(132,204,22,0.65));transition:all .3s;position:relative;z-index:2;}
+#bug-face{position:absolute;top:16px;left:50%;transform:translateX(-50%);width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(132,204,22,0.8));transition:all .4s;z-index:3;border-radius:50%;background:rgba(5,8,3,0.6);padding:8px;}
+#bug-name{color:var(--lime);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-top:12px;text-align:center;}
+#bug-quote{color:rgba(255,255,255,0.5);font-size:12px;text-align:center;max-width:220px;margin-top:6px;font-style:italic;line-height:1.5;}
+#code-panel{flex:1;display:flex;flex-direction:column;padding:16px 12px;min-width:0;}
+#code-label{color:rgba(255,255,255,0.35);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;display:flex;justify-content:space-between;}
+#code-box{flex:1;background:rgba(5,10,3,0.9);border:1.5px solid rgba(132,204,22,0.25);border-radius:12px;overflow-y:auto;padding:16px;position:relative;}
+.code-line{display:flex;align-items:flex-start;padding:5px 8px;border-radius:6px;cursor:pointer;transition:all .2s;gap:12px;font-size:13px;line-height:1.6;}
+.code-line:hover{background:rgba(132,204,22,0.07);}
+.code-line.buggy{border-left:3px solid var(--orange);background:rgba(251,146,60,0.06);}
+.code-line.buggy:hover{background:rgba(251,146,60,0.12);}
+.code-line.found{border-left:3px solid var(--lime);background:rgba(132,204,22,0.1);}
+.code-line.found .line-code{text-decoration:line-through;opacity:.5;}
+.code-line.wrong-pick{animation:shake .3s ease;}
+.line-num{color:rgba(255,255,255,0.2);min-width:24px;text-align:right;font-size:11px;margin-top:2px;}
+.line-code{color:#e2e8f0;white-space:pre-wrap;word-break:break-all;}
+.line-code .kw{color:#a78bfa;}
+.line-code .str{color:#34d399;}
+.line-code .num{color:#fb923c;}
+.found-badge{color:var(--lime);font-size:10px;font-weight:700;margin-left:auto;white-space:nowrap;}
+#chaos-bar-wrap{margin-top:10px;}
+#chaos-bar-label{display:flex;justify-content:space-between;color:rgba(255,255,255,0.4);font-size:11px;margin-bottom:5px;}
+#chaos-bar{height:8px;background:rgba(255,255,255,0.06);border-radius:4px;overflow:hidden;}
+#chaos-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--lime),var(--orange));border-radius:4px;transition:width .5s;}
+#mission-panel{width:340px;flex-shrink:0;display:flex;flex-direction:column;padding:16px 20px 16px 12px;}
+#zone-badge{display:inline-block;background:rgba(132,204,22,0.12);border:1px solid rgba(132,204,22,0.35);color:var(--lime);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
+#mission-card{background:var(--panel);border:1px solid rgba(132,204,22,0.2);border-radius:16px;padding:20px;flex:1;display:flex;flex-direction:column;backdrop-filter:blur(16px);}
+#mission-title{color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
+#mission-desc{color:#fff;font-size:15px;font-weight:700;line-height:1.5;margin-bottom:12px;}
+#bugs-left{color:var(--orange);font-size:12px;font-weight:700;letter-spacing:1px;margin-bottom:16px;}
+#hint-box{background:rgba(132,204,22,0.06);border:1px solid rgba(132,204,22,0.2);border-radius:8px;padding:12px;font-size:12px;color:rgba(255,255,255,0.6);line-height:1.6;margin-bottom:16px;}
+#hint-box strong{color:var(--lime);}
+#progress-dots{display:flex;gap:6px;justify-content:center;margin-top:auto;}
+.dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all .3s;}
+.dot.done{background:var(--lime);}
+.dot.current{background:var(--orange);box-shadow:0 0 8px var(--orange);}
+#timer-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:12px;overflow:hidden;}
+#timer-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--lime),var(--orange));transition:width .1s linear;}
+#feedback-text{text-align:center;font-size:13px;font-weight:700;min-height:20px;margin-bottom:8px;letter-spacing:1px;}
+.score-float{position:fixed;font-size:22px;font-weight:900;pointer-events:none;z-index:999;animation:floatUp .9s ease forwards;}
+@keyframes floatUp{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px);}}
+@keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-7px);}75%{transform:translateX(7px);}}
+.glitch-burst{position:fixed;pointer-events:none;z-index:50;font-size:48px;animation:burstOut .6s ease forwards;}
+@keyframes burstOut{0%{opacity:1;transform:scale(0.5);}100%{opacity:0;transform:scale(2.5) rotate(20deg);}}
+#introScreen{position:fixed;inset:0;background:rgba(5,8,3,0.98);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px;}
+#introScreen.hidden{display:none;}
+.intro-eyebrow{color:var(--lime);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
+#intro-title{color:#fff;font-size:42px;font-weight:900;letter-spacing:-1px;text-align:center;}
+#intro-sub{color:rgba(255,255,255,0.45);font-size:14px;max-width:360px;text-align:center;line-height:1.7;}
+#intro-start{background:linear-gradient(135deg,var(--lime),var(--orange));color:#000;font-size:15px;font-weight:800;padding:16px 48px;border-radius:30px;border:none;cursor:pointer;letter-spacing:2px;text-transform:uppercase;margin-top:8px;transition:transform .2s;}
+#intro-start:hover{transform:scale(1.06);}
+#gameOverScreen{position:fixed;inset:0;background:rgba(5,8,3,0.97);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;}
+#gameOverScreen.hidden{display:none;}
+#gameOverEyebrow{color:var(--lime);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
+#gameOverTitle{color:#fff;font-size:52px;font-weight:900;}
+#gameOverSub{color:rgba(255,255,255,0.45);font-size:15px;max-width:420px;text-align:center;line-height:1.6;}
+#gameOverScore{color:var(--orange);font-size:36px;font-weight:900;}
+#gameOverBug{width:200px;height:200px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(132,204,22,0.7));}
+.over-btn{background:linear-gradient(135deg,var(--lime),var(--orange));color:#000;font-size:14px;font-weight:800;padding:14px 36px;border-radius:30px;border:none;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-top:4px;transition:transform .2s;}
+.over-btn:hover{transform:scale(1.05);}
+.over-btn.ghost{background:rgba(255,255,255,0.07);color:#fff;}
 </style>
 </head>
 <body>
-
 <div id="world-bg"></div>
 <div id="world-overlay"></div>
 <div id="world-glow"></div>
@@ -124,389 +92,81 @@
 
 <!-- INTRO -->
 <div id="introScreen">
-  <div class="intro-eyebrow">Bug's Chaos Code</div>
-  <img id="intro-bug" src="bug-idle-pose.png" alt="Bug" onerror="this.src='bug-entrance.png'">
-  <div id="intro-title">CHAOS CODE</div>
-  <div id="intro-sub">Bug broke the code — on purpose. Find every buggy line before the system crashes. Click the bad lines. Fix the chaos.</div>
-  <button id="intro-start" onclick="startGame()">FIND THE BUGS</button>
+<div class="intro-eyebrow">Bug's Chaos Code</div>
+<div id="intro-title">CHAOS CODE</div>
+<div id="intro-sub">Bug broke the code — on purpose. Find every buggy line before the system crashes. Click the bad lines. Fix the chaos.</div>
+<button id="intro-start" onclick="startGame()">FIND THE BUGS</button>
 </div>
 
 <!-- GAME OVER -->
 <div id="gameOverScreen" class="hidden">
-  <div id="gameOverEyebrow">Mission Complete</div>
-  <div id="gameOverTitle">DEBUGGED!</div>
-  <img id="gameOverBug" src="bug-victory.png" alt="Bug" onerror="this.src='bug-entrance.png'">
-  <div id="gameOverSub">You squashed every bug in the system. Bug is impressed.</div>
-  <div id="gameOverScore">0 pts</div>
-  <button class="over-btn" onclick="location.reload()">PLAY AGAIN</button>
-  <button class="over-btn ghost" onclick="location.href='games.html'">← GAME UNIVERSE</button>
+<div id="gameOverEyebrow">Mission Complete</div>
+<div id="gameOverTitle">DEBUGGED!</div>
+<img id="gameOverBug" src="bug-victory.png" alt="Bug" onerror="this.src='bug-entrance.png'">
+<div id="gameOverSub">You squashed every bug in the system. Bug is impressed.</div>
+<div id="gameOverScore">0 pts</div>
+<button class="over-btn" onclick="location.reload()">PLAY AGAIN</button>
+<button class="over-btn ghost" onclick="location.href='games.html'">← GAME UNIVERSE</button>
 </div>
 
 <nav>
-  <a class="nav-back" href="games.html">← Games</a>
-  <div class="nav-title">CHAOS CODE</div>
-  <div id="nav-score">0 pts</div>
+<a class="nav-back" href="games.html">← Games</a>
+<div class="nav-title">CHAOS CODE</div>
+<div id="nav-score">0 pts</div>
 </nav>
 
 <div id="game-shell">
-
-  <!-- BUG PANEL -->
-  <div id="bug-panel">
-    <img id="bug-face" src="bug-happy.png" alt="" onerror="this.style.display='none'">
-    <img id="bug-img" src="bug-entrance.png" alt="Bug" onerror="this.style.opacity='0'">
-    <div id="bug-name">BUG</div>
-    <div id="bug-quote">"Every bug is a clue. Can you find mine?"</div>
-  </div>
-
-  <!-- CODE PANEL -->
-  <div id="code-panel">
-    <div id="code-label">
-      <span>BUGGY CODE — CLICK THE BAD LINES</span>
-      <span id="found-count">0 / 0 found</span>
-    </div>
-    <div id="code-box"></div>
-    <div id="chaos-bar-wrap">
-      <div id="chaos-bar-label"><span>SYSTEM STABILITY</span><span id="stability-val">100%</span></div>
-      <div id="chaos-bar"><div id="chaos-fill" style="width:100%;background:linear-gradient(90deg,#84cc16,#22d3ee);"></div></div>
-    </div>
-  </div>
-
-  <!-- MISSION PANEL -->
-  <div id="mission-panel">
-    <div id="zone-badge">ZONE 1 · SYNTAX</div>
-    <div id="timer-bar"><div id="timer-fill"></div></div>
-    <div id="feedback-text"></div>
-    <div id="mission-card">
-      <div id="mission-title">YOUR MISSION</div>
-      <div id="mission-desc">Loading...</div>
-      <div id="bugs-left">🐛 bugs remaining: —</div>
-      <div id="hint-box">Loading hint...</div>
-      <div id="progress-dots"></div>
-    </div>
-  </div>
-
+<div id="bug-panel">
+<img id="bug-face" src="bug-happy.png" alt="" onerror="this.style.display='none'">
+<img id="bug-img" src="bug-entrance.png" alt="Bug" onerror="this.style.opacity='0'">
+<div id="bug-name">BUG</div>
+<div id="bug-quote">"Every bug is a clue. Can you find mine?"</div>
+</div>
+<div id="code-panel">
+<div id="code-label">
+<span>BUGGY CODE — CLICK THE BAD LINES</span>
+<span id="found-count">0 / 0 found</span>
+</div>
+<div id="code-box"></div>
+<div id="chaos-bar-wrap">
+<div id="chaos-bar-label"><span>SYSTEM STABILITY</span><span id="stability-val">100%</span></div>
+<div id="chaos-bar"><div id="chaos-fill" style="width:100%;background:linear-gradient(90deg,#84cc16,#22d3ee);"></div></div>
+</div>
+</div>
+<div id="mission-panel">
+<div id="zone-badge">ZONE 1 · SYNTAX</div>
+<div id="timer-bar"><div id="timer-fill"></div></div>
+<div id="feedback-text"></div>
+<div id="mission-card">
+<div id="mission-title">YOUR MISSION</div>
+<div id="mission-desc">Loading...</div>
+<div id="bugs-left">🐛 bugs remaining: —</div>
+<div id="hint-box">Loading hint...</div>
+<div id="progress-dots"></div>
+</div>
+</div>
 </div>
 
 <script>
-// ─── LEVELS ──────────────────────────────────────────────────────────────────
-const LEVELS = [
-  {
-    zone: 'ZONE 1 · SYNTAX',
-    mission: 'Bug scrambled the variable names. Find every broken line.',
-    hint: '<strong>Look for:</strong> wrong variable names, missing quotes, typos in keywords.',
-    time: 45,
-    lines: [
-      { code: 'let playerName = "Zen";', buggy: false },
-      { code: 'let scroe = 0;', buggy: true, fix: 'let score = 0;' },
-      { code: 'let isAlive = true;', buggy: false },
-      { code: 'const MAX_LIVES = 3;', buggy: false },
-      { code: 'let leveel = 1;', buggy: true, fix: 'let level = 1;' },
-      { code: 'let timer = 60;', buggy: false },
-      { code: 'const GAMEE_TITLE = "MiM";', buggy: true, fix: 'const GAME_TITLE = "MiM";' },
-      { code: 'let coins = 0;', buggy: false },
-      { code: 'let speedd = 1.5;', buggy: true, fix: 'let speed = 1.5;' },
-      { code: 'let paused = false;', buggy: false },
-    ]
-  },
-  {
-    zone: 'ZONE 2 · LOGIC',
-    mission: 'The if-statements are completely broken. Hunt them down.',
-    hint: '<strong>Look for:</strong> = instead of ===, missing brackets, flipped conditions.',
-    time: 40,
-    lines: [
-      { code: 'function checkWin(score) {', buggy: false },
-      { code: '  if (score = 100) {', buggy: true, fix: 'if (score === 100) {' },
-      { code: '    return true;', buggy: false },
-      { code: '  }', buggy: false },
-      { code: '  if (lives = 0) {', buggy: true, fix: 'if (lives === 0) {' },
-      { code: '    gameOver();', buggy: false },
-      { code: '  }', buggy: false },
-      { code: '  if (timer > 0 && score > 50 {', buggy: true, fix: 'if (timer > 0 && score > 50) {' },
-      { code: '    awardBonus();', buggy: false },
-      { code: '  }', buggy: false },
-      { code: '}', buggy: false },
-    ]
-  },
-  {
-    zone: 'ZONE 3 · FUNCTIONS',
-    mission: 'Bug corrupted the function calls. Fix them before crash.',
-    hint: '<strong>Look for:</strong> wrong function names, missing parentheses, bad arguments.',
-    time: 35,
-    lines: [
-      { code: 'function startGame() {', buggy: false },
-      { code: '  setUpBoard();', buggy: false },
-      { code: '  loadPlayr("Zen");', buggy: true, fix: 'loadPlayer("Zen");' },
-      { code: '  startTimeer();', buggy: true, fix: 'startTimer();' },
-      { code: '  showScreen("game");', buggy: false },
-      { code: '}', buggy: false },
-      { code: 'function endGame(winnner) {', buggy: true, fix: 'function endGame(winner) {' },
-      { code: '  clearInterval(timer);', buggy: false },
-      { code: '  saveScorre(score);', buggy: true, fix: 'saveScore(score);' },
-      { code: '  showScreen("end");', buggy: false },
-      { code: '}', buggy: false },
-    ]
-  },
-  {
-    zone: 'ZONE 4 · ARRAYS',
-    mission: 'Bug tangled the arrays. Find every broken access.',
-    hint: '<strong>Look for:</strong> off-by-one index, wrong method names, missing brackets.',
-    time: 30,
-    lines: [
-      { code: 'const crew = ["Zen","Byte","Loop","Nova","Bug","Echo"];', buggy: false },
-      { code: 'console.log(crew[6]);', buggy: true, fix: 'console.log(crew[5]);' },
-      { code: 'let first = crew[0];', buggy: false },
-      { code: 'crew.pussh("Pixel");', buggy: true, fix: 'crew.push("Pixel");' },
-      { code: 'let len = crew.length;', buggy: false },
-      { code: 'let last = crew[crew.length];', buggy: true, fix: 'let last = crew[crew.length - 1];' },
-      { code: 'crew.sort();', buggy: false },
-      { code: 'let idx = crew.indxOf("Bug");', buggy: true, fix: 'let idx = crew.indexOf("Bug");' },
-      { code: 'crew.reverse();', buggy: false },
-    ]
-  },
-  {
-    zone: 'ZONE 5 · BOSS ROUND',
-    mission: 'Full system meltdown. Every type of bug is hiding. GO.',
-    hint: '<strong>All bug types:</strong> syntax, logic, typos, bad calls. Eyes open.',
-    time: 25,
-    lines: [
-      { code: 'class Game {', buggy: false },
-      { code: '  constructor(playr) {', buggy: true, fix: 'constructor(player) {' },
-      { code: '    this.score = 0;', buggy: false },
-      { code: '    this.livs = 3;', buggy: true, fix: 'this.lives = 3;' },
-      { code: '    this.active = true;', buggy: false },
-      { code: '  }', buggy: false },
-      { code: '  addPoints(pts) {', buggy: false },
-      { code: '    if (pts = 0) return;', buggy: true, fix: 'if (pts === 0) return;' },
-      { code: '    this.score += pts;', buggy: false },
-      { code: '    this.checkLevel;', buggy: true, fix: 'this.checkLevel();' },
-      { code: '  }', buggy: false },
-      { code: '}', buggy: false },
-    ]
-  }
-];
+const LEVELS=[{zone:'ZONE 1 · SYNTAX',mission:'Bug scrambled the variable names. Find every broken line.',hint:'<strong>Look for:</strong> wrong variable names, missing quotes, typos in keywords.',time:45,lines:[{code:'let playerName = "Zen";',buggy:false},{code:'let scroe = 0;',buggy:true,fix:'let score = 0;'},{code:'let isAlive = true;',buggy:false},{code:'const MAX_LIVES = 3;',buggy:false},{code:'let leveel = 1;',buggy:true,fix:'let level = 1;'},{code:'let timer = 60;',buggy:false},{code:'const GAMEE_TITLE = "MiM";',buggy:true,fix:'const GAME_TITLE = "MiM";'},{code:'let coins = 0;',buggy:false},{code:'let speedd = 1.5;',buggy:true,fix:'let speed = 1.5;'},{code:'let paused = false;',buggy:false}]},{zone:'ZONE 2 · LOGIC',mission:'The if-statements are completely broken. Hunt them down.',hint:'<strong>Look for:</strong> = instead of ===, missing brackets, flipped conditions.',time:40,lines:[{code:'function checkWin(score) {',buggy:false},{code:' if (score = 100) {',buggy:true,fix:'if (score === 100) {'},{code:' return true;',buggy:false},{code:' }',buggy:false},{code:' if (lives = 0) {',buggy:true,fix:'if (lives === 0) {'},{code:' gameOver();',buggy:false},{code:' }',buggy:false},{code:' if (timer > 0 && score > 50 {',buggy:true,fix:'if (timer > 0 && score > 50) {'},{code:' awardBonus();',buggy:false},{code:' }',buggy:false},{code:'}',buggy:false}]},{zone:'ZONE 3 · FUNCTIONS',mission:'Bug corrupted the function calls. Fix them before crash.',hint:'<strong>Look for:</strong> wrong function names, missing parentheses, bad arguments.',time:35,lines:[{code:'function startGame() {',buggy:false},{code:' setUpBoard();',buggy:false},{code:' loadPlayr("Zen");',buggy:true,fix:'loadPlayer("Zen");'},{code:' startTimeer();',buggy:true,fix:'startTimer();'},{code:' showScreen("game");',buggy:false},{code:'}',buggy:false},{code:'function endGame(winnner) {',buggy:true,fix:'function endGame(winner) {'},{code:' clearInterval(timer);',buggy:false},{code:' saveScorre(score);',buggy:true,fix:'saveScore(score);'},{code:' showScreen("end");',buggy:false},{code:'}',buggy:false}]},{zone:'ZONE 4 · ARRAYS',mission:'Bug tangled the arrays. Find every broken access.',hint:'<strong>Look for:</strong> off-by-one index, wrong method names, missing brackets.',time:30,lines:[{code:'const crew = ["Zen","Byte","Loop","Nova","Bug","Echo"];',buggy:false},{code:'console.log(crew[6]);',buggy:true,fix:'console.log(crew[5]);'},{code:'let first = crew[0];',buggy:false},{code:'crew.pussh("Pixel");',buggy:true,fix:'crew.push("Pixel");'},{code:'let len = crew.length;',buggy:false},{code:'let last = crew[crew.length];',buggy:true,fix:'let last = crew[crew.length - 1];'},{code:'crew.sort();',buggy:false},{code:'let idx = crew.indxOf("Bug");',buggy:true,fix:'let idx = crew.indexOf("Bug");'},{code:'crew.reverse();',buggy:false}]},{zone:'ZONE 5 · BOSS ROUND',mission:'Full system meltdown. Every type of bug is hiding. GO.',hint:'<strong>All bug types:</strong> syntax, logic, typos, bad calls. Eyes open.',time:25,lines:[{code:'class Game {',buggy:false},{code:' constructor(playr) {',buggy:true,fix:'constructor(player) {'},{code:' this.score = 0;',buggy:false},{code:' this.livs = 3;',buggy:true,fix:'this.lives = 3;'},{code:' this.active = true;',buggy:false},{code:' }',buggy:false},{code:' addPoints(pts) {',buggy:false},{code:' if (pts = 0) return;',buggy:true,fix:'if (pts === 0) return;'},{code:' this.score += pts;',buggy:false},{code:' this.checkLevel;',buggy:true,fix:'this.checkLevel();'},{code:' }',buggy:false},{code:'}',buggy:false}]}];
 
-// ─── STATE ────────────────────────────────────────────────────────────────────
-let levelIdx = 0;
-let score = 0;
-let stability = 100;
-let foundCount = 0;
-let totalBugs = 0;
-let timerInterval = null;
-let timeLeft = 0;
-let levelDone = false;
+let levelIdx=0,score=0,stability=100,foundCount=0,totalBugs=0,timerInterval=null,timeLeft=0,levelDone=false;
+const BUG_FACES={happy:'bug-happy.png',victory:'bug-victory.png',scared:'bug-scared.png',sad:'bug-sad.png'};
 
-const BUG_FACES = {
-  happy: 'bug-happy.png',
-  victory: 'bug-victory.png',
-  scared: 'bug-scared.png',
-  sad: 'bug-sad.png'
-};
-
-function setBugFace(mood){
-  const f = document.getElementById('bug-face');
-  f.src = BUG_FACES[mood];
-  f.style.display = 'block';
-}
-
-function updateStability(){
-  stability = Math.max(0, stability);
-  document.getElementById('chaos-fill').style.width = stability + '%';
-  document.getElementById('stability-val').textContent = Math.round(stability) + '%';
-  const color = stability > 60 ? 'linear-gradient(90deg,#84cc16,#22d3ee)'
-    : stability > 30 ? 'linear-gradient(90deg,#fb923c,#fbbf24)'
-    : 'linear-gradient(90deg,#ef4444,#fb923c)';
-  document.getElementById('chaos-fill').style.background = color;
-}
-
-function buildDots(){
-  const d = document.getElementById('progress-dots');
-  d.innerHTML = '';
-  LEVELS.forEach((_,i)=>{
-    const dot = document.createElement('div');
-    dot.className = 'dot' + (i < levelIdx ? ' done' : i === levelIdx ? ' current' : '');
-    d.appendChild(dot);
-  });
-}
-
-function loadLevel(){
-  if(levelIdx >= LEVELS.length){ endGame(true); return; }
-  levelDone = false;
-  foundCount = 0;
-  const lv = LEVELS[levelIdx];
-  totalBugs = lv.lines.filter(l=>l.buggy).length;
-
-  document.getElementById('zone-badge').textContent = lv.zone;
-  document.getElementById('mission-desc').textContent = lv.mission;
-  document.getElementById('hint-box').innerHTML = lv.hint;
-  document.getElementById('bugs-left').textContent = `🐛 bugs remaining: ${totalBugs}`;
-  document.getElementById('feedback-text').textContent = '';
-  buildDots();
-  setBugFace('happy');
-  renderCode(lv);
-  startTimer(lv.time);
-  updateFoundCount();
-}
-
-function renderCode(lv){
-  const box = document.getElementById('code-box');
-  box.innerHTML = '';
-  lv.lines.forEach((line, i) => {
-    const row = document.createElement('div');
-    row.className = 'code-line' + (line._found ? ' found' : '');
-    row.dataset.idx = i;
-    if(!line._found){
-      row.onclick = () => clickLine(i);
-    }
-
-    const num = document.createElement('div');
-    num.className = 'line-num';
-    num.textContent = i + 1;
-
-    const code = document.createElement('div');
-    code.className = 'line-code';
-    code.innerHTML = syntaxHL(line.code);
-
-    row.appendChild(num);
-    row.appendChild(code);
-
-    if(line._found){
-      const badge = document.createElement('div');
-      badge.className = 'found-badge';
-      badge.textContent = '✓ FIXED';
-      row.appendChild(badge);
-    }
-
-    box.appendChild(row);
-  });
-}
-
-function syntaxHL(code){
-  return code
-    .replace(/\b(let|const|var|function|return|if|else|class|new|this|true|false|null)\b/g,'<span class="kw">$1</span>')
-    .replace(/"([^"]*)"/g,'"<span class="str">$1</span>"')
-    .replace(/\b(\d+\.?\d*)\b/g,'<span class="num">$1</span>');
-}
-
-function clickLine(i){
-  if(levelDone) return;
-  const lv = LEVELS[levelIdx];
-  const line = lv.lines[i];
-  if(line._found) return;
-
-  if(line.buggy){
-    line._found = true;
-    foundCount++;
-    score += 150 + (levelIdx * 50);
-    setBugFace('victory');
-    showFeedback('🐛 BUG SQUASHED! +' + (150 + levelIdx*50), '#84cc16');
-    showScoreFloat('+' + (150 + levelIdx*50), '#84cc16');
-    glitchBurst(i);
-    document.getElementById('nav-score').textContent = score + ' pts';
-    updateFoundCount();
-    renderCode(lv);
-    if(foundCount >= totalBugs){
-      levelDone = true;
-      clearInterval(timerInterval);
-      setBugFace('victory');
-      showFeedback('ALL BUGS FOUND! NEXT ZONE →', '#22d3ee');
-      setTimeout(()=>{ levelIdx++; loadLevel(); }, 1400);
-    }
-  } else {
-    // wrong line
-    stability -= 15;
-    setBugFace('scared');
-    updateStability();
-    showFeedback('THAT LINE IS CLEAN! -15 STABILITY', '#ef4444');
-    const row = document.querySelector(`.code-line[data-idx="${i}"]`);
-    if(row){ row.classList.add('wrong-pick'); setTimeout(()=>row.classList.remove('wrong-pick'),400); }
-    if(stability <= 0){ clearInterval(timerInterval); endGame(false); }
-  }
-}
-
-function updateFoundCount(){
-  const lv = LEVELS[levelIdx];
-  const total = lv ? lv.lines.filter(l=>l.buggy).length : totalBugs;
-  const remaining = total - foundCount;
-  document.getElementById('bugs-left').textContent = `🐛 bugs remaining: ${remaining}`;
-  document.getElementById('found-count').textContent = `${foundCount} / ${total} found`;
-}
-
-function startTimer(secs){
-  clearInterval(timerInterval);
-  timeLeft = secs;
-  const fill = document.getElementById('timer-fill');
-  fill.style.width = '100%';
-  timerInterval = setInterval(()=>{
-    timeLeft -= 0.1;
-    fill.style.width = Math.max(0,(timeLeft/secs)*100) + '%';
-    if(timeLeft <= 0){
-      clearInterval(timerInterval);
-      if(!levelDone){
-        stability -= 20;
-        updateStability();
-        setBugFace('sad');
-        showFeedback('TIME\'S UP! -20 STABILITY', '#fb923c');
-        if(stability <= 0){ endGame(false); return; }
-        // reveal unfound bugs
-        const lv = LEVELS[levelIdx];
-        lv.lines.forEach(l=>{ if(l.buggy && !l._found){ l._found=true; foundCount++; } });
-        updateFoundCount();
-        renderCode(lv);
-        setTimeout(()=>{ levelIdx++; loadLevel(); }, 1500);
-      }
-    }
-  },100);
-}
-
-function showFeedback(msg, color){
-  const el = document.getElementById('feedback-text');
-  el.textContent = msg;
-  el.style.color = color;
-}
-
-function showScoreFloat(txt, color){
-  const el = document.createElement('div');
-  el.className = 'score-float';
-  el.textContent = txt;
-  el.style.color = color || '#84cc16';
-  el.style.left = (window.innerWidth * 0.55) + 'px';
-  el.style.top = (window.innerHeight * 0.4) + 'px';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 1000);
-}
-
-function glitchBurst(lineIdx){
-  const rows = document.querySelectorAll('.code-line');
-  const row = rows[lineIdx];
-  if(!row) return;
-  const r = row.getBoundingClientRect();
-  const el = document.createElement('div');
-  el.className = 'glitch-burst';
-  el.textContent = '💥';
-  el.style.left = r.left + 'px';
-  el.style.top = r.top + 'px';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 700);
-}
-
-function endGame(won){
-  clearInterval(timerInterval);
-  document.getElementById('gameOverEyebrow').textContent = won ? 'All Zones Cleared' : 'System Crashed';
-  document.getElementById('gameOverTitle').textContent = won ? 'DEBUGGED!' : 'CRASHED!';
-  document.getElementById('gameOverSub').textContent = won
-    ? `You squashed every bug across all ${LEVELS.length} zones. Bug is shook.`
-    : 'The system stability hit zero. But every coder crashes sometimes. Try again!';
-  document.getElementById('gameOverScore').textContent = score + ' pts';
-  document.getElementById('gameOverBug').src = won ? 'bug-victory.png' : 'bug-sad.png';
-  document.getElementById('gameOverScreen').classList.remove('hidden');
-}
-
-function startGame(){
-  // reset all level state
-  LEVELS.forEach(lv => lv.lines.forEach(l => { delete l._found; }));
-  document.getElementById('introScreen').classList.add('hidden');
-  loadLevel();
-}
+function setBugFace(mood){const f=document.getElementById('bug-face');f.src=BUG_FACES[mood];f.style.display='block';}
+function updateStability(){stability=Math.max(0,stability);document.getElementById('chaos-fill').style.width=stability+'%';document.getElementById('stability-val').textContent=Math.round(stability)+'%';const color=stability>60?'linear-gradient(90deg,#84cc16,#22d3ee)':stability>30?'linear-gradient(90deg,#fb923c,#fbbf24)':'linear-gradient(90deg,#ef4444,#fb923c)';document.getElementById('chaos-fill').style.background=color;}
+function buildDots(){const d=document.getElementById('progress-dots');d.innerHTML='';LEVELS.forEach((_,i)=>{const dot=document.createElement('div');dot.className='dot'+(i<levelIdx?' done':i===levelIdx?' current':'');d.appendChild(dot);});}
+function loadLevel(){if(levelIdx>=LEVELS.length){endGame(true);return;}levelDone=false;foundCount=0;const lv=LEVELS[levelIdx];totalBugs=lv.lines.filter(l=>l.buggy).length;document.getElementById('zone-badge').textContent=lv.zone;document.getElementById('mission-desc').textContent=lv.mission;document.getElementById('hint-box').innerHTML=lv.hint;document.getElementById('bugs-left').textContent=`🐛 bugs remaining: ${totalBugs}`;document.getElementById('feedback-text').textContent='';buildDots();setBugFace('happy');renderCode(lv);startTimer(lv.time);updateFoundCount();}
+function renderCode(lv){const box=document.getElementById('code-box');box.innerHTML='';lv.lines.forEach((line,i)=>{const row=document.createElement('div');row.className='code-line'+(line._found?' found':'');row.dataset.idx=i;if(!line._found){row.onclick=()=>clickLine(i);}const num=document.createElement('div');num.className='line-num';num.textContent=i+1;const code=document.createElement('div');code.className='line-code';code.innerHTML=syntaxHL(line.code);row.appendChild(num);row.appendChild(code);if(line._found){const badge=document.createElement('div');badge.className='found-badge';badge.textContent='✓ FIXED';row.appendChild(badge);}box.appendChild(row);});}
+function syntaxHL(code){return code.replace(/\b(let|const|var|function|return|if|else|class|new|this|true|false|null)\b/g,'<span class="kw">$1</span>').replace(/"([^"]*)"/g,'"<span class="str">$1</span>"').replace(/\b(\d+\.?\d*)\b/g,'<span class="num">$1</span>');}
+function clickLine(i){if(levelDone)return;const lv=LEVELS[levelIdx];const line=lv.lines[i];if(line._found)return;if(line.buggy){line._found=true;foundCount++;score+=150+(levelIdx*50);setBugFace('victory');showFeedback('🐛 BUG SQUASHED! +'+(150+levelIdx*50),'#84cc16');showScoreFloat('+'+(150+levelIdx*50),'#84cc16');glitchBurst(i);document.getElementById('nav-score').textContent=score+' pts';updateFoundCount();renderCode(lv);if(foundCount>=totalBugs){levelDone=true;clearInterval(timerInterval);setBugFace('victory');showFeedback('ALL BUGS FOUND! NEXT ZONE →','#22d3ee');setTimeout(()=>{levelIdx++;loadLevel();},1400);}}else{stability-=15;setBugFace('scared');updateStability();showFeedback('THAT LINE IS CLEAN! -15 STABILITY','#ef4444');const row=document.querySelector(`.code-line[data-idx="${i}"]`);if(row){row.classList.add('wrong-pick');setTimeout(()=>row.classList.remove('wrong-pick'),400);}if(stability<=0){clearInterval(timerInterval);endGame(false);}}}
+function updateFoundCount(){const lv=LEVELS[levelIdx];const total=lv?lv.lines.filter(l=>l.buggy).length:totalBugs;const remaining=total-foundCount;document.getElementById('bugs-left').textContent=`🐛 bugs remaining: ${remaining}`;document.getElementById('found-count').textContent=`${foundCount} / ${total} found`;}
+function startTimer(secs){clearInterval(timerInterval);timeLeft=secs;const fill=document.getElementById('timer-fill');fill.style.width='100%';timerInterval=setInterval(()=>{timeLeft-=0.1;fill.style.width=Math.max(0,(timeLeft/secs)*100)+'%';if(timeLeft<=0){clearInterval(timerInterval);if(!levelDone){stability-=20;updateStability();setBugFace('sad');showFeedback("TIME'S UP! -20 STABILITY",'#fb923c');if(stability<=0){endGame(false);return;}const lv=LEVELS[levelIdx];lv.lines.forEach(l=>{if(l.buggy&&!l._found){l._found=true;foundCount++;}});updateFoundCount();renderCode(lv);setTimeout(()=>{levelIdx++;loadLevel();},1500);}}},100);}
+function showFeedback(msg,color){const el=document.getElementById('feedback-text');el.textContent=msg;el.style.color=color;}
+function showScoreFloat(txt,color){const el=document.createElement('div');el.className='score-float';el.textContent=txt;el.style.color=color||'#84cc16';el.style.left=(window.innerWidth*0.55)+'px';el.style.top=(window.innerHeight*0.4)+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),1000);}
+function glitchBurst(lineIdx){const rows=document.querySelectorAll('.code-line');const row=rows[lineIdx];if(!row)return;const r=row.getBoundingClientRect();const el=document.createElement('div');el.className='glitch-burst';el.textContent='💥';el.style.left=r.left+'px';el.style.top=r.top+'px';document.body.appendChild(el);setTimeout(()=>el.remove(),700);}
+function endGame(won){clearInterval(timerInterval);document.getElementById('gameOverEyebrow').textContent=won?'All Zones Cleared':'System Crashed';document.getElementById('gameOverTitle').textContent=won?'DEBUGGED!':'CRASHED!';document.getElementById('gameOverSub').textContent=won?`You squashed every bug across all ${LEVELS.length} zones. Bug is shook.`:'The system stability hit zero. But every coder crashes sometimes. Try again!';document.getElementById('gameOverScore').textContent=score+' pts';document.getElementById('gameOverBug').src=won?'bug-victory.png':'bug-sad.png';document.getElementById('gameOverScreen').classList.remove('hidden');}
+function startGame(){LEVELS.forEach(lv=>lv.lines.forEach(l=>{delete l._found;}));document.getElementById('introScreen').classList.add('hidden');loadLevel();}
 </script>
 </body>
 </html>
