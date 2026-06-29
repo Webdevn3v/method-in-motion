@@ -5,12 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Method in Motion — Create, Don't Consume.</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-DJ3Q488K7W');
-</script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DJ3Q488K7W');</script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
@@ -29,6 +24,8 @@ a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
 .cursor{position:fixed;width:10px;height:10px;border-radius:50%;background:var(--pink);pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width .2s,height .2s;mix-blend-mode:screen;opacity:1;}
 .cursor-ring{position:fixed;width:32px;height:32px;border-radius:50%;border:1px solid rgba(198,107,255,.5);pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform .15s;opacity:1;}
+
+/* NAV */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:18px 48px;display:flex;align-items:center;justify-content:space-between;transition:background .4s,padding .3s;}
 nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 48px;border-bottom:1px solid var(--border);}
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;}
@@ -48,16 +45,13 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 #nav-logout-btn{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.15);background:none;color:rgba(255,255,255,.4);border-radius:100px;cursor:pointer}
 #nav-logout-btn:hover{border-color:var(--pink);color:var(--pink)}
 @media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
+
+/* HERO */
 .hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .hero-bg{position:absolute;inset:0;z-index:0;background:var(--void);}
-/* UNIVERSE IMAGE LAYER */
 .hero-universe{position:absolute;inset:0;z-index:1;background-image:url('universe-view.png');background-size:cover;background-position:center;opacity:0.55;}
 .hero-universe-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(5,5,8,0.15) 0%,rgba(5,5,8,0.3) 50%,rgba(5,5,8,0.85) 100%);}
-.hero-bg-grad{position:absolute;inset:0;z-index:3;background:
-  radial-gradient(ellipse 80% 60% at 20% 50%,rgba(255,107,170,.08) 0%,transparent 60%),
-  radial-gradient(ellipse 70% 70% at 80% 30%,rgba(0,232,255,.06) 0%,transparent 55%),
-  radial-gradient(ellipse 90% 50% at 50% 80%,rgba(198,107,255,.06) 0%,transparent 60%);
-  animation:bg-breathe 12s ease-in-out infinite alternate;}
+.hero-bg-grad{position:absolute;inset:0;z-index:3;background:radial-gradient(ellipse 80% 60% at 20% 50%,rgba(255,107,170,.08) 0%,transparent 60%),radial-gradient(ellipse 70% 70% at 80% 30%,rgba(0,232,255,.06) 0%,transparent 55%),radial-gradient(ellipse 90% 50% at 50% 80%,rgba(198,107,255,.06) 0%,transparent 60%);animation:bg-breathe 12s ease-in-out infinite alternate;}
 @keyframes bg-breathe{0%{opacity:.7;transform:scale(1);}100%{opacity:1;transform:scale(1.04);}}
 .hero-nebula{position:absolute;inset:0;z-index:4;pointer-events:none;}
 .hero-orb{position:absolute;border-radius:50%;filter:blur(90px);z-index:5;pointer-events:none;animation:orb-drift ease-in-out infinite;}
@@ -66,10 +60,7 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .orb-b{width:400px;height:400px;top:10%;right:-5%;background:radial-gradient(circle,rgba(0,232,255,.09),transparent 70%);--dx:-30px;--dy:35px;animation-duration:17s;animation-delay:3s;}
 .orb-c{width:350px;height:350px;bottom:-5%;left:25%;background:radial-gradient(circle,rgba(198,107,255,.08),transparent 70%);--dx:35px;--dy:-20px;animation-duration:15s;animation-delay:6s;}
 .orb-d{width:280px;height:280px;bottom:20%;right:15%;background:radial-gradient(circle,rgba(255,107,170,.06),transparent 70%);--dx:-20px;--dy:-25px;animation-duration:19s;animation-delay:2s;}
-.hero-grid{position:absolute;inset:0;z-index:6;pointer-events:none;
-  background-image:linear-gradient(rgba(0,232,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,255,.02) 1px,transparent 1px);
-  background-size:60px 60px;
-  mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 0%,transparent 80%);}
+.hero-grid{position:absolute;inset:0;z-index:6;pointer-events:none;background-image:linear-gradient(rgba(0,232,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,255,.02) 1px,transparent 1px);background-size:60px 60px;mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 0%,transparent 80%);}
 .hero-scan{position:absolute;inset:0;z-index:7;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.015) 2px,rgba(0,0,0,.015) 4px);}
 .hero-particles{position:absolute;inset:0;z-index:8;pointer-events:none;}
 .hparticle{position:absolute;border-radius:50%;animation:hp-float linear infinite;}
@@ -90,6 +81,8 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .scroll-line{width:1px;height:44px;background:linear-gradient(to bottom,var(--cyan),transparent);animation:scrollPulse 2s ease-in-out infinite;}
 @keyframes scrollPulse{0%{transform:scaleY(0);transform-origin:top;opacity:0}40%{opacity:1}60%{transform:scaleY(1);transform-origin:top}60.01%{transform-origin:bottom}100%{transform:scaleY(0);transform-origin:bottom;opacity:0}}
 @keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+
+/* MISSION */
 .mission{background:var(--deep);padding:80px 48px;text-align:center;position:relative;overflow:hidden;}
 .mission::before{content:'';position:absolute;top:50%;left:50%;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(198,107,255,.05),transparent 70%);transform:translate(-50%,-50%);pointer-events:none;}
 .mission-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:10px;display:block;}
@@ -98,6 +91,8 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .mission-body{font-size:.96rem;color:var(--off);max-width:560px;margin:0 auto 28px;line-height:1.9;}
 .mission-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;}
 .mission-pill{padding:6px 16px;border:1px solid var(--border-md);border-radius:100px;font-family:var(--display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;color:var(--off);}
+
+/* TRUST BAR */
 .trust-bar{background:var(--void);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:32px 48px;}
 .trust-bar__inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:24px;}
 @media(max-width:768px){.trust-bar__inner{grid-template-columns:repeat(2,1fr)}}
@@ -106,12 +101,15 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .trust-icon{font-size:1.4rem;margin-bottom:8px;display:block;}
 .trust-label{font-family:var(--display);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cyan);display:block;margin-bottom:4px;}
 .trust-desc{font-size:.78rem;color:var(--muted);line-height:1.5;}
-.crew{background:var(--void);padding:96px 0;scroll-margin-top:80px;}
+
+/* CREW */
+.crew{background:var(--void);padding:96px 0 80px;scroll-margin-top:64px;}
 .crew__inner{max-width:1240px;margin:0 auto;padding:0 48px}
 .crew__header{text-align:center;margin-bottom:52px}
 .section-label{font-family:var(--display);font-size:.58rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:12px;display:block;}
 .section-title{font-family:var(--heading);font-size:clamp(1.7rem,4vw,3rem);font-weight:800;line-height:1.1;margin-bottom:10px;}
 .section-desc{font-size:.92rem;color:var(--muted);max-width:440px;margin:0 auto;}
+
 .crew-toggle-wrap{text-align:center;margin-bottom:36px;}
 .crew-toggle-btn{display:inline-flex;align-items:center;gap:12px;font-family:var(--display);font-size:.72rem;letter-spacing:.18em;text-transform:uppercase;padding:18px 40px;border-radius:100px;border:2px solid var(--purple);color:#fff;background:linear-gradient(135deg,rgba(198,107,255,.25),rgba(0,232,255,.1));cursor:pointer;transition:all .3s;box-shadow:0 0 30px rgba(198,107,255,.25),inset 0 0 20px rgba(198,107,255,.05);animation:toggle-pulse 3s ease-in-out infinite;}
 @keyframes toggle-pulse{0%,100%{box-shadow:0 0 30px rgba(198,107,255,.25),inset 0 0 20px rgba(198,107,255,.05)}50%{box-shadow:0 0 50px rgba(198,107,255,.5),0 0 20px rgba(0,232,255,.2),inset 0 0 20px rgba(198,107,255,.1)}}
@@ -123,13 +121,20 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .crew__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 @media(max-width:900px){.crew__grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:540px){.crew__grid{grid-template-columns:1fr}}
+
+/* CREW CARDS — world bg + GIF overlay */
 .stat-card{background:var(--card);border-radius:14px;border:1px solid var(--border);overflow:hidden;position:relative;transition:border-color .35s,transform .3s,box-shadow .35s;cursor:pointer;}
 .stat-card:hover{transform:translateY(-5px);border-color:var(--cc,rgba(198,107,255,.5));box-shadow:0 16px 50px rgba(0,0,0,.5),0 0 30px rgba(198,107,255,.12);}
-.sc-media{position:relative;aspect-ratio:3/2.8;overflow:hidden;background:rgba(0,0,0,.3);}
-.sc-media img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center;padding:6px;filter:drop-shadow(0 0 20px var(--cc,rgba(198,107,255,.4)));transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .4s;z-index:1;}
-.stat-card:hover .sc-media img{transform:scale(1.06);filter:drop-shadow(0 0 36px var(--cc,rgba(198,107,255,.7)));}
-.sc-glow{position:absolute;inset:0;z-index:2;background:linear-gradient(to top,var(--card) 0%,transparent 40%);pointer-events:none;}
-.sc-body{padding:0 16px 18px;position:relative;z-index:3;}
+
+/* New card media: world image as bg, GIF centered on top */
+.sc-media{position:relative;aspect-ratio:3/2.6;overflow:hidden;background:#000;}
+.sc-world-bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center top;opacity:.85;transition:transform .5s ease,opacity .4s;}
+.stat-card:hover .sc-world-bg{transform:scale(1.04);opacity:1;}
+.sc-char-gif{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:62%;height:100%;object-fit:contain;object-position:bottom center;filter:drop-shadow(0 0 24px var(--cc,rgba(198,107,255,.6)));transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .4s;z-index:2;}
+.stat-card:hover .sc-char-gif{transform:translateX(-50%) scale(1.07);filter:drop-shadow(0 0 40px var(--cc,rgba(198,107,255,.9)));}
+.sc-glow{position:absolute;inset:0;z-index:3;background:linear-gradient(to top,var(--card) 0%,rgba(0,0,0,.15) 50%,transparent 100%);pointer-events:none;}
+
+.sc-body{padding:0 16px 18px;position:relative;z-index:4;}
 .sc-header{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:8px;}
 .sc-id{font-family:var(--display);font-size:.44rem;letter-spacing:.22em;text-transform:uppercase;color:var(--cc,var(--pink));opacity:.6;}
 .sc-lang-badge{font-family:var(--display);font-size:.42rem;letter-spacing:.1em;text-transform:uppercase;padding:3px 8px;border-radius:4px;border:1px solid var(--cc,var(--pink));color:var(--cc,var(--pink));background:rgba(0,0,0,.3);opacity:.8;}
@@ -154,6 +159,8 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .sc-btn-game:hover{background:var(--cc,var(--pink));color:#000;}
 .sc-btn-game .free-badge{display:inline-block;margin-left:6px;padding:1px 6px;border-radius:100px;font-size:.38rem;letter-spacing:.1em;font-weight:700;background:linear-gradient(135deg,#00e8ff,#c66bff);color:#000;vertical-align:middle;box-shadow:0 0 8px rgba(0,232,255,.5);animation:badge-pulse 2s ease-in-out infinite;}
 @keyframes badge-pulse{0%,100%{box-shadow:0 0 8px rgba(0,232,255,.5)}50%{box-shadow:0 0 16px rgba(0,232,255,.9),0 0 24px rgba(198,107,255,.4)}}
+
+/* MEMBERSHIP */
 .membership-strip{background:var(--deep);padding:80px 48px;position:relative;overflow:hidden;}
 .membership-strip::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 60% 50%,rgba(198,107,255,.08),transparent 70%);pointer-events:none;}
 .membership-strip__inner{max-width:1100px;margin:0 auto;}
@@ -180,6 +187,8 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .tier-card.featured .tier-btn{background:var(--grad);border:none;color:#000;font-weight:700;}
 .tier-card.free-tier .tier-btn{border-color:rgba(0,232,255,.4);color:var(--cyan);}
 .tier-card.free-tier .tier-btn:hover{background:var(--cyan);color:#000;}
+
+/* WORKBOOKS */
 .workbook-strip{background:var(--void);padding:80px 48px;border-top:1px solid var(--border);}
 .workbook-strip__inner{max-width:900px;margin:0 auto;display:flex;gap:40px;align-items:center;}
 @media(max-width:768px){.workbook-strip__inner{flex-direction:column;text-align:center}}
@@ -190,10 +199,14 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .workbook-preview-name{font-family:var(--heading);font-size:1.1rem;font-weight:800;margin-bottom:4px;}
 .workbook-preview-sub{font-size:.74rem;color:var(--muted);margin-bottom:16px;}
 .workbook-preview-pages{font-family:var(--display);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);opacity:.7;}
+
+/* GAME WORLD */
 .dark-orb-strip{position:relative;padding:80px 48px;overflow:hidden;background:radial-gradient(ellipse at 50% 50%,rgba(198,107,255,.07) 0%,var(--void) 70%);border-top:1px solid var(--border);}
 .dark-orb-strip__inner{max-width:700px;margin:0 auto;text-align:center;}
 .dark-orb{width:140px;height:140px;border-radius:50%;background:radial-gradient(circle at 35% 35%,rgba(198,107,255,.6),rgba(5,5,8,.9));border:1px solid rgba(198,107,255,.3);margin:0 auto 28px;box-shadow:0 0 60px rgba(198,107,255,.25),inset 0 0 40px rgba(0,0,0,.5);animation:orb-pulse 4s ease-in-out infinite;}
 @keyframes orb-pulse{0%,100%{box-shadow:0 0 60px rgba(198,107,255,.25),inset 0 0 40px rgba(0,0,0,.5)}50%{box-shadow:0 0 100px rgba(198,107,255,.45),0 0 40px rgba(0,232,255,.15),inset 0 0 40px rgba(0,0,0,.5)}}
+
+/* NEWSLETTER */
 .newsletter{background:var(--deep);padding:72px 48px;text-align:center;border-top:1px solid var(--border);}
 .newsletter__inner{max-width:480px;margin:0 auto;}
 .newsletter-form{display:flex;gap:10px;margin-top:20px;flex-wrap:wrap;justify-content:center;}
@@ -203,12 +216,15 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 .newsletter-btn{font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;padding:12px 24px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;transition:transform .2s;}
 .newsletter-btn:hover{transform:translateY(-1px)}
 #newsletter-success{display:none;font-family:var(--display);font-size:.6rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-top:12px;}
+
 footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;}
 .footer-logo{font-family:var(--display);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.3);}
 .footer-copy{font-size:.74rem;color:var(--muted);}
 .footer-links{display:flex;gap:20px;}
 .footer-links a{font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.25);transition:color .2s;}
 .footer-links a:hover{color:var(--pink);}
+
+/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,5,8,.88);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:20px;}
 .modal-box{background:var(--card);border:1px solid var(--border-md);border-radius:20px;padding:40px;width:100%;max-width:400px;position:relative;}
 .modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;line-height:1;transition:color .2s;}
@@ -225,10 +241,10 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
 .modal-submit{width:100%;font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:13px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;margin-top:6px;transition:transform .2s;}
 .modal-submit:hover{transform:translateY(-1px)}
 .modal-error{font-size:.78rem;color:var(--pink);margin-top:8px;display:none;}
-.modal-success{font-size:.78rem;color:var(--cyan);margin-top:8px;display:none;}
 </style>
 </head>
 <body>
+
 <div class="cursor" id="cursor"></div>
 <div class="cursor-ring" id="cursorRing"></div>
 
@@ -243,6 +259,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     <li><a href="games.html">Games</a></li>
     <li><a href="pdfs.html">PDFs</a></li>
     <li><a href="library.html">Library</a></li>
+    <li><a href="characters.html">Characters</a></li>
   </ul>
   <div class="nav-right">
     <div id="nav-auth-btns" style="display:flex;align-items:center;gap:10px;">
@@ -325,120 +342,145 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     </div>
     <div class="crew__grid-wrap" id="crewGridWrap">
       <div class="crew__grid">
+
         <!-- ZEN -->
         <div class="stat-card" style="--cc:#ff6baa" onclick="window.location='zen.html'">
-          <div class="sc-media"><img src="zen-motion.gif" alt="Zen"><div class="sc-glow"></div></div>
+          <div class="sc-media">
+            <img class="sc-world-bg" src="zen-uni-close-up.png" alt="">
+            <img class="sc-char-gif" src="zen-motion.gif" alt="Zen">
+            <div class="sc-glow"></div>
+          </div>
           <div class="sc-body">
             <div class="sc-header"><span class="sc-id">MIM-001</span><span class="sc-lang-badge">CSS</span></div>
             <div class="sc-name">Zen</div>
-            <div class="sc-role">The Creative Coder</div>
+            <div class="sc-role">The Creative Coder · Coding Realm</div>
             <div class="sc-catchphrase">"If you can imagine it, you can code it!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
             <div class="sc-lessons"><div class="sc-lessons-inner">
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Step into the Creative Studio — color &amp; style <span class="sc-lesson-free">FREE</span></span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Shape the world — spacing, layout &amp; box model</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Bend the layout — Flexbox &amp; real page sections</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Bring it to life — animations &amp; your CSS masterpiece</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">CSS Style Studio — enter the game world</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">What is Code? <span class="sc-lesson-free">FREE</span></span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Your First HTML Tag</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Colors &amp; Style with CSS</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build Your Own Page</span></div>
             </div></div>
-            <div class="sc-actions"><a href="zen.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey <span class="free-badge">FREE</span></a></div>
+            <div class="sc-actions"><a href="zen.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Zen's World <span class="free-badge">FREE</span></a></div>
           </div>
         </div>
+
         <!-- BYTE -->
         <div class="stat-card" style="--cc:#c66bff" onclick="window.location='byte.html'">
-          <div class="sc-media"><img src="byte-motion.gif" alt="Byte"><div class="sc-glow"></div></div>
+          <div class="sc-media">
+            <img class="sc-world-bg" src="byte-uni-close-up.png" alt="">
+            <img class="sc-char-gif" src="byte-motion.gif" alt="Byte">
+            <div class="sc-glow"></div>
+          </div>
           <div class="sc-body">
             <div class="sc-header"><span class="sc-id">MIM-002</span><span class="sc-lang-badge">Debugging</span></div>
             <div class="sc-name">Byte</div>
-            <div class="sc-role">The Data Tracker</div>
-            <div class="sc-catchphrase">"Nothing gets by me!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-role">The Glitch Cat · Code City</div>
+            <div class="sc-catchphrase">"Every bug is just a clue."</div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
             <div class="sc-lessons"><div class="sc-lessons-inner">
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Crack the first clue — what bugs are &amp; how to find them <span class="sc-lesson-free">FREE</span></span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Into the console — tools for tracking broken code</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Follow the logic — fix errors &amp; understand the flow</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">The big case — debug a full broken project</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Glitch Hunt Arcade — enter the game world</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Bug Thinking <span class="sc-lesson-free">FREE</span></span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Error Messages</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Logic Tracing</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Debug Challenge</span></div>
             </div></div>
-            <div class="sc-actions"><a href="byte.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey <span class="free-badge">FREE</span></a></div>
+            <div class="sc-actions"><a href="byte.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Byte's World <span class="free-badge">FREE</span></a></div>
           </div>
         </div>
+
         <!-- LOOP -->
         <div class="stat-card" style="--cc:#00e8ff" onclick="window.location='loop.html'">
-          <div class="sc-media"><img src="loop-motion.gif" alt="Loop"><div class="sc-glow"></div></div>
+          <div class="sc-media">
+            <img class="sc-world-bg" src="loop-uni-close-up.png" alt="">
+            <img class="sc-char-gif" src="loop-motion.gif" alt="Loop">
+            <div class="sc-glow"></div>
+          </div>
           <div class="sc-body">
             <div class="sc-header"><span class="sc-id">MIM-003</span><span class="sc-lang-badge">JavaScript</span></div>
             <div class="sc-name">Loop</div>
-            <div class="sc-role">The Flow Master</div>
-            <div class="sc-catchphrase">"The flow never stops!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-role">The Flow Guide · Challenge Course</div>
+            <div class="sc-catchphrase">"Every pattern has a reason."</div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
             <div class="sc-lessons"><div class="sc-lessons-inner">
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Enter the flow — what loops are &amp; why they matter</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Control the current — while loops &amp; conditions</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Write once, run forever — functions &amp; reusable logic</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build the machine — a logic-driven mini project</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Pattern Runner — enter the game world</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Thinking in Patterns</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">For Loops</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Conditionals</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Flow Challenge</span></div>
             </div></div>
-            <div class="sc-actions"><a href="loop.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey</a></div>
+            <div class="sc-actions"><a href="loop.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Loop's World</a></div>
           </div>
         </div>
+
         <!-- NOVA -->
         <div class="stat-card" style="--cc:#ffe066" onclick="window.location='nova.html'">
-          <div class="sc-media"><img src="nova-motion.gif" alt="Nova"><div class="sc-glow"></div></div>
+          <div class="sc-media">
+            <img class="sc-world-bg" src="nova-uni-close-up.png" alt="">
+            <img class="sc-char-gif" src="nova-motion.gif" alt="Nova">
+            <div class="sc-glow"></div>
+          </div>
           <div class="sc-body">
             <div class="sc-header"><span class="sc-id">MIM-004</span><span class="sc-lang-badge">HTML</span></div>
             <div class="sc-name">Nova</div>
-            <div class="sc-role">The Curious Coder</div>
+            <div class="sc-role">The Builder Bot · Discovery Dome</div>
             <div class="sc-catchphrase">"The answers are out there!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
             <div class="sc-lessons"><div class="sc-lessons-inner">
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">The first blueprint — HTML tags &amp; your first webpage</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Connect the world — links, images &amp; page sections</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Make it interactive — forms, buttons &amp; user input</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">The full build — design &amp; code a real webpage</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Blueprint Builder — enter the game world</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Blueprint Thinking</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Building Blocks</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Layout &amp; Nesting</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build Your Page</span></div>
             </div></div>
-            <div class="sc-actions"><a href="nova.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey</a></div>
+            <div class="sc-actions"><a href="nova.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Nova's World</a></div>
           </div>
         </div>
+
         <!-- BUG -->
-        <div class="stat-card" style="--cc:#a8ff3e" onclick="window.location='bug.html'">
-          <div class="sc-media"><img src="bug-motion.gif" alt="Bug"><div class="sc-glow"></div></div>
+        <div class="stat-card" style="--cc:#84cc16" onclick="window.location='bug.html'">
+          <div class="sc-media">
+            <img class="sc-world-bg" src="bug-uni-close-up.png" alt="">
+            <img class="sc-char-gif" src="bug-motion.gif" alt="Bug">
+            <div class="sc-glow"></div>
+          </div>
           <div class="sc-body">
             <div class="sc-header"><span class="sc-id">MIM-005</span><span class="sc-lang-badge">JS Logic</span></div>
             <div class="sc-name">Bug</div>
-            <div class="sc-role">The Glitch Hunter</div>
-            <div class="sc-catchphrase">"No bug is too big to fix!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-role">The Debug Gremlin · Debug Garage</div>
+            <div class="sc-catchphrase">"Every bug is just a clue."</div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
             <div class="sc-lessons"><div class="sc-lessons-inner">
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Into the chaos — variables, data types &amp; why code breaks</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Make a decision — if/else logic &amp; conditional thinking</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Sort the wreckage — arrays, objects &amp; messy data</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Fix everything — debug a full broken JS project</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Debug Dash — enter the game world</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">What Is a Bug?</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Reading Errors</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Logic Tracing</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Debug Challenge</span></div>
             </div></div>
-            <div class="sc-actions"><a href="bug.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey</a></div>
+            <div class="sc-actions"><a href="bug.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Bug's World</a></div>
           </div>
         </div>
+
         <!-- ECHO -->
-        <div class="stat-card" style="--cc:#00e8ff" onclick="window.location='echo.html'">
-          <div class="sc-media"><img src="echo-motion.gif" alt="Echo"><div class="sc-glow"></div></div>
+        <div class="stat-card" style="--cc:#38bdf8" onclick="window.location='echo.html'">
+          <div class="sc-media">
+            <img class="sc-world-bg" src="echo-uni-close-up.png" alt="">
+            <img class="sc-char-gif" src="echo-motion.gif" alt="Echo">
+            <div class="sc-glow"></div>
+          </div>
           <div class="sc-body">
             <div class="sc-header"><span class="sc-id">MIM-006</span><span class="sc-lang-badge">Web Audio</span></div>
             <div class="sc-name">Echo</div>
-            <div class="sc-role">The Signal Sender</div>
-            <div class="sc-catchphrase">"Sending waves across the universe!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-role">The Signal DJ · Sound Studio</div>
+            <div class="sc-catchphrase">"Every click is a cue."</div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
             <div class="sc-lessons"><div class="sc-lessons-inner">
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Tune in — how sound works on the web &amp; the Audio API</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Shape the wave — frequencies, oscillators &amp; tones</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Feel the beat — rhythm, timing &amp; sequencing sounds</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build the studio — code a 16-step beat machine</span></div>
-              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Beat Lab — enter the game world</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Events &amp; Listeners</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Timers &amp; Timing</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">The Web Audio API</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Beat Machine</span></div>
             </div></div>
-            <div class="sc-actions"><a href="echo.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey</a></div>
+            <div class="sc-actions"><a href="echo.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Echo's World</a></div>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -456,7 +498,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
       <div class="tier-card free-tier" style="--cc:rgba(0,232,255,.8)">
         <div class="tier-name" style="color:var(--cyan)">Explorer</div>
         <div class="tier-price" style="color:var(--cyan)">$0<span>/ always</span></div>
-        <div class="tier-desc">No credit card. No catch. Start coding today and see what the universe is made of.</div>
+        <div class="tier-desc">No credit card. No catch. Start coding today.</div>
         <ul class="tier-perks">
           <li>Free account — forever</li>
           <li>Zen's Lesson 1 unlocked</li>
@@ -468,7 +510,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
       <div class="tier-card" style="--cc:rgba(255,107,170,.6)">
         <div class="tier-name">Sparks</div>
         <div class="tier-price">$5<span>/mo</span></div>
-        <div class="tier-desc">Meet all six crew members. The perfect first step into the full universe.</div>
+        <div class="tier-desc">Meet all six crew members. The perfect first step.</div>
         <ul class="tier-perks">
           <li>Lesson 1 for all 6 characters</li>
           <li>Access to the MiM Library</li>
@@ -480,7 +522,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
         <div class="tier-featured-badge">Most Popular</div>
         <div class="tier-name">Builders</div>
         <div class="tier-price">$9<span>/mo</span></div>
-        <div class="tier-desc">Go deep with every character. Build real projects. This is where creators are made.</div>
+        <div class="tier-desc">Go deep. Build real projects. This is where creators are made.</div>
         <ul class="tier-perks">
           <li>All 4 lessons per character</li>
           <li>PDF workbook access</li>
@@ -492,7 +534,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
       <div class="tier-card" style="--cc:var(--cyan)">
         <div class="tier-name">Coders</div>
         <div class="tier-price">$15<span>/mo</span></div>
-        <div class="tier-desc">The full universe — every lesson, every game world, and first access to what drops next.</div>
+        <div class="tier-desc">The full universe — every lesson, every game world.</div>
         <ul class="tier-perks">
           <li>Everything in Builders</li>
           <li>All 6 game worlds unlocked</li>
@@ -511,7 +553,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     <div class="workbook-strip__text">
       <span class="section-label">Printable Workbooks</span>
       <h2 class="section-title" style="font-size:clamp(1.4rem,3vw,2.2rem);margin-bottom:12px;">Take the knowledge offline.</h2>
-      <p style="font-size:.9rem;color:var(--off);line-height:1.8;margin-bottom:20px;">Three printable cheat sheet volumes covering coding foundations, computer science thinking, and digital world building. Great for kids who learn by writing, drawing, and doing — no screen required.</p>
+      <p style="font-size:.9rem;color:var(--off);line-height:1.8;margin-bottom:20px;">Three printable cheat sheet volumes covering coding foundations, computer science thinking, and digital world building. Great for kids who learn by writing, drawing, and doing.</p>
       <a href="pdfs.html" class="btn-primary" style="display:inline-block">Browse the Collection</a>
     </div>
     <div class="workbook-strip__visual">
@@ -529,8 +571,8 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     <div class="dark-orb"></div>
     <span class="section-label" style="display:block;text-align:center;">The Underground</span>
     <h2 class="section-title" style="text-align:center;margin-bottom:14px;">Six game worlds. One underground universe.</h2>
-    <p style="font-size:.9rem;color:var(--off);text-align:center;max-width:520px;margin:0 auto 10px;line-height:1.8;">Every character has a game world hidden below the surface. These aren't bonus activities — they're Lesson 5. The one that doesn't feel like a lesson at all.</p>
-    <p style="font-size:.82rem;color:var(--muted);text-align:center;max-width:440px;margin:0 auto 28px;line-height:1.7;">Drag-and-drop CSS battles. Glitch-hunting arcades. Beat machines. Blueprint builders. Unlock the Coders tier to enter every world.</p>
+    <p style="font-size:.9rem;color:var(--off);text-align:center;max-width:520px;margin:0 auto 10px;line-height:1.8;">Every character has a game world hidden below the surface. These aren't bonus activities — they're the moment everything clicks.</p>
+    <p style="font-size:.82rem;color:var(--muted);text-align:center;max-width:440px;margin:0 auto 28px;line-height:1.7;">CSS battles. Glitch-hunting arcades. Beat machines. Blueprint builders. Unlock Coders to enter every world.</p>
     <div style="text-align:center;">
       <a href="games.html" class="btn-primary" style="display:inline-block">Explore the Game World</a>
     </div>
@@ -558,6 +600,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     <a href="pdfs.html">PDFs</a>
     <a href="library.html">Library</a>
     <a href="games.html">Games</a>
+    <a href="characters.html">Characters</a>
     <a href="dashboard.html">Dashboard</a>
   </div>
 </footer>
@@ -591,73 +634,31 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
 </div>
 
 <script>
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursorRing');
-document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX+'px';
-  cursor.style.top = e.clientY+'px';
-  setTimeout(()=>{ ring.style.left = e.clientX+'px'; ring.style.top = e.clientY+'px'; }, 80);
-});
-window.addEventListener('scroll', ()=>{
-  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
-});
-function openModal(tab){ document.getElementById('auth-modal').style.display='flex'; switchTab(tab||'login'); }
-function closeModal(){ document.getElementById('auth-modal').style.display='none'; }
-function switchTab(tab){
-  document.querySelectorAll('.auth-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
-  document.getElementById('login-form').style.display = tab==='login'?'block':'none';
-  document.getElementById('signup-form').style.display = tab==='signup'?'block':'none';
-}
-document.getElementById('auth-close-btn').addEventListener('click', closeModal);
-document.getElementById('auth-modal').addEventListener('click', e=>{ if(e.target===document.getElementById('auth-modal')) closeModal(); });
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},80);});
+window.addEventListener('scroll',()=>{document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>40);});
+
+function openModal(tab){document.getElementById('auth-modal').style.display='flex';switchTab(tab||'login');}
+function closeModal(){document.getElementById('auth-modal').style.display='none';}
+function switchTab(tab){document.querySelectorAll('.auth-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.getElementById('login-form').style.display=tab==='login'?'block':'none';document.getElementById('signup-form').style.display=tab==='signup'?'block':'none';}
+document.getElementById('auth-close-btn').addEventListener('click',closeModal);
+document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))closeModal();});
 document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
 document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
-window.openModal = openModal;
-window.closeModal = closeModal;
-function toggleCrew(){ document.getElementById('crewGridWrap').classList.toggle('open'); document.getElementById('crewToggleBtn').classList.toggle('open'); }
-window.toggleCrew = toggleCrew;
-function toggleLessons(btn){
-  const lessons = btn.nextElementSibling;
-  btn.classList.toggle('open');
-  lessons.classList.toggle('open');
-  const label = btn.querySelector('.sc-lesson-toggle-label');
-  label.textContent = lessons.classList.contains('open') ? '5 Lessons · Hide Journey' : '5 Lessons · View Journey';
-}
-window.toggleLessons = toggleLessons;
-window.handleNewsletter = async function(){
-  const email = document.getElementById('newsletterEmail').value;
-  if(!email) return;
-  document.querySelector('.newsletter-form').style.display='none';
-  document.getElementById('newsletter-success').style.display='block';
-};
-(function(){
-  const canvas = document.createElement('canvas');
-  canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
-  document.querySelector('.hero-bg').appendChild(canvas);
-  const ctx = canvas.getContext('2d');
-  function draw(){
-    canvas.width=window.innerWidth; canvas.height=window.innerHeight;
-    ctx.clearRect(0,0,canvas.width,canvas.height);
-    for(let i=0;i<180;i++){
-      ctx.beginPath();
-      ctx.arc(Math.random()*canvas.width, Math.random()*canvas.height, Math.random()*1.2+.2, 0, Math.PI*2);
-      ctx.fillStyle=`rgba(255,255,255,${Math.random()*.5+.1})`;
-      ctx.fill();
-    }
-  }
-  draw(); window.addEventListener('resize', draw);
-})();
-(function(){
-  const c = document.getElementById('heroParticles');
-  const cols = ['#ff6baa','#c66bff','#00e8ff','#fff'];
-  for(let i=0;i<28;i++){
-    const p = document.createElement('div');
-    p.className='hparticle';
-    const s=Math.random()*3+1;
-    p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};opacity:${Math.random()*.5+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*10}s;`;
-    c.appendChild(p);
-  }
-})();
+window.openModal=openModal;window.closeModal=closeModal;
+
+function toggleCrew(){document.getElementById('crewGridWrap').classList.toggle('open');document.getElementById('crewToggleBtn').classList.toggle('open');}
+window.toggleCrew=toggleCrew;
+
+function toggleLessons(btn){const lessons=btn.nextElementSibling;btn.classList.toggle('open');lessons.classList.toggle('open');const label=btn.querySelector('.sc-lesson-toggle-label');label.textContent=lessons.classList.contains('open')?'4 Lessons · Hide Journey':'4 Lessons · View Journey';}
+window.toggleLessons=toggleLessons;
+
+window.handleNewsletter=async function(){const email=document.getElementById('newsletterEmail').value;if(!email)return;document.querySelector('.newsletter-form').style.display='none';document.getElementById('newsletter-success').style.display='block';};
+
+(function(){const canvas=document.createElement('canvas');canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';document.querySelector('.hero-bg').appendChild(canvas);const ctx=canvas.getContext('2d');function draw(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;ctx.clearRect(0,0,canvas.width,canvas.height);for(let i=0;i<180;i++){ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*1.2+.2,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${Math.random()*.5+.1})`;ctx.fill();}}draw();window.addEventListener('resize',draw);})();
+
+(function(){const c=document.getElementById('heroParticles');const cols=['#ff6baa','#c66bff','#00e8ff','#fff'];for(let i=0;i<28;i++){const p=document.createElement('div');p.className='hparticle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};opacity:${Math.random()*.5+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*10}s;`;c.appendChild(p);}})();
 </script>
 <script type="module" src="auth-init.js"></script>
 </body>
