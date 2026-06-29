@@ -14,13 +14,13 @@ gtag('config', 'G-DJ3Q488K7W');
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
---void:#050508;--deep:#080b14;--card:#0f1525;
---border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
---white:#fff;--off:#c8cce0;--muted:#5a6080;
---pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
---grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
---grad2:linear-gradient(135deg,#c66bff,#00e8ff);
---display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+  --void:#050508;--deep:#080b14;--card:#0f1525;
+  --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
+  --white:#fff;--off:#c8cce0;--muted:#5a6080;
+  --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
+  --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+  --grad2:linear-gradient(135deg,#c66bff,#00e8ff);
+  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -50,34 +50,31 @@ nav.scrolled{background:rgba(5,5,8,.92);backdrop-filter:blur(20px);padding:12px 
 @media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
 .hero{position:relative;width:100%;height:100vh;min-height:640px;overflow:hidden;display:flex;align-items:center;justify-content:center;}
 .hero-bg{position:absolute;inset:0;z-index:0;background:var(--void);}
-.hero-bg-grad{position:absolute;inset:0;background:
-  radial-gradient(ellipse 80% 60% at 20% 50%,rgba(255,107,170,.13) 0%,transparent 60%),
-  radial-gradient(ellipse 70% 70% at 80% 30%,rgba(0,232,255,.10) 0%,transparent 55%),
-  radial-gradient(ellipse 90% 50% at 50% 80%,rgba(198,107,255,.10) 0%,transparent 60%),
-  radial-gradient(ellipse 40% 40% at 65% 60%,rgba(255,107,170,.07) 0%,transparent 50%);
-animation:bg-breathe 12s ease-in-out infinite alternate;}
+/* UNIVERSE IMAGE LAYER */
+.hero-universe{position:absolute;inset:0;z-index:1;background-image:url('universe-view.png');background-size:cover;background-position:center;opacity:0.55;}
+.hero-universe-overlay{position:absolute;inset:0;z-index:2;background:linear-gradient(to bottom,rgba(5,5,8,0.15) 0%,rgba(5,5,8,0.3) 50%,rgba(5,5,8,0.85) 100%);}
+.hero-bg-grad{position:absolute;inset:0;z-index:3;background:
+  radial-gradient(ellipse 80% 60% at 20% 50%,rgba(255,107,170,.08) 0%,transparent 60%),
+  radial-gradient(ellipse 70% 70% at 80% 30%,rgba(0,232,255,.06) 0%,transparent 55%),
+  radial-gradient(ellipse 90% 50% at 50% 80%,rgba(198,107,255,.06) 0%,transparent 60%);
+  animation:bg-breathe 12s ease-in-out infinite alternate;}
 @keyframes bg-breathe{0%{opacity:.7;transform:scale(1);}100%{opacity:1;transform:scale(1.04);}}
-.hero-nebula{position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(ellipse 30% 20% at 15% 25%,rgba(198,107,255,.06) 0%,transparent 70%),
-    radial-gradient(ellipse 25% 30% at 85% 70%,rgba(0,232,255,.05) 0%,transparent 70%),
-    radial-gradient(ellipse 20% 25% at 60% 15%,rgba(255,107,170,.05) 0%,transparent 70%);
-  animation:nebula-drift 18s ease-in-out infinite alternate;}
-@keyframes nebula-drift{0%{transform:translate(0,0)}100%{transform:translate(-12px,8px)}}
-.hero-orb{position:absolute;border-radius:50%;filter:blur(90px);z-index:2;pointer-events:none;animation:orb-drift ease-in-out infinite;}
+.hero-nebula{position:absolute;inset:0;z-index:4;pointer-events:none;}
+.hero-orb{position:absolute;border-radius:50%;filter:blur(90px);z-index:5;pointer-events:none;animation:orb-drift ease-in-out infinite;}
 @keyframes orb-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(var(--dx,20px),var(--dy,-20px))}}
-.orb-a{width:500px;height:500px;top:-10%;left:-8%;background:radial-gradient(circle,rgba(255,107,170,.16),transparent 70%);--dx:40px;--dy:30px;animation-duration:14s;}
-.orb-b{width:400px;height:400px;top:10%;right:-5%;background:radial-gradient(circle,rgba(0,232,255,.12),transparent 70%);--dx:-30px;--dy:35px;animation-duration:17s;animation-delay:3s;}
-.orb-c{width:350px;height:350px;bottom:-5%;left:25%;background:radial-gradient(circle,rgba(198,107,255,.11),transparent 70%);--dx:35px;--dy:-20px;animation-duration:15s;animation-delay:6s;}
-.orb-d{width:280px;height:280px;bottom:20%;right:15%;background:radial-gradient(circle,rgba(255,107,170,.08),transparent 70%);--dx:-20px;--dy:-25px;animation-duration:19s;animation-delay:2s;}
-.hero-grid{position:absolute;inset:0;z-index:2;pointer-events:none;
-  background-image:linear-gradient(rgba(0,232,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,255,.03) 1px,transparent 1px);
+.orb-a{width:500px;height:500px;top:-10%;left:-8%;background:radial-gradient(circle,rgba(255,107,170,.12),transparent 70%);--dx:40px;--dy:30px;animation-duration:14s;}
+.orb-b{width:400px;height:400px;top:10%;right:-5%;background:radial-gradient(circle,rgba(0,232,255,.09),transparent 70%);--dx:-30px;--dy:35px;animation-duration:17s;animation-delay:3s;}
+.orb-c{width:350px;height:350px;bottom:-5%;left:25%;background:radial-gradient(circle,rgba(198,107,255,.08),transparent 70%);--dx:35px;--dy:-20px;animation-duration:15s;animation-delay:6s;}
+.orb-d{width:280px;height:280px;bottom:20%;right:15%;background:radial-gradient(circle,rgba(255,107,170,.06),transparent 70%);--dx:-20px;--dy:-25px;animation-duration:19s;animation-delay:2s;}
+.hero-grid{position:absolute;inset:0;z-index:6;pointer-events:none;
+  background-image:linear-gradient(rgba(0,232,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,255,.02) 1px,transparent 1px);
   background-size:60px 60px;
   mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 0%,transparent 80%);}
-.hero-scan{position:absolute;inset:0;z-index:3;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.018) 2px,rgba(0,0,0,.018) 4px);}
-.hero-particles{position:absolute;inset:0;z-index:4;pointer-events:none;}
+.hero-scan{position:absolute;inset:0;z-index:7;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.015) 2px,rgba(0,0,0,.015) 4px);}
+.hero-particles{position:absolute;inset:0;z-index:8;pointer-events:none;}
 .hparticle{position:absolute;border-radius:50%;animation:hp-float linear infinite;}
 @keyframes hp-float{0%{transform:translateY(100vh);opacity:0}10%{opacity:1}90%{opacity:.5}100%{transform:translateY(-80px);opacity:0}}
-.hero-overlay-bottom{position:absolute;bottom:0;left:0;right:0;height:35%;z-index:5;background:linear-gradient(to bottom,transparent,var(--void));pointer-events:none;}
+.hero-overlay-bottom{position:absolute;bottom:0;left:0;right:0;height:35%;z-index:9;background:linear-gradient(to bottom,transparent,var(--void));pointer-events:none;}
 .hero-content{position:relative;z-index:10;text-align:center;padding:0 24px;max-width:700px;}
 .hero-eyebrow{font-family:var(--display);font-size:.58rem;letter-spacing:.32em;text-transform:uppercase;color:var(--cyan);opacity:.8;margin-bottom:16px;animation:fadeUp .8s .2s both;text-shadow:0 0 20px rgba(0,232,255,.6);}
 .hero-title{font-family:var(--display);font-size:clamp(2.6rem,7vw,6rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:10px;animation:fadeUp 1s .3s both;filter:drop-shadow(0 0 40px rgba(198,107,255,.3));}
@@ -263,6 +260,8 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
 <!-- HERO -->
 <section class="hero">
   <div class="hero-bg"><div class="hero-bg-grad"></div></div>
+  <div class="hero-universe"></div>
+  <div class="hero-universe-overlay"></div>
   <div class="hero-nebula"></div>
   <div class="hero-orb orb-a"></div>
   <div class="hero-orb orb-b"></div>
@@ -304,26 +303,10 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
 <!-- TRUST BAR -->
 <section class="trust-bar">
   <div class="trust-bar__inner">
-    <div class="trust-item">
-      <span class="trust-icon">💻</span>
-      <span class="trust-label">Real Code</span>
-      <p class="trust-desc">Kids write actual HTML, CSS, and JavaScript — not simplified drag-and-drop blocks.</p>
-    </div>
-    <div class="trust-item">
-      <span class="trust-icon">🧠</span>
-      <span class="trust-label">Builds Confidence</span>
-      <p class="trust-desc">Every lesson ends with a project they built themselves. That feeling is the point.</p>
-    </div>
-    <div class="trust-item">
-      <span class="trust-icon">🎮</span>
-      <span class="trust-label">Learning Disguised as Play</span>
-      <p class="trust-desc">Six game worlds turn screen time into skill-building. Coders tier unlocks them all.</p>
-    </div>
-    <div class="trust-item">
-      <span class="trust-icon">🔒</span>
-      <span class="trust-label">Safe &amp; Ad-Free</span>
-      <p class="trust-desc">No ads. No distractions. A focused environment designed entirely for young learners.</p>
-    </div>
+    <div class="trust-item"><span class="trust-icon">💻</span><span class="trust-label">Real Code</span><p class="trust-desc">Kids write actual HTML, CSS, and JavaScript — not simplified drag-and-drop blocks.</p></div>
+    <div class="trust-item"><span class="trust-icon">🧠</span><span class="trust-label">Builds Confidence</span><p class="trust-desc">Every lesson ends with a project they built themselves. That feeling is the point.</p></div>
+    <div class="trust-item"><span class="trust-icon">🎮</span><span class="trust-label">Learning Disguised as Play</span><p class="trust-desc">Six game worlds turn screen time into skill-building. Coders tier unlocks them all.</p></div>
+    <div class="trust-item"><span class="trust-icon">🔒</span><span class="trust-label">Safe &amp; Ad-Free</span><p class="trust-desc">No ads. No distractions. A focused environment designed entirely for young learners.</p></div>
   </div>
 </section>
 
@@ -342,7 +325,6 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
     </div>
     <div class="crew__grid-wrap" id="crewGridWrap">
       <div class="crew__grid">
-
         <!-- ZEN -->
         <div class="stat-card" style="--cc:#ff6baa" onclick="window.location='zen.html'">
           <div class="sc-media"><img src="zen-motion.gif" alt="Zen"><div class="sc-glow"></div></div>
@@ -351,25 +333,17 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
             <div class="sc-name">Zen</div>
             <div class="sc-role">The Creative Coder</div>
             <div class="sc-catchphrase">"If you can imagine it, you can code it!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
-              <span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span>
-              <span class="sc-lesson-toggle-arrow">&#8964;</span>
-            </button>
-            <div class="sc-lessons">
-              <div class="sc-lessons-inner">
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Step into the Creative Studio — color &amp; style <span class="sc-lesson-free">FREE</span></span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Shape the world — spacing, layout &amp; box model</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Bend the layout — Flexbox &amp; real page sections</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Bring it to life — animations &amp; your CSS masterpiece</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">CSS Style Studio — enter the game world</span></div>
-              </div>
-            </div>
-            <div class="sc-actions">
-              <a href="zen.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey <span class="free-badge">FREE</span></a>
-            </div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-lessons"><div class="sc-lessons-inner">
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Step into the Creative Studio — color &amp; style <span class="sc-lesson-free">FREE</span></span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Shape the world — spacing, layout &amp; box model</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Bend the layout — Flexbox &amp; real page sections</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Bring it to life — animations &amp; your CSS masterpiece</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">CSS Style Studio — enter the game world</span></div>
+            </div></div>
+            <div class="sc-actions"><a href="zen.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey <span class="free-badge">FREE</span></a></div>
           </div>
         </div>
-
         <!-- BYTE -->
         <div class="stat-card" style="--cc:#c66bff" onclick="window.location='byte.html'">
           <div class="sc-media"><img src="byte-motion.gif" alt="Byte"><div class="sc-glow"></div></div>
@@ -378,25 +352,17 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
             <div class="sc-name">Byte</div>
             <div class="sc-role">The Data Tracker</div>
             <div class="sc-catchphrase">"Nothing gets by me!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
-              <span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span>
-              <span class="sc-lesson-toggle-arrow">&#8964;</span>
-            </button>
-            <div class="sc-lessons">
-              <div class="sc-lessons-inner">
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Crack the first clue — what bugs are &amp; how to find them <span class="sc-lesson-free">FREE</span></span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Into the console — tools for tracking broken code</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Follow the logic — fix errors &amp; understand the flow</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">The big case — debug a full broken project</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Glitch Hunt Arcade — enter the game world</span></div>
-              </div>
-            </div>
-            <div class="sc-actions">
-              <a href="byte.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey <span class="free-badge">FREE</span></a>
-            </div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-lessons"><div class="sc-lessons-inner">
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Crack the first clue — what bugs are &amp; how to find them <span class="sc-lesson-free">FREE</span></span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Into the console — tools for tracking broken code</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Follow the logic — fix errors &amp; understand the flow</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">The big case — debug a full broken project</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Glitch Hunt Arcade — enter the game world</span></div>
+            </div></div>
+            <div class="sc-actions"><a href="byte.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey <span class="free-badge">FREE</span></a></div>
           </div>
         </div>
-
         <!-- LOOP -->
         <div class="stat-card" style="--cc:#00e8ff" onclick="window.location='loop.html'">
           <div class="sc-media"><img src="loop-motion.gif" alt="Loop"><div class="sc-glow"></div></div>
@@ -405,23 +371,17 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
             <div class="sc-name">Loop</div>
             <div class="sc-role">The Flow Master</div>
             <div class="sc-catchphrase">"The flow never stops!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
-              <span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span>
-              <span class="sc-lesson-toggle-arrow">&#8964;</span>
-            </button>
-            <div class="sc-lessons">
-              <div class="sc-lessons-inner">
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Enter the flow — what loops are &amp; why they matter</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Control the current — while loops &amp; conditions</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Write once, run forever — functions &amp; reusable logic</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build the machine — a logic-driven mini project</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Pattern Runner — enter the game world</span></div>
-              </div>
-            </div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-lessons"><div class="sc-lessons-inner">
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Enter the flow — what loops are &amp; why they matter</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Control the current — while loops &amp; conditions</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Write once, run forever — functions &amp; reusable logic</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build the machine — a logic-driven mini project</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Pattern Runner — enter the game world</span></div>
+            </div></div>
             <div class="sc-actions"><a href="loop.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey</a></div>
           </div>
         </div>
-
         <!-- NOVA -->
         <div class="stat-card" style="--cc:#ffe066" onclick="window.location='nova.html'">
           <div class="sc-media"><img src="nova-motion.gif" alt="Nova"><div class="sc-glow"></div></div>
@@ -430,23 +390,17 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
             <div class="sc-name">Nova</div>
             <div class="sc-role">The Curious Coder</div>
             <div class="sc-catchphrase">"The answers are out there!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
-              <span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span>
-              <span class="sc-lesson-toggle-arrow">&#8964;</span>
-            </button>
-            <div class="sc-lessons">
-              <div class="sc-lessons-inner">
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">The first blueprint — HTML tags &amp; your first webpage</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Connect the world — links, images &amp; page sections</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Make it interactive — forms, buttons &amp; user input</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">The full build — design &amp; code a real webpage</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Blueprint Builder — enter the game world</span></div>
-              </div>
-            </div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-lessons"><div class="sc-lessons-inner">
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">The first blueprint — HTML tags &amp; your first webpage</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Connect the world — links, images &amp; page sections</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Make it interactive — forms, buttons &amp; user input</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">The full build — design &amp; code a real webpage</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Blueprint Builder — enter the game world</span></div>
+            </div></div>
             <div class="sc-actions"><a href="nova.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey</a></div>
           </div>
         </div>
-
         <!-- BUG -->
         <div class="stat-card" style="--cc:#a8ff3e" onclick="window.location='bug.html'">
           <div class="sc-media"><img src="bug-motion.gif" alt="Bug"><div class="sc-glow"></div></div>
@@ -455,23 +409,17 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
             <div class="sc-name">Bug</div>
             <div class="sc-role">The Glitch Hunter</div>
             <div class="sc-catchphrase">"No bug is too big to fix!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
-              <span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span>
-              <span class="sc-lesson-toggle-arrow">&#8964;</span>
-            </button>
-            <div class="sc-lessons">
-              <div class="sc-lessons-inner">
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Into the chaos — variables, data types &amp; why code breaks</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Make a decision — if/else logic &amp; conditional thinking</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Sort the wreckage — arrays, objects &amp; messy data</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Fix everything — debug a full broken JS project</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Debug Dash — enter the game world</span></div>
-              </div>
-            </div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-lessons"><div class="sc-lessons-inner">
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Into the chaos — variables, data types &amp; why code breaks</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Make a decision — if/else logic &amp; conditional thinking</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Sort the wreckage — arrays, objects &amp; messy data</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Fix everything — debug a full broken JS project</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Debug Dash — enter the game world</span></div>
+            </div></div>
             <div class="sc-actions"><a href="bug.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey</a></div>
           </div>
         </div>
-
         <!-- ECHO -->
         <div class="stat-card" style="--cc:#00e8ff" onclick="window.location='echo.html'">
           <div class="sc-media"><img src="echo-motion.gif" alt="Echo"><div class="sc-glow"></div></div>
@@ -480,23 +428,17 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
             <div class="sc-name">Echo</div>
             <div class="sc-role">The Signal Sender</div>
             <div class="sc-catchphrase">"Sending waves across the universe!"</div>
-            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
-              <span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span>
-              <span class="sc-lesson-toggle-arrow">&#8964;</span>
-            </button>
-            <div class="sc-lessons">
-              <div class="sc-lessons-inner">
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Tune in — how sound works on the web &amp; the Audio API</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Shape the wave — frequencies, oscillators &amp; tones</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Feel the beat — rhythm, timing &amp; sequencing sounds</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build the studio — code a 16-step beat machine</span></div>
-                <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Beat Lab — enter the game world</span></div>
-              </div>
-            </div>
+            <button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)"><span class="sc-lesson-toggle-label">5 Lessons &nbsp;·&nbsp; View Journey</span><span class="sc-lesson-toggle-arrow">&#8964;</span></button>
+            <div class="sc-lessons"><div class="sc-lessons-inner">
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Tune in — how sound works on the web &amp; the Audio API</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Shape the wave — frequencies, oscillators &amp; tones</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Feel the beat — rhythm, timing &amp; sequencing sounds</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build the studio — code a 16-step beat machine</span></div>
+              <div class="sc-lesson-item"><span class="sc-lesson-num">L5</span><span class="sc-lesson-title">Beat Lab — enter the game world</span></div>
+            </div></div>
             <div class="sc-actions"><a href="echo.html" class="sc-btn-game" onclick="event.stopPropagation()">Start Your Journey</a></div>
           </div>
         </div>
-
       </div>
     </div>
   </div>
@@ -554,7 +496,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
         <ul class="tier-perks">
           <li>Everything in Builders</li>
           <li>All 6 game worlds unlocked</li>
-          <li>Early access to new content</li>
+          <li>Think Like a Programmer PDFs included</li>
           <li>3-day free trial</li>
         </ul>
         <button class="tier-btn" onclick="openModal('signup')">Start Free Trial</button>
@@ -620,7 +562,7 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
   </div>
 </footer>
 
-<!-- AUTH MODAL — matches auth-init.js exactly -->
+<!-- AUTH MODAL -->
 <div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true">
   <div class="modal-box">
     <button class="modal-close" id="auth-close-btn">&#10005;</button>
@@ -652,18 +594,14 @@ footer{background:var(--void);border-top:1px solid var(--border);padding:40px 48
 const cursor = document.getElementById('cursor');
 const ring = document.getElementById('cursorRing');
 document.addEventListener('mousemove', e => {
-  cursor.style.left = e.clientX+'px'; cursor.style.top = e.clientY+'px';
+  cursor.style.left = e.clientX+'px';
+  cursor.style.top = e.clientY+'px';
   setTimeout(()=>{ ring.style.left = e.clientX+'px'; ring.style.top = e.clientY+'px'; }, 80);
 });
 window.addEventListener('scroll', ()=>{
   document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 40);
 });
-
-// MODAL
-function openModal(tab){
-  document.getElementById('auth-modal').style.display='flex';
-  switchTab(tab||'login');
-}
+function openModal(tab){ document.getElementById('auth-modal').style.display='flex'; switchTab(tab||'login'); }
 function closeModal(){ document.getElementById('auth-modal').style.display='none'; }
 function switchTab(tab){
   document.querySelectorAll('.auth-tab').forEach(t=>t.classList.toggle('active', t.dataset.tab===tab));
@@ -676,15 +614,8 @@ document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=
 document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
 window.openModal = openModal;
 window.closeModal = closeModal;
-
-// CREW TOGGLE
-function toggleCrew(){
-  document.getElementById('crewGridWrap').classList.toggle('open');
-  document.getElementById('crewToggleBtn').classList.toggle('open');
-}
+function toggleCrew(){ document.getElementById('crewGridWrap').classList.toggle('open'); document.getElementById('crewToggleBtn').classList.toggle('open'); }
 window.toggleCrew = toggleCrew;
-
-// LESSON TOGGLES
 function toggleLessons(btn){
   const lessons = btn.nextElementSibling;
   btn.classList.toggle('open');
@@ -693,16 +624,12 @@ function toggleLessons(btn){
   label.textContent = lessons.classList.contains('open') ? '5 Lessons · Hide Journey' : '5 Lessons · View Journey';
 }
 window.toggleLessons = toggleLessons;
-
-// NEWSLETTER
 window.handleNewsletter = async function(){
   const email = document.getElementById('newsletterEmail').value;
   if(!email) return;
   document.querySelector('.newsletter-form').style.display='none';
   document.getElementById('newsletter-success').style.display='block';
 };
-
-// STARS
 (function(){
   const canvas = document.createElement('canvas');
   canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';
@@ -720,8 +647,6 @@ window.handleNewsletter = async function(){
   }
   draw(); window.addEventListener('resize', draw);
 })();
-
-// PARTICLES
 (function(){
   const c = document.getElementById('heroParticles');
   const cols = ['#ff6baa','#c66bff','#00e8ff','#fff'];
@@ -734,8 +659,6 @@ window.handleNewsletter = async function(){
   }
 })();
 </script>
-
-<!-- AUTH — uses your real auth-init.js -->
 <script type="module" src="auth-init.js"></script>
 </body>
 </html>
