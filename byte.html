@@ -334,4 +334,645 @@ consol.log(message);
       <div class="quiz-card">
         <div class="quiz-q">Which type of bug causes code to run but produce the wrong answer?</div>
         <div class="quiz-options">
-          <button class="quiz-opt" onclick="che
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A syntax error prevents the code from running at all.')">Syntax Error</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. A logic error runs fine but gives the wrong result.')">Logic Error</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A runtime error crashes the program while running.')">Runtime Error</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-1-0"></div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-q">What's the first thing Byte does when something breaks?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'That skips the clue entirely.')">Delete the code and start over</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Bugs aren\'t solved by luck.')">Guess randomly until it works</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The console tells you exactly what went wrong.')">Open the console and read the error message</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-1-1"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-1-reflect">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Byte says "every bug is just a clue." What do you think that means? How would thinking this way change how you feel when something breaks?</div>
+        <textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
+          <span class="reflect-saved" id="saved-1-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete" id="complete-1">
+        <h3>◈ &nbsp; Lesson 1 Complete</h3>
+        <p>Bug types. Byte's method. The console is your best friend now.</p>
+        <div class="lesson-joke" id="joke-1"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-1-cheat">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 01 · BUG THINKING</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 1 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item"><div class="cheat-term">Syntax error</div><div class="cheat-desc">Typo or bad structure — code can't run.</div></div>
+          <div class="cheat-item"><div class="cheat-term">Logic error</div><div class="cheat-desc">Runs fine, wrong result.</div></div>
+          <div class="cheat-item"><div class="cheat-term">Runtime error</div><div class="cheat-desc">Crashes while running.</div></div>
+          <div class="cheat-item"><div class="cheat-term">Byte's method</div><div class="cheat-desc">Read → Reproduce → Isolate → Fix one thing → Test.</div></div>
+        </div>
+        <button class="cheat-download-btn" onclick="downloadCheat(1)">⬇ Download Cheat Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 2 ===================== -->
+<div class="lesson-panel" id="lesson-2">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 02</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'cheat')" id="sb-2-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-2">
+      <div class="locked-icon">🔒</div>
+      <h2>Sparks Membership Required</h2>
+      <p>Lesson 2 is available to Sparks members and above.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+    <div class="content-block" id="block-2-read" style="display:none">
+      <div class="section-header">Error Messages</div>
+      <div class="section-sub">LESSON 02 · SPARKS+</div>
+      <div class="read-card">
+        <div class="read-card-num">01 / 04</div>
+        <h3>An Error Is a Gift</h3>
+        <p>"An error message is not your enemy. It's Byte's gift to you." Every error has three parts: the <strong>type</strong>, the <strong>message</strong>, and the <strong>location</strong> (file and line number).</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">02 / 04</div>
+        <h3>ReferenceError</h3>
+        <p>You tried to use a variable that doesn't exist. Usually a typo in the variable name, or using it before it's defined.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">03 / 04</div>
+        <h3>TypeError</h3>
+        <p>You tried to do something with a value that doesn't support that action — like calling <code>.length</code> on a number.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">04 / 04</div>
+        <h3>The Line Number Is a Hint, Not the Answer</h3>
+        <p>The error points to where JavaScript noticed the problem. The actual cause is often one or two lines earlier. Read around the line number, not just on it.</p>
+      </div>
+    </div>
+    <div class="content-block" id="block-2-terms" style="display:none">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">ReferenceError <span class="term-arrow">›</span></div><div class="term-def">Using a variable that doesn't exist or wasn't defined yet.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">TypeError <span class="term-arrow">›</span></div><div class="term-def">Performing an operation on a value that doesn't support it.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">SyntaxError <span class="term-arrow">›</span></div><div class="term-def">Code written incorrectly — JavaScript can't parse it at all.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Stack Trace <span class="term-arrow">›</span></div><div class="term-def">The list of function calls that led to the error.</div></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-2-build" style="display:none">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 02 · FIX THE BUG</div>
+      <div class="demo-card">
+        <h3>Bug #2 — ReferenceError</h3>
+        <p>This code uses a variable that was never defined. Fix it.</p>
+        <textarea class="debug-editor" id="debug-d2">function showScore() {
+  console.log("Your score is: " + userScore);
+}
+showScore();
+// Fix: define userScore before using it</textarea>
+        <button class="run-btn" onclick="runDebug('d2')">▶ Run</button>
+        <div class="demo-output" id="debug-out-d2"></div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-q">You get: "TypeError: name.toUpperCase is not a function." What most likely happened?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Spelling wouldn\'t cause this specific error.')">name was spelled wrong</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. name is probably a number or null — not a string.')">name is not a string — it's probably a number or null</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'It already has parentheses in the code.')">toUpperCase needs parentheses</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-2-0"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-2-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">What's the difference between a ReferenceError and a TypeError? Give a real example of how each could happen.</div>
+        <textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
+          <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete show" id="complete-2">
+        <h3>◈ &nbsp; Lesson 2 Complete</h3>
+        <p>Error types. Reading messages. You know where to look now.</p>
+        <div class="lesson-joke" id="joke-2"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-2-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 02 · ERROR MESSAGES</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 2 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item"><div class="cheat-term">ReferenceError</div><div class="cheat-desc">Variable doesn't exist or isn't defined yet.</div></div>
+          <div class="cheat-item"><div class="cheat-term">TypeError</div><div class="cheat-desc">Wrong type — calling a method that doesn't exist on that value.</div></div>
+          <div class="cheat-item"><div class="cheat-term">SyntaxError</div><div class="cheat-desc">Invalid code — caught before it runs.</div></div>
+          <div class="cheat-item"><div class="cheat-term">Line number</div><div class="cheat-desc">A hint, not the answer. Check nearby lines too.</div></div>
+        </div>
+        <button class="cheat-download-btn" onclick="downloadCheat(2)">⬇ Download Cheat Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 3 ===================== -->
+<div class="lesson-panel" id="lesson-3">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 03</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'cheat')" id="sb-3-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-3">
+      <div class="locked-icon">🔒</div>
+      <h2>Builders Membership Required</h2>
+      <p>Lesson 3 is available to Builders members and above.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+    <div class="content-block" id="block-3-read" style="display:none">
+      <div class="section-header">Logic Tracing</div>
+      <div class="section-sub">LESSON 03 · BUILDERS+</div>
+      <div class="read-card">
+        <div class="read-card-num">01 / 04</div>
+        <h3>Become the Computer</h3>
+        <p>"The bug is never where you think it is. You have to follow the code like a trail." <strong>Logic tracing</strong> means reading your code exactly as the computer would, tracking each variable's value as it changes.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">02 / 04</div>
+        <h3>console.log() Is Your Tracer</h3>
+        <p>Place <code>console.log()</code> after key steps to print what a variable holds. If the value is unexpected, you've found your bug's neighborhood.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">03 / 04</div>
+        <h3>Trace Tables</h3>
+        <p>A trace table tracks each variable's value at each step — columns for variables, rows for each line. Fill it in like a spreadsheet.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">04 / 04</div>
+        <h3>Off-By-One Errors</h3>
+        <p>One of the most common logic bugs. Your loop runs one time too many or too few. Usually caused by <code>&lt;</code> vs <code>&lt;=</code>, or starting at 0 instead of 1.</p>
+      </div>
+    </div>
+    <div class="content-block" id="block-3-terms" style="display:none">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Logic Tracing <span class="term-arrow">›</span></div><div class="term-def">Reading code step by step, tracking variable values exactly as the computer would.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Trace Table <span class="term-arrow">›</span></div><div class="term-def">A chart tracking each variable's value at each step of execution.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Off-By-One Error <span class="term-arrow">›</span></div><div class="term-def">A loop runs one iteration too many or too few.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">State <span class="term-arrow">›</span></div><div class="term-def">The current value of all variables at a specific moment during execution.</div></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-3-build" style="display:none">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 03 · TRACE AND FIX</div>
+      <div class="demo-card">
+        <h3>Bug #3 — Trace the Total</h3>
+        <p>Expected total is 15. Trace it, find the mistakes, fix them.</p>
+        <textarea class="debug-editor" id="debug-d3">let total = 0;
+total = total + 5;
+total = total + 5;
+total = total + 3; // should be + 5
+total = total + 2; // shouldn't be here
+console.log("Total:", total);</textarea>
+        <button class="run-btn" onclick="runDebug('d3')">▶ Run</button>
+        <div class="demo-output" id="debug-out-d3"></div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-q">A loop runs from i=0 to i&lt;5. How many times does it run?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Count again: 0,1,2,3,4.')">4 times</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. i = 0,1,2,3,4 — that\'s 5 runs.')">5 times</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The loop stops before i reaches 5.')">6 times</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-3-0"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-3-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Why are off-by-one errors so common? Can you think of a real-life situation where being off by one causes a problem?</div>
+        <textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
+          <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete show" id="complete-3">
+        <h3>◈ &nbsp; Lesson 3 Complete</h3>
+        <p>Trace tables. Off-by-one errors. You can follow any trail now.</p>
+        <div class="lesson-joke" id="joke-3"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-3-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 03 · LOGIC TRACING</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 3 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item"><div class="cheat-term">Logic tracing</div><div class="cheat-desc">Step through code manually, tracking every variable.</div></div>
+          <div class="cheat-item"><div class="cheat-term">Trace table</div><div class="cheat-desc">Columns = variables, rows = steps.</div></div>
+          <div class="cheat-item"><div class="cheat-term">Off-by-one</div><div class="cheat-desc">Check &lt; vs &lt;= and your starting value.</div></div>
+        </div>
+        <button class="cheat-download-btn" onclick="downloadCheat(3)">⬇ Download Cheat Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 4 ===================== -->
+<div class="lesson-panel" id="lesson-4">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 04</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'cheat')" id="sb-4-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-4">
+      <div class="locked-icon">🔒</div>
+      <h2>Coders Membership Required</h2>
+      <p>Lesson 4 is available to Coders members only.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+    <div class="content-block" id="block-4-read" style="display:none">
+      <div class="section-header">Debug Challenge</div>
+      <div class="section-sub">LESSON 04 · CODERS</div>
+      <div class="read-card">
+        <div class="read-card-num">01 / 03</div>
+        <h3>You Have the Tools</h3>
+        <p>Everything from Lessons 1-3. Recognizing bug types, reading error messages, and tracing logic step by step to find where values go wrong.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">02 / 03</div>
+        <h3>Byte's Debug Checklist</h3>
+        <p>Read the error first. Identify the type. Go to the line number. Look around it. Add <code>console.log()</code> to check values. Fix one bug at a time. Test after each fix.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">03 / 03</div>
+        <h3>One Fix at a Time</h3>
+        <p>Fixing multiple things at once makes it impossible to know what worked. Always fix one bug, test, then move to the next.</p>
+      </div>
+    </div>
+    <div class="content-block" id="block-4-build" style="display:none">
+      <div class="section-header">Debug Challenge</div>
+      <div class="section-sub">LESSON 04 · FIND ALL 3 BUGS</div>
+      <div class="demo-card">
+        <h3>Bug #4 — The Full Gauntlet</h3>
+        <p>Calculate a student's average score and print pass/fail. There are <strong>three bugs</strong> — one syntax, one logic, one runtime.</p>
+        <textarea class="debug-editor" id="debug-d4">let scores = [80, 90, 70, 85, 95];
+let total = 0;
+for (let i = 0; i <= scores.length; i++) {
+  total = total + scores[i];
+}
+let average = total / scores.lenght;
+if (average > 75) {
+  console.log("Pass! Average: " + average);
+} else [
+  console.log("Fail. Average: " + average);
+}</textarea>
+        <button class="run-btn" onclick="runDebug('d4')">▶ Run</button>
+        <div class="demo-output" id="debug-out-d4"></div>
+        <div style="background:rgba(255,107,170,0.06);border:1px solid var(--border-pink);border-radius:10px;padding:1.1rem 1.25rem;margin-top:1rem">
+          <p style="font-family:var(--font-mono);font-size:0.72rem;color:var(--pink);margin-bottom:0.6rem;letter-spacing:0.1em">HINTS — BYTE'S CLUES</p>
+          <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0.4rem">Bug 1 (Syntax): What should open a block of code instead of a bracket?</p>
+          <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0.4rem">Bug 2 (Logic): The loop runs one time too many. Check the comparison operator.</p>
+          <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0">Bug 3 (Runtime): There's a typo in a property name.</p>
+        </div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-q">You fixed a bug and now a new error appears. What most likely happened?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A working fix doesn\'t need reverting.')">Your fix made things worse — revert everything</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. Fixing one bug often reveals the next.')">There was a second bug hidden behind the first — now you can see it</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Computers don\'t have bad days — bugs are always explainable.')">The computer is having a bad day</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-4-0"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-4-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 04 · BYTE'S FINAL DEBRIEF</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Describe Byte's full debug method in your own words. If a friend's code was broken, what would you tell them to do first?</div>
+        <textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
+          <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete show" id="complete-4">
+        <h3>◈ &nbsp; Byte's Code City Complete</h3>
+        <p>All four lessons done. Bug types, error messages, tracing, and the full debug checklist. Nothing in code can scare you now.</p>
+        <div class="lesson-joke" id="joke-4"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-4-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 04 · DEBUG CHALLENGE</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 4 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item"><div class="cheat-term">Debug checklist</div><div class="cheat-desc">Read → Identify type → Line number → console.log → Fix one → Test.</div></div>
+          <div class="cheat-item"><div class="cheat-term">One fix at a time</div><div class="cheat-desc">Never fix multiple bugs at once.</div></div>
+        </div>
+        <button class="cheat-download-btn" onclick="downloadCheat(4)">⬇ Download Cheat Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="byte-companion" id="byteCompanion">
+  <img src="byte-idle.gif" alt="Byte" title="Byte is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
+</div>
+
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+
+<div class="portal-modal" id="portalModal">
+  <img src="byte-mim-underground-portal.png" alt="MiM Underground" onerror="this.style.display='none'">
+  <p>MiM Underground — Byte's glitch hunter rules are posted right there. You weren't supposed to find this yet.</p>
+  <button class="portal-close" onclick="closePortal()">Close the Portal</button>
+</div>
+
+<div class="egg-popup" id="eggPopup">
+  <h4>◈ Secret Found!</h4>
+  <p id="eggText"></p>
+</div>
+
+<script type="module" src="auth-init.js"></script>
+<script>
+let currentLesson = null;
+let currentTier = null;
+const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
+function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
+
+window.setNavUser = function(email) {
+  const u = document.getElementById('navUser');
+  const b = document.getElementById('navLogout');
+  if (u) { u.textContent = email; u.style.display = 'inline'; }
+  if (b) b.style.display = 'inline-block';
+};
+
+window.handleTierUnlock = function(tier) {
+  currentTier = tier;
+  const lvl = tierLevel(tier);
+  if (lvl >= tierLevel('sparks')) {
+    document.getElementById('lock-2').style.display = 'none';
+    ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-2-' + b); if (el) el.style.removeProperty('display'); });
+  }
+  if (lvl >= tierLevel('builders')) {
+    document.getElementById('lock-3').style.display = 'none';
+    ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-3-' + b); if (el) el.style.removeProperty('display'); });
+  }
+  if (lvl >= tierLevel('coders')) {
+    document.getElementById('lock-4').style.display = 'none';
+    ['read','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-4-' + b); if (el) el.style.removeProperty('display'); });
+  }
+  loadReflects();
+};
+
+// ── DISCOVERY OVERLAY (no forced scroll) + ambient sound start ──
+function enterCity() {
+  document.getElementById('discoveryOverlay').classList.add('hidden');
+  document.getElementById('soundToggle').classList.add('visible');
+  startAmbient();
+}
+
+// ── COMPANION VISIBILITY ──
+window.addEventListener('scroll', function () {
+  const companion = document.getElementById('byteCompanion');
+  if (!companion) return;
+  if (window.scrollY > window.innerHeight * 0.6) companion.classList.add('visible');
+  else companion.classList.remove('visible');
+}, { passive: true });
+
+// ── LESSON CONTROL ──
+function openLesson(n) {
+  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('lesson-' + n);
+  const tab = document.getElementById('tab-' + n);
+  if (panel) panel.classList.add('open');
+  if (tab) tab.classList.add('active');
+  currentLesson = n;
+  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
+
+function showBlock(lesson, block) {
+  const panel = document.getElementById('lesson-' + lesson);
+  if (!panel) return;
+  panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+  panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+  const target = document.getElementById('block-' + lesson + '-' + block);
+  if (target) target.classList.add('active');
+  const btn = document.getElementById('sb-' + lesson + '-' + block);
+  if (btn) btn.classList.add('active');
+}
+
+function toggleTerm(card) { card.classList.toggle('open'); }
+
+function checkQuiz(btn, correct, feedback) {
+  const opts = btn.closest('.quiz-options');
+  if (opts.querySelector('.correct')) return;
+  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+  if (correct) {
+    btn.classList.add('correct');
+    if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
+  } else {
+    btn.classList.add('wrong');
+    if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
+    setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
+  }
+}
+
+// ── DEBUG RUNNER ──
+function runDebug(id) {
+  const code = document.getElementById('debug-' + id)?.value || '';
+  const outputEl = document.getElementById('debug-out-' + id);
+  if (!outputEl) return;
+  const logs = [];
+  const fakeCon = { log: (...a) => logs.push(a.map(x => String(x)).join(' ')) };
+  try {
+    const fn = new Function('console', code);
+    fn(fakeCon);
+    outputEl.textContent = logs.join('\n') || '(no output)';
+    outputEl.style.color = '#c66bff';
+  } catch(e) {
+    outputEl.textContent = (logs.length ? logs.join('\n') + '\n' : '') + 'Error: ' + e.message;
+    outputEl.style.color = '#ff6baa';
+  }
+  outputEl.classList.add('show');
+}
+
+// ── REFLECT ──
+const REFLECT_RESPONSES = {
+  'ref-1-1': v => `◈ "${v}" — That's exactly the Byte mindset. Follow the clue, don't fear it.`,
+  'ref-2-1': v => `◈ "${v}" — Good instinct. The error type tells you where to look first.`,
+  'ref-3-1': v => `◈ "${v}" — Off-by-one bugs hide in plain sight. You're learning to see them.`,
+  'ref-4-1': v => `◈ "${v}" — That's real debugging wisdom. Keep it in your back pocket.`
+};
+function saveReflect(inputId, savedId) {
+  const val = document.getElementById(inputId)?.value;
+  if (val === undefined) return;
+  localStorage.setItem('byte_' + inputId, val);
+  const saved = document.getElementById(savedId);
+  if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
+  const lessonNum = inputId.split('-')[1];
+  const complete = document.getElementById('complete-' + lessonNum);
+  if (complete) {
+    complete.classList.add('show');
+    const jokeEl = document.getElementById('joke-' + lessonNum);
+    if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
+  }
+}
+function loadReflects() {
+  document.querySelectorAll('.reflect-input').forEach(el => {
+    const stored = localStorage.getItem('byte_' + el.id);
+    if (stored) el.value = stored;
+  });
+}
+
+// ── CHEAT SHEET DOWNLOAD ──
+function downloadCheat(num) {
+  const titles = { 1: 'Lesson 1 — Bug Thinking', 2: 'Lesson 2 — Error Messages', 3: 'Lesson 3 — Logic Tracing', 4: 'Lesson 4 — Debug Challenge' };
+  const content = {
+    1: `BYTE'S CODE CITY — CHEAT SHEET\n${titles[1]}\n\nSYNTAX ERROR: typo, can't run\nLOGIC ERROR: runs, wrong result\nRUNTIME ERROR: crashes while running\n\nBYTE'S METHOD:\nRead → Reproduce → Isolate → Fix one thing → Test`,
+    2: `BYTE'S CODE CITY — CHEAT SHEET\n${titles[2]}\n\nReferenceError: variable doesn't exist\nTypeError: wrong type for that action\nSyntaxError: invalid code structure\n\nLine number = hint, not the answer. Check nearby lines too.`,
+    3: `BYTE'S CODE CITY — CHEAT SHEET\n${titles[3]}\n\nLogic tracing: step through code like the computer would\nTrace table: columns = variables, rows = steps\nOff-by-one: check < vs <= and your starting value`,
+    4: `BYTE'S CODE CITY — CHEAT SHEET\n${titles[4]}\n\nBYTE'S FULL CHECKLIST:\n1. Read the error\n2. Identify the type\n3. Go to the line number\n4. Look around it\n5. console.log() to check values\n6. Fix ONE bug at a time\n7. Test after each fix`
+  };
+  const blob = new Blob([content[num]], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `byte-cheatsheet-lesson${num}.txt`;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+// ── UPGRADE / LOGOUT ──
+function goUpgrade() {
+  if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+    window.location.href = 'membership.html';
+  } else {
+    document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
+  }
+}
+function handleLogout() {
+  if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); }
+}
+
+// ══════════════════ IMMERSION LAYER ══════════════════
+
+const FACTS = [
+  "the first computer 'bug' was a real moth found stuck in a Harvard Mark II relay in 1947.",
+  "the average professional developer spends about 35-50% of their time debugging, not writing new code.",
+  "'rubber duck debugging' is a real technique — explaining your code out loud to an object often reveals the bug.",
+  "the term 'glitch' comes from the Yiddish word 'glitshen,' meaning to slip.",
+  "some of the earliest bugs weren't code at all — they were literal hardware short-circuits caused by insects.",
+  "the Y2K bug happened because programmers stored years using only 2 digits to save memory.",
+  "stack overflow (the website) is named after a real type of runtime error — recursion that never stops.",
+  "cats actually do land on their feet almost every time — kind of like Byte always landing on the real bug."
+];
+let factIndex = 0;
+function cycleFacts() {
+  const el = document.getElementById('factTicker');
+  if (!el) return;
+  el.classList.remove('show');
+  setTimeout(() => {
+    el.textContent = FACTS[factIndex % FACTS.length];
+    el.classList.add('show');
+    factIndex++;
+  }, 400);
+}
+cycleFacts();
+setInterval(cycleFacts, 6500);
+
+const JOKES = [
+  "Why did the cat sit on the keyboard? To keep an eye on the mouse.",
+  "There are only 10 types of bugs: the ones you found, and the ones still hiding.",
+  "Debugging is like being a detective in a crime movie where you're also the murderer.",
+  "Why do programmers prefer cats to dogs? Cats already know how to hunt bugs.",
+  "I told the console to log my feelings. It just printed 'undefined.'",
+  "A bug walks into Byte's lab. It doesn't walk out.",
+  "Why did the developer name their cat 'Exception'? Because it kept getting thrown."
+];
+
+let companionClicks = 0;
+function companionClick() {
+  companionClicks++;
+  if (companionClicks === 5 && !localStorage.getItem('byte_egg_found')) {
+    localStorage.setItem('byte_egg_found', '1');
+    showEgg("You found Byte's secret file! Hidden catchphrase unlocked: \"A quiet bug is still a bug.\" ◈");
+  } else if (companionClicks % 5 === 0) {
+    showEgg("Byte tilts her head. You've already found this one — but she's still glad you're here.");
+  }
+}
+function showEgg(text) {
+  const popup = document.getElementById('eggPopup');
+  document.getElementById('eggText').textContent = text;
+  popup.classList.add('show');
+  setTimeout(() => popup.classList.remove('show'), 5000);
+}
+
+function openPortal() { document.getElementById('portalModal').classList.add('open'); }
+function closePortal() { document.getElementById('portalModal').classList.remove('open'); }
+
+let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
+function startAmbient() {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    droneOsc = audioCtx.createOscillator();
+    droneGain = audioCtx.createGain();
+    droneOsc.type = 'sine';
+    droneOsc.frequency.value = 78;
+    droneGain.gain.value = 0.015;
+    droneOsc.connect(droneGain);
+    droneGain.connect(audioCtx.destination);
+    droneOsc.start();
+  } catch (e) { console.warn('Ambient audio unavailable:', e); }
+}
+function toggleSound() {
+  const btn = document.getElementById('soundToggle');
+  if (!audioCtx) return;
+  soundOn = !soundOn;
+  droneGain.gain.value = soundOn ? 0.015 : 0;
+  btn.textContent = soundOn ? '🔊' : '🔇';
+  btn.classList.toggle('muted', !soundOn);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  loadReflects();
+});
+</script>
+</body>
+</html>
