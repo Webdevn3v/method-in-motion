@@ -186,4 +186,898 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .sound-toggle.muted { opacity: 0.5; }
 .portal-peek-btn { position: fixed; top: 74px; right: 20px; z-index: 150; width: 36px; height: 36px; border-radius: 50%; background: rgba(124,77,255,0.12); border: 1px solid rgba(124,77,255,0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; animation: portalPulse 2.5s ease-in-out infinite; }
 @keyframes portalPulse { 0%,100% { box-shadow: 0 0 6px rgba(124,77,255,0.3); } 50% { box-shadow: 0 0 18px rgba(124,77,255,0.7); } }
-.portal-modal { position: fixed; inset: 0; z-index: 300; background: rgba(2,3,8,0.95); display: none; align-items: center; justify-content: center; padding: 2rem; flex-direct
+.portal-modal { position: fixed; inset: 0; z-index: 300; background: rgba(2,3,8,0.95); display: none; align-items: center; justify-content: center; padding: 2rem; flex-direction: column; text-align: center; }
+.portal-modal.open { display: flex; }
+.portal-modal img { max-width: min(90vw, 520px); border-radius: 12px; border: 1px solid rgba(124,77,255,0.3); box-shadow: 0 0 60px rgba(124,77,255,0.4); margin-bottom: 1.2rem; }
+.portal-modal p { font-family: var(--font-mono); font-size: 0.8rem; color: var(--purple); max-width: 420px; margin-bottom: 1.2rem; line-height: 1.6; }
+.portal-close { background: none; border: 1px solid var(--border-bright); color: var(--cyan); font-family: var(--font-mono); font-size: 0.7rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.08em; }
+.egg-popup { position: fixed; bottom: 100px; right: 24px; z-index: 250; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 1.2rem 1.4rem; max-width: 260px; box-shadow: var(--glow-strong); display: none; }
+.egg-popup.show { display: block; animation: eggPop 0.4s ease; }
+@keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+.egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--cyan); margin-bottom: 0.5rem; }
+.egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
+@media (max-width: 768px) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-right { display: none; }
+  .lesson-panel.open { grid-template-columns: 1fr; }
+  .lesson-sidebar { display: none; }
+  .lesson-content { padding: 1.5rem; }
+  .terms-grid { grid-template-columns: 1fr; }
+  .beat-grid { grid-template-columns: 60px repeat(8, 1fr); }
+  .echo-companion { width: 60px; height: 60px; bottom: 16px; right: 16px; }
+  .echo-companion img { width: 60px; height: 60px; }
+  .fact-ticker { display: none; }
+}
+</style>
+</head>
+<body>
+
+<div class="discovery-overlay" id="discoveryOverlay">
+  <div class="echo-mark">◈ ◈ ◈</div>
+  <div class="discovery-title">Echo's Signal Studio</div>
+  <div class="discovery-sub">Sound. Timing. Events.<br>Code that listens, responds, and plays on beat.</div>
+  <button class="discovery-enter-btn" onclick="enterStudio()">Enter the Studio</button>
+</div>
+
+<nav>
+  <a href="index.html" class="nav-logo">MiM</a>
+  <ul class="nav-links">
+    <li><a href="games.html">Games</a></li>
+    <li><a href="pdfs.html">PDFs</a></li>
+    <li><a href="dashboard.html">Dashboard</a></li>
+    <li><a href="index.html#membership">Membership</a></li>
+  </ul>
+  <span class="nav-user" id="navUser"></span>
+  <button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
+</nav>
+
+<button class="portal-peek-btn" onclick="openPortal()" title="???">🌀</button>
+
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-overlay"></div>
+  <div class="hero-left">
+    <div class="hero-eyebrow">◈ &nbsp; Signal DJ &nbsp; · &nbsp; Web Audio API</div>
+    <div class="hero-name">Echo</div>
+    <div class="hero-catchphrase">Sound is my language.</div>
+    <div class="hero-role">The Signal DJ</div>
+    <div class="hero-quote">"<span>Every click is a cue.</span> Every timer is a beat. Code doesn't just run -- it responds."</div>
+    <div class="fact-ticker" id="factTicker"></div>
+    <div class="hero-tiles">
+      <a class="hero-tile" onclick="jumpToLesson(1)">01 Events &amp; Listeners</a>
+      <a class="hero-tile" onclick="jumpToLesson(2)">02 Timers &amp; Timing</a>
+      <a class="hero-tile" onclick="jumpToLesson(3)">03 The Web Audio API</a>
+      <a class="hero-tile" onclick="jumpToLesson(4)">04 Beat Machine</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <img src="echo-motion.gif" alt="Echo" class="hero-gif" id="echoHeroGif" onerror="this.style.opacity='0.3'" onclick="companionClick()" />
+  </div>
+</section>
+
+<div class="lesson-strip">
+  <button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — Events &amp; Listeners</button>
+  <button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Timers &amp; Timing</button>
+  <button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Web Audio API</button>
+  <button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Beat Machine</button>
+</div>
+
+<!-- ===================== LESSON 1 ===================== -->
+<div class="lesson-panel" id="lesson-1">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 01</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(1,'cheat')" id="sb-1-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="echo-game.html" class="sidebar-game-link">◈ Echo's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="content-block active" id="block-1-read">
+      <div class="section-header">Events &amp; Listeners</div>
+      <div class="section-sub">LESSON 01 · FREE</div>
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>Code That Waits</h3>
+        <p>Most of the code you've learned so far runs immediately. But real web pages do something different -- they <strong>wait</strong>. They wait for a click, a keystroke, a scroll. This kind of code is called <strong>event-driven</strong>, and it's how the web actually works.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>What Is an Event?</h3>
+        <p>An <strong>event</strong> is anything that happens in the browser -- a user clicking a button, moving the mouse, pressing a key, or a page finishing loading. The browser tracks all of these moments automatically. Your job is to tell it what to do when one occurs.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>addEventListener</h3>
+        <p>The method <code>addEventListener</code> connects an element to a function. When the event fires, the function runs. The function is called an <strong>event handler</strong> or <strong>callback</strong> -- a function that gets called later, not right now.</p>
+        <div class="code-block"><span class="kw">const</span> btn = <span class="fn">document</span>.<span class="fn">getElementById</span>(<span class="str">"myBtn"</span>); btn.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, <span class="kw">function</span>() { <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Button was clicked!"</span>); });</div>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>The Event Object</h3>
+        <p>When an event fires, the browser passes an <strong>event object</strong> to your handler. It contains information about what happened -- which key was pressed, where the mouse was, which element triggered it.</p>
+        <div class="code-block">btn.<span class="fn">addEventListener</span>(<span class="str">"click"</span>, <span class="kw">function</span>(e) { <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Clicked at X: "</span> + e.<span class="prop">clientX</span>); });</div>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>Common Event Types</h3>
+        <p>The browser supports dozens of event types you'll use often:</p>
+        <div class="code-block"><span class="str">"click"</span> <span class="cm">// user clicks an element</span> <span class="str">"keydown"</span> <span class="cm">// user presses a key</span> <span class="str">"input"</span> <span class="cm">// value in a text field changes</span> <span class="str">"load"</span> <span class="cm">// page or resource finishes loading</span></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-1-terms">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Event <span class="term-arrow">›</span></div><div class="term-def">Something that happens in the browser -- a click, keypress, scroll, or page load.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Event listener <span class="term-arrow">›</span></div><div class="term-def">Code that "listens" for an event on an element and runs a function when it fires.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">addEventListener <span class="term-arrow">›</span></div><div class="term-def">The method used to attach a listener to an element.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Callback function <span class="term-arrow">›</span></div><div class="term-def">A function passed to another function to be called later.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Event object <span class="term-arrow">›</span></div><div class="term-def">The object the browser passes to your handler with details about the event.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Event-driven <span class="term-arrow">›</span></div><div class="term-def">A style of programming where code waits for events before running.</div></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-1-build">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 01 · EVENT TRACKER</div>
+      <div class="build-section">
+        <h3>Click Counter</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">This code tracks clicks. Edit it to also log the X and Y position using the event object <code>e</code>.</p>
+        <div class="editor-wrap">
+          <div class="editor-toolbar"><span>JAVASCRIPT · EVENTS</span><button class="editor-run-btn" onclick="runEditor('l1')">▶ RUN</button></div>
+          <textarea class="code-editor" id="editor-l1">let clicks = 0;
+function handleClick(e) {
+  clicks++;
+  console.log("Click #" + clicks);
+  // Add: log e.clientX and e.clientY
+}
+handleClick({ clientX: 120, clientY: 340 });
+handleClick({ clientX: 88, clientY: 200 });</textarea>
+        </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l1">Output will appear here...</div>
+      </div>
+      <br>
+      <div class="quiz-card">
+        <div class="quiz-q">What does <code>addEventListener("click", myFn)</code> do?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'It doesn\'t run immediately -- it registers for later.')">Runs myFn immediately</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. It registers myFn to be called when a click occurs.')">Registers myFn to run when the element is clicked</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'It attaches to a specific element, not the whole page.')">Listens for clicks anywhere on the page</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-0"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-1-reflect">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Think of a website you use often. What events do you think are being listened for?</div>
+        <textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
+          <span class="reflect-saved" id="saved-1-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete" id="complete-1">
+        <h3>◈ &nbsp; Lesson 1 Complete</h3>
+        <p>Events. Listeners. Callbacks. The web is always listening. Now you know how to respond.</p>
+        <div class="lesson-joke" id="joke-1"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-1-cheat">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 01 · EVENTS &amp; LISTENERS</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 1 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item"><div class="cheat-term">addEventListener</div><div class="cheat-desc">el.addEventListener("click", fn)</div></div>
+          <div class="cheat-item"><div class="cheat-term">Event object</div><div class="cheat-desc">function(e) { e.clientX }</div></div>
+          <div class="cheat-item"><div class="cheat-term">click / keydown / input / load</div><div class="cheat-desc">Common event types</div></div>
+        </div>
+        <button class="cheat-download-btn" onclick="downloadCheat(1)">⬇ Download Cheat Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 2 ===================== -->
+<div class="lesson-panel" id="lesson-2">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 02</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(2,'cheat')" id="sb-2-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="echo-game.html" class="sidebar-game-link">◈ Echo's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-2">
+      <div class="locked-icon">🔒</div>
+      <h2>Sparks Membership Required</h2>
+      <p>Lesson 2 is available to Sparks members and above.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+    <div class="content-block" id="block-2-read" style="display:none">
+      <div class="section-header">Timers &amp; Timing</div>
+      <div class="section-sub">LESSON 02 · SPARKS+</div>
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>Time Is an Event Too</h3>
+        <p>Not all events come from users. Some come from <strong>time itself</strong>. JavaScript can schedule code to run after a delay, or on a repeating interval.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>setTimeout -- Run Once After a Delay</h3>
+        <p><code>setTimeout</code> runs a function <strong>one time</strong>, after a specified number of milliseconds.</p>
+        <div class="code-block"><span class="fn">setTimeout</span>(<span class="kw">function</span>() { <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"3 seconds later..."</span>); }, <span class="num">3000</span>);</div>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>setInterval -- Run Repeatedly</h3>
+        <p><code>setInterval</code> runs a function <strong>over and over</strong> at a fixed interval until you stop it.</p>
+        <div class="code-block"><span class="kw">const</span> timer = <span class="fn">setInterval</span>(myFn, <span class="num">500</span>);</div>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>clearInterval -- Stopping the Loop</h3>
+        <p>Always save the return value of <code>setInterval</code> so you can pass it to <code>clearInterval</code>.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>Milliseconds and the DJ's Grid</h3>
+        <p>At 120 BPM, one beat lasts <strong>500ms</strong>. Formula: <code>60000 / BPM</code>.</p>
+      </div>
+    </div>
+    <div class="content-block" id="block-2-terms" style="display:none">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">setTimeout <span class="term-arrow">›</span></div><div class="term-def">Runs a function once, after a delay in milliseconds.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">setInterval <span class="term-arrow">›</span></div><div class="term-def">Runs a function repeatedly until stopped.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">clearInterval <span class="term-arrow">›</span></div><div class="term-def">Stops a setInterval.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">BPM <span class="term-arrow">›</span></div><div class="term-def">Beats Per Minute. Convert to ms: 60000 / BPM.</div></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-2-build" style="display:none">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 02 · TEMPO CALCULATOR</div>
+      <div class="build-section">
+        <h3>BPM to Milliseconds</h3>
+        <div class="editor-wrap">
+          <div class="editor-toolbar"><span>JAVASCRIPT · TIMERS</span><button class="editor-run-btn" onclick="runEditor('l2')">▶ RUN</button></div>
+          <textarea class="code-editor" id="editor-l2">function bpmToMs(bpm) {
+  return 0; // replace this
+}
+let tempos = [80, 120, 160];
+for (let i = 0; i < tempos.length; i++) {
+  console.log(tempos[i] + " BPM = " + bpmToMs(tempos[i]) + "ms");
+}</textarea>
+        </div>
+        <div class="preview-label">CONSOLE OUTPUT</div>
+        <div class="console-output" id="output-l2">Output will appear here...</div>
+      </div>
+      <br>
+      <div class="quiz-card">
+        <div class="quiz-q">At 120 BPM, how many milliseconds is one beat?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, '60000 / 120 = 500, not 600.')">600ms</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. 60000 ÷ 120 = 500ms.')">500ms</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'That would be nearly 500 BPM.')">120ms</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-2"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-2-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">Where else on the web do you see timers in action?</div>
+        <textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
+          <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete show" id="complete-2">
+        <h3>◈ &nbsp; Lesson 2 Complete</h3>
+        <p>setTimeout. setInterval. clearInterval. You control time now.</p>
+        <div class="lesson-joke" id="joke-2"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-2-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 02 · TIMERS &amp; TIMING</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 2 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item"><div class="cheat-term">setTimeout(fn, ms)</div><div class="cheat-desc">Runs once after delay</div></div>
+          <div class="cheat-item"><div class="cheat-term">setInterval(fn, ms)</div><div class="cheat-desc">Repeats until cleared</div></div>
+          <div class="cheat-item"><div class="cheat-term">BPM formula</div><div class="cheat-desc">60000 / BPM = ms per beat</div></div>
+        </div>
+        <button class="cheat-download-btn" onclick="downloadCheat(2)">⬇ Download Cheat Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 3 ===================== -->
+<div class="lesson-panel" id="lesson-3">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 03</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(3,'cheat')" id="sb-3-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="echo-game.html" class="sidebar-game-link">◈ Echo's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-3">
+      <div class="locked-icon">🔒</div>
+      <h2>Builders Membership Required</h2>
+      <p>Lesson 3 is available to Builders members and above.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+    <div class="content-block" id="block-3-read" style="display:none">
+      <div class="section-header">The Web Audio API</div>
+      <div class="section-sub">LESSON 03 · BUILDERS+</div>
+      <div class="read-card">
+        <div class="read-card-num">01 / 05</div>
+        <h3>Browsers Can Make Sound</h3>
+        <p>The <strong>Web Audio API</strong> is a built-in browser tool for creating and controlling audio with JavaScript. No plugins needed.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">02 / 05</div>
+        <h3>AudioContext -- The Studio</h3>
+        <p>Everything happens inside an <strong>AudioContext</strong>. Think of it as the mixing board.</p>
+        <div class="code-block"><span class="kw">const</span> ctx = <span class="kw">new</span> <span class="fn">AudioContext</span>();</div>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">03 / 05</div>
+        <h3>OscillatorNode -- Generating Tone</h3>
+        <p>An <strong>OscillatorNode</strong> generates a pure tone. Frequency is measured in Hz -- 440 Hz is the note A4.</p>
+        <div class="code-block"><span class="kw">const</span> osc = ctx.<span class="fn">createOscillator</span>(); osc.<span class="prop">frequency</span>.<span class="prop">value</span> = <span class="num">440</span>; osc.<span class="fn">connect</span>(ctx.<span class="prop">destination</span>); osc.<span class="fn">start</span>();</div>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">04 / 05</div>
+        <h3>GainNode -- Controlling Volume</h3>
+        <p>A <strong>GainNode</strong> controls the volume of a signal. 1 = full volume, 0 = silent.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">05 / 05</div>
+        <h3>The Audio Signal Chain</h3>
+        <p>Signals flow through a <strong>chain of nodes</strong> -- source, processing, then destination.</p>
+      </div>
+    </div>
+    <div class="content-block" id="block-3-terms" style="display:none">
+      <div class="section-header">Key Terms</div>
+      <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+      <div class="terms-grid">
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Web Audio API <span class="term-arrow">›</span></div><div class="term-def">Browser system for creating and controlling audio with JavaScript.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">AudioContext <span class="term-arrow">›</span></div><div class="term-def">The main object all audio nodes connect through.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">OscillatorNode <span class="term-arrow">›</span></div><div class="term-def">Generates a pure tone at a set frequency.</div></div>
+        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">GainNode <span class="term-arrow">›</span></div><div class="term-def">Controls the volume of a signal.</div></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-3-build" style="display:none">
+      <div class="section-header">Build It</div>
+      <div class="section-sub">LESSON 03 · PLAY A NOTE</div>
+      <div class="build-section">
+        <h3>Tone Generator</h3>
+        <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;">Click to play a tone using real Web Audio API.</p>
+        <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+          <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;" onclick="playNote(261.6,'sine',0.4)">C4 · Sine</button>
+          <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--blue);" onclick="playNote(329.6,'square',0.3)">E4 · Square</button>
+          <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--purple);" onclick="playNote(392,'sawtooth',0.25)">G4 · Sawtooth</button>
+        </div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-q">What does a GainNode control?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Pitch is controlled by the OscillatorNode.')">The pitch of the sound</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. GainNode controls amplitude -- how loud it is.')">The volume (amplitude) of the signal</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Wave type is set on the OscillatorNode.')">The wave shape</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-4"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-3-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">What kind of web project would you want to build using the Web Audio API?</div>
+        <textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
+          <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete show" id="complete-3">
+        <h3>◈ &nbsp; Lesson 3 Complete</h3>
+        <p>AudioContext. Oscillators. Gain. Signal chains. The studio is open.</p>
+        <div class="lesson-joke" id="joke-3"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-3-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 03 · WEB AUDIO API</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 3 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item"><div class="cheat-term">AudioContext</div><div class="cheat-desc">const ctx = new AudioContext()</div></div>
+          <div class="cheat-item"><div class="cheat-term">OscillatorNode</div><div class="cheat-desc">ctx.createOscillator()</div></div>
+          <div class="cheat-item"><div class="cheat-term">GainNode</div><div class="cheat-desc">ctx.createGain()</div></div>
+          <div class="cheat-item"><div class="cheat-term">A4 = 440 Hz</div><div class="cheat-desc">Concert A</div></div>
+        </div>
+        <button class="cheat-download-btn" onclick="downloadCheat(3)">⬇ Download Cheat Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== LESSON 4 ===================== -->
+<div class="lesson-panel" id="lesson-4">
+  <aside class="lesson-sidebar">
+    <div class="sidebar-label">Lesson 04</div>
+    <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+    <button class="sidebar-nav-btn" onclick="showBlock(4,'cheat')" id="sb-4-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
+    <div class="sidebar-divider"></div>
+    <a href="echo-game.html" class="sidebar-game-link">◈ Echo's Game World</a>
+  </aside>
+  <div class="lesson-content">
+    <div class="locked-panel" id="lock-4">
+      <div class="locked-icon">🔒</div>
+      <h2>Coders Membership Required</h2>
+      <p>Lesson 4 is available to Coders members only.</p>
+      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+    </div>
+    <div class="content-block" id="block-4-read" style="display:none">
+      <div class="section-header">Beat Machine</div>
+      <div class="section-sub">LESSON 04 · CODERS</div>
+      <div class="read-card">
+        <div class="read-card-num">01 / 04</div>
+        <h3>What Is a Beat Machine?</h3>
+        <p>A <strong>step sequencer</strong> divides time into equal steps -- usually 16 per bar -- and plays a sound at each active step.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">02 / 04</div>
+        <h3>The Data Behind the Grid</h3>
+        <p>Each row is an <strong>array of booleans</strong> -- 16 values, each true (on) or false (off).</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">03 / 04</div>
+        <h3>The Sequencer Loop</h3>
+        <p>A <code>setInterval</code> advances a step counter, checking each row for that step.</p>
+      </div>
+      <div class="read-card">
+        <div class="read-card-num">04 / 04</div>
+        <h3>Click Events Toggle the Grid</h3>
+        <p>Each button's click event <strong>toggles its boolean</strong> from false to true or back.</p>
+      </div>
+    </div>
+    <div class="content-block" id="block-4-build" style="display:none">
+      <div class="section-header">Beat Machine</div>
+      <div class="section-sub">LESSON 04 · BUILD THE BEAT</div>
+      <div class="beat-machine">
+        <h3>◈ Echo's Step Sequencer</h3>
+        <div class="beat-grid" id="beatGrid"></div>
+        <div class="beat-controls">
+          <button class="beat-play-btn" id="beatPlayBtn" onclick="toggleBeat()">▶ PLAY</button>
+          <div class="beat-tempo"><span>BPM</span><input type="range" id="tempoSlider" min="60" max="180" value="120" oninput="updateTempo(this.value)" /><span id="tempoVal">120</span></div>
+          <button class="beat-play-btn" style="background:rgba(0,229,255,0.15);color:var(--cyan);border:1px solid var(--cyan);" onclick="clearBeat()">✕ CLEAR</button>
+          <div class="beat-step-indicator" id="stepIndicator">STEP: --</div>
+        </div>
+      </div>
+      <div class="quiz-card">
+        <div class="quiz-q">In the beat machine, what does toggling a grid button actually change?</div>
+        <div class="quiz-options">
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The CSS class just reflects the underlying data.')">The button's CSS class only</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The boolean in the grid array is flipped.')">A boolean in the grid data array</button>
+          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The sound plays on the next sequencer tick.')">A sound plays immediately</button>
+        </div>
+        <div class="quiz-feedback" id="qfb-6"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-4-reflect" style="display:none">
+      <div class="section-header">Reflect</div>
+      <div class="section-sub">LESSON 04 · YOUR THOUGHTS</div>
+      <div class="reflect-prompt">
+        <div class="reflect-q">The beat machine uses events, timers, and audio all at once. Describe how they work together.</div>
+        <textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
+        <div style="display:flex;align-items:center;gap:1rem;">
+          <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
+          <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
+        </div>
+      </div>
+      <div class="lesson-complete show" id="complete-4">
+        <h3>◈ &nbsp; Echo's Studio Complete</h3>
+        <p>Events. Timers. Audio. Beat machines. You heard the signal. Now you know how to send one.</p>
+        <div class="lesson-joke" id="joke-4"></div>
+      </div>
+    </div>
+    <div class="content-block" id="block-4-cheat" style="display:none">
+      <div class="section-header">Cheat Sheet</div>
+      <div class="section-sub">LESSON 04 · BEAT MACHINE</div>
+      <div class="cheat-card">
+        <h3>◈ Lesson 4 Reference</h3>
+        <div class="cheat-items">
+          <div class="cheat-item"><div class="cheat-term">Step sequencer</div><div class="cheat-desc">Timer advances through a grid, playing active steps</div></div>
+          <div class="cheat-item"><div class="cheat-term">Grid data</div><div class="cheat-desc">2D array of booleans</div></div>
+          <div class="cheat-item"><div class="cheat-term">Step wrap</div><div class="cheat-desc">step = (step + 1) % 16</div></div>
+        </div>
+        <button class="cheat-download-btn" onclick="downloadCheat(4)">⬇ Download Cheat Sheet</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="echo-companion" id="echoCompanion">
+  <img src="echo-idle.gif" alt="Echo" title="Echo is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
+</div>
+
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+
+<div class="portal-modal" id="portalModal">
+  <img src="echo-mim-underground-portal.png" alt="MiM Underground" onerror="this.style.display='none'">
+  <p>MiM Underground — signal strength: -18.4 LUFS. Echo mixes down here when the beat needs work. You're not supposed to see this yet.</p>
+  <button class="portal-close" onclick="closePortal()">Close the Portal</button>
+</div>
+
+<div class="egg-popup" id="eggPopup">
+  <h4>◈ Secret Found!</h4>
+  <p id="eggText"></p>
+</div>
+
+<script type="module" src="auth-init.js"></script>
+<script>
+let currentLesson = null;
+let currentTier = null;
+const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
+function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
+
+window.setNavUser = function(email) {
+  const u = document.getElementById('navUser');
+  const b = document.getElementById('navLogout');
+  if (u) { u.textContent = email; u.style.display = 'inline'; }
+  if (b) b.style.display = 'inline-block';
+};
+
+window.handleTierUnlock = function(tier) {
+  currentTier = tier;
+  const lvl = tierLevel(tier);
+  if (lvl >= tierLevel('sparks')) {
+    document.getElementById('lock-2').style.display = 'none';
+    ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-2-' + b); if (el) el.style.removeProperty('display'); });
+  }
+  if (lvl >= tierLevel('builders')) {
+    document.getElementById('lock-3').style.display = 'none';
+    ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-3-' + b); if (el) el.style.removeProperty('display'); });
+  }
+  if (lvl >= tierLevel('coders')) {
+    document.getElementById('lock-4').style.display = 'none';
+    ['read','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-4-' + b); if (el) el.style.removeProperty('display'); });
+  }
+  loadReflects();
+};
+
+function enterStudio() {
+  document.getElementById('discoveryOverlay').classList.add('hidden');
+  document.getElementById('soundToggle').classList.add('visible');
+  startAmbient();
+}
+
+window.addEventListener('scroll', function () {
+  const companion = document.getElementById('echoCompanion');
+  if (!companion) return;
+  if (window.scrollY > window.innerHeight * 0.6) companion.classList.add('visible');
+  else companion.classList.remove('visible');
+}, { passive: true });
+
+function openLesson(n) {
+  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('lesson-' + n);
+  const tab = document.getElementById('tab-' + n);
+  if (panel) panel.classList.add('open');
+  if (tab) tab.classList.add('active');
+  currentLesson = n;
+  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
+
+function showBlock(lesson, block) {
+  const panel = document.getElementById('lesson-' + lesson);
+  if (!panel) return;
+  panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+  panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+  const target = document.getElementById('block-' + lesson + '-' + block);
+  if (target) target.classList.add('active');
+  const btn = document.getElementById('sb-' + lesson + '-' + block);
+  if (btn) btn.classList.add('active');
+}
+
+function toggleTerm(card) { card.classList.toggle('open'); }
+
+function checkQuiz(btn, correct, feedback) {
+  const opts = btn.closest('.quiz-options');
+  if (opts.querySelector('.correct')) return;
+  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+  if (correct) {
+    btn.classList.add('correct');
+    if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
+  } else {
+    btn.classList.add('wrong');
+    if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
+    setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
+  }
+}
+
+const REFLECT_RESPONSES = {
+  'ref-1-1': v => `◈ "${v}" — Good ear. The web is always listening, once you know where to look.`,
+  'ref-2-1': v => `◈ "${v}" — Timing is everywhere once you notice it.`,
+  'ref-3-1': v => `◈ "${v}" — That's a great use of Web Audio. Build it.`,
+  'ref-4-1': v => `◈ "${v}" — Events, timers, and audio in sync — that's the whole signal chain.`
+};
+function saveReflect(inputId, savedId) {
+  const val = document.getElementById(inputId)?.value;
+  if (val === undefined) return;
+  localStorage.setItem('echo_' + inputId, val);
+  const saved = document.getElementById(savedId);
+  if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
+  const lessonNum = inputId.split('-')[1];
+  const complete = document.getElementById('complete-' + lessonNum);
+  if (complete) {
+    complete.classList.add('show');
+    const jokeEl = document.getElementById('joke-' + lessonNum);
+    if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
+  }
+}
+function loadReflects() {
+  document.querySelectorAll('.reflect-input').forEach(el => {
+    const stored = localStorage.getItem('echo_' + el.id);
+    if (stored) el.value = stored;
+  });
+}
+
+function runEditor(id) {
+  const code = document.getElementById('editor-' + id)?.value || '';
+  const outputEl = document.getElementById('output-' + id);
+  if (!outputEl) return;
+  const logs = [];
+  const fakeCon = { log: (...a) => logs.push(a.join(' ')) };
+  try {
+    const fn = new Function('console', code);
+    fn(fakeCon);
+    outputEl.textContent = logs.join('\n') || '(no output)';
+    outputEl.style.color = '#00e5ff';
+  } catch(e) {
+    outputEl.textContent = 'Error: ' + e.message;
+    outputEl.style.color = '#ff6b6b';
+  }
+}
+
+let audioCtx = null;
+function getAudioCtx() {
+  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  if (audioCtx.state === 'suspended') audioCtx.resume();
+  return audioCtx;
+}
+function playNote(freq, type, duration) {
+  try {
+    const ctx = getAudioCtx();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.frequency.value = freq;
+    osc.type = type || 'sine';
+    gain.gain.setValueAtTime(0.4, ctx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + (duration || 0.3));
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(ctx.currentTime);
+    osc.stop(ctx.currentTime + (duration || 0.3));
+  } catch(e) { console.warn('Audio error:', e); }
+}
+
+const ROWS = [
+  { label: 'KICK', freq: 80, type: 'sine', dur: 0.2 },
+  { label: 'SNARE', freq: 250, type: 'square', dur: 0.1 },
+  { label: 'HIHAT', freq: 800, type: 'sawtooth', dur: 0.06 },
+  { label: 'CLAP', freq: 400, type: 'triangle', dur: 0.12 },
+];
+const STEPS = 16;
+let beatGrid = Array.from({ length: ROWS.length }, () => new Array(STEPS).fill(false));
+let beatPlaying = false;
+let beatInterval = null;
+let beatStep = 0;
+let beatBpm = 120;
+function buildBeatGrid() {
+  const container = document.getElementById('beatGrid');
+  if (!container) return;
+  container.innerHTML = '';
+  ROWS.forEach((row, r) => {
+    const label = document.createElement('div');
+    label.className = 'beat-row-label';
+    label.textContent = row.label;
+    container.appendChild(label);
+    for (let s = 0; s < STEPS; s++) {
+      const btn = document.createElement('button');
+      btn.className = 'beat-btn';
+      btn.dataset.row = r;
+      btn.dataset.step = s;
+      btn.onclick = function() {
+        beatGrid[r][s] = !beatGrid[r][s];
+        btn.classList.toggle('active', beatGrid[r][s]);
+      };
+      container.appendChild(btn);
+    }
+  });
+}
+function playBeatSound(row) {
+  const r = ROWS[row];
+  playNote(r.freq, r.type, r.dur);
+}
+function tickBeat() {
+  document.querySelectorAll('.beat-btn.playing').forEach(b => b.classList.remove('playing'));
+  for (let r = 0; r < ROWS.length; r++) {
+    if (beatGrid[r][beatStep]) playBeatSound(r);
+    const btn = document.querySelector(`.beat-btn[data-row="${r}"][data-step="${beatStep}"]`);
+    if (btn) btn.classList.add('playing');
+  }
+  const ind = document.getElementById('stepIndicator');
+  if (ind) ind.textContent = 'STEP: ' + (beatStep + 1);
+  beatStep = (beatStep + 1) % STEPS;
+}
+function toggleBeat() {
+  const btn = document.getElementById('beatPlayBtn');
+  if (beatPlaying) {
+    clearInterval(beatInterval);
+    beatInterval = null;
+    beatPlaying = false;
+    beatStep = 0;
+    document.querySelectorAll('.beat-btn.playing').forEach(b => b.classList.remove('playing'));
+    if (btn) btn.textContent = '▶ PLAY';
+    const ind = document.getElementById('stepIndicator');
+    if (ind) ind.textContent = 'STEP: --';
+  } else {
+    getAudioCtx();
+    beatPlaying = true;
+    const ms = (60000 / beatBpm) / 4;
+    beatInterval = setInterval(tickBeat, ms);
+    if (btn) btn.textContent = '■ STOP';
+  }
+}
+function updateTempo(val) {
+  beatBpm = parseInt(val);
+  document.getElementById('tempoVal').textContent = val;
+  if (beatPlaying) {
+    clearInterval(beatInterval);
+    const ms = (60000 / beatBpm) / 4;
+    beatInterval = setInterval(tickBeat, ms);
+  }
+}
+function clearBeat() {
+  beatGrid = Array.from({ length: ROWS.length }, () => new Array(STEPS).fill(false));
+  document.querySelectorAll('.beat-btn').forEach(b => { b.classList.remove('active'); b.classList.remove('playing'); });
+}
+
+function downloadCheat(num) {
+  const titles = { 1: 'Lesson 1 — Events & Listeners', 2: 'Lesson 2 — Timers & Timing', 3: 'Lesson 3 — Web Audio API', 4: 'Lesson 4 — Beat Machine' };
+  const content = {
+    1: `ECHO'S SIGNAL STUDIO — CHEAT SHEET\n${titles[1]}\n\naddEventListener(event, fn)\nEvent object: function(e) { e.clientX }\nCommon events: click, keydown, input, load`,
+    2: `ECHO'S SIGNAL STUDIO — CHEAT SHEET\n${titles[2]}\n\nsetTimeout(fn, ms) — once\nsetInterval(fn, ms) — repeating\nclearInterval(id) — stops it\nBPM formula: 60000 / BPM = ms per beat`,
+    3: `ECHO'S SIGNAL STUDIO — CHEAT SHEET\n${titles[3]}\n\nconst ctx = new AudioContext()\nctx.createOscillator() — tone\nctx.createGain() — volume\nA4 = 440 Hz`,
+    4: `ECHO'S SIGNAL STUDIO — CHEAT SHEET\n${titles[4]}\n\nStep sequencer: timer advances through a grid\nGrid data: 2D array of booleans\nstep = (step + 1) % 16`
+  };
+  const blob = new Blob([content[num]], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `echo-cheatsheet-lesson${num}.txt`;
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+
+function goUpgrade() {
+  if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+    window.location.href = 'membership.html';
+  } else {
+    document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
+  }
+}
+function handleLogout() {
+  if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); }
+}
+
+// ══════════════════ IMMERSION LAYER ══════════════════
+
+const FACTS = [
+  "the Web Audio API can generate sound entirely from code — no audio files needed at all.",
+  "the human ear can generally hear frequencies from 20 Hz to 20,000 Hz.",
+  "concert A (440 Hz) wasn't standardized worldwide until 1955.",
+  "a 'sine wave' is the smoothest, purest tone possible — no harmonics, just one frequency.",
+  "the term 'debounce' comes from electrical engineering — it originally described filtering out noisy switch signals.",
+  "the first drum machine, the Rhythmicon, was built in 1931 — decades before computers existed.",
+  "milliseconds matter: human reaction time to sound is about 150ms, faster than reaction to light.",
+  "'echo' as a sound effect is really just a delayed, repeated copy of the original signal — same idea as a setTimeout."
+];
+let factIndex = 0;
+function cycleFacts() {
+  const el = document.getElementById('factTicker');
+  if (!el) return;
+  el.classList.remove('show');
+  setTimeout(() => {
+    el.textContent = FACTS[factIndex % FACTS.length];
+    el.classList.add('show');
+    factIndex++;
+  }, 400);
+}
+cycleFacts();
+setInterval(cycleFacts, 6500);
+
+const JOKES = [
+  "Why did the sound wave break up with the speaker? It needed some space.",
+  "I made a joke about UDP but I'm not sure you got it.",
+  "Why don't developers like silence? Because there's always a bug making noise somewhere.",
+  "Echo told a joke. It told it again. And again.",
+  "Why did the oscillator go to therapy? It had too many unresolved frequencies.",
+  "What's a DJ's favorite type of loop? An infinite one — as long as someone remembers clearInterval.",
+  "Why was the beat machine so calm? Nothing throws it off — it's always on tempo."
+];
+
+let companionClicks = 0;
+function companionClick() {
+  companionClicks++;
+  if (companionClicks === 5 && !localStorage.getItem('echo_egg_found')) {
+    localStorage.setItem('echo_egg_found', '1');
+    showEgg("You found Echo's hidden track! Secret catchphrase unlocked: \"Good sound. Good mood. Good code.\" ◈");
+  } else if (companionClicks % 5 === 0) {
+    showEgg("Echo nods to the beat. You've already found this one — but the signal's always live.");
+  }
+}
+function showEgg(text) {
+  const popup = document.getElementById('eggPopup');
+  document.getElementById('eggText').textContent = text;
+  popup.classList.add('show');
+  setTimeout(() => popup.classList.remove('show'), 5000);
+}
+
+function openPortal() { document.getElementById('portalModal').classList.add('open'); }
+function closePortal() { document.getElementById('portalModal').classList.remove('open'); }
+
+let ambientCtx = null, droneOsc = null, droneGain = null, soundOn = true;
+function startAmbient() {
+  try {
+    ambientCtx = new (window.AudioContext || window.webkitAudioContext)();
+    droneOsc = ambientCtx.createOscillator();
+    droneGain = ambientCtx.createGain();
+    droneOsc.type = 'sine';
+    droneOsc.frequency.value = 85;
+    droneGain.gain.value = 0.015;
+    droneOsc.connect(droneGain);
+    droneGain.connect(ambientCtx.destination);
+    droneOsc.start();
+  } catch (e) { console.warn('Ambient audio unavailable:', e); }
+}
+function toggleSound() {
+  const btn = document.getElementById('soundToggle');
+  if (!ambientCtx) return;
+  soundOn = !soundOn;
+  droneGain.gain.value = soundOn ? 0.015 : 0;
+  btn.textContent = soundOn ? '🔊' : '🔇';
+  btn.classList.toggle('muted', !soundOn);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  buildBeatGrid();
+  loadReflects();
+});
+</script>
+</body>
+</html>
