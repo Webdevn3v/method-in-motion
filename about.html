@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-DJ3Q488K7W');
+</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About | Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --pink: #ff6baa;
+  --purple: #c66bff;
+  --cyan: #00e5ff;
+  --bg: #05040a;
+  --bg-card: #100c1c;
+  --bg-panel: #0a0714;
+  --text: #f0eaff;
+  --text-dim: #a89fc0;
+  --text-muted: #4a3f6a;
+  --border: rgba(198,107,255,0.15);
+  --border-bright: rgba(198,107,255,0.4);
+  --glow: 0 0 24px rgba(198,107,255,0.35);
+  --font-display: 'Orbitron', monospace;
+  --font-body: 'Space Grotesk', sans-serif;
+  --font-mono: 'Space Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; line-height: 1.7; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(5,4,10,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
+.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--pink); text-decoration: none; letter-spacing: 0.1em; }
+.nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
+.nav-links a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--pink); }
+
+/* HERO */
+.hero { margin-top: 60px; padding: 6rem 2rem 5rem; text-align: center; position: relative; overflow: hidden; }
+.hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 20%, rgba(198,107,255,0.14) 0%, transparent 70%); pointer-events: none; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.28em; text-transform: uppercase; color: var(--purple); margin-bottom: 1.2rem; }
+.hero-title { font-family: var(--font-display); font-size: clamp(2.4rem, 6vw, 4rem); font-weight: 900; line-height: 1.05; margin-bottom: 1.2rem; text-shadow: var(--glow); }
+.hero-title span { background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.hero-sub { font-size: 1.1rem; color: var(--text-dim); max-width: 600px; margin: 0 auto; line-height: 1.8; }
+.hero-slogan { font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cyan); margin-top: 2rem; }
+
+/* SECTIONS */
+.section { max-width: 860px; margin: 0 auto; padding: 4rem 2rem; }
+.section-tag { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.22em; text-transform: uppercase; color: var(--pink); margin-bottom: 1rem; }
+.section-title { font-family: var(--font-display); font-size: clamp(1.6rem, 3.5vw, 2.4rem); font-weight: 800; margin-bottom: 1.5rem; color: #fff; }
+.section-body p { font-size: 1rem; color: var(--text-dim); margin-bottom: 1.2rem; line-height: 1.85; }
+.section-body strong { color: var(--text); font-weight: 700; }
+
+/* PULL QUOTE */
+.pull-quote { text-align: center; padding: 3rem 2rem; max-width: 700px; margin: 1rem auto 3rem; }
+.pull-quote p { font-family: var(--font-display); font-size: clamp(1.3rem, 3vw, 1.9rem); font-weight: 700; line-height: 1.4; color: #fff; }
+.pull-quote p span { color: var(--pink); }
+
+/* PHILOSOPHY GRID */
+.philosophy-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin-top: 2rem; }
+@media (max-width: 700px) { .philosophy-grid { grid-template-columns: 1fr; } }
+.phil-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 14px; padding: 1.8rem; transition: all 0.3s ease; }
+.phil-card:hover { border-color: var(--border-bright); box-shadow: var(--glow); transform: translateY(-3px); }
+.phil-icon { font-size: 1.6rem; margin-bottom: 0.9rem; }
+.phil-card h3 { font-family: var(--font-display); font-size: 1rem; color: var(--pink); margin-bottom: 0.7rem; font-weight: 700; }
+.phil-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.7; }
+
+/* CITIZENS SECTION */
+.citizens-block { background: linear-gradient(135deg, rgba(198,107,255,0.06), rgba(255,107,170,0.05)); border: 1px solid var(--border); border-radius: 20px; padding: 3rem 2.5rem; margin: 2rem 0; }
+.citizens-compare { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2rem; }
+@media (max-width: 700px) { .citizens-compare { grid-template-columns: 1fr; } }
+.compare-col { }
+.compare-label { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.15em; text-transform: uppercase; margin-bottom: 1rem; }
+.compare-col.old .compare-label { color: var(--text-muted); }
+.compare-col.new .compare-label { color: var(--cyan); }
+.compare-line { font-size: 0.92rem; padding: 0.7rem 0; border-bottom: 1px solid var(--border); color: var(--text-dim); }
+.compare-col.old .compare-line { text-decoration: line-through; opacity: 0.55; }
+.compare-col.new .compare-line { color: var(--text); font-weight: 500; }
+
+/* BUILT BY KIDS */
+.built-examples { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
+.built-tag { background: rgba(0,229,255,0.08); border: 1px solid rgba(0,229,255,0.25); color: var(--cyan); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.5rem 1rem; border-radius: 100px; }
+
+/* CHARACTERS STRIP */
+.chars-strip { display: flex; gap: 1rem; overflow-x: auto; padding: 1rem 0 0.5rem; scrollbar-width: none; }
+.chars-strip::-webkit-scrollbar { display: none; }
+.char-chip { flex-shrink: 0; background: var(--bg-card); border: 1px solid var(--border); border-radius: 12px; padding: 1rem 1.4rem; min-width: 140px; text-align: center; transition: all 0.25s ease; }
+.char-chip:hover { border-color: var(--border-bright); transform: translateY(-2px); }
+.char-chip .mark { font-size: 1.3rem; margin-bottom: 0.4rem; }
+.char-chip .name { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: #fff; }
+.char-chip .role { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); margin-top: 0.2rem; }
+
+/* VISION QUOTE FINAL */
+.vision-final { text-align: center; padding: 5rem 2rem; }
+.vision-final .parent-quote { font-family: var(--font-display); font-size: clamp(1.2rem, 3vw, 1.7rem); font-weight: 700; color: var(--text-muted); line-height: 1.5; text-decoration: line-through; opacity: 0.4; margin-bottom: 1.5rem; }
+.vision-final .real-quote { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.4rem); font-weight: 900; line-height: 1.35; }
+.vision-final .real-quote span { background: linear-gradient(135deg, var(--pink), var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+
+/* CTA */
+.cta-block { text-align: center; padding: 4rem 2rem 6rem; }
+.cta-btn { display: inline-flex; align-items: center; gap: 0.6rem; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #05040a; font-family: var(--font-display); font-weight: 700; font-size: 0.85rem; padding: 1rem 2.4rem; border-radius: 100px; text-decoration: none; letter-spacing: 0.05em; transition: transform 0.2s ease; }
+.cta-btn:hover { transform: translateY(-2px); }
+.cta-sub { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); margin-top: 1rem; letter-spacing: 0.08em; }
+
+@media (max-width: 700px) {
+  .hero { padding: 4rem 1.5rem 3rem; }
+  .section { padding: 3rem 1.5rem; }
+  .citizens-block { padding: 2rem 1.5rem; }
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="nav-logo">MiM</a>
+  <ul class="nav-links">
+    <li><a href="characters.html">Characters</a></li>
+    <li><a href="games.html">Games</a></li>
+    <li><a href="library.html">Library</a></li>
+    <li><a href="about.html">About</a></li>
+  </ul>
+</nav>
+
+<section class="hero">
+  <div class="hero-eyebrow">✦ Why Method in Motion Exists</div>
+  <h1 class="hero-title">A universe that<br><span>teaches kids to code</span> —<br>not a curriculum that happens to be online.</h1>
+  <p class="hero-sub">Method in Motion isn't trying to compete with coding platforms. It's building something coding platforms were never trying to build: a place kids want to come back to.</p>
+  <div class="hero-slogan">Learn · Create · Explore</div>
+</section>
+
+<div class="pull-quote">
+  <p>"The dream isn't for parents to say <span>this is the best coding curriculum.</span> The dream is for parents to say <span>my kid can't stop playing Method in Motion</span> — and somehow they're learning to code."</p>
+</div>
+
+<section class="section">
+  <div class="section-tag">The Shift</div>
+  <h2 class="section-title">Coding is the language. The world is the point.</h2>
+  <div class="section-body">
+    <p>Most platforms ask: <strong>"How do we teach coding better?"</strong> Method in Motion asks a different question: <strong>"Why would a kid be excited to come back tomorrow?"</strong></p>
+    <p>That question changes everything. Coding isn't the product here — it's the language the world speaks. The real product is the experience of belonging to something. A place where kids don't just complete lessons, but feel like they're part of something bigger. Where the coding happens to them, instead of at them.</p>
+    <p>Learning should feel like a side effect of having fun — not the whole point of showing up.</p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-tag">The Philosophy</div>
+  <h2 class="section-title">This is MY world. My ideas matter. I helped build this.</h2>
+  <div class="section-body">
+    <p>That's the feeling every part of Method in Motion is designed around. Not lessons that talk down to kids, and not a platform that treats them as an audience. A universe that treats them as citizens.</p>
+  </div>
+  <div class="philosophy-grid">
+    <div class="phil-card">
+      <div class="phil-icon">✦</div>
+      <h3>The characters are the product</h3>
+      <p>Zen, Byte, Loop, Nova, Bug, and Echo aren't decorations on top of a curriculum. They're the emotional connection. Kids won't remember worksheets — they'll remember characters they love.</p>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon">◈</div>
+      <h3>A living world, not a static site</h3>
+      <p>The world should feel alive whether a kid is online or not. Bug fixes glitches. Zen finishes inventions. Loop hides secrets. Coming back should feel like walking into a place that kept going without you.</p>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon">⚠</div>
+      <h3>Community over curriculum</h3>
+      <p>Active players, hidden easter eggs, character birthdays, weekly events, voting on what comes next — these aren't features bolted onto lessons. Together, they're what makes this a world instead of a website.</p>
+    </div>
+    <div class="phil-card">
+      <div class="phil-icon">∞</div>
+      <h3>Belonging is the differentiator</h3>
+      <p>Free coding resources already exist everywhere. What's rare is a place a kid actually wants to belong to. That feeling — not the lesson count — is the whole competitive advantage.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="citizens-block">
+    <div class="section-tag">Citizens, Not Customers</div>
+    <h2 class="section-title" style="margin-bottom:0.5rem;">Welcome back. The city grew while you were away.</h2>
+    <p style="color:var(--text-dim);font-size:0.95rem;">Small shifts in language point at a much bigger shift in how this platform treats the kids using it.</p>
+    <div class="citizens-compare">
+      <div class="compare-col old">
+        <div class="compare-label">The Old Way</div>
+        <div class="compare-line">"Welcome to our website."</div>
+        <div class="compare-line">"Send us feedback."</div>
+        <div class="compare-line">Complete Lesson 3 of 12.</div>
+        <div class="compare-line">You are a user.</div>
+      </div>
+      <div class="compare-col new">
+        <div class="compare-label">The MiM Way</div>
+        <div class="compare-line">"Welcome back."</div>
+        <div class="compare-line">"Submit a game idea. Name a city. Design a character."</div>
+        <div class="compare-line">Bug fixed three glitches today.</div>
+        <div class="compare-line">You are a citizen.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-tag">Built By Kids</div>
+  <h2 class="section-title">Not "send us feedback." An identity.</h2>
+  <div class="section-body">
+    <p>Method in Motion is designed to feel like something kids are helping create — not a product they're consuming. Kids submit ideas. Kids get featured, by name, for the things they made.</p>
+    <p style="font-style:italic;color:var(--text);">"Today's challenge was inspired by Emma, age 7." "This robot was designed from a community idea." "This city's name was voted on by our members."</p>
+  </div>
+  <div class="built-examples">
+    <span class="built-tag">Submit a game idea</span>
+    <span class="built-tag">Design a new character</span>
+    <span class="built-tag">Name a city</span>
+    <span class="built-tag">Invent a gadget for Zen</span>
+    <span class="built-tag">Help Bug solve a glitch</span>
+    <span class="built-tag">Suggest Echo's next song</span>
+  </div>
+</section>
+
+<section class="section">
+  <div class="section-tag">The Crew</div>
+  <h2 class="section-title">Six characters. One universe. Every voice different.</h2>
+  <p style="color:var(--text-dim);font-size:0.95rem;margin-bottom:0.5rem;">Every character teaches the same foundational thinking — from a completely different angle.</p>
+  <div class="chars-strip">
+    <a href="zen.html" style="text-decoration:none;"><div class="char-chip"><div class="mark" style="color:#ff6baa;">✦</div><div class="name">Zen</div><div class="role">Creative Coder</div></div></a>
+    <a href="byte.html" style="text-decoration:none;"><div class="char-chip"><div class="mark" style="color:#c66bff;">◈</div><div class="name">Byte</div><div class="role">Glitch Cat</div></div></a>
+    <a href="loop.html" style="text-decoration:none;"><div class="char-chip"><div class="mark" style="color:#00e5ff;">∞</div><div class="name">Loop</div><div class="role">Flow Guide</div></div></a>
+    <a href="nova.html" style="text-decoration:none;"><div class="char-chip"><div class="mark" style="color:#ffe066;">★</div><div class="name">Nova</div><div class="role">Builder Bot</div></div></a>
+    <a href="bug.html" style="text-decoration:none;"><div class="char-chip"><div class="mark" style="color:#b8ff3c;">⚠</div><div class="name">Bug</div><div class="role">Debug Gremlin</div></div></a>
+    <a href="echo.html" style="text-decoration:none;"><div class="char-chip"><div class="mark" style="color:#00e5ff;">◈</div><div class="name">Echo</div><div class="role">Signal DJ</div></div></a>
+  </div>
+</section>
+
+<section class="vision-final">
+  <div class="parent-quote">"This is the best coding curriculum."</div>
+  <div class="real-quote">"My kid can't stop <span>playing</span> Method in Motion...<br>and somehow they're <span>learning to code.</span>"</div>
+</section>
+
+<div class="cta-block">
+  <a href="index.html#membership" class="cta-btn">✦ Join the Crew</a>
+  <div class="cta-sub">Helping kids become creators instead of consumers.</div>
+</div>
+
+</body>
+</html>
