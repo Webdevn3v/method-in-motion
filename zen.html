@@ -77,7 +77,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .ib-build-stage { background: var(--bg-card); border-radius: 14px; padding: 2rem; text-align: center; }
 .ib-build-eyebrow { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.14em; margin-bottom: 0.6rem; }
 .ib-build-def { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; max-width: 480px; margin: 0 auto 1.6rem; }
-.ib-slots { display: flex; justify-content: center; gap: 0.6rem; margin-bottom: 1.6rem; flex-wrap: wrap; min-height: 56px; }
+.ib-slots { display: flex; flex-direction: column; align-items: center; gap: 1.4rem; margin-bottom: 1.6rem; }
 .ib-slot { width: 84px; height: 52px; border: 2px dashed var(--border-bright); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-muted); background: rgba(255,255,255,0.02); transition: all 0.2s; }
 .ib-slot.filled { border-style: solid; color: #fff; font-weight: 700; }
 .ib-pieces-tray { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
@@ -90,7 +90,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .ib-seq-status { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em; margin-bottom: 1.4rem; min-height: 20px; }
 .ib-seq-board { display: flex; justify-content: center; gap: 0.7rem; flex-wrap: wrap; }
 .ib-seq-board { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; max-width: 680px; margin: 0 auto; }
-.ib-seq-card { min-width: 84px; height: 84px; padding: 0 0.8rem; border-radius: 12px; border: 2px solid; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.15s; background: rgba(255,255,255,0.03); text-align: center; line-height: 1.25; }
+.ib-seq-card { min-width: 84px; min-height: 84px; padding: 0.5rem 0.9rem; border-radius: 12px; border: 2px solid; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; background: rgba(255,255,255,0.03); text-align: center; line-height: 1.3; word-break: break-word; }
 .ib-seq-card.lit { transform: scale(1.15); box-shadow: 0 0 28px var(--c, currentColor); background: var(--c, currentColor); color: #0a0512 !important; }
 .ib-seq-card.wrong { animation: shake 0.3s ease; }
 .ib-complete-card { background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 14px; padding: 2.5rem 2rem; text-align: center; }
@@ -116,7 +116,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
   45% { transform: scale(1.015); filter: brightness(1.3); }
   100% { opacity: 1; transform: scale(1); filter: brightness(1); }
 }
-.ib-slot-group { margin-bottom: 1.2rem; }
+.ib-slot-group { margin-bottom: 0; padding-bottom: 1.2rem; border-bottom: 1px dashed var(--border); width: 100%; }
+.ib-slot-group:last-child { border-bottom: none; padding-bottom: 0; }
 .ib-slot-group-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 0.5rem; }
 .ib-doc-panel { background: #0c0614; border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.6rem; margin: 0 auto 1.6rem; max-width: 420px; text-align: left; font-family: var(--font-mono); font-size: 0.82rem; line-height: 2; }
 .ib-doc-line { color: var(--text-muted); opacity: 0.35; transition: all 0.4s ease; white-space: pre; }
@@ -944,7 +945,12 @@ function ibCheckBuild(i) {
   fb.style.color = tag.color;
   ibPlayTone(tag.freq, 0.4, tag.wave);
   ibRevealDocTag(tag.id, tag.color);
-  tag.pieces.forEach((pieceText, idx) => { ibPiecePool.push({ text: pieceText, color: tag.color, freq: tag.freq + idx * 14, wave: tag.wave }); });
+  if (!tag.hasClose) {
+    ibPiecePool.push({ text: tag.code, color: tag.color, freq: tag.freq, wave: tag.wave });
+  } else {
+    ibPiecePool.push({ text: tag.code, color: tag.color, freq: tag.freq, wave: tag.wave });
+    ibPiecePool.push({ text: tag.code.replace('<', '</'), color: tag.color, freq: tag.freq + 20, wave: tag.wave });
+  }
   setTimeout(() => ibBeginLocalDrill(i), 900);
 }
 
