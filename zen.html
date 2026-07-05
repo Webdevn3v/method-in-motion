@@ -44,7 +44,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .particle:nth-child(odd) { background: var(--purple); box-shadow: 0 0 8px 2px rgba(198,107,255,0.6); }
 @keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
 .hero-zen-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(255,107,170,0.4)); pointer-events: none; }
-@media (max-width: 768px) { .hero-zen-gif { display: none; } .ib-toggle-tab { width: 140px; padding: 0.8rem 0.7rem 0.7rem; top: 12%; right: 2%; } .ib-toggle-icon { font-size: 1.2rem; margin-bottom: 0.3rem; } .ib-toggle-title { font-size: 0.68rem; } .ib-toggle-tab-label { font-size: 0.56rem; margin-bottom: 0.6rem; } .ib-toggle-cta { font-size: 0.58rem; padding: 0.35rem 0.7rem; } }
+@media (max-width: 768px) { .hero-zen-gif { display: none; } .ib-toggle-tab { width: 140px; padding: 0.8rem 0.7rem 0.7rem; bottom: 6%; right: 2%; } .ib-toggle-icon { font-size: 1.2rem; margin-bottom: 0.3rem; } .ib-toggle-title { font-size: 0.68rem; } .ib-toggle-tab-label { font-size: 0.56rem; margin-bottom: 0.6rem; } .ib-toggle-cta { font-size: 0.58rem; padding: 0.35rem 0.7rem; } }
 .hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
 .hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--pink); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(255,107,170,0.6); }
 .hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
@@ -100,15 +100,22 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .ib-skip-btn { display: block; margin: 1.6rem auto 0; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.2s; }
 .ib-skip-btn:hover { color: var(--text-dim); border-color: var(--border-bright); }
 @media (max-width: 600px) { .ib-slot { width: 64px; height: 46px; font-size: 0.78rem; } .ib-seq-card { min-width: 64px; height: 64px; font-size: 0.8rem; } }
-.ib-toggle-tab { position: absolute; z-index: 20; right: 3%; top: 15%; width: 200px; padding: 1.2rem 1.1rem 1.1rem; border-radius: 16px; border: 1px solid var(--border-cyan); background: linear-gradient(160deg, rgba(0,229,255,0.1), rgba(198,107,255,0.08)); backdrop-filter: blur(6px); cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 24px rgba(0,229,255,0.18), inset 0 0 20px rgba(0,229,255,0.05); animation: ibCardFloat 4s ease-in-out infinite; }
-.ib-toggle-tab:hover { border-color: var(--cyan); box-shadow: 0 0 34px rgba(0,229,255,0.35), inset 0 0 24px rgba(0,229,255,0.08); transform: translateY(-2px); }
+.ib-toggle-tab { position: absolute; z-index: 20; right: 4%; bottom: 10%; width: 200px; padding: 1.2rem 1.1rem 1.1rem; border-radius: 16px; border: 1px solid var(--border-bright); background: linear-gradient(160deg, rgba(255,107,170,0.14), rgba(198,107,255,0.08)); backdrop-filter: blur(6px); cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 24px rgba(255,107,170,0.22), inset 0 0 20px rgba(255,107,170,0.06); animation: ibCardFloat 4s ease-in-out infinite; }
+.ib-toggle-tab:hover { border-color: var(--pink); box-shadow: 0 0 34px rgba(255,107,170,0.4), inset 0 0 24px rgba(255,107,170,0.1); transform: translateY(-2px); }
 @keyframes ibCardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-.ib-toggle-icon { font-size: 1.6rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px rgba(0,229,255,0.6)); }
-.ib-toggle-title { font-family: var(--font-display); font-size: 0.82rem; font-weight: 900; color: #fff; letter-spacing: 0.06em; text-shadow: 0 0 12px rgba(0,229,255,0.6); margin-bottom: 0.35rem; }
+.ib-toggle-icon { font-size: 1.6rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px rgba(255,107,170,0.6)); }
+.ib-toggle-title { font-family: var(--font-display); font-size: 0.82rem; font-weight: 900; color: #fff; letter-spacing: 0.06em; text-shadow: 0 0 12px rgba(255,107,170,0.7); margin-bottom: 0.35rem; }
 .ib-toggle-tab-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; color: var(--text-dim); line-height: 1.5; margin-bottom: 0.8rem; }
-.ib-toggle-cta { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(0,229,255,0.14); border: 1px solid var(--cyan); color: var(--cyan); font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.45rem 0.9rem; border-radius: 100px; }
+.ib-toggle-cta { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(255,107,170,0.16); border: 1px solid var(--pink); color: var(--pink); font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.45rem 0.9rem; border-radius: 100px; }
 .icebreaker-wrapper { display: none; }
 .icebreaker-wrapper.open { display: block; }
+.icebreaker-wrapper.open .icebreaker { animation: ibPowerOn 0.6s ease; }
+@keyframes ibPowerOn {
+  0% { opacity: 0; transform: scale(0.92); filter: brightness(3.5) saturate(1.6); }
+  15% { opacity: 1; filter: brightness(2.4) saturate(1.4); }
+  45% { transform: scale(1.015); filter: brightness(1.3); }
+  100% { opacity: 1; transform: scale(1); filter: brightness(1); }
+}
 .ib-slot-group { margin-bottom: 1.2rem; }
 .ib-slot-group-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 0.5rem; }
 .ib-doc-panel { background: #0c0614; border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.6rem; margin: 0 auto 1.6rem; max-width: 420px; text-align: left; font-family: var(--font-mono); font-size: 0.82rem; line-height: 2; }
@@ -279,9 +286,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="hero-pulse"></div>
 <div class="particle-field" id="particleField"></div>
 <img class="hero-zen-gif" src="zen-idle.gif" alt="Zen" onerror="this.style.display='none'">
-<button class="ib-toggle-tab" onclick="ibToggleWrapper()" aria-label="Open the Building Blocks icebreaker game">
+<button class="ib-toggle-tab" onclick="ibToggleWrapper()" aria-label="Open the Memory Matrix icebreaker game">
   <div class="ib-toggle-icon">✦</div>
-  <div class="ib-toggle-title">BUILDING BLOCKS</div>
+  <div class="ib-toggle-title">MEMORY MATRIX</div>
   <div class="ib-toggle-tab-label">Train your memory.<br>Master the tags.</div>
   <div class="ib-toggle-cta">Boot Game →</div>
 </button>
@@ -291,7 +298,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="hero-catchphrase">Nothing → Something.</div>
 <div class="hero-role">The Creative Coder</div>
 <div class="hero-quote">"<span>Every idea starts as nothing.</span> Then you write one line of code, and it becomes something real."</div>
-<div class="hero-hint">Welcome to Zen's Creative Studio. Click around the room to unlock lessons, portals, and creative coding missions.</div>
 <div class="fact-ticker" id="factTicker"></div>
 <div class="hero-tiles">
 <a class="hero-tile" onclick="jumpToLesson(1)">01 What Is Code?</a>
@@ -585,6 +591,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="cheat-item"><div class="cheat-term">Tag</div><div class="cheat-desc">Labels in angle brackets that tell the browser what content is.</div></div>
 <div class="cheat-item"><div class="cheat-term">Browser</div><div class="cheat-desc">The program that reads HTML and displays it as a webpage.</div></div>
 </div>
+<div class="code-block"><span class="code-tag">&lt;h1&gt;</span>Hello, I'm Zen.<span class="code-tag">&lt;/h1&gt;</span><br><span class="code-tag">&lt;p&gt;</span>I build things with code.<span class="code-tag">&lt;/p&gt;</span></div>
 </div>
 <div class="cheat-card">
 <h3>✦ Lesson 2 — Your First HTML Tag</h3>
@@ -594,6 +601,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="cheat-item"><div class="cheat-term">Element</div><div class="cheat-desc">Opening tag + content + closing tag together.</div></div>
 <div class="cheat-item"><div class="cheat-term">Attribute</div><div class="cheat-desc">Extra info inside an opening tag, like href.</div></div>
 </div>
+<div class="code-block"><span class="code-tag">&lt;a </span><span class="code-attr">href</span>=<span class="code-str">"https://..."</span><span class="code-tag">&gt;</span>Click here<span class="code-tag">&lt;/a&gt;</span></div>
 </div>
 <div class="cheat-card">
 <h3>✦ Lesson 3 — Colors &amp; Style with CSS</h3>
@@ -603,6 +611,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="cheat-item"><div class="cheat-term">Property</div><div class="cheat-desc">What to change: color, font-size, background.</div></div>
 <div class="cheat-item"><div class="cheat-term">Value</div><div class="cheat-desc">What to set it to: pink, 2rem, #ff6baa.</div></div>
 </div>
+<div class="code-block"><span class="code-tag">h1</span> {<br>&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">#ff6baa</span>;<br>&nbsp;&nbsp;<span class="code-attr">font-size</span>: <span class="code-val">2rem</span>;<br>}</div>
 </div>
 <div class="cheat-card">
 <h3>✦ Lesson 4 — Build Your Own Page</h3>
@@ -612,6 +621,20 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="cheat-item"><div class="cheat-term">&lt;body&gt;</div><div class="cheat-desc">Everything the visitor sees goes here.</div></div>
 <div class="cheat-item"><div class="cheat-term">&lt;style&gt;</div><div class="cheat-desc">Write CSS inside this tag, inside the head.</div></div>
 </div>
+<div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&nbsp;&lt;head&gt;&lt;title&gt;My Page&lt;/title&gt;&lt;/head&gt;<br>&nbsp;&lt;body&gt;&lt;h1&gt;Hello!&lt;/h1&gt;&lt;p&gt;A paragraph.&lt;/p&gt;&lt;/body&gt;<br>&lt;/html&gt;</div>
+</div>
+<div class="cheat-card">
+<h3>✦ Symbols Reference</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">&lt;</div><div class="cheat-desc">Opening bracket. Starts every tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">&gt;</div><div class="cheat-desc">Closing bracket. Ends every tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;/</div><div class="cheat-desc">Opening bracket + slash. Starts a closing tag — this is how a tag says "I'm done."</div></div>
+<div class="cheat-item"><div class="cheat-term">!</div><div class="cheat-desc">Exclamation point. Only used once, in &lt;!DOCTYPE html&gt;, to mark it as a special declaration rather than a normal tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">{ }</div><div class="cheat-desc">Curly braces. Wrap the style rules in CSS, right after a selector.</div></div>
+<div class="cheat-item"><div class="cheat-term">:</div><div class="cheat-desc">Colon. Separates a CSS property from its value, like color: pink;</div></div>
+<div class="cheat-item"><div class="cheat-term">;</div><div class="cheat-desc">Semicolon. Ends a CSS line, like a period ends a sentence.</div></div>
+<div class="cheat-item"><div class="cheat-term">#</div><div class="cheat-desc">Pound sign. Starts a hex color code, like #ff6baa.</div></div>
+</div>
 <div class="cheat-btn-row">
 <a href="zen-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
 <button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
@@ -619,6 +642,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </div>
 </div>
 </div>
+
 
 <div class="zen-companion" id="zenCompanion"><img src="zen-idle.gif" alt="Zen" title="Zen is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()"></div>
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
@@ -722,11 +746,11 @@ function updateCapstone() {
 }
 function downloadCheat() {
   const content = "ZEN'S CODING REALM — FULL CHEAT SHEET\n\n" +
-    "LESSON 1 — What Is Code?\nCODE: Step-by-step instructions.\nHTML: HyperText Markup Language.\nTAG: Labels in angle brackets: <tag> and </tag>\nBROWSER: Reads HTML, displays it as a webpage.\n\n" +
-    "LESSON 2 — Your First HTML Tag\nOPENING TAG <tagname>\nCLOSING TAG </tagname>\nELEMENT: tag+content+closing tag\nATTRIBUTE: extra info in opening tag\n\n" +
-    "LESSON 3 — Colors & Style with CSS\nCSS styles HTML.\nSELECTOR: h1 { }\nPROPERTY: color, font-size\nVALUE: pink, 2rem, #ff6baa\n\n" +
-    "LESSON 4 — Build Your Own Page\n<!DOCTYPE html> — always first\n<head> — settings, not visible\n<body> — everything visible\n<style> — CSS goes here\n\n" +
-    "<!DOCTYPE html>\n<html>\n <head><title>My Page</title></head>\n <body><h1>Hello!</h1><p>A paragraph.</p></body>\n</html>";
+    "LESSON 1 — What Is Code?\nCODE: Step-by-step instructions.\nHTML: HyperText Markup Language.\nTAG: Labels in angle brackets: <tag> and </tag>\nBROWSER: Reads HTML, displays it as a webpage.\nLINES YOU'LL USE:\n<h1>Hello, I'm Zen.</h1>\n<p>I build things with code.</p>\n\n" +
+    "LESSON 2 — Your First HTML Tag\nOPENING TAG <tagname>\nCLOSING TAG </tagname>\nELEMENT: tag+content+closing tag\nATTRIBUTE: extra info in opening tag\nLINES YOU'LL USE:\n<a href=\"https://...\">Click here</a>\n\n" +
+    "LESSON 3 — Colors & Style with CSS\nCSS styles HTML.\nSELECTOR: h1 { }\nPROPERTY: color, font-size\nVALUE: pink, 2rem, #ff6baa\nLINES YOU'LL USE:\nh1 {\n  color: #ff6baa;\n  font-size: 2rem;\n}\n\n" +
+    "LESSON 4 — Build Your Own Page\n<!DOCTYPE html> — always first\n<head> — settings, not visible\n<body> — everything visible\n<style> — CSS goes here\nLINES YOU'LL USE:\n<!DOCTYPE html>\n<html>\n <head><title>My Page</title></head>\n <body><h1>Hello!</h1><p>A paragraph.</p></body>\n</html>\n\n" +
+    "SYMBOLS REFERENCE\n<        opening bracket — starts every tag\n>        closing bracket — ends every tag\n</       opening bracket + slash — starts a closing tag\n!        used once, in <!DOCTYPE html>, marks it as a special declaration\n{ }      curly braces — wrap CSS style rules\n:        colon — separates a CSS property from its value\n;        semicolon — ends a CSS line\n#        pound sign — starts a hex color code, like #ff6baa";
   const blob = new Blob([content], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'zen-cheatsheet.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
 }
 function goUpgrade() { if (window.firebaseAuth && window.firebaseAuth.currentUser) { window.location.href = 'membership.html'; } else { document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } })); } }
