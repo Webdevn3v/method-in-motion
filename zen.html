@@ -44,7 +44,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .particle:nth-child(odd) { background: var(--purple); box-shadow: 0 0 8px 2px rgba(198,107,255,0.6); }
 @keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
 .hero-zen-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(255,107,170,0.4)); pointer-events: none; }
-@media (max-width: 768px) { .hero-zen-gif { display: none; } }
+@media (max-width: 768px) { .hero-zen-gif { display: none; } .ib-toggle-tab { width: 140px; padding: 0.8rem 0.7rem 0.7rem; top: 12%; right: 2%; } .ib-toggle-icon { font-size: 1.2rem; margin-bottom: 0.3rem; } .ib-toggle-title { font-size: 0.68rem; } .ib-toggle-tab-label { font-size: 0.56rem; margin-bottom: 0.6rem; } .ib-toggle-cta { font-size: 0.58rem; padding: 0.35rem 0.7rem; } }
 .hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
 .hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--pink); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(255,107,170,0.6); }
 .hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
@@ -100,9 +100,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .ib-skip-btn { display: block; margin: 1.6rem auto 0; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.2s; }
 .ib-skip-btn:hover { color: var(--text-dim); border-color: var(--border-bright); }
 @media (max-width: 600px) { .ib-slot { width: 64px; height: 46px; font-size: 0.78rem; } .ib-seq-card { min-width: 64px; height: 64px; font-size: 0.8rem; } }
-.ib-toggle-tab { position: absolute; z-index: 20; right: 3%; top: 20%; width: 15%; min-width: 130px; padding: 0.9rem 0.6rem; border-radius: 14px; border: 1px solid var(--border-cyan); background: rgba(0,229,255,0.06); cursor: pointer; text-align: center; transition: all 0.25s ease; animation: hotspotPulse 2.6s ease-in-out infinite; }
-.ib-toggle-tab:hover { background: rgba(0,229,255,0.16); box-shadow: 0 0 18px rgba(0,229,255,0.35); }
-.ib-toggle-tab-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--cyan); line-height: 1.5; }
+.ib-toggle-tab { position: absolute; z-index: 20; right: 3%; top: 15%; width: 200px; padding: 1.2rem 1.1rem 1.1rem; border-radius: 16px; border: 1px solid var(--border-cyan); background: linear-gradient(160deg, rgba(0,229,255,0.1), rgba(198,107,255,0.08)); backdrop-filter: blur(6px); cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 24px rgba(0,229,255,0.18), inset 0 0 20px rgba(0,229,255,0.05); animation: ibCardFloat 4s ease-in-out infinite; }
+.ib-toggle-tab:hover { border-color: var(--cyan); box-shadow: 0 0 34px rgba(0,229,255,0.35), inset 0 0 24px rgba(0,229,255,0.08); transform: translateY(-2px); }
+@keyframes ibCardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.ib-toggle-icon { font-size: 1.6rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px rgba(0,229,255,0.6)); }
+.ib-toggle-title { font-family: var(--font-display); font-size: 0.82rem; font-weight: 900; color: #fff; letter-spacing: 0.06em; text-shadow: 0 0 12px rgba(0,229,255,0.6); margin-bottom: 0.35rem; }
+.ib-toggle-tab-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; color: var(--text-dim); line-height: 1.5; margin-bottom: 0.8rem; }
+.ib-toggle-cta { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(0,229,255,0.14); border: 1px solid var(--cyan); color: var(--cyan); font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.45rem 0.9rem; border-radius: 100px; }
 .icebreaker-wrapper { display: none; }
 .icebreaker-wrapper.open { display: block; }
 .ib-slot-group { margin-bottom: 1.2rem; }
@@ -276,7 +280,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="particle-field" id="particleField"></div>
 <img class="hero-zen-gif" src="zen-idle.gif" alt="Zen" onerror="this.style.display='none'">
 <button class="ib-toggle-tab" onclick="ibToggleWrapper()" aria-label="Open the Building Blocks icebreaker game">
-  <div class="ib-toggle-tab-label">✦ BUILDING<br>BLOCKS<br>ICEBREAKER</div>
+  <div class="ib-toggle-icon">✦</div>
+  <div class="ib-toggle-title">BUILDING BLOCKS</div>
+  <div class="ib-toggle-tab-label">Train your memory.<br>Master the tags.</div>
+  <div class="ib-toggle-cta">Boot Game →</div>
 </button>
 <div class="hero-content">
 <div class="hero-eyebrow">✦ &nbsp; Creative Coder &nbsp; · &nbsp; HTML &amp; CSS</div>
