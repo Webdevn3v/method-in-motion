@@ -14,27 +14,13 @@ gtag('config', 'G-DJ3Q488K7W');
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
 :root {
-  --pink: #ff6baa;
-  --pink-dim: #e0568f;
-  --purple: #c66bff;
-  --purple-dim: #a34fe0;
-  --bg: #0a0512;
-  --bg-mid: #120a1e;
-  --bg-card: #150c22;
-  --bg-panel: #0d0718;
-  --text: #f5e8f5;
-  --text-dim: #b083c4;
-  --text-muted: #5a3a6e;
-  --border: rgba(255,107,170,0.15);
-  --border-bright: rgba(255,107,170,0.4);
-  --border-purple: rgba(198,107,255,0.3);
-  --glow: 0 0 18px rgba(255,107,170,0.3);
-  --glow-strong: 0 0 36px rgba(255,107,170,0.55);
-  --cyan: #7fe8ff;
-  --border-cyan: rgba(0,229,255,0.45);
-  --font-display: 'Orbitron', monospace;
-  --font-body: 'Space Grotesk', sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --pink: #ff6baa; --pink-dim: #e0568f; --purple: #c66bff; --purple-dim: #a34fe0;
+  --bg: #0a0512; --bg-mid: #120a1e; --bg-card: #150c22; --bg-panel: #0d0718;
+  --text: #f5e8f5; --text-dim: #b083c4; --text-muted: #5a3a6e;
+  --border: rgba(255,107,170,0.15); --border-bright: rgba(255,107,170,0.4); --border-purple: rgba(198,107,255,0.3);
+  --glow: 0 0 18px rgba(255,107,170,0.3); --glow-strong: 0 0 36px rgba(255,107,170,0.55);
+  --cyan: #7fe8ff; --border-cyan: rgba(0,229,255,0.45);
+  --font-display: 'Orbitron', monospace; --font-body: 'Space Grotesk', sans-serif; --font-mono: 'Space Mono', monospace;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
@@ -47,9 +33,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .nav-logout { background: none; border: 1px solid var(--border); color: var(--text-dim); font-family: var(--font-body); font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: none; }
 .nav-logout:hover { border-color: var(--pink); color: var(--pink); }
 
-/* ═══════════ HERO — single panoramic room image with hotspots ═══════════ */
+/* ═══════════ HERO — video background with hotspots ═══════════ */
 .hero { margin-top: 60px; min-height: 640px; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
-.hero-image { position: absolute; inset: 0; background-image: url('zen-hero.png'); background-size: cover; background-position: center; transform: scale(1.02); animation: heroBreathe 10s ease-in-out infinite; }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); animation: heroBreathe 10s ease-in-out infinite; }
 @keyframes heroBreathe { 0%, 100% { transform: scale(1.02); } 50% { transform: scale(1.05); } }
 .hero-gradient { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(10,5,18,0.96) 0%, rgba(10,5,18,0.5) 30%, rgba(10,5,18,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(10,5,18,0.55) 0%, rgba(10,5,18,0.1) 40%, transparent 70%); pointer-events: none; }
 .hero-pulse { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(ellipse 55% 45% at 50% 65%, rgba(198,107,255,0.14) 0%, transparent 65%); animation: pulseGlow 5s ease-in-out infinite; }
@@ -58,8 +44,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 8px 2px rgba(255,107,170,0.6); opacity: 0; animation: floatUp linear infinite; }
 .particle:nth-child(odd) { background: var(--purple); box-shadow: 0 0 8px 2px rgba(198,107,255,0.6); }
 @keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
-
-/* Hotspots sit directly over the room objects in the image, as %-based boxes */
 .hotspot { position: absolute; z-index: 15; cursor: pointer; border-radius: 14px; border: 1px solid rgba(255,107,170,0.4); background: rgba(255,107,170,0.05); animation: hotspotPulse 2.6s ease-in-out infinite; transition: all 0.25s ease; }
 .hotspot:hover, .hotspot:focus-visible { background: rgba(255,107,170,0.22); border-color: var(--pink); box-shadow: var(--glow); }
 .hotspot:focus-visible { outline: 2px solid var(--pink); outline-offset: 3px; }
@@ -67,21 +51,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .hotspot:hover::after, .hotspot:focus-visible::after, .hotspot.show-tip::after { opacity: 1; }
 @keyframes hotspotPulse { 0%, 100% { box-shadow: 0 0 0 0 rgba(255,107,170,0.3); } 50% { box-shadow: 0 0 0 7px rgba(255,107,170,0); } }
 .hero.reveal-hotspots .hotspot { background: rgba(255,107,170,0.16); border-color: var(--pink); }
-
-/* Portal hotspots get a cyan/pink distinction matching University vs Underground */
 .hotspot-university { border-color: var(--border-cyan); background: rgba(0,229,255,0.05); }
 .hotspot-university:hover, .hotspot-university:focus-visible { border-color: var(--cyan); background: rgba(0,229,255,0.16); box-shadow: 0 0 18px rgba(0,229,255,0.35); }
 .hotspot-university::after { color: var(--cyan); border-color: var(--border-cyan); }
 .hero.reveal-hotspots .hotspot-university { border-color: var(--cyan); background: rgba(0,229,255,0.14); }
-
-/* Approximate hotspot positions — tweak these percentages any time to nudge alignment */
 .hs-portal-university { left: 3%; top: 22%; width: 19%; height: 46%; }
 .hs-portal-underground { left: 80%; top: 20%; width: 18%; height: 47%; }
 .hs-lesson-laptop { left: 82%; top: 70%; width: 16%; height: 24%; }
 .hs-lesson-skateboard { left: 9%; top: 56%; width: 6%; height: 20%; }
 .hs-lesson-monitor { left: 45%; top: 40%; width: 22%; height: 15%; }
 .hs-lesson-board { left: 65%; top: 20%; width: 11%; height: 16%; }
-
 .hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
 .hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--pink); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(255,107,170,0.6); }
 .hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
@@ -98,15 +77,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .hero-tile:hover { background: rgba(255,107,170,0.18); border-color: var(--pink); color: var(--pink); box-shadow: var(--glow); transform: translateY(-2px); }
 .hero-tile.mission-tile { border-color: var(--border-purple); color: var(--purple); }
 .hero-tile.mission-tile:hover { background: rgba(198,107,255,0.16); border-color: var(--purple); box-shadow: 0 0 18px rgba(198,107,255,0.3); }
-
 .show-hotspots-btn { display: none; }
-@media (max-width: 768px) {
-  .show-hotspots-btn { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.8rem; background: rgba(198,107,255,0.1); border: 1px solid var(--border-purple); color: var(--purple); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; }
-}
-
+@media (max-width: 768px) { .show-hotspots-btn { display: inline-flex; align-items: center; gap: 0.4rem; margin-top: 0.8rem; background: rgba(198,107,255,0.1); border: 1px solid var(--border-purple); color: var(--purple); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; } }
 .click-ripple { position: fixed; z-index: 400; border-radius: 50%; border: 2px solid var(--pink); pointer-events: none; animation: rippleOut 0.6s ease-out forwards; }
 @keyframes rippleOut { from { width: 0; height: 0; opacity: 1; } to { width: 80px; height: 80px; margin-left: -40px; margin-top: -40px; opacity: 0; } }
-
 .lesson-strip { position: sticky; top: 60px; z-index: 90; background: rgba(10,5,18,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; overflow-x: auto; scrollbar-width: none; }
 .lesson-strip::-webkit-scrollbar { display: none; }
 .lesson-tab { flex-shrink: 0; padding: 0.9rem 1.6rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; background: none; border-top: none; border-left: none; border-right: none; }
@@ -241,8 +215,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 @keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 .egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--pink); margin-bottom: 0.5rem; }
 .egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
-
-/* ═══════════ PORTAL PANEL (modal) ═══════════ */
 .portal-panel-backdrop { position: fixed; inset: 0; z-index: 260; background: rgba(10,5,18,0.85); backdrop-filter: blur(3px); display: none; align-items: center; justify-content: center; padding: 1.5rem; }
 .portal-panel-backdrop.show { display: flex; }
 .portal-panel { background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 16px; padding: 2rem; max-width: 400px; width: 100%; box-shadow: var(--glow-strong); position: relative; }
@@ -252,8 +224,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .portal-link-btn { display: flex; align-items: center; gap: 0.7rem; width: 100%; text-align: left; background: rgba(255,107,170,0.06); border: 1px solid var(--border); color: var(--text); font-family: var(--font-body); font-size: 0.88rem; padding: 0.8rem 1rem; border-radius: 8px; cursor: pointer; text-decoration: none; margin-bottom: 0.6rem; transition: all 0.2s; }
 .portal-link-btn:last-child { margin-bottom: 0; }
 .portal-link-btn:hover { border-color: var(--pink); background: rgba(255,107,170,0.14); transform: translateX(2px); }
-
-/* ═══════════ MISSION DRAWER ═══════════ */
 .mission-drawer-backdrop { position: fixed; inset: 0; z-index: 240; background: rgba(10,5,18,0.6); display: none; }
 .mission-drawer-backdrop.open { display: block; }
 .mission-drawer { position: fixed; top: 0; right: -340px; width: 320px; height: 100vh; z-index: 245; background: var(--bg-panel); border-left: 1px solid var(--border-bright); padding: 2rem 1.6rem; transition: right 0.35s ease; overflow-y: auto; }
@@ -271,23 +241,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .mission-check.done { background: var(--pink); color: var(--bg); border-color: var(--pink); }
 .mission-item-label { font-size: 0.85rem; color: var(--text-dim); }
 .mission-item:hover .mission-item-label { color: var(--pink); }
-
-@media (max-width: 768px) {
-  .hero { min-height: 480px; }
-  .hero-content { padding: 2rem 1.5rem 2rem; }
-  .hotspot { opacity: 0; pointer-events: none; }
-  .hero.reveal-hotspots .hotspot { opacity: 1; pointer-events: auto; }
-  .lesson-panel.open { grid-template-columns: 1fr; }
-  .lesson-sidebar { display: none; }
-  .lesson-content { padding: 1.5rem; }
-  .terms-grid { grid-template-columns: 1fr; }
-  .zen-companion { width: 60px; height: 60px; bottom: 16px; right: 16px; }
-  .zen-companion img { width: 60px; height: 60px; }
-  .fact-ticker { display: none; }
-  .mission-drawer { width: 100%; right: -100%; }
-  .mission-toggle { left: auto; right: 24px; bottom: 80px; }
-  .sound-toggle { bottom: 24px; }
-}
+@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .hotspot { opacity: 0; pointer-events: none; } .hero.reveal-hotspots .hotspot { opacity: 1; pointer-events: auto; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .zen-companion { width: 60px; height: 60px; bottom: 16px; right: 16px; } .zen-companion img { width: 60px; height: 60px; } .fact-ticker { display: none; } .mission-drawer { width: 100%; right: -100%; } .mission-toggle { left: auto; right: 24px; bottom: 80px; } .sound-toggle { bottom: 24px; } }
 </style>
 </head>
 <body>
@@ -309,23 +263,18 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
 </nav>
 <section class="hero" id="zenHero">
-<div class="hero-image"></div>
+<video class="hero-video" autoplay muted loop playsinline poster="zen-hero.png">
+  <source src="zen-hero.mp4" type="video/mp4">
+</video>
 <div class="hero-gradient"></div>
 <div class="hero-pulse"></div>
 <div class="particle-field" id="particleField"></div>
-
 <button class="hotspot hotspot-university hs-portal-university" data-label="MiM University — Reading, Cheat Sheet, Glossary, Quiz, Parent Guide" aria-label="Open MiM University portal for lessons and resources" onclick="hotspotTapGuard(event, () => openPortalPanel('university'))"></button>
-
 <button class="hotspot hs-portal-underground" data-label="MiM Underground — Games & Challenges" aria-label="Open MiM Underground portal for games and challenges" onclick="hotspotTapGuard(event, () => openPortalPanel('underground'))"></button>
-
 <button class="hotspot hs-lesson-laptop" data-label="Lesson 1: What Is Code?" aria-label="Open Lesson 1 at the laptop" onclick="hotspotTapGuard(event, () => jumpToLesson(1))"></button>
-
 <button class="hotspot hs-lesson-skateboard" data-label="Lesson 2: Your First Tag" aria-label="Open Lesson 2 at the skateboard" onclick="hotspotTapGuard(event, () => jumpToLesson(2))"></button>
-
 <button class="hotspot hs-lesson-monitor" data-label="Lesson 3: Colors &amp; Style" aria-label="Open Lesson 3 at the coding monitor" onclick="hotspotTapGuard(event, () => jumpToLesson(3))"></button>
-
 <button class="hotspot hs-lesson-board" data-label="Lesson 4: Build Your Page" aria-label="Open Lesson 4 at the Today's Plan board" onclick="hotspotTapGuard(event, () => jumpToLesson(4))"></button>
-
 <div class="hero-content">
 <div class="hero-eyebrow">✦ &nbsp; Creative Coder &nbsp; · &nbsp; HTML &amp; CSS</div>
 <div class="hero-name">Zen</div>
@@ -655,7 +604,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
 <button class="mission-toggle" id="missionToggle" onclick="toggleMissionDrawer()">✦ Missions</button>
 <div class="egg-popup" id="eggPopup"><h4>✦ Secret Found!</h4><p id="eggText"></p></div>
-
 <div class="portal-panel-backdrop" id="portalPanelBackdrop" onclick="if(event.target===this) closePortalPanel()">
 <div class="portal-panel">
 <button class="portal-panel-close" onclick="closePortalPanel()" aria-label="Close portal panel">✕</button>
@@ -663,7 +611,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div id="portalPanelBody"></div>
 </div>
 </div>
-
 <div class="mission-drawer-backdrop" id="missionDrawerBackdrop" onclick="closeMissionDrawer()"></div>
 <div class="mission-drawer" id="missionDrawer">
 <button class="mission-drawer-close" onclick="closeMissionDrawer()" aria-label="Close mission board">✕</button>
@@ -688,7 +635,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="mission-item-label">Lesson 4 — Build Your Page</div>
 </div>
 </div>
-
 <script type="module" src="auth-init.js"></script>
 <script>
 let currentLesson = null;
@@ -696,28 +642,16 @@ let currentTier = null;
 const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
 function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
 window.setNavUser = function(email) {
-  const u = document.getElementById('navUser');
-  const b = document.getElementById('navLogout');
+  const u = document.getElementById('navUser'); const b = document.getElementById('navLogout');
   if (u) { u.textContent = email; u.style.display = 'inline'; }
   if (b) b.style.display = 'inline-block';
 };
 window.handleTierUnlock = function(tier) {
-  currentTier = tier;
-  const lvl = tierLevel(tier);
-  if (lvl >= tierLevel('sparks')) {
-    document.getElementById('lock-2').style.display = 'none';
-    ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-2-' + b); if (el) el.style.removeProperty('display'); });
-  }
-  if (lvl >= tierLevel('builders')) {
-    document.getElementById('lock-3').style.display = 'none';
-    ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-3-' + b); if (el) el.style.removeProperty('display'); });
-  }
-  if (lvl >= tierLevel('coders')) {
-    document.getElementById('lock-4').style.display = 'none';
-    ['read','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-4-' + b); if (el) el.style.removeProperty('display'); });
-  }
-  loadReflects();
-  updateProgress();
+  currentTier = tier; const lvl = tierLevel(tier);
+  if (lvl >= tierLevel('sparks')) { document.getElementById('lock-2').style.display = 'none'; ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-2-' + b); if (el) el.style.removeProperty('display'); }); }
+  if (lvl >= tierLevel('builders')) { document.getElementById('lock-3').style.display = 'none'; ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-3-' + b); if (el) el.style.removeProperty('display'); }); }
+  if (lvl >= tierLevel('coders')) { document.getElementById('lock-4').style.display = 'none'; ['read','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-4-' + b); if (el) el.style.removeProperty('display'); }); }
+  loadReflects(); updateProgress();
 };
 function enterRealm() {
   document.getElementById('discoveryOverlay').classList.add('hidden');
@@ -728,43 +662,29 @@ function enterRealm() {
 window.addEventListener('scroll', function () {
   const companion = document.getElementById('zenCompanion');
   if (!companion) return;
-  if (window.scrollY > window.innerHeight * 0.6) companion.classList.add('visible');
-  else companion.classList.remove('visible');
+  if (window.scrollY > window.innerHeight * 0.6) companion.classList.add('visible'); else companion.classList.remove('visible');
 }, { passive: true });
 function openLesson(n) {
   document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
   document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
-  const panel = document.getElementById('lesson-' + n);
-  const tab = document.getElementById('tab-' + n);
-  if (panel) panel.classList.add('open');
-  if (tab) tab.classList.add('active');
-  currentLesson = n;
-  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const panel = document.getElementById('lesson-' + n); const tab = document.getElementById('tab-' + n);
+  if (panel) panel.classList.add('open'); if (tab) tab.classList.add('active');
+  currentLesson = n; panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
 function showBlock(lesson, block) {
-  const panel = document.getElementById('lesson-' + lesson);
-  if (!panel) return;
+  const panel = document.getElementById('lesson-' + lesson); if (!panel) return;
   panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
   panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-  const target = document.getElementById('block-' + lesson + '-' + block);
-  if (target) target.classList.add('active');
-  const btn = document.getElementById('sb-' + lesson + '-' + block);
-  if (btn) btn.classList.add('active');
+  const target = document.getElementById('block-' + lesson + '-' + block); if (target) target.classList.add('active');
+  const btn = document.getElementById('sb-' + lesson + '-' + block); if (btn) btn.classList.add('active');
 }
 function toggleTerm(card) { card.classList.toggle('open'); }
 function checkQuiz(btn, correct, feedback) {
-  const opts = btn.closest('.quiz-options');
-  if (opts.querySelector('.correct')) return;
+  const opts = btn.closest('.quiz-options'); if (opts.querySelector('.correct')) return;
   const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
-  if (correct) {
-    btn.classList.add('correct');
-    if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
-  } else {
-    btn.classList.add('wrong');
-    if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
-    setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
-  }
+  if (correct) { btn.classList.add('correct'); if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; } }
+  else { btn.classList.add('wrong'); if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; } setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400); }
 }
 const REFLECT_RESPONSES = {
   'ref-1-1': v => '✦ "' + v + '" — That\'s a real idea. Write it down and keep it.',
@@ -773,54 +693,27 @@ const REFLECT_RESPONSES = {
   'ref-4-1': v => '✦ "' + v + '" — Hold onto that feeling.'
 };
 function saveReflect(inputId, savedId) {
-  const val = document.getElementById(inputId)?.value;
-  if (val === undefined) return;
+  const val = document.getElementById(inputId)?.value; if (val === undefined) return;
   localStorage.setItem('zen_' + inputId, val);
-  const saved = document.getElementById(savedId);
-  if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
+  const saved = document.getElementById(savedId); if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
   const respEl = document.getElementById('resp-' + inputId.replace('ref-', ''));
-  if (val.trim() && REFLECT_RESPONSES[inputId] && respEl) {
-    respEl.textContent = REFLECT_RESPONSES[inputId](val.trim());
-    respEl.classList.add('show');
-  }
+  if (val.trim() && REFLECT_RESPONSES[inputId] && respEl) { respEl.textContent = REFLECT_RESPONSES[inputId](val.trim()); respEl.classList.add('show'); }
   const lessonNum = inputId.split('-')[1];
   const complete = document.getElementById('complete-' + lessonNum);
-  if (complete) {
-    complete.classList.add('show');
-    const jokeEl = document.getElementById('joke-' + lessonNum);
-    if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
-  }
-  localStorage.setItem('zen_lesson_complete_' + lessonNum, '1');
-  updateProgress();
+  if (complete) { complete.classList.add('show'); const jokeEl = document.getElementById('joke-' + lessonNum); if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)]; }
+  localStorage.setItem('zen_lesson_complete_' + lessonNum, '1'); updateProgress();
 }
-function loadReflects() {
-  document.querySelectorAll('.reflect-input').forEach(el => {
-    const stored = localStorage.getItem('zen_' + el.id);
-    if (stored) el.value = stored;
-  });
-}
-function revealLines(ids, then) {
-  ids.forEach((id, i) => setTimeout(() => { const el = document.getElementById(id); if (el) el.classList.add('visible'); }, i * 220));
-  if (then) setTimeout(then, ids.length * 220 + 150);
-}
+function loadReflects() { document.querySelectorAll('.reflect-input').forEach(el => { const stored = localStorage.getItem('zen_' + el.id); if (stored) el.value = stored; }); }
+function revealLines(ids, then) { ids.forEach((id, i) => setTimeout(() => { const el = document.getElementById(id); if (el) el.classList.add('visible'); }, i * 220)); if (then) setTimeout(then, ids.length * 220 + 150); }
 function runCode1() { revealLines(['c1l1','c1l2','c1l3','c1l4'], () => document.getElementById('output1').classList.add('show')); }
 function runCode2() { revealLines(['c2l1','c2l2','c2l3'], () => document.getElementById('output2').classList.add('show')); }
 function setupDrag(listId) {
-  let dragSrc = null;
-  const list = document.getElementById(listId);
-  if (!list) return;
+  let dragSrc = null; const list = document.getElementById(listId); if (!list) return;
   list.querySelectorAll('.drag-item').forEach(item => {
     item.addEventListener('dragstart', () => { dragSrc = item; item.classList.add('dragging'); });
     item.addEventListener('dragend', () => item.classList.remove('dragging'));
     item.addEventListener('dragover', e => e.preventDefault());
-    item.addEventListener('drop', e => {
-      e.preventDefault();
-      if (dragSrc !== item) {
-        const items = [...list.querySelectorAll('.drag-item')];
-        if (items.indexOf(dragSrc) < items.indexOf(item)) item.after(dragSrc);
-        else item.before(dragSrc);
-      }
-    });
+    item.addEventListener('drop', e => { e.preventDefault(); if (dragSrc !== item) { const items = [...list.querySelectorAll('.drag-item')]; if (items.indexOf(dragSrc) < items.indexOf(item)) item.after(dragSrc); else item.before(dragSrc); } });
   });
 }
 setupDrag('dragList1');
@@ -828,25 +721,15 @@ function checkDrag1() {
   const items = [...document.getElementById('dragList1').querySelectorAll('.drag-item')];
   const correct = items.map(i => parseInt(i.dataset.order)).every((v, i) => v === i + 1);
   items.forEach((item, i) => item.querySelector('.drag-num').textContent = i + 1);
-  const res = document.getElementById('drag1Result');
-  res.className = 'demo-output show';
-  res.innerHTML = correct ? '✦ Perfect!' : 'Not quite — try again.';
+  const res = document.getElementById('drag1Result'); res.className = 'demo-output show'; res.innerHTML = correct ? '✦ Perfect!' : 'Not quite — try again.';
 }
 function updatePreview3() {
-  const color = document.getElementById('colorPicker').value;
-  const size = document.getElementById('sizeSlider').value;
-  const text = document.getElementById('styleText').value || 'Your styled heading';
-  document.getElementById('styleOutput').style.color = color;
-  document.getElementById('styleOutput').style.fontSize = size + 'px';
-  document.getElementById('styleOutput').textContent = text;
-  document.getElementById('colorHex').textContent = color;
-  document.getElementById('sizeVal').textContent = size + 'px';
+  const color = document.getElementById('colorPicker').value; const size = document.getElementById('sizeSlider').value; const text = document.getElementById('styleText').value || 'Your styled heading';
+  document.getElementById('styleOutput').style.color = color; document.getElementById('styleOutput').style.fontSize = size + 'px'; document.getElementById('styleOutput').textContent = text;
+  document.getElementById('colorHex').textContent = color; document.getElementById('sizeVal').textContent = size + 'px';
 }
 function updateCapstone() {
-  const title = document.getElementById('cap-title').value || 'My Page';
-  const h1 = document.getElementById('cap-h1').value;
-  const p = document.getElementById('cap-p').value;
-  const color = document.getElementById('cap-color').value;
+  const title = document.getElementById('cap-title').value || 'My Page'; const h1 = document.getElementById('cap-h1').value; const p = document.getElementById('cap-p').value; const color = document.getElementById('cap-color').value;
   const out = document.getElementById('capOutput');
   out.innerHTML = '<div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-bottom:12px">Page: "' + title + '"</div>' + (h1 ? '<div style="font-size:1.4rem;font-weight:700;color:' + color + ';margin-bottom:8px;">' + h1 + '</div>' : '') + (p ? '<div style="font-size:.9rem;color:var(--text-dim);">' + p + '</div>' : '');
 }
@@ -858,89 +741,44 @@ function downloadCheat(num) {
     3: "ZEN'S CODING REALM — CHEAT SHEET\n" + titles[3] + "\n\nCSS styles HTML.\nSELECTOR: h1 { }\nPROPERTY: color, font-size\nVALUE: pink, 2rem, #ff6baa\n\nh1 { color: #ff6baa; font-size: 2rem; }",
     4: "ZEN'S CODING REALM — CHEAT SHEET\n" + titles[4] + "\n\n<!DOCTYPE html> — always first\n<head> — settings, not visible\n<body> — everything visible\n<style> — CSS goes here\n\n<!DOCTYPE html>\n<html>\n <head><title>My Page</title></head>\n <body><h1>Hello!</h1></body>\n</html>"
   };
-  const blob = new Blob([content[num]], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'zen-cheatsheet-lesson' + num + '.txt';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  const blob = new Blob([content[num]], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'zen-cheatsheet-lesson' + num + '.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
 }
-function goUpgrade() {
-  if (window.firebaseAuth && window.firebaseAuth.currentUser) { window.location.href = 'membership.html'; }
-  else { document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } })); }
-}
+function goUpgrade() { if (window.firebaseAuth && window.firebaseAuth.currentUser) { window.location.href = 'membership.html'; } else { document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } })); } }
 function handleLogout() { if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); } }
-
-/* ══════════════════ HOTSPOT INTERACTIONS ══════════════════ */
 function spawnParticle() {
-  const field = document.getElementById('particleField');
-  if (!field) return;
-  const p = document.createElement('div');
-  p.className = 'particle';
-  const startX = Math.random() * 100;
-  const duration = 8 + Math.random() * 10;
-  const delay = Math.random() * 2;
-  p.style.left = startX + '%'; p.style.bottom = '0';
-  p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
-  field.appendChild(p);
-  setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
+  const field = document.getElementById('particleField'); if (!field) return;
+  const p = document.createElement('div'); p.className = 'particle';
+  const startX = Math.random() * 100; const duration = 8 + Math.random() * 10; const delay = Math.random() * 2;
+  p.style.left = startX + '%'; p.style.bottom = '0'; p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
+  field.appendChild(p); setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
 }
 for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400);
 setInterval(spawnParticle, 900);
-
 function hotspotClick(e, action) {
-  const ripple = document.createElement('div');
-  ripple.className = 'click-ripple';
-  ripple.style.left = e.clientX + 'px'; ripple.style.top = e.clientY + 'px';
-  document.body.appendChild(ripple);
-  setTimeout(() => ripple.remove(), 600);
-  action();
+  const ripple = document.createElement('div'); ripple.className = 'click-ripple'; ripple.style.left = e.clientX + 'px'; ripple.style.top = e.clientY + 'px';
+  document.body.appendChild(ripple); setTimeout(() => ripple.remove(), 600); action();
 }
-
-/* Mobile: first tap reveals the tooltip, second tap on the same hotspot fires the action.
-   Desktop / keyboard: hover and Enter/Space fire immediately since there's no tap ambiguity. */
-let lastTappedHotspot = null;
-let lastTapTime = 0;
+let lastTappedHotspot = null; let lastTapTime = 0;
 function hotspotTapGuard(e, action) {
-  const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches;
-  const el = e.currentTarget;
-  const now = Date.now();
+  const isCoarsePointer = window.matchMedia('(pointer: coarse)').matches; const el = e.currentTarget; const now = Date.now();
   if (isCoarsePointer) {
-    if (lastTappedHotspot !== el || (now - lastTapTime) > 2500) {
-      document.querySelectorAll('.hotspot.show-tip').forEach(h => h.classList.remove('show-tip'));
-      el.classList.add('show-tip');
-      lastTappedHotspot = el;
-      lastTapTime = now;
-      return;
-    }
+    if (lastTappedHotspot !== el || (now - lastTapTime) > 2500) { document.querySelectorAll('.hotspot.show-tip').forEach(h => h.classList.remove('show-tip')); el.classList.add('show-tip'); lastTappedHotspot = el; lastTapTime = now; return; }
   }
-  lastTappedHotspot = null;
-  el.classList.remove('show-tip');
-  hotspotClick(e, action);
+  lastTappedHotspot = null; el.classList.remove('show-tip'); hotspotClick(e, action);
 }
-function showHotspotsBriefly() {
-  const hero = document.getElementById('zenHero');
-  hero.classList.add('reveal-hotspots');
-  setTimeout(() => hero.classList.remove('reveal-hotspots'), 4000);
-}
-
-/* ══════════════════ PORTAL PANELS ══════════════════ */
+function showHotspotsBriefly() { const hero = document.getElementById('zenHero'); hero.classList.add('reveal-hotspots'); setTimeout(() => hero.classList.remove('reveal-hotspots'), 4000); }
 function openPortalPanel(type) {
-  const backdrop = document.getElementById('portalPanelBackdrop');
-  const title = document.getElementById('portalPanelTitle');
-  const body = document.getElementById('portalPanelBody');
+  const backdrop = document.getElementById('portalPanelBackdrop'); const title = document.getElementById('portalPanelTitle'); const body = document.getElementById('portalPanelBody');
   if (type === 'university') {
     title.textContent = 'MiM University Portal';
-    body.innerHTML =
-      '<button class="portal-link-btn" onclick="closePortalPanel(); jumpToLesson(1);">📖 Reading — start at Lesson 1</button>' +
+    body.innerHTML = '<button class="portal-link-btn" onclick="closePortalPanel(); jumpToLesson(1);">📖 Reading — start at Lesson 1</button>' +
       '<button class="portal-link-btn" onclick="closePortalPanel(); jumpToLesson(1); showBlock(1,\'cheat\');">📋 Cheat Sheet</button>' +
       '<button class="portal-link-btn" onclick="closePortalPanel(); jumpToLesson(1); showBlock(1,\'terms\');">🔑 Glossary</button>' +
       '<button class="portal-link-btn" onclick="closePortalPanel(); jumpToLesson(1); showBlock(1,\'build\');">✅ Quiz</button>' +
       '<a class="portal-link-btn" href="pdfs.html">👪 Parent Guide</a>';
   } else {
     title.textContent = 'MiM Underground Portal';
-    body.innerHTML =
-      '<a class="portal-link-btn" href="zen-game.html">🎮 Mini Game</a>' +
+    body.innerHTML = '<a class="portal-link-btn" href="zen-game.html">🎮 Mini Game</a>' +
       '<a class="portal-link-btn" href="zen-game.html">⚡ Bonus Challenge</a>' +
       '<a class="portal-link-btn" href="zen-game.html">👑 Boss Mission</a>' +
       '<a class="portal-link-btn" href="dashboard.html">🏆 Collectibles</a>' +
@@ -948,86 +786,35 @@ function openPortalPanel(type) {
   }
   backdrop.classList.add('show');
 }
-function closePortalPanel() {
-  document.getElementById('portalPanelBackdrop').classList.remove('show');
-}
-
-/* ══════════════════ MISSION DRAWER ══════════════════ */
-function toggleMissionDrawer() {
-  const drawer = document.getElementById('missionDrawer');
-  const backdrop = document.getElementById('missionDrawerBackdrop');
-  const isOpen = drawer.classList.toggle('open');
-  backdrop.classList.toggle('open', isOpen);
-}
-function closeMissionDrawer() {
-  document.getElementById('missionDrawer').classList.remove('open');
-  document.getElementById('missionDrawerBackdrop').classList.remove('open');
-}
+function closePortalPanel() { document.getElementById('portalPanelBackdrop').classList.remove('show'); }
+function toggleMissionDrawer() { const drawer = document.getElementById('missionDrawer'); const backdrop = document.getElementById('missionDrawerBackdrop'); const isOpen = drawer.classList.toggle('open'); backdrop.classList.toggle('open', isOpen); }
+function closeMissionDrawer() { document.getElementById('missionDrawer').classList.remove('open'); document.getElementById('missionDrawerBackdrop').classList.remove('open'); }
 function updateProgress() {
   let done = 0;
-  for (let i = 1; i <= 4; i++) {
-    const complete = localStorage.getItem('zen_lesson_complete_' + i);
-    const box = document.getElementById('mission-check-' + i);
-    if (complete) { done++; if (box) box.classList.add('done'); }
-    else if (box) box.classList.remove('done');
-  }
-  const bar = document.getElementById('missionBarFill');
-  const label = document.getElementById('missionProgressLabel');
-  if (bar) bar.style.width = (done / 4 * 100) + '%';
-  if (label) label.textContent = done + '/4 Complete';
+  for (let i = 1; i <= 4; i++) { const complete = localStorage.getItem('zen_lesson_complete_' + i); const box = document.getElementById('mission-check-' + i); if (complete) { done++; if (box) box.classList.add('done'); } else if (box) box.classList.remove('done'); }
+  const bar = document.getElementById('missionBarFill'); const label = document.getElementById('missionProgressLabel');
+  if (bar) bar.style.width = (done / 4 * 100) + '%'; if (label) label.textContent = done + '/4 Complete';
 }
-
 const FACTS = [ "the first ever website is still online — info.cern.ch, made in 1991.", "CSS was proposed in 1994, three years after HTML existed.", "the '404 Not Found' error is named after a room number at CERN.", "JavaScript was built in just 10 days in 1995.", "the pink hex code #ff6baa is technically called 'French Rose.'", "the first computer 'bug' was an actual moth stuck in a machine in 1947.", "there are more possible chess games than atoms in the universe.", "the <marquee> tag used to make text scroll. It's basically retired now." ];
 let factIndex = 0;
-function cycleFacts() {
-  const el = document.getElementById('factTicker');
-  if (!el) return;
-  el.classList.remove('show');
-  setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400);
-}
-cycleFacts();
-setInterval(cycleFacts, 6500);
+function cycleFacts() { const el = document.getElementById('factTicker'); if (!el) return; el.classList.remove('show'); setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400); }
+cycleFacts(); setInterval(cycleFacts, 6500);
 const JOKES = [ "Why do coders prefer dark mode? Because light attracts bugs.", "There are 10 types of people: those who understand binary, and those who don't.", "A CSS developer walks into a bar... and leaves because there was no style.", "Why did the developer go broke? Because they used up all their cache.", "HTML and CSS walk into a bar. The bartender says 'we don't serve your type here.'", "Why do programmers hate nature? Too many bugs.", "I'd tell you a UDP joke, but you might not get it." ];
 let companionClicks = 0;
 function companionClick() {
   companionClicks++;
-  if (companionClicks === 5 && !localStorage.getItem('zen_egg_found')) {
-    localStorage.setItem('zen_egg_found', '1');
-    showEgg("You found Zen's hidden stash! Secret catchphrase unlocked: \"Bugs are just ideas that aren't finished yet.\" ✦");
-  } else if (companionClicks % 5 === 0) {
-    showEgg("Zen waves. She's already found this easter egg with you before.");
-  }
+  if (companionClicks === 5 && !localStorage.getItem('zen_egg_found')) { localStorage.setItem('zen_egg_found', '1'); showEgg("You found Zen's hidden stash! Secret catchphrase unlocked: \"Bugs are just ideas that aren't finished yet.\" ✦"); }
+  else if (companionClicks % 5 === 0) { showEgg("Zen waves. She's already found this easter egg with you before."); }
 }
-function showEgg(text) {
-  const popup = document.getElementById('eggPopup');
-  document.getElementById('eggText').textContent = text;
-  popup.classList.add('show');
-  setTimeout(() => popup.classList.remove('show'), 5000);
-}
+function showEgg(text) { const popup = document.getElementById('eggPopup'); document.getElementById('eggText').textContent = text; popup.classList.add('show'); setTimeout(() => popup.classList.remove('show'), 5000); }
 let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
 function startAmbient() {
-  try {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    droneOsc = audioCtx.createOscillator();
-    droneGain = audioCtx.createGain();
-    droneOsc.type = 'sine'; droneOsc.frequency.value = 82;
-    droneGain.gain.value = 0.015;
-    droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination);
-    droneOsc.start();
-  } catch (e) { console.warn('Ambient audio unavailable:', e); }
+  try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain(); droneOsc.type = 'sine'; droneOsc.frequency.value = 82; droneGain.gain.value = 0.015; droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start(); }
+  catch (e) { console.warn('Ambient audio unavailable:', e); }
 }
-function toggleSound() {
-  const btn = document.getElementById('soundToggle');
-  if (!audioCtx) return;
-  soundOn = !soundOn;
-  droneGain.gain.value = soundOn ? 0.015 : 0;
-  btn.textContent = soundOn ? '🔊' : '🔇';
-  btn.classList.toggle('muted', !soundOn);
-}
+function toggleSound() { const btn = document.getElementById('soundToggle'); if (!audioCtx) return; soundOn = !soundOn; droneGain.gain.value = soundOn ? 0.015 : 0; btn.textContent = soundOn ? '🔊' : '🔇'; btn.classList.toggle('muted', !soundOn); }
 document.addEventListener('DOMContentLoaded', () => { loadReflects(); updateProgress(); });
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Escape') { closePortalPanel(); closeMissionDrawer(); }
-});
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') { closePortalPanel(); closeMissionDrawer(); } });
 </script>
 </body>
 </html>
