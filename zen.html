@@ -130,14 +130,14 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .lesson-strip { position: sticky; top: 60px; z-index: 90; background: rgba(10,5,18,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; overflow-x: auto; scrollbar-width: none; }
 .lesson-strip::-webkit-scrollbar { display: none; }
 .lesson-tab { flex-shrink: 0; padding: 0.9rem 1.6rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; background: none; border-top: none; border-left: none; border-right: none; }
-.lesson-tab:hover { color: var(--pink); }
+.lesson-tab:hover { color: var(--pink); text-shadow: 0 0 8px rgba(255,107,170,0.5); transform: translateY(-1px); }
 .lesson-tab.active { color: var(--pink); border-bottom-color: var(--pink); text-shadow: 0 0 8px rgba(255,107,170,0.5); }
 .lesson-panel { display: none; }
 .lesson-panel.open { display: grid; grid-template-columns: 220px 1fr; min-height: 80vh; }
 .lesson-sidebar { background: var(--bg-panel); border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: sticky; top: calc(60px + 42px); height: calc(100vh - 102px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
 .sidebar-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
 .sidebar-nav-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.65rem 0.8rem; margin-bottom: 0.2rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
-.sidebar-nav-btn:hover { background: rgba(255,107,170,0.07); color: var(--pink); }
+.sidebar-nav-btn:hover { background: rgba(255,107,170,0.07); color: var(--pink); transform: translateX(3px); }
 .sidebar-nav-btn.active { background: rgba(255,107,170,0.11); color: var(--pink); font-weight: 600; }
 .sidebar-icon { font-size: 0.9rem; }
 .lesson-content { padding: 2.5rem 3rem; max-width: 900px; }
@@ -162,7 +162,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .demo-console .line.visible { opacity: 1; transform: none; }
 .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
 .term-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; }
-.term-card:hover { border-color: var(--pink); }
+.term-card:hover { border-color: var(--pink); box-shadow: 0 0 14px rgba(255,107,170,0.2); transform: translateY(-2px); }
 .term-card.open { border-color: var(--pink); }
 .term-name { font-family: var(--font-mono); font-size: 0.8rem; color: var(--pink); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
 .term-arrow { transition: transform 0.2s; color: var(--text-muted); }
@@ -247,7 +247,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .discovery-enter-btn:hover { transform: scale(1.03); }
 .zen-companion { position: fixed; bottom: 24px; right: 24px; z-index: 150; width: 80px; height: 80px; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
 .zen-companion.visible { opacity: 1; pointer-events: auto; }
-.zen-companion img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 16px rgba(255,107,170,0.5)); animation: companionFloat 3s ease-in-out infinite; cursor: pointer; }
+.zen-companion img, .zen-companion video { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 16px rgba(255,107,170,0.5)); animation: companionFloat 3s ease-in-out infinite; cursor: pointer; }
 @keyframes companionFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .sound-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: rgba(21,12,34,0.9); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; opacity: 0; pointer-events: none; }
 .sound-toggle.visible { opacity: 1; pointer-events: auto; }
@@ -258,7 +258,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 @keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 .egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--pink); margin-bottom: 0.5rem; }
 .egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
-@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .zen-companion { width: 60px; height: 60px; bottom: 16px; right: 16px; } .zen-companion img { width: 60px; height: 60px; } .fact-ticker { display: none; } .sound-toggle { bottom: 24px; } }
+@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .zen-companion { width: 60px; height: 60px; bottom: 16px; right: 16px; } .zen-companion img, .zen-companion video { width: 60px; height: 60px; } .fact-ticker { display: none; } .sound-toggle { bottom: 24px; } }
 </style>
 </head>
 <body>
@@ -358,7 +358,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="lesson-content">
 <div class="content-block active" id="block-1-read">
 <div class="section-header">What Is Code?</div>
-<div class="section-sub">LESSON 01 · FREE</div>
+<div class="section-sub">LESSON 01</div>
 <div class="read-card"><div class="read-card-num">01 / 04</div><h3>Instructions, Not Magic</h3><p>"Hey, I'm Zen. I build things with code — websites, animations, digital art. Before I learned how, I had one question: what even IS this stuff?"</p><p>Code is just a set of instructions. That's it.</p></div>
 <div class="read-card"><div class="read-card-num">02 / 04</div><h3>Computers Follow Instructions Fast</h3><p>The language we use to write instructions for websites is called <strong>HTML</strong>. It's made of <strong>tags</strong> — labels that tell the browser what to do with your content.</p></div>
 <div class="read-card"><div class="read-card-num">03 / 04</div><h3>The Browser Reads Your Instructions</h3><p>A browser is just reading your instructions and turning them into something visual. You're the one writing the instructions. That makes you the coder.</p></div>
@@ -645,7 +645,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </div>
 
 
-<div class="zen-companion" id="zenCompanion"><img src="zen-idle.gif" alt="Zen" title="Zen is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()"></div>
+<div class="zen-companion" id="zenCompanion"><video src="zen-game-idle-trans.mp4" autoplay muted loop playsinline title="Zen is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()"></video></div>
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
 <div class="egg-popup" id="eggPopup"><h4>✦ Secret Found!</h4><p id="eggText"></p></div>
 <script type="module" src="auth-init.js"></script>
@@ -671,17 +671,17 @@ function enterRealm() {
   document.getElementById('soundToggle').classList.add('visible');
   startAmbient();
 }
-window.addEventListener('scroll', function () {
-  const companion = document.getElementById('zenCompanion');
-  if (!companion) return;
-  if (window.scrollY > window.innerHeight * 0.6) companion.classList.add('visible'); else companion.classList.remove('visible');
-}, { passive: true });
 function openLesson(n) {
   document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
   document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
   const panel = document.getElementById('lesson-' + n); const tab = document.getElementById('tab-' + n);
   if (panel) panel.classList.add('open'); if (tab) tab.classList.add('active');
   currentLesson = n; panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  playUISound(330);
+  const companion = document.getElementById('zenCompanion');
+  if (companion && n !== 'cheat') companion.classList.add('visible');
+  const wrapper = document.getElementById('icebreakerWrapper');
+  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
 }
 function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
 function showBlock(lesson, block) {
@@ -690,8 +690,21 @@ function showBlock(lesson, block) {
   panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
   const target = document.getElementById('block-' + lesson + '-' + block); if (target) target.classList.add('active');
   const btn = document.getElementById('sb-' + lesson + '-' + block); if (btn) btn.classList.add('active');
+  playUISound(392);
 }
-function toggleTerm(card) { card.classList.toggle('open'); }
+function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); }
+let ibUIAudioCtx = null;
+function playUISound(freq) {
+  try {
+    if (!ibUIAudioCtx) ibUIAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ibUIAudioCtx.createOscillator(); const gain = ibUIAudioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.05, ibUIAudioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ibUIAudioCtx.currentTime + 0.18);
+    osc.connect(gain); gain.connect(ibUIAudioCtx.destination);
+    osc.start(); osc.stop(ibUIAudioCtx.currentTime + 0.18);
+  } catch (e) { /* audio unavailable, silently continue */ }
+}
 function checkQuiz(btn, correct, feedback) {
   const opts = btn.closest('.quiz-options'); if (opts.querySelector('.correct')) return;
   const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
