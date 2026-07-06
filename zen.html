@@ -1201,4 +1201,23 @@ function ibFinaleClick(idx) {
     return;
   }
   if (ibSeqPlayer.length === ibFinalePattern.length) {
-    document.getElementById('ibSeqStatus').textContent = '✦ You built the whole 
+    document.getElementById('ibSeqStatus').textContent = '✦ You built the whole page!';
+    setTimeout(() => ibComplete(), 1000);
+  }
+}
+
+function ibComplete() {
+  document.getElementById('ib-game').style.display = 'none';
+  document.getElementById('ib-complete').style.display = 'block';
+}
+
+function ibReset() {
+  document.getElementById('ib-complete').style.display = 'none';
+  document.getElementById('ib-intro').style.display = 'block';
+  ibIndex = 0; ibMasterPattern = []; ibUnlockedCount = 0; ibPiecePool = [];
+}
+
+document.addEventListener('DOMContentLoaded', () => { loadReflects(); ibRenderIntro(); });
+</script>
+</body>
+</html>
