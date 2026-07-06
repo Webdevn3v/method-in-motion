@@ -234,7 +234,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--cyan); margin-bottom: 0.5rem; }
 .lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
 .lesson-joke { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--purple); font-style: italic; }
-.discovery-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(4, 6, 15, 0.97); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; }
+.discovery-overlay { position: fixed; inset: 0; z-index: 200; background: #04060f; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; }
 .discovery-overlay.hidden { display: none; }
 .echo-mark { font-family: var(--font-mono); font-size: 2rem; color: var(--cyan); margin-bottom: 1rem; letter-spacing: 0.3em; text-shadow: var(--glow-strong); animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
@@ -802,7 +802,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </div>
 
 <div class="echo-companion" id="echoCompanion">
-<video src="echo-idle.gif" autoplay muted loop playsinline title="Echo is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()"></video>
+<img src="echo-idle.gif" alt="Echo" title="Echo is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
 </div>
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
 <div class="portal-modal" id="portalModal">
@@ -833,21 +833,23 @@ window.handleTierUnlock = function(tier) {
   loadReflects();
 };
 function enterStudio() {
-  document.getElementById('discoveryEnterBtn').style.display = 'none';
-  document.querySelector('.echo-mark').style.display = 'none';
-  document.getElementById('discoveryTitle').style.display = 'none';
-  document.getElementById('discoverySub').style.display = 'none';
-  const stage = document.getElementById('hologramStage');
-  stage.style.display = 'block';
+  const overlay = document.getElementById('discoveryOverlay');
   const finishEntrance = () => {
-    const overlay = document.getElementById('discoveryOverlay');
     overlay.classList.add('fading');
     setTimeout(() => {
       overlay.classList.add('hidden');
-      document.getElementById('soundToggle').classList.add('visible');
-      startAmbient();
+      const st = document.getElementById('soundToggle'); if (st) st.classList.add('visible');
+      try { startAmbient(); } catch (e) { /* ambient audio optional */ }
     }, 700);
   };
+  try {
+    document.getElementById('discoveryEnterBtn').style.display = 'none';
+    document.querySelector('.echo-mark').style.display = 'none';
+    document.getElementById('discoveryTitle').style.display = 'none';
+    document.getElementById('discoverySub').style.display = 'none';
+    const stage = document.getElementById('hologramStage');
+    stage.style.display = 'block';
+  } catch (e) { /* hologram cosmetics optional, overlay must still dismiss */ }
   setTimeout(finishEntrance, 3000);
 }
 function openLesson(n) {
