@@ -39,7 +39,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .particle:nth-child(odd) { background: var(--pink); box-shadow: 0 0 8px 2px rgba(255,107,170,0.6); }
 @keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
 .hero-byte-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(198,107,255,0.4)); pointer-events: none; }
-@media (max-width: 768px) { .hero-byte-gif { display: none; } .ib-toggle-tab { width: 140px; padding: 0.8rem 0.7rem 0.7rem; top: 90px; right: 2%; } .ib-toggle-icon { font-size: 1.2rem; margin-bottom: 0.3rem; } .ib-toggle-title { font-size: 0.68rem; } .ib-toggle-tab-label { font-size: 0.56rem; margin-bottom: 0.6rem; } .ib-toggle-cta { font-size: 0.58rem; padding: 0.35rem 0.7rem; } }
+@media (max-width: 768px) { .hero-byte-gif { display: none; } }
 .hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
 .hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--purple); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(198,107,255,0.6); }
 .hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
@@ -55,13 +55,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .hero-tile:hover { background: rgba(198,107,255,0.18); border-color: var(--purple); color: var(--purple); box-shadow: var(--glow); transform: translateY(-2px); }
 
 /* ═══════════ ICEBREAKER TOGGLE CARD ═══════════ */
-.ib-toggle-tab { position: absolute; z-index: 20; right: 4%; top: 110px; width: 200px; padding: 1.2rem 1.1rem 1.1rem; border-radius: 16px; border: 1px solid var(--border-bright); background: linear-gradient(160deg, rgba(198,107,255,0.14), rgba(255,107,170,0.08)); backdrop-filter: blur(6px); cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 24px rgba(198,107,255,0.2), inset 0 0 20px rgba(198,107,255,0.05); animation: ibCardFloat 4s ease-in-out infinite; }
-.ib-toggle-tab:hover { border-color: var(--purple); box-shadow: 0 0 34px rgba(198,107,255,0.4), inset 0 0 24px rgba(198,107,255,0.1); transform: translateY(-2px); }
-@keyframes ibCardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
-.ib-toggle-icon { font-size: 1.6rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px rgba(198,107,255,0.6)); }
-.ib-toggle-title { font-family: var(--font-display); font-size: 0.82rem; font-weight: 900; color: #fff; letter-spacing: 0.06em; text-shadow: 0 0 12px rgba(198,107,255,0.7); margin-bottom: 0.35rem; }
-.ib-toggle-tab-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; color: var(--text-dim); line-height: 1.5; margin-bottom: 0.8rem; }
-.ib-toggle-cta { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(198,107,255,0.16); border: 1px solid var(--purple); color: var(--purple); font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.45rem 0.9rem; border-radius: 100px; }
+.hero-tiles { display: flex; gap: 0.8rem; align-items: stretch; }
+.hero-lesson-grid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 0.6rem; }
+.hero-bugcatch-tile { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.3rem; min-width: 100px; max-width: 120px; border-radius: 10px; border: 1px solid var(--pink); background: rgba(255,107,170,0.12); color: var(--pink); font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-align: center; padding: 0.6rem 0.5rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 14px rgba(255,107,170,0.15); }
+.hero-bugcatch-tile:hover { background: rgba(255,107,170,0.24); box-shadow: 0 0 22px rgba(255,107,170,0.4); transform: translateY(-2px); }
+.hero-bugcatch-icon { font-size: 1.2rem; }
+.hero-bugcatch-cta { font-size: 0.6rem; opacity: 0.85; }
+@media (max-width: 768px) { .hero-tiles { flex-wrap: wrap; } }
 
 /* ═══════════ ICEBREAKER — BUG CATCH GAME ═══════════ */
 .icebreaker-wrapper { display: none; }
@@ -239,7 +239,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterCity()">Enter Code City</button>
 <div class="hologram-stage" id="hologramStage">
   <div class="hologram-frame">
-    <img class="hologram-video" id="entranceVideo" src="byte-entrance.gif" alt="Byte materializing">
+    <img class="hologram-video" id="entranceVideo" src="byte-entrance-hero.gif" alt="Byte materializing">
     <div class="hologram-scanlines"></div>
     <div class="hologram-scan-sweep"></div>
   </div>
@@ -264,13 +264,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="hero-gradient"></div>
 <div class="hero-pulse"></div>
 <div class="particle-field" id="particleField"></div>
-<img class="hero-byte-gif" src="byte-idle.gif" alt="Byte" onerror="this.style.display='none'" onclick="companionClick()" style="pointer-events:auto;cursor:pointer;">
-<button class="ib-toggle-tab" onclick="ibToggleWrapper()" aria-label="Open the Bug Catch icebreaker game">
-  <div class="ib-toggle-icon">◈</div>
-  <div class="ib-toggle-title">BUG CATCH</div>
-  <div class="ib-toggle-tab-label">Learn the bug types.<br>Catch them before they escape.</div>
-  <div class="ib-toggle-cta">Boot Game →</div>
-</button>
+<img class="hero-byte-gif" src="byte-motion.gif" alt="Byte" onerror="this.style.display='none'" onclick="companionClick()" style="pointer-events:auto;cursor:pointer;">
 <div class="hero-content">
 <div class="hero-eyebrow">◈ &nbsp; Glitch Cat &nbsp; · &nbsp; Debugging</div>
 <div class="hero-name">Byte</div>
@@ -279,10 +273,17 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="hero-quote">"<span>Most people panic when they see an error.</span> I get excited. It's a clue waiting to be followed."</div>
 <div class="fact-ticker" id="factTicker"></div>
 <div class="hero-tiles">
+<div class="hero-lesson-grid">
 <a class="hero-tile" onclick="jumpToLesson(1)">01 Bug Thinking</a>
 <a class="hero-tile" onclick="jumpToLesson(2)">02 Error Messages</a>
 <a class="hero-tile" onclick="jumpToLesson(3)">03 Logic Tracing</a>
 <a class="hero-tile" onclick="jumpToLesson(4)">04 Debug Challenge</a>
+</div>
+<button class="hero-bugcatch-tile" onclick="ibToggleWrapper()" aria-label="Open the Bug Catch icebreaker game">
+<span class="hero-bugcatch-icon">◈</span>
+<span>BUG<br>CATCH</span>
+<span class="hero-bugcatch-cta">Boot →</span>
+</button>
 </div>
 </div>
 </section>
@@ -668,6 +669,7 @@ function openLesson(n) {
   const panel = document.getElementById('lesson-' + n); const tab = document.getElementById('tab-' + n);
   if (panel) panel.classList.add('open'); if (tab) tab.classList.add('active');
   currentLesson = n; panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (n !== 'cheat') showBlock(n, 'read');
   playUISound(330);
   const wrapper = document.getElementById('icebreakerWrapper');
   if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
