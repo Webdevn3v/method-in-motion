@@ -39,7 +39,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .particle:nth-child(odd) { background: var(--pink); box-shadow: 0 0 8px 2px rgba(255,107,170,0.6); }
 @keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
 .hero-byte-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(198,107,255,0.4)); pointer-events: none; }
-@media (max-width: 768px) { .hero-byte-gif { display: none; } .ib-toggle-tab { width: 140px; padding: 0.8rem 0.7rem 0.7rem; bottom: 6%; right: 2%; } .ib-toggle-icon { font-size: 1.2rem; margin-bottom: 0.3rem; } .ib-toggle-title { font-size: 0.68rem; } .ib-toggle-tab-label { font-size: 0.56rem; margin-bottom: 0.6rem; } .ib-toggle-cta { font-size: 0.58rem; padding: 0.35rem 0.7rem; } }
+@media (max-width: 768px) { .hero-byte-gif { display: none; } .ib-toggle-tab { width: 140px; padding: 0.8rem 0.7rem 0.7rem; top: 90px; right: 2%; } .ib-toggle-icon { font-size: 1.2rem; margin-bottom: 0.3rem; } .ib-toggle-title { font-size: 0.68rem; } .ib-toggle-tab-label { font-size: 0.56rem; margin-bottom: 0.6rem; } .ib-toggle-cta { font-size: 0.58rem; padding: 0.35rem 0.7rem; } }
 .hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
 .hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--purple); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(198,107,255,0.6); }
 .hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
@@ -55,7 +55,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .hero-tile:hover { background: rgba(198,107,255,0.18); border-color: var(--purple); color: var(--purple); box-shadow: var(--glow); transform: translateY(-2px); }
 
 /* ═══════════ ICEBREAKER TOGGLE CARD ═══════════ */
-.ib-toggle-tab { position: absolute; z-index: 20; right: 4%; bottom: 10%; width: 200px; padding: 1.2rem 1.1rem 1.1rem; border-radius: 16px; border: 1px solid var(--border-bright); background: linear-gradient(160deg, rgba(198,107,255,0.14), rgba(255,107,170,0.08)); backdrop-filter: blur(6px); cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 24px rgba(198,107,255,0.2), inset 0 0 20px rgba(198,107,255,0.05); animation: ibCardFloat 4s ease-in-out infinite; }
+.ib-toggle-tab { position: absolute; z-index: 20; right: 4%; top: 110px; width: 200px; padding: 1.2rem 1.1rem 1.1rem; border-radius: 16px; border: 1px solid var(--border-bright); background: linear-gradient(160deg, rgba(198,107,255,0.14), rgba(255,107,170,0.08)); backdrop-filter: blur(6px); cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 24px rgba(198,107,255,0.2), inset 0 0 20px rgba(198,107,255,0.05); animation: ibCardFloat 4s ease-in-out infinite; }
 .ib-toggle-tab:hover { border-color: var(--purple); box-shadow: 0 0 34px rgba(198,107,255,0.4), inset 0 0 24px rgba(198,107,255,0.1); transform: translateY(-2px); }
 @keyframes ibCardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
 .ib-toggle-icon { font-size: 1.6rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px rgba(198,107,255,0.6)); }
@@ -218,9 +218,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .discovery-sub { font-size: 1rem; color: var(--text-dim); max-width: 460px; line-height: 1.6; margin-bottom: 2rem; }
 .discovery-enter-btn { background: var(--purple); color: var(--bg); font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 1rem 2.5rem; border-radius: 8px; border: none; cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s; box-shadow: var(--glow-strong); }
 .discovery-enter-btn:hover { transform: scale(1.03); }
-.byte-companion { position: fixed; bottom: 24px; right: 24px; z-index: 150; width: 80px; height: 80px; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
-.byte-companion.visible { opacity: 1; pointer-events: auto; }
-.byte-companion img, .byte-companion video { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 16px rgba(198,107,255,0.5)); animation: companionFloat 3s ease-in-out infinite; cursor: pointer; }
 @keyframes companionFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
 .sound-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: rgba(19,16,34,0.9); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; opacity: 0; pointer-events: none; }
 .sound-toggle.visible { opacity: 1; pointer-events: auto; }
@@ -231,7 +228,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 @keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 .egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--purple); margin-bottom: 0.5rem; }
 .egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
-@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .byte-companion { width: 60px; height: 60px; bottom: 16px; right: 16px; } .byte-companion img, .byte-companion video { width: 60px; height: 60px; } .fact-ticker { display: none; } }
+@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .fact-ticker { display: none; } }
 </style>
 </head>
 <body>
@@ -267,7 +264,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="hero-gradient"></div>
 <div class="hero-pulse"></div>
 <div class="particle-field" id="particleField"></div>
-<img class="hero-byte-gif" src="byte-idle.gif" alt="Byte" onerror="this.style.display='none'">
+<img class="hero-byte-gif" src="byte-idle.gif" alt="Byte" onerror="this.style.display='none'" onclick="companionClick()" style="pointer-events:auto;cursor:pointer;">
 <button class="ib-toggle-tab" onclick="ibToggleWrapper()" aria-label="Open the Bug Catch icebreaker game">
   <div class="ib-toggle-icon">◈</div>
   <div class="ib-toggle-title">BUG CATCH</div>
@@ -625,9 +622,6 @@ if (average > 75) {
 </div>
 </div>
 
-<div class="byte-companion" id="byteCompanion">
-<img src="byte-idle.gif" alt="Byte" title="Byte is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
-</div>
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
 <div class="egg-popup" id="eggPopup"><h4>◈ Secret Found!</h4><p id="eggText"></p></div>
 <script type="module" src="auth-init.js"></script>
@@ -675,8 +669,6 @@ function openLesson(n) {
   if (panel) panel.classList.add('open'); if (tab) tab.classList.add('active');
   currentLesson = n; panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
   playUISound(330);
-  const companion = document.getElementById('byteCompanion');
-  if (companion && n !== 'cheat') companion.classList.add('visible');
   const wrapper = document.getElementById('icebreakerWrapper');
   if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
 }
