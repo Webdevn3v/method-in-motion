@@ -16,30 +16,29 @@ gtag('config', 'G-DJ3Q488K7W');
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
 :root{
-  --void:#050508;
-  --deep:#08080f;
-  --card:rgba(12,10,22,0.9);
-  --border:rgba(255,255,255,0.06);
-  --border-md:rgba(255,255,255,0.1);
-  --text:#e8e8f5;
-  --muted:#5a5a75;
-  --pink:#f472b6;
-  --purple:#a855f7;
-  --cyan:#00f5d4;
-  --yellow:#fbbf24;
-  --lime:#84cc16;
-  --blue:#38bdf8;
-  --orange:#fb923c;
-  --grad:linear-gradient(135deg,#ff6baa,#c66bff);
-  --display:'Orbitron',monospace;
-  --head:'Syne',sans-serif;
-  --body:'DM Sans',sans-serif;
+--void:#050508;
+--deep:#08080f;
+--card:rgba(12,10,22,0.9);
+--border:rgba(255,255,255,0.06);
+--border-md:rgba(255,255,255,0.1);
+--text:#e8e8f5;
+--muted:#5a5a75;
+--pink:#f472b6;
+--purple:#a855f7;
+--cyan:#00f5d4;
+--yellow:#fbbf24;
+--lime:#84cc16;
+--blue:#38bdf8;
+--orange:#fb923c;
+--grad:linear-gradient(135deg,#ff6baa,#c66bff);
+--display:'Orbitron',monospace;
+--head:'Syne',sans-serif;
+--body:'DM Sans',sans-serif;
 }
 html{scroll-behavior:smooth;}
 body{background:var(--void);color:var(--text);font-family:var(--body);font-weight:300;min-height:100vh;overflow-x:hidden;}
 a{text-decoration:none;color:inherit;}
-.dash-bg{position:fixed;inset:0;z-index:0;background-image:url('Mim_Parent_Portal.png');background-size:cover;background-position:center top;opacity:0.22;pointer-events:none;}
-.dash-bg-overlay{position:fixed;inset:0;z-index:0;background:linear-gradient(to bottom,rgba(5,5,8,0.3) 0%,rgba(5,5,8,0.65) 35%,rgba(5,5,8,0.97) 75%);pointer-events:none;}
+.dash-bg-overlay{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at top,rgba(168,85,247,0.06),transparent 60%),linear-gradient(to bottom,rgba(5,5,8,1) 0%,rgba(5,5,8,1) 100%);pointer-events:none;}
 .ambient{position:fixed;inset:0;pointer-events:none;z-index:0;}
 .ambient-orb{position:absolute;border-radius:50%;filter:blur(120px);animation:orb-drift ease-in-out infinite;}
 @keyframes orb-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(var(--dx,20px),var(--dy,-20px))}}
@@ -151,280 +150,236 @@ footer a{color:var(--cyan);}
 </style>
 </head>
 <body>
-<div class="dash-bg"></div>
 <div class="dash-bg-overlay"></div>
 <div class="ambient">
-  <div class="ambient-orb amb1"></div>
-  <div class="ambient-orb amb2"></div>
-  <div class="ambient-orb amb3"></div>
+<div class="ambient-orb amb1"></div>
+<div class="ambient-orb amb2"></div>
+<div class="ambient-orb amb3"></div>
 </div>
-
 <nav>
-  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
-  <div class="nav-right">
-    <span class="nav-username" id="nav-username"></span>
-    <button id="logout-btn">Log Out</button>
-  </div>
+<a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
+<div class="nav-right">
+<span class="nav-username" id="nav-username"></span>
+<button id="logout-btn">Log Out</button>
+</div>
 </nav>
-
 <div id="loading">
-  <div class="spinner"></div>
-  <span>Loading your universe...</span>
+<div class="spinner"></div>
+<span>Loading your universe...</span>
 </div>
-
 <div id="dashboard">
-  <div class="dash-hero">
-    <div>
-      <div class="dash-greeting">Welcome back</div>
-      <div class="dash-name">Hey, <span id="user-name">Coder</span>.</div>
-      <div class="dash-sub">Your worlds are waiting. Pick up where you left off.</div>
-      <div class="tier-pill free" id="tier-pill"><span class="tier-pill-dot"></span><span id="tier-label">Free</span></div>
-    </div>
-  </div>
-
-  <div class="upgrade-strip" id="upgrade-strip">
-    <p><strong>Unlock more worlds.</strong> Upgrade your plan to access all 6 character lessons and all games.</p>
-    <a href="membership.html">Upgrade Plan →</a>
-  </div>
-
-  <div class="stats-strip" id="stats-strip">
-    <div class="stat-card">
-      <div class="stat-val" id="stat-worlds" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">—</div>
-      <div class="stat-label">Worlds Unlocked</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="stat-lessons" style="color:var(--cyan);">—</div>
-      <div class="stat-label">Lessons Available</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="stat-games" style="color:var(--purple);">—</div>
-      <div class="stat-label">Games Unlocked</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val" id="stat-workbooks" style="color:var(--yellow);">—</div>
-      <div class="stat-label">Workbooks</div>
-    </div>
-  </div>
-
-  <div class="dash-section">
-    <div class="section-header">
-      <div class="section-title">Character Worlds</div>
-      <a href="games.html" class="section-link">Game Universe →</a>
-    </div>
-    <div class="world-grid" id="world-grid"></div>
-  </div>
-
-  <div class="dash-section">
-    <div class="section-header">
-      <div class="section-title">Think Like a Programmer</div>
-      <a href="pdfs.html" class="section-link">All PDFs →</a>
-    </div>
-    <div class="pdf-vol-grid" id="pdf-vol-grid"></div>
-  </div>
-
-  <div class="dash-section">
-    <div class="section-header">
-      <div class="section-title">Workbooks</div>
-      <a href="pdfs.html" class="section-link">All PDFs →</a>
-    </div>
-    <div class="wb-grid" id="wb-grid"></div>
-  </div>
+<div class="dash-hero">
+<div>
+<div class="dash-greeting">Welcome back</div>
+<div class="dash-name">Hey, <span id="user-name">Coder</span>.</div>
+<div class="dash-sub">Your worlds are waiting. Pick up where you left off.</div>
+<div class="tier-pill free" id="tier-pill"><span class="tier-pill-dot"></span><span id="tier-label">Free</span></div>
 </div>
-
+</div>
+<div class="upgrade-strip" id="upgrade-strip">
+<p><strong>Unlock more worlds.</strong> Upgrade your plan to access all 6 character lessons and all games.</p>
+<a href="membership.html">Upgrade Plan →</a>
+</div>
+<div class="stats-strip" id="stats-strip">
+<div class="stat-card">
+<div class="stat-val" id="stat-worlds" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">—</div>
+<div class="stat-label">Worlds Unlocked</div>
+</div>
+<div class="stat-card">
+<div class="stat-val" id="stat-lessons" style="color:var(--cyan);">—</div>
+<div class="stat-label">Lessons Available</div>
+</div>
+<div class="stat-card">
+<div class="stat-val" id="stat-games" style="color:var(--purple);">—</div>
+<div class="stat-label">Games Unlocked</div>
+</div>
+<div class="stat-card">
+<div class="stat-val" id="stat-workbooks" style="color:var(--yellow);">—</div>
+<div class="stat-label">Workbooks</div>
+</div>
+</div>
+<div class="dash-section">
+<div class="section-header">
+<div class="section-title">Character Worlds</div>
+<a href="games.html" class="section-link">Game Universe →</a>
+</div>
+<div class="world-grid" id="world-grid"></div>
+</div>
+<div class="dash-section">
+<div class="section-header">
+<div class="section-title">Think Like a Programmer</div>
+<a href="pdfs.html" class="section-link">All PDFs →</a>
+</div>
+<div class="pdf-vol-grid" id="pdf-vol-grid"></div>
+</div>
+<div class="dash-section">
+<div class="section-header">
+<div class="section-title">Workbooks</div>
+<a href="pdfs.html" class="section-link">All PDFs →</a>
+</div>
+<div class="wb-grid" id="wb-grid"></div>
+</div>
+</div>
 <footer>Method in Motion &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="membership.html">Membership</a> &nbsp;·&nbsp; "Create, Don't Consume."</footer>
-
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
 import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
 import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-
 const firebaseConfig={
-  apiKey:"AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
-  authDomain:"method-in-motion.firebaseapp.com",
-  projectId:"method-in-motion",
-  storageBucket:"method-in-motion.appspot.com",
-  messagingSenderId:"1067937974009",
-  appId:"1:1067937974009:web:5b21e6abe84e0b28234428"
+apiKey:"AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
+authDomain:"method-in-motion.firebaseapp.com",
+projectId:"method-in-motion",
+storageBucket:"method-in-motion.appspot.com",
+messagingSenderId:"1067937974009",
+appId:"1:1067937974009:web:5b21e6abe84e0b28234428"
 };
-
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
-
 const CHARS=[
-  {id:'zen',name:'Zen',role:'Creative Coder',accent:'#f472b6',deep:'#0e0510',glowColor:'rgba(244,114,182,0.35)',image:'zen-entrance.png',world:'zen.html',game:'zen-game.html',gameName:'CSS Challenge'},
-  {id:'byte',name:'Byte',role:'Glitch Cat',accent:'#a855f7',deep:'#080514',glowColor:'rgba(168,85,247,0.35)',image:'byte-entrance.png',world:'byte.html',game:'byte-game.html',gameName:'Glitch Hunt'},
-  {id:'loop',name:'Loop',role:'Flow Guide',accent:'#00f5d4',deep:'#03100e',glowColor:'rgba(0,245,212,0.3)',image:'loop-entrance.png',world:'loop.html',game:'loop-game.html',gameName:'Logic Quest'},
-  {id:'nova',name:'Nova',role:'Builder Bot',accent:'#fbbf24',deep:'#0d0a00',glowColor:'rgba(251,191,36,0.3)',image:'nova-entrance.png',world:'nova.html',game:'nova-game.html',gameName:'Build Lab'},
-  {id:'bug',name:'Bug',role:'Debug Gremlin',accent:'#84cc16',deep:'#060a00',glowColor:'rgba(132,204,22,0.3)',image:'bug-entrance.png',world:'bug.html',game:'bug-game.html',gameName:'Chaos Code'},
-  {id:'echo',name:'Echo',role:'Signal DJ',accent:'#38bdf8',deep:'#030d12',glowColor:'rgba(56,189,248,0.3)',image:'echo-entrance.png',world:'echo.html',game:'echo-game.html',gameName:'Signal Lab'}
+{id:'zen',name:'Zen',role:'Creative Coder',accent:'#f472b6',deep:'#0e0510',glowColor:'rgba(244,114,182,0.35)',image:'zen-entrance.png',world:'zen.html',game:'zen-game.html',gameName:'CSS Challenge'},
+{id:'byte',name:'Byte',role:'Glitch Cat',accent:'#a855f7',deep:'#080514',glowColor:'rgba(168,85,247,0.35)',image:'byte-entrance.png',world:'byte.html',game:'byte-game.html',gameName:'Glitch Hunt'},
+{id:'loop',name:'Loop',role:'Flow Guide',accent:'#00f5d4',deep:'#03100e',glowColor:'rgba(0,245,212,0.3)',image:'loop-entrance.png',world:'loop.html',game:'loop-game.html',gameName:'Logic Quest'},
+{id:'nova',name:'Nova',role:'Builder Bot',accent:'#fbbf24',deep:'#0d0a00',glowColor:'rgba(251,191,36,0.3)',image:'nova-entrance.png',world:'nova.html',game:'nova-game.html',gameName:'Build Lab'},
+{id:'bug',name:'Bug',role:'Debug Gremlin',accent:'#84cc16',deep:'#060a00',glowColor:'rgba(132,204,22,0.3)',image:'bug-entrance.png',world:'bug.html',game:'bug-game.html',gameName:'Chaos Code'},
+{id:'echo',name:'Echo',role:'Signal DJ',accent:'#38bdf8',deep:'#030d12',glowColor:'rgba(56,189,248,0.3)',image:'echo-entrance.png',world:'echo.html',game:'echo-game.html',gameName:'Signal Lab'}
 ];
-
 const WORKBOOKS=[
-  {char:'Zen',color:'#f472b6',title:"Zen's Creative Circuits",sub:'Vol. 1 · HTML & CSS',available:true},
-  {char:'Byte',color:'#a855f7',title:"Byte's Debug Lab",sub:'Vol. 1 · Debugging',available:false},
-  {char:'Loop',color:'#00f5d4',title:"Loop's Logic Quest",sub:'Vol. 1 · Loops & Logic',available:false},
-  {char:'Nova',color:'#fbbf24',title:"Nova's Build Lab",sub:'Vol. 1 · Projects',available:false},
-  {char:'Bug',color:'#84cc16',title:"Bug's Chaos Code",sub:'Vol. 1 · Problem Solving',available:false},
-  {char:'Echo',color:'#38bdf8',title:"Echo's Signal Lab",sub:'Vol. 1 · Events & Timing',available:false}
+{char:'Zen',color:'#f472b6',title:"Zen's Creative Circuits",sub:'Vol. 1 · HTML & CSS',available:true},
+{char:'Byte',color:'#a855f7',title:"Byte's Debug Lab",sub:'Vol. 1 · Debugging',available:false},
+{char:'Loop',color:'#00f5d4',title:"Loop's Logic Quest",sub:'Vol. 1 · Loops & Logic',available:false},
+{char:'Nova',color:'#fbbf24',title:"Nova's Build Lab",sub:'Vol. 1 · Projects',available:false},
+{char:'Bug',color:'#84cc16',title:"Bug's Chaos Code",sub:'Vol. 1 · Problem Solving',available:false},
+{char:'Echo',color:'#38bdf8',title:"Echo's Signal Lab",sub:'Vol. 1 · Events & Timing',available:false}
 ];
-
 const PDF_VOLS=[
-  {
-    tag:'Vol. 1 · Foundations',
-    title:'Think Like a Programmer',
-    sub:'Problem-solving, pattern recognition, sequencing, and the coder mindset.',
-    cover:'vol.1-think-cover.png',
-    file:'Vol.1_Think_Like_a_Programmer.pdf'
-  },
-  {
-    tag:'Vol. 2 · Systems & Logic',
-    title:'How Computers Think',
-    sub:'Systems, input & output, conditions, and loops — how computers process the world.',
-    cover:'vol.2-think-cover.png',
-    file:'Vol.2_Think_Like_a_Programmer.pdf'
-  },
-  {
-    tag:'Vol. 3 · The Big Picture',
-    title:'Building Digital Worlds',
-    sub:'Websites, apps, games, digital design, and emerging tech for young creators.',
-    cover:'vol.3-think-cover.png',
-    file:'Vol.3_Think_Like_a_Programmer.pdf'
-  }
+{ tag:'Vol. 1 · Foundations', title:'Think Like a Programmer', sub:'Problem-solving, pattern recognition, sequencing, and the coder mindset.', cover:'vol.1-think-cover.png', file:'Vol.1_Think_Like_a_Programmer.pdf' },
+{ tag:'Vol. 2 · Systems & Logic', title:'How Computers Think', sub:'Systems, input & output, conditions, and loops — how computers process the world.', cover:'vol.2-think-cover.png', file:'Vol.2_Think_Like_a_Programmer.pdf' },
+{ tag:'Vol. 3 · The Big Picture', title:'Building Digital Worlds', sub:'Websites, apps, games, digital design, and emerging tech for young creators.', cover:'vol.3-think-cover.png', file:'Vol.3_Think_Like_a_Programmer.pdf' }
 ];
-
 const TIER_CFG={
-  free:{label:'Free',cls:'free',lessonsPerChar:1,gamesUnlocked:['byte'],worldsUnlocked:6},
-  sparks:{label:'Sparks · $5/mo',cls:'sparks',lessonsPerChar:2,gamesUnlocked:['byte'],worldsUnlocked:6},
-  builders:{label:'Builders · $9/mo',cls:'builders',lessonsPerChar:3,gamesUnlocked:['byte'],worldsUnlocked:6},
-  coders:{label:'Coders · $15/mo',cls:'coders',lessonsPerChar:4,gamesUnlocked:'all',worldsUnlocked:6}
+free:{label:'Free',cls:'free',lessonsPerChar:1,gamesUnlocked:['byte'],worldsUnlocked:6},
+sparks:{label:'Sparks · $5/mo',cls:'sparks',lessonsPerChar:2,gamesUnlocked:['byte'],worldsUnlocked:6},
+builders:{label:'Builders · $9/mo',cls:'builders',lessonsPerChar:3,gamesUnlocked:['byte'],worldsUnlocked:6},
+coders:{label:'Coders · $15/mo',cls:'coders',lessonsPerChar:4,gamesUnlocked:'all',worldsUnlocked:6}
 };
-
 function getStatusLabel(char,tier){
-  if(tier==='coders')return'All 4 lessons unlocked';
-  if(tier==='builders')return'Lessons 1–3 unlocked';
-  if(tier==='sparks')return'Lessons 1–2 unlocked';
-  return'Lesson 1 available';
+if(tier==='coders')return'All 4 lessons unlocked';
+if(tier==='builders')return'Lessons 1–3 unlocked';
+if(tier==='sparks')return'Lessons 1–2 unlocked';
+return'Lesson 1 available';
 }
-
 function getStatus(tier){
-  if(tier==='coders')return'unlocked';
-  if(tier==='builders'||tier==='sparks')return'partial';
-  return'partial';
+if(tier==='coders')return'unlocked';
+if(tier==='builders'||tier==='sparks')return'partial';
+return'partial';
 }
-
 function canPlayGame(charId,tier){
-  if(tier==='coders')return true;
-  if(charId==='byte')return true;
-  return false;
+if(tier==='coders')return true;
+if(charId==='byte')return true;
+return false;
 }
-
 function buildWorldGrid(tier){
-  const grid=document.getElementById('world-grid');
-  const isFreeGame=(id)=>id==='byte';
-  grid.innerHTML=CHARS.map(c=>{
-    const status=getStatus(tier);
-    const statusLabel=getStatusLabel(c,tier);
-    const gameAccess=canPlayGame(c.id,tier);
-    const freeGame=isFreeGame(c.id);
-    return`<div class="world-card" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor};">
-      <div class="wc-image" style="background-image:url('${c.image}');">
-        <div class="wc-glow"></div>
-        ${freeGame?'<div class="wc-free-badge">Free Game</div>':''}
-      </div>
-      <div class="wc-body">
-        <div class="wc-char-label">${c.role}</div>
-        <div class="wc-name">${c.name}</div>
-        <div class="wc-role">${c.gameName}</div>
-        <div class="wc-status status-${status}">
-          <div class="wc-status-dot"></div>
-          <div class="wc-status-text">${statusLabel}</div>
-        </div>
-        <div class="wc-actions">
-          <a href="${c.world}" class="wc-btn wc-btn-lesson">Lessons →</a>
-          ${gameAccess
-            ?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Game →</a>`
-            :freeGame
-              ?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Free →</a>`
-              :`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,0.06);">Unlock Game</a>`
-          }
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+const grid=document.getElementById('world-grid');
+const isFreeGame=(id)=>id==='byte';
+grid.innerHTML=CHARS.map(c=>{
+const status=getStatus(tier);
+const statusLabel=getStatusLabel(c,tier);
+const gameAccess=canPlayGame(c.id,tier);
+const freeGame=isFreeGame(c.id);
+return`<div class="world-card" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor};">
+<div class="wc-image" style="background-image:url('${c.image}');">
+<div class="wc-glow"></div>
+${freeGame?'<div class="wc-free-badge">Free Game</div>':''}
+</div>
+<div class="wc-body">
+<div class="wc-char-label">${c.role}</div>
+<div class="wc-name">${c.name}</div>
+<div class="wc-role">${c.gameName}</div>
+<div class="wc-status status-${status}">
+<div class="wc-status-dot"></div>
+<div class="wc-status-text">${statusLabel}</div>
+</div>
+<div class="wc-actions">
+<a href="${c.world}" class="wc-btn wc-btn-lesson">Lessons →</a>
+${gameAccess
+?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Game →</a>`
+:freeGame
+?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Free →</a>`
+:`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,0.06);">Unlock Game</a>`
 }
-
+</div>
+</div>
+</div>`;
+}).join('');
+}
 function buildPdfVolGrid(tier){
-  const grid=document.getElementById('pdf-vol-grid');
-  const isCoders=tier==='coders';
-  grid.innerHTML=PDF_VOLS.map(v=>`
-    <div class="pdf-vol-card ${isCoders?'unlocked':''}">
-      <div class="pdf-vol-cover">
-        <img src="${v.cover}" alt="${v.title}">
-      </div>
-      <div class="pdf-vol-body">
-        <span class="pdf-vol-tag">${v.tag}</span>
-        <div class="pdf-vol-title">${v.title}</div>
-        <div class="pdf-vol-sub">${v.sub}</div>
-        ${isCoders
-          ?`<div class="pdf-vol-perk">Coders Perk — Included</div>
-            <a href="${v.file}" download target="_blank" class="pdf-vol-btn unlock">Download PDF →</a>`
-          :`<span class="pdf-vol-lock-note">Coders tier perk</span>
-            <a href="membership.html" class="pdf-vol-btn locked">Upgrade to Access →</a>`
-        }
-      </div>
-    </div>
-  `).join('');
+const grid=document.getElementById('pdf-vol-grid');
+const isCoders=tier==='coders';
+grid.innerHTML=PDF_VOLS.map(v=>`
+<div class="pdf-vol-card ${isCoders?'unlocked':''}">
+<div class="pdf-vol-cover">
+<img src="${v.cover}" alt="${v.title}">
+</div>
+<div class="pdf-vol-body">
+<span class="pdf-vol-tag">${v.tag}</span>
+<div class="pdf-vol-title">${v.title}</div>
+<div class="pdf-vol-sub">${v.sub}</div>
+${isCoders
+?`<div class="pdf-vol-perk">Coders Perk — Included</div>
+<a href="${v.file}" download target="_blank" class="pdf-vol-btn unlock">Download PDF →</a>`
+:`<span class="pdf-vol-lock-note">Coders tier perk</span>
+<a href="membership.html" class="pdf-vol-btn locked">Upgrade to Access →</a>`
 }
-
+</div>
+</div>
+`).join('');
+}
 function buildWorkbookGrid(tier){
-  const grid=document.getElementById('wb-grid');
-  const hasWorkbooks=tier==='coders'||tier==='builders'||tier==='sparks';
-  grid.innerHTML=WORKBOOKS.map(wb=>`
-    <div class="wb-card" style="--wb-accent:${wb.color};">
-      <div class="wb-initial" style="color:${wb.color};border-color:${wb.color}30;">${wb.char[0]}</div>
-      <div class="wb-info">
-        <div class="wb-title">${wb.title}</div>
-        <div class="wb-sub">${wb.sub}</div>
-      </div>
-      <div class="wb-tag ${wb.available&&hasWorkbooks?'available':'soon'}">${wb.available&&hasWorkbooks?'Download':'Soon'}</div>
-    </div>
-  `).join('');
+const grid=document.getElementById('wb-grid');
+const hasWorkbooks=tier==='coders'||tier==='builders'||tier==='sparks';
+grid.innerHTML=WORKBOOKS.map(wb=>`
+<div class="wb-card" style="--wb-accent:${wb.color};">
+<div class="wb-initial" style="color:${wb.color};border-color:${wb.color}30;">${wb.char[0]}</div>
+<div class="wb-info">
+<div class="wb-title">${wb.title}</div>
+<div class="wb-sub">${wb.sub}</div>
+</div>
+<div class="wb-tag ${wb.available&&hasWorkbooks?'available':'soon'}">${wb.available&&hasWorkbooks?'Download':'Soon'}</div>
+</div>
+`).join('');
 }
-
 function buildStats(tier){
-  const cfg=TIER_CFG[tier]||TIER_CFG.free;
-  document.getElementById('stat-worlds').textContent='6';
-  document.getElementById('stat-lessons').textContent=cfg.lessonsPerChar+'×6';
-  document.getElementById('stat-games').textContent=cfg.gamesUnlocked==='all'?'6':'1';
-  document.getElementById('stat-workbooks').textContent=tier==='coders'||tier==='builders'||tier==='sparks'?'6':'0';
+const cfg=TIER_CFG[tier]||TIER_CFG.free;
+document.getElementById('stat-worlds').textContent='6';
+document.getElementById('stat-lessons').textContent=cfg.lessonsPerChar+'×6';
+document.getElementById('stat-games').textContent=cfg.gamesUnlocked==='all'?'6':'1';
+document.getElementById('stat-workbooks').textContent=tier==='coders'||tier==='builders'||tier==='sparks'?'6':'0';
 }
-
 onAuthStateChanged(auth,async(user)=>{
-  if(!user){window.location.href='index.html';return;}
-  let tier='free';
-  try{
-    const snap=await getDoc(doc(db,'users',user.uid));
-    if(snap.exists()&&snap.data().tier)tier=snap.data().tier.toLowerCase();
-  }catch(e){console.error(e);}
-  const cfg=TIER_CFG[tier]||TIER_CFG.free;
-  const displayName=user.displayName||user.email.split('@')[0];
-  document.getElementById('nav-username').textContent=displayName;
-  document.getElementById('user-name').textContent=displayName;
-  const pill=document.getElementById('tier-pill');
-  pill.className='tier-pill '+cfg.cls;
-  document.getElementById('tier-label').textContent=cfg.label;
-  if(tier==='coders')document.getElementById('upgrade-strip').style.display='none';
-  buildStats(tier);
-  buildWorldGrid(tier);
-  buildPdfVolGrid(tier);
-  buildWorkbookGrid(tier);
-  document.getElementById('loading').style.display='none';
-  document.getElementById('dashboard').style.display='block';
+if(!user){window.location.href='index.html';return;}
+let tier='free';
+try{
+const snap=await getDoc(doc(db,'users',user.uid));
+if(snap.exists()&&snap.data().tier)tier=snap.data().tier.toLowerCase();
+}catch(e){console.error(e);}
+const cfg=TIER_CFG[tier]||TIER_CFG.free;
+const displayName=user.displayName||user.email.split('@')[0];
+document.getElementById('nav-username').textContent=displayName;
+document.getElementById('user-name').textContent=displayName;
+const pill=document.getElementById('tier-pill');
+pill.className='tier-pill '+cfg.cls;
+document.getElementById('tier-label').textContent=cfg.label;
+if(tier==='coders')document.getElementById('upgrade-strip').style.display='none';
+buildStats(tier);
+buildWorldGrid(tier);
+buildPdfVolGrid(tier);
+buildWorkbookGrid(tier);
+document.getElementById('loading').style.display='none';
+document.getElementById('dashboard').style.display='block';
 });
-
 document.getElementById('logout-btn').addEventListener('click',()=>{
-  signOut(auth).then(()=>window.location.href='index.html');
+signOut(auth).then(()=>window.location.href='index.html');
 });
 </script>
 </body>
