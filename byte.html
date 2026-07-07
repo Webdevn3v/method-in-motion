@@ -2,41 +2,23 @@
 <html lang="en">
 <head>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-DJ3Q488K7W');
-</script>
+<script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-DJ3Q488K7W'); </script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Byte's Code City | Method in Motion</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
 :root {
-  --purple: #c66bff;
-  --purple-dim: #a34fe0;
-  --pink: #ff6baa;
-  --pink-dim: #e0568f;
-  --bg: #07050f;
-  --bg-mid: #0f0d1a;
-  --bg-card: #131022;
-  --bg-panel: #0a0714;
-  --text: #f0eaff;
-  --text-dim: #a89fc0;
-  --text-muted: #4a3f6a;
-  --border: rgba(198,107,255,0.15);
-  --border-bright: rgba(198,107,255,0.4);
-  --border-pink: rgba(255,107,170,0.3);
-  --glow: 0 0 18px rgba(198,107,255,0.3);
-  --glow-strong: 0 0 36px rgba(198,107,255,0.55);
-  --font-display: 'Orbitron', monospace;
-  --font-body: 'Space Grotesk', sans-serif;
-  --font-mono: 'Space Mono', monospace;
+  --purple: #c66bff; --purple-dim: #a34fe0; --pink: #ff6baa; --pink-dim: #e0568f;
+  --bg: #07050f; --bg-mid: #0f0d1a; --bg-card: #131022; --bg-panel: #0a0714;
+  --text: #f0eaff; --text-dim: #a89fc0; --text-muted: #4a3f6a;
+  --border: rgba(198,107,255,0.15); --border-bright: rgba(198,107,255,0.4); --border-pink: rgba(255,107,170,0.3);
+  --glow: 0 0 18px rgba(198,107,255,0.3); --glow-strong: 0 0 36px rgba(198,107,255,0.55);
+  --cyan: #7fe8ff; --border-cyan: rgba(0,229,255,0.45);
+  --font-display: 'Orbitron', monospace; --font-body: 'Space Grotesk', sans-serif; --font-mono: 'Space Mono', monospace;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(7,5,15,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
 .nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--purple); text-decoration: none; letter-spacing: 0.1em; }
 .nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
@@ -46,52 +28,119 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .nav-logout { background: none; border: 1px solid var(--border); color: var(--text-dim); font-family: var(--font-body); font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: none; }
 .nav-logout:hover { border-color: var(--purple); color: var(--purple); }
 
-.hero { margin-top: 60px; min-height: 480px; display: grid; grid-template-columns: 1fr 1fr; position: relative; overflow: hidden; }
-.hero-bg { position: absolute; inset: 0; background-image: url('byte-entrance.png'); background-size: cover; background-position: center; filter: blur(3px) brightness(0.25); z-index: 0; animation: heroDrift 20s ease-in-out infinite alternate; }
-@keyframes heroDrift { from { transform: scale(1.02); } to { transform: scale(1.08) translate(-1%,1%); } }
-.hero-overlay { position: absolute; inset: 0; background: linear-gradient(135deg, rgba(7,5,15,0.9) 0%, rgba(198,107,255,0.04) 100%); z-index: 1; }
-.hero-left { position: relative; z-index: 2; padding: 3rem 2.5rem 3rem 3rem; display: flex; flex-direction: column; justify-content: center; }
-.hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--purple); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.85; }
+/* ═══════════ HERO — video background ═══════════ */
+.hero { margin-top: 60px; min-height: 640px; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); }
+.hero-gradient { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(7,5,15,0.96) 0%, rgba(7,5,15,0.5) 30%, rgba(7,5,15,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(7,5,15,0.55) 0%, rgba(7,5,15,0.1) 40%, transparent 70%); pointer-events: none; }
+.hero-pulse { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(ellipse 55% 45% at 50% 65%, rgba(255,107,170,0.14) 0%, transparent 65%); animation: pulseGlow 5s ease-in-out infinite; }
+@keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.particle-field { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--purple); box-shadow: 0 0 8px 2px rgba(198,107,255,0.6); opacity: 0; animation: floatUp linear infinite; }
+.particle:nth-child(odd) { background: var(--pink); box-shadow: 0 0 8px 2px rgba(255,107,170,0.6); }
+@keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
+.hero-byte-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(198,107,255,0.4)); pointer-events: none; }
+@media (max-width: 768px) { .hero-byte-gif { display: none; } .ib-toggle-tab { width: 140px; padding: 0.8rem 0.7rem 0.7rem; bottom: 6%; right: 2%; } .ib-toggle-icon { font-size: 1.2rem; margin-bottom: 0.3rem; } .ib-toggle-title { font-size: 0.68rem; } .ib-toggle-tab-label { font-size: 0.56rem; margin-bottom: 0.6rem; } .ib-toggle-cta { font-size: 0.58rem; padding: 0.35rem 0.7rem; } }
+.hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--purple); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(198,107,255,0.6); }
 .hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
-.hero-catchphrase { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink); background: rgba(255,107,170,0.1); border: 1px solid var(--border-pink); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; }
+.hero-catchphrase { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink); background: rgba(255,107,170,0.1); border: 1px solid var(--border-pink); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; backdrop-filter: blur(4px); }
 .hero-role { font-family: var(--font-display); font-size: clamp(0.75rem, 1.5vw, 0.95rem); font-weight: 600; color: var(--purple); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; }
-.hero-quote { font-size: 1.05rem; color: var(--text-dim); line-height: 1.6; max-width: 420px; margin-bottom: 1.5rem; font-style: italic; }
+.hero-quote { font-size: 1.05rem; color: var(--text-dim); line-height: 1.6; max-width: 460px; margin-bottom: 1rem; font-style: italic; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
 .hero-quote span { color: var(--purple); font-style: normal; font-weight: 600; }
-.fact-ticker { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-muted); max-width: 420px; min-height: 32px; margin-bottom: 1.5rem; line-height: 1.5; opacity: 0; transition: opacity 0.5s; }
+.fact-ticker { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); max-width: 460px; min-height: 32px; margin-bottom: 1.2rem; line-height: 1.5; opacity: 0; transition: opacity 0.5s; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
 .fact-ticker.show { opacity: 1; }
 .fact-ticker::before { content: '◈ BYTE\'S FILE — '; color: var(--pink); }
 .hero-tiles { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-.hero-tile { background: rgba(198,107,255,0.06); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; }
-.hero-tile:hover { background: rgba(198,107,255,0.14); border-color: var(--purple); color: var(--purple); box-shadow: var(--glow); }
-.hero-right { position: relative; z-index: 2; display: flex; align-items: center; justify-content: center; padding: 2rem; }
-.hero-gif { width: 100%; max-width: 360px; height: auto; border-radius: 12px; animation: float 3.5s ease-in-out infinite; filter: drop-shadow(0 0 28px rgba(198,107,255,0.5)); object-fit: contain; cursor: pointer; }
-@keyframes float { 0%,100% { transform: translateY(0px); } 50% { transform: translateY(-12px); } }
+.hero-tile { background: rgba(198,107,255,0.08); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; backdrop-filter: blur(4px); }
+.hero-tile:hover { background: rgba(198,107,255,0.18); border-color: var(--purple); color: var(--purple); box-shadow: var(--glow); transform: translateY(-2px); }
+
+/* ═══════════ ICEBREAKER TOGGLE CARD ═══════════ */
+.ib-toggle-tab { position: absolute; z-index: 20; right: 4%; bottom: 10%; width: 200px; padding: 1.2rem 1.1rem 1.1rem; border-radius: 16px; border: 1px solid var(--border-bright); background: linear-gradient(160deg, rgba(198,107,255,0.14), rgba(255,107,170,0.08)); backdrop-filter: blur(6px); cursor: pointer; text-align: center; transition: all 0.25s ease; box-shadow: 0 0 24px rgba(198,107,255,0.2), inset 0 0 20px rgba(198,107,255,0.05); animation: ibCardFloat 4s ease-in-out infinite; }
+.ib-toggle-tab:hover { border-color: var(--purple); box-shadow: 0 0 34px rgba(198,107,255,0.4), inset 0 0 24px rgba(198,107,255,0.1); transform: translateY(-2px); }
+@keyframes ibCardFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+.ib-toggle-icon { font-size: 1.6rem; margin-bottom: 0.5rem; filter: drop-shadow(0 0 10px rgba(198,107,255,0.6)); }
+.ib-toggle-title { font-family: var(--font-display); font-size: 0.82rem; font-weight: 900; color: #fff; letter-spacing: 0.06em; text-shadow: 0 0 12px rgba(198,107,255,0.7); margin-bottom: 0.35rem; }
+.ib-toggle-tab-label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.04em; color: var(--text-dim); line-height: 1.5; margin-bottom: 0.8rem; }
+.ib-toggle-cta { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(198,107,255,0.16); border: 1px solid var(--purple); color: var(--purple); font-family: var(--font-mono); font-size: 0.66rem; font-weight: 700; letter-spacing: 0.08em; padding: 0.45rem 0.9rem; border-radius: 100px; }
+
+/* ═══════════ ICEBREAKER — BUG CATCH GAME ═══════════ */
+.icebreaker-wrapper { display: none; }
+.icebreaker-wrapper.open { display: block; }
+.icebreaker-wrapper.open .icebreaker { animation: ibPowerOn 0.6s ease; }
+@keyframes ibPowerOn { 0% { opacity: 0; transform: scale(0.92); filter: brightness(3.5) saturate(1.6); } 15% { opacity: 1; filter: brightness(2.4) saturate(1.4); } 45% { transform: scale(1.015); filter: brightness(1.3); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
+.icebreaker { background: var(--bg-mid); border-bottom: 1px solid var(--border); padding: 3rem 2rem 3.5rem; }
+.ib-header { max-width: 640px; margin: 0 auto 2.2rem; text-align: center; }
+.ib-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; color: var(--pink); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
+.ib-title { font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem); color: #fff; font-weight: 900; margin-bottom: 0.6rem; text-shadow: var(--glow); }
+.ib-sub { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
+.ib-phase { max-width: 760px; margin: 0 auto; }
+.ib-terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.9rem; margin-bottom: 2rem; }
+.ib-term-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; padding: 1.1rem; cursor: pointer; transition: all 0.2s; text-align: center; }
+.ib-term-card:hover { transform: translateY(-2px); }
+.ib-term-bug-icon { font-size: 2rem; margin-bottom: 0.5rem; }
+.ib-term-code { font-family: var(--font-display); font-size: 0.85rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: 0.04em; }
+.ib-term-def { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; display: none; }
+.ib-term-card.open .ib-term-def { display: block; }
+.ib-start-btn { display: block; margin: 0 auto; background: linear-gradient(135deg, var(--purple), var(--pink)); color: #000; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 0.9rem 2.4rem; border-radius: 100px; border: none; cursor: pointer; letter-spacing: 0.08em; box-shadow: var(--glow-strong); transition: transform 0.2s; }
+.ib-start-btn:hover { transform: scale(1.03); }
+.ib-catch-stage { background: var(--bg-card); border-radius: 14px; padding: 1.6rem; text-align: center; position: relative; overflow: hidden; }
+.ib-catch-hud { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em; }
+.ib-catch-hud .lives { color: var(--pink); }
+.ib-catch-bins { display: flex; justify-content: center; gap: 0.7rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
+.ib-catch-bin { flex: 1; min-width: 130px; max-width: 200px; padding: 0.9rem 0.6rem; border-radius: 10px; border: 2px solid; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; background: rgba(255,255,255,0.03); transition: all 0.15s; }
+.ib-catch-bin:hover { transform: translateY(-2px); }
+.ib-catch-bin.flash { transform: scale(1.06); }
+.ib-catch-arena { position: relative; height: 220px; background: #0a0714; border: 1px solid var(--border); border-radius: 12px; overflow: hidden; margin-bottom: 1rem; }
+.ib-bug-sprite { position: absolute; font-size: 1.8rem; cursor: pointer; user-select: none; transition: transform 0.1s; filter: drop-shadow(0 0 8px currentColor); }
+.ib-bug-sprite:hover { transform: scale(1.15); }
+.ib-catch-status { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); min-height: 20px; }
+.ib-reaction-img { width: 64px; height: 64px; object-fit: contain; position: absolute; top: 10px; right: 10px; z-index: 5; filter: drop-shadow(0 0 12px rgba(198,107,255,0.5)); display: none; }
+.ib-reaction-img.show { display: block; animation: eggPop 0.3s ease; }
+.ib-complete-card { background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 14px; padding: 2.5rem 2rem; text-align: center; }
+.ib-complete-card img { width: 90px; height: 90px; object-fit: contain; margin: 0 auto 1rem; display: block; filter: drop-shadow(0 0 20px rgba(198,107,255,0.5)); }
+.ib-complete-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--purple); margin-bottom: 0.8rem; text-shadow: var(--glow); }
+.ib-complete-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.4rem; }
+.ib-replay-btn { background: none; border: 1px solid var(--border-bright); color: var(--purple); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.4rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; }
+.ib-skip-btn { display: block; margin: 1.2rem auto 0; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.2s; }
+.ib-skip-btn:hover { color: var(--text-dim); border-color: var(--border-bright); }
+@media (max-width: 600px) { .ib-catch-arena { height: 180px; } .ib-bug-sprite { font-size: 1.4rem; } }
+
+/* ═══════════ HOLOGRAM ENTRANCE ═══════════ */
+.discovery-overlay.fading { opacity: 0; transition: opacity 0.7s ease; pointer-events: none; }
+.hologram-stage { display: none; position: relative; width: min(320px, 78vw); margin: 0 auto; }
+.hologram-frame { position: relative; border: 1px solid var(--border-cyan); border-radius: 12px; overflow: hidden; box-shadow: 0 0 40px rgba(0,229,255,0.35), 0 0 80px rgba(198,107,255,0.2); animation: hologramMaterialize 1.1s ease-out, hologramFlicker 2.4s steps(1) infinite 1.1s; }
+.hologram-frame::before, .hologram-frame::after { content: ''; position: absolute; width: 22px; height: 22px; border: 2px solid var(--cyan); z-index: 5; }
+.hologram-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.hologram-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+.hologram-video { width: 100%; display: block; filter: saturate(1.2) brightness(1.05); }
+.hologram-scanlines { position: absolute; inset: 0; z-index: 4; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0,229,255,0.08) 0px, transparent 2px, transparent 4px); mix-blend-mode: overlay; }
+.hologram-scan-sweep { position: absolute; left: 0; right: 0; height: 40%; z-index: 6; pointer-events: none; background: linear-gradient(to bottom, transparent, rgba(0,229,255,0.25), transparent); animation: hologramSweep 1.6s ease-in-out infinite; }
+.hologram-caption { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--cyan); text-shadow: 0 0 10px rgba(0,229,255,0.6); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes hologramMaterialize { 0% { opacity: 0; transform: scale(0.85) translateY(10px); clip-path: inset(0 0 100% 0); } 40% { opacity: 1; clip-path: inset(0 0 0 0); } 100% { opacity: 1; transform: scale(1) translateY(0); clip-path: inset(0 0 0 0); } }
+@keyframes hologramFlicker { 0%, 100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.6; } 94% { opacity: 1; } 96% { opacity: 0.75; } 97% { opacity: 1; } }
+@keyframes hologramSweep { 0% { top: -40%; } 100% { top: 100%; } }
 
 .lesson-strip { position: sticky; top: 60px; z-index: 90; background: rgba(7,5,15,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; overflow-x: auto; scrollbar-width: none; }
 .lesson-strip::-webkit-scrollbar { display: none; }
 .lesson-tab { flex-shrink: 0; padding: 0.9rem 1.6rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; background: none; border-top: none; border-left: none; border-right: none; }
-.lesson-tab:hover { color: var(--purple); }
+.lesson-tab:hover { color: var(--purple); text-shadow: 0 0 8px rgba(198,107,255,0.5); transform: translateY(-1px); }
 .lesson-tab.active { color: var(--purple); border-bottom-color: var(--purple); text-shadow: 0 0 8px rgba(198,107,255,0.5); }
-
 .lesson-panel { display: none; }
 .lesson-panel.open { display: grid; grid-template-columns: 220px 1fr; min-height: 80vh; }
-
 .lesson-sidebar { background: var(--bg-panel); border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: sticky; top: calc(60px + 42px); height: calc(100vh - 102px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
 .sidebar-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
 .sidebar-nav-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.65rem 0.8rem; margin-bottom: 0.2rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
-.sidebar-nav-btn:hover { background: rgba(198,107,255,0.07); color: var(--purple); }
+.sidebar-nav-btn:hover { background: rgba(198,107,255,0.07); color: var(--purple); transform: translateX(3px); }
 .sidebar-nav-btn.active { background: rgba(198,107,255,0.11); color: var(--purple); font-weight: 600; }
 .sidebar-icon { font-size: 0.9rem; }
 .sidebar-divider { height: 1px; background: var(--border); margin: 1rem 0; }
 .sidebar-game-link { display: block; margin-top: 1rem; padding: 0.65rem 0.8rem; background: rgba(198,107,255,0.05); border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--purple-dim); text-decoration: none; letter-spacing: 0.08em; transition: all 0.2s; text-align: center; }
 .sidebar-game-link:hover { background: rgba(198,107,255,0.13); border-color: var(--purple); color: var(--purple); }
-
 .lesson-content { padding: 2.5rem 3rem; max-width: 900px; }
 .content-block { display: none; }
 .content-block.active { display: block; }
 .section-header { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
 .section-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; font-family: var(--font-mono); letter-spacing: 0.05em; }
-
 .read-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem 2rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
 .read-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--purple), var(--pink)); }
 .read-card-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--purple); letter-spacing: 0.2em; margin-bottom: 0.6rem; opacity: 0.7; }
@@ -99,25 +148,17 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .read-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
 .read-card p strong { color: var(--purple); font-weight: 600; }
 .read-card code { font-family: var(--font-mono); font-size: 0.85rem; background: rgba(198,107,255,0.1); color: var(--purple); padding: 0.15em 0.4em; border-radius: 4px; }
-
 .code-block { background: #0a0714; border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.85; color: #e0d8f5; overflow-x: auto; }
-.code-tag { color: #c66bff; font-weight: 700; }
-.code-str { color: #ffe066; }
-.code-comment { color: #4a3f6a; font-style: italic; }
-.code-attr { color: #ff6baa; }
-.code-val { color: #00e5ff; }
-.code-fn { color: #a2ff32; }
-
+.code-tag { color: #c66bff; font-weight: 700; } .code-str { color: #ffe066; } .code-comment { color: #4a3f6a; font-style: italic; } .code-attr { color: #ff6baa; } .code-val { color: #00e5ff; } .code-fn { color: #a2ff32; }
 .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
 .term-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; }
-.term-card:hover { border-color: var(--purple); }
+.term-card:hover { border-color: var(--purple); box-shadow: 0 0 14px rgba(198,107,255,0.2); transform: translateY(-2px); }
 .term-card.open { border-color: var(--purple); }
 .term-name { font-family: var(--font-mono); font-size: 0.8rem; color: var(--purple); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
 .term-arrow { transition: transform 0.2s; color: var(--text-muted); }
 .term-card.open .term-arrow { transform: rotate(90deg); }
 .term-def { display: none; font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
 .term-card.open .term-def { display: block; }
-
 .demo-card { background: var(--bg-card); border: 1px solid var(--border-pink); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.2rem; position: relative; }
 .demo-card::before { content: '◈ BUILD IT'; position: absolute; top: -1px; right: 12px; background: var(--pink); color: #000; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 0 0 4px 4px; letter-spacing: 0.1em; }
 .demo-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--pink); margin-bottom: 0.8rem; font-weight: 700; }
@@ -127,7 +168,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .run-btn:hover { opacity: 0.85; }
 .demo-output { background: #0a0714; border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.9rem; color: var(--text); display: none; line-height: 1.8; }
 .demo-output.show { display: block; }
-
 .quiz-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
 .quiz-q { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; }
 .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
@@ -140,7 +180,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .quiz-feedback.show { display: block; }
 .quiz-feedback.correct { background: rgba(198,107,255,0.08); color: #d9a3ff; border: 1px solid rgba(198,107,255,0.2); }
 .quiz-feedback.wrong { background: rgba(255,107,170,0.07); color: #ff9ac4; border: 1px solid rgba(255,107,170,0.2); }
-
 .reflect-prompt { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
 .reflect-q { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.8rem; line-height: 1.5; }
 .reflect-input { width: 100%; background: rgba(198,107,255,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--text); resize: vertical; min-height: 80px; outline: none; transition: border-color 0.2s; }
@@ -148,7 +187,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .reflect-save-btn { margin-top: 0.5rem; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.35rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; }
 .reflect-save-btn:hover { border-color: var(--purple); color: var(--purple); }
 .reflect-saved { font-family: var(--font-mono); font-size: 0.68rem; color: var(--purple); margin-top: 0.4rem; display: none; }
-
 .cheat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.8rem; margin-bottom: 1rem; }
 .cheat-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--purple); margin-bottom: 1rem; font-weight: 700; }
 .cheat-items { display: flex; flex-direction: column; gap: 0.7rem; }
@@ -156,23 +194,23 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .cheat-item:last-child { border-bottom: none; padding-bottom: 0; }
 .cheat-term { font-family: var(--font-mono); font-size: 0.78rem; color: var(--purple); min-width: 140px; font-weight: 700; }
 .cheat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
-.cheat-download-btn { display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.2rem; background: rgba(198,107,255,0.07); border: 1px solid var(--border-bright); color: var(--purple); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.08em; }
+.cheat-btn-row { display: flex; gap: 0.7rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.cheat-download-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(198,107,255,0.07); border: 1px solid var(--border-bright); color: var(--purple); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.08em; }
 .cheat-download-btn:hover { background: rgba(198,107,255,0.16); box-shadow: var(--glow); }
-
+.cheat-download-btn.secondary { background: none; border-color: var(--border); color: var(--text-muted); font-size: 0.65rem; }
+.cheat-download-btn.secondary:hover { color: var(--text-dim); border-color: var(--border-bright); }
 .locked-panel { padding: 4rem 3rem; text-align: center; }
 .locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.45; }
 .locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; }
 .locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
 .gate-btn { display: inline-block; background: var(--purple); color: var(--bg); font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; padding: 0.8rem 2rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; letter-spacing: 0.08em; transition: opacity 0.2s; }
 .gate-btn:hover { opacity: 0.85; }
-
 .lesson-complete { background: linear-gradient(135deg, rgba(198,107,255,0.07), rgba(255,107,170,0.05)); border: 1px solid var(--border-bright); border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; display: none; }
 .lesson-complete.show { display: block; }
 .lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--purple); margin-bottom: 0.5rem; }
 .lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
 .lesson-joke { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--pink); font-style: italic; }
-
-.discovery-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(7,5,15,0.97); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; }
+.discovery-overlay { position: fixed; inset: 0; z-index: 200; background: #07050f; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; }
 .discovery-overlay.hidden { display: none; }
 .byte-mark { font-family: var(--font-mono); font-size: 2rem; color: var(--purple); margin-bottom: 1rem; letter-spacing: 0.3em; text-shadow: var(--glow-strong); animation: pulse 2s ease-in-out infinite; }
 @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
@@ -180,476 +218,332 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .discovery-sub { font-size: 1rem; color: var(--text-dim); max-width: 460px; line-height: 1.6; margin-bottom: 2rem; }
 .discovery-enter-btn { background: var(--purple); color: var(--bg); font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 1rem 2.5rem; border-radius: 8px; border: none; cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s; box-shadow: var(--glow-strong); }
 .discovery-enter-btn:hover { transform: scale(1.03); }
-
 .byte-companion { position: fixed; bottom: 24px; right: 24px; z-index: 150; width: 80px; height: 80px; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
 .byte-companion.visible { opacity: 1; pointer-events: auto; }
-.byte-companion img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 16px rgba(198,107,255,0.5)); animation: companionFloat 3s ease-in-out infinite; cursor: pointer; }
+.byte-companion img, .byte-companion video { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 16px rgba(198,107,255,0.5)); animation: companionFloat 3s ease-in-out infinite; cursor: pointer; }
 @keyframes companionFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-
 .sound-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: rgba(19,16,34,0.9); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; opacity: 0; pointer-events: none; }
 .sound-toggle.visible { opacity: 1; pointer-events: auto; }
 .sound-toggle:hover { box-shadow: var(--glow); border-color: var(--purple); }
 .sound-toggle.muted { opacity: 0.5; }
-
-.portal-peek-btn { position: fixed; top: 74px; right: 20px; z-index: 150; width: 36px; height: 36px; border-radius: 50%; background: rgba(255,107,170,0.12); border: 1px solid var(--border-pink); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; animation: portalPulse 2.5s ease-in-out infinite; }
-@keyframes portalPulse { 0%,100% { box-shadow: 0 0 6px rgba(255,107,170,0.3); } 50% { box-shadow: 0 0 18px rgba(255,107,170,0.7); } }
-.portal-modal { position: fixed; inset: 0; z-index: 300; background: rgba(3,2,8,0.95); display: none; align-items: center; justify-content: center; padding: 2rem; flex-direction: column; text-align: center; }
-.portal-modal.open { display: flex; }
-.portal-modal img { max-width: min(90vw, 520px); border-radius: 12px; border: 1px solid var(--border-pink); box-shadow: 0 0 60px rgba(255,107,170,0.4); margin-bottom: 1.2rem; }
-.portal-modal p { font-family: var(--font-mono); font-size: 0.8rem; color: var(--pink); max-width: 420px; margin-bottom: 1.2rem; line-height: 1.6; }
-.portal-close { background: none; border: 1px solid var(--border-bright); color: var(--purple); font-family: var(--font-mono); font-size: 0.7rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.08em; }
-
 .egg-popup { position: fixed; bottom: 100px; right: 24px; z-index: 250; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 1.2rem 1.4rem; max-width: 260px; box-shadow: var(--glow-strong); display: none; }
 .egg-popup.show { display: block; animation: eggPop 0.4s ease; }
 @keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
 .egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--purple); margin-bottom: 0.5rem; }
 .egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
-
-@media (max-width: 768px) {
-  .hero { grid-template-columns: 1fr; }
-  .hero-right { display: none; }
-  .lesson-panel.open { grid-template-columns: 1fr; }
-  .lesson-sidebar { display: none; }
-  .lesson-content { padding: 1.5rem; }
-  .terms-grid { grid-template-columns: 1fr; }
-  .byte-companion { width: 60px; height: 60px; bottom: 16px; right: 16px; }
-  .byte-companion img { width: 60px; height: 60px; }
-  .fact-ticker { display: none; }
-}
+@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .byte-companion { width: 60px; height: 60px; bottom: 16px; right: 16px; } .byte-companion img, .byte-companion video { width: 60px; height: 60px; } .fact-ticker { display: none; } }
 </style>
 </head>
 <body>
-
 <div class="discovery-overlay" id="discoveryOverlay">
-  <div class="byte-mark">◈ ◈ ◈</div>
-  <div class="discovery-title">Byte's Code City</div>
-  <div class="discovery-sub">Every bug is just a clue.<br>Find it. Understand it. Crush it.</div>
-  <button class="discovery-enter-btn" onclick="enterCity()">Enter Code City</button>
+<div class="byte-mark">◈ ◈ ◈</div>
+<div class="discovery-title" id="discoveryTitle">Byte's Code City</div>
+<div class="discovery-sub" id="discoverySub">Every bug is just a clue.<br>Find it. Understand it. Crush it.</div>
+<button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterCity()">Enter Code City</button>
+<div class="hologram-stage" id="hologramStage">
+  <div class="hologram-frame">
+    <img class="hologram-video" id="entranceVideo" src="byte-entrance.gif" alt="Byte materializing">
+    <div class="hologram-scanlines"></div>
+    <div class="hologram-scan-sweep"></div>
+  </div>
+  <div class="hologram-caption">◈ SIGNAL LOCKING IN...</div>
 </div>
-
+</div>
 <nav>
-  <a href="index.html" class="nav-logo">MiM</a>
-  <ul class="nav-links">
-    <li><a href="games.html">Games</a></li>
-    <li><a href="pdfs.html">PDFs</a></li>
-    <li><a href="dashboard.html">Dashboard</a></li>
-    <li><a href="index.html#membership">Membership</a></li>
-  </ul>
-  <span class="nav-user" id="navUser"></span>
-  <button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
+<a href="index.html" class="nav-logo">MiM</a>
+<ul class="nav-links">
+<li><a href="games.html">Games</a></li>
+<li><a href="pdfs.html">PDFs</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="index.html#membership">Membership</a></li>
+</ul>
+<span class="nav-user" id="navUser"></span>
+<button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
 </nav>
-
-<button class="portal-peek-btn" onclick="openPortal()" title="???">🌀</button>
-
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-left">
-    <div class="hero-eyebrow">◈ &nbsp; Glitch Cat &nbsp; · &nbsp; Debugging</div>
-    <div class="hero-name">Byte</div>
-    <div class="hero-catchphrase">Every bug is just a clue.</div>
-    <div class="hero-role">The Glitch Cat</div>
-    <div class="hero-quote">"<span>Most people panic when they see an error.</span> I get excited. It's a clue waiting to be followed."</div>
-    <div class="fact-ticker" id="factTicker"></div>
-    <div class="hero-tiles">
-      <a class="hero-tile" onclick="jumpToLesson(1)">01 Bug Thinking</a>
-      <a class="hero-tile" onclick="jumpToLesson(2)">02 Error Messages</a>
-      <a class="hero-tile" onclick="jumpToLesson(3)">03 Logic Tracing</a>
-      <a class="hero-tile" onclick="jumpToLesson(4)">04 Debug Challenge</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <img src="byte-motion.gif" alt="Byte" class="hero-gif" id="byteHeroGif" onerror="this.style.opacity='0.3'" onclick="companionClick()" />
-  </div>
+<section class="hero" id="byteHero">
+<video class="hero-video" autoplay muted loop playsinline poster="byte-entrance.png">
+  <source src="byte-hero.mp4" type="video/mp4">
+</video>
+<div class="hero-gradient"></div>
+<div class="hero-pulse"></div>
+<div class="particle-field" id="particleField"></div>
+<img class="hero-byte-gif" src="byte-idle.gif" alt="Byte" onerror="this.style.display='none'">
+<button class="ib-toggle-tab" onclick="ibToggleWrapper()" aria-label="Open the Bug Catch icebreaker game">
+  <div class="ib-toggle-icon">◈</div>
+  <div class="ib-toggle-title">BUG CATCH</div>
+  <div class="ib-toggle-tab-label">Learn the bug types.<br>Catch them before they escape.</div>
+  <div class="ib-toggle-cta">Boot Game →</div>
+</button>
+<div class="hero-content">
+<div class="hero-eyebrow">◈ &nbsp; Glitch Cat &nbsp; · &nbsp; Debugging</div>
+<div class="hero-name">Byte</div>
+<div class="hero-catchphrase">Every bug is just a clue.</div>
+<div class="hero-role">The Glitch Cat</div>
+<div class="hero-quote">"<span>Most people panic when they see an error.</span> I get excited. It's a clue waiting to be followed."</div>
+<div class="fact-ticker" id="factTicker"></div>
+<div class="hero-tiles">
+<a class="hero-tile" onclick="jumpToLesson(1)">01 Bug Thinking</a>
+<a class="hero-tile" onclick="jumpToLesson(2)">02 Error Messages</a>
+<a class="hero-tile" onclick="jumpToLesson(3)">03 Logic Tracing</a>
+<a class="hero-tile" onclick="jumpToLesson(4)">04 Debug Challenge</a>
+</div>
+</div>
 </section>
 
-<div class="lesson-strip">
-  <button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — Bug Thinking</button>
-  <button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Error Messages</button>
-  <button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Logic Tracing</button>
-  <button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Debug Challenge</button>
-</div>
+<div class="icebreaker-wrapper" id="icebreakerWrapper">
+<section class="icebreaker" id="icebreaker">
+  <div class="ib-header">
+    <div class="ib-eyebrow">◈ &nbsp; ICEBREAKER &nbsp; · &nbsp; BUG CATCH</div>
+    <h2 class="ib-title">Learn the Bug Types</h2>
+    <p class="ib-sub">Three kinds of bugs hide in every codebase. Meet them, then catch them before they scurry off screen — sort each one into the right bin.</p>
+  </div>
 
-<!-- ===================== LESSON 1 ===================== -->
-<div class="lesson-panel" id="lesson-1">
-  <aside class="lesson-sidebar">
-    <div class="sidebar-label">Lesson 01</div>
-    <button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(1,'cheat')" id="sb-1-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
-    <div class="sidebar-divider"></div>
-    <a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
-  </aside>
-  <div class="lesson-content">
-    <div class="content-block active" id="block-1-read">
-      <div class="section-header">Bug Thinking</div>
-      <div class="section-sub">LESSON 01 · FREE</div>
-      <div class="read-card">
-        <div class="read-card-num">01 / 04</div>
-        <h3>Bugs Are Normal</h3>
-        <p>A <strong>bug</strong> is anything that makes your code do something different from what you intended. Every programmer, from beginners to senior engineers, writes bugs. The skill isn't avoiding them — it's finding and fixing them fast.</p>
+  <div class="ib-phase" id="ib-intro">
+    <div class="ib-terms-grid" id="ibTermsGrid"></div>
+    <button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">Start Catching ◈</button>
+  </div>
+
+  <div class="ib-phase" id="ib-game" style="display:none;">
+    <div class="ib-catch-stage">
+      <img class="ib-reaction-img" id="ibReactionImg" src="" alt="">
+      <div class="ib-catch-hud">
+        <span id="ibRoundLabel">ROUND 1</span>
+        <span class="lives" id="ibLivesLabel">♥ ♥ ♥</span>
       </div>
-      <div class="read-card">
-        <div class="read-card-num">02 / 04</div>
-        <h3>Where the Word Comes From</h3>
-        <p>The name comes from 1947, when a real moth got stuck inside a computer and caused it to malfunction. Grace Hopper's team literally debugged a machine — and taped the moth into their logbook.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">03 / 04</div>
-        <h3>Three Types of Bugs</h3>
-        <p><strong>Syntax errors</strong> — the code is written wrong, like a typo. <strong>Logic errors</strong> — the code runs but gives the wrong result. <strong>Runtime errors</strong> — the code crashes while it's running.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">04 / 04</div>
-        <h3>Byte's Method</h3>
-        <p>Read the error message. Reproduce the bug. Isolate where it happens. Fix one thing at a time. Test after each change. Never guess randomly.</p>
-      </div>
+      <div class="ib-catch-arena" id="ibArena"></div>
+      <div class="ib-catch-bins" id="ibBins"></div>
+      <div class="ib-catch-status" id="ibCatchStatus">Tap the bug, then tap the bin it belongs in.</div>
     </div>
-    <div class="content-block" id="block-1-terms">
-      <div class="section-header">Key Terms</div>
-      <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
-      <div class="terms-grid">
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Bug <span class="term-arrow">›</span></div><div class="term-def">Any error that causes code to behave differently from what was intended.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Debugging <span class="term-arrow">›</span></div><div class="term-def">The process of finding, understanding, and fixing bugs in code.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Syntax Error <span class="term-arrow">›</span></div><div class="term-def">A typo or grammatical mistake in the code. The computer can't even read it.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Logic Error <span class="term-arrow">›</span></div><div class="term-def">The code runs without crashing but produces the wrong result.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Runtime Error <span class="term-arrow">›</span></div><div class="term-def">The code looks fine but crashes when it actually runs.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Console <span class="term-arrow">›</span></div><div class="term-def">The browser's built-in tool that shows error messages and logged values.</div></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-1-build">
-      <div class="section-header">Build It</div>
-      <div class="section-sub">LESSON 01 · FIX THE BUG</div>
-      <div class="demo-card">
-        <h3>Bug #1 — Spot the Syntax Error</h3>
-        <p>This code has a typo. Find it, fix it, then run.</p>
-        <textarea class="debug-editor" id="debug-d1">let message = "Bug squashed!";
-consol.log(message);
-// Hint: look closely at "consol"</textarea>
-        <button class="run-btn" onclick="runDebug('d1')">▶ Run</button>
-        <div class="demo-output" id="debug-out-d1"></div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-q">Which type of bug causes code to run but produce the wrong answer?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A syntax error prevents the code from running at all.')">Syntax Error</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. A logic error runs fine but gives the wrong result.')">Logic Error</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A runtime error crashes the program while running.')">Runtime Error</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-1-0"></div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-q">What's the first thing Byte does when something breaks?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'That skips the clue entirely.')">Delete the code and start over</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Bugs aren\'t solved by luck.')">Guess randomly until it works</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The console tells you exactly what went wrong.')">Open the console and read the error message</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-1-1"></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-1-reflect">
-      <div class="section-header">Reflect</div>
-      <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">Byte says "every bug is just a clue." What do you think that means? How would thinking this way change how you feel when something breaks?</div>
-        <textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
-          <span class="reflect-saved" id="saved-1-1">✓ Saved</span>
-        </div>
-      </div>
-      <div class="lesson-complete" id="complete-1">
-        <h3>◈ &nbsp; Lesson 1 Complete</h3>
-        <p>Bug types. Byte's method. The console is your best friend now.</p>
-        <div class="lesson-joke" id="joke-1"></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-1-cheat">
-      <div class="section-header">Cheat Sheet</div>
-      <div class="section-sub">LESSON 01 · BUG THINKING</div>
-      <div class="cheat-card">
-        <h3>◈ Lesson 1 Reference</h3>
-        <div class="cheat-items">
-          <div class="cheat-item"><div class="cheat-term">Syntax error</div><div class="cheat-desc">Typo or bad structure — code can't run.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Logic error</div><div class="cheat-desc">Runs fine, wrong result.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Runtime error</div><div class="cheat-desc">Crashes while running.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Byte's method</div><div class="cheat-desc">Read → Reproduce → Isolate → Fix one thing → Test.</div></div>
-        </div>
-        <button class="cheat-download-btn" onclick="downloadCheat(1)">⬇ Download Cheat Sheet</button>
-      </div>
+    <button class="ib-skip-btn" onclick="ibSkipGame()">Skip this part →</button>
+  </div>
+
+  <div class="ib-phase" id="ib-complete" style="display:none;">
+    <div class="ib-complete-card">
+      <img src="byte-victory.png" alt="Byte celebrating" onerror="this.style.display='none'">
+      <h3>◈ Every Bug Caught</h3>
+      <p>Syntax. Runtime. Logic. That's the whole bug family — and you can spot all three on sight now.</p>
+      <button class="ib-replay-btn" onclick="ibReset()">Play Again</button>
+      <button class="ib-replay-btn" onclick="ibToggleWrapper()" style="margin-left:0.6rem;">Close</button>
     </div>
   </div>
+</section>
 </div>
 
+<div class="lesson-strip">
+<button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — Bug Thinking</button>
+<button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Error Messages</button>
+<button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Logic Tracing</button>
+<button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Debug Challenge</button>
+<button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">◈ Cheat Sheet</button>
+</div>
+<!-- ===================== LESSON 1 ===================== -->
+<div class="lesson-panel" id="lesson-1">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 01</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider"></div>
+<a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
+</aside>
+<div class="lesson-content">
+<div class="content-block active" id="block-1-read">
+<div class="section-header">Bug Thinking</div>
+<div class="section-sub">LESSON 01 · FREE</div>
+<div class="read-card"><div class="read-card-num">01 / 04</div><h3>Bugs Are Normal</h3><p>A <strong>bug</strong> is anything that makes your code do something different from what you intended. Every programmer, from beginners to senior engineers, writes bugs. The skill isn't avoiding them — it's finding and fixing them fast.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 04</div><h3>Where the Word Comes From</h3><p>The name comes from 1947, when a real moth got stuck inside a computer and caused it to malfunction. Grace Hopper's team literally debugged a machine — and taped the moth into their logbook.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 04</div><h3>Three Types of Bugs</h3><p><strong>Syntax errors</strong> — the code is written wrong, like a typo. <strong>Logic errors</strong> — the code runs but gives the wrong result. <strong>Runtime errors</strong> — the code crashes while it's running.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 04</div><h3>Byte's Method</h3><p>Read the error message. Reproduce the bug. Isolate where it happens. Fix one thing at a time. Test after each change. Never guess randomly.</p></div>
+</div>
+<div class="content-block" id="block-1-terms">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Bug <span class="term-arrow">›</span></div><div class="term-def">Any error that causes code to behave differently from what was intended.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Debugging <span class="term-arrow">›</span></div><div class="term-def">The process of finding, understanding, and fixing bugs in code.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Syntax Error <span class="term-arrow">›</span></div><div class="term-def">A typo or grammatical mistake in the code. The computer can't even read it.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Logic Error <span class="term-arrow">›</span></div><div class="term-def">The code runs without crashing but produces the wrong result.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Runtime Error <span class="term-arrow">›</span></div><div class="term-def">The code looks fine but crashes when it actually runs.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Console <span class="term-arrow">›</span></div><div class="term-def">The browser's built-in tool that shows error messages and logged values.</div></div>
+</div>
+</div>
+<div class="content-block" id="block-1-build">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 01 · FIX THE BUG</div>
+<div class="demo-card"><h3>Bug #1 — Spot the Syntax Error</h3><p>This code has a typo. Find it, fix it, then run.</p>
+<textarea class="debug-editor" id="debug-d1">let message = "Bug squashed!";
+consol.log(message);
+// Hint: look closely at "consol"</textarea>
+<button class="run-btn" onclick="runDebug('d1')">▶ Run</button>
+<div class="demo-output" id="debug-out-d1"></div>
+</div>
+<div class="quiz-card"><div class="quiz-q">Which type of bug causes code to run but produce the wrong answer?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'A syntax error prevents the code from running at all.')">Syntax Error</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. A logic error runs fine but gives the wrong result.')">Logic Error</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'A runtime error crashes the program while running.')">Runtime Error</button>
+</div><div class="quiz-feedback" id="qfb-1-0"></div></div>
+<div class="quiz-card"><div class="quiz-q">What's the first thing Byte does when something breaks?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'That skips the clue entirely.')">Delete the code and start over</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Bugs aren\'t solved by luck.')">Guess randomly until it works</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The console tells you exactly what went wrong.')">Open the console and read the error message</button>
+</div><div class="quiz-feedback" id="qfb-1-1"></div></div>
+</div>
+<div class="content-block" id="block-1-reflect">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
+<div class="reflect-prompt"><div class="reflect-q">Byte says "every bug is just a clue." What do you think that means? How would thinking this way change how you feel when something breaks?</div>
+<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button><span class="reflect-saved" id="saved-1-1">✓ Saved</span></div></div>
+<div class="lesson-complete" id="complete-1"><h3>◈ &nbsp; Lesson 1 Complete</h3><p>Bug types. Byte's method. The console is your best friend now.</p><div class="lesson-joke" id="joke-1"></div></div>
+</div>
+</div>
+</div>
 <!-- ===================== LESSON 2 ===================== -->
 <div class="lesson-panel" id="lesson-2">
-  <aside class="lesson-sidebar">
-    <div class="sidebar-label">Lesson 02</div>
-    <button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(2,'cheat')" id="sb-2-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
-    <div class="sidebar-divider"></div>
-    <a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
-  </aside>
-  <div class="lesson-content">
-    <div class="locked-panel" id="lock-2">
-      <div class="locked-icon">🔒</div>
-      <h2>Sparks Membership Required</h2>
-      <p>Lesson 2 is available to Sparks members and above.</p>
-      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-    </div>
-    <div class="content-block" id="block-2-read" style="display:none">
-      <div class="section-header">Error Messages</div>
-      <div class="section-sub">LESSON 02 · SPARKS+</div>
-      <div class="read-card">
-        <div class="read-card-num">01 / 04</div>
-        <h3>An Error Is a Gift</h3>
-        <p>"An error message is not your enemy. It's Byte's gift to you." Every error has three parts: the <strong>type</strong>, the <strong>message</strong>, and the <strong>location</strong> (file and line number).</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">02 / 04</div>
-        <h3>ReferenceError</h3>
-        <p>You tried to use a variable that doesn't exist. Usually a typo in the variable name, or using it before it's defined.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">03 / 04</div>
-        <h3>TypeError</h3>
-        <p>You tried to do something with a value that doesn't support that action — like calling <code>.length</code> on a number.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">04 / 04</div>
-        <h3>The Line Number Is a Hint, Not the Answer</h3>
-        <p>The error points to where JavaScript noticed the problem. The actual cause is often one or two lines earlier. Read around the line number, not just on it.</p>
-      </div>
-    </div>
-    <div class="content-block" id="block-2-terms" style="display:none">
-      <div class="section-header">Key Terms</div>
-      <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
-      <div class="terms-grid">
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">ReferenceError <span class="term-arrow">›</span></div><div class="term-def">Using a variable that doesn't exist or wasn't defined yet.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">TypeError <span class="term-arrow">›</span></div><div class="term-def">Performing an operation on a value that doesn't support it.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">SyntaxError <span class="term-arrow">›</span></div><div class="term-def">Code written incorrectly — JavaScript can't parse it at all.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Stack Trace <span class="term-arrow">›</span></div><div class="term-def">The list of function calls that led to the error.</div></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-2-build" style="display:none">
-      <div class="section-header">Build It</div>
-      <div class="section-sub">LESSON 02 · FIX THE BUG</div>
-      <div class="demo-card">
-        <h3>Bug #2 — ReferenceError</h3>
-        <p>This code uses a variable that was never defined. Fix it.</p>
-        <textarea class="debug-editor" id="debug-d2">function showScore() {
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 02</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider"></div>
+<a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-2"><div class="locked-icon">🔒</div><h2>Sparks Membership Required</h2><p>Lesson 2 is available to Sparks members and above.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+<div class="content-block" id="block-2-read" style="display:none">
+<div class="section-header">Error Messages</div>
+<div class="section-sub">LESSON 02 · SPARKS+</div>
+<div class="read-card"><div class="read-card-num">01 / 04</div><h3>An Error Is a Gift</h3><p>"An error message is not your enemy. It's Byte's gift to you." Every error has three parts: the <strong>type</strong>, the <strong>message</strong>, and the <strong>location</strong> (file and line number).</p></div>
+<div class="read-card"><div class="read-card-num">02 / 04</div><h3>ReferenceError</h3><p>You tried to use a variable that doesn't exist. Usually a typo in the variable name, or using it before it's defined.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 04</div><h3>TypeError</h3><p>You tried to do something with a value that doesn't support that action — like calling <code>.length</code> on a number.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 04</div><h3>The Line Number Is a Hint, Not the Answer</h3><p>The error points to where JavaScript noticed the problem. The actual cause is often one or two lines earlier. Read around the line number, not just on it.</p></div>
+</div>
+<div class="content-block" id="block-2-terms" style="display:none">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">ReferenceError <span class="term-arrow">›</span></div><div class="term-def">Using a variable that doesn't exist or wasn't defined yet.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">TypeError <span class="term-arrow">›</span></div><div class="term-def">Performing an operation on a value that doesn't support it.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">SyntaxError <span class="term-arrow">›</span></div><div class="term-def">Code written incorrectly — JavaScript can't parse it at all.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Stack Trace <span class="term-arrow">›</span></div><div class="term-def">The list of function calls that led to the error.</div></div>
+</div>
+</div>
+<div class="content-block" id="block-2-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 02 · FIX THE BUG</div>
+<div class="demo-card"><h3>Bug #2 — ReferenceError</h3><p>This code uses a variable that was never defined. Fix it.</p>
+<textarea class="debug-editor" id="debug-d2">function showScore() {
   console.log("Your score is: " + userScore);
 }
 showScore();
 // Fix: define userScore before using it</textarea>
-        <button class="run-btn" onclick="runDebug('d2')">▶ Run</button>
-        <div class="demo-output" id="debug-out-d2"></div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-q">You get: "TypeError: name.toUpperCase is not a function." What most likely happened?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Spelling wouldn\'t cause this specific error.')">name was spelled wrong</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. name is probably a number or null — not a string.')">name is not a string — it's probably a number or null</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'It already has parentheses in the code.')">toUpperCase needs parentheses</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-2-0"></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-2-reflect" style="display:none">
-      <div class="section-header">Reflect</div>
-      <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">What's the difference between a ReferenceError and a TypeError? Give a real example of how each could happen.</div>
-        <textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
-          <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
-        </div>
-      </div>
-      <div class="lesson-complete show" id="complete-2">
-        <h3>◈ &nbsp; Lesson 2 Complete</h3>
-        <p>Error types. Reading messages. You know where to look now.</p>
-        <div class="lesson-joke" id="joke-2"></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-2-cheat" style="display:none">
-      <div class="section-header">Cheat Sheet</div>
-      <div class="section-sub">LESSON 02 · ERROR MESSAGES</div>
-      <div class="cheat-card">
-        <h3>◈ Lesson 2 Reference</h3>
-        <div class="cheat-items">
-          <div class="cheat-item"><div class="cheat-term">ReferenceError</div><div class="cheat-desc">Variable doesn't exist or isn't defined yet.</div></div>
-          <div class="cheat-item"><div class="cheat-term">TypeError</div><div class="cheat-desc">Wrong type — calling a method that doesn't exist on that value.</div></div>
-          <div class="cheat-item"><div class="cheat-term">SyntaxError</div><div class="cheat-desc">Invalid code — caught before it runs.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Line number</div><div class="cheat-desc">A hint, not the answer. Check nearby lines too.</div></div>
-        </div>
-        <button class="cheat-download-btn" onclick="downloadCheat(2)">⬇ Download Cheat Sheet</button>
-      </div>
-    </div>
-  </div>
+<button class="run-btn" onclick="runDebug('d2')">▶ Run</button>
+<div class="demo-output" id="debug-out-d2"></div></div>
+<div class="quiz-card"><div class="quiz-q">You get: "TypeError: name.toUpperCase is not a function." What most likely happened?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Spelling wouldn\'t cause this specific error.')">name was spelled wrong</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. name is probably a number or null — not a string.')">name is not a string — it's probably a number or null</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'It already has parentheses in the code.')">toUpperCase needs parentheses</button>
+</div><div class="quiz-feedback" id="qfb-2-0"></div></div>
 </div>
-
+<div class="content-block" id="block-2-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
+<div class="reflect-prompt"><div class="reflect-q">What's the difference between a ReferenceError and a TypeError? Give a real example of how each could happen.</div>
+<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button><span class="reflect-saved" id="saved-2-1">✓ Saved</span></div></div>
+<div class="lesson-complete show" id="complete-2"><h3>◈ &nbsp; Lesson 2 Complete</h3><p>Error types. Reading messages. You know where to look now.</p><div class="lesson-joke" id="joke-2"></div></div>
+</div>
+</div>
+</div>
 <!-- ===================== LESSON 3 ===================== -->
 <div class="lesson-panel" id="lesson-3">
-  <aside class="lesson-sidebar">
-    <div class="sidebar-label">Lesson 03</div>
-    <button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(3,'cheat')" id="sb-3-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
-    <div class="sidebar-divider"></div>
-    <a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
-  </aside>
-  <div class="lesson-content">
-    <div class="locked-panel" id="lock-3">
-      <div class="locked-icon">🔒</div>
-      <h2>Builders Membership Required</h2>
-      <p>Lesson 3 is available to Builders members and above.</p>
-      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-    </div>
-    <div class="content-block" id="block-3-read" style="display:none">
-      <div class="section-header">Logic Tracing</div>
-      <div class="section-sub">LESSON 03 · BUILDERS+</div>
-      <div class="read-card">
-        <div class="read-card-num">01 / 04</div>
-        <h3>Become the Computer</h3>
-        <p>"The bug is never where you think it is. You have to follow the code like a trail." <strong>Logic tracing</strong> means reading your code exactly as the computer would, tracking each variable's value as it changes.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">02 / 04</div>
-        <h3>console.log() Is Your Tracer</h3>
-        <p>Place <code>console.log()</code> after key steps to print what a variable holds. If the value is unexpected, you've found your bug's neighborhood.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">03 / 04</div>
-        <h3>Trace Tables</h3>
-        <p>A trace table tracks each variable's value at each step — columns for variables, rows for each line. Fill it in like a spreadsheet.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">04 / 04</div>
-        <h3>Off-By-One Errors</h3>
-        <p>One of the most common logic bugs. Your loop runs one time too many or too few. Usually caused by <code>&lt;</code> vs <code>&lt;=</code>, or starting at 0 instead of 1.</p>
-      </div>
-    </div>
-    <div class="content-block" id="block-3-terms" style="display:none">
-      <div class="section-header">Key Terms</div>
-      <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
-      <div class="terms-grid">
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Logic Tracing <span class="term-arrow">›</span></div><div class="term-def">Reading code step by step, tracking variable values exactly as the computer would.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Trace Table <span class="term-arrow">›</span></div><div class="term-def">A chart tracking each variable's value at each step of execution.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Off-By-One Error <span class="term-arrow">›</span></div><div class="term-def">A loop runs one iteration too many or too few.</div></div>
-        <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">State <span class="term-arrow">›</span></div><div class="term-def">The current value of all variables at a specific moment during execution.</div></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-3-build" style="display:none">
-      <div class="section-header">Build It</div>
-      <div class="section-sub">LESSON 03 · TRACE AND FIX</div>
-      <div class="demo-card">
-        <h3>Bug #3 — Trace the Total</h3>
-        <p>Expected total is 15. Trace it, find the mistakes, fix them.</p>
-        <textarea class="debug-editor" id="debug-d3">let total = 0;
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 03</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider"></div>
+<a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-3"><div class="locked-icon">🔒</div><h2>Builders Membership Required</h2><p>Lesson 3 is available to Builders members and above.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+<div class="content-block" id="block-3-read" style="display:none">
+<div class="section-header">Logic Tracing</div>
+<div class="section-sub">LESSON 03 · BUILDERS+</div>
+<div class="read-card"><div class="read-card-num">01 / 04</div><h3>Become the Computer</h3><p>"The bug is never where you think it is. You have to follow the code like a trail." <strong>Logic tracing</strong> means reading your code exactly as the computer would, tracking each variable's value as it changes.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 04</div><h3>console.log() Is Your Tracer</h3><p>Place <code>console.log()</code> after key steps to print what a variable holds. If the value is unexpected, you've found your bug's neighborhood.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 04</div><h3>Trace Tables</h3><p>A trace table tracks each variable's value at each step — columns for variables, rows for each line. Fill it in like a spreadsheet.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 04</div><h3>Off-By-One Errors</h3><p>One of the most common logic bugs. Your loop runs one time too many or too few. Usually caused by <code>&lt;</code> vs <code>&lt;=</code>, or starting at 0 instead of 1.</p></div>
+</div>
+<div class="content-block" id="block-3-terms" style="display:none">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Logic Tracing <span class="term-arrow">›</span></div><div class="term-def">Reading code step by step, tracking variable values exactly as the computer would.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Trace Table <span class="term-arrow">›</span></div><div class="term-def">A chart tracking each variable's value at each step of execution.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Off-By-One Error <span class="term-arrow">›</span></div><div class="term-def">A loop runs one iteration too many or too few.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">State <span class="term-arrow">›</span></div><div class="term-def">The current value of all variables at a specific moment during execution.</div></div>
+</div>
+</div>
+<div class="content-block" id="block-3-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 03 · TRACE AND FIX</div>
+<div class="demo-card"><h3>Bug #3 — Trace the Total</h3><p>Expected total is 15. Trace it, find the mistakes, fix them.</p>
+<textarea class="debug-editor" id="debug-d3">let total = 0;
 total = total + 5;
 total = total + 5;
 total = total + 3; // should be + 5
 total = total + 2; // shouldn't be here
 console.log("Total:", total);</textarea>
-        <button class="run-btn" onclick="runDebug('d3')">▶ Run</button>
-        <div class="demo-output" id="debug-out-d3"></div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-q">A loop runs from i=0 to i&lt;5. How many times does it run?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Count again: 0,1,2,3,4.')">4 times</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. i = 0,1,2,3,4 — that\'s 5 runs.')">5 times</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The loop stops before i reaches 5.')">6 times</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-3-0"></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-3-reflect" style="display:none">
-      <div class="section-header">Reflect</div>
-      <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">Why are off-by-one errors so common? Can you think of a real-life situation where being off by one causes a problem?</div>
-        <textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
-          <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
-        </div>
-      </div>
-      <div class="lesson-complete show" id="complete-3">
-        <h3>◈ &nbsp; Lesson 3 Complete</h3>
-        <p>Trace tables. Off-by-one errors. You can follow any trail now.</p>
-        <div class="lesson-joke" id="joke-3"></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-3-cheat" style="display:none">
-      <div class="section-header">Cheat Sheet</div>
-      <div class="section-sub">LESSON 03 · LOGIC TRACING</div>
-      <div class="cheat-card">
-        <h3>◈ Lesson 3 Reference</h3>
-        <div class="cheat-items">
-          <div class="cheat-item"><div class="cheat-term">Logic tracing</div><div class="cheat-desc">Step through code manually, tracking every variable.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Trace table</div><div class="cheat-desc">Columns = variables, rows = steps.</div></div>
-          <div class="cheat-item"><div class="cheat-term">Off-by-one</div><div class="cheat-desc">Check &lt; vs &lt;= and your starting value.</div></div>
-        </div>
-        <button class="cheat-download-btn" onclick="downloadCheat(3)">⬇ Download Cheat Sheet</button>
-      </div>
-    </div>
-  </div>
+<button class="run-btn" onclick="runDebug('d3')">▶ Run</button>
+<div class="demo-output" id="debug-out-d3"></div></div>
+<div class="quiz-card"><div class="quiz-q">A loop runs from i=0 to i&lt;5. How many times does it run?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Count again: 0,1,2,3,4.')">4 times</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. i = 0,1,2,3,4 — that\'s 5 runs.')">5 times</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'The loop stops before i reaches 5.')">6 times</button>
+</div><div class="quiz-feedback" id="qfb-3-0"></div></div>
 </div>
-
+<div class="content-block" id="block-3-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
+<div class="reflect-prompt"><div class="reflect-q">Why are off-by-one errors so common? Can you think of a real-life situation where being off by one causes a problem?</div>
+<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button><span class="reflect-saved" id="saved-3-1">✓ Saved</span></div></div>
+<div class="lesson-complete show" id="complete-3"><h3>◈ &nbsp; Lesson 3 Complete</h3><p>Trace tables. Off-by-one errors. You can follow any trail now.</p><div class="lesson-joke" id="joke-3"></div></div>
+</div>
+</div>
+</div>
 <!-- ===================== LESSON 4 ===================== -->
 <div class="lesson-panel" id="lesson-4">
-  <aside class="lesson-sidebar">
-    <div class="sidebar-label">Lesson 04</div>
-    <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(4,'cheat')" id="sb-4-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
-    <div class="sidebar-divider"></div>
-    <a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
-  </aside>
-  <div class="lesson-content">
-    <div class="locked-panel" id="lock-4">
-      <div class="locked-icon">🔒</div>
-      <h2>Coders Membership Required</h2>
-      <p>Lesson 4 is available to Coders members only.</p>
-      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-    </div>
-    <div class="content-block" id="block-4-read" style="display:none">
-      <div class="section-header">Debug Challenge</div>
-      <div class="section-sub">LESSON 04 · CODERS</div>
-      <div class="read-card">
-        <div class="read-card-num">01 / 03</div>
-        <h3>You Have the Tools</h3>
-        <p>Everything from Lessons 1-3. Recognizing bug types, reading error messages, and tracing logic step by step to find where values go wrong.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">02 / 03</div>
-        <h3>Byte's Debug Checklist</h3>
-        <p>Read the error first. Identify the type. Go to the line number. Look around it. Add <code>console.log()</code> to check values. Fix one bug at a time. Test after each fix.</p>
-      </div>
-      <div class="read-card">
-        <div class="read-card-num">03 / 03</div>
-        <h3>One Fix at a Time</h3>
-        <p>Fixing multiple things at once makes it impossible to know what worked. Always fix one bug, test, then move to the next.</p>
-      </div>
-    </div>
-    <div class="content-block" id="block-4-build" style="display:none">
-      <div class="section-header">Debug Challenge</div>
-      <div class="section-sub">LESSON 04 · FIND ALL 3 BUGS</div>
-      <div class="demo-card">
-        <h3>Bug #4 — The Full Gauntlet</h3>
-        <p>Calculate a student's average score and print pass/fail. There are <strong>three bugs</strong> — one syntax, one logic, one runtime.</p>
-        <textarea class="debug-editor" id="debug-d4">let scores = [80, 90, 70, 85, 95];
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 04</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider"></div>
+<a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-4"><div class="locked-icon">🔒</div><h2>Coders Membership Required</h2><p>Lesson 4 is available to Coders members only.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+<div class="content-block" id="block-4-read" style="display:none">
+<div class="section-header">Debug Challenge</div>
+<div class="section-sub">LESSON 04 · CODERS</div>
+<div class="read-card"><div class="read-card-num">01 / 03</div><h3>You Have the Tools</h3><p>Everything from Lessons 1-3. Recognizing bug types, reading error messages, and tracing logic step by step to find where values go wrong.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 03</div><h3>Byte's Debug Checklist</h3><p>Read the error first. Identify the type. Go to the line number. Look around it. Add <code>console.log()</code> to check values. Fix one bug at a time. Test after each fix.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 03</div><h3>One Fix at a Time</h3><p>Fixing multiple things at once makes it impossible to know what worked. Always fix one bug, test, then move to the next.</p></div>
+</div>
+<div class="content-block" id="block-4-build" style="display:none">
+<div class="section-header">Debug Challenge</div>
+<div class="section-sub">LESSON 04 · FIND ALL 3 BUGS</div>
+<div class="demo-card"><h3>Bug #4 — The Full Gauntlet</h3><p>Calculate a student's average score and print pass/fail. There are <strong>three bugs</strong> — one syntax, one logic, one runtime.</p>
+<textarea class="debug-editor" id="debug-d4">let scores = [80, 90, 70, 85, 95];
 let total = 0;
 for (let i = 0; i <= scores.length; i++) {
   total = total + scores[i];
@@ -660,319 +554,354 @@ if (average > 75) {
 } else [
   console.log("Fail. Average: " + average);
 }</textarea>
-        <button class="run-btn" onclick="runDebug('d4')">▶ Run</button>
-        <div class="demo-output" id="debug-out-d4"></div>
-        <div style="background:rgba(255,107,170,0.06);border:1px solid var(--border-pink);border-radius:10px;padding:1.1rem 1.25rem;margin-top:1rem">
-          <p style="font-family:var(--font-mono);font-size:0.72rem;color:var(--pink);margin-bottom:0.6rem;letter-spacing:0.1em">HINTS — BYTE'S CLUES</p>
-          <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0.4rem">Bug 1 (Syntax): What should open a block of code instead of a bracket?</p>
-          <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0.4rem">Bug 2 (Logic): The loop runs one time too many. Check the comparison operator.</p>
-          <p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0">Bug 3 (Runtime): There's a typo in a property name.</p>
-        </div>
-      </div>
-      <div class="quiz-card">
-        <div class="quiz-q">You fixed a bug and now a new error appears. What most likely happened?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A working fix doesn\'t need reverting.')">Your fix made things worse — revert everything</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. Fixing one bug often reveals the next.')">There was a second bug hidden behind the first — now you can see it</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Computers don\'t have bad days — bugs are always explainable.')">The computer is having a bad day</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-4-0"></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-4-reflect" style="display:none">
-      <div class="section-header">Reflect</div>
-      <div class="section-sub">LESSON 04 · BYTE'S FINAL DEBRIEF</div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">Describe Byte's full debug method in your own words. If a friend's code was broken, what would you tell them to do first?</div>
-        <textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
-          <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
-        </div>
-      </div>
-      <div class="lesson-complete show" id="complete-4">
-        <h3>◈ &nbsp; Byte's Code City Complete</h3>
-        <p>All four lessons done. Bug types, error messages, tracing, and the full debug checklist. Nothing in code can scare you now.</p>
-        <div class="lesson-joke" id="joke-4"></div>
-      </div>
-    </div>
-    <div class="content-block" id="block-4-cheat" style="display:none">
-      <div class="section-header">Cheat Sheet</div>
-      <div class="section-sub">LESSON 04 · DEBUG CHALLENGE</div>
-      <div class="cheat-card">
-        <h3>◈ Lesson 4 Reference</h3>
-        <div class="cheat-items">
-          <div class="cheat-item"><div class="cheat-term">Debug checklist</div><div class="cheat-desc">Read → Identify type → Line number → console.log → Fix one → Test.</div></div>
-          <div class="cheat-item"><div class="cheat-term">One fix at a time</div><div class="cheat-desc">Never fix multiple bugs at once.</div></div>
-        </div>
-        <button class="cheat-download-btn" onclick="downloadCheat(4)">⬇ Download Cheat Sheet</button>
-      </div>
-    </div>
-  </div>
+<button class="run-btn" onclick="runDebug('d4')">▶ Run</button>
+<div class="demo-output" id="debug-out-d4"></div>
+<div style="background:rgba(255,107,170,0.06);border:1px solid var(--border-pink);border-radius:10px;padding:1.1rem 1.25rem;margin-top:1rem">
+<p style="font-family:var(--font-mono);font-size:0.72rem;color:var(--pink);margin-bottom:0.6rem;letter-spacing:0.1em">HINTS — BYTE'S CLUES</p>
+<p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0.4rem">Bug 1 (Syntax): What should open a block of code instead of a bracket?</p>
+<p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0.4rem">Bug 2 (Logic): The loop runs one time too many. Check the comparison operator.</p>
+<p style="font-size:0.85rem;color:var(--text-dim);margin-bottom:0">Bug 3 (Runtime): There's a typo in a property name.</p>
+</div></div>
+<div class="quiz-card"><div class="quiz-q">You fixed a bug and now a new error appears. What most likely happened?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'A working fix doesn\'t need reverting.')">Your fix made things worse — revert everything</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. Fixing one bug often reveals the next.')">There was a second bug hidden behind the first — now you can see it</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Computers don\'t have bad days — bugs are always explainable.')">The computer is having a bad day</button>
+</div><div class="quiz-feedback" id="qfb-4-0"></div></div>
+</div>
+<div class="content-block" id="block-4-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 04 · BYTE'S FINAL DEBRIEF</div>
+<div class="reflect-prompt"><div class="reflect-q">Describe Byte's full debug method in your own words. If a friend's code was broken, what would you tell them to do first?</div>
+<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button><span class="reflect-saved" id="saved-4-1">✓ Saved</span></div></div>
+<div class="lesson-complete show" id="complete-4"><h3>◈ &nbsp; Byte's Code City Complete</h3><p>All four lessons done. Bug types, error messages, tracing, and the full debug checklist. Nothing in code can scare you now.</p><div class="lesson-joke" id="joke-4"></div></div>
+</div>
+</div>
+</div>
+
+<div class="lesson-panel" id="lesson-cheat">
+<div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
+<div class="section-header">Byte's Cheat Sheet</div>
+<div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
+<div class="cheat-card"><h3>◈ Lesson 1 — Bug Thinking</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Syntax error</div><div class="cheat-desc">Typo or bad structure — code can't run.</div></div>
+<div class="cheat-item"><div class="cheat-term">Logic error</div><div class="cheat-desc">Runs fine, wrong result.</div></div>
+<div class="cheat-item"><div class="cheat-term">Runtime error</div><div class="cheat-desc">Crashes while running.</div></div>
+<div class="cheat-item"><div class="cheat-term">Byte's method</div><div class="cheat-desc">Read → Reproduce → Isolate → Fix one thing → Test.</div></div>
+</div></div>
+<div class="cheat-card"><h3>◈ Lesson 2 — Error Messages</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">ReferenceError</div><div class="cheat-desc">Variable doesn't exist or isn't defined yet.</div></div>
+<div class="cheat-item"><div class="cheat-term">TypeError</div><div class="cheat-desc">Wrong type — calling a method that doesn't exist on that value.</div></div>
+<div class="cheat-item"><div class="cheat-term">SyntaxError</div><div class="cheat-desc">Invalid code — caught before it runs.</div></div>
+<div class="cheat-item"><div class="cheat-term">Line number</div><div class="cheat-desc">A hint, not the answer. Check nearby lines too.</div></div>
+</div></div>
+<div class="cheat-card"><h3>◈ Lesson 3 — Logic Tracing</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Logic tracing</div><div class="cheat-desc">Step through code manually, tracking every variable.</div></div>
+<div class="cheat-item"><div class="cheat-term">Trace table</div><div class="cheat-desc">Columns = variables, rows = steps.</div></div>
+<div class="cheat-item"><div class="cheat-term">Off-by-one</div><div class="cheat-desc">Check &lt; vs &lt;= and your starting value.</div></div>
+</div></div>
+<div class="cheat-card"><h3>◈ Lesson 4 — Debug Challenge</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Debug checklist</div><div class="cheat-desc">Read → Identify type → Line number → console.log → Fix one → Test.</div></div>
+<div class="cheat-item"><div class="cheat-term">One fix at a time</div><div class="cheat-desc">Never fix multiple bugs at once.</div></div>
+</div></div>
+<div class="cheat-card"><h3>◈ Symbols Reference</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">( )</div><div class="cheat-desc">Parentheses — call a function, or hold its arguments.</div></div>
+<div class="cheat-item"><div class="cheat-term">.</div><div class="cheat-desc">Dot — accesses a property or method on an object.</div></div>
+<div class="cheat-item"><div class="cheat-term">'  '</div><div class="cheat-desc">Quotes — wrap text values (strings).</div></div>
+<div class="cheat-item"><div class="cheat-term">=</div><div class="cheat-desc">Equals sign — assigns a value.</div></div>
+<div class="cheat-item"><div class="cheat-term">%</div><div class="cheat-desc">Modulo — gives the remainder of division. Used to check even/odd.</div></div>
+</div>
+<div class="cheat-btn-row">
+<a href="byte-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
+<button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
+</div>
+</div>
+</div>
 </div>
 
 <div class="byte-companion" id="byteCompanion">
-  <img src="byte-idle.gif" alt="Byte" title="Byte is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
+<img src="byte-idle.gif" alt="Byte" title="Byte is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
 </div>
-
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
-
-<div class="portal-modal" id="portalModal">
-  <img src="byte-mim-underground-portal.png" alt="MiM Underground" onerror="this.style.display='none'">
-  <p>MiM Underground — Byte's glitch hunter rules are posted right there. You weren't supposed to find this yet.</p>
-  <button class="portal-close" onclick="closePortal()">Close the Portal</button>
-</div>
-
-<div class="egg-popup" id="eggPopup">
-  <h4>◈ Secret Found!</h4>
-  <p id="eggText"></p>
-</div>
-
+<div class="egg-popup" id="eggPopup"><h4>◈ Secret Found!</h4><p id="eggText"></p></div>
 <script type="module" src="auth-init.js"></script>
 <script>
 let currentLesson = null;
 let currentTier = null;
 const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
 function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
-
 window.setNavUser = function(email) {
-  const u = document.getElementById('navUser');
-  const b = document.getElementById('navLogout');
+  const u = document.getElementById('navUser'); const b = document.getElementById('navLogout');
   if (u) { u.textContent = email; u.style.display = 'inline'; }
   if (b) b.style.display = 'inline-block';
 };
-
 window.handleTierUnlock = function(tier) {
-  currentTier = tier;
-  const lvl = tierLevel(tier);
-  if (lvl >= tierLevel('sparks')) {
-    document.getElementById('lock-2').style.display = 'none';
-    ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-2-' + b); if (el) el.style.removeProperty('display'); });
-  }
-  if (lvl >= tierLevel('builders')) {
-    document.getElementById('lock-3').style.display = 'none';
-    ['read','terms','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-3-' + b); if (el) el.style.removeProperty('display'); });
-  }
-  if (lvl >= tierLevel('coders')) {
-    document.getElementById('lock-4').style.display = 'none';
-    ['read','build','reflect','cheat'].forEach(b => { const el = document.getElementById('block-4-' + b); if (el) el.style.removeProperty('display'); });
-  }
+  currentTier = tier; const lvl = tierLevel(tier);
+  if (lvl >= tierLevel('sparks')) { document.getElementById('lock-2').style.display = 'none'; ['read','terms','build','reflect'].forEach(b => { const el = document.getElementById('block-2-' + b); if (el) el.style.removeProperty('display'); }); }
+  if (lvl >= tierLevel('builders')) { document.getElementById('lock-3').style.display = 'none'; ['read','terms','build','reflect'].forEach(b => { const el = document.getElementById('block-3-' + b); if (el) el.style.removeProperty('display'); }); }
+  if (lvl >= tierLevel('coders')) { document.getElementById('lock-4').style.display = 'none'; ['read','build','reflect'].forEach(b => { const el = document.getElementById('block-4-' + b); if (el) el.style.removeProperty('display'); }); }
   loadReflects();
 };
-
-// ── DISCOVERY OVERLAY (no forced scroll) + ambient sound start ──
 function enterCity() {
-  document.getElementById('discoveryOverlay').classList.add('hidden');
-  document.getElementById('soundToggle').classList.add('visible');
-  startAmbient();
+  const overlay = document.getElementById('discoveryOverlay');
+  const finishEntrance = () => {
+    overlay.classList.add('fading');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      const st = document.getElementById('soundToggle'); if (st) st.classList.add('visible');
+      try { startAmbient(); } catch (e) { /* ambient audio optional */ }
+    }, 700);
+  };
+  try {
+    document.getElementById('discoveryEnterBtn').style.display = 'none';
+    document.querySelector('.byte-mark').style.display = 'none';
+    document.getElementById('discoveryTitle').style.display = 'none';
+    document.getElementById('discoverySub').style.display = 'none';
+    const stage = document.getElementById('hologramStage');
+    stage.style.display = 'block';
+  } catch (e) { /* hologram cosmetics optional, overlay must still dismiss */ }
+  setTimeout(finishEntrance, 3000);
 }
-
-// ── COMPANION VISIBILITY ──
-window.addEventListener('scroll', function () {
-  const companion = document.getElementById('byteCompanion');
-  if (!companion) return;
-  if (window.scrollY > window.innerHeight * 0.6) companion.classList.add('visible');
-  else companion.classList.remove('visible');
-}, { passive: true });
-
-// ── LESSON CONTROL ──
 function openLesson(n) {
   document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
   document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
-  const panel = document.getElementById('lesson-' + n);
-  const tab = document.getElementById('tab-' + n);
-  if (panel) panel.classList.add('open');
-  if (tab) tab.classList.add('active');
-  currentLesson = n;
-  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  const panel = document.getElementById('lesson-' + n); const tab = document.getElementById('tab-' + n);
+  if (panel) panel.classList.add('open'); if (tab) tab.classList.add('active');
+  currentLesson = n; panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  playUISound(330);
+  const companion = document.getElementById('byteCompanion');
+  if (companion && n !== 'cheat') companion.classList.add('visible');
+  const wrapper = document.getElementById('icebreakerWrapper');
+  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
 }
 function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
-
 function showBlock(lesson, block) {
-  const panel = document.getElementById('lesson-' + lesson);
-  if (!panel) return;
+  const panel = document.getElementById('lesson-' + lesson); if (!panel) return;
   panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
   panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-  const target = document.getElementById('block-' + lesson + '-' + block);
-  if (target) target.classList.add('active');
-  const btn = document.getElementById('sb-' + lesson + '-' + block);
-  if (btn) btn.classList.add('active');
+  const target = document.getElementById('block-' + lesson + '-' + block); if (target) target.classList.add('active');
+  const btn = document.getElementById('sb-' + lesson + '-' + block); if (btn) btn.classList.add('active');
+  playUISound(392);
 }
-
-function toggleTerm(card) { card.classList.toggle('open'); }
-
-function checkQuiz(btn, correct, feedback) {
-  const opts = btn.closest('.quiz-options');
-  if (opts.querySelector('.correct')) return;
-  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
-  if (correct) {
-    btn.classList.add('correct');
-    if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
-  } else {
-    btn.classList.add('wrong');
-    if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
-    setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
-  }
-}
-
-// ── DEBUG RUNNER ──
-function runDebug(id) {
-  const code = document.getElementById('debug-' + id)?.value || '';
-  const outputEl = document.getElementById('debug-out-' + id);
-  if (!outputEl) return;
-  const logs = [];
-  const fakeCon = { log: (...a) => logs.push(a.map(x => String(x)).join(' ')) };
+function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); }
+let uiAudioCtx = null;
+function playUISound(freq) {
   try {
-    const fn = new Function('console', code);
-    fn(fakeCon);
-    outputEl.textContent = logs.join('\n') || '(no output)';
-    outputEl.style.color = '#c66bff';
-  } catch(e) {
-    outputEl.textContent = (logs.length ? logs.join('\n') + '\n' : '') + 'Error: ' + e.message;
-    outputEl.style.color = '#ff6baa';
-  }
-  outputEl.classList.add('show');
+    if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = uiAudioCtx.createOscillator(); const gain = uiAudioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
+    osc.connect(gain); gain.connect(uiAudioCtx.destination);
+    osc.start(); osc.stop(uiAudioCtx.currentTime + 0.18);
+  } catch (e) { /* audio unavailable, silently continue */ }
 }
-
-// ── REFLECT ──
-const REFLECT_RESPONSES = {
-  'ref-1-1': v => `◈ "${v}" — That's exactly the Byte mindset. Follow the clue, don't fear it.`,
-  'ref-2-1': v => `◈ "${v}" — Good instinct. The error type tells you where to look first.`,
-  'ref-3-1': v => `◈ "${v}" — Off-by-one bugs hide in plain sight. You're learning to see them.`,
-  'ref-4-1': v => `◈ "${v}" — That's real debugging wisdom. Keep it in your back pocket.`
-};
+function checkQuiz(btn, correct, feedback) {
+  const opts = btn.closest('.quiz-options'); if (opts.querySelector('.correct')) return;
+  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+  if (correct) { btn.classList.add('correct'); if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; } }
+  else { btn.classList.add('wrong'); if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; } setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400); }
+}
 function saveReflect(inputId, savedId) {
-  const val = document.getElementById(inputId)?.value;
-  if (val === undefined) return;
+  const val = document.getElementById(inputId)?.value; if (val === undefined) return;
   localStorage.setItem('byte_' + inputId, val);
-  const saved = document.getElementById(savedId);
-  if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
+  const saved = document.getElementById(savedId); if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
   const lessonNum = inputId.split('-')[1];
   const complete = document.getElementById('complete-' + lessonNum);
-  if (complete) {
-    complete.classList.add('show');
-    const jokeEl = document.getElementById('joke-' + lessonNum);
-    if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
-  }
+  if (complete) { complete.classList.add('show'); const jokeEl = document.getElementById('joke-' + lessonNum); if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)]; }
 }
-function loadReflects() {
-  document.querySelectorAll('.reflect-input').forEach(el => {
-    const stored = localStorage.getItem('byte_' + el.id);
-    if (stored) el.value = stored;
-  });
+function loadReflects() { document.querySelectorAll('.reflect-input').forEach(el => { const stored = localStorage.getItem('byte_' + el.id); if (stored) el.value = stored; }); }
+function runDebug(id) {
+  const code = document.getElementById('debug-' + id)?.value || ''; const outputEl = document.getElementById('debug-out-' + id); if (!outputEl) return;
+  const logs = []; const fakeCon = { log: (...a) => logs.push(a.map(x => String(x)).join(' ')) };
+  try { const fn = new Function('console', code); fn(fakeCon); outputEl.textContent = logs.join('\n') || '(no output)'; outputEl.style.color = '#c66bff'; outputEl.classList.add('show'); }
+  catch(e) { outputEl.textContent = (logs.length ? logs.join('\n') + '\n' : '') + 'Error: ' + e.message; outputEl.style.color = '#ff6baa'; outputEl.classList.add('show'); }
 }
-
-// ── CHEAT SHEET DOWNLOAD ──
-function downloadCheat(num) {
-  const titles = { 1: 'Lesson 1 — Bug Thinking', 2: 'Lesson 2 — Error Messages', 3: 'Lesson 3 — Logic Tracing', 4: 'Lesson 4 — Debug Challenge' };
-  const content = {
-    1: `BYTE'S CODE CITY — CHEAT SHEET\n${titles[1]}\n\nSYNTAX ERROR: typo, can't run\nLOGIC ERROR: runs, wrong result\nRUNTIME ERROR: crashes while running\n\nBYTE'S METHOD:\nRead → Reproduce → Isolate → Fix one thing → Test`,
-    2: `BYTE'S CODE CITY — CHEAT SHEET\n${titles[2]}\n\nReferenceError: variable doesn't exist\nTypeError: wrong type for that action\nSyntaxError: invalid code structure\n\nLine number = hint, not the answer. Check nearby lines too.`,
-    3: `BYTE'S CODE CITY — CHEAT SHEET\n${titles[3]}\n\nLogic tracing: step through code like the computer would\nTrace table: columns = variables, rows = steps\nOff-by-one: check < vs <= and your starting value`,
-    4: `BYTE'S CODE CITY — CHEAT SHEET\n${titles[4]}\n\nBYTE'S FULL CHECKLIST:\n1. Read the error\n2. Identify the type\n3. Go to the line number\n4. Look around it\n5. console.log() to check values\n6. Fix ONE bug at a time\n7. Test after each fix`
-  };
-  const blob = new Blob([content[num]], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = `byte-cheatsheet-lesson${num}.txt`;
-  document.body.appendChild(a); a.click();
-  document.body.removeChild(a); URL.revokeObjectURL(url);
+function downloadCheat() {
+  const content = "BYTE'S CODE CITY — FULL CHEAT SHEET\n\n" +
+    "LESSON 1 — Bug Thinking\nSYNTAX ERROR: typo, can't run\nLOGIC ERROR: runs, wrong result\nRUNTIME ERROR: crashes while running\nBYTE'S METHOD: Read → Reproduce → Isolate → Fix one thing → Test\n\n" +
+    "LESSON 2 — Error Messages\nReferenceError: variable doesn't exist\nTypeError: wrong type for that action\nSyntaxError: invalid code structure\nLine number = hint, not the answer.\n\n" +
+    "LESSON 3 — Logic Tracing\nLogic tracing: step through code like the computer would\nTrace table: columns = variables, rows = steps\nOff-by-one: check < vs <= and your starting value\n\n" +
+    "LESSON 4 — Debug Challenge\n1. Read the error\n2. Identify the type\n3. Go to the line number\n4. Look around it\n5. console.log() to check values\n6. Fix ONE bug at a time\n7. Test after each fix\n\n" +
+    "SYMBOLS REFERENCE\n( )   parentheses — call a function, or hold its arguments\n.     dot — accesses a property or method\n'  '  quotes — wrap text values\n=     equals sign — assigns a value\n%     modulo — remainder of division, used for even/odd checks";
+  const blob = new Blob([content], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'byte-cheatsheet.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
 }
-
-// ── UPGRADE / LOGOUT ──
-function goUpgrade() {
-  if (window.firebaseAuth && window.firebaseAuth.currentUser) {
-    window.location.href = 'membership.html';
-  } else {
-    document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
-  }
+function goUpgrade() { if (window.firebaseAuth && window.firebaseAuth.currentUser) { window.location.href = 'membership.html'; } else { document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } })); } }
+function handleLogout() { if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); } }
+function spawnParticle() {
+  const field = document.getElementById('particleField'); if (!field) return;
+  const p = document.createElement('div'); p.className = 'particle';
+  const startX = Math.random() * 100; const duration = 8 + Math.random() * 10; const delay = Math.random() * 2;
+  p.style.left = startX + '%'; p.style.bottom = '0'; p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
+  field.appendChild(p); setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
 }
-function handleLogout() {
-  if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); }
-}
-
-// ══════════════════ IMMERSION LAYER ══════════════════
-
-const FACTS = [
-  "the first computer 'bug' was a real moth found stuck in a Harvard Mark II relay in 1947.",
-  "the average professional developer spends about 35-50% of their time debugging, not writing new code.",
-  "'rubber duck debugging' is a real technique — explaining your code out loud to an object often reveals the bug.",
-  "the term 'glitch' comes from the Yiddish word 'glitshen,' meaning to slip.",
-  "some of the earliest bugs weren't code at all — they were literal hardware short-circuits caused by insects.",
-  "the Y2K bug happened because programmers stored years using only 2 digits to save memory.",
-  "stack overflow (the website) is named after a real type of runtime error — recursion that never stops.",
-  "cats actually do land on their feet almost every time — kind of like Byte always landing on the real bug."
-];
+for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400);
+setInterval(spawnParticle, 900);
+const FACTS = [ "the first computer 'bug' was a real moth found stuck in a Harvard Mark II relay in 1947.", "the average professional developer spends about 35-50% of their time debugging, not writing new code.", "'rubber duck debugging' is a real technique — explaining your code out loud to an object often reveals the bug.", "the term 'glitch' comes from the Yiddish word 'glitshen,' meaning to slip.", "some of the earliest bugs weren't code at all — they were literal hardware short-circuits caused by insects.", "the Y2K bug happened because programmers stored years using only 2 digits to save memory.", "stack overflow (the website) is named after a real type of runtime error — recursion that never stops.", "cats actually do land on their feet almost every time — kind of like Byte always landing on the real bug." ];
 let factIndex = 0;
-function cycleFacts() {
-  const el = document.getElementById('factTicker');
-  if (!el) return;
-  el.classList.remove('show');
-  setTimeout(() => {
-    el.textContent = FACTS[factIndex % FACTS.length];
-    el.classList.add('show');
-    factIndex++;
-  }, 400);
-}
-cycleFacts();
-setInterval(cycleFacts, 6500);
-
-const JOKES = [
-  "Why did the cat sit on the keyboard? To keep an eye on the mouse.",
-  "There are only 10 types of bugs: the ones you found, and the ones still hiding.",
-  "Debugging is like being a detective in a crime movie where you're also the murderer.",
-  "Why do programmers prefer cats to dogs? Cats already know how to hunt bugs.",
-  "I told the console to log my feelings. It just printed 'undefined.'",
-  "A bug walks into Byte's lab. It doesn't walk out.",
-  "Why did the developer name their cat 'Exception'? Because it kept getting thrown."
-];
-
+function cycleFacts() { const el = document.getElementById('factTicker'); if (!el) return; el.classList.remove('show'); setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400); }
+cycleFacts(); setInterval(cycleFacts, 6500);
+const JOKES = [ "Why did the cat sit on the keyboard? To keep an eye on the mouse.", "There are only 10 types of bugs: the ones you found, and the ones still hiding.", "Debugging is like being a detective in a crime movie where you're also the murderer.", "Why do programmers prefer cats to dogs? Cats already know how to hunt bugs.", "I told the console to log my feelings. It just printed 'undefined.'", "A bug walks into Byte's lab. It doesn't walk out.", "Why did the developer name their cat 'Exception'? Because it kept getting thrown." ];
 let companionClicks = 0;
 function companionClick() {
   companionClicks++;
-  if (companionClicks === 5 && !localStorage.getItem('byte_egg_found')) {
-    localStorage.setItem('byte_egg_found', '1');
-    showEgg("You found Byte's secret file! Hidden catchphrase unlocked: \"A quiet bug is still a bug.\" ◈");
-  } else if (companionClicks % 5 === 0) {
-    showEgg("Byte tilts her head. You've already found this one — but she's still glad you're here.");
+  if (companionClicks === 5 && !localStorage.getItem('byte_egg_found')) { localStorage.setItem('byte_egg_found', '1'); showEgg("You found Byte's secret file! Hidden catchphrase unlocked: \"A quiet bug is still a bug.\" ◈"); }
+  else if (companionClicks % 5 === 0) { showEgg("Byte tilts her head. You've already found this one — but she's still glad you're here."); }
+}
+function showEgg(text) { const popup = document.getElementById('eggPopup'); document.getElementById('eggText').textContent = text; popup.classList.add('show'); setTimeout(() => popup.classList.remove('show'), 5000); }
+let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
+function startAmbient() { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain(); droneOsc.type = 'sine'; droneOsc.frequency.value = 78; droneGain.gain.value = 0.015; droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start(); } catch (e) { console.warn('Ambient audio unavailable:', e); } }
+function toggleSound() { const btn = document.getElementById('soundToggle'); if (!audioCtx) return; soundOn = !soundOn; droneGain.gain.value = soundOn ? 0.015 : 0; btn.textContent = soundOn ? '🔊' : '🔇'; btn.classList.toggle('muted', !soundOn); }
+
+/* ══════════════════ ICEBREAKER — BUG CATCH GAME ══════════════════ */
+const IB_BUG_TYPES = [
+  { id: 'syntax', icon: '🐞', label: 'SYNTAX BUG', color: '#ff6baa', def: "The code is written wrong — a typo, a missing bracket. It can't even run yet.", freq: 261 },
+  { id: 'runtime', icon: '🕷️', label: 'RUNTIME BUG', color: '#c66bff', def: "The code starts running fine, then crashes partway through.", freq: 329 },
+  { id: 'logic', icon: '🪲', label: 'LOGIC BUG', color: '#b8ff3c', def: "The code runs with no crash at all — it just gives the wrong answer.", freq: 392 }
+];
+const IB_ROUNDS = [3, 4, 5]; // bugs per round, increasing difficulty
+let ibRoundIndex = 0;
+let ibLives = 3;
+let ibBugsRemaining = 0;
+let ibBugsCaught = 0;
+let ibArenaTimer = null;
+let ibAudioCtx = null;
+
+function ibPlayTone(freq, dur) {
+  try {
+    if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ibAudioCtx.createOscillator(); const gain = ibAudioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
+    osc.connect(gain); gain.connect(ibAudioCtx.destination);
+    osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
+  } catch (e) { /* audio unavailable, silently continue */ }
+}
+function ibToggleWrapper() {
+  const wrapper = document.getElementById('icebreakerWrapper');
+  const opening = !wrapper.classList.contains('open');
+  wrapper.classList.toggle('open');
+  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function ibRenderIntro() {
+  const grid = document.getElementById('ibTermsGrid'); if (!grid) return;
+  grid.innerHTML = IB_BUG_TYPES.map(t =>
+    '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' +
+      '<div class="ib-term-bug-icon">' + t.icon + '</div>' +
+      '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' +
+      '<div class="ib-term-def">' + t.def + '</div>' +
+    '</div>'
+  ).join('');
+}
+function ibShowReaction(imgFile) {
+  const img = document.getElementById('ibReactionImg');
+  img.src = imgFile; img.onerror = () => { img.classList.remove('show'); };
+  img.classList.add('show');
+  setTimeout(() => img.classList.remove('show'), 900);
+}
+function ibStartGame() {
+  document.getElementById('ib-intro').style.display = 'none';
+  document.getElementById('ib-game').style.display = 'block';
+  ibRoundIndex = 0; ibLives = 3; ibBugsCaught = 0;
+  ibRenderBins();
+  ibBeginRound();
+}
+function ibRenderBins() {
+  const bins = document.getElementById('ibBins');
+  bins.innerHTML = IB_BUG_TYPES.map(t =>
+    '<div class="ib-catch-bin" id="ibBin-' + t.id + '" style="border-color:' + t.color + ';color:' + t.color + '" onclick="ibBinClick(\'' + t.id + '\')">' + t.icon + ' ' + t.label + '</div>'
+  ).join('');
+}
+function ibBeginRound() {
+  const count = IB_ROUNDS[ibRoundIndex] || IB_ROUNDS[IB_ROUNDS.length - 1];
+  ibBugsRemaining = count;
+  document.getElementById('ibRoundLabel').textContent = 'ROUND ' + (ibRoundIndex + 1) + ' OF ' + IB_ROUNDS.length;
+  ibUpdateLives();
+  document.getElementById('ibCatchStatus').textContent = 'Tap a bug, then tap the bin it belongs in.';
+  document.getElementById('ibArena').innerHTML = '';
+  ibSelectedBug = null;
+  for (let i = 0; i < count; i++) setTimeout(() => ibSpawnBug(), i * 900);
+}
+let ibSelectedBug = null;
+function ibSpawnBug() {
+  const arena = document.getElementById('ibArena'); if (!arena) return;
+  const type = IB_BUG_TYPES[Math.floor(Math.random() * IB_BUG_TYPES.length)];
+  const sprite = document.createElement('div');
+  sprite.className = 'ib-bug-sprite';
+  sprite.textContent = type.icon;
+  sprite.style.color = type.color;
+  sprite.dataset.type = type.id;
+  const x = 5 + Math.random() * 80;
+  const y = 5 + Math.random() * 70;
+  sprite.style.left = x + '%'; sprite.style.top = y + '%';
+  sprite.onclick = () => ibBugClick(sprite, type);
+  arena.appendChild(sprite);
+  ibWanderBug(sprite);
+}
+function ibWanderBug(sprite) {
+  if (!sprite.isConnected) return;
+  const dx = (Math.random() - 0.5) * 30;
+  const dy = (Math.random() - 0.5) * 30;
+  const curX = parseFloat(sprite.style.left); const curY = parseFloat(sprite.style.top);
+  let newX = Math.min(90, Math.max(2, curX + dx));
+  let newY = Math.min(80, Math.max(2, curY + dy));
+  sprite.style.transition = 'left 1.1s linear, top 1.1s linear';
+  sprite.style.left = newX + '%'; sprite.style.top = newY + '%';
+  setTimeout(() => ibWanderBug(sprite), 1100);
+}
+function ibBugClick(sprite, type) {
+  document.querySelectorAll('.ib-bug-sprite').forEach(s => s.style.outline = 'none');
+  sprite.style.outline = '2px solid #fff';
+  ibSelectedBug = { sprite, type };
+  document.getElementById('ibCatchStatus').textContent = 'Now tap the bin — is this a ' + type.label.toLowerCase() + '?';
+}
+function ibBinClick(binId) {
+  if (!ibSelectedBug) { document.getElementById('ibCatchStatus').textContent = 'Tap a bug first!'; return; }
+  const binEl = document.getElementById('ibBin-' + binId);
+  binEl.classList.add('flash'); setTimeout(() => binEl.classList.remove('flash'), 200);
+  if (ibSelectedBug.type.id === binId) {
+    ibPlayTone(ibSelectedBug.type.freq, 0.35);
+    ibShowReaction('byte-happy.png');
+    ibSelectedBug.sprite.remove();
+    ibBugsRemaining--; ibBugsCaught++;
+    document.getElementById('ibCatchStatus').textContent = '◈ Caught it! Nice work.';
+    ibSelectedBug = null;
+    if (ibBugsRemaining <= 0) { setTimeout(() => ibAdvanceRound(), 900); }
+  } else {
+    ibPlayTone(120, 0.3);
+    ibShowReaction('byte-sad.png');
+    ibLives--;
+    document.getElementById('ibCatchStatus').textContent = 'Not quite — that was a ' + ibSelectedBug.type.label.toLowerCase() + '. Try the next one.';
+    ibSelectedBug.sprite.style.outline = 'none';
+    ibSelectedBug = null;
+    ibUpdateLives();
+    if (ibLives <= 0) { ibShowReaction('byte-scared.png'); setTimeout(() => ibBeginRound(), 1200); ibLives = 3; }
   }
 }
-function showEgg(text) {
-  const popup = document.getElementById('eggPopup');
-  document.getElementById('eggText').textContent = text;
-  popup.classList.add('show');
-  setTimeout(() => popup.classList.remove('show'), 5000);
+function ibUpdateLives() { document.getElementById('ibLivesLabel').textContent = '♥ '.repeat(ibLives).trim() || '—'; }
+function ibAdvanceRound() {
+  ibRoundIndex++;
+  if (ibRoundIndex >= IB_ROUNDS.length) { ibComplete(); }
+  else { ibBeginRound(); }
 }
-
-function openPortal() { document.getElementById('portalModal').classList.add('open'); }
-function closePortal() { document.getElementById('portalModal').classList.remove('open'); }
-
-let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
-function startAmbient() {
-  try {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    droneOsc = audioCtx.createOscillator();
-    droneGain = audioCtx.createGain();
-    droneOsc.type = 'sine';
-    droneOsc.frequency.value = 78;
-    droneGain.gain.value = 0.015;
-    droneOsc.connect(droneGain);
-    droneGain.connect(audioCtx.destination);
-    droneOsc.start();
-  } catch (e) { console.warn('Ambient audio unavailable:', e); }
+function ibSkipGame() { ibComplete(); }
+function ibComplete() {
+  document.getElementById('ib-game').style.display = 'none';
+  document.getElementById('ib-complete').style.display = 'block';
 }
-function toggleSound() {
-  const btn = document.getElementById('soundToggle');
-  if (!audioCtx) return;
-  soundOn = !soundOn;
-  droneGain.gain.value = soundOn ? 0.015 : 0;
-  btn.textContent = soundOn ? '🔊' : '🔇';
-  btn.classList.toggle('muted', !soundOn);
+function ibReset() {
+  document.getElementById('ib-complete').style.display = 'none';
+  document.getElementById('ib-intro').style.display = 'block';
+  ibRoundIndex = 0; ibLives = 3; ibBugsCaught = 0;
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-  loadReflects();
-});
+document.addEventListener('DOMContentLoaded', () => { loadReflects(); ibRenderIntro(); });
 </script>
 </body>
 </html>
