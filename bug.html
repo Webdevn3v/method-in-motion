@@ -1,1792 +1,881 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Bug's Debug Garage | Method in Motion</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --lime: #b8ff3c;
-      --lime-dim: #8acc2a;
-      --lime-dark: #4a6e00;
-      --orange: #ff6b1a;
-      --orange-dim: #cc4a00;
-      --bg: #060a02;
-      --bg-mid: #0c1404;
-      --bg-card: #0f1a05;
-      --bg-panel: #080d03;
-      --text: #e8f5d0;
-      --text-dim: #7aaa3a;
-      --text-muted: #3a5a15;
-      --border: rgba(184, 255, 60, 0.15);
-      --border-bright: rgba(184, 255, 60, 0.4);
-      --border-orange: rgba(255, 107, 26, 0.3);
-      --glow: 0 0 18px rgba(184, 255, 60, 0.3);
-      --glow-strong: 0 0 36px rgba(184, 255, 60, 0.55);
-      --glow-orange: 0 0 18px rgba(255, 107, 26, 0.4);
-      --font-display: 'Orbitron', monospace;
-      --font-body: 'Space Grotesk', sans-serif;
-      --font-mono: 'Space Mono', monospace;
-    }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Bug's Debug Garage | Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --lime: #b8ff3c; --lime-dim: #8acc2a; --lime-dark: #4a6e00; --orange: #ff6b1a; --orange-dim: #cc4a00;
+  --bg: #060a02; --bg-mid: #0c1404; --bg-card: #0f1a05; --bg-panel: #080d03;
+  --text: #e8f5d0; --text-dim: #7aaa3a; --text-muted: #3a5a15;
+  --border: rgba(184, 255, 60, 0.15); --border-bright: rgba(184, 255, 60, 0.4); --border-orange: rgba(255, 107, 26, 0.3);
+  --glow: 0 0 18px rgba(184, 255, 60, 0.3); --glow-strong: 0 0 36px rgba(184, 255, 60, 0.55);
+  --font-display: 'Orbitron', monospace; --font-body: 'Space Grotesk', sans-serif; --font-mono: 'Space Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(6, 10, 2, 0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
+.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--lime); text-decoration: none; letter-spacing: 0.1em; }
+.nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
+.nav-links a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--lime); }
+.nav-user { font-family: var(--font-mono); font-size: 0.75rem; color: var(--lime); display: none; }
+.nav-logout { background: none; border: 1px solid var(--border); color: var(--text-dim); font-family: var(--font-body); font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: none; }
+.nav-logout:hover { border-color: var(--lime); color: var(--lime); }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+/* ═══════════ HERO — video background ═══════════ */
+.hero { margin-top: 60px; min-height: 640px; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); }
+.hero-gradient { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(6,10,2,0.96) 0%, rgba(6,10,2,0.5) 30%, rgba(6,10,2,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(6,10,2,0.55) 0%, rgba(6,10,2,0.1) 40%, transparent 70%); pointer-events: none; }
+.hero-pulse { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(ellipse 55% 45% at 50% 65%, rgba(255,107,26,0.14) 0%, transparent 65%); animation: pulseGlow 5s ease-in-out infinite; }
+@keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.particle-field { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 8px 2px rgba(184,255,60,0.6); opacity: 0; animation: floatUp linear infinite; }
+.particle:nth-child(odd) { background: var(--orange); box-shadow: 0 0 8px 2px rgba(255,107,26,0.6); }
+@keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
+.hero-bug-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(184,255,60,0.4)); pointer-events: auto; cursor: pointer; }
+@media (max-width: 768px) { .hero-bug-gif { display: none; } }
+.hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--lime); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(184,255,60,0.6); }
+.hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
+.hero-catchphrase { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); background: rgba(255,107,26,0.1); border: 1px solid var(--border-orange); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; backdrop-filter: blur(4px); }
+.hero-role { font-family: var(--font-display); font-size: clamp(0.75rem, 1.5vw, 0.95rem); font-weight: 600; color: var(--lime); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; }
+.hero-quote { font-size: 1.05rem; color: var(--text-dim); line-height: 1.6; max-width: 460px; margin-bottom: 1rem; font-style: italic; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
+.hero-quote span { color: var(--lime); font-style: normal; font-weight: 600; }
+.fact-ticker { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); max-width: 460px; min-height: 32px; margin-bottom: 1.2rem; line-height: 1.5; opacity: 0; transition: opacity 0.5s; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+.fact-ticker.show { opacity: 1; }
+.fact-ticker::before { content: '⚠ BUG\'S LOG — '; color: var(--orange); }
+.hero-tiles { display: flex; gap: 0.8rem; align-items: stretch; }
+.hero-lesson-grid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 0.6rem; }
+.hero-tile { background: rgba(184,255,60,0.06); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; backdrop-filter: blur(4px); }
+.hero-tile:hover { background: rgba(184,255,60,0.14); border-color: var(--lime); color: var(--lime); box-shadow: var(--glow); transform: translateY(-2px); }
+.hero-game-tile { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.3rem; min-width: 100px; max-width: 120px; border-radius: 10px; border: 1px solid var(--orange); background: rgba(255,107,26,0.12); color: var(--orange); font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-align: center; padding: 0.6rem 0.5rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 14px rgba(255,107,26,0.15); }
+.hero-game-tile:hover { background: rgba(255,107,26,0.24); box-shadow: 0 0 22px rgba(255,107,26,0.4); transform: translateY(-2px); }
+.hero-game-icon { font-size: 1.2rem; }
+.hero-game-cta { font-size: 0.6rem; opacity: 0.85; }
 
-    body {
-      font-family: var(--font-body);
-      background: var(--bg);
-      color: var(--text);
-      min-height: 100vh;
-      overflow-x: hidden;
-    }
+/* ═══════════ ICEBREAKER — SPOT THE DIFFERENCE ═══════════ */
+.icebreaker-wrapper { display: none; }
+.icebreaker-wrapper.open { display: block; }
+.icebreaker-wrapper.open .icebreaker { animation: ibPowerOn 0.6s ease; }
+@keyframes ibPowerOn { 0% { opacity: 0; transform: scale(0.92); filter: brightness(3.5) saturate(1.6); } 15% { opacity: 1; filter: brightness(2.4) saturate(1.4); } 45% { transform: scale(1.015); filter: brightness(1.3); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
+.icebreaker { background: var(--bg-mid); border-bottom: 1px solid var(--border); padding: 3rem 2rem 3.5rem; }
+.ib-header { max-width: 640px; margin: 0 auto 2.2rem; text-align: center; }
+.ib-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; color: var(--orange); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
+.ib-title { font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem); color: #fff; font-weight: 900; margin-bottom: 0.6rem; text-shadow: var(--glow); }
+.ib-sub { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
+.ib-phase { max-width: 820px; margin: 0 auto; }
+.ib-terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.9rem; margin-bottom: 2rem; }
+.ib-term-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; padding: 1.1rem; cursor: pointer; transition: all 0.2s; text-align: center; }
+.ib-term-card:hover { transform: translateY(-2px); }
+.ib-term-code { font-family: var(--font-display); font-size: 0.85rem; font-weight: 900; margin-bottom: 0.5rem; }
+.ib-term-def { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; display: none; }
+.ib-term-card.open .ib-term-def { display: block; }
+.ib-start-btn { display: block; margin: 0 auto; background: linear-gradient(135deg, var(--lime), var(--orange)); color: #060a02; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 0.9rem 2.4rem; border-radius: 100px; border: none; cursor: pointer; letter-spacing: 0.08em; box-shadow: var(--glow-strong); transition: transform 0.2s; }
+.ib-start-btn:hover { transform: scale(1.03); }
+.ib-diff-stage { background: var(--bg-card); border-radius: 14px; padding: 1.8rem; text-align: center; }
+.ib-round-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.14em; margin-bottom: 1rem; }
+.ib-diff-goal { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.2rem; line-height: 1.6; }
+.ib-diff-panes { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; text-align: left; }
+.ib-diff-pane { background: #060a02; border: 1px solid var(--border); border-radius: 10px; padding: 1rem 0.5rem; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.9; }
+.ib-diff-line { padding: 0.1rem 0.8rem; border-radius: 5px; cursor: pointer; transition: all 0.15s; white-space: pre; }
+.ib-diff-line:hover { background: rgba(184,255,60,0.08); }
+.ib-diff-line.correct-pick { background: rgba(184,255,60,0.25); color: var(--lime); font-weight: 700; }
+.ib-diff-line.wrong-pick { background: rgba(255,107,26,0.2); animation: shake 0.3s ease; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.ib-diff-status { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); min-height: 20px; margin-top: 0.6rem; }
+.ib-complete-card { background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 14px; padding: 2.5rem 2rem; text-align: center; }
+.ib-complete-card img { width: 90px; height: 90px; object-fit: contain; margin: 0 auto 1rem; display: block; filter: drop-shadow(0 0 20px rgba(184,255,60,0.5)); }
+.ib-complete-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--lime); margin-bottom: 0.8rem; text-shadow: var(--glow); }
+.ib-complete-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.4rem; }
+.ib-replay-btn { background: none; border: 1px solid var(--border-bright); color: var(--lime); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.4rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; }
+.ib-skip-btn { display: block; margin: 1.4rem auto 0; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.2s; }
+.ib-skip-btn:hover { color: var(--text-dim); border-color: var(--border-bright); }
+@media (max-width: 700px) { .ib-diff-panes { grid-template-columns: 1fr; } }
 
-    /* ── NAV ── */
-    nav {
-      position: fixed;
-      top: 0; left: 0; right: 0;
-      z-index: 100;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 2rem;
-      height: 60px;
-      background: rgba(6, 10, 2, 0.96);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(10px);
-    }
-    .nav-logo {
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      font-weight: 700;
-      color: var(--lime);
-      text-decoration: none;
-      letter-spacing: 0.1em;
-    }
-    .nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
-    .nav-links a {
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      font-weight: 500;
-      color: var(--text-dim);
-      text-decoration: none;
-      letter-spacing: 0.05em;
-      transition: color 0.2s;
-    }
-    .nav-links a:hover { color: var(--lime); }
-    .nav-user { font-family: var(--font-mono); font-size: 0.75rem; color: var(--lime); display: none; }
-    .nav-logout {
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-dim);
-      font-family: var(--font-body);
-      font-size: 0.78rem;
-      padding: 0.3rem 0.8rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-      display: none;
-    }
-    .nav-logout:hover { border-color: var(--lime); color: var(--lime); }
+/* ═══════════ HOLOGRAM ENTRANCE ═══════════ */
+.discovery-overlay.fading { opacity: 0; transition: opacity 0.7s ease; pointer-events: none; }
+.hologram-stage { display: none; position: relative; width: min(320px, 78vw); margin: 0 auto; }
+.hologram-frame { position: relative; border: 1px solid rgba(255,107,26,0.5); border-radius: 12px; overflow: hidden; box-shadow: 0 0 40px rgba(255,107,26,0.3), 0 0 80px rgba(184,255,60,0.2); animation: hologramMaterialize 1.1s ease-out, hologramFlicker 2.4s steps(1) infinite 1.1s; }
+.hologram-frame::before, .hologram-frame::after { content: ''; position: absolute; width: 22px; height: 22px; border: 2px solid var(--orange); z-index: 5; }
+.hologram-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.hologram-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+.hologram-video { width: 100%; display: block; filter: saturate(1.2) brightness(1.05); }
+.hologram-scanlines { position: absolute; inset: 0; z-index: 4; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(255,107,26,0.08) 0px, transparent 2px, transparent 4px); mix-blend-mode: overlay; }
+.hologram-scan-sweep { position: absolute; left: 0; right: 0; height: 40%; z-index: 6; pointer-events: none; background: linear-gradient(to bottom, transparent, rgba(255,107,26,0.25), transparent); animation: hologramSweep 1.6s ease-in-out infinite; }
+.hologram-caption { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--orange); text-shadow: 0 0 10px rgba(255,107,26,0.6); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes hologramMaterialize { 0% { opacity: 0; transform: scale(0.85) translateY(10px); clip-path: inset(0 0 100% 0); } 40% { opacity: 1; clip-path: inset(0 0 0 0); } 100% { opacity: 1; transform: scale(1) translateY(0); clip-path: inset(0 0 0 0); } }
+@keyframes hologramFlicker { 0%, 100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.6; } 94% { opacity: 1; } 96% { opacity: 0.75; } 97% { opacity: 1; } }
+@keyframes hologramSweep { 0% { top: -40%; } 100% { top: 100%; } }
 
-    /* ── HERO ── */
-    .hero {
-      margin-top: 60px;
-      min-height: 480px;
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      position: relative;
-      overflow: hidden;
-    }
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      background-image: url('bug-entrance.png');
-      background-size: cover;
-      background-position: center;
-      filter: blur(3px) brightness(0.25);
-      z-index: 0;
-    }
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(6,10,2,0.9) 0%, rgba(184,255,60,0.03) 100%);
-      z-index: 1;
-    }
-    .hero-left {
-      position: relative;
-      z-index: 2;
-      padding: 3rem 2.5rem 3rem 3rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-    .hero-eyebrow {
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--lime);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      opacity: 0.85;
-    }
-    .hero-name {
-      font-family: var(--font-display);
-      font-size: clamp(2.8rem, 6vw, 4.5rem);
-      font-weight: 900;
-      color: #fff;
-      line-height: 0.95;
-      text-shadow: var(--glow-strong);
-      margin-bottom: 0.5rem;
-    }
-    .hero-role {
-      font-family: var(--font-display);
-      font-size: clamp(0.75rem, 1.5vw, 0.95rem);
-      font-weight: 600;
-      color: var(--lime);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 1.5rem;
-    }
-    .hero-quote {
-      font-size: 1.05rem;
-      color: var(--text-dim);
-      line-height: 1.6;
-      max-width: 420px;
-      margin-bottom: 2rem;
-      font-style: italic;
-    }
-    .hero-quote span { color: var(--lime); font-style: normal; font-weight: 600; }
-    .hero-tiles { display: flex; gap: 0.6rem; flex-wrap: wrap; }
-    .hero-tile {
-      background: rgba(184, 255, 60, 0.06);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.5rem 1rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      cursor: pointer;
-      transition: all 0.2s;
-      text-decoration: none;
-      display: block;
-    }
-    .hero-tile:hover {
-      background: rgba(184, 255, 60, 0.14);
-      border-color: var(--lime);
-      color: var(--lime);
-      box-shadow: var(--glow);
-    }
-    .hero-right {
-      position: relative;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-    }
-    .hero-gif {
-      width: 100%;
-      max-width: 360px;
-      height: auto;
-      border-radius: 12px;
-      animation: glitch-float 3s ease-in-out infinite;
-      filter: drop-shadow(0 0 28px rgba(184,255,60,0.5));
-      object-fit: contain;
-    }
-    @keyframes glitch-float {
-      0%, 100% { transform: translateY(0px) skewX(0deg); }
-      45% { transform: translateY(-12px) skewX(0deg); }
-      50% { transform: translateY(-12px) skewX(-1deg); }
-      55% { transform: translateY(-12px) skewX(1deg); }
-      60% { transform: translateY(-10px) skewX(0deg); }
-    }
-
-    /* ── LESSON STRIP ── */
-    .lesson-strip {
-      position: sticky;
-      top: 60px;
-      z-index: 90;
-      background: rgba(6, 10, 2, 0.97);
-      border-bottom: 1px solid var(--border);
-      backdrop-filter: blur(10px);
-      display: flex;
-      overflow-x: auto;
-      scrollbar-width: none;
-    }
-    .lesson-strip::-webkit-scrollbar { display: none; }
-    .lesson-tab {
-      flex-shrink: 0;
-      padding: 0.9rem 1.6rem;
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      font-weight: 700;
-      letter-spacing: 0.08em;
-      color: var(--text-muted);
-      cursor: pointer;
-      border-bottom: 2px solid transparent;
-      transition: all 0.2s;
-      white-space: nowrap;
-      user-select: none;
-      background: none;
-      border-top: none;
-      border-left: none;
-      border-right: none;
-    }
-    .lesson-tab:hover { color: var(--lime); }
-    .lesson-tab.active {
-      color: var(--lime);
-      border-bottom-color: var(--lime);
-      text-shadow: 0 0 8px rgba(184,255,60,0.5);
-    }
-
-    /* ── LESSON PANELS ── */
-    .lesson-panel { display: none; }
-    .lesson-panel.open {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      min-height: 80vh;
-    }
-
-    /* ── SIDEBAR ── */
-    .lesson-sidebar {
-      background: var(--bg-panel);
-      border-right: 1px solid var(--border);
-      padding: 2rem 1.2rem;
-      position: sticky;
-      top: calc(60px + 42px);
-      height: calc(100vh - 102px);
-      overflow-y: auto;
-      scrollbar-width: thin;
-      scrollbar-color: var(--border) transparent;
-    }
-    .sidebar-label {
-      font-family: var(--font-mono);
-      font-size: 0.62rem;
-      color: var(--text-muted);
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      margin-bottom: 1rem;
-      padding-bottom: 0.5rem;
-      border-bottom: 1px solid var(--border);
-    }
-    .sidebar-nav-btn {
-      width: 100%;
-      background: none;
-      border: none;
-      text-align: left;
-      padding: 0.65rem 0.8rem;
-      margin-bottom: 0.2rem;
-      border-radius: 6px;
-      font-family: var(--font-body);
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      cursor: pointer;
-      transition: all 0.2s;
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
-    }
-    .sidebar-nav-btn:hover { background: rgba(184,255,60,0.07); color: var(--lime); }
-    .sidebar-nav-btn.active { background: rgba(184,255,60,0.11); color: var(--lime); font-weight: 600; }
-    .sidebar-icon { font-size: 0.9rem; }
-    .sidebar-divider { height: 1px; background: var(--border); margin: 1rem 0; }
-    .sidebar-game-link {
-      display: block;
-      margin-top: 1rem;
-      padding: 0.65rem 0.8rem;
-      background: rgba(184,255,60,0.05);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      color: var(--lime-dim);
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      transition: all 0.2s;
-      text-align: center;
-    }
-    .sidebar-game-link:hover { background: rgba(184,255,60,0.13); border-color: var(--lime); color: var(--lime); }
-
-    /* ── CONTENT ── */
-    .lesson-content { padding: 2.5rem 3rem; max-width: 900px; }
-    .content-block { display: none; }
-    .content-block.active { display: block; }
-
-    .section-header {
-      font-family: var(--font-display);
-      font-size: 1.4rem;
-      font-weight: 700;
-      color: #fff;
-      margin-bottom: 0.4rem;
-    }
-    .section-sub {
-      font-size: 0.88rem;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      font-family: var(--font-mono);
-      letter-spacing: 0.05em;
-    }
-
-    /* ── READ CARDS ── */
-    .read-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.8rem 2rem;
-      margin-bottom: 1.2rem;
-      position: relative;
-      overflow: hidden;
-    }
-    .read-card::before {
-      content: '';
-      position: absolute;
-      left: 0; top: 0; bottom: 0;
-      width: 3px;
-      background: linear-gradient(to bottom, var(--lime), var(--orange));
-    }
-    .read-card-num {
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      color: var(--lime);
-      letter-spacing: 0.2em;
-      margin-bottom: 0.6rem;
-      opacity: 0.7;
-    }
-    .read-card h3 {
-      font-family: var(--font-display);
-      font-size: 0.95rem;
-      color: #fff;
-      margin-bottom: 0.8rem;
-      font-weight: 700;
-    }
-    .read-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
-    .read-card p strong { color: var(--lime); font-weight: 600; }
-    .read-card code {
-      font-family: var(--font-mono);
-      font-size: 0.85rem;
-      background: rgba(184,255,60,0.1);
-      color: var(--lime);
-      padding: 0.15em 0.4em;
-      border-radius: 4px;
-    }
-
-    /* ── BUGGY CODE CARDS ── */
-    .buggy-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border-orange);
-      border-radius: 10px;
-      padding: 1.5rem;
-      margin-bottom: 1.2rem;
-      position: relative;
-    }
-    .buggy-card::before {
-      content: '! BUG DETECTED';
-      position: absolute;
-      top: -1px; right: 12px;
-      background: var(--orange);
-      color: #000;
-      font-family: var(--font-mono);
-      font-size: 0.6rem;
-      font-weight: 700;
-      padding: 0.2rem 0.6rem;
-      border-radius: 0 0 4px 4px;
-      letter-spacing: 0.1em;
-    }
-    .buggy-card h3 {
-      font-family: var(--font-display);
-      font-size: 0.88rem;
-      color: var(--orange);
-      margin-bottom: 0.8rem;
-      font-weight: 700;
-    }
-    .buggy-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 0.8rem; }
-
-    /* ── CODE BLOCK ── */
-    .code-block {
-      background: #020601;
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1.4rem;
-      margin: 1rem 0;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      line-height: 1.7;
-      color: #c8e6a0;
-      overflow-x: auto;
-    }
-    .code-block .kw { color: #b8ff3c; font-weight: 700; }
-    .code-block .str { color: #ffe066; }
-    .code-block .cm { color: #3a5a15; font-style: italic; }
-    .code-block .num { color: #ff9a9a; }
-    .code-block .fn { color: #80d840; }
-    .code-block .err { color: #ff6b1a; text-decoration: underline wavy; }
-    .code-block .fix { color: #b8ff3c; font-weight: 700; }
-
-    /* ── TERMS ── */
-    .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-    .term-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 8px;
-      padding: 1rem 1.2rem;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .term-card:hover { border-color: var(--lime); }
-    .term-card.open { border-color: var(--lime); }
-    .term-name {
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--lime);
-      font-weight: 700;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .term-arrow { transition: transform 0.2s; color: var(--text-muted); }
-    .term-card.open .term-arrow { transform: rotate(90deg); }
-    .term-def {
-      display: none;
-      font-size: 0.85rem;
-      color: var(--text-dim);
-      line-height: 1.6;
-      margin-top: 0.6rem;
-      padding-top: 0.6rem;
-      border-top: 1px solid var(--border);
-    }
-    .term-card.open .term-def { display: block; }
-
-    /* ── DEBUG CHALLENGE (interactive) ── */
-    .debug-challenge {
-      background: var(--bg-card);
-      border: 1px solid var(--border-orange);
-      border-radius: 10px;
-      overflow: hidden;
-      margin-bottom: 1.2rem;
-    }
-    .debug-header {
-      background: rgba(255,107,26,0.1);
-      border-bottom: 1px solid var(--border-orange);
-      padding: 0.8rem 1.2rem;
-      font-family: var(--font-mono);
-      font-size: 0.7rem;
-      color: var(--orange);
-      letter-spacing: 0.12em;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .debug-run-btn {
-      background: var(--lime);
-      color: var(--bg);
-      border: none;
-      padding: 0.25rem 0.8rem;
-      border-radius: 4px;
-      font-family: var(--font-mono);
-      font-size: 0.65rem;
-      font-weight: 700;
-      cursor: pointer;
-      letter-spacing: 0.1em;
-      transition: opacity 0.2s;
-    }
-    .debug-run-btn:hover { opacity: 0.85; }
-    .debug-editor {
-      width: 100%;
-      min-height: 160px;
-      background: #020601;
-      border: none;
-      padding: 1rem 1.2rem;
-      font-family: var(--font-mono);
-      font-size: 0.82rem;
-      color: #c8e6a0;
-      resize: vertical;
-      outline: none;
-      line-height: 1.7;
-    }
-    .debug-output {
-      background: #020601;
-      border-top: 1px solid var(--border);
-      padding: 0.8rem 1.2rem;
-      font-family: var(--font-mono);
-      font-size: 0.8rem;
-      color: var(--lime);
-      min-height: 60px;
-      white-space: pre-wrap;
-    }
-
-    /* ── QUIZ ── */
-    .quiz-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    .quiz-q { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; }
-    .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
-    .quiz-opt {
-      background: rgba(184,255,60,0.03);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.7rem 1rem;
-      font-size: 0.88rem;
-      color: var(--text-dim);
-      cursor: pointer;
-      transition: all 0.2s;
-      text-align: left;
-      font-family: var(--font-body);
-    }
-    .quiz-opt:hover { border-color: var(--lime); color: var(--lime); }
-    .quiz-opt.correct { border-color: #b8ff3c; background: rgba(184,255,60,0.1); color: #b8ff3c; }
-    .quiz-opt.wrong { border-color: #ff6b1a; background: rgba(255,107,26,0.08); color: #ff6b1a; animation: shake 0.3s ease; }
-    @keyframes shake {
-      0%,100% { transform: translateX(0); }
-      25% { transform: translateX(-6px); }
-      75% { transform: translateX(6px); }
-    }
-    .quiz-feedback { font-size: 0.82rem; margin-top: 0.6rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; }
-    .quiz-feedback.show { display: block; }
-    .quiz-feedback.correct { background: rgba(184,255,60,0.08); color: #b8ff3c; border: 1px solid rgba(184,255,60,0.2); }
-    .quiz-feedback.wrong { background: rgba(255,107,26,0.07); color: #ff9a9a; border: 1px solid rgba(255,107,26,0.2); }
-
-    /* ── REFLECT ── */
-    .reflect-prompt {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-    }
-    .reflect-q { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.8rem; line-height: 1.5; }
-    .reflect-input {
-      width: 100%;
-      background: rgba(184,255,60,0.03);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 0.8rem 1rem;
-      font-family: var(--font-body);
-      font-size: 0.88rem;
-      color: var(--text);
-      resize: vertical;
-      min-height: 80px;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-    .reflect-input:focus { border-color: var(--lime); }
-    .reflect-save-btn {
-      margin-top: 0.5rem;
-      background: none;
-      border: 1px solid var(--border);
-      color: var(--text-muted);
-      font-family: var(--font-mono);
-      font-size: 0.68rem;
-      padding: 0.35rem 0.8rem;
-      border-radius: 4px;
-      cursor: pointer;
-      transition: all 0.2s;
-      letter-spacing: 0.08em;
-    }
-    .reflect-save-btn:hover { border-color: var(--lime); color: var(--lime); }
-    .reflect-saved { font-family: var(--font-mono); font-size: 0.68rem; color: var(--lime); margin-top: 0.4rem; display: none; }
-
-    /* ── CHEAT SHEET ── */
-    .cheat-card {
-      background: var(--bg-card);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 1.5rem 1.8rem;
-      margin-bottom: 1rem;
-    }
-    .cheat-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--lime); margin-bottom: 1rem; font-weight: 700; }
-    .cheat-items { display: flex; flex-direction: column; gap: 0.7rem; }
-    .cheat-item {
-      display: flex;
-      gap: 1rem;
-      align-items: flex-start;
-      padding-bottom: 0.7rem;
-      border-bottom: 1px solid rgba(184,255,60,0.06);
-    }
-    .cheat-item:last-child { border-bottom: none; padding-bottom: 0; }
-    .cheat-term { font-family: var(--font-mono); font-size: 0.78rem; color: var(--lime); min-width: 140px; font-weight: 700; }
-    .cheat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
-    .cheat-download-btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      margin-top: 1.2rem;
-      background: rgba(184,255,60,0.07);
-      border: 1px solid var(--border-bright);
-      color: var(--lime);
-      font-family: var(--font-mono);
-      font-size: 0.72rem;
-      padding: 0.6rem 1.2rem;
-      border-radius: 6px;
-      cursor: pointer;
-      text-decoration: none;
-      transition: all 0.2s;
-      letter-spacing: 0.08em;
-    }
-    .cheat-download-btn:hover { background: rgba(184,255,60,0.16); box-shadow: var(--glow); }
-
-    /* ── GATE ── */
-    .locked-panel { padding: 4rem 3rem; text-align: center; }
-    .locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.45; }
-    .locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; }
-    .locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .gate-btn {
-      display: inline-block;
-      background: var(--lime);
-      color: var(--bg);
-      font-family: var(--font-display);
-      font-size: 0.78rem;
-      font-weight: 700;
-      padding: 0.8rem 2rem;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      text-decoration: none;
-      letter-spacing: 0.08em;
-      transition: opacity 0.2s;
-    }
-    .gate-btn:hover { opacity: 0.85; }
-
-    /* ── LESSON COMPLETE ── */
-    .lesson-complete {
-      background: linear-gradient(135deg, rgba(184,255,60,0.07), rgba(255,107,26,0.04));
-      border: 1px solid var(--border-bright);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: center;
-      margin-top: 2rem;
-    }
-    .lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--lime); margin-bottom: 0.5rem; }
-    .lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
-
-    /* ── DISCOVERY OVERLAY ── */
-    .discovery-overlay {
-      position: fixed;
-      inset: 0;
-      z-index: 200;
-      background: rgba(6, 10, 2, 0.97);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
-      text-align: center;
-      padding: 2rem;
-    }
-    .discovery-overlay.hidden { display: none; }
-    .bug-mark {
-      font-family: var(--font-mono);
-      font-size: 1.8rem;
-      color: var(--orange);
-      margin-bottom: 1rem;
-      text-shadow: var(--glow-orange);
-      animation: flicker 1.5s step-end infinite;
-    }
-    @keyframes flicker {
-      0%,100% { opacity: 1; }
-      50% { opacity: 0.6; }
-      75% { opacity: 0.9; }
-      85% { opacity: 0.4; }
-    }
-    .discovery-title {
-      font-family: var(--font-display);
-      font-size: clamp(1.5rem, 4vw, 2.5rem);
-      font-weight: 900;
-      color: var(--lime);
-      text-shadow: var(--glow-strong);
-      margin-bottom: 0.8rem;
-    }
-    .discovery-sub {
-      font-size: 1rem;
-      color: var(--text-dim);
-      max-width: 460px;
-      line-height: 1.6;
-      margin-bottom: 2rem;
-    }
-    .discovery-enter-btn {
-      background: var(--lime);
-      color: var(--bg);
-      font-family: var(--font-display);
-      font-size: 0.85rem;
-      font-weight: 700;
-      padding: 1rem 2.5rem;
-      border-radius: 8px;
-      border: none;
-      cursor: pointer;
-      letter-spacing: 0.1em;
-      transition: all 0.2s;
-      box-shadow: var(--glow-strong);
-    }
-    .discovery-enter-btn:hover { transform: scale(1.03); }
-
-    /* ── MOBILE ── */
-    @media (max-width: 768px) {
-      .hero { grid-template-columns: 1fr; }
-      .hero-right { display: none; }
-      .lesson-panel.open { grid-template-columns: 1fr; }
-      .lesson-sidebar { display: none; }
-      .lesson-content { padding: 1.5rem; }
-      .terms-grid { grid-template-columns: 1fr; }
-    }
-  </style>
+.lesson-strip { position: sticky; top: 60px; z-index: 90; background: rgba(6,10,2,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; overflow-x: auto; scrollbar-width: none; }
+.lesson-strip::-webkit-scrollbar { display: none; }
+.lesson-tab { flex-shrink: 0; padding: 0.9rem 1.6rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; background: none; border-top: none; border-left: none; border-right: none; }
+.lesson-tab:hover { color: var(--lime); text-shadow: 0 0 8px rgba(184,255,60,0.5); transform: translateY(-1px); }
+.lesson-tab.active { color: var(--lime); border-bottom-color: var(--lime); text-shadow: 0 0 8px rgba(184,255,60,0.5); }
+.lesson-panel { display: none; }
+.lesson-panel.open { display: grid; grid-template-columns: 220px 1fr; min-height: 80vh; }
+.lesson-sidebar { background: var(--bg-panel); border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: sticky; top: calc(60px + 42px); height: calc(100vh - 102px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.sidebar-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.sidebar-nav-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.65rem 0.8rem; margin-bottom: 0.2rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+.sidebar-nav-btn:hover { background: rgba(184,255,60,0.07); color: var(--lime); transform: translateX(3px); }
+.sidebar-nav-btn.active { background: rgba(184,255,60,0.11); color: var(--lime); font-weight: 600; }
+.sidebar-icon { font-size: 0.9rem; }
+.sidebar-divider { height: 1px; background: var(--border); margin: 1rem 0; }
+.sidebar-game-link { display: block; margin-top: 1rem; padding: 0.65rem 0.8rem; background: rgba(184,255,60,0.05); border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--lime-dim); text-decoration: none; letter-spacing: 0.08em; transition: all 0.2s; text-align: center; }
+.sidebar-game-link:hover { background: rgba(184,255,60,0.13); border-color: var(--lime); color: var(--lime); }
+.lesson-content { padding: 2.5rem 3rem; max-width: 900px; }
+.content-block { display: none; }
+.content-block.active { display: block; }
+.section-header { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+.section-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; font-family: var(--font-mono); letter-spacing: 0.05em; }
+.read-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem 2rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
+.read-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--lime), var(--orange)); }
+.read-card-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--lime); letter-spacing: 0.2em; margin-bottom: 0.6rem; opacity: 0.7; }
+.read-card h3 { font-family: var(--font-display); font-size: 0.95rem; color: #fff; margin-bottom: 0.8rem; font-weight: 700; }
+.read-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
+.read-card p strong { color: var(--lime); font-weight: 600; }
+.read-card code { font-family: var(--font-mono); font-size: 0.85rem; background: rgba(184,255,60,0.1); color: var(--lime); padding: 0.15em 0.4em; border-radius: 4px; }
+.code-block { background: #020601; border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.7; color: #c8e6a0; overflow-x: auto; }
+.code-block .kw { color: #b8ff3c; font-weight: 700; } .code-block .str { color: #ffe066; } .code-block .cm { color: #3a5a15; font-style: italic; } .code-block .num { color: #ff9a9a; } .code-block .fn { color: #80d840; }
+.terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
+.term-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; }
+.term-card:hover { border-color: var(--lime); }
+.term-card.open { border-color: var(--lime); }
+.term-name { font-family: var(--font-mono); font-size: 0.8rem; color: var(--lime); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+.term-arrow { transition: transform 0.2s; color: var(--text-muted); }
+.term-card.open .term-arrow { transform: rotate(90deg); }
+.term-def { display: none; font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
+.term-card.open .term-def { display: block; }
+.buggy-card { background: var(--bg-card); border: 1px solid var(--border-orange); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.2rem; position: relative; }
+.buggy-card::before { content: '! BUG DETECTED'; position: absolute; top: -1px; right: 12px; background: var(--orange); color: #000; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 0 0 4px 4px; letter-spacing: 0.1em; }
+.buggy-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--orange); margin-bottom: 0.8rem; font-weight: 700; }
+.buggy-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 0.8rem; }
+.debug-challenge { background: var(--bg-card); border: 1px solid var(--border-orange); border-radius: 10px; overflow: hidden; margin-bottom: 1.2rem; }
+.debug-header { background: rgba(255,107,26,0.1); border-bottom: 1px solid var(--border-orange); padding: 0.8rem 1.2rem; font-family: var(--font-mono); font-size: 0.7rem; color: var(--orange); letter-spacing: 0.12em; display: flex; justify-content: space-between; align-items: center; }
+.debug-run-btn { background: var(--lime); color: var(--bg); border: none; padding: 0.25rem 0.8rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; cursor: pointer; letter-spacing: 0.1em; transition: opacity 0.2s; }
+.debug-run-btn:hover { opacity: 0.85; }
+.debug-editor { width: 100%; min-height: 160px; background: #020601; border: none; padding: 1rem 1.2rem; font-family: var(--font-mono); font-size: 0.82rem; color: #c8e6a0; resize: vertical; outline: none; line-height: 1.7; }
+.debug-output { background: #020601; border-top: 1px solid var(--border); padding: 0.8rem 1.2rem; font-family: var(--font-mono); font-size: 0.8rem; color: var(--lime); min-height: 60px; white-space: pre-wrap; }
+.quiz-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+.quiz-q { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; }
+.quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.quiz-opt { background: rgba(184,255,60,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; font-size: 0.88rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-align: left; font-family: var(--font-body); }
+.quiz-opt:hover { border-color: var(--lime); color: var(--lime); }
+.quiz-opt.correct { border-color: #b8ff3c; background: rgba(184,255,60,0.1); color: #b8ff3c; }
+.quiz-opt.wrong { border-color: #ff6b1a; background: rgba(255,107,26,0.08); color: #ff6b1a; animation: shake 0.3s ease; }
+.quiz-feedback { font-size: 0.82rem; margin-top: 0.6rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; }
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: rgba(184,255,60,0.08); color: #b8ff3c; border: 1px solid rgba(184,255,60,0.2); }
+.quiz-feedback.wrong { background: rgba(255,107,26,0.07); color: #ff9a9a; border: 1px solid rgba(255,107,26,0.2); }
+.reflect-prompt { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+.reflect-q { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.8rem; line-height: 1.5; }
+.reflect-input { width: 100%; background: rgba(184,255,60,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--text); resize: vertical; min-height: 80px; outline: none; transition: border-color 0.2s; }
+.reflect-input:focus { border-color: var(--lime); }
+.reflect-save-btn { margin-top: 0.5rem; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.35rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; }
+.reflect-save-btn:hover { border-color: var(--lime); color: var(--lime); }
+.reflect-saved { font-family: var(--font-mono); font-size: 0.68rem; color: var(--lime); margin-top: 0.4rem; display: none; }
+.cheat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.8rem; margin-bottom: 1rem; }
+.cheat-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--lime); margin-bottom: 1rem; font-weight: 700; }
+.cheat-items { display: flex; flex-direction: column; gap: 0.7rem; }
+.cheat-item { display: flex; gap: 1rem; align-items: flex-start; padding-bottom: 0.7rem; border-bottom: 1px solid rgba(184,255,60,0.06); }
+.cheat-item:last-child { border-bottom: none; padding-bottom: 0; }
+.cheat-term { font-family: var(--font-mono); font-size: 0.78rem; color: var(--lime); min-width: 140px; font-weight: 700; }
+.cheat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
+.cheat-btn-row { display: flex; gap: 0.7rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.cheat-download-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(184,255,60,0.07); border: 1px solid var(--border-bright); color: var(--lime); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.08em; }
+.cheat-download-btn:hover { background: rgba(184,255,60,0.16); box-shadow: var(--glow); }
+.cheat-download-btn.secondary { background: none; border-color: var(--border); color: var(--text-muted); font-size: 0.65rem; }
+.cheat-download-btn.secondary:hover { color: var(--text-dim); border-color: var(--border-bright); }
+.locked-panel { padding: 4rem 3rem; text-align: center; }
+.locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.45; }
+.locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; }
+.locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+.gate-btn { display: inline-block; background: var(--lime); color: var(--bg); font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; padding: 0.8rem 2rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; letter-spacing: 0.08em; transition: opacity 0.2s; }
+.gate-btn:hover { opacity: 0.85; }
+.lesson-complete { background: linear-gradient(135deg, rgba(184,255,60,0.07), rgba(255,107,26,0.04)); border: 1px solid var(--border-bright); border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; display: none; }
+.lesson-complete.show { display: block; }
+.lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--lime); margin-bottom: 0.5rem; }
+.lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
+.lesson-joke { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--orange); font-style: italic; }
+.discovery-overlay { position: fixed; inset: 0; z-index: 200; background: #060a02; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; }
+.discovery-overlay.hidden { display: none; }
+.bug-mark { font-family: var(--font-mono); font-size: 1.8rem; color: var(--orange); margin-bottom: 1rem; text-shadow: 0 0 18px rgba(255,107,26,0.4); animation: flicker 1.5s step-end infinite; }
+@keyframes flicker { 0%,100% { opacity: 1; } 50% { opacity: 0.6; } 75% { opacity: 0.9; } 85% { opacity: 0.4; } }
+.discovery-title { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; color: var(--lime); text-shadow: var(--glow-strong); margin-bottom: 0.8rem; }
+.discovery-sub { font-size: 1rem; color: var(--text-dim); max-width: 460px; line-height: 1.6; margin-bottom: 2rem; }
+.discovery-enter-btn { background: var(--lime); color: var(--bg); font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 1rem 2.5rem; border-radius: 8px; border: none; cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s; box-shadow: var(--glow-strong); }
+.discovery-enter-btn:hover { transform: scale(1.03); }
+.bug-companion { position: fixed; bottom: 24px; right: 24px; z-index: 150; width: 80px; height: 80px; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
+.bug-companion.visible { opacity: 1; pointer-events: auto; }
+.bug-companion img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 16px rgba(184,255,60,0.5)); animation: companionFloat 3s ease-in-out infinite; cursor: pointer; }
+@keyframes companionFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.sound-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: rgba(15,26,5,0.9); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; opacity: 0; pointer-events: none; }
+.sound-toggle.visible { opacity: 1; pointer-events: auto; }
+.sound-toggle:hover { box-shadow: var(--glow); border-color: var(--lime); }
+.sound-toggle.muted { opacity: 0.5; }
+.egg-popup { position: fixed; bottom: 100px; right: 24px; z-index: 250; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 1.2rem 1.4rem; max-width: 260px; box-shadow: var(--glow-strong); display: none; }
+.egg-popup.show { display: block; animation: eggPop 0.4s ease; }
+@keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+.egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--lime); margin-bottom: 0.5rem; }
+.egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
+@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .hero-tiles { flex-wrap: wrap; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .fact-ticker { display: none; } }
+</style>
 </head>
 <body>
-
-<!-- DISCOVERY OVERLAY -->
 <div class="discovery-overlay" id="discoveryOverlay">
-  <div class="bug-mark">⚠ ERROR ⚠</div>
-  <div class="discovery-title">Bug's Debug Lab</div>
-  <div class="discovery-sub">Every bug is just a clue.<br>Find it. Understand it. Crush it.</div>
-  <button class="discovery-enter-btn" onclick="enterLab()">Enter the Lab</button>
+<div class="bug-mark">⚠ ERROR ⚠</div>
+<div class="discovery-title" id="discoveryTitle">Bug's Debug Garage</div>
+<div class="discovery-sub" id="discoverySub">Every bug is just a clue.<br>Find it. Understand it. Crush it.</div>
+<button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterGarage()">Enter the Garage</button>
+<div class="hologram-stage" id="hologramStage">
+  <div class="hologram-frame">
+    <img class="hologram-video" id="entranceVideo" src="bug-entrance.gif" alt="Bug materializing">
+    <div class="hologram-scanlines"></div>
+    <div class="hologram-scan-sweep"></div>
+  </div>
+  <div class="hologram-caption">⚠ SIGNAL GLITCHING IN...</div>
 </div>
-
-<!-- NAV -->
+</div>
 <nav>
-  <a href="index.html" class="nav-logo">MiM</a>
-  <ul class="nav-links">
-    <li><a href="games.html">Games</a></li>
-    <li><a href="pdfs.html">PDFs</a></li>
-    <li><a href="dashboard.html">Dashboard</a></li>
-    <li><a href="index.html#membership">Membership</a></li>
-  </ul>
-  <span class="nav-user" id="navUser"></span>
-  <button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
+<a href="index.html" class="nav-logo">MiM</a>
+<ul class="nav-links">
+<li><a href="games.html">Games</a></li>
+<li><a href="pdfs.html">PDFs</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="index.html#membership">Membership</a></li>
+</ul>
+<span class="nav-user" id="navUser"></span>
+<button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
 </nav>
-
-<!-- HERO -->
-<section class="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-overlay"></div>
-  <div class="hero-left">
-    <div class="hero-eyebrow">⚠ &nbsp; Debug Gremlin &nbsp; · &nbsp; JS Logic</div>
-    <div class="hero-name">Bug</div>
-    <div class="hero-role">The Debug Gremlin</div>
-    <div class="hero-quote">"<span>Every bug is just a clue.</span> The code is trying to tell you something -- you just have to learn how to listen."</div>
-    <div class="hero-tiles">
-      <a class="hero-tile" onclick="jumpToLesson(1)">01 What Is a Bug?</a>
-      <a class="hero-tile" onclick="jumpToLesson(2)">02 Reading Errors</a>
-      <a class="hero-tile" onclick="jumpToLesson(3)">03 Logic Tracing</a>
-      <a class="hero-tile" onclick="jumpToLesson(4)">04 Debug Challenge</a>
-    </div>
-  </div>
-  <div class="hero-right">
-    <img src="bug-motion.gif" alt="Bug" class="hero-gif" onerror="this.style.opacity='0.3'" />
-  </div>
+<section class="hero" id="bugHero">
+<video class="hero-video" autoplay muted loop playsinline poster="bug-entrance.png">
+  <source src="bug-hero.mp4" type="video/mp4">
+</video>
+<div class="hero-gradient"></div>
+<div class="hero-pulse"></div>
+<div class="particle-field" id="particleField"></div>
+<img class="hero-bug-gif" src="bug-idle.gif" alt="Bug" onerror="this.style.display='none'" onclick="companionClick()">
+<div class="hero-content">
+<div class="hero-eyebrow">⚠ &nbsp; Debug Gremlin &nbsp; · &nbsp; JS Logic</div>
+<div class="hero-name">Bug</div>
+<div class="hero-catchphrase">Every bug is just a clue.</div>
+<div class="hero-role">The Debug Gremlin</div>
+<div class="hero-quote">"<span>Most people panic when they see an error.</span> The code is trying to tell you something — you just have to learn how to listen."</div>
+<div class="fact-ticker" id="factTicker"></div>
+<div class="hero-tiles">
+<div class="hero-lesson-grid">
+<a class="hero-tile" onclick="jumpToLesson(1)">01 What Is a Bug?</a>
+<a class="hero-tile" onclick="jumpToLesson(2)">02 Reading Errors</a>
+<a class="hero-tile" onclick="jumpToLesson(3)">03 Logic Tracing</a>
+<a class="hero-tile" onclick="jumpToLesson(4)">04 Debug Challenge</a>
+</div>
+<button class="hero-game-tile" onclick="ibToggleWrapper()" aria-label="Open the Spot the Difference icebreaker game">
+<span class="hero-game-icon">⚠</span>
+<span>SPOT THE<br>DIFFERENCE</span>
+<span class="hero-game-cta">Boot →</span>
+</button>
+</div>
+</div>
 </section>
 
-<!-- LESSON STRIP -->
-<div class="lesson-strip">
-  <button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — What Is a Bug?</button>
-  <button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Reading Errors</button>
-  <button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Logic Tracing</button>
-  <button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Debug Challenge</button>
+<div class="icebreaker-wrapper" id="icebreakerWrapper">
+<section class="icebreaker" id="icebreaker">
+  <div class="ib-header">
+    <div class="ib-eyebrow">⚠ &nbsp; ICEBREAKER &nbsp; · &nbsp; SPOT THE DIFFERENCE</div>
+    <h2 class="ib-title">Train Your Bug Eye</h2>
+    <p class="ib-sub">These two snippets look identical — but one tiny difference is hiding in there. Find it. That's exactly what real debugging feels like.</p>
+  </div>
+
+  <div class="ib-phase" id="ib-intro">
+    <div class="ib-terms-grid" id="ibTermsGrid"></div>
+    <button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">Start Spotting ⚠</button>
+  </div>
+
+  <div class="ib-phase" id="ib-game" style="display:none;">
+    <div class="ib-diff-stage" id="ibDiffStage"></div>
+    <button class="ib-skip-btn" onclick="ibSkipGame()">Skip this part →</button>
+  </div>
+
+  <div class="ib-phase" id="ib-complete" style="display:none;">
+    <div class="ib-complete-card">
+      <img src="bug-victory.png" alt="Bug celebrating" onerror="this.style.display='none'">
+      <h3>⚠ Sharp Eyes, Detective</h3>
+      <p>You found every difference. That's the exact skill real debugging runs on — noticing the one thing that changed.</p>
+      <button class="ib-replay-btn" onclick="ibReset()">Play Again</button>
+      <button class="ib-replay-btn" onclick="ibToggleWrapper()" style="margin-left:0.6rem;">Close</button>
+    </div>
+  </div>
+</section>
 </div>
 
+<div class="lesson-strip">
+<button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — What Is a Bug?</button>
+<button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Reading Errors</button>
+<button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Logic Tracing</button>
+<button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Debug Challenge</button>
+<button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">⚠ Cheat Sheet</button>
+</div>
 <!-- ===================== LESSON 1 ===================== -->
 <div class="lesson-panel" id="lesson-1">
-  <aside class="lesson-sidebar">
-    <div class="sidebar-label">Lesson 01</div>
-    <button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(1,'cheat')" id="sb-1-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
-    <div class="sidebar-divider"></div>
-    <a href="bug-game.html" class="sidebar-game-link">⚠ Bug's Game World</a>
-  </aside>
-  <div class="lesson-content">
-
-    <!-- READ -->
-    <div class="content-block active" id="block-1-read">
-      <div class="section-header">What Is a Bug?</div>
-      <div class="section-sub">LESSON 01 · FREE</div>
-
-      <div class="read-card">
-        <div class="read-card-num">01 / 05</div>
-        <h3>Bugs Are Normal</h3>
-        <p>Every programmer -- from beginners to professionals -- writes code with bugs. A <strong>bug</strong> is anything in your code that makes it behave differently than you intended. The goal isn't to write perfect code the first time. The goal is to <strong>find and fix bugs fast</strong>.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">02 / 05</div>
-        <h3>The Word "Bug" Is 80 Years Old</h3>
-        <p>In 1947, engineer Grace Hopper found an actual moth stuck in a computer relay, causing it to malfunction. The team taped the moth into their log and wrote "First actual case of bug being found." The word stuck. Today, bugs are everywhere -- but they're always solvable.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">03 / 05</div>
-        <h3>Three Types of Bugs</h3>
-        <p>Not all bugs look the same. There are three main types to know:</p>
-        <p style="margin-top:0.8rem;"><strong>Syntax errors</strong> -- the code is written incorrectly. Missing a bracket, misspelling a keyword. The browser can't even run it.</p>
-        <p style="margin-top:0.6rem;"><strong>Runtime errors</strong> -- the code starts running but crashes midway. Calling a function that doesn't exist. Using a variable before it's defined.</p>
-        <p style="margin-top:0.6rem;"><strong>Logic errors</strong> -- the code runs fine but produces the wrong result. The hardest type to find because nothing crashes -- it just does the wrong thing.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">04 / 05</div>
-        <h3>Debugging Is a Skill</h3>
-        <p>Debugging is not random guessing. It's a <strong>systematic process</strong>: understand what should happen, observe what actually happens, form a hypothesis about why, test it, fix it, and verify the fix. Good debuggers are calm, curious, and methodical.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">05 / 05</div>
-        <h3>The Console Is Your Best Friend</h3>
-        <p><code>console.log()</code> is the most basic debugging tool. Print the value of variables at different points in your code to see what's actually happening versus what you think is happening. When in doubt, log it out.</p>
-        <div class="code-block"><span class="kw">let</span> total = <span class="num">0</span>;
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 01</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider"></div>
+<a href="bug-game.html" class="sidebar-game-link">⚠ Bug's Game World</a>
+</aside>
+<div class="lesson-content">
+<div class="content-block active" id="block-1-read">
+<div class="section-header">What Is a Bug?</div>
+<div class="section-sub">LESSON 01 · FREE</div>
+<div class="read-card"><div class="read-card-num">01 / 05</div><h3>Bugs Are Normal</h3><p>Every programmer — from beginners to professionals — writes code with bugs. A <strong>bug</strong> is anything in your code that makes it behave differently than you intended. The goal is to <strong>find and fix bugs fast</strong>.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 05</div><h3>The Word "Bug" Is 80 Years Old</h3><p>In 1947, engineer Grace Hopper found an actual moth stuck in a computer relay, causing it to malfunction. The word stuck. Today, bugs are everywhere — but they're always solvable.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 05</div><h3>Three Types of Bugs</h3><p><strong>Syntax errors</strong> — the code is written incorrectly. <strong>Runtime errors</strong> — the code starts running but crashes midway. <strong>Logic errors</strong> — the code runs fine but produces the wrong result.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 05</div><h3>Debugging Is a Skill</h3><p>Debugging is a <strong>systematic process</strong>: understand what should happen, observe what actually happens, form a hypothesis, test it, fix it, verify.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 05</div><h3>The Console Is Your Best Friend</h3><p><code>console.log()</code> is the most basic debugging tool. When in doubt, log it out.</p>
+<div class="code-block"><span class="kw">let</span> total = <span class="num">0</span>;
 <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
-  total += i;
-  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"i ="</span>, i, <span class="str">"total ="</span>, total);
-}
-<span class="cm">// See what's happening at every step</span></div>
-      </div>
-    </div>
-
-    <!-- TERMS -->
-    <div class="content-block" id="block-1-terms">
-      <div class="section-header">Key Terms</div>
-      <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
-      <div class="terms-grid">
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Bug <span class="term-arrow">›</span></div>
-          <div class="term-def">An error or flaw in code that makes it behave differently than intended. All programmers encounter bugs -- the skill is finding and fixing them.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Debugging <span class="term-arrow">›</span></div>
-          <div class="term-def">The systematic process of finding and fixing bugs. Not guessing -- observing, hypothesizing, testing, and confirming.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Syntax error <span class="term-arrow">›</span></div>
-          <div class="term-def">A mistake in how the code is written -- missing brackets, misspelled keywords. The code can't run at all until it's fixed.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Runtime error <span class="term-arrow">›</span></div>
-          <div class="term-def">An error that happens while the code is running. The code started fine but crashed. Often caused by calling undefined functions or accessing null values.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Logic error <span class="term-arrow">›</span></div>
-          <div class="term-def">The code runs without crashing but produces the wrong result. The hardest type to find -- nothing breaks, it just does the wrong thing.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">console.log() <span class="term-arrow">›</span></div>
-          <div class="term-def">Prints a value to the browser console. The most basic and widely used debugging tool in JavaScript.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BUILD -->
-    <div class="content-block" id="block-1-build">
-      <div class="section-header">Build It</div>
-      <div class="section-sub">LESSON 01 · SPOT THE BUG TYPE</div>
-
-      <div class="buggy-card">
-        <h3>Bug #1 -- What type is this?</h3>
-        <p>This code runs but prints the wrong answer. The loop should add 1+2+3+4+5 = 15. What type of bug is this, and what's wrong?</p>
-        <div class="debug-challenge">
-          <div class="debug-header">
-            <span>DEBUG CHALLENGE · BUG #1</span>
-            <button class="debug-run-btn" onclick="runDebug('d1')">▶ RUN</button>
-          </div>
-          <textarea class="debug-editor" id="debug-d1">let total = 0;
+&nbsp;&nbsp;total += i;
+&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"i ="</span>, i, <span class="str">"total ="</span>, total);
+}</div></div>
+</div>
+<div class="content-block" id="block-1-terms">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Bug <span class="term-arrow">›</span></div><div class="term-def">An error or flaw in code that makes it behave differently than intended.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Debugging <span class="term-arrow">›</span></div><div class="term-def">The systematic process of finding and fixing bugs.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Syntax error <span class="term-arrow">›</span></div><div class="term-def">A mistake in how the code is written. The code can't run at all until it's fixed.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Runtime error <span class="term-arrow">›</span></div><div class="term-def">An error that happens while the code is running.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Logic error <span class="term-arrow">›</span></div><div class="term-def">The code runs without crashing but produces the wrong result.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">console.log() <span class="term-arrow">›</span></div><div class="term-def">Prints a value to the browser console — the most basic debugging tool.</div></div>
+</div>
+</div>
+<div class="content-block" id="block-1-build">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 01 · SPOT THE BUG TYPE</div>
+<div class="buggy-card"><h3>Bug #1 — What type is this?</h3><p>This code runs but prints the wrong answer. What type of bug is this?</p>
+<div class="debug-challenge">
+<div class="debug-header"><span>DEBUG CHALLENGE · BUG #1</span><button class="debug-run-btn" onclick="runDebug('d1')">▶ RUN</button></div>
+<textarea class="debug-editor" id="debug-d1">let total = 0;
 for (let i = 0; i <= 5; i++) {
   total += i;
 }
 console.log("Total:", total);
-// Should be 15 -- why is it 15 vs what you expect?
+// Should be 15 -- why is it different?
 // Hint: what does i start at? What does <= include?</textarea>
-          <div class="debug-output" id="debug-out-d1">Output will appear here...</div>
-        </div>
-      </div>
-
-      <div class="buggy-card">
-        <h3>Bug #2 -- Fix the syntax</h3>
-        <p>This code has a syntax error. Find and fix it so it runs.</p>
-        <div class="debug-challenge">
-          <div class="debug-header">
-            <span>DEBUG CHALLENGE · BUG #2</span>
-            <button class="debug-run-btn" onclick="runDebug('d2')">▶ RUN</button>
-          </div>
-          <textarea class="debug-editor" id="debug-d2">let name = "Bug"
+<div class="debug-output" id="debug-out-d1">Output will appear here...</div>
+</div></div>
+<div class="buggy-card"><h3>Bug #2 — Fix the syntax</h3><p>This code has a syntax error. Find and fix it so it runs.</p>
+<div class="debug-challenge">
+<div class="debug-header"><span>DEBUG CHALLENGE · BUG #2</span><button class="debug-run-btn" onclick="runDebug('d2')">▶ RUN</button></div>
+<textarea class="debug-editor" id="debug-d2">let name = "Bug"
 let greeting = "Hello, " + name
 console.log(greeting
 // Fix the syntax error above</textarea>
-          <div class="debug-output" id="debug-out-d2">Output will appear here...</div>
-        </div>
-      </div>
-
-      <div class="quiz-card">
-        <div class="quiz-q">Code runs without crashing but prints the wrong number. What type of bug is this?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A syntax error prevents the code from running at all -- this code ran fine.')">Syntax error</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A runtime error causes a crash while running -- this code didn\'t crash.')">Runtime error</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. A logic error means the code runs but produces the wrong result. Nothing crashes -- it just does the wrong thing.')">Logic error</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-0"></div>
-      </div>
-
-      <div class="quiz-card">
-        <div class="quiz-q">What does <code>console.log()</code> help you do when debugging?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Exactly. console.log lets you print variable values at any point so you can see what\'s actually happening in your code versus what you expect.')">See what values your variables actually hold at different points</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'console.log doesn\'t fix bugs -- it helps you find them by showing you what\'s happening.')">Automatically fix bugs</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'console.log doesn\'t stop the code -- it just prints information while the code runs.')">Stop the code from running</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-1"></div>
-      </div>
-    </div>
-
-    <!-- REFLECT -->
-    <div class="content-block" id="block-1-reflect">
-      <div class="section-header">Reflect</div>
-      <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">Think of a time something didn't work the way you expected -- in code or in real life. How did you figure out what went wrong? Was it systematic or random guessing?</div>
-        <textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
-          <span class="reflect-saved" id="saved-1-1">✓ Saved</span>
-        </div>
-      </div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">Why do you think logic errors are harder to find than syntax errors? What makes them sneaky?</div>
-        <textarea class="reflect-input" id="ref-1-2" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-1-2','saved-1-2')">Save</button>
-          <span class="reflect-saved" id="saved-1-2">✓ Saved</span>
-        </div>
-      </div>
-      <div class="lesson-complete">
-        <h3>⚠ &nbsp; Lesson 1 Complete</h3>
-        <p>Bugs. Bug types. Debugging mindset. You know what you're hunting now. Let's go deeper.</p>
-      </div>
-    </div>
-
-    <!-- CHEAT SHEET -->
-    <div class="content-block" id="block-1-cheat">
-      <div class="section-header">Cheat Sheet</div>
-      <div class="section-sub">LESSON 01 · WHAT IS A BUG?</div>
-      <div class="cheat-card">
-        <h3>⚠ Lesson 1 Reference</h3>
-        <div class="cheat-items">
-          <div class="cheat-item">
-            <div class="cheat-term">Syntax error</div>
-            <div class="cheat-desc">Bad code structure -- can't run. Missing brackets, misspelled keywords.</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Runtime error</div>
-            <div class="cheat-desc">Crashes while running. Undefined variable, missing function, null reference.</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Logic error</div>
-            <div class="cheat-desc">Runs fine, wrong result. No crash -- just wrong output or behavior.</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">console.log()</div>
-            <div class="cheat-desc">Print variable values to trace what's happening. Log early, log often.</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Debugging process</div>
-            <div class="cheat-desc">Observe → Hypothesize → Test → Fix → Verify. Never random guessing.</div>
-          </div>
-        </div>
-        <a href="bug-cheat-1.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
-      </div>
-    </div>
-  </div>
+<div class="debug-output" id="debug-out-d2">Output will appear here...</div>
+</div></div>
+<div class="quiz-card"><div class="quiz-q">Code runs without crashing but prints the wrong number. What type of bug is this?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'A syntax error prevents the code from running at all.')">Syntax error</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'A runtime error causes a crash while running.')">Runtime error</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. A logic error means the code runs but produces the wrong result.')">Logic error</button>
+</div><div class="quiz-feedback" id="qfb-0"></div></div>
 </div>
-
+<div class="content-block" id="block-1-reflect">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
+<div class="reflect-prompt"><div class="reflect-q">Think of a time something didn't work the way you expected. How did you figure out what went wrong?</div>
+<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button><span class="reflect-saved" id="saved-1-1">✓ Saved</span></div></div>
+<div class="lesson-complete" id="complete-1"><h3>⚠ &nbsp; Lesson 1 Complete</h3><p>Bugs. Bug types. Debugging mindset. You know what you're hunting now.</p><div class="lesson-joke" id="joke-1"></div></div>
+</div>
+</div>
+</div>
 <!-- ===================== LESSON 2 ===================== -->
 <div class="lesson-panel" id="lesson-2">
-  <aside class="lesson-sidebar">
-    <div class="sidebar-label">Lesson 02</div>
-    <button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(2,'cheat')" id="sb-2-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
-    <div class="sidebar-divider"></div>
-    <a href="bug-game.html" class="sidebar-game-link">⚠ Bug's Game World</a>
-  </aside>
-  <div class="lesson-content">
-    <div class="locked-panel" id="lock-2">
-      <div class="locked-icon">🔒</div>
-      <h2>Sparks Membership Required</h2>
-      <p>Lesson 2 is available to Sparks members and above.</p>
-      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-    </div>
-
-    <!-- READ -->
-    <div class="content-block" id="block-2-read" style="display:none">
-      <div class="section-header">Reading Errors</div>
-      <div class="section-sub">LESSON 02 · SPARKS+</div>
-
-      <div class="read-card">
-        <div class="read-card-num">01 / 05</div>
-        <h3>Error Messages Are Information</h3>
-        <p>Most beginners panic when they see an error message. Don't. An error message is the computer <strong>telling you exactly what went wrong</strong>. Learning to read them is one of the most valuable skills in programming. The message is not an attack -- it's a clue.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">02 / 05</div>
-        <h3>Anatomy of an Error Message</h3>
-        <p>Most JavaScript errors have three parts: the <strong>error type</strong>, the <strong>message</strong>, and the <strong>location</strong> (file and line number). Read all three before doing anything else.</p>
-        <div class="code-block"><span class="err">ReferenceError</span>: x is not defined
-    at myFunction (<span class="str">script.js:12</span>)
-    at <span class="fn">onClick</span> (<span class="str">script.js:24</span>)
-
-<span class="cm">// Type: ReferenceError</span>
-<span class="cm">// Message: x is not defined</span>
-<span class="cm">// Location: script.js, line 12</span></div>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">03 / 05</div>
-        <h3>Common Error Types</h3>
-        <p><strong>ReferenceError</strong> -- you used a variable that hasn't been declared yet, or is out of scope.</p>
-        <p style="margin-top:0.6rem;"><strong>TypeError</strong> -- you tried to do something with the wrong type of value. Calling a non-function, reading a property of null or undefined.</p>
-        <p style="margin-top:0.6rem;"><strong>SyntaxError</strong> -- the code structure is invalid. Missing bracket, extra comma, bad keyword placement.</p>
-        <p style="margin-top:0.6rem;"><strong>RangeError</strong> -- a value is outside its allowed range. Infinite recursion, invalid array length.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">04 / 05</div>
-        <h3>The Call Stack</h3>
-        <p>Error messages often include a <strong>call stack</strong> -- a list of functions that were running when the error occurred. Read it from top to bottom. The top is where the crash happened. Below that are the functions that called it. This tells you how the code got to the error.</p>
-        <div class="code-block"><span class="cm">// Call stack reads top to bottom</span>
-<span class="cm">// crash happened in calculateTotal</span>
-<span class="cm">// which was called by processOrder</span>
-<span class="cm">// which was called by handleSubmit</span>
-    at <span class="fn">calculateTotal</span> (app.js:<span class="num">45</span>)
-    at <span class="fn">processOrder</span> (app.js:<span class="num">22</span>)
-    at <span class="fn">handleSubmit</span> (app.js:<span class="num">8</span>)</div>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">05 / 05</div>
-        <h3>The Browser DevTools Console</h3>
-        <p>Every browser has built-in developer tools. In Chrome, press <code>F12</code> or right-click and choose Inspect, then click the <strong>Console</strong> tab. This is where all JavaScript errors appear -- in red, with the line number, clickable to go straight to the code. Open it every time you build something.</p>
-      </div>
-    </div>
-
-    <!-- TERMS -->
-    <div class="content-block" id="block-2-terms" style="display:none">
-      <div class="section-header">Key Terms</div>
-      <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
-      <div class="terms-grid">
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">ReferenceError <span class="term-arrow">›</span></div>
-          <div class="term-def">Using a variable that hasn't been declared or is out of scope. "x is not defined."</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">TypeError <span class="term-arrow">›</span></div>
-          <div class="term-def">Doing something with the wrong data type -- calling null as a function, accessing a property on undefined.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">SyntaxError <span class="term-arrow">›</span></div>
-          <div class="term-def">Invalid code structure -- missing brackets, extra commas. Caught before the code even runs.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Call stack <span class="term-arrow">›</span></div>
-          <div class="term-def">The list of functions that were running when an error occurred. Shows you the path the code took to reach the crash.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">DevTools <span class="term-arrow">›</span></div>
-          <div class="term-def">Built-in browser developer tools (F12 in Chrome). The Console tab shows all JS errors, logs, and warnings in real time.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Line number <span class="term-arrow">›</span></div>
-          <div class="term-def">Errors include the file name and line where the problem occurred. Always check it -- it tells you exactly where to look.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BUILD -->
-    <div class="content-block" id="block-2-build" style="display:none">
-      <div class="section-header">Build It</div>
-      <div class="section-sub">LESSON 02 · READ THE ERROR</div>
-
-      <div class="buggy-card">
-        <h3>Bug #3 -- ReferenceError</h3>
-        <p>This code throws a ReferenceError. Read the error output, find the undefined variable, and fix it.</p>
-        <div class="debug-challenge">
-          <div class="debug-header">
-            <span>DEBUG · REFERENCEERROR</span>
-            <button class="debug-run-btn" onclick="runDebug('d3')">▶ RUN</button>
-          </div>
-          <textarea class="debug-editor" id="debug-d3">function greetUser() {
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 02</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider"></div>
+<a href="bug-game.html" class="sidebar-game-link">⚠ Bug's Game World</a>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-2"><div class="locked-icon">🔒</div><h2>Sparks Membership Required</h2><p>Lesson 2 is available to Sparks members and above.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+<div class="content-block" id="block-2-read" style="display:none">
+<div class="section-header">Reading Errors</div>
+<div class="section-sub">LESSON 02 · SPARKS+</div>
+<div class="read-card"><div class="read-card-num">01 / 05</div><h3>Error Messages Are Information</h3><p>An error message is the computer <strong>telling you exactly what went wrong</strong>. The message is not an attack — it's a clue.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 05</div><h3>Anatomy of an Error Message</h3><p>Most JavaScript errors have three parts: the <strong>error type</strong>, the <strong>message</strong>, and the <strong>location</strong>.</p>
+<div class="code-block"><span class="kw">ReferenceError</span>: x is not defined
+&nbsp;&nbsp;at myFunction (<span class="str">script.js:12</span>)</div></div>
+<div class="read-card"><div class="read-card-num">03 / 05</div><h3>Common Error Types</h3><p><strong>ReferenceError</strong> — a variable that hasn't been declared. <strong>TypeError</strong> — the wrong type of value. <strong>SyntaxError</strong> — invalid code structure. <strong>RangeError</strong> — a value outside its allowed range.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 05</div><h3>The Call Stack</h3><p>A <strong>call stack</strong> is a list of functions that were running when the error occurred. Read it top to bottom.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 05</div><h3>The Browser DevTools Console</h3><p>Press <code>F12</code> or right-click and choose Inspect, then click the <strong>Console</strong> tab. Open it every time you build something.</p></div>
+</div>
+<div class="content-block" id="block-2-terms" style="display:none">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">ReferenceError <span class="term-arrow">›</span></div><div class="term-def">Using a variable that hasn't been declared or is out of scope.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">TypeError <span class="term-arrow">›</span></div><div class="term-def">Doing something with the wrong data type.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">SyntaxError <span class="term-arrow">›</span></div><div class="term-def">Invalid code structure, caught before the code even runs.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Call stack <span class="term-arrow">›</span></div><div class="term-def">The list of functions running when an error occurred.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">DevTools <span class="term-arrow">›</span></div><div class="term-def">Built-in browser developer tools (F12 in Chrome).</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Line number <span class="term-arrow">›</span></div><div class="term-def">Tells you exactly where to look — always check it.</div></div>
+</div>
+</div>
+<div class="content-block" id="block-2-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 02 · READ THE ERROR</div>
+<div class="buggy-card"><h3>Bug #3 — ReferenceError</h3><p>This code throws a ReferenceError. Find the undefined variable and fix it.</p>
+<div class="debug-challenge">
+<div class="debug-header"><span>DEBUG · REFERENCEERROR</span><button class="debug-run-btn" onclick="runDebug('d3')">▶ RUN</button></div>
+<textarea class="debug-editor" id="debug-d3">function greetUser() {
   let firstName = "Jordan";
   console.log("Hello, " + fullName + "!");
 }
 greetUser();</textarea>
-          <div class="debug-output" id="debug-out-d3">Output will appear here...</div>
-        </div>
-      </div>
-
-      <div class="buggy-card">
-        <h3>Bug #4 -- TypeError</h3>
-        <p>This code throws a TypeError. What's wrong with how the function is being called?</p>
-        <div class="debug-challenge">
-          <div class="debug-header">
-            <span>DEBUG · TYPEERROR</span>
-            <button class="debug-run-btn" onclick="runDebug('d4')">▶ RUN</button>
-          </div>
-          <textarea class="debug-editor" id="debug-d4">let score = 42;
-let result = score.toUpperCase();
-console.log(result);
-// Fix: toUpperCase() is a string method, not a number method</textarea>
-          <div class="debug-output" id="debug-out-d4">Output will appear here...</div>
-        </div>
-      </div>
-
-      <div class="quiz-card">
-        <div class="quiz-q">You see: <code>TypeError: Cannot read properties of undefined (reading 'name')</code>. What does this mean?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A SyntaxError prevents the code from running -- a TypeError happens during runtime.')">There is a syntax error in the code</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The code tried to access the .name property of something that is undefined -- meaning the object doesn\'t exist yet.')">The code tried to access .name on something that is undefined</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The variable "name" is declared fine -- the problem is the object it\'s being accessed from is undefined.')">The variable "name" was never declared</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-2"></div>
-      </div>
-
-      <div class="quiz-card">
-        <div class="quiz-q">In a call stack, which function crashed first?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The call stack shows the crash at the top. Below it are the functions that led to it, working downward to the entry point.')">The one at the top of the stack</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The bottom of the stack is the entry point -- the first function called. The crash is at the top.')">The one at the bottom of the stack</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'The middle of the stack is just one of the intermediate callers -- the crash is always at the top.')">The one in the middle of the stack</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-3"></div>
-      </div>
-    </div>
-
-    <!-- REFLECT -->
-    <div class="content-block" id="block-2-reflect" style="display:none">
-      <div class="section-header">Reflect</div>
-      <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">Before this lesson, how did you react when you saw an error message? Has your thinking changed? What will you do differently next time?</div>
-        <textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
-          <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
-        </div>
-      </div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">The call stack shows the path the code took before it crashed. Why might that information be useful? Can you think of a situation where the crash location and the actual bug are in different places?</div>
-        <textarea class="reflect-input" id="ref-2-2" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-2-2','saved-2-2')">Save</button>
-          <span class="reflect-saved" id="saved-2-2">✓ Saved</span>
-        </div>
-      </div>
-      <div class="lesson-complete">
-        <h3>⚠ &nbsp; Lesson 2 Complete</h3>
-        <p>Error types. Call stacks. DevTools. The console is no longer scary. Every error is readable now.</p>
-      </div>
-    </div>
-
-    <!-- CHEAT SHEET -->
-    <div class="content-block" id="block-2-cheat" style="display:none">
-      <div class="section-header">Cheat Sheet</div>
-      <div class="section-sub">LESSON 02 · READING ERRORS</div>
-      <div class="cheat-card">
-        <h3>⚠ Lesson 2 Reference</h3>
-        <div class="cheat-items">
-          <div class="cheat-item">
-            <div class="cheat-term">ReferenceError</div>
-            <div class="cheat-desc">Variable used before declaration or out of scope</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">TypeError</div>
-            <div class="cheat-desc">Wrong type -- calling null as a function, property of undefined</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">SyntaxError</div>
-            <div class="cheat-desc">Invalid code structure -- caught before code runs</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Call stack</div>
-            <div class="cheat-desc">Top = crash site. Below = path taken to get there.</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">DevTools</div>
-            <div class="cheat-desc">F12 in browser → Console tab. Errors in red with line numbers.</div>
-          </div>
-        </div>
-        <a href="bug-cheat-2.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
-      </div>
-    </div>
-  </div>
+<div class="debug-output" id="debug-out-d3">Output will appear here...</div>
+</div></div>
+<div class="quiz-card"><div class="quiz-q">You see: <code>TypeError: Cannot read properties of undefined (reading 'name')</code>. What does this mean?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'A SyntaxError prevents the code from running at all.')">There is a syntax error in the code</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The code tried to access .name on something that is undefined.')">The code tried to access .name on something that is undefined</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'The variable is fine — the object it\'s accessed from is undefined.')">The variable "name" was never declared</button>
+</div><div class="quiz-feedback" id="qfb-2"></div></div>
 </div>
-
+<div class="content-block" id="block-2-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
+<div class="reflect-prompt"><div class="reflect-q">Before this lesson, how did you react when you saw an error message? Has that changed?</div>
+<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button><span class="reflect-saved" id="saved-2-1">✓ Saved</span></div></div>
+<div class="lesson-complete show" id="complete-2"><h3>⚠ &nbsp; Lesson 2 Complete</h3><p>Error types. Call stacks. DevTools. The console is no longer scary.</p><div class="lesson-joke" id="joke-2"></div></div>
+</div>
+</div>
+</div>
 <!-- ===================== LESSON 3 ===================== -->
 <div class="lesson-panel" id="lesson-3">
-  <aside class="lesson-sidebar">
-    <div class="sidebar-label">Lesson 03</div>
-    <button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(3,'cheat')" id="sb-3-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
-    <div class="sidebar-divider"></div>
-    <a href="bug-game.html" class="sidebar-game-link">⚠ Bug's Game World</a>
-  </aside>
-  <div class="lesson-content">
-    <div class="locked-panel" id="lock-3">
-      <div class="locked-icon">🔒</div>
-      <h2>Builders Membership Required</h2>
-      <p>Lesson 3 is available to Builders members and above.</p>
-      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-    </div>
-
-    <!-- READ -->
-    <div class="content-block" id="block-3-read" style="display:none">
-      <div class="section-header">Logic Tracing</div>
-      <div class="section-sub">LESSON 03 · BUILDERS+</div>
-
-      <div class="read-card">
-        <div class="read-card-num">01 / 05</div>
-        <h3>What Is Logic Tracing?</h3>
-        <p><strong>Logic tracing</strong> is running code in your head -- or on paper -- step by step. You become the computer. You track every variable, every condition, every loop iteration, and write down what changes. It reveals logic errors that no error message will ever tell you about.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">02 / 05</div>
-        <h3>Tracing a Loop</h3>
-        <p>To trace a loop, track the value of every variable at every iteration. Create a simple table: columns for each variable, rows for each step. This makes the pattern visible and impossible to miss.</p>
-        <div class="code-block"><span class="kw">let</span> x = <span class="num">1</span>;
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 03</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider"></div>
+<a href="bug-game.html" class="sidebar-game-link">⚠ Bug's Game World</a>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-3"><div class="locked-icon">🔒</div><h2>Builders Membership Required</h2><p>Lesson 3 is available to Builders members and above.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+<div class="content-block" id="block-3-read" style="display:none">
+<div class="section-header">Logic Tracing</div>
+<div class="section-sub">LESSON 03 · BUILDERS+</div>
+<div class="read-card"><div class="read-card-num">01 / 05</div><h3>What Is Logic Tracing?</h3><p><strong>Logic tracing</strong> is running code in your head — step by step. You track every variable, every condition, every loop iteration.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 05</div><h3>Tracing a Loop</h3><p>Track the value of every variable at every iteration. Create a simple table — columns for each variable, rows for each step.</p>
+<div class="code-block"><span class="kw">let</span> x = <span class="num">1</span>;
 <span class="kw">let</span> result = <span class="num">0</span>;
-
 <span class="kw">while</span> (x &lt;= <span class="num">4</span>) {
-  result += x;
-  x++;
+&nbsp;&nbsp;result += x;
+&nbsp;&nbsp;x++;
 }
-
-<span class="cm">// Trace table:
-// x=1, result=0+1=1
-// x=2, result=1+2=3
-// x=3, result=3+3=6
-// x=4, result=6+4=10
-// x=5, condition false, loop ends
-// Final result: 10</span></div>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">03 / 05</div>
-        <h3>Off-By-One Errors</h3>
-        <p>The most common logic error in loops is the <strong>off-by-one error</strong> -- the loop runs one time too many or one time too few. This usually comes from using <code>&lt;</code> vs <code>&lt;=</code>, or starting at 0 vs 1. Always trace the first and last iteration carefully.</p>
-        <div class="code-block"><span class="cm">// Intended: print 1 through 5</span>
-<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i <span class="err">&lt;</span> <span class="num">5</span>; i++) { <span class="cm">// BUG: misses 5</span>
-  <span class="fn">console</span>.<span class="fn">log</span>(i);
-}
-
-<span class="cm">// Fix:</span>
-<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i <span class="fix">&lt;=</span> <span class="num">5</span>; i++) { <span class="cm">// correct</span>
-  <span class="fn">console</span>.<span class="fn">log</span>(i);
-}</div>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">04 / 05</div>
-        <h3>Tracing Conditionals</h3>
-        <p>When tracing an if/else chain, work through each condition with the actual values. Don't assume -- evaluate. Write out <code>if (score >= 70)</code> with the real number and check: is 65 >= 70? No. Which branch runs? The else. Follow the actual path the code takes.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">05 / 05</div>
-        <h3>Rubber Duck Debugging</h3>
-        <p>Explaining your code out loud -- to a rubber duck, a friend, or nobody -- forces you to slow down and say exactly what each line does. Often the moment you start explaining, you catch the bug yourself. The act of forming words makes the logic visible in a new way.</p>
-      </div>
-    </div>
-
-    <!-- TERMS -->
-    <div class="content-block" id="block-3-terms" style="display:none">
-      <div class="section-header">Key Terms</div>
-      <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
-      <div class="terms-grid">
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Logic tracing <span class="term-arrow">›</span></div>
-          <div class="term-def">Manually stepping through code line by line, tracking every variable's value at every step. You become the computer.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Off-by-one error <span class="term-arrow">›</span></div>
-          <div class="term-def">A loop that runs one too many or one too few times. Usually caused by &lt; vs &lt;= or starting at 0 vs 1.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Trace table <span class="term-arrow">›</span></div>
-          <div class="term-def">A table tracking variable values at each step of a loop. Columns = variables, rows = iterations.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Rubber duck debugging <span class="term-arrow">›</span></div>
-          <div class="term-def">Explaining your code out loud forces you to think precisely. Often reveals the bug immediately.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Boundary condition <span class="term-arrow">›</span></div>
-          <div class="term-def">The edge cases at the start and end of a loop or condition. Most logic errors hide at the boundaries -- first and last iterations.</div>
-        </div>
-        <div class="term-card" onclick="toggleTerm(this)">
-          <div class="term-name">Infinite loop <span class="term-arrow">›</span></div>
-          <div class="term-def">A loop where the exit condition is never met, so it runs forever. Usually caused by forgetting to update the counter variable.</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- BUILD -->
-    <div class="content-block" id="block-3-build" style="display:none">
-      <div class="section-header">Build It</div>
-      <div class="section-sub">LESSON 03 · TRACE AND FIX</div>
-
-      <div class="buggy-card">
-        <h3>Bug #5 -- Off-By-One</h3>
-        <p>This function should return the sum of numbers 1 through n. Trace it with n=5 and find the off-by-one error.</p>
-        <div class="debug-challenge">
-          <div class="debug-header">
-            <span>DEBUG · OFF-BY-ONE</span>
-            <button class="debug-run-btn" onclick="runDebug('d5')">▶ RUN</button>
-          </div>
-          <textarea class="debug-editor" id="debug-d5">function sumTo(n) {
+<span class="cm">// Final result: 10</span></div></div>
+<div class="read-card"><div class="read-card-num">03 / 05</div><h3>Off-By-One Errors</h3><p>The loop runs one time too many or too few. Usually caused by <code>&lt;</code> vs <code>&lt;=</code>.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 05</div><h3>Tracing Conditionals</h3><p>When tracing an if/else chain, work through each condition with the actual values. Don't assume — evaluate.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 05</div><h3>Rubber Duck Debugging</h3><p>Explaining your code out loud forces you to slow down and say exactly what each line does.</p></div>
+</div>
+<div class="content-block" id="block-3-terms" style="display:none">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Logic tracing <span class="term-arrow">›</span></div><div class="term-def">Manually stepping through code, tracking every variable's value.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Off-by-one error <span class="term-arrow">›</span></div><div class="term-def">A loop that runs one too many or one too few times.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Trace table <span class="term-arrow">›</span></div><div class="term-def">A table tracking variable values at each step of a loop.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Rubber duck debugging <span class="term-arrow">›</span></div><div class="term-def">Explaining your code out loud to find the bug yourself.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Boundary condition <span class="term-arrow">›</span></div><div class="term-def">Edge cases at the start and end of a loop or condition.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Infinite loop <span class="term-arrow">›</span></div><div class="term-def">A loop where the exit condition is never met.</div></div>
+</div>
+</div>
+<div class="content-block" id="block-3-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 03 · TRACE AND FIX</div>
+<div class="buggy-card"><h3>Bug #5 — Off-By-One</h3><p>This function should return the sum of numbers 1 through n. Trace it and find the off-by-one error.</p>
+<div class="debug-challenge">
+<div class="debug-header"><span>DEBUG · OFF-BY-ONE</span><button class="debug-run-btn" onclick="runDebug('d5')">▶ RUN</button></div>
+<textarea class="debug-editor" id="debug-d5">function sumTo(n) {
   let total = 0;
   for (let i = 1; i < n; i++) {
     total += i;
   }
   return total;
 }
-
-console.log(sumTo(5)); // Should be 15, not 10
-// Fix the loop condition above</textarea>
-          <div class="debug-output" id="debug-out-d5">Output will appear here...</div>
-        </div>
-      </div>
-
-      <div class="buggy-card">
-        <h3>Bug #6 -- Wrong Condition</h3>
-        <p>This code should print only even numbers from 1-10. Something is wrong with the condition. Find and fix it.</p>
-        <div class="debug-challenge">
-          <div class="debug-header">
-            <span>DEBUG · LOGIC ERROR</span>
-            <button class="debug-run-btn" onclick="runDebug('d6')">▶ RUN</button>
-          </div>
-          <textarea class="debug-editor" id="debug-d6">for (let i = 1; i <= 10; i++) {
-  if (i % 2 === 1) {
-    console.log(i);
-  }
-}
-// Fix: even numbers have remainder 0 when divided by 2
-// Change the condition so only evens print</textarea>
-          <div class="debug-output" id="debug-out-d6">Output will appear here...</div>
-        </div>
-      </div>
-
-      <div class="quiz-card">
-        <div class="quiz-q">A loop runs 4 times when it should run 5. This is most likely a...</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A syntax error would prevent the code from running at all.')">Syntax error</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'A runtime error would crash the program -- this loop runs, just the wrong number of times.')">Runtime error</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. An off-by-one error is the most common cause of loops running one iteration too few or too many.')">Off-by-one error (logic error)</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-4"></div>
-      </div>
-
-      <div class="quiz-card">
-        <div class="quiz-q">What does rubber duck debugging help you do?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Explaining code out loud doesn\'t run it automatically.')">Run your code automatically</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Exactly. Explaining code out loud slows you down and forces precision. This often surfaces the bug without any tools.')">Slow down and think precisely, which often reveals the bug</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'Rubber duck debugging is about speaking, not the console.')">Print values to the console</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-5"></div>
-      </div>
-    </div>
-
-    <!-- REFLECT -->
-    <div class="content-block" id="block-3-reflect" style="display:none">
-      <div class="section-header">Reflect</div>
-      <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">Try tracing this loop on paper before running it. What is the final value of <code>result</code>?<br><br><code style="font-family:var(--font-mono);font-size:0.82rem;color:var(--lime)">let result = 1; for (let i = 1; i &lt;= 4; i++) { result *= i; }</code></div>
-        <textarea class="reflect-input" id="ref-3-1" placeholder="Trace it step by step, then write your answer..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
-          <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
-        </div>
-      </div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">Why are boundary conditions (first and last iterations) the most common places logic errors hide? Can you think of an example?</div>
-        <textarea class="reflect-input" id="ref-3-2" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-3-2','saved-3-2')">Save</button>
-          <span class="reflect-saved" id="saved-3-2">✓ Saved</span>
-        </div>
-      </div>
-      <div class="lesson-complete">
-        <h3>⚠ &nbsp; Lesson 3 Complete</h3>
-        <p>Logic tracing. Off-by-one errors. Rubber duck debugging. The invisible bugs are visible now.</p>
-      </div>
-    </div>
-
-    <!-- CHEAT SHEET -->
-    <div class="content-block" id="block-3-cheat" style="display:none">
-      <div class="section-header">Cheat Sheet</div>
-      <div class="section-sub">LESSON 03 · LOGIC TRACING</div>
-      <div class="cheat-card">
-        <h3>⚠ Lesson 3 Reference</h3>
-        <div class="cheat-items">
-          <div class="cheat-item">
-            <div class="cheat-term">Logic tracing</div>
-            <div class="cheat-desc">Step through code manually, tracking every variable at every step</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Off-by-one</div>
-            <div class="cheat-desc">Loop runs 1 too many/few times -- check &lt; vs &lt;= and start value</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Trace table</div>
-            <div class="cheat-desc">Columns = variables, rows = iterations. Make the data visible.</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Even check</div>
-            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--lime)">i % 2 === 0</code> -- remainder 0 means even</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Rubber duck</div>
-            <div class="cheat-desc">Say each line out loud. The bug usually shows itself when you have to explain it.</div>
-          </div>
-        </div>
-        <a href="bug-cheat-3.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
-      </div>
-    </div>
-  </div>
+console.log(sumTo(5));
+// Should be 15, not 10 -- fix the loop condition</textarea>
+<div class="debug-output" id="debug-out-d5">Output will appear here...</div>
+</div></div>
+<div class="quiz-card"><div class="quiz-q">A loop runs 4 times when it should run 5. This is most likely a...</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'A syntax error would prevent the code from running at all.')">Syntax error</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'A runtime error would crash the program.')">Runtime error</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. An off-by-one error is the most common cause of this.')">Off-by-one error (logic error)</button>
+</div><div class="quiz-feedback" id="qfb-4"></div></div>
 </div>
-
+<div class="content-block" id="block-3-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
+<div class="reflect-prompt"><div class="reflect-q">Why are boundary conditions the most common places logic errors hide?</div>
+<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button><span class="reflect-saved" id="saved-3-1">✓ Saved</span></div></div>
+<div class="lesson-complete show" id="complete-3"><h3>⚠ &nbsp; Lesson 3 Complete</h3><p>Logic tracing. Off-by-one errors. The invisible bugs are visible now.</p><div class="lesson-joke" id="joke-3"></div></div>
+</div>
+</div>
+</div>
 <!-- ===================== LESSON 4 ===================== -->
 <div class="lesson-panel" id="lesson-4">
-  <aside class="lesson-sidebar">
-    <div class="sidebar-label">Lesson 04</div>
-    <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-    <button class="sidebar-nav-btn" onclick="showBlock(4,'cheat')" id="sb-4-cheat"><span class="sidebar-icon">📋</span> Cheat Sheet</button>
-    <div class="sidebar-divider"></div>
-    <a href="bug-game.html" class="sidebar-game-link">⚠ Bug's Game World</a>
-  </aside>
-  <div class="lesson-content">
-    <div class="locked-panel" id="lock-4">
-      <div class="locked-icon">🔒</div>
-      <h2>Coders Membership Required</h2>
-      <p>Lesson 4 is available to Coders members only.</p>
-      <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-    </div>
-
-    <!-- READ -->
-    <div class="content-block" id="block-4-read" style="display:none">
-      <div class="section-header">Debug Challenge</div>
-      <div class="section-sub">LESSON 04 · CODERS</div>
-
-      <div class="read-card">
-        <div class="read-card-num">01 / 04</div>
-        <h3>Advanced Debugging Strategies</h3>
-        <p>Beyond <code>console.log</code> and reading errors, experienced debuggers use a set of mental strategies. <strong>Divide and conquer</strong>: narrow the problem by commenting out half the code and seeing if the bug persists. <strong>Minimal reproduction</strong>: strip the code down to the smallest version that still shows the bug.</p>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">02 / 04</div>
-        <h3>try / catch -- Catching Errors Gracefully</h3>
-        <p>Sometimes you expect code might fail. A <strong>try/catch block</strong> lets you run risky code and handle any error without crashing the whole program. The <code>try</code> block runs, and if it throws an error, the <code>catch</code> block runs instead.</p>
-        <div class="code-block"><span class="kw">try</span> {
-  <span class="kw">let</span> result = riskyFunction();
-  <span class="fn">console</span>.<span class="fn">log</span>(result);
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 04</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider"></div>
+<a href="bug-game.html" class="sidebar-game-link">⚠ Bug's Game World</a>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-4"><div class="locked-icon">🔒</div><h2>Coders Membership Required</h2><p>Lesson 4 is available to Coders members only.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+<div class="content-block" id="block-4-read" style="display:none">
+<div class="section-header">Debug Challenge</div>
+<div class="section-sub">LESSON 04 · CODERS</div>
+<div class="read-card"><div class="read-card-num">01 / 04</div><h3>Advanced Debugging Strategies</h3><p><strong>Divide and conquer</strong>: narrow the problem by commenting out half the code. <strong>Minimal reproduction</strong>: strip the code down to the smallest version that still shows the bug.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 04</div><h3>try / catch — Catching Errors Gracefully</h3><p>A <strong>try/catch block</strong> lets you run risky code and handle any error without crashing the whole program.</p>
+<div class="code-block"><span class="kw">try</span> {
+&nbsp;&nbsp;<span class="kw">let</span> result = riskyFunction();
 } <span class="kw">catch</span> (err) {
-  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Caught an error: "</span> + err.<span class="prop">message</span>);
-}</div>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">03 / 04</div>
-        <h3>Defensive Programming</h3>
-        <p><strong>Defensive programming</strong> means writing code that anticipates problems before they happen. Check that values exist before using them. Validate inputs. Provide defaults. Don't trust that a function will always receive the right data -- check it.</p>
-        <div class="code-block"><span class="cm">// Without defense -- crashes if name is undefined</span>
-<span class="fn">console</span>.<span class="fn">log</span>(name.<span class="fn">toUpperCase</span>());
-
-<span class="cm">// With defense -- safe</span>
-<span class="kw">if</span> (name && <span class="kw">typeof</span> name === <span class="str">"string"</span>) {
-  <span class="fn">console</span>.<span class="fn">log</span>(name.<span class="fn">toUpperCase</span>());
-} <span class="kw">else</span> {
-  <span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"No name provided"</span>);
-}</div>
-      </div>
-
-      <div class="read-card">
-        <div class="read-card-num">04 / 04</div>
-        <h3>The Debug Mindset</h3>
-        <p>The best debuggers share one trait: <strong>they don't assume</strong>. They verify. They don't think "that part works" -- they prove it. Every assumption is a potential bug. When stuck, question everything you thought you knew about what the code was doing. The bug is always there -- you just haven't found it yet.</p>
-      </div>
-    </div>
-
-    <!-- BUILD -->
-    <div class="content-block" id="block-4-build" style="display:none">
-      <div class="section-header">Debug Challenge</div>
-      <div class="section-sub">LESSON 04 · THE GAUNTLET</div>
-
-      <div class="buggy-card">
-        <h3>Bug #7 -- try/catch</h3>
-        <p>Wrap the risky code in a try/catch block. Print the error message if it fails, or the result if it succeeds.</p>
-        <div class="debug-challenge">
-          <div class="debug-header">
-            <span>DEBUG · TRY/CATCH</span>
-            <button class="debug-run-btn" onclick="runDebug('d7')">▶ RUN</button>
-          </div>
-          <textarea class="debug-editor" id="debug-d7">function parseNumber(str) {
-  let n = parseInt(str);
-  if (isNaN(n)) throw new Error("Not a valid number: " + str);
-  return n * 2;
-}
-
-// Wrap this in try/catch and handle the error
-let result = parseNumber("hello");
-console.log(result);</textarea>
-          <div class="debug-output" id="debug-out-d7">Output will appear here...</div>
-        </div>
-      </div>
-
-      <div class="buggy-card">
-        <h3>Bug #8 -- The Full Gauntlet</h3>
-        <p>This function has three bugs: a logic error, a type issue, and a missing defensive check. Find and fix all three.</p>
-        <div class="debug-challenge">
-          <div class="debug-header">
-            <span>DEBUG · 3 BUGS · FIND THEM ALL</span>
-            <button class="debug-run-btn" onclick="runDebug('d8')">▶ RUN</button>
-          </div>
-          <textarea class="debug-editor" id="debug-d8">function getAverage(numbers) {
-  // Bug 1: no check if numbers is empty (divide by zero)
+&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Caught: "</span> + err.message);
+}</div></div>
+<div class="read-card"><div class="read-card-num">03 / 04</div><h3>Defensive Programming</h3><p><strong>Defensive programming</strong> means writing code that anticipates problems before they happen.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 04</div><h3>The Debug Mindset</h3><p>The best debuggers <strong>don't assume</strong>. They verify. Every assumption is a potential bug.</p></div>
+</div>
+<div class="content-block" id="block-4-build" style="display:none">
+<div class="section-header">Debug Challenge</div>
+<div class="section-sub">LESSON 04 · THE GAUNTLET</div>
+<div class="buggy-card"><h3>Bug #8 — The Full Gauntlet</h3><p>This function has three bugs: a logic error, a type issue, and a missing defensive check.</p>
+<div class="debug-challenge">
+<div class="debug-header"><span>DEBUG · 3 BUGS · FIND THEM ALL</span><button class="debug-run-btn" onclick="runDebug('d8')">▶ RUN</button></div>
+<textarea class="debug-editor" id="debug-d8">function getAverage(numbers) {
   let total = 0;
-  for (let i = 0; i <= numbers.length; i++) { // Bug 2: off-by-one
+  for (let i = 0; i <= numbers.length; i++) {
     total += numbers[i];
   }
   let avg = total / numbers.length;
-  return avg.toFixed(2); // Bug 3: toFixed returns a string, not a number
-                         // Fix: return Number(avg.toFixed(2))
+  return avg.toFixed(2);
 }
-
-console.log(getAverage([10, 20, 30])); // Should be 20.00
-console.log(getAverage([]));           // Should handle gracefully</textarea>
-          <div class="debug-output" id="debug-out-d8">Output will appear here...</div>
-        </div>
-      </div>
-
-      <div class="quiz-card">
-        <div class="quiz-q">What is the purpose of a try/catch block?</div>
-        <div class="quiz-options">
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'try/catch doesn\'t prevent bugs -- it handles errors when they occur.')">Prevent all bugs from occurring</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. try/catch lets you run risky code and handle any errors gracefully instead of crashing the whole program.')">Run risky code and handle errors gracefully if they occur</button>
-          <button class="quiz-opt" onclick="checkQuiz(this, false, 'try/catch doesn\'t make code faster -- it handles runtime errors.')">Make code run faster</button>
-        </div>
-        <div class="quiz-feedback" id="qfb-6"></div>
-      </div>
-    </div>
-
-    <!-- REFLECT -->
-    <div class="content-block" id="block-4-reflect" style="display:none">
-      <div class="section-header">Reflect</div>
-      <div class="section-sub">LESSON 04 · YOUR THOUGHTS</div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">What does it mean to "not assume" when debugging? Think of a time when an assumption led you (or could lead someone) to miss the real problem.</div>
-        <textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
-          <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
-        </div>
-      </div>
-      <div class="reflect-prompt">
-        <div class="reflect-q">How has your understanding of bugs changed across these four lessons? What's the most important thing you're taking away?</div>
-        <textarea class="reflect-input" id="ref-4-2" placeholder="Write your thoughts here..."></textarea>
-        <div style="display:flex;align-items:center;gap:1rem;">
-          <button class="reflect-save-btn" onclick="saveReflect('ref-4-2','saved-4-2')">Save</button>
-          <span class="reflect-saved" id="saved-4-2">✓ Saved</span>
-        </div>
-      </div>
-      <div class="lesson-complete">
-        <h3>⚠ &nbsp; Debug Challenge Complete</h3>
-        <p>try/catch. Defensive programming. The debug mindset. Every bug is still just a clue -- and now you know how to read every one of them.</p>
-      </div>
-    </div>
-
-    <!-- CHEAT SHEET -->
-    <div class="content-block" id="block-4-cheat" style="display:none">
-      <div class="section-header">Cheat Sheet</div>
-      <div class="section-sub">LESSON 04 · ADVANCED DEBUGGING</div>
-      <div class="cheat-card">
-        <h3>⚠ Lesson 4 Reference</h3>
-        <div class="cheat-items">
-          <div class="cheat-item">
-            <div class="cheat-term">try/catch</div>
-            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--lime)">try { risky() } catch(err) { handle }</code></div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">err.message</div>
-            <div class="cheat-desc">The error description inside the catch block</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Defensive check</div>
-            <div class="cheat-desc"><code style="font-family:var(--font-mono);font-size:0.78rem;color:var(--lime)">if (val && typeof val === "string")</code></div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Divide &amp; conquer</div>
-            <div class="cheat-desc">Comment out half the code to narrow down where the bug is</div>
-          </div>
-          <div class="cheat-item">
-            <div class="cheat-term">Debug mindset</div>
-            <div class="cheat-desc">Never assume -- verify. Prove each section works. The bug is always there.</div>
-          </div>
-        </div>
-        <a href="bug-cheat-4.pdf" download class="cheat-download-btn">⬇ Download PDF</a>
-      </div>
-    </div>
-  </div>
+console.log(getAverage([10, 20, 30]));
+console.log(getAverage([]));</textarea>
+<div class="debug-output" id="debug-out-d8">Output will appear here...</div>
+</div></div>
+<div class="quiz-card"><div class="quiz-q">What is the purpose of a try/catch block?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'try/catch doesn\'t prevent bugs -- it handles errors when they occur.')">Prevent all bugs from occurring</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. try/catch lets you run risky code and handle errors gracefully.')">Run risky code and handle errors gracefully if they occur</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'try/catch doesn\'t make code faster.')">Make code run faster</button>
+</div><div class="quiz-feedback" id="qfb-6"></div></div>
+</div>
+<div class="content-block" id="block-4-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 04 · YOUR THOUGHTS</div>
+<div class="reflect-prompt"><div class="reflect-q">How has your understanding of bugs changed across these four lessons?</div>
+<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button><span class="reflect-saved" id="saved-4-1">✓ Saved</span></div></div>
+<div class="lesson-complete show" id="complete-4"><h3>⚠ &nbsp; Debug Challenge Complete</h3><p>try/catch. Defensive programming. The debug mindset. Every bug is still just a clue.</p><div class="lesson-joke" id="joke-4"></div></div>
+</div>
+</div>
 </div>
 
-<!-- ==================== FIREBASE + SCRIPTS ==================== -->
+<div class="lesson-panel" id="lesson-cheat">
+<div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
+<div class="section-header">Bug's Cheat Sheet</div>
+<div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
+<div class="cheat-card"><h3>⚠ Lesson 1 — What Is a Bug?</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Syntax error</div><div class="cheat-desc">Bad code structure — can't run.</div></div>
+<div class="cheat-item"><div class="cheat-term">Runtime error</div><div class="cheat-desc">Crashes while running.</div></div>
+<div class="cheat-item"><div class="cheat-term">Logic error</div><div class="cheat-desc">Runs fine, wrong result.</div></div>
+</div></div>
+<div class="cheat-card"><h3>⚠ Lesson 2 — Reading Errors</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">ReferenceError</div><div class="cheat-desc">Variable used before declaration or out of scope.</div></div>
+<div class="cheat-item"><div class="cheat-term">TypeError</div><div class="cheat-desc">Wrong type — calling null as a function, etc.</div></div>
+<div class="cheat-item"><div class="cheat-term">Call stack</div><div class="cheat-desc">Top = crash site. Below = path taken to get there.</div></div>
+</div></div>
+<div class="cheat-card"><h3>⚠ Lesson 3 — Logic Tracing</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Logic tracing</div><div class="cheat-desc">Step through code manually, tracking every variable.</div></div>
+<div class="cheat-item"><div class="cheat-term">Off-by-one</div><div class="cheat-desc">Check &lt; vs &lt;= and your starting value.</div></div>
+<div class="cheat-item"><div class="cheat-term">Rubber duck</div><div class="cheat-desc">Say each line out loud to reveal the bug.</div></div>
+</div></div>
+<div class="cheat-card"><h3>⚠ Lesson 4 — Advanced Debugging</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">try/catch</div><div class="cheat-desc">try { risky() } catch(err) { handle }</div></div>
+<div class="cheat-item"><div class="cheat-term">Defensive check</div><div class="cheat-desc">if (val && typeof val === "string")</div></div>
+<div class="cheat-item"><div class="cheat-term">Debug mindset</div><div class="cheat-desc">Never assume — verify. Prove each section works.</div></div>
+</div></div>
+<div class="cheat-card"><h3>⚠ Symbols Reference</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">( )</div><div class="cheat-desc">Parentheses — call a function or hold its arguments.</div></div>
+<div class="cheat-item"><div class="cheat-term">.</div><div class="cheat-desc">Dot — accesses a property or method.</div></div>
+<div class="cheat-item"><div class="cheat-term">=</div><div class="cheat-desc">Equals sign — assigns a value.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt; / &lt;=</div><div class="cheat-desc">Less than / less than or equal — common off-by-one culprits.</div></div>
+</div>
+<div class="cheat-btn-row">
+<a href="bug-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
+<button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
+</div>
+</div>
+</div>
+</div>
+
+<div class="bug-companion" id="bugCompanion">
+<img src="bug-idle.gif" alt="Bug" title="Bug is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
+</div>
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+<div class="egg-popup" id="eggPopup"><h4>⚠ Secret Found!</h4><p id="eggText"></p></div>
 <script type="module" src="auth-init.js"></script>
 <script>
-  let currentLesson = null;
-  let currentTier = null;
-  const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
-  function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
-
-  window.setNavUser = function(email) {
-    const u = document.getElementById('navUser');
-    const b = document.getElementById('navLogout');
-    if (u) { u.textContent = email; u.style.display = 'inline'; }
-    if (b) b.style.display = 'inline-block';
+let currentLesson = null;
+let currentTier = null;
+const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
+function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
+window.setNavUser = function(email) {
+  const u = document.getElementById('navUser'); const b = document.getElementById('navLogout');
+  if (u) { u.textContent = email; u.style.display = 'inline'; }
+  if (b) b.style.display = 'inline-block';
+};
+window.handleTierUnlock = function(tier) {
+  currentTier = tier; const lvl = tierLevel(tier);
+  if (lvl >= tierLevel('sparks')) { document.getElementById('lock-2').style.display = 'none'; ['read','terms','build','reflect'].forEach(b => { const el = document.getElementById('block-2-' + b); if (el) el.style.removeProperty('display'); }); }
+  if (lvl >= tierLevel('builders')) { document.getElementById('lock-3').style.display = 'none'; ['read','terms','build','reflect'].forEach(b => { const el = document.getElementById('block-3-' + b); if (el) el.style.removeProperty('display'); }); }
+  if (lvl >= tierLevel('coders')) { document.getElementById('lock-4').style.display = 'none'; ['read','build','reflect'].forEach(b => { const el = document.getElementById('block-4-' + b); if (el) el.style.removeProperty('display'); }); }
+  loadReflects();
+};
+function enterGarage() {
+  const overlay = document.getElementById('discoveryOverlay');
+  const finishEntrance = () => {
+    overlay.classList.add('fading');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      const st = document.getElementById('soundToggle'); if (st) st.classList.add('visible');
+      try { startAmbient(); } catch (e) { /* ambient audio optional */ }
+    }, 700);
   };
+  try {
+    document.getElementById('discoveryEnterBtn').style.display = 'none';
+    document.querySelector('.bug-mark').style.display = 'none';
+    document.getElementById('discoveryTitle').style.display = 'none';
+    document.getElementById('discoverySub').style.display = 'none';
+    const stage = document.getElementById('hologramStage');
+    stage.style.display = 'block';
+  } catch (e) { /* hologram cosmetics optional, overlay must still dismiss */ }
+  setTimeout(finishEntrance, 3000);
+}
+function openLesson(n) {
+  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('lesson-' + n); const tab = document.getElementById('tab-' + n);
+  if (panel) panel.classList.add('open'); if (tab) tab.classList.add('active');
+  currentLesson = n; panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (n !== 'cheat') showBlock(n, 'read');
+  playUISound(330);
+  const companion = document.getElementById('bugCompanion');
+  if (companion && n !== 'cheat') companion.classList.add('visible');
+  const wrapper = document.getElementById('icebreakerWrapper');
+  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
+}
+function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
+function showBlock(lesson, block) {
+  const panel = document.getElementById('lesson-' + lesson); if (!panel) return;
+  panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+  panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+  const target = document.getElementById('block-' + lesson + '-' + block); if (target) target.classList.add('active');
+  const btn = document.getElementById('sb-' + lesson + '-' + block); if (btn) btn.classList.add('active');
+  playUISound(392);
+}
+function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); }
+let uiAudioCtx = null;
+function playUISound(freq) {
+  try {
+    if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = uiAudioCtx.createOscillator(); const gain = uiAudioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
+    osc.connect(gain); gain.connect(uiAudioCtx.destination);
+    osc.start(); osc.stop(uiAudioCtx.currentTime + 0.18);
+  } catch (e) { /* audio unavailable, silently continue */ }
+}
+function checkQuiz(btn, correct, feedback) {
+  const opts = btn.closest('.quiz-options'); if (opts.querySelector('.correct')) return;
+  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+  if (correct) { btn.classList.add('correct'); if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; } }
+  else { btn.classList.add('wrong'); if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; } setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400); }
+}
+function saveReflect(inputId, savedId) {
+  const val = document.getElementById(inputId)?.value; if (val === undefined) return;
+  localStorage.setItem('bug_' + inputId, val);
+  const saved = document.getElementById(savedId); if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
+  const lessonNum = inputId.split('-')[1];
+  const complete = document.getElementById('complete-' + lessonNum);
+  if (complete) { complete.classList.add('show'); const jokeEl = document.getElementById('joke-' + lessonNum); if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)]; }
+}
+function loadReflects() { document.querySelectorAll('.reflect-input').forEach(el => { const stored = localStorage.getItem('bug_' + el.id); if (stored) el.value = stored; }); }
+function runDebug(id) {
+  const code = document.getElementById('debug-' + id)?.value || ''; const outputEl = document.getElementById('debug-out-' + id); if (!outputEl) return;
+  const logs = []; const fakeCon = { log: (...a) => logs.push(a.map(x => String(x)).join(' ')) };
+  try { const fn = new Function('console', code); fn(fakeCon); outputEl.textContent = logs.join('\n') || '(no output)'; outputEl.style.color = '#b8ff3c'; }
+  catch(e) { outputEl.textContent = (logs.length ? logs.join('\n') + '\n' : '') + 'Error: ' + e.message; outputEl.style.color = '#ff6b1a'; }
+}
+function downloadCheat() {
+  const content = "BUG'S DEBUG GARAGE — FULL CHEAT SHEET\n\n" +
+    "LESSON 1 — What Is a Bug?\nSYNTAX ERROR: typo, can't run\nRUNTIME ERROR: crashes while running\nLOGIC ERROR: runs, wrong result\n\n" +
+    "LESSON 2 — Reading Errors\nReferenceError: variable doesn't exist\nTypeError: wrong type for that action\nCall stack: top = crash site\n\n" +
+    "LESSON 3 — Logic Tracing\nLogic tracing: step through code like the computer would\nOff-by-one: check < vs <= and your starting value\nRubber duck: say each line out loud\n\n" +
+    "LESSON 4 — Advanced Debugging\ntry { risky() } catch(err) { handle }\nDefensive check: if (val && typeof val === 'string')\nDebug mindset: never assume -- verify\n\n" +
+    "SYMBOLS REFERENCE\n( )   parentheses -- call a function or hold arguments\n.     dot -- accesses a property or method\n=     equals sign -- assigns a value\n< <=  common off-by-one culprits";
+  const blob = new Blob([content], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'bug-cheatsheet.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+}
+function goUpgrade() { if (window.firebaseAuth && window.firebaseAuth.currentUser) { window.location.href = 'membership.html'; } else { document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } })); } }
+function handleLogout() { if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); } }
+function spawnParticle() {
+  const field = document.getElementById('particleField'); if (!field) return;
+  const p = document.createElement('div'); p.className = 'particle';
+  const startX = Math.random() * 100; const duration = 8 + Math.random() * 10; const delay = Math.random() * 2;
+  p.style.left = startX + '%'; p.style.bottom = '0'; p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
+  field.appendChild(p); setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
+}
+for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400);
+setInterval(spawnParticle, 900);
+const FACTS = [ "the first computer 'bug' was a real moth found stuck in a Harvard Mark II relay in 1947.", "the average professional developer spends about 35-50% of their time debugging, not writing new code.", "'rubber duck debugging' is a real technique -- explaining your code out loud to an object often reveals the bug.", "the term 'glitch' comes from the Yiddish word 'glitshen,' meaning to slip.", "the Y2K bug happened because programmers stored years using only 2 digits to save memory.", "stack overflow (the website) is named after a real type of runtime error -- recursion that never stops.", "some of the earliest bugs weren't code at all -- they were literal hardware short-circuits caused by insects.", "one misplaced comma once caused NASA to lose an entire spacecraft -- the Mariner 1, in 1962." ];
+let factIndex = 0;
+function cycleFacts() { const el = document.getElementById('factTicker'); if (!el) return; el.classList.remove('show'); setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400); }
+cycleFacts(); setInterval(cycleFacts, 6500);
+const JOKES = [ "There are only 10 types of bugs: the ones you found, and the ones still hiding.", "Debugging is like being a detective in a crime movie where you're also the murderer.", "I told the console to log my feelings. It just printed 'undefined.'", "A bug walks into the garage. It doesn't walk out.", "Why did the developer name their pet 'Exception'? Because it kept getting thrown.", "Why do bugs make terrible poker players? They always give something away.", "My code has no bugs. It just has extremely surprising features." ];
+let companionClicks = 0;
+function companionClick() {
+  companionClicks++;
+  if (companionClicks === 5 && !localStorage.getItem('bug_egg_found')) { localStorage.setItem('bug_egg_found', '1'); showEgg("You found Bug's hidden file! Secret catchphrase unlocked: \"A quiet bug is still a bug.\" ⚠"); }
+  else if (companionClicks % 5 === 0) { showEgg("Bug grins. You've already found this one — but there's always another clue."); }
+}
+function showEgg(text) { const popup = document.getElementById('eggPopup'); document.getElementById('eggText').textContent = text; popup.classList.add('show'); setTimeout(() => popup.classList.remove('show'), 5000); }
+let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
+function startAmbient() { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain(); droneOsc.type = 'sawtooth'; droneOsc.frequency.value = 72; droneGain.gain.value = 0.012; droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start(); } catch (e) { console.warn('Ambient audio unavailable:', e); } }
+function toggleSound() { const btn = document.getElementById('soundToggle'); if (!audioCtx) return; soundOn = !soundOn; droneGain.gain.value = soundOn ? 0.012 : 0; btn.textContent = soundOn ? '🔊' : '🔇'; btn.classList.toggle('muted', !soundOn); }
 
-  window.handleTierUnlock = function(tier) {
-    currentTier = tier;
-    const lvl = tierLevel(tier);
-    if (lvl >= tierLevel('sparks')) {
-      document.getElementById('lock-2').style.display = 'none';
-      ['read','terms','build','reflect','cheat'].forEach(b => {
-        const el = document.getElementById('block-2-' + b);
-        if (el) el.style.removeProperty('display');
-      });
-    }
-    if (lvl >= tierLevel('builders')) {
-      document.getElementById('lock-3').style.display = 'none';
-      ['read','terms','build','reflect','cheat'].forEach(b => {
-        const el = document.getElementById('block-3-' + b);
-        if (el) el.style.removeProperty('display');
-      });
-    }
-    if (lvl >= tierLevel('coders')) {
-      document.getElementById('lock-4').style.display = 'none';
-      ['read','build','reflect','cheat'].forEach(b => {
-        const el = document.getElementById('block-4-' + b);
-        if (el) el.style.removeProperty('display');
-      });
-    }
-    openLesson(1);
-    showBlock(1, 'read');
-    loadReflects();
-  };
+/* ══════════════════ ICEBREAKER — SPOT THE DIFFERENCE GAME ══════════════════ */
+const IB_TIPS = [
+  { label: 'LOOK AT SYMBOLS FIRST', def: "A single bracket, comma, or quote mark is the easiest thing to miss — and the easiest thing to change." },
+  { label: 'COMPARE LINE BY LINE', def: "Don't scan the whole block at once. Match each line in the left pane to the same line on the right." },
+  { label: 'ONE CHANGE, BIG EFFECT', def: "A single wrong character can flip an entire program's behavior. Never assume a line is 'probably fine.'" }
+];
+const IB_ROUNDS_DATA = [
+  { a: ['let score = 10;','if (score > 5) {','  console.log("Win");','}'],
+    b: ['let score = 10;','if (score >= 5) {','  console.log("Win");','}'], diff: 1 },
+  { a: ['function add(a, b) {','  return a + b;','}','console.log(add(2, 3));'],
+    b: ['function add(a, b) {','  return a - b;','}','console.log(add(2, 3));'], diff: 1 },
+  { a: ['let items = ["cat","dog"];','for (let i = 0; i < items.length; i++) {','  console.log(items[i]);','}'],
+    b: ['let items = ["cat","dog"];','for (let i = 0; i <= items.length; i++) {','  console.log(items[i]);','}'], diff: 1 },
+  { a: ['let name = "Bug";','console.log(name.toUpperCase());'],
+    b: ['let name = "Bug";','console.log(name.toUpperCase);'], diff: 1 }
+];
+let ibRound = 0;
+let ibAudioCtx = null;
 
-  function enterLab() {
-    document.getElementById('discoveryOverlay').classList.add('hidden');
-    openLesson(1);
-    showBlock(1, 'read');
+function ibPlayTone(freq, dur) {
+  try {
+    if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ibAudioCtx.createOscillator(); const gain = ibAudioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
+    osc.connect(gain); gain.connect(ibAudioCtx.destination);
+    osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
+  } catch (e) { /* audio unavailable, silently continue */ }
+}
+function ibToggleWrapper() {
+  const wrapper = document.getElementById('icebreakerWrapper');
+  const opening = !wrapper.classList.contains('open');
+  wrapper.classList.toggle('open');
+  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function ibRenderIntro() {
+  const grid = document.getElementById('ibTermsGrid'); if (!grid) return;
+  grid.innerHTML = IB_TIPS.map(t =>
+    '<div class="ib-term-card" onclick="this.classList.toggle(\'open\')">' +
+      '<div class="ib-term-code">' + t.label + '</div>' +
+      '<div class="ib-term-def">' + t.def + '</div>' +
+    '</div>'
+  ).join('');
+}
+function ibStartGame() {
+  document.getElementById('ib-intro').style.display = 'none';
+  document.getElementById('ib-game').style.display = 'block';
+  ibRound = 0;
+  ibBeginRound();
+}
+function ibBeginRound() {
+  const data = IB_ROUNDS_DATA[ibRound];
+  const stage = document.getElementById('ibDiffStage');
+  stage.innerHTML =
+    '<div class="ib-round-label">ROUND ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' +
+    '<div class="ib-diff-goal">Click the line that\'s different between the two snippets.</div>' +
+    '<div class="ib-diff-panes">' +
+      '<div class="ib-diff-pane" id="ibPaneA"></div>' +
+      '<div class="ib-diff-pane" id="ibPaneB"></div>' +
+    '</div>' +
+    '<div class="ib-diff-status" id="ibDiffStatus"></div>';
+  const paneA = document.getElementById('ibPaneA');
+  const paneB = document.getElementById('ibPaneB');
+  paneA.innerHTML = data.a.map((line, idx) => '<div class="ib-diff-line" data-idx="' + idx + '" onclick="ibLineClick(' + idx + ')">' + escapeHtml(line) + '</div>').join('');
+  paneB.innerHTML = data.b.map((line, idx) => '<div class="ib-diff-line" data-idx="' + idx + '" onclick="ibLineClick(' + idx + ')">' + escapeHtml(line) + '</div>').join('');
+}
+function escapeHtml(s) { return s.replace(/</g, '&lt;').replace(/>/g, '&gt;'); }
+function ibLineClick(idx) {
+  const data = IB_ROUNDS_DATA[ibRound];
+  const status = document.getElementById('ibDiffStatus');
+  const lines = document.querySelectorAll('.ib-diff-line[data-idx="' + idx + '"]');
+  if (idx === data.diff) {
+    lines.forEach(l => l.classList.add('correct-pick'));
+    ibPlayTone(500, 0.35);
+    status.textContent = '✓ Found it! Line ' + (idx + 1) + ' is where they differ.';
+    setTimeout(() => ibAdvanceRound(), 1100);
+  } else {
+    lines.forEach(l => { l.classList.add('wrong-pick'); setTimeout(() => l.classList.remove('wrong-pick'), 500); });
+    ibPlayTone(130, 0.3);
+    status.textContent = 'Not that line — look closer at every symbol.';
   }
-
-  function openLesson(n) {
-    document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
-    document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
-    const panel = document.getElementById('lesson-' + n);
-    const tab = document.getElementById('tab-' + n);
-    if (panel) panel.classList.add('open');
-    if (tab) tab.classList.add('active');
-    currentLesson = n;
-    panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  }
-
-  function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
-
-  function showBlock(lesson, block) {
-    const panel = document.getElementById('lesson-' + lesson);
-    if (!panel) return;
-    panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
-    panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-    const target = document.getElementById('block-' + lesson + '-' + block);
-    if (target) target.classList.add('active');
-    const btn = document.getElementById('sb-' + lesson + '-' + block);
-    if (btn) btn.classList.add('active');
-  }
-
-  function toggleTerm(card) { card.classList.toggle('open'); }
-
-  function checkQuiz(btn, correct, feedback) {
-    const opts = btn.closest('.quiz-options');
-    if (opts.querySelector('.correct')) return;
-    const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
-    if (correct) {
-      btn.classList.add('correct');
-      if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
-    } else {
-      btn.classList.add('wrong');
-      if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
-      setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
-    }
-  }
-
-  function saveReflect(inputId, savedId) {
-    const val = document.getElementById(inputId)?.value;
-    if (val !== undefined) {
-      localStorage.setItem('bug_' + inputId, val);
-      const saved = document.getElementById(savedId);
-      if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
-    }
-  }
-
-  function loadReflects() {
-    document.querySelectorAll('.reflect-input').forEach(el => {
-      const stored = localStorage.getItem('bug_' + el.id);
-      if (stored) el.value = stored;
-    });
-  }
-
-  function runDebug(id) {
-    const code = document.getElementById('debug-' + id)?.value || '';
-    const outputEl = document.getElementById('debug-out-' + id);
-    if (!outputEl) return;
-    const logs = [];
-    const fakeCon = { log: (...a) => logs.push(a.map(x => String(x)).join(' ')) };
-    try {
-      const fn = new Function('console', code);
-      fn(fakeCon);
-      outputEl.textContent = logs.join('\n') || '(no output)';
-      outputEl.style.color = '#b8ff3c';
-    } catch(e) {
-      outputEl.textContent = (logs.length ? logs.join('\n') + '\n' : '') + 'Error: ' + e.message;
-      outputEl.style.color = '#ff6b1a';
-    }
-  }
-
-  function goUpgrade() {
-    if (window.firebaseAuth && window.firebaseAuth.currentUser) {
-      window.location.href = 'membership.html';
-    } else {
-      document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
-    }
-  }
-
-  function handleLogout() {
-    if (window.firebaseAuth) {
-      window.firebaseAuth.signOut().then(() => location.reload());
-    }
-  }
-
-  document.addEventListener('DOMContentLoaded', () => {
-    openLesson(1);
-    showBlock(1, 'read');
-    loadReflects();
-  });
+}
+function ibAdvanceRound() {
+  ibRound++;
+  if (ibRound >= IB_ROUNDS_DATA.length) { ibComplete(); }
+  else { ibBeginRound(); }
+}
+function ibSkipGame() { ibComplete(); }
+function ibComplete() {
+  document.getElementById('ib-game').style.display = 'none';
+  document.getElementById('ib-complete').style.display = 'block';
+}
+function ibReset() {
+  document.getElementById('ib-complete').style.display = 'none';
+  document.getElementById('ib-intro').style.display = 'block';
+  ibRound = 0;
+}
+document.addEventListener('DOMContentLoaded', () => { loadReflects(); ibRenderIntro(); });
 </script>
 </body>
 </html>
