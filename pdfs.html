@@ -15,12 +15,12 @@ gtag('config', 'G-DJ3Q488K7W');
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --void:#050508;--deep:#080b14;--card:#0f1525;
-  --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
-  --white:#fff;--off:#c8cce0;--muted:#5a6080;
-  --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
-  --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
-  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
+--void:#050508;--deep:#080b14;--card:#0f1525;
+--border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
+--white:#fff;--off:#c8cce0;--muted:#5a6080;
+--pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
+--grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+--display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
@@ -112,191 +112,174 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 </head>
 <body>
 <nav>
-  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
-  <ul class="nav-links">
-    <li><a href="index.html#crew">Crew</a></li>
-    <li><a href="membership.html">Membership</a></li>
-    <li><a href="games.html">Games</a></li>
-    <li><a href="pdfs.html" class="active">PDFs</a></li>
-    <li><a href="library.html">Library</a></li>
-  </ul>
-  <div class="nav-right">
-    <div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
-      <a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
-      <button id="nav-logout-btn">Sign Out</button>
-    </div>
-    <button class="nav-cta" onclick="openAuthModal('login')">Log In</button>
-    <button class="nav-join" onclick="openAuthModal('signup')">Join Free</button>
-  </div>
-</nav>
-
-<section class="page-hero">
-  <div class="page-hero-content">
-    <span class="page-eyebrow">Method in Motion · PDF Resource Vault</span>
-    <h1 class="page-title">PDFs</h1>
-    <p class="page-desc">Printable cheat sheets and workbooks for every character. Take the universe offline.</p>
-  </div>
-</section>
-
-<section class="pdfs-section">
-  <div class="pdfs__inner">
-    <span class="pdfs-label">Think Like a Programmer</span>
-    <h2 class="pdfs-section-title">Premium Cheat Sheets</h2>
-    <p class="pdfs-section-desc">Three quick-reference guides designed for young coders. Print them, stick them up, reference them forever. $3 each.</p>
-    <div class="cheatsheet-premium-grid">
-
-      <div class="cs-card" style="--cc:#c66bff">
-        <div class="cs-cover">
-          <img src="vol_1-think-cover.png" alt="Think Like a Programmer Vol. 1">
-        </div>
-        <div class="cs-body">
-          <span class="cs-tag">Vol. 1 · Foundations</span>
-          <div class="cs-title">Think Like a Programmer</div>
-          <div class="cs-desc">The foundation. Problem-solving, pattern recognition, sequencing, and the coder mindset. Perfect for beginners.</div>
-          <div class="cs-footer">
-            <div class="cs-price">$3.00</div>
-            <a href="https://buy.stripe.com/8x2aEX7Bk4X8fl83lYa3u0a" class="cs-btn">Buy Now →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cs-card" style="--cc:#00e8ff">
-        <div class="cs-cover">
-          <img src="vol_2-think-cover.png" alt="How Computers Think Vol. 2">
-        </div>
-        <div class="cs-body">
-          <span class="cs-tag">Vol. 2 · Systems & Logic</span>
-          <div class="cs-title">How Computers Think</div>
-          <div class="cs-desc">Go deeper. Systems, input & output, cause & effect, conditions, and loops — how computers actually process the world.</div>
-          <div class="cs-footer">
-            <div class="cs-price">$3.00</div>
-            <a href="https://buy.stripe.com/dRmaEXcVE9do1ui3lYa3u0b" class="cs-btn">Buy Now →</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="cs-card" style="--cc:#ff6baa">
-        <div class="cs-cover">
-          <img src="vol_3-think-cover.png" alt="Building Digital Worlds Vol. 3">
-        </div>
-        <div class="cs-body">
-          <span class="cs-tag">Vol. 3 · The Big Picture</span>
-          <div class="cs-title">Building Digital Worlds</div>
-          <div class="cs-desc">Websites, apps, games, digital design, and emerging tech. For kids who want to know how the digital world is built.</div>
-          <div class="cs-footer">
-            <div class="cs-price">$3.00</div>
-            <a href="https://buy.stripe.com/00w8wPaNwexIc8W6yaa3u0c" class="cs-btn">Buy Now →</a>
-          </div>
-        </div>
-      </div>
-
-    </div>
-
-    <span class="pdfs-label">Character Workbooks</span>
-    <h2 class="pdfs-section-title">Six characters. Six workbooks.</h2>
-    <p class="pdfs-section-desc">50-page printable curriculum packs. Designed for kids, built by creators. Coming soon.</p>
-    <div class="workbooks-grid">
-
-      <div class="wb-card" style="--wc:#f472b6;">
-        <div class="wb-cover"><img src="zen-motion.gif" alt="Zen Vol 1"></div>
-        <div class="wb-body">
-          <div class="wb-char">Zen · CSS & Design</div>
-          <div class="wb-title">Zen's Creative Circuits Vol. 1</div>
-          <div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div>
-          <div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
-        </div>
-      </div>
-
-      <div class="wb-card" style="--wc:#a855f7;">
-        <div class="wb-cover"><img src="byte-motion.gif" alt="Byte Debug Lab"></div>
-        <div class="wb-body">
-          <div class="wb-char">Byte · Debugging</div>
-          <div class="wb-title">Byte's Debug Lab</div>
-          <div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div>
-          <div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
-        </div>
-      </div>
-
-      <div class="wb-card" style="--wc:#00f5d4;">
-        <div class="wb-cover"><img src="loop-motion.gif" alt="Loop Logic Quest"></div>
-        <div class="wb-body">
-          <div class="wb-char">Loop · JavaScript</div>
-          <div class="wb-title">Loop's Logic Quest</div>
-          <div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div>
-          <div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
-        </div>
-      </div>
-
-      <div class="wb-card" style="--wc:#fbbf24;">
-        <div class="wb-cover"><img src="nova-motion.gif" alt="Nova Builds a Website"></div>
-        <div class="wb-body">
-          <div class="wb-char">Nova · HTML Structure</div>
-          <div class="wb-title">Nova Builds a Website</div>
-          <div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div>
-          <div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
-        </div>
-      </div>
-
-      <div class="wb-card" style="--wc:#84cc16;">
-        <div class="wb-cover"><img src="bug-motion.gif" alt="Bug Glitch Quest"></div>
-        <div class="wb-body">
-          <div class="wb-char">Bug · JS Logic</div>
-          <div class="wb-title">Bug's Glitch Quest</div>
-          <div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div>
-          <div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
-        </div>
-      </div>
-
-      <div class="wb-card" style="--wc:#38bdf8;">
-        <div class="wb-cover"><img src="echo-motion.gif" alt="Echo Sound Systems"></div>
-        <div class="wb-body">
-          <div class="wb-char">Echo · Web Audio</div>
-          <div class="wb-title">Echo's Sound Systems</div>
-          <div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div>
-          <div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
-        </div>
-      </div>
-
-    </div>
-
-    <div class="coming-strip">
-      <div class="coming-badge">Coming Soon</div>
-      <div class="coming-strip-title">More Cheat Sheets + Full Workbooks</div>
-      <div class="coming-strip-desc">More printable packs are in production. Stay in orbit — the universe is always expanding.</div>
-    </div>
-  </div>
-</section>
-
-<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
-  <div class="auth-modal-box">
-    <button class="auth-close" id="auth-close-btn">&times;</button>
-    <div class="auth-modal-header">
-      <div class="auth-logo-mark">MiM</div>
-      <p class="auth-tagline">Create. Don't Consume.</p>
-    </div>
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="login">Log In</button>
-      <button class="auth-tab" data-tab="signup">Join the Crew</button>
-    </div>
-    <div id="login-form" class="auth-form active">
-      <div class="auth-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/></div>
-      <div class="auth-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/></div>
-      <p class="auth-error" id="login-error"></p>
-      <button class="auth-submit" id="login-submit-btn">Log In</button>
-      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
-    </div>
-    <div id="signup-form" class="auth-form">
-      <p style="font-family:'Syne',sans-serif;font-size:.72rem;color:rgba(0,232,255,.8);text-align:center;margin-bottom:.9rem">Free account — no card needed</p>
-      <div class="auth-field"><label>Display Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"/></div>
-      <div class="auth-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"/></div>
-      <div class="auth-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"/></div>
-      <p class="auth-error" id="signup-error"></p>
-      <button class="auth-submit" id="signup-submit-btn">Create Free Account</button>
-      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
-    </div>
-  </div>
+<a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
+<ul class="nav-links">
+<li><a href="index.html#crew">Crew</a></li>
+<li><a href="membership.html">Membership</a></li>
+<li><a href="games.html">Games</a></li>
+<li><a href="pdfs.html" class="active">PDFs</a></li>
+<li><a href="library.html">Library</a></li>
+</ul>
+<div class="nav-right">
+<div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
+<a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
+<button id="nav-logout-btn">Sign Out</button>
 </div>
-
+<button class="nav-cta" onclick="openAuthModal('login')">Log In</button>
+<button class="nav-join" onclick="openAuthModal('signup')">Join Free</button>
+</div>
+</nav>
+<section class="page-hero">
+<div class="page-hero-content">
+<span class="page-eyebrow">Method in Motion · PDF Resource Vault</span>
+<h1 class="page-title">PDFs</h1>
+<p class="page-desc">Printable cheat sheets and workbooks for every character. Take the universe offline.</p>
+</div>
+</section>
+<section class="pdfs-section">
+<div class="pdfs__inner">
+<span class="pdfs-label">Think Like a Programmer</span>
+<h2 class="pdfs-section-title">Premium Cheat Sheets</h2>
+<p class="pdfs-section-desc">Three quick-reference guides designed for young coders. Print them, stick them up, reference them forever. $3 each.</p>
+<div class="cheatsheet-premium-grid">
+<div class="cs-card" style="--cc:#c66bff">
+<div class="cs-cover">
+<img src="vol.1-think-cover.png" alt="Think Like a Programmer Vol. 1">
+</div>
+<div class="cs-body">
+<span class="cs-tag">Vol. 1 · Foundations</span>
+<div class="cs-title">Think Like a Programmer</div>
+<div class="cs-desc">The foundation. Problem-solving, pattern recognition, sequencing, and the coder mindset. Perfect for beginners.</div>
+<div class="cs-footer">
+<div class="cs-price">$3.00</div>
+<a href="https://buy.stripe.com/8x2aEX7Bk4X8fl83lYa3u0a" class="cs-btn">Buy Now →</a>
+</div>
+</div>
+</div>
+<div class="cs-card" style="--cc:#00e8ff">
+<div class="cs-cover">
+<img src="vol.2-think-cover.png" alt="How Computers Think Vol. 2">
+</div>
+<div class="cs-body">
+<span class="cs-tag">Vol. 2 · Systems & Logic</span>
+<div class="cs-title">How Computers Think</div>
+<div class="cs-desc">Go deeper. Systems, input & output, cause & effect, conditions, and loops — how computers actually process the world.</div>
+<div class="cs-footer">
+<div class="cs-price">$3.00</div>
+<a href="https://buy.stripe.com/dRmaEXcVE9do1ui3lYa3u0b" class="cs-btn">Buy Now →</a>
+</div>
+</div>
+</div>
+<div class="cs-card" style="--cc:#ff6baa">
+<div class="cs-cover">
+<img src="vol.3-think-cover.png" alt="Building Digital Worlds Vol. 3">
+</div>
+<div class="cs-body">
+<span class="cs-tag">Vol. 3 · The Big Picture</span>
+<div class="cs-title">Building Digital Worlds</div>
+<div class="cs-desc">Websites, apps, games, digital design, and emerging tech. For kids who want to know how the digital world is built.</div>
+<div class="cs-footer">
+<div class="cs-price">$3.00</div>
+<a href="https://buy.stripe.com/00w8wPaNwexIc8W6yaa3u0c" class="cs-btn">Buy Now →</a>
+</div>
+</div>
+</div>
+</div>
+<span class="pdfs-label">Character Workbooks</span>
+<h2 class="pdfs-section-title">Six characters. Six workbooks.</h2>
+<p class="pdfs-section-desc">50-page printable curriculum packs. Designed for kids, built by creators. Coming soon.</p>
+<div class="workbooks-grid">
+<div class="wb-card" style="--wc:#f472b6;">
+<div class="wb-cover"><img src="zen-motion.gif" alt="Zen Vol 1"></div>
+<div class="wb-body">
+<div class="wb-char">Zen · CSS & Design</div>
+<div class="wb-title">Zen's Creative Circuits Vol. 1</div>
+<div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div>
+<div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
+</div>
+</div>
+<div class="wb-card" style="--wc:#a855f7;">
+<div class="wb-cover"><img src="byte-motion.gif" alt="Byte Debug Lab"></div>
+<div class="wb-body">
+<div class="wb-char">Byte · Debugging</div>
+<div class="wb-title">Byte's Debug Lab</div>
+<div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div>
+<div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
+</div>
+</div>
+<div class="wb-card" style="--wc:#00f5d4;">
+<div class="wb-cover"><img src="loop-motion.gif" alt="Loop Logic Quest"></div>
+<div class="wb-body">
+<div class="wb-char">Loop · JavaScript</div>
+<div class="wb-title">Loop's Logic Quest</div>
+<div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div>
+<div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
+</div>
+</div>
+<div class="wb-card" style="--wc:#fbbf24;">
+<div class="wb-cover"><img src="nova-motion.gif" alt="Nova Builds a Website"></div>
+<div class="wb-body">
+<div class="wb-char">Nova · HTML Structure</div>
+<div class="wb-title">Nova Builds a Website</div>
+<div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div>
+<div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
+</div>
+</div>
+<div class="wb-card" style="--wc:#84cc16;">
+<div class="wb-cover"><img src="bug-motion.gif" alt="Bug Glitch Quest"></div>
+<div class="wb-body">
+<div class="wb-char">Bug · JS Logic</div>
+<div class="wb-title">Bug's Glitch Quest</div>
+<div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div>
+<div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
+</div>
+</div>
+<div class="wb-card" style="--wc:#38bdf8;">
+<div class="wb-cover"><img src="echo-motion.gif" alt="Echo Sound Systems"></div>
+<div class="wb-body">
+<div class="wb-char">Echo · Web Audio</div>
+<div class="wb-title">Echo's Sound Systems</div>
+<div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div>
+<div class="wb-footer"><div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">Coming Soon</div></div>
+</div>
+</div>
+</div>
+<div class="coming-strip">
+<div class="coming-badge">Coming Soon</div>
+<div class="coming-strip-title">More Cheat Sheets + Full Workbooks</div>
+<div class="coming-strip-desc">More printable packs are in production. Stay in orbit — the universe is always expanding.</div>
+</div>
+</div>
+</section>
+<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
+<div class="auth-modal-box">
+<button class="auth-close" id="auth-close-btn">&times;</button>
+<div class="auth-modal-header">
+<div class="auth-logo-mark">MiM</div>
+<p class="auth-tagline">Create. Don't Consume.</p>
+</div>
+<div class="auth-tabs">
+<button class="auth-tab active" data-tab="login">Log In</button>
+<button class="auth-tab" data-tab="signup">Join the Crew</button>
+</div>
+<div id="login-form" class="auth-form active">
+<div class="auth-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/></div>
+<div class="auth-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/></div>
+<p class="auth-error" id="login-error"></p>
+<button class="auth-submit" id="login-submit-btn">Log In</button>
+<p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
+</div>
+<div id="signup-form" class="auth-form">
+<p style="font-family:'Syne',sans-serif;font-size:.72rem;color:rgba(0,232,255,.8);text-align:center;margin-bottom:.9rem">Free account — no card needed</p>
+<div class="auth-field"><label>Display Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"/></div>
+<div class="auth-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"/></div>
+<div class="auth-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"/></div>
+<p class="auth-error" id="signup-error"></p>
+<button class="auth-submit" id="signup-submit-btn">Create Free Account</button>
+<p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
+</div>
+</div>
+</div>
 <script>
 function openAuthModal(tab){document.getElementById('auth-modal').classList.add('active');switchTab(tab);}
 function switchTab(tab){document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));document.querySelector('.auth-tab[data-tab="'+tab+'"]').classList.add('active');document.getElementById(tab+'-form').classList.add('active');}
