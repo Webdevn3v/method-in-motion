@@ -1694,29 +1694,6 @@
  top: 100%;
  }
  }
- .zen-companion {
- position: fixed;
- bottom: 24px;
- right: 24px;
- z-index: 150;
- width: 80px;
- height: 80px;
- pointer-events: none;
- opacity: 0;
- transition: opacity 0.6s ease;
- }
- .zen-companion.visible {
- opacity: 1;
- pointer-events: auto;
- }
- .zen-companion img, .zen-companion video {
- width: 80px;
- height: 80px;
- object-fit: contain;
- filter: drop-shadow(0 0 16px rgba(255,107,170,0.5));
- animation: companionFloat 3s ease-in-out infinite;
- cursor: pointer;
- }
  @keyframes companionFloat {
  0%,100% {
  transform: translateY(0);
@@ -1811,16 +1788,6 @@
  }
  .terms-grid {
  grid-template-columns: 1fr;
- }
- .zen-companion {
- width: 60px;
- height: 60px;
- bottom: 16px;
- right: 16px;
- }
- .zen-companion img, .zen-companion video {
- width: 60px;
- height: 60px;
  }
  .fact-ticker {
  display: none;
@@ -1952,7 +1919,7 @@
  
 </div>
  
-<img class="hero-zen-gif" src="corrected-zen-idle.gif" alt="Zen" onerror="this.style.display='none'">
+<img class="hero-zen-gif" src="corrected-zen-idle.gif" alt="Zen" onerror="this.style.display='none'" onclick="companionClick()" style="pointer-events:auto;cursor:pointer;">
  
 <div class="hero-content">
  
@@ -4308,14 +4275,6 @@ MATRIX
  
 </div>
  
-<div class="zen-companion" id="zenCompanion">
- 
-<video src="zen-game-idle-trans.mp4" autoplay muted loop playsinline title="Zen is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
- 
-</video>
- 
-</div>
- 
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">
  🔊
 </button>
@@ -4413,8 +4372,6 @@ MATRIX
  );
  if (n !== 'cheat') showBlock(n, 'read');
  playUISound(330);
- const companion = document.getElementById('zenCompanion');
- if (companion && n !== 'cheat') companion.classList.add('visible');
  const wrapper = document.getElementById('icebreakerWrapper');
  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
  }
