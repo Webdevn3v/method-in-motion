@@ -1,997 +1,4349 @@
 <!DOCTYPE html>
+ 
 <html lang="en">
+ 
 <head>
+ 
 <meta charset="UTF-8" />
+ 
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Loop's Challenge Course | Method in Motion</title>
+ 
+<title>
+Loop's Challenge Course | Method in Motion
+</title>
+ 
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+ 
 <style>
-:root {
-  --cyan: #00f5d4; --cyan-dim: #00c4a8; --cyan-dark: #007a69; --blue: #4fc3f7; --blue-dim: #0288d1;
-  --bg: #050d12; --bg-mid: #0a1a22; --bg-card: #0d2030; --bg-panel: #071520;
-  --text: #e0f7fa; --text-dim: #80cbc4; --text-muted: #4a8a84;
-  --border: rgba(0,245,212,0.18); --border-bright: rgba(0,245,212,0.45);
-  --glow: 0 0 18px rgba(0,245,212,0.35); --glow-strong: 0 0 32px rgba(0,245,212,0.6);
-  --pink: #ff6bad;
-  --font-display: 'Orbitron', monospace; --font-body: 'Space Grotesk', sans-serif; --font-mono: 'Space Mono', monospace;
-}
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(5,13,18,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
-.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--cyan); text-decoration: none; letter-spacing: 0.1em; }
-.nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
-.nav-links a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
-.nav-links a:hover { color: var(--cyan); }
-.nav-user { font-family: var(--font-mono); font-size: 0.75rem; color: var(--cyan); display: none; }
-.nav-logout { background: none; border: 1px solid var(--border); color: var(--text-dim); font-family: var(--font-body); font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: none; }
-.nav-logout:hover { border-color: var(--cyan); color: var(--cyan); }
-
-/* ═══════════ HERO — video background ═══════════ */
-.hero { margin-top: 60px; min-height: 640px; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); }
-.hero-gradient { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(5,13,18,0.96) 0%, rgba(5,13,18,0.5) 30%, rgba(5,13,18,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(5,13,18,0.55) 0%, rgba(5,13,18,0.1) 40%, transparent 70%); pointer-events: none; }
-.hero-pulse { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(ellipse 55% 45% at 50% 65%, rgba(0,245,212,0.14) 0%, transparent 65%); animation: pulseGlow 5s ease-in-out infinite; }
-@keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-.particle-field { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
-.particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--cyan); box-shadow: 0 0 8px 2px rgba(0,245,212,0.6); opacity: 0; animation: floatUp linear infinite; }
-.particle:nth-child(odd) { background: var(--blue); box-shadow: 0 0 8px 2px rgba(79,195,247,0.6); }
-@keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
-.hero-loop-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(0,245,212,0.4)); pointer-events: auto; cursor: pointer; }
-@media (max-width: 768px) { .hero-loop-gif { display: none; } }
-.hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
-.hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--cyan); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(0,245,212,0.6); }
-.hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
-.hero-catchphrase { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--blue); background: rgba(79,195,247,0.1); border: 1px solid rgba(79,195,247,0.3); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; backdrop-filter: blur(4px); }
-.hero-role { font-family: var(--font-display); font-size: clamp(0.75rem, 1.5vw, 0.95rem); font-weight: 600; color: var(--cyan); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; }
-.hero-quote { font-size: 1.05rem; color: var(--text-dim); line-height: 1.6; max-width: 460px; margin-bottom: 1rem; font-style: italic; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
-.hero-quote span { color: var(--cyan); font-style: normal; font-weight: 600; }
-.fact-ticker { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); max-width: 460px; min-height: 32px; margin-bottom: 1.2rem; line-height: 1.5; opacity: 0; transition: opacity 0.5s; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-.fact-ticker.show { opacity: 1; }
-.fact-ticker::before { content: '∞ LOOP\'S LOG — '; color: var(--blue); }
-.hero-tiles { display: flex; gap: 0.8rem; align-items: stretch; }
-.hero-lesson-grid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 0.6rem; }
-.hero-tile { background: rgba(0,245,212,0.08); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; backdrop-filter: blur(4px); }
-.hero-tile:hover { background: rgba(0,245,212,0.18); border-color: var(--cyan); color: var(--cyan); box-shadow: var(--glow); transform: translateY(-2px); }
-.hero-game-tile { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.3rem; min-width: 100px; max-width: 120px; border-radius: 10px; border: 1px solid var(--pink); background: rgba(255,107,173,0.12); color: var(--pink); font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; letter-spacing: 0.05em; text-align: center; padding: 0.6rem 0.5rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 14px rgba(255,107,173,0.15); }
-.hero-game-tile:hover { background: rgba(255,107,173,0.24); box-shadow: 0 0 22px rgba(255,107,173,0.4); transform: translateY(-2px); }
-.hero-game-icon { font-size: 1.2rem; }
-.hero-game-cta { font-size: 0.6rem; opacity: 0.85; }
-
-/* ═══════════ ICEBREAKER — STEP COUNTER GAME ═══════════ */
-.icebreaker-wrapper { display: none; }
-.icebreaker-wrapper.open { display: block; }
-.icebreaker-wrapper.open .icebreaker { animation: ibPowerOn 0.6s ease; }
-@keyframes ibPowerOn { 0% { opacity: 0; transform: scale(0.92); filter: brightness(3.5) saturate(1.6); } 15% { opacity: 1; filter: brightness(2.4) saturate(1.4); } 45% { transform: scale(1.015); filter: brightness(1.3); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
-.icebreaker { background: var(--bg-mid); border-bottom: 1px solid var(--border); padding: 3rem 2rem 3.5rem; }
-.ib-header { max-width: 640px; margin: 0 auto 2.2rem; text-align: center; }
-.ib-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; color: var(--blue); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
-.ib-title { font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem); color: #fff; font-weight: 900; margin-bottom: 0.6rem; text-shadow: var(--glow); }
-.ib-sub { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
-.ib-phase { max-width: 760px; margin: 0 auto; }
-.ib-terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 0.8rem; margin-bottom: 2rem; }
-.ib-term-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 10px; padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: center; }
-.ib-term-card:hover { transform: translateY(-2px); }
-.ib-term-code { font-family: var(--font-display); font-size: 0.85rem; font-weight: 900; margin-bottom: 0.5rem; }
-.ib-term-def { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; display: none; }
-.ib-term-card.open .ib-term-def { display: block; }
-.ib-start-btn { display: block; margin: 0 auto; background: linear-gradient(135deg, var(--cyan), var(--blue)); color: #04141a; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 0.9rem 2.4rem; border-radius: 100px; border: none; cursor: pointer; letter-spacing: 0.08em; box-shadow: var(--glow-strong); transition: transform 0.2s; }
-.ib-start-btn:hover { transform: scale(1.03); }
-.ib-track-stage { background: var(--bg-card); border-radius: 14px; padding: 1.8rem; text-align: center; }
-.ib-round-label { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.14em; margin-bottom: 1rem; }
-.ib-track-goal { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 1.2rem; line-height: 1.6; }
-.ib-track { position: relative; height: 70px; background: #04141a; border: 1px solid var(--border); border-radius: 10px; margin-bottom: 1.4rem; display: flex; align-items: center; padding: 0 1.2rem; }
-.ib-track-dot { position: absolute; bottom: 12px; width: 12px; height: 12px; border-radius: 50%; background: var(--border-bright); transform: translateX(-50%); }
-.ib-track-dot.target { background: var(--pink); box-shadow: 0 0 10px var(--pink); }
-.ib-track-runner { position: absolute; bottom: 22px; font-size: 1.6rem; transform: translateX(-50%); transition: left 0.5s ease; }
-.ib-controls-row { display: flex; justify-content: center; gap: 1.6rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
-.ib-control { display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
-.ib-control label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.1em; text-transform: uppercase; }
-.ib-control-row { display: flex; align-items: center; gap: 0.6rem; }
-.ib-step-btn { width: 32px; height: 32px; border-radius: 50%; border: 1px solid var(--border-bright); background: rgba(0,245,212,0.08); color: var(--cyan); font-size: 1rem; font-weight: 700; cursor: pointer; transition: all 0.15s; }
-.ib-step-btn:hover { background: rgba(0,245,212,0.18); }
-.ib-control-val { font-family: var(--font-display); font-size: 1.1rem; font-weight: 900; color: #fff; min-width: 28px; text-align: center; }
-.ib-run-btn { background: var(--cyan); color: #04141a; border: none; padding: 0.7rem 1.8rem; border-radius: 100px; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; }
-.ib-track-status { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); min-height: 20px; margin-top: 1rem; }
-.ib-build-stage { background: var(--bg-card); border-radius: 14px; padding: 2rem; text-align: center; }
-.ib-build-eyebrow { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.14em; margin-bottom: 0.6rem; }
-.ib-build-def { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; max-width: 480px; margin: 0 auto 1.6rem; }
-.ib-slots { display: flex; justify-content: center; gap: 0.6rem; margin-bottom: 1.4rem; flex-wrap: wrap; }
-.ib-slot { min-width: 84px; height: 52px; padding: 0 0.6rem; border: 2px dashed var(--border-bright); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-muted); background: rgba(255,255,255,0.02); transition: all 0.2s; text-align: center; word-break: break-word; }
-.ib-slot.filled { border-style: solid; color: #fff; font-weight: 700; }
-.ib-pieces-tray { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
-.ib-piece { padding: 0.7rem 1rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; cursor: grab; user-select: none; border: 2px solid; transition: all 0.2s; background: rgba(255,255,255,0.04); }
-.ib-piece:active { cursor: grabbing; }
-.ib-piece.placed { opacity: 0.25; pointer-events: none; }
-.ib-build-feedback { font-family: var(--font-mono); font-size: 0.78rem; color: var(--cyan); min-height: 22px; margin-bottom: 0.6rem; }
-.ib-check-btn { background: var(--cyan); color: #04141a; border: none; padding: 0.6rem 1.6rem; border-radius: 100px; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; }
-.ib-sequence-stage { background: var(--bg-card); border-radius: 14px; padding: 2rem; text-align: center; }
-.ib-seq-status { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em; margin-bottom: 1.4rem; min-height: 20px; }
-.ib-seq-board { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; max-width: 680px; margin: 0 auto; }
-.ib-seq-card { min-width: 84px; min-height: 84px; padding: 0.5rem 0.9rem; border-radius: 12px; border: 2px solid; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.78rem; font-weight: 700; cursor: pointer; transition: all 0.15s; background: rgba(255,255,255,0.03); text-align: center; line-height: 1.3; word-break: break-word; }
-.ib-seq-card.lit { transform: scale(1.15); box-shadow: 0 0 28px var(--c, currentColor); background: var(--c, currentColor); color: #050d12 !important; }
-.ib-seq-card.wrong { animation: shake 0.3s ease; }
-@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
-.ib-complete-card { background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 14px; padding: 2.5rem 2rem; text-align: center; }
-.ib-complete-card img { width: 90px; height: 90px; object-fit: contain; margin: 0 auto 1rem; display: block; filter: drop-shadow(0 0 20px rgba(0,245,212,0.5)); }
-.ib-complete-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--cyan); margin-bottom: 0.8rem; text-shadow: var(--glow); }
-.ib-complete-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.4rem; }
-.ib-replay-btn { background: none; border: 1px solid var(--border-bright); color: var(--cyan); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.4rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; }
-.ib-skip-btn { display: block; margin: 1.6rem auto 0; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.2s; }
-.ib-skip-btn:hover { color: var(--text-dim); border-color: var(--border-bright); }
-
-/* ═══════════ HOLOGRAM ENTRANCE ═══════════ */
-.discovery-overlay.fading { opacity: 0; transition: opacity 0.7s ease; pointer-events: none; }
-.hologram-stage { display: none; position: relative; width: min(320px, 78vw); margin: 0 auto; }
-.hologram-frame { position: relative; border: 1px solid rgba(0,245,212,0.45); border-radius: 12px; overflow: hidden; box-shadow: 0 0 40px rgba(0,245,212,0.35), 0 0 80px rgba(79,195,247,0.2); animation: hologramMaterialize 1.1s ease-out, hologramFlicker 2.4s steps(1) infinite 1.1s; }
-.hologram-frame::before, .hologram-frame::after { content: ''; position: absolute; width: 22px; height: 22px; border: 2px solid var(--cyan); z-index: 5; }
-.hologram-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-.hologram-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-.hologram-video { width: 100%; display: block; filter: saturate(1.2) brightness(1.05); }
-.hologram-scanlines { position: absolute; inset: 0; z-index: 4; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0,245,212,0.08) 0px, transparent 2px, transparent 4px); mix-blend-mode: overlay; }
-.hologram-scan-sweep { position: absolute; left: 0; right: 0; height: 40%; z-index: 6; pointer-events: none; background: linear-gradient(to bottom, transparent, rgba(0,245,212,0.25), transparent); animation: hologramSweep 1.6s ease-in-out infinite; }
-.hologram-caption { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--cyan); text-shadow: 0 0 10px rgba(0,245,212,0.6); animation: pulse 1.2s ease-in-out infinite; }
-@keyframes hologramMaterialize { 0% { opacity: 0; transform: scale(0.85) translateY(10px); clip-path: inset(0 0 100% 0); } 40% { opacity: 1; clip-path: inset(0 0 0 0); } 100% { opacity: 1; transform: scale(1) translateY(0); clip-path: inset(0 0 0 0); } }
-@keyframes hologramFlicker { 0%, 100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.6; } 94% { opacity: 1; } 96% { opacity: 0.75; } 97% { opacity: 1; } }
-@keyframes hologramSweep { 0% { top: -40%; } 100% { top: 100%; } }
-
-.lesson-strip { position: sticky; top: 60px; z-index: 90; background: rgba(5,13,18,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; overflow-x: auto; scrollbar-width: none; }
-.lesson-strip::-webkit-scrollbar { display: none; }
-.lesson-tab { flex-shrink: 0; padding: 0.9rem 1.6rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; background: none; border-top: none; border-left: none; border-right: none; }
-.lesson-tab:hover { color: var(--cyan); text-shadow: 0 0 8px rgba(0,245,212,0.5); transform: translateY(-1px); }
-.lesson-tab.active { color: var(--cyan); border-bottom-color: var(--cyan); text-shadow: 0 0 8px rgba(0,245,212,0.5); }
-.lesson-panel { display: none; }
-.lesson-panel.open { display: grid; grid-template-columns: 220px 1fr; min-height: 80vh; }
-.lesson-sidebar { background: var(--bg-panel); border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: sticky; top: calc(60px + 42px); height: calc(100vh - 102px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
-.sidebar-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-.sidebar-nav-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.65rem 0.8rem; margin-bottom: 0.2rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
-.sidebar-nav-btn:hover { background: rgba(0,245,212,0.07); color: var(--cyan); transform: translateX(3px); }
-.sidebar-nav-btn.active { background: rgba(0,245,212,0.11); color: var(--cyan); font-weight: 600; }
-.sidebar-icon { font-size: 0.9rem; }
-.sidebar-divider { height: 1px; background: var(--border); margin: 1rem 0; }
-.sidebar-game-link { display: block; margin-top: 1rem; padding: 0.65rem 0.8rem; background: rgba(0,245,212,0.05); border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--cyan-dim); text-decoration: none; letter-spacing: 0.08em; transition: all 0.2s; text-align: center; }
-.sidebar-game-link:hover { background: rgba(0,245,212,0.13); border-color: var(--cyan); color: var(--cyan); }
-.lesson-content { padding: 2.5rem 3rem; max-width: 900px; }
-.content-block { display: none; }
-.content-block.active { display: block; }
-.section-header { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
-.section-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; font-family: var(--font-mono); letter-spacing: 0.05em; }
-.read-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem 2rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
-.read-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--cyan), var(--blue)); }
-.read-card-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--cyan); letter-spacing: 0.2em; margin-bottom: 0.6rem; opacity: 0.7; }
-.read-card h3 { font-family: var(--font-display); font-size: 0.95rem; color: #fff; margin-bottom: 0.8rem; font-weight: 700; }
-.read-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
-.read-card p strong { color: var(--cyan); font-weight: 600; }
-.read-card code { font-family: var(--font-mono); font-size: 0.85rem; background: rgba(0,245,212,0.1); color: var(--cyan); padding: 0.15em 0.4em; border-radius: 4px; }
-.code-block { background: #040e14; border: 1px solid var(--border); border-radius: 8px; padding: 1.5rem; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.7; color: #a0e4db; overflow-x: auto; }
-.code-block .kw { color: #00f5d4; font-weight: 700; } .code-block .str { color: #ffe066; } .code-block .cm { color: #4a8a84; font-style: italic; } .code-block .num { color: #ff9a9a; } .code-block .fn { color: #4fc3f7; }
-.terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-.term-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; }
-.term-card:hover { border-color: var(--cyan); box-shadow: 0 0 14px rgba(0,245,212,0.2); transform: translateY(-2px); }
-.term-card.open { border-color: var(--cyan); }
-.term-name { font-family: var(--font-mono); font-size: 0.8rem; color: var(--cyan); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-.term-arrow { transition: transform 0.2s; color: var(--text-muted); }
-.term-card.open .term-arrow { transform: rotate(90deg); }
-.term-def { display: none; font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
-.term-card.open .term-def { display: block; }
-.editor-wrap { background: #040e14; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; margin-bottom: 1rem; }
-.editor-toolbar { background: rgba(0,245,212,0.06); border-bottom: 1px solid var(--border); padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.12em; display: flex; justify-content: space-between; align-items: center; }
-.editor-run-btn { background: var(--cyan); color: #04141a; border: none; padding: 0.25rem 0.8rem; border-radius: 4px; font-family: var(--font-mono); font-size: 0.65rem; font-weight: 700; cursor: pointer; letter-spacing: 0.1em; transition: opacity 0.2s; }
-.editor-run-btn:hover { opacity: 0.85; }
-.code-editor { width: 100%; min-height: 160px; background: transparent; border: none; padding: 1rem 1.2rem; font-family: var(--font-mono); font-size: 0.82rem; color: #a0e4db; resize: vertical; outline: none; line-height: 1.7; }
-.preview-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.15em; margin-bottom: 0.4rem; text-transform: uppercase; }
-.console-output { background: #000; border: 1px solid var(--border); border-radius: 8px; padding: 1rem; font-family: var(--font-mono); font-size: 0.82rem; color: #00f5d4; min-height: 80px; white-space: pre-wrap; }
-.quiz-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
-.quiz-q { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; }
-.quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
-.quiz-opt { background: rgba(0,245,212,0.04); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; font-size: 0.88rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-align: left; font-family: var(--font-body); }
-.quiz-opt:hover { border-color: var(--cyan); color: var(--cyan); }
-.quiz-opt.correct { border-color: #00f5d4; background: rgba(0,245,212,0.12); color: #00f5d4; }
-.quiz-opt.wrong { border-color: #ff6b6b; background: rgba(255,107,107,0.1); color: #ff6b6b; animation: shake 0.3s ease; }
-.quiz-feedback { font-size: 0.82rem; margin-top: 0.6rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; }
-.quiz-feedback.show { display: block; }
-.quiz-feedback.correct { background: rgba(0,245,212,0.1); color: #00f5d4; border: 1px solid rgba(0,245,212,0.25); }
-.quiz-feedback.wrong { background: rgba(255,107,107,0.08); color: #ff9a9a; border: 1px solid rgba(255,107,107,0.2); }
-.reflect-prompt { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
-.reflect-q { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.8rem; line-height: 1.5; }
-.reflect-input { width: 100%; background: rgba(0,245,212,0.04); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--text); resize: vertical; min-height: 80px; outline: none; transition: border-color 0.2s; }
-.reflect-input:focus { border-color: var(--cyan); }
-.reflect-save-btn { margin-top: 0.5rem; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.35rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; }
-.reflect-save-btn:hover { border-color: var(--cyan); color: var(--cyan); }
-.reflect-saved { font-family: var(--font-mono); font-size: 0.68rem; color: var(--cyan); margin-top: 0.4rem; display: none; }
-.cheat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.8rem; margin-bottom: 1rem; }
-.cheat-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--cyan); margin-bottom: 1rem; font-weight: 700; }
-.cheat-items { display: flex; flex-direction: column; gap: 0.7rem; }
-.cheat-item { display: flex; gap: 1rem; align-items: flex-start; padding-bottom: 0.7rem; border-bottom: 1px solid rgba(0,245,212,0.06); }
-.cheat-item:last-child { border-bottom: none; padding-bottom: 0; }
-.cheat-term { font-family: var(--font-mono); font-size: 0.78rem; color: var(--cyan); min-width: 140px; font-weight: 700; }
-.cheat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
-.cheat-btn-row { display: flex; gap: 0.7rem; margin-top: 1.2rem; flex-wrap: wrap; }
-.cheat-download-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(0,245,212,0.07); border: 1px solid var(--border-bright); color: var(--cyan); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.08em; }
-.cheat-download-btn:hover { background: rgba(0,245,212,0.16); box-shadow: var(--glow); }
-.cheat-download-btn.secondary { background: none; border-color: var(--border); color: var(--text-muted); font-size: 0.65rem; }
-.cheat-download-btn.secondary:hover { color: var(--text-dim); border-color: var(--border-bright); }
-.locked-panel { padding: 4rem 3rem; text-align: center; }
-.locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.45; }
-.locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; }
-.locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-.gate-btn { display: inline-block; background: var(--cyan); color: #04141a; font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; padding: 0.8rem 2rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; letter-spacing: 0.08em; transition: opacity 0.2s; }
-.gate-btn:hover { opacity: 0.85; }
-.lesson-complete { background: linear-gradient(135deg, rgba(0,245,212,0.08), rgba(79,195,247,0.06)); border: 1px solid var(--border-bright); border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; display: none; }
-.lesson-complete.show { display: block; }
-.lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--cyan); margin-bottom: 0.5rem; }
-.lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
-.lesson-joke { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--blue); font-style: italic; }
-.discovery-overlay { position: fixed; inset: 0; z-index: 200; background: #050d12; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; }
-.discovery-overlay.hidden { display: none; }
-.loop-mark { font-family: var(--font-mono); font-size: 2rem; color: var(--cyan); margin-bottom: 1rem; letter-spacing: 0.3em; text-shadow: var(--glow-strong); animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-.discovery-title { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; color: var(--cyan); text-shadow: var(--glow-strong); margin-bottom: 0.8rem; }
-.discovery-sub { font-size: 1rem; color: var(--text-dim); max-width: 460px; line-height: 1.6; margin-bottom: 2rem; }
-.discovery-enter-btn { background: var(--cyan); color: #04141a; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 1rem 2.5rem; border-radius: 8px; border: none; cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s; box-shadow: var(--glow-strong); }
-.discovery-enter-btn:hover { transform: scale(1.03); }
-.loop-companion { position: fixed; bottom: 24px; right: 24px; z-index: 150; width: 80px; height: 80px; pointer-events: none; opacity: 0; transition: opacity 0.6s ease; }
-.loop-companion.visible { opacity: 1; pointer-events: auto; }
-.loop-companion img { width: 80px; height: 80px; object-fit: contain; filter: drop-shadow(0 0 16px rgba(0,245,212,0.5)); animation: companionFloat 3s ease-in-out infinite; cursor: pointer; }
-@keyframes companionFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-.sound-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: rgba(13,32,48,0.9); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; opacity: 0; pointer-events: none; }
-.sound-toggle.visible { opacity: 1; pointer-events: auto; }
-.sound-toggle:hover { box-shadow: var(--glow); border-color: var(--cyan); }
-.sound-toggle.muted { opacity: 0.5; }
-.egg-popup { position: fixed; bottom: 100px; right: 24px; z-index: 250; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 1.2rem 1.4rem; max-width: 260px; box-shadow: var(--glow-strong); display: none; }
-.egg-popup.show { display: block; animation: eggPop 0.4s ease; }
-@keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-.egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--cyan); margin-bottom: 0.5rem; }
-.egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
-@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .hero-tiles { flex-wrap: wrap; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .fact-ticker { display: none; } }
+ :root {
+ --cyan: #00f5d4;
+ --cyan-dim: #00c4a8;
+ --cyan-dark: #007a69;
+ --blue: #4fc3f7;
+ --blue-dim: #0288d1;
+ --bg: #050d12;
+ --bg-mid: #0a1a22;
+ --bg-card: #0d2030;
+ --bg-panel: #071520;
+ --text: #e0f7fa;
+ --text-dim: #80cbc4;
+ --text-muted: #4a8a84;
+ --border: rgba(0,245,212,0.18);
+ --border-bright: rgba(0,245,212,0.45);
+ --glow: 0 0 18px rgba(0,245,212,0.35);
+ --glow-strong: 0 0 32px rgba(0,245,212,0.6);
+ --pink: #ff6bad;
+ --font-display: 'Orbitron', monospace;
+ --font-body: 'Space Grotesk', sans-serif;
+ --font-mono: 'Space Mono', monospace;
+ }
+ * {
+ box-sizing: border-box;
+ margin: 0;
+ padding: 0;
+ }
+ body {
+ font-family: var(--font-body);
+ background: var(--bg);
+ color: var(--text);
+ min-height: 100vh;
+ overflow-x: hidden;
+ }
+ nav {
+ position: fixed;
+ top: 0;
+ left: 0;
+ right: 0;
+ z-index: 100;
+ display: flex;
+ align-items: center;
+ justify-content: space-between;
+ padding: 0 2rem;
+ height: 60px;
+ background: rgba(5,13,18,0.96);
+ border-bottom: 1px solid var(--border);
+ backdrop-filter: blur(10px);
+ }
+ .nav-logo {
+ font-family: var(--font-display);
+ font-size: 0.85rem;
+ font-weight: 700;
+ color: var(--cyan);
+ text-decoration: none;
+ letter-spacing: 0.1em;
+ }
+ .nav-links {
+ display: flex;
+ align-items: center;
+ gap: 1.5rem;
+ list-style: none;
+ }
+ .nav-links a {
+ font-family: var(--font-body);
+ font-size: 0.82rem;
+ font-weight: 500;
+ color: var(--text-dim);
+ text-decoration: none;
+ letter-spacing: 0.05em;
+ transition: color 0.2s;
+ }
+ .nav-links a:hover {
+ color: var(--cyan);
+ }
+ .nav-user {
+ font-family: var(--font-mono);
+ font-size: 0.75rem;
+ color: var(--cyan);
+ display: none;
+ }
+ .nav-logout {
+ background: none;
+ border: 1px solid var(--border);
+ color: var(--text-dim);
+ font-family: var(--font-body);
+ font-size: 0.78rem;
+ padding: 0.3rem 0.8rem;
+ border-radius: 4px;
+ cursor: pointer;
+ transition: all 0.2s;
+ display: none;
+ }
+ .nav-logout:hover {
+ border-color: var(--cyan);
+ color: var(--cyan);
+ }
+ /* ═══════════ HERO — video background ═══════════ */ .hero {
+ margin-top: 60px;
+ min-height: 640px;
+ position: relative;
+ overflow: hidden;
+ display: flex;
+ align-items: flex-end;
+ }
+ .hero-video {
+ position: absolute;
+ inset: 0;
+ width: 100%;
+ height: 100%;
+ object-fit: cover;
+ transform: scale(1.02);
+ }
+ .hero-gradient {
+ position: absolute;
+ inset: 0;
+ z-index: 2;
+ background: linear-gradient(to top, rgba(5,13,18,0.96) 0%, rgba(5,13,18,0.5) 30%, rgba(5,13,18,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(5,13,18,0.55) 0%, rgba(5,13,18,0.1) 40%, transparent 70%);
+ pointer-events: none;
+ }
+ .hero-pulse {
+ position: absolute;
+ inset: 0;
+ z-index: 3;
+ pointer-events: none;
+ background: radial-gradient(ellipse 55% 45% at 50% 65%, rgba(0,245,212,0.14) 0%, transparent 65%);
+ animation: pulseGlow 5s ease-in-out infinite;
+ }
+ @keyframes pulseGlow {
+ 0%, 100% {
+ opacity: 0.5;
+ }
+ 50% {
+ opacity: 1;
+ }
+ }
+ .particle-field {
+ position: absolute;
+ inset: 0;
+ z-index: 4;
+ pointer-events: none;
+ overflow: hidden;
+ }
+ .particle {
+ position: absolute;
+ width: 3px;
+ height: 3px;
+ border-radius: 50%;
+ background: var(--cyan);
+ box-shadow: 0 0 8px 2px rgba(0,245,212,0.6);
+ opacity: 0;
+ animation: floatUp linear infinite;
+ }
+ .particle:nth-child(odd) {
+ background: var(--blue);
+ box-shadow: 0 0 8px 2px rgba(79,195,247,0.6);
+ }
+ @keyframes floatUp {
+ 0% {
+ transform: translateY(0) translateX(0);
+ opacity: 0;
+ }
+ 10% {
+ opacity: 0.8;
+ }
+ 90% {
+ opacity: 0.4;
+ }
+ 100% {
+ transform: translateY(-380px) translateX(20px);
+ opacity: 0;
+ }
+ }
+ .hero-loop-gif {
+ position: absolute;
+ z-index: 8;
+ right: 4%;
+ bottom: 0;
+ height: 82%;
+ max-height: 520px;
+ width: auto;
+ object-fit: contain;
+ filter: drop-shadow(0 0 30px rgba(0,245,212,0.4));
+ pointer-events: auto;
+ cursor: pointer;
+ }
+ @media (max-width: 768px) {
+ .hero-loop-gif {
+ display: none;
+ }
+ }
+ .hero-content {
+ position: relative;
+ z-index: 10;
+ padding: 3rem 3rem 3.5rem;
+ max-width: 620px;
+ }
+ .hero-eyebrow {
+ font-family: var(--font-mono);
+ font-size: 0.7rem;
+ color: var(--cyan);
+ letter-spacing: 0.2em;
+ text-transform: uppercase;
+ margin-bottom: 1rem;
+ opacity: 0.9;
+ text-shadow: 0 0 12px rgba(0,245,212,0.6);
+ }
+ .hero-name {
+ font-family: var(--font-display);
+ font-size: clamp(2.8rem, 6vw, 4.5rem);
+ font-weight: 900;
+ color: #fff;
+ line-height: 0.95;
+ text-shadow: var(--glow-strong);
+ margin-bottom: 0.4rem;
+ }
+ .hero-catchphrase {
+ display: inline-block;
+ font-family: var(--font-mono);
+ font-size: 0.68rem;
+ letter-spacing: 0.14em;
+ text-transform: uppercase;
+ color: var(--blue);
+ background: rgba(79,195,247,0.1);
+ border: 1px solid rgba(79,195,247,0.3);
+ padding: 0.3rem 0.8rem;
+ border-radius: 100px;
+ margin-bottom: 1rem;
+ backdrop-filter: blur(4px);
+ }
+ .hero-role {
+ font-family: var(--font-display);
+ font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+ font-weight: 600;
+ color: var(--cyan);
+ letter-spacing: 0.18em;
+ text-transform: uppercase;
+ margin-bottom: 1.2rem;
+ }
+ .hero-quote {
+ font-size: 1.05rem;
+ color: var(--text-dim);
+ line-height: 1.6;
+ max-width: 460px;
+ margin-bottom: 1rem;
+ font-style: italic;
+ text-shadow: 0 2px 12px rgba(0,0,0,0.8);
+ }
+ .hero-quote span {
+ color: var(--cyan);
+ font-style: normal;
+ font-weight: 600;
+ }
+ .fact-ticker {
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ color: var(--text-dim);
+ max-width: 460px;
+ min-height: 32px;
+ margin-bottom: 1.2rem;
+ line-height: 1.5;
+ opacity: 0;
+ transition: opacity 0.5s;
+ text-shadow: 0 2px 10px rgba(0,0,0,0.9);
+ }
+ .fact-ticker.show {
+ opacity: 1;
+ }
+ .fact-ticker::before {
+ content: '∞ LOOP\'S LOG — ';
+ color: var(--blue);
+ }
+ .hero-tiles {
+ display: flex;
+ gap: 0.8rem;
+ align-items: stretch;
+ flex-wrap: wrap;
+ }
+ .hero-lesson-grid {
+ display: grid;
+ grid-template-columns: repeat(2, minmax(140px, 1fr));
+ gap: 0.6rem;
+ }
+ .hero-tile {
+ background: rgba(0,245,212,0.08);
+ border: 1px solid var(--border);
+ border-radius: 6px;
+ padding: 0.5rem 1rem;
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ color: var(--text-dim);
+ cursor: pointer;
+ transition: all 0.2s;
+ text-decoration: none;
+ display: block;
+ backdrop-filter: blur(4px);
+ }
+ .hero-tile:hover {
+ background: rgba(0,245,212,0.18);
+ border-color: var(--cyan);
+ color: var(--cyan);
+ box-shadow: var(--glow);
+ transform: translateY(-2px);
+ }
+ .hero-game-tile {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ gap: 0.35rem;
+ min-width: 128px;
+ max-width: 150px;
+ border-radius: 12px;
+ border: 2px solid var(--pink);
+ background: linear-gradient(160deg, rgba(255,107,173,0.24), rgba(0,245,212,0.14));
+ color: #fff;
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ font-weight: 700;
+ letter-spacing: 0.05em;
+ text-align: center;
+ padding: 0.75rem 0.6rem;
+ cursor: pointer;
+ transition: all 0.2s;
+ box-shadow: 0 0 22px rgba(255,107,173,0.3), inset 0 0 16px rgba(255,107,173,0.08);
+ animation: heroGameFloat 3.4s ease-in-out infinite;
+ }
+ .hero-game-tile:hover {
+ background: linear-gradient(160deg, rgba(255,107,173,0.36), rgba(0,245,212,0.24));
+ box-shadow: 0 0 32px rgba(255,107,173,0.5), inset 0 0 20px rgba(255,107,173,0.14);
+ transform: translateY(-3px) scale(1.03);
+ }
+ @keyframes heroGameFloat {
+ 0%, 100% {
+ transform: translateY(0);
+ }
+ 50% {
+ transform: translateY(-4px);
+ }
+ }
+ .hero-game-icon {
+ font-size: 1.5rem;
+ filter: drop-shadow(0 0 8px rgba(255,107,173,0.7));
+ }
+ .hero-game-label {
+ font-family: var(--font-display);
+ font-size: 0.74rem;
+ letter-spacing: 0.06em;
+ }
+ .hero-game-cta {
+ font-size: 0.6rem;
+ opacity: 0.9;
+ color: var(--pink);
+ }
+ /* ═══════════ ICEBREAKER — STEP COUNTER GAME ═══════════ */ .icebreaker-wrapper {
+ display: none;
+ }
+ .icebreaker-wrapper.open {
+ display: block;
+ }
+ .icebreaker-wrapper.open .icebreaker {
+ animation: ibPowerOn 0.6s ease;
+ }
+ @keyframes ibPowerOn {
+ 0% {
+ opacity: 0;
+ transform: scale(0.92);
+ filter: brightness(3.5) saturate(1.6);
+ }
+ 15% {
+ opacity: 1;
+ filter: brightness(2.4) saturate(1.4);
+ }
+ 45% {
+ transform: scale(1.015);
+ filter: brightness(1.3);
+ }
+ 100% {
+ opacity: 1;
+ transform: scale(1);
+ filter: brightness(1);
+ }
+ }
+ .icebreaker {
+ background: var(--bg-mid);
+ border-bottom: 1px solid var(--border);
+ padding: 3rem 2rem 3.5rem;
+ }
+ .ib-header {
+ max-width: 640px;
+ margin: 0 auto 2.2rem;
+ text-align: center;
+ }
+ .ib-eyebrow {
+ font-family: var(--font-mono);
+ font-size: 0.68rem;
+ color: var(--blue);
+ letter-spacing: 0.18em;
+ margin-bottom: 0.6rem;
+ }
+ .ib-title {
+ font-family: var(--font-display);
+ font-size: clamp(1.4rem, 3.5vw, 2rem);
+ color: #fff;
+ font-weight: 900;
+ margin-bottom: 0.6rem;
+ text-shadow: var(--glow);
+ }
+ .ib-sub {
+ font-size: 0.9rem;
+ color: var(--text-dim);
+ line-height: 1.6;
+ }
+ .ib-phase {
+ max-width: 760px;
+ margin: 0 auto;
+ }
+ .ib-terms-grid {
+ display: grid;
+ grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+ gap: 0.8rem;
+ margin-bottom: 2rem;
+ }
+ .ib-term-card {
+ background: var(--bg-card);
+ border: 2px solid var(--border);
+ border-radius: 10px;
+ padding: 1rem;
+ cursor: pointer;
+ transition: all 0.2s;
+ text-align: center;
+ }
+ .ib-term-card:hover {
+ transform: translateY(-2px);
+ }
+ .ib-term-code {
+ font-family: var(--font-display);
+ font-size: 0.85rem;
+ font-weight: 900;
+ margin-bottom: 0.5rem;
+ }
+ .ib-term-def {
+ font-size: 0.78rem;
+ color: var(--text-dim);
+ line-height: 1.5;
+ display: none;
+ }
+ .ib-term-card.open .ib-term-def {
+ display: block;
+ }
+ .ib-start-btn {
+ display: block;
+ margin: 0 auto;
+ background: linear-gradient(135deg, var(--cyan), var(--blue));
+ color: #04141a;
+ font-family: var(--font-display);
+ font-size: 0.85rem;
+ font-weight: 700;
+ padding: 0.9rem 2.4rem;
+ border-radius: 100px;
+ border: none;
+ cursor: pointer;
+ letter-spacing: 0.08em;
+ box-shadow: var(--glow-strong);
+ transition: transform 0.2s;
+ }
+ .ib-start-btn:hover {
+ transform: scale(1.03);
+ }
+ .ib-track-stage {
+ background: var(--bg-card);
+ border-radius: 14px;
+ padding: 1.8rem;
+ text-align: center;
+ }
+ .ib-round-label {
+ font-family: var(--font-mono);
+ font-size: 0.65rem;
+ color: var(--text-muted);
+ letter-spacing: 0.14em;
+ margin-bottom: 1rem;
+ }
+ .ib-track-goal {
+ font-size: 0.9rem;
+ color: var(--text-dim);
+ margin-bottom: 1.2rem;
+ line-height: 1.6;
+ }
+ .ib-track {
+ position: relative;
+ height: 70px;
+ background: #04141a;
+ border: 1px solid var(--border);
+ border-radius: 10px;
+ margin-bottom: 1.4rem;
+ display: flex;
+ align-items: center;
+ padding: 0 1.2rem;
+ }
+ .ib-track-dot {
+ position: absolute;
+ bottom: 12px;
+ width: 12px;
+ height: 12px;
+ border-radius: 50%;
+ background: var(--border-bright);
+ transform: translateX(-50%);
+ }
+ .ib-track-dot.target {
+ background: var(--pink);
+ box-shadow: 0 0 10px var(--pink);
+ }
+ .ib-track-runner {
+ position: absolute;
+ bottom: 22px;
+ font-size: 1.6rem;
+ transform: translateX(-50%);
+ transition: left 0.5s ease;
+ }
+ .ib-controls-row {
+ display: flex;
+ justify-content: center;
+ gap: 1.6rem;
+ margin-bottom: 1.4rem;
+ flex-wrap: wrap;
+ }
+ .ib-control {
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ gap: 0.4rem;
+ }
+ .ib-control label {
+ font-family: var(--font-mono);
+ font-size: 0.62rem;
+ color: var(--text-muted);
+ letter-spacing: 0.1em;
+ text-transform: uppercase;
+ }
+ .ib-control-row {
+ display: flex;
+ align-items: center;
+ gap: 0.6rem;
+ }
+ .ib-step-btn {
+ width: 32px;
+ height: 32px;
+ border-radius: 50%;
+ border: 1px solid var(--border-bright);
+ background: rgba(0,245,212,0.08);
+ color: var(--cyan);
+ font-size: 1rem;
+ font-weight: 700;
+ cursor: pointer;
+ transition: all 0.15s;
+ }
+ .ib-step-btn:hover {
+ background: rgba(0,245,212,0.18);
+ }
+ .ib-control-val {
+ font-family: var(--font-display);
+ font-size: 1.1rem;
+ font-weight: 900;
+ color: #fff;
+ min-width: 28px;
+ text-align: center;
+ }
+ .ib-run-btn {
+ background: var(--cyan);
+ color: #04141a;
+ border: none;
+ padding: 0.7rem 1.8rem;
+ border-radius: 100px;
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ font-weight: 700;
+ letter-spacing: 0.08em;
+ cursor: pointer;
+ }
+ .ib-track-status {
+ font-family: var(--font-mono);
+ font-size: 0.78rem;
+ color: var(--text-dim);
+ min-height: 20px;
+ margin-top: 1rem;
+ }
+ .ib-build-stage {
+ background: var(--bg-card);
+ border-radius: 14px;
+ padding: 2rem;
+ text-align: center;
+ }
+ .ib-build-eyebrow {
+ font-family: var(--font-mono);
+ font-size: 0.65rem;
+ color: var(--text-muted);
+ letter-spacing: 0.14em;
+ margin-bottom: 0.6rem;
+ }
+ .ib-build-def {
+ font-size: 0.92rem;
+ color: var(--text-dim);
+ line-height: 1.6;
+ max-width: 480px;
+ margin: 0 auto 1.6rem;
+ }
+ .ib-slots {
+ display: flex;
+ justify-content: center;
+ gap: 0.6rem;
+ margin-bottom: 1.4rem;
+ flex-wrap: wrap;
+ }
+ .ib-slot {
+ min-width: 84px;
+ height: 52px;
+ padding: 0 0.6rem;
+ border: 2px dashed var(--border-bright);
+ border-radius: 8px;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-family: var(--font-mono);
+ font-size: 0.78rem;
+ color: var(--text-muted);
+ background: rgba(255,255,255,0.02);
+ transition: all 0.2s;
+ text-align: center;
+ word-break: break-word;
+ }
+ .ib-slot.filled {
+ border-style: solid;
+ color: #fff;
+ font-weight: 700;
+ }
+ .ib-pieces-tray {
+ display: flex;
+ justify-content: center;
+ gap: 0.6rem;
+ flex-wrap: wrap;
+ margin-bottom: 1.4rem;
+ }
+ .ib-piece {
+ padding: 0.7rem 1rem;
+ border-radius: 8px;
+ font-family: var(--font-mono);
+ font-size: 0.8rem;
+ font-weight: 700;
+ cursor: grab;
+ user-select: none;
+ border: 2px solid;
+ transition: all 0.2s;
+ background: rgba(255,255,255,0.04);
+ }
+ .ib-piece:active {
+ cursor: grabbing;
+ }
+ .ib-piece.placed {
+ opacity: 0.25;
+ pointer-events: none;
+ }
+ .ib-build-feedback {
+ font-family: var(--font-mono);
+ font-size: 0.78rem;
+ color: var(--cyan);
+ min-height: 22px;
+ margin-bottom: 0.6rem;
+ }
+ .ib-check-btn {
+ background: var(--cyan);
+ color: #04141a;
+ border: none;
+ padding: 0.6rem 1.6rem;
+ border-radius: 100px;
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ font-weight: 700;
+ letter-spacing: 0.08em;
+ cursor: pointer;
+ }
+ .ib-sequence-stage {
+ background: var(--bg-card);
+ border-radius: 14px;
+ padding: 2rem;
+ text-align: center;
+ }
+ .ib-seq-status {
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ color: var(--text-dim);
+ letter-spacing: 0.06em;
+ margin-bottom: 1.4rem;
+ min-height: 20px;
+ }
+ .ib-seq-board {
+ display: flex;
+ justify-content: center;
+ gap: 0.6rem;
+ flex-wrap: wrap;
+ max-width: 680px;
+ margin: 0 auto;
+ }
+ .ib-seq-card {
+ min-width: 84px;
+ min-height: 84px;
+ padding: 0.5rem 0.9rem;
+ border-radius: 12px;
+ border: 2px solid;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ font-family: var(--font-mono);
+ font-size: 0.78rem;
+ font-weight: 700;
+ cursor: pointer;
+ transition: all 0.15s;
+ background: rgba(255,255,255,0.03);
+ text-align: center;
+ line-height: 1.3;
+ word-break: break-word;
+ }
+ .ib-seq-card.lit {
+ transform: scale(1.15);
+ box-shadow: 0 0 28px var(--c, currentColor);
+ background: var(--c, currentColor);
+ color: #050d12 !important;
+ }
+ .ib-seq-card.wrong {
+ animation: shake 0.3s ease;
+ }
+ @keyframes shake {
+ 0%,100% {
+ transform: translateX(0);
+ }
+ 25% {
+ transform: translateX(-6px);
+ }
+ 75% {
+ transform: translateX(6px);
+ }
+ }
+ .ib-complete-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border-bright);
+ border-radius: 14px;
+ padding: 2.5rem 2rem;
+ text-align: center;
+ }
+ .ib-complete-card img {
+ width: 90px;
+ height: 90px;
+ object-fit: contain;
+ margin: 0 auto 1rem;
+ display: block;
+ filter: drop-shadow(0 0 20px rgba(0,245,212,0.5));
+ }
+ .ib-complete-card h3 {
+ font-family: var(--font-display);
+ font-size: 1.2rem;
+ color: var(--cyan);
+ margin-bottom: 0.8rem;
+ text-shadow: var(--glow);
+ }
+ .ib-complete-card p {
+ font-size: 0.9rem;
+ color: var(--text-dim);
+ line-height: 1.6;
+ margin-bottom: 1.4rem;
+ }
+ .ib-replay-btn {
+ background: none;
+ border: 1px solid var(--border-bright);
+ color: var(--cyan);
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ padding: 0.6rem 1.4rem;
+ border-radius: 100px;
+ cursor: pointer;
+ letter-spacing: 0.06em;
+ }
+ .ib-skip-btn {
+ display: block;
+ margin: 1.6rem auto 0;
+ background: none;
+ border: 1px solid var(--border);
+ color: var(--text-muted);
+ font-family: var(--font-mono);
+ font-size: 0.68rem;
+ padding: 0.5rem 1.2rem;
+ border-radius: 100px;
+ cursor: pointer;
+ letter-spacing: 0.06em;
+ transition: all 0.2s;
+ }
+ .ib-skip-btn:hover {
+ color: var(--text-dim);
+ border-color: var(--border-bright);
+ }
+ /* ═══════════ HOLOGRAM ENTRANCE ═══════════ */ .discovery-overlay.fading {
+ opacity: 0;
+ transition: opacity 0.7s ease;
+ pointer-events: none;
+ }
+ .hologram-stage {
+ display: none;
+ position: relative;
+ width: min(420px, 86vw);
+ margin: 0 auto;
+ }
+ .hologram-frame {
+ position: relative;
+ border: 1px solid rgba(0,245,212,0.45);
+ border-radius: 12px;
+ overflow: hidden;
+ box-shadow: 0 0 40px rgba(0,245,212,0.35), 0 0 80px rgba(79,195,247,0.2);
+ animation: hologramMaterialize 1.1s ease-out, hologramFlicker 2.4s steps(1) infinite 1.1s;
+ }
+ .hologram-frame::before, .hologram-frame::after {
+ content: '';
+ position: absolute;
+ width: 22px;
+ height: 22px;
+ border: 2px solid var(--cyan);
+ z-index: 5;
+ }
+ .hologram-frame::before {
+ top: -1px;
+ left: -1px;
+ border-right: none;
+ border-bottom: none;
+ }
+ .hologram-frame::after {
+ bottom: -1px;
+ right: -1px;
+ border-left: none;
+ border-top: none;
+ }
+ .hologram-video {
+ width: 100%;
+ display: block;
+ filter: saturate(1.2) brightness(1.05);
+ }
+ .hologram-scanlines {
+ position: absolute;
+ inset: 0;
+ z-index: 4;
+ pointer-events: none;
+ background: repeating-linear-gradient(to bottom, rgba(0,245,212,0.08) 0px, transparent 2px, transparent 4px);
+ mix-blend-mode: overlay;
+ }
+ .hologram-scan-sweep {
+ position: absolute;
+ left: 0;
+ right: 0;
+ height: 40%;
+ z-index: 6;
+ pointer-events: none;
+ background: linear-gradient(to bottom, transparent, rgba(0,245,212,0.25), transparent);
+ animation: hologramSweep 1.6s ease-in-out infinite;
+ }
+ .hologram-caption {
+ margin-top: 1rem;
+ font-family: var(--font-mono);
+ font-size: 0.7rem;
+ letter-spacing: 0.14em;
+ color: var(--cyan);
+ text-shadow: 0 0 10px rgba(0,245,212,0.6);
+ animation: pulse 1.2s ease-in-out infinite;
+ }
+ @keyframes hologramMaterialize {
+ 0% {
+ opacity: 0;
+ transform: scale(0.85) translateY(10px);
+ clip-path: inset(0 0 100% 0);
+ }
+ 40% {
+ opacity: 1;
+ clip-path: inset(0 0 0 0);
+ }
+ 100% {
+ opacity: 1;
+ transform: scale(1) translateY(0);
+ clip-path: inset(0 0 0 0);
+ }
+ }
+ @keyframes hologramFlicker {
+ 0%, 100% {
+ opacity: 1;
+ }
+ 92% {
+ opacity: 1;
+ }
+ 93% {
+ opacity: 0.6;
+ }
+ 94% {
+ opacity: 1;
+ }
+ 96% {
+ opacity: 0.75;
+ }
+ 97% {
+ opacity: 1;
+ }
+ }
+ @keyframes hologramSweep {
+ 0% {
+ top: -40%;
+ }
+ 100% {
+ top: 100%;
+ }
+ }
+ .lesson-strip {
+ position: sticky;
+ top: 60px;
+ z-index: 90;
+ background: rgba(5,13,18,0.97);
+ border-bottom: 1px solid var(--border);
+ backdrop-filter: blur(10px);
+ display: flex;
+ overflow-x: auto;
+ scrollbar-width: none;
+ }
+ .lesson-strip::-webkit-scrollbar {
+ display: none;
+ }
+ .lesson-tab {
+ flex-shrink: 0;
+ padding: 0.9rem 1.6rem;
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ font-weight: 700;
+ letter-spacing: 0.08em;
+ color: var(--text-muted);
+ cursor: pointer;
+ border-bottom: 2px solid transparent;
+ transition: all 0.2s;
+ white-space: nowrap;
+ user-select: none;
+ background: none;
+ border-top: none;
+ border-left: none;
+ border-right: none;
+ }
+ .lesson-tab:hover {
+ color: var(--cyan);
+ text-shadow: 0 0 8px rgba(0,245,212,0.5);
+ transform: translateY(-1px);
+ }
+ .lesson-tab.active {
+ color: var(--cyan);
+ border-bottom-color: var(--cyan);
+ text-shadow: 0 0 8px rgba(0,245,212,0.5);
+ }
+ .lesson-panel {
+ display: none;
+ }
+ .lesson-panel.open {
+ display: grid;
+ grid-template-columns: 220px 1fr;
+ min-height: 80vh;
+ }
+ .lesson-sidebar {
+ background: var(--bg-panel);
+ border-right: 1px solid var(--border);
+ padding: 2rem 1.2rem;
+ position: sticky;
+ top: calc(60px + 42px);
+ height: calc(100vh - 102px);
+ overflow-y: auto;
+ scrollbar-width: thin;
+ scrollbar-color: var(--border) transparent;
+ }
+ .sidebar-label {
+ font-family: var(--font-mono);
+ font-size: 0.62rem;
+ color: var(--text-muted);
+ letter-spacing: 0.18em;
+ text-transform: uppercase;
+ margin-bottom: 1rem;
+ padding-bottom: 0.5rem;
+ border-bottom: 1px solid var(--border);
+ }
+ .sidebar-nav-btn {
+ width: 100%;
+ background: none;
+ border: none;
+ text-align: left;
+ padding: 0.65rem 0.8rem;
+ margin-bottom: 0.2rem;
+ border-radius: 6px;
+ font-family: var(--font-body);
+ font-size: 0.82rem;
+ color: var(--text-dim);
+ cursor: pointer;
+ transition: all 0.2s;
+ display: flex;
+ align-items: center;
+ gap: 0.5rem;
+ }
+ .sidebar-nav-btn:hover {
+ background: rgba(0,245,212,0.07);
+ color: var(--cyan);
+ transform: translateX(3px);
+ }
+ .sidebar-nav-btn.active {
+ background: rgba(0,245,212,0.11);
+ color: var(--cyan);
+ font-weight: 600;
+ }
+ .sidebar-icon {
+ font-size: 0.9rem;
+ }
+ .sidebar-divider {
+ height: 1px;
+ background: var(--border);
+ margin: 1rem 0;
+ }
+ .sidebar-game-link {
+ display: block;
+ margin-top: 1rem;
+ padding: 0.65rem 0.8rem;
+ background: rgba(0,245,212,0.05);
+ border: 1px solid var(--border);
+ border-radius: 6px;
+ font-family: var(--font-mono);
+ font-size: 0.68rem;
+ color: var(--cyan-dim);
+ text-decoration: none;
+ letter-spacing: 0.08em;
+ transition: all 0.2s;
+ text-align: center;
+ }
+ .sidebar-game-link:hover {
+ background: rgba(0,245,212,0.13);
+ border-color: var(--cyan);
+ color: var(--cyan);
+ }
+ .lesson-content {
+ padding: 2.5rem 3rem;
+ max-width: 900px;
+ }
+ .content-block {
+ display: none;
+ }
+ .content-block.active {
+ display: block;
+ }
+ .section-header {
+ font-family: var(--font-display);
+ font-size: 1.4rem;
+ font-weight: 700;
+ color: #fff;
+ margin-bottom: 0.4rem;
+ }
+ .section-sub {
+ font-size: 0.88rem;
+ color: var(--text-muted);
+ margin-bottom: 2rem;
+ font-family: var(--font-mono);
+ letter-spacing: 0.05em;
+ }
+ .read-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 10px;
+ padding: 1.8rem 2rem;
+ margin-bottom: 1.2rem;
+ position: relative;
+ overflow: hidden;
+ }
+ .read-card::before {
+ content: '';
+ position: absolute;
+ left: 0;
+ top: 0;
+ bottom: 0;
+ width: 3px;
+ background: linear-gradient(to bottom, var(--cyan), var(--blue));
+ }
+ .read-card-num {
+ font-family: var(--font-mono);
+ font-size: 0.65rem;
+ color: var(--cyan);
+ letter-spacing: 0.2em;
+ margin-bottom: 0.6rem;
+ opacity: 0.7;
+ }
+ .read-card h3 {
+ font-family: var(--font-display);
+ font-size: 0.95rem;
+ color: #fff;
+ margin-bottom: 0.8rem;
+ font-weight: 700;
+ }
+ .read-card p {
+ font-size: 0.95rem;
+ color: var(--text-dim);
+ line-height: 1.7;
+ }
+ .read-card p strong {
+ color: var(--cyan);
+ font-weight: 600;
+ }
+ .read-card code {
+ font-family: var(--font-mono);
+ font-size: 0.85rem;
+ background: rgba(0,245,212,0.1);
+ color: var(--cyan);
+ padding: 0.15em 0.4em;
+ border-radius: 4px;
+ }
+ .code-block {
+ background: #040e14;
+ border: 1px solid var(--border);
+ border-radius: 8px;
+ padding: 1.5rem;
+ margin: 1rem 0;
+ font-family: var(--font-mono);
+ font-size: 0.82rem;
+ line-height: 1.7;
+ color: #a0e4db;
+ overflow-x: auto;
+ }
+ .code-block .kw {
+ color: #00f5d4;
+ font-weight: 700;
+ }
+ .code-block .str {
+ color: #ffe066;
+ }
+ .code-block .cm {
+ color: #4a8a84;
+ font-style: italic;
+ }
+ .code-block .num {
+ color: #ff9a9a;
+ }
+ .code-block .fn {
+ color: #4fc3f7;
+ }
+ .terms-grid {
+ display: grid;
+ grid-template-columns: 1fr 1fr;
+ gap: 0.8rem;
+ margin-top: 1rem;
+ }
+ .term-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 8px;
+ padding: 1rem 1.2rem;
+ cursor: pointer;
+ transition: all 0.2s;
+ }
+ .term-card:hover {
+ border-color: var(--cyan);
+ box-shadow: 0 0 14px rgba(0,245,212,0.2);
+ transform: translateY(-2px);
+ }
+ .term-card.open {
+ border-color: var(--cyan);
+ }
+ .term-name {
+ font-family: var(--font-mono);
+ font-size: 0.8rem;
+ color: var(--cyan);
+ font-weight: 700;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+ .term-arrow {
+ transition: transform 0.2s;
+ color: var(--text-muted);
+ }
+ .term-card.open .term-arrow {
+ transform: rotate(90deg);
+ }
+ .term-def {
+ display: none;
+ font-size: 0.85rem;
+ color: var(--text-dim);
+ line-height: 1.6;
+ margin-top: 0.6rem;
+ padding-top: 0.6rem;
+ border-top: 1px solid var(--border);
+ }
+ .term-card.open .term-def {
+ display: block;
+ }
+ .editor-wrap {
+ background: #040e14;
+ border: 1px solid var(--border);
+ border-radius: 8px;
+ overflow: hidden;
+ margin-bottom: 1rem;
+ }
+ .editor-toolbar {
+ background: rgba(0,245,212,0.06);
+ border-bottom: 1px solid var(--border);
+ padding: 0.5rem 1rem;
+ font-family: var(--font-mono);
+ font-size: 0.65rem;
+ color: var(--text-muted);
+ letter-spacing: 0.12em;
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ }
+ .editor-run-btn {
+ background: var(--cyan);
+ color: #04141a;
+ border: none;
+ padding: 0.25rem 0.8rem;
+ border-radius: 4px;
+ font-family: var(--font-mono);
+ font-size: 0.65rem;
+ font-weight: 700;
+ cursor: pointer;
+ letter-spacing: 0.1em;
+ transition: opacity 0.2s;
+ }
+ .editor-run-btn:hover {
+ opacity: 0.85;
+ }
+ .code-editor {
+ width: 100%;
+ min-height: 160px;
+ background: transparent;
+ border: none;
+ padding: 1rem 1.2rem;
+ font-family: var(--font-mono);
+ font-size: 0.82rem;
+ color: #a0e4db;
+ resize: vertical;
+ outline: none;
+ line-height: 1.7;
+ }
+ .preview-label {
+ font-family: var(--font-mono);
+ font-size: 0.62rem;
+ color: var(--text-muted);
+ letter-spacing: 0.15em;
+ margin-bottom: 0.4rem;
+ text-transform: uppercase;
+ }
+ .console-output {
+ background: #000;
+ border: 1px solid var(--border);
+ border-radius: 8px;
+ padding: 1rem;
+ font-family: var(--font-mono);
+ font-size: 0.82rem;
+ color: #00f5d4;
+ min-height: 80px;
+ white-space: pre-wrap;
+ }
+ .quiz-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 10px;
+ padding: 1.5rem;
+ margin-bottom: 1rem;
+ }
+ .quiz-q {
+ font-size: 0.95rem;
+ color: var(--text);
+ margin-bottom: 1rem;
+ line-height: 1.5;
+ font-weight: 500;
+ }
+ .quiz-options {
+ display: flex;
+ flex-direction: column;
+ gap: 0.5rem;
+ }
+ .quiz-opt {
+ background: rgba(0,245,212,0.04);
+ border: 1px solid var(--border);
+ border-radius: 6px;
+ padding: 0.7rem 1rem;
+ font-size: 0.88rem;
+ color: var(--text-dim);
+ cursor: pointer;
+ transition: all 0.2s;
+ text-align: left;
+ font-family: var(--font-body);
+ }
+ .quiz-opt:hover {
+ border-color: var(--cyan);
+ color: var(--cyan);
+ }
+ .quiz-opt.correct {
+ border-color: #00f5d4;
+ background: rgba(0,245,212,0.12);
+ color: #00f5d4;
+ }
+ .quiz-opt.wrong {
+ border-color: #ff6b6b;
+ background: rgba(255,107,107,0.1);
+ color: #ff6b6b;
+ animation: shake 0.3s ease;
+ }
+ .quiz-feedback {
+ font-size: 0.82rem;
+ margin-top: 0.6rem;
+ padding: 0.5rem 0.8rem;
+ border-radius: 5px;
+ display: none;
+ }
+ .quiz-feedback.show {
+ display: block;
+ }
+ .quiz-feedback.correct {
+ background: rgba(0,245,212,0.1);
+ color: #00f5d4;
+ border: 1px solid rgba(0,245,212,0.25);
+ }
+ .quiz-feedback.wrong {
+ background: rgba(255,107,107,0.08);
+ color: #ff9a9a;
+ border: 1px solid rgba(255,107,107,0.2);
+ }
+ .reflect-prompt {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 10px;
+ padding: 1.5rem;
+ margin-bottom: 1rem;
+ }
+ .reflect-q {
+ font-size: 0.9rem;
+ color: var(--text-dim);
+ margin-bottom: 0.8rem;
+ line-height: 1.5;
+ }
+ .reflect-input {
+ width: 100%;
+ background: rgba(0,245,212,0.04);
+ border: 1px solid var(--border);
+ border-radius: 6px;
+ padding: 0.8rem 1rem;
+ font-family: var(--font-body);
+ font-size: 0.88rem;
+ color: var(--text);
+ resize: vertical;
+ min-height: 80px;
+ outline: none;
+ transition: border-color 0.2s;
+ }
+ .reflect-input:focus {
+ border-color: var(--cyan);
+ }
+ .reflect-save-btn {
+ margin-top: 0.5rem;
+ background: none;
+ border: 1px solid var(--border);
+ color: var(--text-muted);
+ font-family: var(--font-mono);
+ font-size: 0.68rem;
+ padding: 0.35rem 0.8rem;
+ border-radius: 4px;
+ cursor: pointer;
+ transition: all 0.2s;
+ letter-spacing: 0.08em;
+ }
+ .reflect-save-btn:hover {
+ border-color: var(--cyan);
+ color: var(--cyan);
+ }
+ .reflect-saved {
+ font-family: var(--font-mono);
+ font-size: 0.68rem;
+ color: var(--cyan);
+ margin-top: 0.4rem;
+ display: none;
+ }
+ .cheat-card {
+ background: var(--bg-card);
+ border: 1px solid var(--border);
+ border-radius: 10px;
+ padding: 1.5rem 1.8rem;
+ margin-bottom: 1rem;
+ }
+ .cheat-card h3 {
+ font-family: var(--font-display);
+ font-size: 0.88rem;
+ color: var(--cyan);
+ margin-bottom: 1rem;
+ font-weight: 700;
+ }
+ .cheat-items {
+ display: flex;
+ flex-direction: column;
+ gap: 0.7rem;
+ }
+ .cheat-item {
+ display: flex;
+ gap: 1rem;
+ align-items: flex-start;
+ padding-bottom: 0.7rem;
+ border-bottom: 1px solid rgba(0,245,212,0.06);
+ }
+ .cheat-item:last-child {
+ border-bottom: none;
+ padding-bottom: 0;
+ }
+ .cheat-term {
+ font-family: var(--font-mono);
+ font-size: 0.78rem;
+ color: var(--cyan);
+ min-width: 140px;
+ font-weight: 700;
+ }
+ .cheat-desc {
+ font-size: 0.85rem;
+ color: var(--text-dim);
+ line-height: 1.5;
+ }
+ .cheat-btn-row {
+ display: flex;
+ gap: 0.7rem;
+ margin-top: 1.2rem;
+ flex-wrap: wrap;
+ }
+ .cheat-download-btn {
+ display: inline-flex;
+ align-items: center;
+ gap: 0.5rem;
+ background: rgba(0,245,212,0.07);
+ border: 1px solid var(--border-bright);
+ color: var(--cyan);
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ padding: 0.6rem 1.2rem;
+ border-radius: 6px;
+ cursor: pointer;
+ text-decoration: none;
+ transition: all 0.2s;
+ letter-spacing: 0.08em;
+ }
+ .cheat-download-btn:hover {
+ background: rgba(0,245,212,0.16);
+ box-shadow: var(--glow);
+ }
+ .cheat-download-btn.secondary {
+ background: none;
+ border-color: var(--border);
+ color: var(--text-muted);
+ font-size: 0.65rem;
+ }
+ .cheat-download-btn.secondary:hover {
+ color: var(--text-dim);
+ border-color: var(--border-bright);
+ }
+ .locked-panel {
+ padding: 4rem 3rem;
+ text-align: center;
+ }
+ .locked-icon {
+ font-size: 2.5rem;
+ margin-bottom: 1.2rem;
+ opacity: 0.45;
+ }
+ .locked-panel h2 {
+ font-family: var(--font-display);
+ font-size: 1.2rem;
+ color: var(--text-dim);
+ margin-bottom: 0.6rem;
+ }
+ .locked-panel p {
+ font-size: 0.9rem;
+ color: var(--text-muted);
+ margin-bottom: 1.5rem;
+ }
+ .gate-btn {
+ display: inline-block;
+ background: var(--cyan);
+ color: #04141a;
+ font-family: var(--font-display);
+ font-size: 0.78rem;
+ font-weight: 700;
+ padding: 0.8rem 2rem;
+ border-radius: 6px;
+ border: none;
+ cursor: pointer;
+ text-decoration: none;
+ letter-spacing: 0.08em;
+ transition: opacity 0.2s;
+ }
+ .gate-btn:hover {
+ opacity: 0.85;
+ }
+ .lesson-complete {
+ background: linear-gradient(135deg, rgba(0,245,212,0.08), rgba(79,195,247,0.06));
+ border: 1px solid var(--border-bright);
+ border-radius: 12px;
+ padding: 2rem;
+ text-align: center;
+ margin-top: 2rem;
+ display: none;
+ }
+ .lesson-complete.show {
+ display: block;
+ }
+ .lesson-complete h3 {
+ font-family: var(--font-display);
+ font-size: 1rem;
+ color: var(--cyan);
+ margin-bottom: 0.5rem;
+ }
+ .lesson-complete p {
+ font-size: 0.88rem;
+ color: var(--text-dim);
+ }
+ .lesson-joke {
+ margin-top: 0.8rem;
+ font-family: var(--font-mono);
+ font-size: 0.78rem;
+ color: var(--blue);
+ font-style: italic;
+ }
+ .discovery-overlay {
+ position: fixed;
+ inset: 0;
+ z-index: 200;
+ background: #050d12;
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ flex-direction: column;
+ text-align: center;
+ padding: 2rem;
+ }
+ .discovery-overlay.hidden {
+ display: none;
+ }
+ .loop-mark {
+ font-family: var(--font-mono);
+ font-size: 2rem;
+ color: var(--cyan);
+ margin-bottom: 1rem;
+ letter-spacing: 0.3em;
+ text-shadow: var(--glow-strong);
+ animation: pulse 2s ease-in-out infinite;
+ }
+ @keyframes pulse {
+ 0%,100% {
+ opacity: 1;
+ }
+ 50% {
+ opacity: 0.5;
+ }
+ }
+ .discovery-title {
+ font-family: var(--font-display);
+ font-size: clamp(1.5rem, 4vw, 2.5rem);
+ font-weight: 900;
+ color: var(--cyan);
+ text-shadow: var(--glow-strong);
+ margin-bottom: 0.8rem;
+ }
+ .discovery-sub {
+ font-size: 1rem;
+ color: var(--text-dim);
+ max-width: 460px;
+ line-height: 1.6;
+ margin-bottom: 2rem;
+ }
+ .discovery-enter-btn {
+ background: var(--cyan);
+ color: #04141a;
+ font-family: var(--font-display);
+ font-size: 0.85rem;
+ font-weight: 700;
+ padding: 1rem 2.5rem;
+ border-radius: 8px;
+ border: none;
+ cursor: pointer;
+ letter-spacing: 0.1em;
+ transition: all 0.2s;
+ box-shadow: var(--glow-strong);
+ }
+ .discovery-enter-btn:hover {
+ transform: scale(1.03);
+ }
+ .sound-toggle {
+ position: fixed;
+ bottom: 24px;
+ left: 24px;
+ z-index: 150;
+ width: 44px;
+ height: 44px;
+ border-radius: 50%;
+ background: rgba(13,32,48,0.9);
+ border: 1px solid var(--border-bright);
+ display: flex;
+ align-items: center;
+ justify-content: center;
+ cursor: pointer;
+ font-size: 1.1rem;
+ transition: all 0.2s;
+ opacity: 0;
+ pointer-events: none;
+ }
+ .sound-toggle.visible {
+ opacity: 1;
+ pointer-events: auto;
+ }
+ .sound-toggle:hover {
+ box-shadow: var(--glow);
+ border-color: var(--cyan);
+ }
+ .sound-toggle.muted {
+ opacity: 0.5;
+ }
+ .egg-popup {
+ position: fixed;
+ bottom: 100px;
+ right: 24px;
+ z-index: 250;
+ background: var(--bg-card);
+ border: 1px solid var(--border-bright);
+ border-radius: 12px;
+ padding: 1.2rem 1.4rem;
+ max-width: 260px;
+ box-shadow: var(--glow-strong);
+ display: none;
+ }
+ .egg-popup.show {
+ display: block;
+ animation: eggPop 0.4s ease;
+ }
+ @keyframes eggPop {
+ from {
+ transform: scale(0.8) translateY(10px);
+ opacity: 0;
+ }
+ to {
+ transform: scale(1) translateY(0);
+ opacity: 1;
+ }
+ }
+ .egg-popup h4 {
+ font-family: var(--font-display);
+ font-size: 0.78rem;
+ color: var(--cyan);
+ margin-bottom: 0.5rem;
+ }
+ .egg-popup p {
+ font-size: 0.8rem;
+ color: var(--text-dim);
+ line-height: 1.5;
+ }
+ @media (max-width: 768px) {
+ .hero {
+ min-height: 480px;
+ }
+ .hero-content {
+ padding: 2rem 1.5rem 2rem;
+ }
+ .hero-tiles {
+ flex-wrap: wrap;
+ }
+ .lesson-panel.open {
+ grid-template-columns: 1fr;
+ }
+ .lesson-sidebar {
+ display: none;
+ }
+ .lesson-content {
+ padding: 1.5rem;
+ }
+ .terms-grid {
+ grid-template-columns: 1fr;
+ }
+ .fact-ticker {
+ display: none;
+ }
+ }
+ 
 </style>
+ 
 </head>
+ 
 <body>
+ 
 <div class="discovery-overlay" id="discoveryOverlay">
-<div class="loop-mark">∞ ∞ ∞</div>
-<div class="discovery-title" id="discoveryTitle">Loop's Challenge Course</div>
-<div class="discovery-sub" id="discoverySub">Patterns. Repetition. Logic.<br>This is where code starts thinking for itself.</div>
-<button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterCourse()">Enter the Course</button>
+ 
+<div class="loop-mark">
+∞ ∞ ∞
+</div>
+ 
+<div class="discovery-title" id="discoveryTitle">
+Loop's Challenge Course
+</div>
+ 
+<div class="discovery-sub" id="discoverySub">
+Patterns. Repetition. Logic.
+<br>
+This is where code starts thinking for itself.
+</div>
+ 
+<button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterCourse()">
+Enter the Course
+</button>
+ 
 <div class="hologram-stage" id="hologramStage">
-  <div class="hologram-frame">
-    <img class="hologram-video" id="entranceVideo" src="loop-entrance-hero.webp" alt="Loop materializing">
-    <div class="hologram-scanlines"></div>
-    <div class="hologram-scan-sweep"></div>
-  </div>
-  <div class="hologram-caption">∞ SYNCING PATTERN...</div>
+ 
+<div class="hologram-frame">
+ 
+<img class="hologram-video" id="entranceVideo" src="corrected-loop.gif" alt="Loop materializing">
+ 
+<div class="hologram-scanlines">
 </div>
+ 
+<div class="hologram-scan-sweep">
 </div>
+ 
+</div>
+ 
+<div class="hologram-caption">
+∞ SYNCING PATTERN...
+</div>
+ 
+</div>
+ 
+</div>
+ 
 <nav>
-<a href="index.html" class="nav-logo">MiM</a>
+ 
+<a href="index.html" class="nav-logo">
+MiM
+</a>
+ 
 <ul class="nav-links">
-<li><a href="games.html">Games</a></li>
-<li><a href="pdfs.html">PDFs</a></li>
-<li><a href="dashboard.html">Dashboard</a></li>
-<li><a href="index.html#membership">Membership</a></li>
+ 
+<li>
+<a href="games.html">
+Games
+</a>
+</li>
+ 
+<li>
+<a href="pdfs.html">
+PDFs
+</a>
+</li>
+ 
+<li>
+<a href="dashboard.html">
+Dashboard
+</a>
+</li>
+ 
+<li>
+<a href="index.html#membership">
+Membership
+</a>
+</li>
+ 
 </ul>
-<span class="nav-user" id="navUser"></span>
-<button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
+ 
+<span class="nav-user" id="navUser">
+</span>
+ 
+<button class="nav-logout" id="navLogout" onclick="handleLogout()">
+Log Out
+</button>
+ 
 </nav>
+ 
 <section class="hero" id="loopHero">
+ 
 <video class="hero-video" autoplay muted loop playsinline poster="loop-entrance.png">
-  <source src="loop-hero.mp4" type="video/mp4">
+ 
+<source src="loop-hero.mp4" type="video/mp4">
+ 
 </video>
-<div class="hero-gradient"></div>
-<div class="hero-pulse"></div>
-<div class="particle-field" id="particleField"></div>
-<img class="hero-loop-gif" src="loop-motion.gif" alt="Loop" onerror="this.style.display='none'" onclick="companionClick()">
-<div class="hero-content">
-<div class="hero-eyebrow">∞ &nbsp; Flow Guide &nbsp; · &nbsp; JavaScript</div>
-<div class="hero-name">Loop</div>
-<div class="hero-catchphrase">See the pattern, write the loop.</div>
-<div class="hero-role">The Flow Guide</div>
-<div class="hero-quote">"<span>Every pattern has a reason.</span> Learn to see it, and you'll know what to build next."</div>
-<div class="fact-ticker" id="factTicker"></div>
-<div class="hero-tiles">
-<div class="hero-lesson-grid">
-<a class="hero-tile" onclick="jumpToLesson(1)">01 Thinking in Patterns</a>
-<a class="hero-tile" onclick="jumpToLesson(2)">02 For Loops</a>
-<a class="hero-tile" onclick="jumpToLesson(3)">03 Conditionals</a>
-<a class="hero-tile" onclick="jumpToLesson(4)">04 Flow Challenge</a>
+ 
+<div class="hero-gradient">
 </div>
+ 
+<div class="hero-pulse">
+</div>
+ 
+<div class="particle-field" id="particleField">
+</div>
+ 
+<img class="hero-loop-gif" src="loop-motion.gif" alt="Loop" onerror="this.style.display='none'" onclick="companionClick()">
+ 
+<div class="hero-content">
+ 
+<div class="hero-eyebrow">
+∞ &nbsp; Flow Guide &nbsp; · &nbsp; JavaScript
+</div>
+ 
+<div class="hero-name">
+Loop
+</div>
+ 
+<div class="hero-catchphrase">
+See the pattern, write the loop.
+</div>
+ 
+<div class="hero-role">
+The Flow Guide
+</div>
+ 
+<div class="hero-quote">
+"
+<span>
+Every pattern has a reason.
+</span>
+ Learn to see it, and you'll know what to build next."
+</div>
+ 
+<div class="fact-ticker" id="factTicker">
+</div>
+ 
+<div class="hero-tiles">
+ 
+<div class="hero-lesson-grid">
+ 
+<a class="hero-tile" onclick="jumpToLesson(1)">
+01 Thinking in Patterns
+</a>
+ 
+<a class="hero-tile" onclick="jumpToLesson(2)">
+02 For Loops
+</a>
+ 
+<a class="hero-tile" onclick="jumpToLesson(3)">
+03 Conditionals
+</a>
+ 
+<a class="hero-tile" onclick="jumpToLesson(4)">
+04 Flow Challenge
+</a>
+ 
+</div>
+ 
 <button class="hero-game-tile" onclick="ibToggleWrapper()" aria-label="Open the Step Counter icebreaker game">
-<span class="hero-game-icon">∞</span>
-<span>STEP<br>COUNTER</span>
-<span class="hero-game-cta">Boot →</span>
+ 
+<span class="hero-game-icon">
+∞
+</span>
+ 
+<span class="hero-game-label">
+STEP
+<br>
+COUNTER
+</span>
+ 
+<span class="hero-game-cta">
+Boot Game →
+</span>
+ 
+</button>
+ 
+</div>
+ 
+</div>
+ 
+</section>
+ 
+<div class="icebreaker-wrapper" id="icebreakerWrapper">
+ 
+<section class="icebreaker" id="icebreaker">
+ 
+<div class="ib-header">
+ 
+<div class="ib-eyebrow">
+∞ &nbsp; ICEBREAKER &nbsp; · &nbsp; STEP COUNTER
+</div>
+ 
+<h2 class="ib-title">
+Match the Pattern
+</h2>
+ 
+<p class="ib-sub">
+Every for loop is just a start, a stop, and a step. Set the runner's path to match the highlighted track, then watch the real code build itself.
+</p>
+ 
+</div>
+ 
+<div class="ib-phase" id="ib-intro">
+ 
+<div class="ib-terms-grid" id="ibTermsGrid">
+</div>
+ 
+<button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">
+Start the Course ∞
+</button>
+ 
+</div>
+ 
+<div class="ib-phase" id="ib-game" style="display:none;">
+ 
+<div class="ib-track-stage" id="ibTrackStage">
+</div>
+ 
+<div class="ib-build-stage" id="ibBuildStage" style="display:none;margin-top:1.4rem;">
+</div>
+ 
+<div class="ib-sequence-stage" id="ibSequenceStage" style="display:none;margin-top:1.4rem;">
+</div>
+ 
+<button class="ib-skip-btn" onclick="ibSkipGame()">
+Skip this part →
+</button>
+ 
+</div>
+ 
+<div class="ib-phase" id="ib-complete" style="display:none;">
+ 
+<div class="ib-complete-card">
+ 
+<img src="loop-victory.png" alt="Loop celebrating" onerror="this.style.display='none'">
+ 
+<h3>
+∞ Pattern Locked In
+</h3>
+ 
+<p>
+Start. Stop. Step. That's every for loop you'll ever write — and now you can see the pattern before you even write the code.
+</p>
+ 
+<button class="ib-replay-btn" onclick="ibReset()">
+Play Again
+</button>
+ 
+<button class="ib-replay-btn" onclick="ibToggleWrapper()" style="margin-left:0.6rem;">
+Close
+</button>
+ 
+</div>
+ 
+</div>
+ 
+</section>
+ 
+</div>
+ 
+<div class="lesson-strip">
+ 
+<button class="lesson-tab" id="tab-1" onclick="openLesson(1)">
+01 — Thinking in Patterns
+</button>
+ 
+<button class="lesson-tab" id="tab-2" onclick="openLesson(2)">
+02 — For Loops
+</button>
+ 
+<button class="lesson-tab" id="tab-3" onclick="openLesson(3)">
+03 — Conditionals
+</button>
+ 
+<button class="lesson-tab" id="tab-4" onclick="openLesson(4)">
+04 — Flow Challenge
+</button>
+ 
+<button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">
+∞ Cheat Sheet
+</button>
+ 
+</div>
+ 
+<!-- ===================== LESSON 1 ===================== -->
+ 
+<div class="lesson-panel" id="lesson-1">
+ 
+<aside class="lesson-sidebar">
+ 
+<div class="sidebar-label">
+Lesson 01
+</div>
+ 
+<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read">
+<span class="sidebar-icon">
+📖
+</span>
+ Read
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms">
+<span class="sidebar-icon">
+🔑
+</span>
+ Terms
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build">
+<span class="sidebar-icon">
+⚙️
+</span>
+ Build
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect">
+<span class="sidebar-icon">
+💭
+</span>
+ Reflect
+</button>
+ 
+<div class="sidebar-divider">
+</div>
+ 
+<a href="loop-game.html" class="sidebar-game-link">
+∞ Loop's Game World
+</a>
+ 
+</aside>
+ 
+<div class="lesson-content">
+ 
+<div class="content-block active" id="block-1-read">
+ 
+<div class="section-header">
+Thinking in Patterns
+</div>
+ 
+<div class="section-sub">
+LESSON 01 · FREE
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+01 / 05
+</div>
+<h3>
+What Is a Pattern?
+</h3>
+<p>
+A pattern is something that 
+<strong>
+repeats in a predictable way
+</strong>
+. Stripes on a shirt. Steps in a dance. Computers are pattern machines. When you recognize a pattern, you know what to automate.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+02 / 05
+</div>
+<h3>
+Why Computers Love Repetition
+</h3>
+<p>
+A 
+<strong>
+loop
+</strong>
+ is the tool that lets you tell a computer: "Do this action, over and over, until I say stop." It's one of the most powerful ideas in all of programming.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+03 / 05
+</div>
+<h3>
+Sequences Come First
+</h3>
+<p>
+Before loops, there are 
+<strong>
+sequences
+</strong>
+ — a list of steps in order. Code runs top to bottom, one line at a time.
+</p>
+ 
+<div class="code-block">
+<span class="cm">
+// A sequence — each step in order
+</span>
+ 
+<span class="kw">
+let
+</span>
+ egg = 
+<span class="str">
+"cracked"
+</span>
+; 
+<span class="kw">
+let
+</span>
+ batter = 
+<span class="str">
+"mixed"
+</span>
+; 
+<span class="kw">
+let
+</span>
+ result = 
+<span class="str">
+"cooked"
+</span>
+;
+</div>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+04 / 05
+</div>
+<h3>
+Loops Are Patterns in Code
+</h3>
+<p>
+Instead of writing the same line 10 times, you write it 
+<strong>
+once inside a loop
+</strong>
+.
+</p>
+ 
+<div class="code-block">
+<span class="kw">
+for
+</span>
+ (
+<span class="kw">
+let
+</span>
+ i = 
+<span class="num">
+1
+</span>
+; i &lt;= 
+<span class="num">
+3
+</span>
+; i++) { &nbsp;&nbsp;
+<span class="fn">
+console
+</span>
+.
+<span class="fn">
+log
+</span>
+(
+<span class="str">
+"Step "
+</span>
+ + i); }
+</div>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+05 / 05
+</div>
+<h3>
+Flow Is the Big Idea
+</h3>
+<p>
+Programming isn't just about commands — it's about 
+<strong>
+controlling the flow
+</strong>
+ of those commands. You're designing the path the computer follows.
+</p>
+</div>
+ 
+</div>
+ 
+<div class="locked-panel" id="anon-lock-1">
+ 
+<div class="locked-icon">
+∞
+</div>
+ 
+<h2>
+Free to Explore, Free to Sign Up
+</h2>
+ 
+<p>
+Create a free account to unlock quizzes, the build tools, and reflections for every one of Loop's lessons.
+</p>
+ 
+<button class="gate-btn" onclick="goUpgrade()">
+Sign Up Free
+</button>
+ 
+</div>
+ 
+<div id="anon-gated-1">
+ 
+<div class="content-block" id="block-1-terms">
+ 
+<div class="section-header">
+Key Terms
+</div>
+ 
+<div class="section-sub">
+LESSON 01 · TAP TO EXPAND
+</div>
+ 
+<div class="terms-grid">
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Pattern 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+Something that repeats in a predictable way. A signal to use a loop instead of repeating code.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Sequence 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+Steps in a specific order. Code runs top to bottom, one line at a time.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Loop 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+A block of code that runs repeatedly until a condition tells it to stop.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Flow 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+The path a program follows as it runs.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Iteration 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+One single pass through a loop.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Automate 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+To make a computer do a task without doing it manually each time.
+</div>
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-1-build">
+ 
+<div class="section-header">
+Build It
+</div>
+ 
+<div class="section-sub">
+LESSON 01 · SPOT THE PATTERN
+</div>
+ 
+<div class="editor-wrap">
+ 
+<div class="editor-toolbar">
+<span>
+JAVASCRIPT · FLOW LAB
+</span>
+<button class="editor-run-btn" onclick="runEditor('l1')">
+▶ RUN
 </button>
 </div>
+ 
+<textarea class="code-editor" id="editor-l1">
+// Change the loop to count 1 through 8 for (let i = 1; i 
+<= 5; i++) { console.log("Count: " + i); }</textarea>
+ 
 </div>
-</section>
-
-<div class="icebreaker-wrapper" id="icebreakerWrapper">
-<section class="icebreaker" id="icebreaker">
-  <div class="ib-header">
-    <div class="ib-eyebrow">∞ &nbsp; ICEBREAKER &nbsp; · &nbsp; STEP COUNTER</div>
-    <h2 class="ib-title">Match the Pattern</h2>
-    <p class="ib-sub">Every for loop is just a start, a stop, and a step. Set the runner's path to match the highlighted track, then watch the real code build itself.</p>
-  </div>
-
-  <div class="ib-phase" id="ib-intro">
-    <div class="ib-terms-grid" id="ibTermsGrid"></div>
-    <button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">Start the Course ∞</button>
-  </div>
-
-  <div class="ib-phase" id="ib-game" style="display:none;">
-    <div class="ib-track-stage" id="ibTrackStage"></div>
-    <div class="ib-build-stage" id="ibBuildStage" style="display:none;margin-top:1.4rem;"></div>
-    <div class="ib-sequence-stage" id="ibSequenceStage" style="display:none;margin-top:1.4rem;"></div>
-    <button class="ib-skip-btn" onclick="ibSkipGame()">Skip this part →</button>
-  </div>
-
-  <div class="ib-phase" id="ib-complete" style="display:none;">
-    <div class="ib-complete-card">
-      <img src="loop-victory.png" alt="Loop celebrating" onerror="this.style.display='none'">
-      <h3>∞ Pattern Locked In</h3>
-      <p>Start. Stop. Step. That's every for loop you'll ever write — and now you can see the pattern before you even write the code.</p>
-      <button class="ib-replay-btn" onclick="ibReset()">Play Again</button>
-      <button class="ib-replay-btn" onclick="ibToggleWrapper()" style="margin-left:0.6rem;">Close</button>
-    </div>
-  </div>
-</section>
+ 
+<div class="preview-label">
+CONSOLE OUTPUT
 </div>
-
-<div class="lesson-strip">
-<button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — Thinking in Patterns</button>
-<button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — For Loops</button>
-<button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Conditionals</button>
-<button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Flow Challenge</button>
-<button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">∞ Cheat Sheet</button>
+ 
+<div class="console-output" id="output-l1">
+Output will appear here...
 </div>
-<!-- ===================== LESSON 1 ===================== -->
-<div class="lesson-panel" id="lesson-1">
-<aside class="lesson-sidebar">
-<div class="sidebar-label">Lesson 01</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
-<a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
-</aside>
-<div class="lesson-content">
-<div class="content-block active" id="block-1-read">
-<div class="section-header">Thinking in Patterns</div>
-<div class="section-sub">LESSON 01 · FREE</div>
-<div class="read-card"><div class="read-card-num">01 / 05</div><h3>What Is a Pattern?</h3><p>A pattern is something that <strong>repeats in a predictable way</strong>. Stripes on a shirt. Steps in a dance. Computers are pattern machines. When you recognize a pattern, you know what to automate.</p></div>
-<div class="read-card"><div class="read-card-num">02 / 05</div><h3>Why Computers Love Repetition</h3><p>A <strong>loop</strong> is the tool that lets you tell a computer: "Do this action, over and over, until I say stop." It's one of the most powerful ideas in all of programming.</p></div>
-<div class="read-card"><div class="read-card-num">03 / 05</div><h3>Sequences Come First</h3><p>Before loops, there are <strong>sequences</strong> — a list of steps in order. Code runs top to bottom, one line at a time.</p>
-<div class="code-block"><span class="cm">// A sequence — each step in order</span>
-<span class="kw">let</span> egg = <span class="str">"cracked"</span>;
-<span class="kw">let</span> batter = <span class="str">"mixed"</span>;
-<span class="kw">let</span> result = <span class="str">"cooked"</span>;</div></div>
-<div class="read-card"><div class="read-card-num">04 / 05</div><h3>Loops Are Patterns in Code</h3><p>Instead of writing the same line 10 times, you write it <strong>once inside a loop</strong>.</p>
-<div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Step "</span> + i);
-}</div></div>
-<div class="read-card"><div class="read-card-num">05 / 05</div><h3>Flow Is the Big Idea</h3><p>Programming isn't just about commands — it's about <strong>controlling the flow</strong> of those commands. You're designing the path the computer follows.</p></div>
-</div>
-<div class="content-block" id="block-1-terms">
-<div class="section-header">Key Terms</div>
-<div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
-<div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Pattern <span class="term-arrow">›</span></div><div class="term-def">Something that repeats in a predictable way. A signal to use a loop instead of repeating code.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Sequence <span class="term-arrow">›</span></div><div class="term-def">Steps in a specific order. Code runs top to bottom, one line at a time.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Loop <span class="term-arrow">›</span></div><div class="term-def">A block of code that runs repeatedly until a condition tells it to stop.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Flow <span class="term-arrow">›</span></div><div class="term-def">The path a program follows as it runs.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Iteration <span class="term-arrow">›</span></div><div class="term-def">One single pass through a loop.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Automate <span class="term-arrow">›</span></div><div class="term-def">To make a computer do a task without doing it manually each time.</div></div>
-</div>
-</div>
-<div class="content-block" id="block-1-build">
-<div class="section-header">Build It</div>
-<div class="section-sub">LESSON 01 · SPOT THE PATTERN</div>
-<div class="editor-wrap">
-<div class="editor-toolbar"><span>JAVASCRIPT · FLOW LAB</span><button class="editor-run-btn" onclick="runEditor('l1')">▶ RUN</button></div>
-<textarea class="code-editor" id="editor-l1">// Change the loop to count 1 through 8
-for (let i = 1; i <= 5; i++) {
-  console.log("Count: " + i);
-}</textarea>
-</div>
-<div class="preview-label">CONSOLE OUTPUT</div>
-<div class="console-output" id="output-l1">Output will appear here...</div>
+ 
 <br>
-<div class="quiz-card"><div class="quiz-q">What does a loop let you do that writing each line manually doesn't?</div>
-<div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'Not quite — a loop doesn\'t change what the code does, just how many times.')">Change what the code does</button>
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Exactly right. Loops run the same block as many times as you tell them to.')">Repeat the same block of code automatically</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'Loops don\'t make code faster to read on their own.')">Make code run faster</button>
-</div><div class="quiz-feedback" id="qfb-0"></div></div>
+ 
+<div class="quiz-card">
+<div class="quiz-q">
+What does a loop let you do that writing each line manually doesn't?
 </div>
+ 
+<div class="quiz-options">
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Not quite — a loop doesn\'t change what the code does, just how many times.')">
+Change what the code does
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Exactly right. Loops run the same block as many times as you tell them to.')">
+Repeat the same block of code automatically
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Loops don\'t make code faster to read on their own.')">
+Make code run faster
+</button>
+ 
+</div>
+<div class="quiz-feedback" id="qfb-0">
+</div>
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-1-reflect">
-<div class="section-header">Reflect</div>
-<div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
-<div class="reflect-prompt"><div class="reflect-q">Think of something in your daily life that is a pattern. How could a loop automate it?</div>
-<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
-<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button><span class="reflect-saved" id="saved-1-1">✓ Saved</span></div></div>
-<div class="lesson-complete" id="complete-1"><h3>∞ &nbsp; Lesson 1 Complete</h3><p>Patterns. Sequences. Flow. The foundation is set.</p><div class="lesson-joke" id="joke-1"></div></div>
+ 
+<div class="section-header">
+Reflect
+</div>
+ 
+<div class="section-sub">
+LESSON 01 · YOUR THOUGHTS
+</div>
+ 
+<div class="reflect-prompt">
+<div class="reflect-q">
+Think of something in your daily life that is a pattern. How could a loop automate it?
+</div>
+ 
+<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here...">
+</textarea>
+ 
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">
+Save
+</button>
+<span class="reflect-saved" id="saved-1-1">
+✓ Saved
+</span>
 </div>
 </div>
+ 
+<div class="lesson-complete" id="complete-1">
+<h3>
+∞ &nbsp; Lesson 1 Complete
+</h3>
+<p>
+Patterns. Sequences. Flow. The foundation is set.
+</p>
+<div class="lesson-joke" id="joke-1">
 </div>
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
 <!-- ===================== LESSON 2 ===================== -->
+ 
 <div class="lesson-panel" id="lesson-2">
+ 
 <aside class="lesson-sidebar">
-<div class="sidebar-label">Lesson 02</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
-<a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
+ 
+<div class="sidebar-label">
+Lesson 02
+</div>
+ 
+<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read">
+<span class="sidebar-icon">
+📖
+</span>
+ Read
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms">
+<span class="sidebar-icon">
+🔑
+</span>
+ Terms
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build">
+<span class="sidebar-icon">
+⚙️
+</span>
+ Build
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect">
+<span class="sidebar-icon">
+💭
+</span>
+ Reflect
+</button>
+ 
+<div class="sidebar-divider">
+</div>
+ 
+<a href="loop-game.html" class="sidebar-game-link">
+∞ Loop's Game World
+</a>
+ 
 </aside>
+ 
 <div class="lesson-content">
-<div class="locked-panel" id="lock-2"><div class="locked-icon">🔒</div><h2>Sparks Membership Required</h2><p>Lesson 2 is available to Sparks members and above.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+ 
+<div class="locked-panel" id="lock-2">
+<div class="locked-icon">
+🔒
+</div>
+<h2>
+Sparks Membership Required
+</h2>
+<p>
+Lesson 2 is available to Sparks members and above.
+</p>
+<button class="gate-btn" onclick="goUpgrade()">
+Upgrade Now
+</button>
+</div>
+ 
 <div class="content-block" id="block-2-read" style="display:none">
-<div class="section-header">For Loops</div>
-<div class="section-sub">LESSON 02 · SPARKS+</div>
-<div class="read-card"><div class="read-card-num">01 / 05</div><h3>Anatomy of a For Loop</h3><p>A <strong>for loop</strong> has three parts: where to <strong>start</strong>, when to <strong>stop</strong>, and how to <strong>step</strong> forward.</p>
-<div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
-&nbsp;&nbsp;<span class="cm">// runs 5 times: i = 0, 1, 2, 3, 4</span>
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(i);
-}</div></div>
-<div class="read-card"><div class="read-card-num">02 / 05</div><h3>The Counter Variable</h3><p>The variable <code>i</code> is a <strong>counter</strong>. It changes with every iteration.</p></div>
-<div class="read-card"><div class="read-card-num">03 / 05</div><h3>Using i Inside the Loop</h3><p>Because <code>i</code> changes each time, you can use it inside the loop body to create <strong>dynamic output</strong>.</p></div>
-<div class="read-card"><div class="read-card-num">04 / 05</div><h3>Looping Over an Array</h3><p>Use <code>i</code> as the index to access each item one at a time in a list (array).</p>
-<div class="code-block"><span class="kw">let</span> crew = [<span class="str">"Loop"</span>, <span class="str">"Zen"</span>, <span class="str">"Nova"</span>, <span class="str">"Byte"</span>];
-<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; crew.length; i++) {
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(crew[i]);
-}</div></div>
-<div class="read-card"><div class="read-card-num">05 / 05</div><h3>Counting Down</h3><p>You can count <strong>backwards</strong> using <code>i--</code>.</p></div>
+ 
+<div class="section-header">
+For Loops
 </div>
+ 
+<div class="section-sub">
+LESSON 02 · SPARKS+
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+01 / 05
+</div>
+<h3>
+Anatomy of a For Loop
+</h3>
+<p>
+A 
+<strong>
+for loop
+</strong>
+ has three parts: where to 
+<strong>
+start
+</strong>
+, when to 
+<strong>
+stop
+</strong>
+, and how to 
+<strong>
+step
+</strong>
+ forward.
+</p>
+ 
+<div class="code-block">
+<span class="kw">
+for
+</span>
+ (
+<span class="kw">
+let
+</span>
+ i = 
+<span class="num">
+0
+</span>
+; i &lt; 
+<span class="num">
+5
+</span>
+; i++) { &nbsp;&nbsp;
+<span class="cm">
+// runs 5 times: i = 0, 1, 2, 3, 4
+</span>
+ &nbsp;&nbsp;
+<span class="fn">
+console
+</span>
+.
+<span class="fn">
+log
+</span>
+(i); }
+</div>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+02 / 05
+</div>
+<h3>
+The Counter Variable
+</h3>
+<p>
+The variable 
+<code>
+i
+</code>
+ is a 
+<strong>
+counter
+</strong>
+. It changes with every iteration.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+03 / 05
+</div>
+<h3>
+Using i Inside the Loop
+</h3>
+<p>
+Because 
+<code>
+i
+</code>
+ changes each time, you can use it inside the loop body to create 
+<strong>
+dynamic output
+</strong>
+.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+04 / 05
+</div>
+<h3>
+Looping Over an Array
+</h3>
+<p>
+Use 
+<code>
+i
+</code>
+ as the index to access each item one at a time in a list (array).
+</p>
+ 
+<div class="code-block">
+<span class="kw">
+let
+</span>
+ crew = [
+<span class="str">
+"Loop"
+</span>
+, 
+<span class="str">
+"Zen"
+</span>
+, 
+<span class="str">
+"Nova"
+</span>
+, 
+<span class="str">
+"Byte"
+</span>
+]; 
+<span class="kw">
+for
+</span>
+ (
+<span class="kw">
+let
+</span>
+ i = 
+<span class="num">
+0
+</span>
+; i &lt; crew.length; i++) { &nbsp;&nbsp;
+<span class="fn">
+console
+</span>
+.
+<span class="fn">
+log
+</span>
+(crew[i]); }
+</div>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+05 / 05
+</div>
+<h3>
+Counting Down
+</h3>
+<p>
+You can count 
+<strong>
+backwards
+</strong>
+ using 
+<code>
+i--
+</code>
+.
+</p>
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-2-terms" style="display:none">
-<div class="section-header">Key Terms</div>
-<div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+ 
+<div class="section-header">
+Key Terms
+</div>
+ 
+<div class="section-sub">
+LESSON 02 · TAP TO EXPAND
+</div>
+ 
 <div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">for loop <span class="term-arrow">›</span></div><div class="term-def">A loop with a built-in counter — you define the start, stop, and step.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Counter variable <span class="term-arrow">›</span></div><div class="term-def">Usually named i, tracks which iteration the loop is on.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Array <span class="term-arrow">›</span></div><div class="term-def">A list of values stored in one variable, zero-indexed.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Index <span class="term-arrow">›</span></div><div class="term-def">The position of an item in an array, starting at 0.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">i++ / i-- <span class="term-arrow">›</span></div><div class="term-def">Shorthand for adding or subtracting 1 from i each pass.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">.length <span class="term-arrow">›</span></div><div class="term-def">Tells you how many items are in an array.</div></div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+for loop 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+A loop with a built-in counter — you define the start, stop, and step.
 </div>
 </div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Counter variable 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+Usually named i, tracks which iteration the loop is on.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Array 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+A list of values stored in one variable, zero-indexed.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Index 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+The position of an item in an array, starting at 0.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+i++ / i-- 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+Shorthand for adding or subtracting 1 from i each pass.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+.length 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+Tells you how many items are in an array.
+</div>
+</div>
+ 
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-2-build" style="display:none">
-<div class="section-header">Build It</div>
-<div class="section-sub">LESSON 02 · LOOP THE CREW</div>
+ 
+<div class="section-header">
+Build It
+</div>
+ 
+<div class="section-sub">
+LESSON 02 · LOOP THE CREW
+</div>
+ 
 <div class="editor-wrap">
-<div class="editor-toolbar"><span>JAVASCRIPT · FOR LOOPS</span><button class="editor-run-btn" onclick="runEditor('l2')">▶ RUN</button></div>
-<textarea class="code-editor" id="editor-l2">let crew = ["Loop", "Zen", "Nova", "Byte"];
-for (let i = 0; i < crew.length; i++) {
-  console.log("Present: " + crew[i]);
-}</textarea>
+ 
+<div class="editor-toolbar">
+<span>
+JAVASCRIPT · FOR LOOPS
+</span>
+<button class="editor-run-btn" onclick="runEditor('l2')">
+▶ RUN
+</button>
 </div>
-<div class="preview-label">CONSOLE OUTPUT</div>
-<div class="console-output" id="output-l2">Output will appear here...</div>
+ 
+<textarea class="code-editor" id="editor-l2">
+let crew = ["Loop", "Zen", "Nova", "Byte"]; for (let i = 0; i 
+< crew.length; i++) { console.log("Present: " + crew[i]); }</textarea>
+ 
+</div>
+ 
+<div class="preview-label">
+CONSOLE OUTPUT
+</div>
+ 
+<div class="console-output" id="output-l2">
+Output will appear here...
+</div>
+ 
 <br>
-<div class="quiz-card"><div class="quiz-q">In <code>for (let i = 0; i &lt; 5; i++)</code>, what does <code>i &lt; 5</code> do?</div>
-<div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'The start value is set by the first part.')">Sets the starting value</button>
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Right. The condition is checked before each iteration.')">Checks if the loop should keep going</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'The step is handled by i++.')">Adds 1 to i each time</button>
-</div><div class="quiz-feedback" id="qfb-2"></div></div>
+ 
+<div class="quiz-card">
+<div class="quiz-q">
+In 
+<code>
+for (let i = 0; i &lt; 5; i++)
+</code>
+, what does 
+<code>
+i &lt; 5
+</code>
+ do?
 </div>
+ 
+<div class="quiz-options">
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'The start value is set by the first part.')">
+Sets the starting value
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Right. The condition is checked before each iteration.')">
+Checks if the loop should keep going
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'The step is handled by i++.')">
+Adds 1 to i each time
+</button>
+ 
+</div>
+<div class="quiz-feedback" id="qfb-2">
+</div>
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-2-reflect" style="display:none">
-<div class="section-header">Reflect</div>
-<div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
-<div class="reflect-prompt"><div class="reflect-q">What real-world list (array) would you want to loop through in a program?</div>
-<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
-<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button><span class="reflect-saved" id="saved-2-1">✓ Saved</span></div></div>
-<div class="lesson-complete show" id="complete-2"><h3>∞ &nbsp; Lesson 2 Complete</h3><p>For loops mastered. Arrays looped.</p><div class="lesson-joke" id="joke-2"></div></div>
+ 
+<div class="section-header">
+Reflect
+</div>
+ 
+<div class="section-sub">
+LESSON 02 · YOUR THOUGHTS
+</div>
+ 
+<div class="reflect-prompt">
+<div class="reflect-q">
+What real-world list (array) would you want to loop through in a program?
+</div>
+ 
+<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here...">
+</textarea>
+ 
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">
+Save
+</button>
+<span class="reflect-saved" id="saved-2-1">
+✓ Saved
+</span>
 </div>
 </div>
+ 
+<div class="lesson-complete show" id="complete-2">
+<h3>
+∞ &nbsp; Lesson 2 Complete
+</h3>
+<p>
+For loops mastered. Arrays looped.
+</p>
+<div class="lesson-joke" id="joke-2">
 </div>
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
 <!-- ===================== LESSON 3 ===================== -->
+ 
 <div class="lesson-panel" id="lesson-3">
+ 
 <aside class="lesson-sidebar">
-<div class="sidebar-label">Lesson 03</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
-<a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
+ 
+<div class="sidebar-label">
+Lesson 03
+</div>
+ 
+<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read">
+<span class="sidebar-icon">
+📖
+</span>
+ Read
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms">
+<span class="sidebar-icon">
+🔑
+</span>
+ Terms
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build">
+<span class="sidebar-icon">
+⚙️
+</span>
+ Build
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect">
+<span class="sidebar-icon">
+💭
+</span>
+ Reflect
+</button>
+ 
+<div class="sidebar-divider">
+</div>
+ 
+<a href="loop-game.html" class="sidebar-game-link">
+∞ Loop's Game World
+</a>
+ 
 </aside>
+ 
 <div class="lesson-content">
-<div class="locked-panel" id="lock-3"><div class="locked-icon">🔒</div><h2>Builders Membership Required</h2><p>Lesson 3 is available to Builders members and above.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+ 
+<div class="locked-panel" id="lock-3">
+<div class="locked-icon">
+🔒
+</div>
+<h2>
+Coders Membership Required
+</h2>
+<p>
+Lesson 3 is available to Coders members.
+</p>
+<button class="gate-btn" onclick="goUpgrade()">
+Upgrade Now
+</button>
+</div>
+ 
 <div class="content-block" id="block-3-read" style="display:none">
-<div class="section-header">Conditionals &amp; Flow Control</div>
-<div class="section-sub">LESSON 03 · BUILDERS+</div>
-<div class="read-card"><div class="read-card-num">01 / 05</div><h3>Making Decisions in Code</h3><p>An <code>if</code> statement checks whether something is true, and only runs a block of code if it is.</p>
-<div class="code-block"><span class="kw">if</span> (temperature > <span class="num">80</span>) {
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Wear sunscreen!"</span>);
-}</div></div>
-<div class="read-card"><div class="read-card-num">02 / 05</div><h3>if / else</h3><p>Add an <code>else</code> block to handle the case when the condition is <strong>false</strong>.</p></div>
-<div class="read-card"><div class="read-card-num">03 / 05</div><h3>else if — More Than Two Paths</h3><p>Code checks each condition <strong>in order</strong> and runs the first block where the condition is true.</p></div>
-<div class="read-card"><div class="read-card-num">04 / 05</div><h3>Conditionals Inside Loops</h3><p>You can put an <code>if</code> statement <strong>inside a loop</strong> to check a condition on every item.</p></div>
-<div class="read-card"><div class="read-card-num">05 / 05</div><h3>Comparison Operators</h3><p>Conditions use operators like <code>===</code>, <code>!==</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>.</p></div>
+ 
+<div class="section-header">
+Conditionals &amp; Flow Control
 </div>
+ 
+<div class="section-sub">
+LESSON 03 · CODERS
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+01 / 05
+</div>
+<h3>
+Making Decisions in Code
+</h3>
+<p>
+An 
+<code>
+if
+</code>
+ statement checks whether something is true, and only runs a block of code if it is.
+</p>
+ 
+<div class="code-block">
+<span class="kw">
+if
+</span>
+ (temperature > 
+<span class="num">
+80
+</span>
+) { &nbsp;&nbsp;
+<span class="fn">
+console
+</span>
+.
+<span class="fn">
+log
+</span>
+(
+<span class="str">
+"Wear sunscreen!"
+</span>
+); }
+</div>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+02 / 05
+</div>
+<h3>
+if / else
+</h3>
+<p>
+Add an 
+<code>
+else
+</code>
+ block to handle the case when the condition is 
+<strong>
+false
+</strong>
+.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+03 / 05
+</div>
+<h3>
+else if — More Than Two Paths
+</h3>
+<p>
+Code checks each condition 
+<strong>
+in order
+</strong>
+ and runs the first block where the condition is true.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+04 / 05
+</div>
+<h3>
+Conditionals Inside Loops
+</h3>
+<p>
+You can put an 
+<code>
+if
+</code>
+ statement 
+<strong>
+inside a loop
+</strong>
+ to check a condition on every item.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+05 / 05
+</div>
+<h3>
+Comparison Operators
+</h3>
+<p>
+Conditions use operators like 
+<code>
+===
+</code>
+, 
+<code>
+!==
+</code>
+, 
+<code>
+&gt;
+</code>
+, 
+<code>
+&lt;
+</code>
+, 
+<code>
+&gt;=
+</code>
+, 
+<code>
+&lt;=
+</code>
+.
+</p>
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-3-terms" style="display:none">
-<div class="section-header">Key Terms</div>
-<div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+ 
+<div class="section-header">
+Key Terms
+</div>
+ 
+<div class="section-sub">
+LESSON 03 · TAP TO EXPAND
+</div>
+ 
 <div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Conditional <span class="term-arrow">›</span></div><div class="term-def">A statement that only runs if a condition is true.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">if statement <span class="term-arrow">›</span></div><div class="term-def">Checks a condition, runs code if true.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">else <span class="term-arrow">›</span></div><div class="term-def">The block that runs when if is false.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">else if <span class="term-arrow">›</span></div><div class="term-def">Adds more branches, checked in order.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Boolean <span class="term-arrow">›</span></div><div class="term-def">A value that is either true or false.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">=== vs == <span class="term-arrow">›</span></div><div class="term-def">=== checks value AND type. Always prefer ===.</div></div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Conditional 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+A statement that only runs if a condition is true.
 </div>
 </div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+if statement 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+Checks a condition, runs code if true.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+else 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+The block that runs when if is false.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+else if 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+Adds more branches, checked in order.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+Boolean 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+A value that is either true or false.
+</div>
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">
+=== vs == 
+<span class="term-arrow">
+›
+</span>
+</div>
+<div class="term-def">
+=== checks value AND type. Always prefer ===.
+</div>
+</div>
+ 
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-3-build" style="display:none">
-<div class="section-header">Build It</div>
-<div class="section-sub">LESSON 03 · GRADE THE CREW</div>
+ 
+<div class="section-header">
+Build It
+</div>
+ 
+<div class="section-sub">
+LESSON 03 · GRADE THE CREW
+</div>
+ 
 <div class="editor-wrap">
-<div class="editor-toolbar"><span>JAVASCRIPT · CONDITIONALS</span><button class="editor-run-btn" onclick="runEditor('l3')">▶ RUN</button></div>
-<textarea class="code-editor" id="editor-l3">let scores = [95, 82, 74, 58, 88];
-for (let i = 0; i < scores.length; i++) {
-  console.log(scores[i]);
-}</textarea>
+ 
+<div class="editor-toolbar">
+<span>
+JAVASCRIPT · CONDITIONALS
+</span>
+<button class="editor-run-btn" onclick="runEditor('l3')">
+▶ RUN
+</button>
 </div>
-<div class="preview-label">CONSOLE OUTPUT</div>
-<div class="console-output" id="output-l3">Output will appear here...</div>
+ 
+<textarea class="code-editor" id="editor-l3">
+let scores = [95, 82, 74, 58, 88]; for (let i = 0; i 
+< scores.length; i++) { console.log(scores[i]); }</textarea>
+ 
+</div>
+ 
+<div class="preview-label">
+CONSOLE OUTPUT
+</div>
+ 
+<div class="console-output" id="output-l3">
+Output will appear here...
+</div>
+ 
 <br>
-<div class="quiz-card"><div class="quiz-q">What does <code>===</code> check that <code>==</code> does not?</div>
-<div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'Neither operator checks spelling.')">Spelling of the value</button>
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. === checks that both the value and the type match.')">Both the value and the data type</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'That\'s not what == or === compare.')">Which variable was declared first</button>
-</div><div class="quiz-feedback" id="qfb-4"></div></div>
+ 
+<div class="quiz-card">
+<div class="quiz-q">
+What does 
+<code>
+===
+</code>
+ check that 
+<code>
+==
+</code>
+ does not?
 </div>
+ 
+<div class="quiz-options">
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Neither operator checks spelling.')">
+Spelling of the value
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. === checks that both the value and the type match.')">
+Both the value and the data type
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'That\'s not what == or === compare.')">
+Which variable was declared first
+</button>
+ 
+</div>
+<div class="quiz-feedback" id="qfb-4">
+</div>
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-3-reflect" style="display:none">
-<div class="section-header">Reflect</div>
-<div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
-<div class="reflect-prompt"><div class="reflect-q">Think of a decision you make every day. How would you write it as an if / else if / else chain?</div>
-<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
-<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button><span class="reflect-saved" id="saved-3-1">✓ Saved</span></div></div>
-<div class="lesson-complete show" id="complete-3"><h3>∞ &nbsp; Lesson 3 Complete</h3><p>Conditionals unlocked. Code now makes decisions.</p><div class="lesson-joke" id="joke-3"></div></div>
+ 
+<div class="section-header">
+Reflect
+</div>
+ 
+<div class="section-sub">
+LESSON 03 · YOUR THOUGHTS
+</div>
+ 
+<div class="reflect-prompt">
+<div class="reflect-q">
+Think of a decision you make every day. How would you write it as an if / else if / else chain?
+</div>
+ 
+<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here...">
+</textarea>
+ 
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">
+Save
+</button>
+<span class="reflect-saved" id="saved-3-1">
+✓ Saved
+</span>
 </div>
 </div>
+ 
+<div class="lesson-complete show" id="complete-3">
+<h3>
+∞ &nbsp; Lesson 3 Complete
+</h3>
+<p>
+Conditionals unlocked. Code now makes decisions.
+</p>
+<div class="lesson-joke" id="joke-3">
 </div>
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
 <!-- ===================== LESSON 4 ===================== -->
+ 
 <div class="lesson-panel" id="lesson-4">
+ 
 <aside class="lesson-sidebar">
-<div class="sidebar-label">Lesson 04</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
-<a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
+ 
+<div class="sidebar-label">
+Lesson 04
+</div>
+ 
+<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read">
+<span class="sidebar-icon">
+📖
+</span>
+ Read
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build">
+<span class="sidebar-icon">
+⚙️
+</span>
+ Build
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect">
+<span class="sidebar-icon">
+💭
+</span>
+ Reflect
+</button>
+ 
+<div class="sidebar-divider">
+</div>
+ 
+<a href="loop-game.html" class="sidebar-game-link">
+∞ Loop's Game World
+</a>
+ 
 </aside>
+ 
 <div class="lesson-content">
-<div class="locked-panel" id="lock-4"><div class="locked-icon">🔒</div><h2>Coders Membership Required</h2><p>Lesson 4 is available to Coders members only.</p><button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button></div>
+ 
+<div class="locked-panel" id="lock-4">
+<div class="locked-icon">
+🔒
+</div>
+<h2>
+Coders Membership Required
+</h2>
+<p>
+Lesson 4 is available to Coders members only.
+</p>
+<button class="gate-btn" onclick="goUpgrade()">
+Upgrade Now
+</button>
+</div>
+ 
 <div class="content-block" id="block-4-read" style="display:none">
-<div class="section-header">Flow Challenge</div>
-<div class="section-sub">LESSON 04 · CODERS</div>
-<div class="read-card"><div class="read-card-num">01 / 04</div><h3>Putting It All Together</h3><p>Real programs layer loops inside loops, conditions inside loops, and conditions that decide whether a loop even runs.</p></div>
-<div class="read-card"><div class="read-card-num">02 / 04</div><h3>While Loops</h3><p>A <strong>while loop</strong> keeps running as long as a condition stays true. Use it when you don't know exactly how many times the loop needs to run.</p>
-<div class="code-block"><span class="kw">let</span> energy = <span class="num">10</span>;
-<span class="kw">while</span> (energy > <span class="num">0</span>) {
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Energy: "</span> + energy);
-&nbsp;&nbsp;energy -= <span class="num">3</span>;
-}</div></div>
-<div class="read-card"><div class="read-card-num">03 / 04</div><h3>Nested Loops</h3><p>A loop inside another loop is called a <strong>nested loop</strong>. This is how you work with grids and tables.</p></div>
-<div class="read-card"><div class="read-card-num">04 / 04</div><h3>break and continue</h3><p><strong>break</strong> exits a loop immediately. <strong>continue</strong> skips the rest of the current iteration.</p></div>
+ 
+<div class="section-header">
+Flow Challenge
 </div>
+ 
+<div class="section-sub">
+LESSON 04 · CODERS
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+01 / 04
+</div>
+<h3>
+Putting It All Together
+</h3>
+<p>
+Real programs layer loops inside loops, conditions inside loops, and conditions that decide whether a loop even runs.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+02 / 04
+</div>
+<h3>
+While Loops
+</h3>
+<p>
+A 
+<strong>
+while loop
+</strong>
+ keeps running as long as a condition stays true. Use it when you don't know exactly how many times the loop needs to run.
+</p>
+ 
+<div class="code-block">
+<span class="kw">
+let
+</span>
+ energy = 
+<span class="num">
+10
+</span>
+; 
+<span class="kw">
+while
+</span>
+ (energy > 
+<span class="num">
+0
+</span>
+) { &nbsp;&nbsp;
+<span class="fn">
+console
+</span>
+.
+<span class="fn">
+log
+</span>
+(
+<span class="str">
+"Energy: "
+</span>
+ + energy); &nbsp;&nbsp;energy -= 
+<span class="num">
+3
+</span>
+; }
+</div>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+03 / 04
+</div>
+<h3>
+Nested Loops
+</h3>
+<p>
+A loop inside another loop is called a 
+<strong>
+nested loop
+</strong>
+. This is how you work with grids and tables.
+</p>
+</div>
+ 
+<div class="read-card">
+<div class="read-card-num">
+04 / 04
+</div>
+<h3>
+break and continue
+</h3>
+<p>
+<strong>
+break
+</strong>
+ exits a loop immediately. 
+<strong>
+continue
+</strong>
+ skips the rest of the current iteration.
+</p>
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-4-build" style="display:none">
-<div class="section-header">Build It</div>
-<div class="section-sub">LESSON 04 · BUILD THE FLOW</div>
+ 
+<div class="section-header">
+Build It
+</div>
+ 
+<div class="section-sub">
+LESSON 04 · BUILD THE FLOW
+</div>
+ 
 <div class="editor-wrap">
-<div class="editor-toolbar"><span>JAVASCRIPT · NESTED LOOPS</span><button class="editor-run-btn" onclick="runEditor('l4a')">▶ RUN</button></div>
-<textarea class="code-editor" id="editor-l4a">// Build a 3x3 multiplication grid
-for (let row = 1; row <= 3; row++) {
-  // Add the inner loop here
-}</textarea>
+ 
+<div class="editor-toolbar">
+<span>
+JAVASCRIPT · NESTED LOOPS
+</span>
+<button class="editor-run-btn" onclick="runEditor('l4a')">
+▶ RUN
+</button>
 </div>
-<div class="preview-label">CONSOLE OUTPUT</div>
-<div class="console-output" id="output-l4a">Output will appear here...</div>
+ 
+<textarea class="code-editor" id="editor-l4a">
+// Build a 3x3 multiplication grid for (let row = 1; row 
+<= 3; row++) { // Add the inner loop here }</textarea>
+ 
+</div>
+ 
+<div class="preview-label">
+CONSOLE OUTPUT
+</div>
+ 
+<div class="console-output" id="output-l4a">
+Output will appear here...
+</div>
+ 
 <br>
-<div class="quiz-card"><div class="quiz-q">What is the difference between <code>break</code> and <code>continue</code>?</div>
+ 
+<div class="quiz-card">
+<div class="quiz-q">
+What is the difference between 
+<code>
+break
+</code>
+ and 
+<code>
+continue
+</code>
+?
+</div>
+ 
 <div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'Both are used inside loops.')">break is for conditionals, continue is for loops</button>
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. break exits the loop; continue skips to the next iteration.')">break exits the loop; continue skips to the next iteration</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'They have different effects.')">They do the same thing</button>
-</div><div class="quiz-feedback" id="qfb-6"></div></div>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Both are used inside loops.')">
+break is for conditionals, continue is for loops
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. break exits the loop; continue skips to the next iteration.')">
+break exits the loop; continue skips to the next iteration
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'They have different effects.')">
+They do the same thing
+</button>
+ 
 </div>
+<div class="quiz-feedback" id="qfb-6">
+</div>
+</div>
+ 
+</div>
+ 
 <div class="content-block" id="block-4-reflect" style="display:none">
-<div class="section-header">Reflect</div>
-<div class="section-sub">LESSON 04 · YOUR THOUGHTS</div>
-<div class="reflect-prompt"><div class="reflect-q">When would you choose a while loop over a for loop?</div>
-<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
-<div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button><span class="reflect-saved" id="saved-4-1">✓ Saved</span></div></div>
-<div class="lesson-complete show" id="complete-4"><h3>∞ &nbsp; Flow Challenge Complete</h3><p>Sequences. Loops. Conditionals. Nested logic. You think in flow now.</p><div class="lesson-joke" id="joke-4"></div></div>
+ 
+<div class="section-header">
+Reflect
+</div>
+ 
+<div class="section-sub">
+LESSON 04 · YOUR THOUGHTS
+</div>
+ 
+<div class="reflect-prompt">
+<div class="reflect-q">
+When would you choose a while loop over a for loop?
+</div>
+ 
+<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here...">
+</textarea>
+ 
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">
+Save
+</button>
+<span class="reflect-saved" id="saved-4-1">
+✓ Saved
+</span>
 </div>
 </div>
+ 
+<div class="lesson-complete show" id="complete-4">
+<h3>
+∞ &nbsp; Flow Challenge Complete
+</h3>
+<p>
+Sequences. Loops. Conditionals. Nested logic. You think in flow now.
+</p>
+<div class="lesson-joke" id="joke-4">
 </div>
-
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
 <div class="lesson-panel" id="lesson-cheat">
+ 
 <div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
-<div class="section-header">Loop's Cheat Sheet</div>
-<div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
-<div class="cheat-card"><h3>∞ Lesson 1 — Patterns &amp; Sequences</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">Pattern</div><div class="cheat-desc">Something that repeats predictably — the signal to use a loop.</div></div>
-<div class="cheat-item"><div class="cheat-term">Sequence</div><div class="cheat-desc">Code executes top to bottom, one line at a time.</div></div>
-<div class="cheat-item"><div class="cheat-term">Iteration</div><div class="cheat-desc">One single pass through a loop.</div></div>
-</div></div>
-<div class="cheat-card"><h3>∞ Lesson 2 — For Loops</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">for loop</div><div class="cheat-desc">for (let i = 0; i &lt; n; i++) { }</div></div>
-<div class="cheat-item"><div class="cheat-term">Count up / down</div><div class="cheat-desc">i++ adds 1, i-- subtracts 1 each pass.</div></div>
-<div class="cheat-item"><div class="cheat-term">Array index</div><div class="cheat-desc">Starts at 0. A 5-item array has indices 0 through 4.</div></div>
-</div></div>
-<div class="cheat-card"><h3>∞ Lesson 3 — Conditionals</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">if</div><div class="cheat-desc">if (condition) { } — runs only when true.</div></div>
-<div class="cheat-item"><div class="cheat-term">else / else if</div><div class="cheat-desc">Adds more branches, checked top to bottom.</div></div>
-<div class="cheat-item"><div class="cheat-term">===</div><div class="cheat-desc">Checks value AND type — always prefer over ==.</div></div>
-</div></div>
-<div class="cheat-card"><h3>∞ Lesson 4 — Flow Control</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">while loop</div><div class="cheat-desc">while (condition) { } — runs until condition is false.</div></div>
-<div class="cheat-item"><div class="cheat-term">Nested loop</div><div class="cheat-desc">A loop inside another loop.</div></div>
-<div class="cheat-item"><div class="cheat-term">break / continue</div><div class="cheat-desc">break exits the loop; continue skips to the next pass.</div></div>
-</div></div>
-<div class="cheat-card"><h3>∞ Symbols Reference</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">( )</div><div class="cheat-desc">Holds the loop's start, stop, and step.</div></div>
-<div class="cheat-item"><div class="cheat-term">;</div><div class="cheat-desc">Separates the 3 parts of a for loop.</div></div>
-<div class="cheat-item"><div class="cheat-term">&lt; / &lt;=</div><div class="cheat-desc">Less than / less than or equal — controls the stop condition.</div></div>
-<div class="cheat-item"><div class="cheat-term">++ / --</div><div class="cheat-desc">Increment / decrement — the step.</div></div>
+ 
+<div class="section-header">
+Loop's Cheat Sheet
 </div>
+ 
+<div class="section-sub">
+ALL FOUR LESSONS · COMBINED REFERENCE
+</div>
+ 
+<div class="cheat-card">
+<h3>
+∞ Lesson 1 — Patterns &amp; Sequences
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+Pattern
+</div>
+<div class="cheat-desc">
+Something that repeats predictably — the signal to use a loop.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+Sequence
+</div>
+<div class="cheat-desc">
+Code executes top to bottom, one line at a time.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+Iteration
+</div>
+<div class="cheat-desc">
+One single pass through a loop.
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+<div class="cheat-card">
+<h3>
+∞ Lesson 2 — For Loops
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+for loop
+</div>
+<div class="cheat-desc">
+for (let i = 0; i &lt; n; i++) { }
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+Count up / down
+</div>
+<div class="cheat-desc">
+i++ adds 1, i-- subtracts 1 each pass.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+Array index
+</div>
+<div class="cheat-desc">
+Starts at 0. A 5-item array has indices 0 through 4.
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+<div class="cheat-card">
+<h3>
+∞ Lesson 3 — Conditionals
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+if
+</div>
+<div class="cheat-desc">
+if (condition) { } — runs only when true.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+else / else if
+</div>
+<div class="cheat-desc">
+Adds more branches, checked top to bottom.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+===
+</div>
+<div class="cheat-desc">
+Checks value AND type — always prefer over ==.
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+<div class="cheat-card">
+<h3>
+∞ Lesson 4 — Flow Control
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+while loop
+</div>
+<div class="cheat-desc">
+while (condition) { } — runs until condition is false.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+Nested loop
+</div>
+<div class="cheat-desc">
+A loop inside another loop.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+break / continue
+</div>
+<div class="cheat-desc">
+break exits the loop; continue skips to the next pass.
+</div>
+</div>
+ 
+</div>
+</div>
+ 
+<div class="cheat-card">
+<h3>
+∞ Symbols Reference
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+( )
+</div>
+<div class="cheat-desc">
+Holds the loop's start, stop, and step.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+;
+</div>
+<div class="cheat-desc">
+Separates the 3 parts of a for loop.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+&lt; / &lt;=
+</div>
+<div class="cheat-desc">
+Less than / less than or equal — controls the stop condition.
+</div>
+</div>
+ 
+<div class="cheat-item">
+<div class="cheat-term">
+++ / --
+</div>
+<div class="cheat-desc">
+Increment / decrement — the step.
+</div>
+</div>
+ 
+</div>
+ 
 <div class="cheat-btn-row">
-<a href="loop-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
-<button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
+ 
+<a href="loop-cheatsheet.pdf" download class="cheat-download-btn">
+⬇ Download Full PDF Cheat Sheet
+</a>
+ 
+<button class="cheat-download-btn secondary" onclick="downloadCheat()">
+Quick Text Reference
+</button>
+ 
 </div>
+ 
 </div>
+ 
 </div>
+ 
 </div>
+ 
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">
+🔊
+</button>
+ 
+<div class="egg-popup" id="eggPopup">
+<h4>
+∞ Secret Found!
+</h4>
+<p id="eggText">
+</p>
+</div>
+ 
+<script type="module" src="auth-init.js">
 
-<div class="loop-companion" id="loopCompanion">
-<img src="loop-idle.gif" alt="Loop" title="Loop is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
-</div>
-<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
-<div class="egg-popup" id="eggPopup"><h4>∞ Secret Found!</h4><p id="eggText"></p></div>
-<script type="module" src="auth-init.js"></script>
-<script>
-let currentLesson = null;
-let currentTier = null;
-const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
-function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
-window.setNavUser = function(email) {
-  const u = document.getElementById('navUser'); const b = document.getElementById('navLogout');
-  if (u) { u.textContent = email; u.style.display = 'inline'; }
-  if (b) b.style.display = 'inline-block';
-};
-window.handleTierUnlock = function(tier) {
-  currentTier = tier; const lvl = tierLevel(tier);
-  if (lvl >= tierLevel('sparks')) { document.getElementById('lock-2').style.display = 'none'; ['read','terms','build','reflect'].forEach(b => { const el = document.getElementById('block-2-' + b); if (el) el.style.removeProperty('display'); }); }
-  if (lvl >= tierLevel('builders')) { document.getElementById('lock-3').style.display = 'none'; ['read','terms','build','reflect'].forEach(b => { const el = document.getElementById('block-3-' + b); if (el) el.style.removeProperty('display'); }); }
-  if (lvl >= tierLevel('coders')) { document.getElementById('lock-4').style.display = 'none'; ['read','build','reflect'].forEach(b => { const el = document.getElementById('block-4-' + b); if (el) el.style.removeProperty('display'); }); }
-  loadReflects();
-};
-function enterCourse() {
-  const overlay = document.getElementById('discoveryOverlay');
-  const finishEntrance = () => {
-    overlay.classList.add('fading');
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-      const st = document.getElementById('soundToggle'); if (st) st.classList.add('visible');
-      try { startAmbient(); } catch (e) { /* ambient audio optional */ }
-    }, 700);
-  };
-  try {
-    document.getElementById('discoveryEnterBtn').style.display = 'none';
-    document.querySelector('.loop-mark').style.display = 'none';
-    document.getElementById('discoveryTitle').style.display = 'none';
-    document.getElementById('discoverySub').style.display = 'none';
-    const stage = document.getElementById('hologramStage');
-    stage.style.display = 'block';
-  } catch (e) { /* hologram cosmetics optional, overlay must still dismiss */ }
-  setTimeout(finishEntrance, 3000);
-}
-function openLesson(n) {
-  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
-  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
-  const panel = document.getElementById('lesson-' + n); const tab = document.getElementById('tab-' + n);
-  if (panel) panel.classList.add('open'); if (tab) tab.classList.add('active');
-  currentLesson = n; panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  if (n !== 'cheat') showBlock(n, 'read');
-  playUISound(330);
-  const companion = document.getElementById('loopCompanion');
-  if (companion && n !== 'cheat') companion.classList.add('visible');
-  const wrapper = document.getElementById('icebreakerWrapper');
-  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
-}
-function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
-function showBlock(lesson, block) {
-  const panel = document.getElementById('lesson-' + lesson); if (!panel) return;
-  panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
-  panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-  const target = document.getElementById('block-' + lesson + '-' + block); if (target) target.classList.add('active');
-  const btn = document.getElementById('sb-' + lesson + '-' + block); if (btn) btn.classList.add('active');
-  playUISound(392);
-}
-function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); }
-let uiAudioCtx = null;
-function playUISound(freq) {
-  try {
-    if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = uiAudioCtx.createOscillator(); const gain = uiAudioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
-    osc.connect(gain); gain.connect(uiAudioCtx.destination);
-    osc.start(); osc.stop(uiAudioCtx.currentTime + 0.18);
-  } catch (e) { /* audio unavailable, silently continue */ }
-}
-function checkQuiz(btn, correct, feedback) {
-  const opts = btn.closest('.quiz-options'); if (opts.querySelector('.correct')) return;
-  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
-  if (correct) { btn.classList.add('correct'); if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; } }
-  else { btn.classList.add('wrong'); if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; } setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400); }
-}
-function saveReflect(inputId, savedId) {
-  const val = document.getElementById(inputId)?.value; if (val === undefined) return;
-  localStorage.setItem('loop_' + inputId, val);
-  const saved = document.getElementById(savedId); if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
-  const lessonNum = inputId.split('-')[1];
-  const complete = document.getElementById('complete-' + lessonNum);
-  if (complete) { complete.classList.add('show'); const jokeEl = document.getElementById('joke-' + lessonNum); if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)]; }
-}
-function loadReflects() { document.querySelectorAll('.reflect-input').forEach(el => { const stored = localStorage.getItem('loop_' + el.id); if (stored) el.value = stored; }); }
-function runEditor(id) {
-  const code = document.getElementById('editor-' + id)?.value || ''; const outputEl = document.getElementById('output-' + id); if (!outputEl) return;
-  const logs = []; const fakeCon = { log: (...a) => logs.push(a.join(' ')) };
-  try { const fn = new Function('console', code); fn(fakeCon); outputEl.textContent = logs.join('\n') || '(no output)'; outputEl.style.color = '#00f5d4'; }
-  catch(e) { outputEl.textContent = 'Error: ' + e.message; outputEl.style.color = '#ff6b6b'; }
-}
-function downloadCheat() {
-  const content = "LOOP'S CHALLENGE COURSE — FULL CHEAT SHEET\n\n" +
-    "LESSON 1 — Patterns & Sequences\nPattern: repeats predictably\nSequence: top to bottom, one line at a time\nIteration: one pass through a loop\n\n" +
-    "LESSON 2 — For Loops\nfor (let i = 0; i < n; i++) { }\ni++ / i-- adjusts the counter\nArray index starts at 0\n\n" +
-    "LESSON 3 — Conditionals\nif (condition) { }\nelse / else if adds branches\n=== checks value AND type\n\n" +
-    "LESSON 4 — Flow Control\nwhile (condition) { }\nNested loop: a loop inside another loop\nbreak exits, continue skips to next pass\n\n" +
-    "SYMBOLS REFERENCE\n( )   holds start, stop, step\n;     separates the 3 for-loop parts\n< <=  controls the stop condition\n++ --  the step";
-  const blob = new Blob([content], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'loop-cheatsheet.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
-}
-function goUpgrade() { if (window.firebaseAuth && window.firebaseAuth.currentUser) { window.location.href = 'membership.html'; } else { document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } })); } }
-function handleLogout() { if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); } }
-function spawnParticle() {
-  const field = document.getElementById('particleField'); if (!field) return;
-  const p = document.createElement('div'); p.className = 'particle';
-  const startX = Math.random() * 100; const duration = 8 + Math.random() * 10; const delay = Math.random() * 2;
-  p.style.left = startX + '%'; p.style.bottom = '0'; p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
-  field.appendChild(p); setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
-}
-for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400);
-setInterval(spawnParticle, 900);
-const FACTS = [ "the word 'algorithm' comes from the name of a 9th-century Persian mathematician, al-Khwarizmi.", "the very first for loop appeared in FORTRAN, one of the earliest programming languages, back in 1957.", "loops are so fundamental that almost every programming language ever created has some version of one.", "a loop with no exit condition is called an infinite loop — and it's one of the most common beginner bugs.", "the 'while' loop and the 'for' loop do the same basic job — but for loops are better when you know your count ahead of time.", "some of the earliest computers used physical punch cards to represent loop instructions.", "nested loops are how video game grids, spreadsheets, and pixel art all get built row by row.", "the term 'iteration' comes from the Latin word 'iterare,' meaning 'to repeat.'" ];
-let factIndex = 0;
-function cycleFacts() { const el = document.getElementById('factTicker'); if (!el) return; el.classList.remove('show'); setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400); }
-cycleFacts(); setInterval(cycleFacts, 6500);
-const JOKES = [ "Why did the for loop break up with the while loop? It needed more structure.", "I'd tell you an infinite loop joke, but I'd tell you an infinite loop joke, but...", "Why do loops make great friends? They always come back around.", "There are two hard problems in computer science: naming things, cache invalidation, and off-by-one errors.", "Why did the counter variable go to therapy? It kept getting incremented against its will.", "What did the array say to the loop? Index me, baby.", "Loop's favorite dance move? The repeat." ];
-let companionClicks = 0;
-function companionClick() {
-  companionClicks++;
-  if (companionClicks === 5 && !localStorage.getItem('loop_egg_found')) { localStorage.setItem('loop_egg_found', '1'); showEgg("You found Loop's hidden track! Secret catchphrase unlocked: \"Around and around, until it's right.\" ∞"); }
-  else if (companionClicks % 5 === 0) { showEgg("Loop nods calmly. You've already found this one — but the pattern's always there."); }
-}
-function showEgg(text) { const popup = document.getElementById('eggPopup'); document.getElementById('eggText').textContent = text; popup.classList.add('show'); setTimeout(() => popup.classList.remove('show'), 5000); }
-let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
-function startAmbient() { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain(); droneOsc.type = 'sine'; droneOsc.frequency.value = 90; droneGain.gain.value = 0.015; droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start(); } catch (e) { console.warn('Ambient audio unavailable:', e); } }
-function toggleSound() { const btn = document.getElementById('soundToggle'); if (!audioCtx) return; soundOn = !soundOn; droneGain.gain.value = soundOn ? 0.015 : 0; btn.textContent = soundOn ? '🔊' : '🔇'; btn.classList.toggle('muted', !soundOn); }
-
-/* ══════════════════ ICEBREAKER — STEP COUNTER GAME ══════════════════ */
-const IB_TERMS = [
-  { id: 'start', label: 'START', def: "The number a loop begins counting from. In for (let i = 0; ...), the start is 0.", color: '#00f5d4' },
-  { id: 'stop', label: 'STOP', def: "The condition that ends the loop. In i < 5, the loop stops once i reaches 5.", color: '#4fc3f7' },
-  { id: 'step', label: 'STEP', def: "How much the counter changes each pass. i++ means the step is 1.", color: '#ff6bad' }
-];
-const IB_ROUNDS_DATA = [
-  { start: 0, stop: 3, step: 1, hops: 3, piece: 'let i = 0' },
-  { start: 0, stop: 6, step: 2, hops: 3, piece: 'i < 6' },
-  { start: 1, stop: 5, step: 1, hops: 4, piece: 'i++' }
-];
-let ibRound = 0;
-let ibVals = { start: 0, stop: 0, step: 1 };
-let ibCollectedPieces = [];
-let ibAudioCtx = null;
-let ibSeqPattern = [];
-let ibSeqPlayer = [];
-let ibSeqPlaying = false;
-
-function ibPlayTone(freq, dur) {
-  try {
-    if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ibAudioCtx.createOscillator(); const gain = ibAudioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
-    osc.connect(gain); gain.connect(ibAudioCtx.destination);
-    osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
-  } catch (e) { /* audio unavailable, silently continue */ }
-}
-function ibToggleWrapper() {
-  const wrapper = document.getElementById('icebreakerWrapper');
-  const opening = !wrapper.classList.contains('open');
-  wrapper.classList.toggle('open');
-  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-function ibRenderIntro() {
-  const grid = document.getElementById('ibTermsGrid'); if (!grid) return;
-  grid.innerHTML = IB_TERMS.map(t =>
-    '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' +
-      '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' +
-      '<div class="ib-term-def">' + t.def + '</div>' +
-    '</div>'
-  ).join('');
-}
-function ibStartGame() {
-  document.getElementById('ib-intro').style.display = 'none';
-  document.getElementById('ib-game').style.display = 'block';
-  ibRound = 0; ibCollectedPieces = [];
-  ibBeginRound();
-}
-function ibBeginRound() {
-  const data = IB_ROUNDS_DATA[ibRound];
-  ibVals = { start: 0, stop: 0, step: 1 };
-  document.getElementById('ibBuildStage').style.display = 'none';
-  document.getElementById('ibSequenceStage').style.display = 'none';
-  const stage = document.getElementById('ibTrackStage');
-  stage.style.display = 'block';
-  stage.innerHTML =
-    '<div class="ib-round-label">ROUND ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' +
-    '<div class="ib-track-goal">Set the runner\'s START, STOP, and STEP to hit every pink dot — then press Run.</div>' +
-    '<div class="ib-track" id="ibTrack"></div>' +
-    '<div class="ib-controls-row">' +
-      ibControlHTML('start') + ibControlHTML('stop') + ibControlHTML('step') +
-    '</div>' +
-    '<button class="ib-run-btn" onclick="ibRunTrack()">▶ Run</button>' +
-    '<div class="ib-track-status" id="ibTrackStatus"></div>';
-  ibRenderTrack(data);
-  ibUpdateControlDisplays();
-}
-function ibControlHTML(key) {
-  return '<div class="ib-control"><label>' + key + '</label><div class="ib-control-row">' +
-    '<button class="ib-step-btn" onclick="ibAdjust(\'' + key + '\',-1)">−</button>' +
-    '<span class="ib-control-val" id="ibVal-' + key + '">0</span>' +
-    '<button class="ib-step-btn" onclick="ibAdjust(\'' + key + '\',1)">+</button>' +
-  '</div></div>';
-}
-function ibAdjust(key, dir) {
-  const min = key === 'step' ? 1 : 0;
-  ibVals[key] = Math.max(min, Math.min(10, ibVals[key] + dir));
-  ibUpdateControlDisplays();
-  ibPlayTone(300, 0.1);
-}
-function ibUpdateControlDisplays() {
-  ['start','stop','step'].forEach(k => { const el = document.getElementById('ibVal-' + k); if (el) el.textContent = ibVals[k]; });
-}
-function ibRenderTrack(data) {
-  const track = document.getElementById('ibTrack');
-  const maxPos = Math.max(data.stop, 8);
-  track.innerHTML = '<div class="ib-track-runner" id="ibRunner" style="left:2%;">🏃</div>';
-  let hop = data.start;
-  while (hop <= data.stop) {
-    const pct = 4 + (hop / maxPos) * 90;
-    const dot = document.createElement('div');
-    dot.className = 'ib-track-dot target';
-    dot.style.left = pct + '%';
-    track.appendChild(dot);
-    hop += data.step;
-  }
-}
-function ibRunTrack() {
-  const data = IB_ROUNDS_DATA[ibRound];
-  const status = document.getElementById('ibTrackStatus');
-  const runner = document.getElementById('ibRunner');
-  const maxPos = Math.max(data.stop, 8);
-  if (ibVals.start !== data.start || ibVals.stop !== data.stop || ibVals.step !== data.step) {
-    status.textContent = 'Not quite matching the dots yet — adjust start, stop, or step and try again.';
-    runner.style.left = (4 + (ibVals.start / maxPos) * 90) + '%';
-    ibPlayTone(140, 0.3);
-    return;
-  }
-  status.textContent = 'Watch the runner hop the pattern...';
-  let hop = data.start; let step = 0;
-  const totalHops = Math.floor((data.stop - data.start) / data.step) + 1;
-  function nextHop() {
-    if (step >= totalHops) {
-      status.textContent = '✓ Perfect run! That pattern is now real code.';
-      ibPlayTone(500, 0.4);
-      setTimeout(() => ibRevealPiece(), 700);
-      return;
-    }
-    const pct = 4 + (hop / maxPos) * 90;
-    runner.style.left = pct + '%';
-    ibPlayTone(320 + step * 30, 0.15);
-    hop += data.step; step++;
-    setTimeout(nextHop, 500);
-  }
-  nextHop();
-}
-function ibRevealPiece() {
-  const data = IB_ROUNDS_DATA[ibRound];
-  ibCollectedPieces.push(data.piece);
-  document.getElementById('ibTrackStage').style.display = 'none';
-  const build = document.getElementById('ibBuildStage');
-  build.style.display = 'block';
-  build.innerHTML =
-    '<div class="ib-build-eyebrow">CODE PIECE ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' +
-    '<div class="ib-build-def">Your run just matched this piece of real for-loop code:</div>' +
-    '<div class="ib-slots"><div class="ib-slot filled" style="border-color:#00f5d4;color:#00f5d4;">' + data.piece + '</div></div>' +
-    '<div class="ib-build-feedback">◈ Locked in.</div>' +
-    '<button class="ib-check-btn" onclick="ibAdvanceRound()">Continue →</button>';
-}
-function ibAdvanceRound() {
-  ibRound++;
-  if (ibRound >= IB_ROUNDS_DATA.length) { ibBeginSequence(); }
-  else { ibBeginRound(); }
-}
-function ibBeginSequence() {
-  document.getElementById('ibBuildStage').style.display = 'none';
-  const stage = document.getElementById('ibSequenceStage');
-  stage.style.display = 'block';
-  const colors = ['#00f5d4', '#4fc3f7', '#ff6bad'];
-  stage.innerHTML =
-    '<div class="ib-build-eyebrow">FINAL PRACTICE &nbsp;·&nbsp; THE WHOLE LOOP</div>' +
-    '<div class="ib-seq-status" id="ibSeqStatus">Watch the full line come together...</div>' +
-    '<div class="ib-seq-board" id="ibSeqBoard"></div>';
-  const board = document.getElementById('ibSeqBoard');
-  board.innerHTML = ibCollectedPieces.map((p, idx) =>
-    '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + colors[idx] + ';color:' + colors[idx] + ';--c:' + colors[idx] + '" onclick="ibSeqClick(' + idx + ')">' + p + '</div>'
-  ).join('');
-  ibSeqPattern = ibCollectedPieces.map((_, idx) => idx);
-  ibPlaySeqPattern(colors);
-}
-function ibPlaySeqPattern(colors) {
-  ibSeqPlayer = []; ibSeqPlaying = true;
-  const statusEl = document.getElementById('ibSeqStatus');
-  statusEl.textContent = 'Watch the full line come together...';
-  let step = 0;
-  function playNext() {
-    if (step >= ibSeqPattern.length) { ibSeqPlaying = false; statusEl.textContent = 'Your turn — click the pieces in order.'; return; }
-    const idx = ibSeqPattern[step];
-    const card = document.getElementById('ibSeqCard' + idx);
-    card.classList.add('lit');
-    ibPlayTone(350 + idx * 60, 0.3);
-    setTimeout(() => { card.classList.remove('lit'); step++; setTimeout(playNext, 200); }, 400);
-  }
-  setTimeout(playNext, 500);
-}
-function ibSeqClick(idx) {
-  if (ibSeqPlaying) return;
-  const card = document.getElementById('ibSeqCard' + idx);
-  card.classList.add('lit');
-  ibPlayTone(350 + idx * 60, 0.25);
-  setTimeout(() => card.classList.remove('lit'), 300);
-  ibSeqPlayer.push(idx);
-  const step = ibSeqPlayer.length - 1;
-  if (ibSeqPlayer[step] !== ibSeqPattern[step]) {
-    card.classList.add('wrong');
-    document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
-    setTimeout(() => { card.classList.remove('wrong'); ibPlaySeqPattern(['#00f5d4','#4fc3f7','#ff6bad']); }, 700);
-    return;
-  }
-  if (ibSeqPlayer.length === ibSeqPattern.length) {
-    document.getElementById('ibSeqStatus').textContent = '✓ Perfect sequence!';
-    setTimeout(() => ibComplete(), 800);
-  }
-}
-function ibSkipGame() { ibComplete(); }
-function ibComplete() {
-  document.getElementById('ib-game').style.display = 'none';
-  document.getElementById('ib-complete').style.display = 'block';
-}
-function ibReset() {
-  document.getElementById('ib-complete').style.display = 'none';
-  document.getElementById('ib-intro').style.display = 'block';
-  ibRound = 0; ibCollectedPieces = [];
-}
-document.addEventListener('DOMContentLoaded', () => { loadReflects(); ibRenderIntro(); });
 </script>
+ 
+<script>
+ let currentLesson = null;
+ let currentTier = null;
+ const TIER_ORDER = ['explorer', 'sparks', 'coders'];
+ function tierLevel(t) {
+ return TIER_ORDER.indexOf((t || '').toLowerCase());
+ }
+ window.setNavUser = function(email) {
+ const u = document.getElementById('navUser');
+ const b = document.getElementById('navLogout');
+ if (u) {
+ u.textContent = email;
+ u.style.display = 'inline';
+ }
+ if (b) b.style.display = 'inline-block';
+ }
+;
+ window.handleTierUnlock = function(tier) {
+ currentTier = tier;
+ const loggedIn = !!tier && tier !== 'logged-out';
+ const anonLock = document.getElementById('anon-lock-1');
+ const anonGated = document.getElementById('anon-gated-1');
+ if (loggedIn) {
+ if (anonLock) anonLock.style.display = 'none';
+ if (anonGated) anonGated.style.display = 'block';
+ }
+ else {
+ if (anonLock) anonLock.style.display = 'block';
+ if (anonGated) anonGated.style.display = 'none';
+ }
+ const lvl = tierLevel(tier);
+ if (lvl >= tierLevel('sparks')) {
+ document.getElementById('lock-2').style.display = 'none';
+ ['read','terms','build','reflect'].forEach(b => {
+ const el = document.getElementById('block-2-' + b);
+ if (el) el.style.removeProperty('display');
+ }
+);
+ }
+ if (lvl >= tierLevel('coders')) {
+ document.getElementById('lock-3').style.display = 'none';
+ document.getElementById('lock-4').style.display = 'none';
+ ['read','terms','build','reflect'].forEach(b => {
+ const el = document.getElementById('block-3-' + b);
+ if (el) el.style.removeProperty('display');
+ }
+);
+ ['read','build','reflect'].forEach(b => {
+ const el = document.getElementById('block-4-' + b);
+ if (el) el.style.removeProperty('display');
+ }
+);
+ }
+ loadReflects();
+ }
+;
+ function enterCourse() {
+ const overlay = document.getElementById('discoveryOverlay');
+ const finishEntrance = () => {
+ overlay.classList.add('fading');
+ setTimeout(() => {
+ overlay.classList.add('hidden');
+ const st = document.getElementById('soundToggle');
+ if (st) st.classList.add('visible');
+ try {
+ startAmbient();
+ }
+ catch (e) {
+ /* ambient audio optional */ }
+ }
+, 700);
+ }
+;
+ try {
+ document.getElementById('discoveryEnterBtn').style.display = 'none';
+ document.querySelector('.loop-mark').style.display = 'none';
+ document.getElementById('discoveryTitle').style.display = 'none';
+ document.getElementById('discoverySub').style.display = 'none';
+ const stage = document.getElementById('hologramStage');
+ stage.style.display = 'block';
+ }
+ catch (e) {
+ /* hologram cosmetics optional, overlay must still dismiss */ }
+ setTimeout(finishEntrance, 3000);
+ }
+ function openLesson(n) {
+ document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+ document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+ const panel = document.getElementById('lesson-' + n);
+ const tab = document.getElementById('tab-' + n);
+ if (panel) panel.classList.add('open');
+ if (tab) tab.classList.add('active');
+ currentLesson = n;
+ panel?.scrollIntoView({
+ behavior: 'smooth', block: 'start' }
+);
+ if (n !== 'cheat') showBlock(n, 'read');
+ playUISound(330);
+ const wrapper = document.getElementById('icebreakerWrapper');
+ if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
+ }
+ function jumpToLesson(n) {
+ openLesson(n);
+ showBlock(n, 'read');
+ }
+ function showBlock(lesson, block) {
+ const panel = document.getElementById('lesson-' + lesson);
+ if (!panel) return;
+ panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+ panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+ const target = document.getElementById('block-' + lesson + '-' + block);
+ if (target) target.classList.add('active');
+ const btn = document.getElementById('sb-' + lesson + '-' + block);
+ if (btn) btn.classList.add('active');
+ playUISound(392);
+ }
+ function toggleTerm(card) {
+ card.classList.toggle('open');
+ playUISound(440);
+ }
+ let uiAudioCtx = null;
+ function playUISound(freq) {
+ try {
+ if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+ const osc = uiAudioCtx.createOscillator();
+ const gain = uiAudioCtx.createGain();
+ osc.type = 'sine';
+ osc.frequency.value = freq;
+ gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
+ gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
+ osc.connect(gain);
+ gain.connect(uiAudioCtx.destination);
+ osc.start();
+ osc.stop(uiAudioCtx.currentTime + 0.18);
+ }
+ catch (e) {
+ /* audio unavailable, silently continue */ }
+ }
+ function checkQuiz(btn, correct, feedback) {
+ const opts = btn.closest('.quiz-options');
+ if (opts.querySelector('.correct')) return;
+ const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+ if (correct) {
+ btn.classList.add('correct');
+ if (fb) {
+ fb.textContent = '✓ ' + feedback;
+ fb.className = 'quiz-feedback show correct';
+ }
+ }
+ else {
+ btn.classList.add('wrong');
+ if (fb) {
+ fb.textContent = '✗ ' + feedback;
+ fb.className = 'quiz-feedback show wrong';
+ }
+ setTimeout(() => {
+ btn.classList.remove('wrong');
+ if (fb) fb.classList.remove('show');
+ }
+, 1400);
+ }
+ }
+ function saveReflect(inputId, savedId) {
+ const val = document.getElementById(inputId)?.value;
+ if (val === undefined) return;
+ localStorage.setItem('loop_' + inputId, val);
+ const saved = document.getElementById(savedId);
+ if (saved) {
+ saved.style.display = 'inline';
+ setTimeout(() => saved.style.display = 'none', 2000);
+ }
+ const lessonNum = inputId.split('-')[1];
+ const complete = document.getElementById('complete-' + lessonNum);
+ if (complete) {
+ complete.classList.add('show');
+ const jokeEl = document.getElementById('joke-' + lessonNum);
+ if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
+ }
+ }
+ function loadReflects() {
+ document.querySelectorAll('.reflect-input').forEach(el => {
+ const stored = localStorage.getItem('loop_' + el.id);
+ if (stored) el.value = stored;
+ }
+);
+ }
+ function runEditor(id) {
+ const code = document.getElementById('editor-' + id)?.value || '';
+ const outputEl = document.getElementById('output-' + id);
+ if (!outputEl) return;
+ const logs = [];
+ const fakeCon = {
+ log: (...a) => logs.push(a.join(' ')) }
+;
+ try {
+ const fn = new Function('console', code);
+ fn(fakeCon);
+ outputEl.textContent = logs.join('\n') || '(no output)';
+ outputEl.style.color = '#00f5d4';
+ }
+ catch(e) {
+ outputEl.textContent = 'Error: ' + e.message;
+ outputEl.style.color = '#ff6b6b';
+ }
+ }
+ function downloadCheat() {
+ const content = "LOOP'S CHALLENGE COURSE — FULL CHEAT SHEET\n\n" + "LESSON 1 — Patterns & Sequences\nPattern: repeats predictably\nSequence: top to bottom, one line at a time\nIteration: one pass through a loop\n\n" + "LESSON 2 — For Loops\nfor (let i = 0; i < n; i++) { }\ni++ / i-- adjusts the counter\nArray index starts at 0\n\n" + "LESSON 3 — Conditionals\nif (condition) { }\nelse / else if adds branches\n=== checks value AND type\n\n" + "LESSON 4 — Flow Control\nwhile (condition) { }\nNested loop: a loop inside another loop\nbreak exits, continue skips to next pass\n\n" + "SYMBOLS REFERENCE\n( ) holds start, stop, step\n; separates the 3 for-loop parts\n< <= controls the stop condition\n++ -- the step";
+ const blob = new Blob([content], {
+ type: 'text/plain' }
+);
+ const url = URL.createObjectURL(blob);
+ const a = document.createElement('a');
+ a.href = url;
+ a.download = 'loop-cheatsheet.txt';
+ document.body.appendChild(a);
+ a.click();
+ document.body.removeChild(a);
+ URL.revokeObjectURL(url);
+ }
+ function goUpgrade() {
+ if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+ window.location.href = 'membership.html';
+ }
+ else {
+ document.dispatchEvent(new CustomEvent('mim-auth', {
+ detail: {
+ action: 'signup' }
+ }
+));
+ }
+ }
+ function handleLogout() {
+ if (window.firebaseAuth) {
+ window.firebaseAuth.signOut().then(() => location.reload());
+ }
+ }
+ function spawnParticle() {
+ const field = document.getElementById('particleField');
+ if (!field) return;
+ const p = document.createElement('div');
+ p.className = 'particle';
+ const startX = Math.random() * 100;
+ const duration = 8 + Math.random() * 10;
+ const delay = Math.random() * 2;
+ p.style.left = startX + '%';
+ p.style.bottom = '0';
+ p.style.animationDuration = duration + 's';
+ p.style.animationDelay = delay + 's';
+ field.appendChild(p);
+ setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
+ }
+ for (let i = 0;
+ i < 14;
+ i++) setTimeout(spawnParticle, i * 400);
+ setInterval(spawnParticle, 900);
+ const FACTS = [ "the word 'algorithm' comes from the name of a 9th-century Persian mathematician, al-Khwarizmi.", "the very first for loop appeared in FORTRAN, one of the earliest programming languages, back in 1957.", "loops are so fundamental that almost every programming language ever created has some version of one.", "a loop with no exit condition is called an infinite loop — and it's one of the most common beginner bugs.", "the 'while' loop and the 'for' loop do the same basic job — but for loops are better when you know your count ahead of time.", "some of the earliest computers used physical punch cards to represent loop instructions.", "nested loops are how video game grids, spreadsheets, and pixel art all get built row by row.", "the term 'iteration' comes from the Latin word 'iterare,' meaning 'to repeat.'" ];
+ let factIndex = 0;
+ function cycleFacts() {
+ const el = document.getElementById('factTicker');
+ if (!el) return;
+ el.classList.remove('show');
+ setTimeout(() => {
+ el.textContent = FACTS[factIndex % FACTS.length];
+ el.classList.add('show');
+ factIndex++;
+ }
+, 400);
+ }
+ cycleFacts();
+ setInterval(cycleFacts, 6500);
+ const JOKES = [ "Why did the for loop break up with the while loop? It needed more structure.", "I'd tell you an infinite loop joke, but I'd tell you an infinite loop joke, but...", "Why do loops make great friends? They always come back around.", "There are two hard problems in computer science: naming things, cache invalidation, and off-by-one errors.", "Why did the counter variable go to therapy? It kept getting incremented against its will.", "What did the array say to the loop? Index me, baby.", "Loop's favorite dance move? The repeat." ];
+ let companionClicks = 0;
+ function companionClick() {
+ companionClicks++;
+ if (companionClicks === 5 && !localStorage.getItem('loop_egg_found')) {
+ localStorage.setItem('loop_egg_found', '1');
+ showEgg("You found Loop's hidden track! Secret catchphrase unlocked: \"Around and around, until it's right.\" ∞");
+ }
+ else if (companionClicks % 5 === 0) {
+ showEgg("Loop nods calmly. You've already found this one — but the pattern's always there.");
+ }
+ }
+ function showEgg(text) {
+ const popup = document.getElementById('eggPopup');
+ document.getElementById('eggText').textContent = text;
+ popup.classList.add('show');
+ setTimeout(() => popup.classList.remove('show'), 5000);
+ }
+ let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
+ function startAmbient() {
+ try {
+ audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+ droneOsc = audioCtx.createOscillator();
+ droneGain = audioCtx.createGain();
+ droneOsc.type = 'sine';
+ droneOsc.frequency.value = 90;
+ droneGain.gain.value = 0.015;
+ droneOsc.connect(droneGain);
+ droneGain.connect(audioCtx.destination);
+ droneOsc.start();
+ }
+ catch (e) {
+ console.warn('Ambient audio unavailable:', e);
+ }
+ }
+ function toggleSound() {
+ const btn = document.getElementById('soundToggle');
+ if (!audioCtx) return;
+ soundOn = !soundOn;
+ droneGain.gain.value = soundOn ? 0.015 : 0;
+ btn.textContent = soundOn ? '🔊' : '🔇';
+ btn.classList.toggle('muted', !soundOn);
+ }
+ /* ══════════════════ ICEBREAKER — STEP COUNTER GAME ══════════════════ */ const IB_TERMS = [ {
+ id: 'start', label: 'START', def: "The number a loop begins counting from. In for (let i = 0; ...), the start is 0.", color: '#00f5d4' }
+, {
+ id: 'stop', label: 'STOP', def: "The condition that ends the loop. In i < 5, the loop stops once i reaches 5.", color: '#4fc3f7' }
+, {
+ id: 'step', label: 'STEP', def: "How much the counter changes each pass. i++ means the step is 1.", color: '#ff6bad' }
+ ];
+ const IB_ROUNDS_DATA = [ {
+ start: 0, stop: 3, step: 1, hops: 3, piece: 'let i = 0' }
+, {
+ start: 0, stop: 6, step: 2, hops: 3, piece: 'i < 6' }
+, {
+ start: 1, stop: 5, step: 1, hops: 4, piece: 'i++' }
+ ];
+ let ibRound = 0;
+ let ibVals = {
+ start: 0, stop: 0, step: 1 }
+;
+ let ibCollectedPieces = [];
+ let ibAudioCtx = null;
+ let ibSeqPattern = [];
+ let ibSeqPlayer = [];
+ let ibSeqPlaying = false;
+ function ibPlayTone(freq, dur) {
+ try {
+ if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+ const osc = ibAudioCtx.createOscillator();
+ const gain = ibAudioCtx.createGain();
+ osc.type = 'sine';
+ osc.frequency.value = freq;
+ gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
+ gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
+ osc.connect(gain);
+ gain.connect(ibAudioCtx.destination);
+ osc.start();
+ osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
+ }
+ catch (e) {
+ /* audio unavailable, silently continue */ }
+ }
+ function ibToggleWrapper() {
+ const wrapper = document.getElementById('icebreakerWrapper');
+ const opening = !wrapper.classList.contains('open');
+ wrapper.classList.toggle('open');
+ if (opening) wrapper.scrollIntoView({
+ behavior: 'smooth', block: 'start' }
+);
+ }
+ function ibRenderIntro() {
+ const grid = document.getElementById('ibTermsGrid');
+ if (!grid) return;
+ grid.innerHTML = IB_TERMS.map(t => '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' + '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' + '<div class="ib-term-def">' + t.def + '</div>' + '</div>' ).join('');
+ }
+ function ibStartGame() {
+ document.getElementById('ib-intro').style.display = 'none';
+ document.getElementById('ib-game').style.display = 'block';
+ ibRound = 0;
+ ibCollectedPieces = [];
+ ibBeginRound();
+ }
+ function ibBeginRound() {
+ const data = IB_ROUNDS_DATA[ibRound];
+ ibVals = {
+ start: 0, stop: 0, step: 1 }
+;
+ document.getElementById('ibBuildStage').style.display = 'none';
+ document.getElementById('ibSequenceStage').style.display = 'none';
+ const stage = document.getElementById('ibTrackStage');
+ stage.style.display = 'block';
+ stage.innerHTML = '<div class="ib-round-label">ROUND ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' + '<div class="ib-track-goal">Set the runner\'s START, STOP, and STEP to hit every pink dot — then press Run.</div>' + '<div class="ib-track" id="ibTrack"></div>' + '<div class="ib-controls-row">' + ibControlHTML('start') + ibControlHTML('stop') + ibControlHTML('step') + '</div>' + '<button class="ib-run-btn" onclick="ibRunTrack()">▶ Run</button>' + '<div class="ib-track-status" id="ibTrackStatus"></div>';
+ ibRenderTrack(data);
+ ibUpdateControlDisplays();
+ }
+ function ibControlHTML(key) {
+ return '<div class="ib-control"><label>' + key + '</label><div class="ib-control-row">' + '<button class="ib-step-btn" onclick="ibAdjust(\'' + key + '\',-1)">−</button>' + '<span class="ib-control-val" id="ibVal-' + key + '">0</span>' + '<button class="ib-step-btn" onclick="ibAdjust(\'' + key + '\',1)">+</button>' + '</div></div>';
+ }
+ function ibAdjust(key, dir) {
+ const min = key === 'step' ? 1 : 0;
+ ibVals[key] = Math.max(min, Math.min(10, ibVals[key] + dir));
+ ibUpdateControlDisplays();
+ ibPlayTone(300, 0.1);
+ }
+ function ibUpdateControlDisplays() {
+ ['start','stop','step'].forEach(k => {
+ const el = document.getElementById('ibVal-' + k);
+ if (el) el.textContent = ibVals[k];
+ }
+);
+ }
+ function ibRenderTrack(data) {
+ const track = document.getElementById('ibTrack');
+ const maxPos = Math.max(data.stop, 8);
+ track.innerHTML = '<div class="ib-track-runner" id="ibRunner" style="left:2%;">🏃</div>';
+ let hop = data.start;
+ while (hop <= data.stop) {
+ const pct = 4 + (hop / maxPos) * 90;
+ const dot = document.createElement('div');
+ dot.className = 'ib-track-dot target';
+ dot.style.left = pct + '%';
+ track.appendChild(dot);
+ hop += data.step;
+ }
+ }
+ function ibRunTrack() {
+ const data = IB_ROUNDS_DATA[ibRound];
+ const status = document.getElementById('ibTrackStatus');
+ const runner = document.getElementById('ibRunner');
+ const maxPos = Math.max(data.stop, 8);
+ if (ibVals.start !== data.start || ibVals.stop !== data.stop || ibVals.step !== data.step) {
+ status.textContent = 'Not quite matching the dots yet — adjust start, stop, or step and try again.';
+ runner.style.left = (4 + (ibVals.start / maxPos) * 90) + '%';
+ ibPlayTone(140, 0.3);
+ return;
+ }
+ status.textContent = 'Watch the runner hop the pattern...';
+ let hop = data.start;
+ let step = 0;
+ const totalHops = Math.floor((data.stop - data.start) / data.step) + 1;
+ function nextHop() {
+ if (step >= totalHops) {
+ status.textContent = '✓ Perfect run! That pattern is now real code.';
+ ibPlayTone(500, 0.4);
+ setTimeout(() => ibRevealPiece(), 700);
+ return;
+ }
+ const pct = 4 + (hop / maxPos) * 90;
+ runner.style.left = pct + '%';
+ ibPlayTone(320 + step * 30, 0.15);
+ hop += data.step;
+ step++;
+ setTimeout(nextHop, 500);
+ }
+ nextHop();
+ }
+ function ibRevealPiece() {
+ const data = IB_ROUNDS_DATA[ibRound];
+ ibCollectedPieces.push(data.piece);
+ document.getElementById('ibTrackStage').style.display = 'none';
+ const build = document.getElementById('ibBuildStage');
+ build.style.display = 'block';
+ build.innerHTML = '<div class="ib-build-eyebrow">CODE PIECE ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' + '<div class="ib-build-def">Your run just matched this piece of real for-loop code:</div>' + '<div class="ib-slots"><div class="ib-slot filled" style="border-color:#00f5d4;color:#00f5d4;">' + data.piece + '</div></div>' + '<div class="ib-build-feedback">◈ Locked in.</div>' + '<button class="ib-check-btn" onclick="ibAdvanceRound()">Continue →</button>';
+ }
+ function ibAdvanceRound() {
+ ibRound++;
+ if (ibRound >= IB_ROUNDS_DATA.length) {
+ ibBeginSequence();
+ }
+ else {
+ ibBeginRound();
+ }
+ }
+ function ibBeginSequence() {
+ document.getElementById('ibBuildStage').style.display = 'none';
+ const stage = document.getElementById('ibSequenceStage');
+ stage.style.display = 'block';
+ const colors = ['#00f5d4', '#4fc3f7', '#ff6bad'];
+ stage.innerHTML = '<div class="ib-build-eyebrow">FINAL PRACTICE &nbsp;·&nbsp; THE WHOLE LOOP</div>' + '<div class="ib-seq-status" id="ibSeqStatus">Watch the full line come together...</div>' + '<div class="ib-seq-board" id="ibSeqBoard"></div>';
+ const board = document.getElementById('ibSeqBoard');
+ board.innerHTML = ibCollectedPieces.map((p, idx) => '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + colors[idx] + ';color:' + colors[idx] + ';--c:' + colors[idx] + '" onclick="ibSeqClick(' + idx + ')">' + p + '</div>' ).join('');
+ ibSeqPattern = ibCollectedPieces.map((_, idx) => idx);
+ ibPlaySeqPattern(colors);
+ }
+ function ibPlaySeqPattern(colors) {
+ ibSeqPlayer = [];
+ ibSeqPlaying = true;
+ const statusEl = document.getElementById('ibSeqStatus');
+ statusEl.textContent = 'Watch the full line come together...';
+ let step = 0;
+ function playNext() {
+ if (step >= ibSeqPattern.length) {
+ ibSeqPlaying = false;
+ statusEl.textContent = 'Your turn — click the pieces in order.';
+ return;
+ }
+ const idx = ibSeqPattern[step];
+ const card = document.getElementById('ibSeqCard' + idx);
+ card.classList.add('lit');
+ ibPlayTone(350 + idx * 60, 0.3);
+ setTimeout(() => {
+ card.classList.remove('lit');
+ step++;
+ setTimeout(playNext, 200);
+ }
+, 400);
+ }
+ setTimeout(playNext, 500);
+ }
+ function ibSeqClick(idx) {
+ if (ibSeqPlaying) return;
+ const card = document.getElementById('ibSeqCard' + idx);
+ card.classList.add('lit');
+ ibPlayTone(350 + idx * 60, 0.25);
+ setTimeout(() => card.classList.remove('lit'), 300);
+ ibSeqPlayer.push(idx);
+ const step = ibSeqPlayer.length - 1;
+ if (ibSeqPlayer[step] !== ibSeqPattern[step]) {
+ card.classList.add('wrong');
+ document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
+ setTimeout(() => {
+ card.classList.remove('wrong');
+ ibPlaySeqPattern(['#00f5d4','#4fc3f7','#ff6bad']);
+ }
+, 700);
+ return;
+ }
+ if (ibSeqPlayer.length === ibSeqPattern.length) {
+ document.getElementById('ibSeqStatus').textContent = '✓ Perfect sequence!';
+ setTimeout(() => ibComplete(), 800);
+ }
+ }
+ function ibSkipGame() {
+ ibComplete();
+ }
+ function ibComplete() {
+ document.getElementById('ib-game').style.display = 'none';
+ document.getElementById('ib-complete').style.display = 'block';
+ }
+ function ibReset() {
+ document.getElementById('ib-complete').style.display = 'none';
+ document.getElementById('ib-intro').style.display = 'block';
+ ibRound = 0;
+ ibCollectedPieces = [];
+ }
+ document.addEventListener('DOMContentLoaded', () => {
+ loadReflects();
+ ibRenderIntro();
+ handleTierUnlock(null);
+ }
+);
+ 
+</script>
+ 
 </body>
+ 
 </html>
