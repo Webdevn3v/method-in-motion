@@ -1,12 +1,21 @@
 <!DOCTYPE html>
- <html lang="en">
- <head>
- <meta charset="UTF-8" />
- <meta name="viewport" content="width=device-width, initial-scale=1.0" />
- <title>
-Echo's Sound Studio | Method in Motion</title>
- <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
- <style> :root {
+ 
+<html lang="en">
+ 
+<head>
+ 
+<meta charset="UTF-8" />
+ 
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+ 
+<title>
+ Echo's Sound Studio | Method in Motion
+</title>
+ 
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+ 
+<style>
+ :root {
  --cyan: #00e5ff;
  --cyan-dim: #00b8d4;
  --blue: #448aff;
@@ -26,22 +35,19 @@ Echo's Sound Studio | Method in Motion</title>
  --font-display: 'Orbitron', monospace;
  --font-body: 'Space Grotesk', sans-serif;
  --font-mono: 'Space Mono', monospace;
-
-}
+ }
  * {
  box-sizing: border-box;
  margin: 0;
  padding: 0;
-
-}
+ }
  body {
  font-family: var(--font-body);
  background: var(--bg);
  color: var(--text);
  min-height: 100vh;
  overflow-x: hidden;
-
-}
+ }
  nav {
  position: fixed;
  top: 0;
@@ -56,8 +62,7 @@ Echo's Sound Studio | Method in Motion</title>
  background: rgba(4, 6, 15, 0.95);
  border-bottom: 1px solid var(--border);
  backdrop-filter: blur(10px);
-
-}
+ }
  .nav-logo {
  font-family: var(--font-display);
  font-size: 0.85rem;
@@ -65,15 +70,13 @@ Echo's Sound Studio | Method in Motion</title>
  color: var(--cyan);
  text-decoration: none;
  letter-spacing: 0.1em;
-
-}
+ }
  .nav-links {
  display: flex;
  align-items: center;
  gap: 1.5rem;
  list-style: none;
-
-}
+ }
  .nav-links a {
  font-family: var(--font-body);
  font-size: 0.82rem;
@@ -82,19 +85,16 @@ Echo's Sound Studio | Method in Motion</title>
  text-decoration: none;
  letter-spacing: 0.05em;
  transition: color 0.2s;
-
-}
+ }
  .nav-links a:hover {
  color: var(--cyan);
-
-}
+ }
  .nav-user {
  font-family: var(--font-mono);
  font-size: 0.75rem;
  color: var(--cyan);
  display: none;
-
-}
+ }
  .nav-logout {
  background: none;
  border: 1px solid var(--border);
@@ -106,13 +106,11 @@ Echo's Sound Studio | Method in Motion</title>
  cursor: pointer;
  transition: all 0.2s;
  display: none;
-
-}
+ }
  .nav-logout:hover {
  border-color: var(--cyan);
  color: var(--cyan);
-
-}
+ }
  /* ═══════════ HERO — video background ═══════════ */ .hero {
  margin-top: 60px;
  min-height: 640px;
@@ -120,8 +118,7 @@ Echo's Sound Studio | Method in Motion</title>
  overflow: hidden;
  display: flex;
  align-items: flex-end;
-
-}
+ }
  .hero-video {
  position: absolute;
  inset: 0;
@@ -129,16 +126,14 @@ Echo's Sound Studio | Method in Motion</title>
  height: 100%;
  object-fit: cover;
  transform: scale(1.02);
-
-}
+ }
  .hero-gradient {
  position: absolute;
  inset: 0;
  z-index: 2;
  background: linear-gradient(to top, rgba(4,6,15,0.96) 0%, rgba(4,6,15,0.5) 30%, rgba(4,6,15,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(4,6,15,0.55) 0%, rgba(4,6,15,0.1) 40%, transparent 70%);
  pointer-events: none;
-
-}
+ }
  .hero-echo-gif {
  position: absolute;
  z-index: 8;
@@ -149,23 +144,20 @@ Echo's Sound Studio | Method in Motion</title>
  width: auto;
  object-fit: contain;
  filter: drop-shadow(0 0 30px rgba(0,229,255,0.4));
- pointer-events: none;
-
-}
+ pointer-events: auto;
+ cursor: pointer;
+ }
  @media (max-width: 768px) {
  .hero-echo-gif {
  display: none;
-
-}
-
-}
+ }
+ }
  .hero-content {
  position: relative;
  z-index: 10;
  padding: 3rem 3rem 3.5rem;
  max-width: 620px;
-
-}
+ }
  .hero-eyebrow {
  font-family: var(--font-mono);
  font-size: 0.7rem;
@@ -175,8 +167,7 @@ Echo's Sound Studio | Method in Motion</title>
  margin-bottom: 1rem;
  opacity: 0.85;
  text-shadow: 0 0 12px rgba(0,229,255,0.6);
-
-}
+ }
  .hero-name {
  font-family: var(--font-display);
  font-size: clamp(2.8rem, 6vw, 4.5rem);
@@ -185,8 +176,7 @@ Echo's Sound Studio | Method in Motion</title>
  line-height: 0.95;
  text-shadow: var(--glow-strong);
  margin-bottom: 0.4rem;
-
-}
+ }
  .hero-catchphrase {
  display: inline-block;
  font-family: var(--font-mono);
@@ -200,8 +190,7 @@ Echo's Sound Studio | Method in Motion</title>
  border-radius: 100px;
  margin-bottom: 1rem;
  backdrop-filter: blur(4px);
-
-}
+ }
  .hero-role {
  font-family: var(--font-display);
  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
@@ -210,8 +199,7 @@ Echo's Sound Studio | Method in Motion</title>
  letter-spacing: 0.18em;
  text-transform: uppercase;
  margin-bottom: 1.2rem;
-
-}
+ }
  .hero-quote {
  font-size: 1.05rem;
  color: var(--text-dim);
@@ -220,14 +208,12 @@ Echo's Sound Studio | Method in Motion</title>
  margin-bottom: 1rem;
  font-style: italic;
  text-shadow: 0 2px 12px rgba(0,0,0,0.8);
-
-}
+ }
  .hero-quote span {
  color: var(--cyan);
  font-style: normal;
  font-weight: 600;
-
-}
+ }
  .fact-ticker {
  font-family: var(--font-mono);
  font-size: 0.72rem;
@@ -239,23 +225,25 @@ Echo's Sound Studio | Method in Motion</title>
  opacity: 0;
  transition: opacity 0.5s;
  text-shadow: 0 2px 10px rgba(0,0,0,0.9);
-
-}
+ }
  .fact-ticker.show {
  opacity: 1;
-
-}
+ }
  .fact-ticker::before {
  content: '◈ SIGNAL CHECK — ';
  color: var(--purple);
-
-}
+ }
  .hero-tiles {
  display: flex;
- gap: 0.6rem;
+ gap: 0.8rem;
+ align-items: stretch;
  flex-wrap: wrap;
-
-}
+ }
+ .hero-lesson-grid {
+ display: grid;
+ grid-template-columns: repeat(2, minmax(140px, 1fr));
+ gap: 0.6rem;
+ }
  .hero-tile {
  background: rgba(0, 229, 255, 0.07);
  border: 1px solid var(--border);
@@ -269,177 +257,110 @@ Echo's Sound Studio | Method in Motion</title>
  text-decoration: none;
  display: block;
  backdrop-filter: blur(4px);
-
-}
+ }
  .hero-tile:hover {
  background: rgba(0, 229, 255, 0.16);
  border-color: var(--cyan);
  color: var(--cyan);
  box-shadow: var(--glow);
  transform: translateY(-2px);
-
-}
- /* ═══════════ ICEBREAKER TOGGLE CARD ═══════════ */ .ib-toggle-tab {
- position: absolute;
- z-index: 20;
- right: 4%;
- bottom: 10%;
- width: 200px;
- padding: 1.2rem 1.1rem 1.1rem;
- border-radius: 16px;
- border: 1px solid var(--border-bright);
- background: linear-gradient(160deg, rgba(0,229,255,0.14), rgba(124,77,255,0.08));
- backdrop-filter: blur(6px);
- cursor: pointer;
+ }
+ .hero-game-tile {
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+ gap: 0.35rem;
+ min-width: 128px;
+ max-width: 150px;
+ border-radius: 12px;
+ border: 2px solid var(--purple);
+ background: linear-gradient(160deg, rgba(124,77,255,0.26), rgba(0,229,255,0.14));
+ color: #fff;
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ font-weight: 700;
+ letter-spacing: 0.05em;
  text-align: center;
- transition: all 0.25s ease;
- box-shadow: 0 0 24px rgba(0,229,255,0.2), inset 0 0 20px rgba(0,229,255,0.05);
- animation: ibCardFloat 4s ease-in-out infinite;
-
-}
- .ib-toggle-tab:hover {
- border-color: var(--cyan);
- box-shadow: 0 0 34px rgba(0,229,255,0.4), inset 0 0 24px rgba(0,229,255,0.1);
- transform: translateY(-2px);
-
-}
- @keyframes ibCardFloat {
+ padding: 0.75rem 0.6rem;
+ cursor: pointer;
+ transition: all 0.2s;
+ box-shadow: 0 0 22px rgba(124,77,255,0.3), inset 0 0 16px rgba(124,77,255,0.08);
+ animation: heroGameFloat 3.4s ease-in-out infinite;
+ }
+ .hero-game-tile:hover {
+ background: linear-gradient(160deg, rgba(124,77,255,0.38), rgba(0,229,255,0.24));
+ box-shadow: 0 0 32px rgba(124,77,255,0.5), inset 0 0 20px rgba(124,77,255,0.14);
+ transform: translateY(-3px) scale(1.03);
+ }
+ @keyframes heroGameFloat {
  0%, 100% {
  transform: translateY(0);
-
-}
+ }
  50% {
- transform: translateY(-6px);
-
-}
-
-}
- .ib-toggle-icon {
- font-size: 1.6rem;
- margin-bottom: 0.5rem;
- filter: drop-shadow(0 0 10px rgba(0,229,255,0.6));
-
-}
- .ib-toggle-title {
+ transform: translateY(-4px);
+ }
+ }
+ .hero-game-icon {
+ font-size: 1.5rem;
+ filter: drop-shadow(0 0 8px rgba(124,77,255,0.7));
+ }
+ .hero-game-label {
  font-family: var(--font-display);
- font-size: 0.82rem;
- font-weight: 900;
- color: #fff;
+ font-size: 0.74rem;
  letter-spacing: 0.06em;
- text-shadow: 0 0 12px rgba(0,229,255,0.7);
- margin-bottom: 0.35rem;
-
-}
- .ib-toggle-tab-label {
- font-family: var(--font-mono);
- font-size: 0.62rem;
- letter-spacing: 0.04em;
- color: var(--text-dim);
- line-height: 1.5;
- margin-bottom: 0.8rem;
-
-}
- .ib-toggle-cta {
- display: inline-flex;
- align-items: center;
- gap: 0.4rem;
- background: rgba(0,229,255,0.16);
- border: 1px solid var(--cyan);
- color: var(--cyan);
- font-family: var(--font-mono);
- font-size: 0.66rem;
- font-weight: 700;
- letter-spacing: 0.08em;
- padding: 0.45rem 0.9rem;
- border-radius: 100px;
-
-}
- @media (max-width: 768px) {
- .ib-toggle-tab {
- width: 140px;
- padding: 0.8rem 0.7rem 0.7rem;
- bottom: 6%;
- right: 2%;
-
-}
- .ib-toggle-icon {
- font-size: 1.2rem;
- margin-bottom: 0.3rem;
-
-}
- .ib-toggle-title {
- font-size: 0.68rem;
-
-}
- .ib-toggle-tab-label {
- font-size: 0.56rem;
- margin-bottom: 0.6rem;
-
-}
- .ib-toggle-cta {
- font-size: 0.58rem;
- padding: 0.35rem 0.7rem;
-
-}
-
-}
- /* ═══════════ ICEBREAKER — SOUND BOARD GAME ═══════════ */ .icebreaker-wrapper {
+ }
+ .hero-game-cta {
+ font-size: 0.6rem;
+ opacity: 0.9;
+ color: var(--purple);
+ }
+ /* ═══════════ ICEBREAKER — BEATBOX GAME ═══════════ */ .icebreaker-wrapper {
  display: none;
-
-}
+ }
  .icebreaker-wrapper.open {
  display: block;
-
-}
+ }
  .icebreaker-wrapper.open .icebreaker {
  animation: ibPowerOn 0.6s ease;
-
-}
+ }
  @keyframes ibPowerOn {
  0% {
  opacity: 0;
  transform: scale(0.92);
  filter: brightness(3.5) saturate(1.6);
-
-}
+ }
  15% {
  opacity: 1;
  filter: brightness(2.4) saturate(1.4);
-
-}
+ }
  45% {
  transform: scale(1.015);
  filter: brightness(1.3);
-
-}
+ }
  100% {
  opacity: 1;
  transform: scale(1);
  filter: brightness(1);
-
-}
-
-}
+ }
+ }
  .icebreaker {
  background: var(--bg-mid);
  border-bottom: 1px solid var(--border);
  padding: 3rem 2rem 3.5rem;
-
-}
+ }
  .ib-header {
  max-width: 640px;
  margin: 0 auto 2.2rem;
  text-align: center;
-
-}
+ }
  .ib-eyebrow {
  font-family: var(--font-mono);
  font-size: 0.68rem;
  color: var(--purple);
  letter-spacing: 0.18em;
  margin-bottom: 0.6rem;
-
-}
+ }
  .ib-title {
  font-family: var(--font-display);
  font-size: clamp(1.4rem, 3.5vw, 2rem);
@@ -447,59 +368,112 @@ Echo's Sound Studio | Method in Motion</title>
  font-weight: 900;
  margin-bottom: 0.6rem;
  text-shadow: var(--glow);
-
-}
+ }
  .ib-sub {
  font-size: 0.9rem;
  color: var(--text-dim);
  line-height: 1.6;
-
-}
- .ib-phase {
+ }
+ /* ═══════════ BEATBOX ═══════════ */ .bb-mode-tabs {
+ display: flex;
+ gap: 0.6rem;
+ justify-content: center;
+ margin-bottom: 1.8rem;
+ }
+ .bb-mode-tab {
+ background: rgba(0,229,255,0.05);
+ border: 1px solid var(--border);
+ color: var(--text-dim);
+ font-family: var(--font-mono);
+ font-size: 0.75rem;
+ font-weight: 700;
+ padding: 0.6rem 1.4rem;
+ border-radius: 100px;
+ cursor: pointer;
+ letter-spacing: 0.06em;
+ transition: all 0.2s;
+ }
+ .bb-mode-tab.active {
+ background: rgba(0,229,255,0.15);
+ border-color: var(--cyan);
+ color: var(--cyan);
+ box-shadow: var(--glow);
+ }
+ .bb-panel {
  max-width: 760px;
  margin: 0 auto;
-
-}
- .ib-terms-grid {
- display: grid;
- grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
- gap: 0.8rem;
- margin-bottom: 2rem;
-
-}
- .ib-term-card {
- background: var(--bg-card);
- border: 2px solid var(--border);
- border-radius: 10px;
- padding: 1rem;
- cursor: pointer;
- transition: all 0.2s;
+ }
+ .bb-freeplay-note {
  text-align: center;
-
-}
- .ib-term-card:hover {
- transform: translateY(-2px);
-
-}
- .ib-term-code {
  font-family: var(--font-mono);
- font-size: 0.82rem;
+ font-size: 0.7rem;
+ color: var(--text-muted);
+ margin-bottom: 1rem;
+ letter-spacing: 0.05em;
+ }
+ .bb-score-row {
+ display: flex;
+ justify-content: center;
+ gap: 2rem;
+ margin-bottom: 1.2rem;
+ font-family: var(--font-mono);
+ font-size: 0.72rem;
+ color: var(--text-muted);
+ letter-spacing: 0.08em;
+ }
+ .bb-score-row span {
+ color: var(--cyan);
  font-weight: 700;
- margin-bottom: 0.5rem;
- word-break: break-word;
-
-}
- .ib-term-def {
- font-size: 0.76rem;
+ }
+ .bb-status {
+ text-align: center;
+ font-family: var(--font-mono);
+ font-size: 0.78rem;
  color: var(--text-dim);
- line-height: 1.5;
- display: none;
-
-}
- .ib-term-card.open .ib-term-def {
- display: block;
-
-}
+ margin-bottom: 1.4rem;
+ min-height: 20px;
+ letter-spacing: 0.03em;
+ }
+ .bb-pads-row {
+ display: flex;
+ gap: 1rem;
+ justify-content: center;
+ flex-wrap: wrap;
+ margin: 0 0 1.8rem;
+ }
+ .bb-pad {
+ width: 110px;
+ height: 110px;
+ border-radius: 16px;
+ border: 2px solid;
+ background: rgba(255,255,255,0.03);
+ display: flex;
+ flex-direction: column;
+ align-items: center;
+ justify-content: center;
+ gap: 0.4rem;
+ cursor: pointer;
+ font-family: var(--font-mono);
+ font-weight: 700;
+ font-size: 0.76rem;
+ transition: all 0.12s ease;
+ user-select: none;
+ }
+ .bb-pad:active {
+ transform: scale(0.94);
+ }
+ .bb-pad.lit {
+ transform: scale(1.08);
+ box-shadow: 0 0 30px var(--c, currentColor);
+ background: var(--c, currentColor);
+ color: #04060f !important;
+ }
+ .bb-pad.wrong {
+ animation: shake 0.3s ease;
+ }
+ .bb-pad-icon {
+ font-size: 1.9rem;
+ }
  .ib-start-btn {
  display: block;
  margin: 0 auto;
@@ -515,321 +489,42 @@ Echo's Sound Studio | Method in Motion</title>
  letter-spacing: 0.08em;
  box-shadow: var(--glow-strong);
  transition: transform 0.2s;
-
-}
+ }
  .ib-start-btn:hover {
  transform: scale(1.03);
-
-}
- .ib-chain-panel {
- background: #02040c;
- border: 1px solid var(--border);
- border-radius: 10px;
- padding: 1.4rem 1rem;
- margin: 0 auto 1.6rem;
- max-width: 560px;
- display: flex;
- align-items: center;
- justify-content: center;
- gap: 0.4rem;
- flex-wrap: wrap;
-
-}
- .ib-chain-node {
- font-family: var(--font-mono);
- font-size: 0.68rem;
- font-weight: 700;
- padding: 0.6rem 0.8rem;
- border-radius: 8px;
- border: 1px solid var(--border);
- color: var(--text-muted);
- opacity: 0.35;
- transition: all 0.4s ease;
- text-align: center;
-
-}
- .ib-chain-node.revealed {
- opacity: 1;
-
-}
- .ib-chain-arrow {
- color: var(--text-muted);
- font-size: 0.9rem;
-
-}
- .ib-build-stage {
- background: var(--bg-card);
- border-radius: 14px;
- padding: 2rem;
- text-align: center;
-
-}
- .ib-build-eyebrow {
- font-family: var(--font-mono);
- font-size: 0.65rem;
- color: var(--text-muted);
- letter-spacing: 0.14em;
- margin-bottom: 0.6rem;
-
-}
- .ib-build-def {
- font-size: 0.92rem;
- color: var(--text-dim);
- line-height: 1.6;
- max-width: 480px;
- margin: 0 auto 1.6rem;
-
-}
- .ib-slots {
- display: flex;
- flex-direction: column;
- align-items: center;
- gap: 1.4rem;
- margin-bottom: 1.6rem;
-
-}
- .ib-slot-group {
- margin-bottom: 0;
- padding-bottom: 0;
- width: 100%;
-
-}
- .ib-slots-row {
- display: flex;
- gap: 0.6rem;
- justify-content: center;
- flex-wrap: wrap;
-
-}
- .ib-slot {
- min-width: 84px;
- height: 52px;
- padding: 0 0.6rem;
- border: 2px dashed var(--border-bright);
- border-radius: 8px;
- display: flex;
- align-items: center;
- justify-content: center;
- font-family: var(--font-mono);
- font-size: 0.78rem;
- color: var(--text-muted);
- background: rgba(255,255,255,0.02);
- transition: all 0.2s;
- text-align: center;
- word-break: break-word;
-
-}
- .ib-slot.filled {
- border-style: solid;
- color: #fff;
- font-weight: 700;
-
-}
- .ib-pieces-tray {
- display: flex;
- justify-content: center;
- gap: 0.6rem;
- flex-wrap: wrap;
- margin-bottom: 1.4rem;
-
-}
- .ib-piece {
- padding: 0.7rem 1rem;
- border-radius: 8px;
- font-family: var(--font-mono);
- font-size: 0.8rem;
- font-weight: 700;
- cursor: grab;
- user-select: none;
- border: 2px solid;
- transition: all 0.2s;
- background: rgba(255,255,255,0.04);
-
-}
- .ib-piece:active {
- cursor: grabbing;
-
-}
- .ib-piece.placed {
- opacity: 0.25;
- pointer-events: none;
-
-}
- .ib-build-feedback {
- font-family: var(--font-mono);
- font-size: 0.78rem;
- color: var(--cyan);
- min-height: 22px;
- margin-bottom: 0.6rem;
-
-}
- .ib-check-btn {
- background: var(--cyan);
- color: var(--bg);
- border: none;
- padding: 0.6rem 1.6rem;
- border-radius: 100px;
- font-family: var(--font-mono);
- font-size: 0.72rem;
- font-weight: 700;
- letter-spacing: 0.08em;
- cursor: pointer;
-
-}
- .ib-sequence-stage {
- background: var(--bg-card);
- border-radius: 14px;
- padding: 2rem;
- text-align: center;
-
-}
- .ib-seq-status {
- font-family: var(--font-mono);
- font-size: 0.72rem;
- color: var(--text-dim);
- letter-spacing: 0.06em;
- margin-bottom: 1.4rem;
- min-height: 20px;
-
-}
- .ib-seq-board {
- display: flex;
- justify-content: center;
- gap: 0.6rem;
- flex-wrap: wrap;
- max-width: 680px;
- margin: 0 auto;
-
-}
- .ib-seq-card {
- min-width: 84px;
- min-height: 84px;
- padding: 0.5rem 0.9rem;
- border-radius: 12px;
- border: 2px solid;
- display: flex;
- align-items: center;
- justify-content: center;
- font-family: var(--font-mono);
- font-size: 0.78rem;
- font-weight: 700;
- cursor: pointer;
- transition: all 0.15s;
- background: rgba(255,255,255,0.03);
- text-align: center;
- line-height: 1.3;
- word-break: break-word;
-
-}
- .ib-seq-card.lit {
- transform: scale(1.15);
- box-shadow: 0 0 28px var(--c, currentColor);
- background: var(--c, currentColor);
- color: #04060f !important;
-
-}
- .ib-seq-card.wrong {
- animation: shake 0.3s ease;
-
-}
+ }
  @keyframes shake {
  0%,100% {
  transform: translateX(0);
-
-}
+ }
  25% {
  transform: translateX(-6px);
-
-}
+ }
  75% {
  transform: translateX(6px);
-
-}
-
-}
- .ib-complete-card {
- background: var(--bg-card);
- border: 1px solid var(--border-bright);
- border-radius: 14px;
- padding: 2.5rem 2rem;
- text-align: center;
-
-}
- .ib-complete-card h3 {
- font-family: var(--font-display);
- font-size: 1.2rem;
- color: var(--cyan);
- margin-bottom: 0.8rem;
- text-shadow: var(--glow);
-
-}
- .ib-complete-card p {
- font-size: 0.9rem;
- color: var(--text-dim);
- line-height: 1.6;
- margin-bottom: 1.4rem;
-
-}
- .ib-replay-btn {
- background: none;
- border: 1px solid var(--border-bright);
- color: var(--cyan);
- font-family: var(--font-mono);
- font-size: 0.72rem;
- padding: 0.6rem 1.4rem;
- border-radius: 100px;
- cursor: pointer;
- letter-spacing: 0.06em;
-
-}
- .ib-skip-btn {
- display: block;
- margin: 1.6rem auto 0;
- background: none;
- border: 1px solid var(--border);
- color: var(--text-muted);
- font-family: var(--font-mono);
- font-size: 0.68rem;
- padding: 0.5rem 1.2rem;
- border-radius: 100px;
- cursor: pointer;
- letter-spacing: 0.06em;
- transition: all 0.2s;
-
-}
- .ib-skip-btn:hover {
- color: var(--text-dim);
- border-color: var(--border-bright);
-
-}
+ }
+ }
  @media (max-width: 600px) {
- .ib-slot {
- min-width: 64px;
- height: 46px;
- font-size: 0.7rem;
-
-}
- .ib-seq-card {
- min-width: 64px;
- height: 64px;
+ .bb-pad {
+ width: 84px;
+ height: 84px;
  font-size: 0.66rem;
-
-}
-
-}
+ }
+ .bb-pad-icon {
+ font-size: 1.5rem;
+ }
+ }
  /* ═══════════ HOLOGRAM ENTRANCE ═══════════ */ .discovery-overlay.fading {
  opacity: 0;
  transition: opacity 0.7s ease;
  pointer-events: none;
-
-}
+ }
  .hologram-stage {
  display: none;
  position: relative;
- width: min(320px, 78vw);
+ width: min(420px, 86vw);
  margin: 0 auto;
-
-}
+ }
  .hologram-frame {
  position: relative;
  border: 1px solid var(--border-bright);
@@ -837,8 +532,7 @@ Echo's Sound Studio | Method in Motion</title>
  overflow: hidden;
  box-shadow: 0 0 40px rgba(0,229,255,0.35), 0 0 80px rgba(124,77,255,0.2);
  animation: hologramMaterialize 1.1s ease-out, hologramFlicker 2.4s steps(1) infinite 1.1s;
-
-}
+ }
  .hologram-frame::before, .hologram-frame::after {
  content: '';
  position: absolute;
@@ -846,28 +540,24 @@ Echo's Sound Studio | Method in Motion</title>
  height: 22px;
  border: 2px solid var(--cyan);
  z-index: 5;
-
-}
+ }
  .hologram-frame::before {
  top: -1px;
  left: -1px;
  border-right: none;
  border-bottom: none;
-
-}
+ }
  .hologram-frame::after {
  bottom: -1px;
  right: -1px;
  border-left: none;
  border-top: none;
-
-}
+ }
  .hologram-video {
  width: 100%;
  display: block;
  filter: saturate(1.2) brightness(1.05);
-
-}
+ }
  .hologram-scanlines {
  position: absolute;
  inset: 0;
@@ -875,8 +565,7 @@ Echo's Sound Studio | Method in Motion</title>
  pointer-events: none;
  background: repeating-linear-gradient(to bottom, rgba(0,229,255,0.08) 0px, transparent 2px, transparent 4px);
  mix-blend-mode: overlay;
-
-}
+ }
  .hologram-scan-sweep {
  position: absolute;
  left: 0;
@@ -886,8 +575,7 @@ Echo's Sound Studio | Method in Motion</title>
  pointer-events: none;
  background: linear-gradient(to bottom, transparent, rgba(0,229,255,0.25), transparent);
  animation: hologramSweep 1.6s ease-in-out infinite;
-
-}
+ }
  .hologram-caption {
  margin-top: 1rem;
  font-family: var(--font-mono);
@@ -896,66 +584,51 @@ Echo's Sound Studio | Method in Motion</title>
  color: var(--cyan);
  text-shadow: 0 0 10px rgba(0,229,255,0.6);
  animation: pulse 1.2s ease-in-out infinite;
-
-}
+ }
  @keyframes hologramMaterialize {
  0% {
  opacity: 0;
  transform: scale(0.85) translateY(10px);
  clip-path: inset(0 0 100% 0);
-
-}
+ }
  40% {
  opacity: 1;
  clip-path: inset(0 0 0 0);
-
-}
+ }
  100% {
  opacity: 1;
  transform: scale(1) translateY(0);
  clip-path: inset(0 0 0 0);
-
-}
-
-}
+ }
+ }
  @keyframes hologramFlicker {
  0%, 100% {
  opacity: 1;
-
-}
+ }
  92% {
  opacity: 1;
-
-}
+ }
  93% {
  opacity: 0.6;
-
-}
+ }
  94% {
  opacity: 1;
-
-}
+ }
  96% {
  opacity: 0.75;
-
-}
+ }
  97% {
  opacity: 1;
-
-}
-
-}
+ }
+ }
  @keyframes hologramSweep {
  0% {
  top: -40%;
-
-}
+ }
  100% {
  top: 100%;
-
-}
-
-}
+ }
+ }
  .lesson-strip {
  position: sticky;
  top: 60px;
@@ -966,12 +639,10 @@ Echo's Sound Studio | Method in Motion</title>
  display: flex;
  overflow-x: auto;
  scrollbar-width: none;
-
-}
+ }
  .lesson-strip::-webkit-scrollbar {
  display: none;
-
-}
+ }
  .lesson-tab {
  flex-shrink: 0;
  padding: 0.9rem 1.6rem;
@@ -989,30 +660,25 @@ Echo's Sound Studio | Method in Motion</title>
  border-top: none;
  border-left: none;
  border-right: none;
-
-}
+ }
  .lesson-tab:hover {
  color: var(--cyan);
  text-shadow: 0 0 8px rgba(0,229,255,0.5);
  transform: translateY(-1px);
-
-}
+ }
  .lesson-tab.active {
  color: var(--cyan);
  border-bottom-color: var(--cyan);
  text-shadow: 0 0 8px rgba(0,229,255,0.5);
-
-}
+ }
  .lesson-panel {
  display: none;
-
-}
+ }
  .lesson-panel.open {
  display: grid;
  grid-template-columns: 220px 1fr;
  min-height: 80vh;
-
-}
+ }
  .lesson-sidebar {
  background: var(--bg-panel);
  border-right: 1px solid var(--border);
@@ -1023,8 +689,7 @@ Echo's Sound Studio | Method in Motion</title>
  overflow-y: auto;
  scrollbar-width: thin;
  scrollbar-color: var(--border) transparent;
-
-}
+ }
  .sidebar-label {
  font-family: var(--font-mono);
  font-size: 0.62rem;
@@ -1034,8 +699,7 @@ Echo's Sound Studio | Method in Motion</title>
  margin-bottom: 1rem;
  padding-bottom: 0.5rem;
  border-bottom: 1px solid var(--border);
-
-}
+ }
  .sidebar-nav-btn {
  width: 100%;
  background: none;
@@ -1052,30 +716,25 @@ Echo's Sound Studio | Method in Motion</title>
  display: flex;
  align-items: center;
  gap: 0.5rem;
-
-}
+ }
  .sidebar-nav-btn:hover {
  background: rgba(0,229,255,0.07);
  color: var(--cyan);
  transform: translateX(3px);
-
-}
+ }
  .sidebar-nav-btn.active {
  background: rgba(0,229,255,0.11);
  color: var(--cyan);
  font-weight: 600;
-
-}
+ }
  .sidebar-icon {
  font-size: 0.9rem;
-
-}
+ }
  .sidebar-divider {
  height: 1px;
  background: var(--border);
  margin: 1rem 0;
-
-}
+ }
  .sidebar-game-link {
  display: block;
  margin-top: 1rem;
@@ -1090,43 +749,36 @@ Echo's Sound Studio | Method in Motion</title>
  letter-spacing: 0.08em;
  transition: all 0.2s;
  text-align: center;
-
-}
+ }
  .sidebar-game-link:hover {
  background: rgba(0,229,255,0.13);
  border-color: var(--cyan);
  color: var(--cyan);
-
-}
+ }
  .lesson-content {
  padding: 2.5rem 3rem;
  max-width: 900px;
-
-}
+ }
  .content-block {
  display: none;
-
-}
+ }
  .content-block.active {
  display: block;
-
-}
+ }
  .section-header {
  font-family: var(--font-display);
  font-size: 1.4rem;
  font-weight: 700;
  color: #fff;
  margin-bottom: 0.4rem;
-
-}
+ }
  .section-sub {
  font-size: 0.88rem;
  color: var(--text-muted);
  margin-bottom: 2rem;
  font-family: var(--font-mono);
  letter-spacing: 0.05em;
-
-}
+ }
  .read-card {
  background: var(--bg-card);
  border: 1px solid var(--border);
@@ -1135,8 +787,7 @@ Echo's Sound Studio | Method in Motion</title>
  margin-bottom: 1.2rem;
  position: relative;
  overflow: hidden;
-
-}
+ }
  .read-card::before {
  content: '';
  position: absolute;
@@ -1145,8 +796,7 @@ Echo's Sound Studio | Method in Motion</title>
  bottom: 0;
  width: 3px;
  background: linear-gradient(to bottom, var(--cyan), var(--blue));
-
-}
+ }
  .read-card-num {
  font-family: var(--font-mono);
  font-size: 0.65rem;
@@ -1154,27 +804,23 @@ Echo's Sound Studio | Method in Motion</title>
  letter-spacing: 0.2em;
  margin-bottom: 0.6rem;
  opacity: 0.7;
-
-}
+ }
  .read-card h3 {
  font-family: var(--font-display);
  font-size: 0.95rem;
  color: #fff;
  margin-bottom: 0.8rem;
  font-weight: 700;
-
-}
+ }
  .read-card p {
  font-size: 0.95rem;
  color: var(--text-dim);
  line-height: 1.7;
-
-}
+ }
  .read-card p strong {
  color: var(--cyan);
  font-weight: 600;
-
-}
+ }
  .read-card code {
  font-family: var(--font-mono);
  font-size: 0.85rem;
@@ -1182,8 +828,7 @@ Echo's Sound Studio | Method in Motion</title>
  color: var(--cyan);
  padding: 0.15em 0.4em;
  border-radius: 4px;
-
-}
+ }
  .code-block {
  background: #02040c;
  border: 1px solid var(--border);
@@ -1195,41 +840,33 @@ Echo's Sound Studio | Method in Motion</title>
  line-height: 1.7;
  color: #90caf9;
  overflow-x: auto;
-
-}
+ }
  .code-block .kw {
  color: #00e5ff;
  font-weight: 700;
-
-}
+ }
  .code-block .str {
  color: #ffe066;
-
-}
+ }
  .code-block .cm {
  color: #3a5a7a;
  font-style: italic;
-
-}
+ }
  .code-block .num {
  color: #ff9a9a;
-
-}
+ }
  .code-block .fn {
  color: #80deea;
-
-}
+ }
  .code-block .prop {
  color: #b39ddb;
-
-}
+ }
  .terms-grid {
  display: grid;
  grid-template-columns: 1fr 1fr;
  gap: 0.8rem;
  margin-top: 1rem;
-
-}
+ }
  .term-card {
  background: var(--bg-card);
  border: 1px solid var(--border);
@@ -1237,18 +874,15 @@ Echo's Sound Studio | Method in Motion</title>
  padding: 1rem 1.2rem;
  cursor: pointer;
  transition: all 0.2s;
-
-}
+ }
  .term-card:hover {
  border-color: var(--cyan);
  box-shadow: 0 0 14px rgba(0,229,255,0.2);
  transform: translateY(-2px);
-
-}
+ }
  .term-card.open {
  border-color: var(--cyan);
-
-}
+ }
  .term-name {
  font-family: var(--font-mono);
  font-size: 0.8rem;
@@ -1257,17 +891,14 @@ Echo's Sound Studio | Method in Motion</title>
  display: flex;
  justify-content: space-between;
  align-items: center;
-
-}
+ }
  .term-arrow {
  transition: transform 0.2s;
  color: var(--text-muted);
-
-}
+ }
  .term-card.open .term-arrow {
  transform: rotate(90deg);
-
-}
+ }
  .term-def {
  display: none;
  font-size: 0.85rem;
@@ -1276,28 +907,24 @@ Echo's Sound Studio | Method in Motion</title>
  margin-top: 0.6rem;
  padding-top: 0.6rem;
  border-top: 1px solid var(--border);
-
-}
+ }
  .term-card.open .term-def {
  display: block;
-
-}
+ }
  .build-section h3 {
  font-family: var(--font-display);
  font-size: 0.9rem;
  color: var(--cyan);
  margin-bottom: 1rem;
  font-weight: 700;
-
-}
+ }
  .editor-wrap {
  background: #02040c;
  border: 1px solid var(--border);
  border-radius: 8px;
  overflow: hidden;
  margin-bottom: 1rem;
-
-}
+ }
  .editor-toolbar {
  background: rgba(0,229,255,0.05);
  border-bottom: 1px solid var(--border);
@@ -1309,8 +936,7 @@ Echo's Sound Studio | Method in Motion</title>
  display: flex;
  justify-content: space-between;
  align-items: center;
-
-}
+ }
  .editor-run-btn {
  background: var(--cyan);
  color: var(--bg);
@@ -1323,12 +949,10 @@ Echo's Sound Studio | Method in Motion</title>
  cursor: pointer;
  letter-spacing: 0.1em;
  transition: opacity 0.2s;
-
-}
+ }
  .editor-run-btn:hover {
  opacity: 0.85;
-
-}
+ }
  .code-editor {
  width: 100%;
  min-height: 160px;
@@ -1341,8 +965,7 @@ Echo's Sound Studio | Method in Motion</title>
  resize: vertical;
  outline: none;
  line-height: 1.7;
-
-}
+ }
  .preview-label {
  font-family: var(--font-mono);
  font-size: 0.62rem;
@@ -1350,8 +973,7 @@ Echo's Sound Studio | Method in Motion</title>
  letter-spacing: 0.15em;
  margin-bottom: 0.4rem;
  text-transform: uppercase;
-
-}
+ }
  .console-output {
  background: #02040c;
  border: 1px solid var(--border);
@@ -1362,31 +984,27 @@ Echo's Sound Studio | Method in Motion</title>
  color: var(--cyan);
  min-height: 80px;
  white-space: pre-wrap;
-
-}
+ }
  .beat-machine {
  background: var(--bg-card);
  border: 1px solid var(--border-bright);
  border-radius: 12px;
  padding: 1.5rem;
  margin: 1rem 0;
-
-}
+ }
  .beat-machine h3 {
  font-family: var(--font-display);
  font-size: 0.9rem;
  color: var(--cyan);
  margin-bottom: 1.2rem;
  font-weight: 700;
-
-}
+ }
  .beat-grid {
  display: grid;
  grid-template-columns: 80px repeat(16, 1fr);
  gap: 3px;
  margin-bottom: 1rem;
-
-}
+ }
  .beat-row-label {
  font-family: var(--font-mono);
  font-size: 0.65rem;
@@ -1394,8 +1012,7 @@ Echo's Sound Studio | Method in Motion</title>
  display: flex;
  align-items: center;
  padding-right: 0.5rem;
-
-}
+ }
  .beat-btn {
  aspect-ratio: 1;
  border-radius: 3px;
@@ -1404,30 +1021,25 @@ Echo's Sound Studio | Method in Motion</title>
  cursor: pointer;
  transition: all 0.1s;
  min-height: 24px;
-
-}
+ }
  .beat-btn:hover {
  border-color: var(--cyan);
  background: rgba(0,229,255,0.1);
-
-}
+ }
  .beat-btn.active {
  background: var(--cyan);
  border-color: var(--cyan);
  box-shadow: 0 0 8px rgba(0,229,255,0.6);
-
-}
+ }
  .beat-btn.playing {
  background: #fff;
-
-}
+ }
  .beat-controls {
  display: flex;
  align-items: center;
  gap: 1rem;
  flex-wrap: wrap;
-
-}
+ }
  .beat-play-btn {
  background: var(--cyan);
  color: var(--bg);
@@ -1440,12 +1052,10 @@ Echo's Sound Studio | Method in Motion</title>
  cursor: pointer;
  letter-spacing: 0.08em;
  transition: opacity 0.2s;
-
-}
+ }
  .beat-play-btn:hover {
  opacity: 0.85;
-
-}
+ }
  .beat-tempo {
  display: flex;
  align-items: center;
@@ -1453,46 +1063,39 @@ Echo's Sound Studio | Method in Motion</title>
  font-family: var(--font-mono);
  font-size: 0.72rem;
  color: var(--text-dim);
-
-}
+ }
  .beat-tempo input[type=range] {
  accent-color: var(--cyan);
  width: 100px;
-
-}
+ }
  .beat-tempo span {
  color: var(--cyan);
  min-width: 50px;
-
-}
+ }
  .beat-step-indicator {
  font-family: var(--font-mono);
  font-size: 0.68rem;
  color: var(--text-muted);
-
-}
+ }
  .quiz-card {
  background: var(--bg-card);
  border: 1px solid var(--border);
  border-radius: 10px;
  padding: 1.5rem;
  margin-bottom: 1rem;
-
-}
+ }
  .quiz-q {
  font-size: 0.95rem;
  color: var(--text);
  margin-bottom: 1rem;
  line-height: 1.5;
  font-weight: 500;
-
-}
+ }
  .quiz-options {
  display: flex;
  flex-direction: column;
  gap: 0.5rem;
-
-}
+ }
  .quiz-opt {
  background: rgba(0,229,255,0.03);
  border: 1px solid var(--border);
@@ -1504,65 +1107,55 @@ Echo's Sound Studio | Method in Motion</title>
  transition: all 0.2s;
  text-align: left;
  font-family: var(--font-body);
-
-}
+ }
  .quiz-opt:hover {
  border-color: var(--cyan);
  color: var(--cyan);
-
-}
+ }
  .quiz-opt.correct {
  border-color: #00e5ff;
  background: rgba(0,229,255,0.1);
  color: #00e5ff;
-
-}
+ }
  .quiz-opt.wrong {
  border-color: #ff6b6b;
  background: rgba(255,107,107,0.08);
  color: #ff6b6b;
  animation: shake 0.3s ease;
-
-}
+ }
  .quiz-feedback {
  font-size: 0.82rem;
  margin-top: 0.6rem;
  padding: 0.5rem 0.8rem;
  border-radius: 5px;
  display: none;
-
-}
+ }
  .quiz-feedback.show {
  display: block;
-
-}
+ }
  .quiz-feedback.correct {
  background: rgba(0,229,255,0.08);
  color: #00e5ff;
  border: 1px solid rgba(0,229,255,0.2);
-
-}
+ }
  .quiz-feedback.wrong {
  background: rgba(255,107,107,0.06);
  color: #ff9a9a;
  border: 1px solid rgba(255,107,107,0.18);
-
-}
+ }
  .reflect-prompt {
  background: var(--bg-card);
  border: 1px solid var(--border);
  border-radius: 10px;
  padding: 1.5rem;
  margin-bottom: 1rem;
-
-}
+ }
  .reflect-q {
  font-size: 0.9rem;
  color: var(--text-dim);
  margin-bottom: 0.8rem;
  line-height: 1.5;
-
-}
+ }
  .reflect-input {
  width: 100%;
  background: rgba(0,229,255,0.03);
@@ -1576,12 +1169,10 @@ Echo's Sound Studio | Method in Motion</title>
  min-height: 80px;
  outline: none;
  transition: border-color 0.2s;
-
-}
+ }
  .reflect-input:focus {
  border-color: var(--cyan);
-
-}
+ }
  .reflect-save-btn {
  margin-top: 0.5rem;
  background: none;
@@ -1594,77 +1185,66 @@ Echo's Sound Studio | Method in Motion</title>
  cursor: pointer;
  transition: all 0.2s;
  letter-spacing: 0.08em;
-
-}
+ }
  .reflect-save-btn:hover {
  border-color: var(--cyan);
  color: var(--cyan);
-
-}
+ }
  .reflect-saved {
  font-family: var(--font-mono);
  font-size: 0.68rem;
  color: var(--cyan);
  margin-top: 0.4rem;
  display: none;
-
-}
+ }
  .cheat-card {
  background: var(--bg-card);
  border: 1px solid var(--border);
  border-radius: 10px;
  padding: 1.5rem 1.8rem;
  margin-bottom: 1rem;
-
-}
+ }
  .cheat-card h3 {
  font-family: var(--font-display);
  font-size: 0.88rem;
  color: var(--cyan);
  margin-bottom: 1rem;
  font-weight: 700;
-
-}
+ }
  .cheat-items {
  display: flex;
  flex-direction: column;
  gap: 0.7rem;
-
-}
+ }
  .cheat-item {
  display: flex;
  gap: 1rem;
  align-items: flex-start;
  padding-bottom: 0.7rem;
  border-bottom: 1px solid rgba(0,229,255,0.06);
-
-}
+ }
  .cheat-item:last-child {
  border-bottom: none;
  padding-bottom: 0;
-
-}
+ }
  .cheat-term {
  font-family: var(--font-mono);
  font-size: 0.78rem;
  color: var(--cyan);
  min-width: 140px;
  font-weight: 700;
-
-}
+ }
  .cheat-desc {
  font-size: 0.85rem;
  color: var(--text-dim);
  line-height: 1.5;
-
-}
+ }
  .cheat-btn-row {
  display: flex;
  gap: 0.7rem;
  margin-top: 1.2rem;
  flex-wrap: wrap;
-
-}
+ }
  .cheat-download-btn {
  display: inline-flex;
  align-items: center;
@@ -1680,49 +1260,41 @@ Echo's Sound Studio | Method in Motion</title>
  text-decoration: none;
  transition: all 0.2s;
  letter-spacing: 0.08em;
-
-}
+ }
  .cheat-download-btn:hover {
  background: rgba(0,229,255,0.16);
  box-shadow: var(--glow);
-
-}
+ }
  .cheat-download-btn.secondary {
  background: none;
  border-color: var(--border);
  color: var(--text-muted);
  font-size: 0.65rem;
-
-}
+ }
  .cheat-download-btn.secondary:hover {
  color: var(--text-dim);
  border-color: var(--border-bright);
-
-}
+ }
  .locked-panel {
  padding: 4rem 3rem;
  text-align: center;
-
-}
+ }
  .locked-icon {
  font-size: 2.5rem;
  margin-bottom: 1.2rem;
  opacity: 0.45;
-
-}
+ }
  .locked-panel h2 {
  font-family: var(--font-display);
  font-size: 1.2rem;
  color: var(--text-dim);
  margin-bottom: 0.6rem;
-
-}
+ }
  .locked-panel p {
  font-size: 0.9rem;
  color: var(--text-muted);
  margin-bottom: 1.5rem;
-
-}
+ }
  .gate-btn {
  display: inline-block;
  background: var(--cyan);
@@ -1737,12 +1309,10 @@ Echo's Sound Studio | Method in Motion</title>
  text-decoration: none;
  letter-spacing: 0.08em;
  transition: opacity 0.2s;
-
-}
+ }
  .gate-btn:hover {
  opacity: 0.85;
-
-}
+ }
  .lesson-complete {
  background: linear-gradient(135deg, rgba(0,229,255,0.07), rgba(68,138,255,0.05));
  border: 1px solid var(--border-bright);
@@ -1750,28 +1320,24 @@ Echo's Sound Studio | Method in Motion</title>
  padding: 2rem;
  text-align: center;
  margin-top: 2rem;
-
-}
+ }
  .lesson-complete h3 {
  font-family: var(--font-display);
  font-size: 1rem;
  color: var(--cyan);
  margin-bottom: 0.5rem;
-
-}
+ }
  .lesson-complete p {
  font-size: 0.88rem;
  color: var(--text-dim);
-
-}
+ }
  .lesson-joke {
  margin-top: 0.8rem;
  font-family: var(--font-mono);
  font-size: 0.78rem;
  color: var(--purple);
  font-style: italic;
-
-}
+ }
  .discovery-overlay {
  position: fixed;
  inset: 0;
@@ -1783,12 +1349,10 @@ Echo's Sound Studio | Method in Motion</title>
  flex-direction: column;
  text-align: center;
  padding: 2rem;
-
-}
+ }
  .discovery-overlay.hidden {
  display: none;
-
-}
+ }
  .echo-mark {
  font-family: var(--font-mono);
  font-size: 2rem;
@@ -1797,19 +1361,15 @@ Echo's Sound Studio | Method in Motion</title>
  letter-spacing: 0.3em;
  text-shadow: var(--glow-strong);
  animation: pulse 2s ease-in-out infinite;
-
-}
+ }
  @keyframes pulse {
  0%,100% {
  opacity: 1;
-
-}
+ }
  50% {
  opacity: 0.5;
-
-}
-
-}
+ }
+ }
  .discovery-title {
  font-family: var(--font-display);
  font-size: clamp(1.5rem, 4vw, 2.5rem);
@@ -1817,16 +1377,14 @@ Echo's Sound Studio | Method in Motion</title>
  color: var(--cyan);
  text-shadow: var(--glow-strong);
  margin-bottom: 0.8rem;
-
-}
+ }
  .discovery-sub {
  font-size: 1rem;
  color: var(--text-dim);
  max-width: 460px;
  line-height: 1.6;
  margin-bottom: 2rem;
-
-}
+ }
  .discovery-enter-btn {
  background: var(--cyan);
  color: var(--bg);
@@ -1840,49 +1398,10 @@ Echo's Sound Studio | Method in Motion</title>
  letter-spacing: 0.1em;
  transition: all 0.2s;
  box-shadow: var(--glow-strong);
-
-}
+ }
  .discovery-enter-btn:hover {
  transform: scale(1.03);
-
-}
- .echo-companion {
- position: fixed;
- bottom: 24px;
- right: 24px;
- z-index: 150;
- width: 80px;
- height: 80px;
- pointer-events: none;
- opacity: 0;
- transition: opacity 0.6s ease;
-
-}
- .echo-companion.visible {
- opacity: 1;
- pointer-events: auto;
-
-}
- .echo-companion img {
- width: 80px;
- height: 80px;
- object-fit: contain;
- filter: drop-shadow(0 0 16px rgba(0,229,255,0.5));
- animation: companionFloat 3s ease-in-out infinite;
- cursor: pointer;
-
-}
- @keyframes companionFloat {
- 0%,100% {
- transform: translateY(0);
-
-}
- 50% {
- transform: translateY(-8px);
-
-}
-
-}
+ }
  .sound-toggle {
  position: fixed;
  bottom: 24px;
@@ -1901,22 +1420,18 @@ Echo's Sound Studio | Method in Motion</title>
  transition: all 0.2s;
  opacity: 0;
  pointer-events: none;
-
-}
+ }
  .sound-toggle.visible {
  opacity: 1;
  pointer-events: auto;
-
-}
+ }
  .sound-toggle:hover {
  box-shadow: var(--glow);
  border-color: var(--cyan);
-
-}
+ }
  .sound-toggle.muted {
  opacity: 0.5;
-
-}
+ }
  .portal-peek-btn {
  position: fixed;
  top: 74px;
@@ -1933,19 +1448,15 @@ Echo's Sound Studio | Method in Motion</title>
  cursor: pointer;
  font-size: 0.9rem;
  animation: portalPulse 2.5s ease-in-out infinite;
-
-}
+ }
  @keyframes portalPulse {
  0%,100% {
  box-shadow: 0 0 6px rgba(124,77,255,0.3);
-
-}
+ }
  50% {
  box-shadow: 0 0 18px rgba(124,77,255,0.7);
-
-}
-
-}
+ }
+ }
  .portal-modal {
  position: fixed;
  inset: 0;
@@ -1957,20 +1468,17 @@ Echo's Sound Studio | Method in Motion</title>
  padding: 2rem;
  flex-direction: column;
  text-align: center;
-
-}
+ }
  .portal-modal.open {
  display: flex;
-
-}
+ }
  .portal-modal img {
  max-width: min(90vw, 520px);
  border-radius: 12px;
  border: 1px solid rgba(124,77,255,0.3);
  box-shadow: 0 0 60px rgba(124,77,255,0.4);
  margin-bottom: 1.2rem;
-
-}
+ }
  .portal-modal p {
  font-family: var(--font-mono);
  font-size: 0.8rem;
@@ -1978,8 +1486,7 @@ Echo's Sound Studio | Method in Motion</title>
  max-width: 420px;
  margin-bottom: 1.2rem;
  line-height: 1.6;
-
-}
+ }
  .portal-close {
  background: none;
  border: 1px solid var(--border-bright);
@@ -1990,8 +1497,7 @@ Echo's Sound Studio | Method in Motion</title>
  border-radius: 100px;
  cursor: pointer;
  letter-spacing: 0.08em;
-
-}
+ }
  .egg-popup {
  position: fixed;
  bottom: 100px;
@@ -2004,1515 +1510,2621 @@ Echo's Sound Studio | Method in Motion</title>
  max-width: 260px;
  box-shadow: var(--glow-strong);
  display: none;
-
-}
+ }
  .egg-popup.show {
  display: block;
  animation: eggPop 0.4s ease;
-
-}
+ }
  @keyframes eggPop {
  from {
  transform: scale(0.8) translateY(10px);
  opacity: 0;
-
-}
+ }
  to {
  transform: scale(1) translateY(0);
  opacity: 1;
-
-}
-
-}
+ }
+ }
  .egg-popup h4 {
  font-family: var(--font-display);
  font-size: 0.78rem;
  color: var(--cyan);
  margin-bottom: 0.5rem;
-
-}
+ }
  .egg-popup p {
  font-size: 0.8rem;
  color: var(--text-dim);
  line-height: 1.5;
-
-}
- /* ═══════════ BEATBOX ═══════════ */ .bb-mode-tabs {
- display: flex;
- gap: 0.6rem;
- justify-content: center;
- margin-bottom: 1.8rem;
-
-}
- .bb-mode-tab {
- background: rgba(0,229,255,0.05);
- border: 1px solid var(--border);
- color: var(--text-dim);
- font-family: var(--font-mono);
- font-size: 0.75rem;
- font-weight: 700;
- padding: 0.6rem 1.4rem;
- border-radius: 100px;
- cursor: pointer;
- letter-spacing: 0.06em;
- transition: all 0.2s;
-
-}
- .bb-mode-tab.active {
- background: rgba(0,229,255,0.15);
- border-color: var(--cyan);
- color: var(--cyan);
- box-shadow: var(--glow);
-
-}
- .bb-panel {
- max-width: 760px;
- margin: 0 auto;
-
-}
- .bb-freeplay-note {
- text-align: center;
- font-family: var(--font-mono);
- font-size: 0.7rem;
- color: var(--text-muted);
- margin-bottom: 1rem;
- letter-spacing: 0.05em;
-
-}
- .bb-score-row {
- display: flex;
- justify-content: center;
- gap: 2rem;
- margin-bottom: 1.2rem;
- font-family: var(--font-mono);
- font-size: 0.72rem;
- color: var(--text-muted);
- letter-spacing: 0.08em;
-
-}
- .bb-score-row span {
- color: var(--cyan);
- font-weight: 700;
-
-}
- .bb-status {
- text-align: center;
- font-family: var(--font-mono);
- font-size: 0.78rem;
- color: var(--text-dim);
- margin-bottom: 1.4rem;
- min-height: 20px;
- letter-spacing: 0.03em;
-
-}
- .bb-pads-row {
- display: flex;
- gap: 1rem;
- justify-content: center;
- flex-wrap: wrap;
- margin: 0 0 1.8rem;
-
-}
- .bb-pad {
- width: 110px;
- height: 110px;
- border-radius: 16px;
- border: 2px solid;
- background: rgba(255,255,255,0.03);
- display: flex;
- flex-direction: column;
- align-items: center;
- justify-content: center;
- gap: 0.4rem;
- cursor: pointer;
- font-family: var(--font-mono);
- font-weight: 700;
- font-size: 0.76rem;
- transition: all 0.12s ease;
- user-select: none;
-
-}
- .bb-pad:active {
- transform: scale(0.94);
-
-}
- .bb-pad.lit {
- transform: scale(1.08);
- box-shadow: 0 0 30px var(--c, currentColor);
- background: var(--c, currentColor);
- color: #04060f !important;
-
-}
- .bb-pad.wrong {
- animation: shake 0.3s ease;
-
-}
- .bb-pad-icon {
- font-size: 1.9rem;
-
-}
- @media (max-width: 600px) {
- .bb-pad {
- width: 84px;
- height: 84px;
- font-size: 0.66rem;
-
-}
- .bb-pad-icon {
- font-size: 1.5rem;
-
-}
-
-}
+ }
  @media (max-width: 768px) {
  .hero {
  min-height: 480px;
-
-}
+ }
  .hero-content {
  padding: 2rem 1.5rem 2rem;
-
-}
+ }
  .lesson-panel.open {
  grid-template-columns: 1fr;
-
-}
+ }
  .lesson-sidebar {
  display: none;
-
-}
+ }
  .lesson-content {
  padding: 1.5rem;
-
-}
+ }
  .terms-grid {
  grid-template-columns: 1fr;
-
-}
+ }
  .beat-grid {
  grid-template-columns: 60px repeat(8, 1fr);
-
-}
- .echo-companion {
- width: 60px;
- height: 60px;
- bottom: 16px;
- right: 16px;
-
-}
- .echo-companion img {
- width: 60px;
- height: 60px;
-
-}
+ }
  .fact-ticker {
  display: none;
-
-}
-
-}
- </style>
- </head>
- <body>
- <div class="discovery-overlay" id="discoveryOverlay">
- <div class="echo-mark">
-◈ ◈ ◈</div>
- <div class="discovery-title" id="discoveryTitle">
-Echo's Signal Studio</div>
- <div class="discovery-sub" id="discoverySub">
-Sound. Timing. Events.<br>
-Code that listens, responds, and plays on beat.</div>
- <button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterStudio()">
-Enter the Studio</button>
- <div class="hologram-stage" id="hologramStage">
- <div class="hologram-frame">
- <img class="hologram-video" id="entranceVideo" src="echo-motion.gif" alt="Echo materializing">
- <div class="hologram-scanlines">
+ }
+ }
+ 
+</style>
+ 
+</head>
+ 
+<body>
+ 
+<div class="discovery-overlay" id="discoveryOverlay">
+ 
+<div class="echo-mark">
+ ◈ ◈ ◈
 </div>
- <div class="hologram-scan-sweep">
+ 
+<div class="discovery-title" id="discoveryTitle">
+ Echo's Signal Studio
 </div>
- </div>
- <div class="hologram-caption">
-◈ SIGNAL LOCKING IN...</div>
- </div>
- </div>
- <nav>
- <a href="index.html" class="nav-logo">
-MiM</a>
- <ul class="nav-links">
- <li>
+ 
+<div class="discovery-sub" id="discoverySub">
+ Sound. Timing. Events.
+<br>
+ Code that listens, responds, and plays on beat.
+</div>
+ 
+<button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterStudio()">
+ Enter the Studio
+</button>
+ 
+<div class="hologram-stage" id="hologramStage">
+ 
+<div class="hologram-frame">
+ 
+<img class="hologram-video" id="entranceVideo" src="corrected-echo-opening.gif" alt="Echo materializing">
+ 
+<div class="hologram-scanlines">
+ 
+</div>
+ 
+<div class="hologram-scan-sweep">
+ 
+</div>
+ 
+</div>
+ 
+<div class="hologram-caption">
+ ◈ SIGNAL LOCKING IN...
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<nav>
+ 
+<a href="index.html" class="nav-logo">
+ MiM
+</a>
+ 
+<ul class="nav-links">
+ 
+<li>
+ 
 <a href="games.html">
-Games</a>
+ Games
+</a>
+ 
 </li>
- <li>
+ 
+<li>
+ 
 <a href="pdfs.html">
-PDFs</a>
+ PDFs
+</a>
+ 
 </li>
- <li>
+ 
+<li>
+ 
 <a href="dashboard.html">
-Dashboard</a>
+ Dashboard
+</a>
+ 
 </li>
- <li>
+ 
+<li>
+ 
 <a href="index.html#membership">
-Membership</a>
+ Membership
+</a>
+ 
 </li>
- </ul>
- <span class="nav-user" id="navUser">
+ 
+</ul>
+ 
+<span class="nav-user" id="navUser">
+ 
 </span>
- <button class="nav-logout" id="navLogout" onclick="handleLogout()">
-Log Out</button>
- </nav>
- <button class="portal-peek-btn" onclick="openPortal()" title="???">
-🌀</button>
- <section class="hero" id="echoHero">
- <video class="hero-video" autoplay muted loop playsinline poster="echo-entrance.png">
- <source src="echo-hero.mp4" type="video/mp4">
- </video>
- <div class="hero-gradient">
+ 
+<button class="nav-logout" id="navLogout" onclick="handleLogout()">
+ Log Out
+</button>
+ 
+</nav>
+ 
+<button class="portal-peek-btn" onclick="openPortal()" title="???">
+ 🌀
+</button>
+ 
+<section class="hero" id="echoHero">
+ 
+<video class="hero-video" autoplay muted loop playsinline poster="echo-entrance.png">
+ 
+<source src="echo-hero.mp4" type="video/mp4">
+ 
+</video>
+ 
+<div class="hero-gradient">
+ 
 </div>
- <img class="hero-echo-gif" src="echo-motion.gif" alt="Echo" onerror="this.style.display='none'">
- <button class="ib-toggle-tab" onclick="ibToggleWrapper()" aria-label="Open the Beatbox icebreaker game">
- <div class="ib-toggle-icon">
-◈</div>
- <div class="ib-toggle-title">
-BEATBOX</div>
- <div class="ib-toggle-tab-label">
-Freeplay a beat.<br>
-Or match Echo's pattern.</div>
- <div class="ib-toggle-cta">
-Boot Game →</div>
- </button>
- <div class="hero-content">
- <div class="hero-eyebrow">
-◈ &nbsp; Signal DJ &nbsp; · &nbsp; Web Audio API</div>
- <div class="hero-name">
-Echo</div>
- <div class="hero-catchphrase">
-Sound is my language.</div>
- <div class="hero-role">
-The Signal DJ</div>
- <div class="hero-quote">
-"<span>
-Every click is a cue.</span>
- Every timer is a beat. Code doesn't just run -- it responds."</div>
- <div class="fact-ticker" id="factTicker">
+ 
+<img class="hero-echo-gif" src="echo-motion.gif" alt="Echo" onerror="this.style.display='none'" onclick="companionClick()">
+ 
+<div class="hero-content">
+ 
+<div class="hero-eyebrow">
+ ◈ &nbsp; Signal DJ &nbsp; · &nbsp; Web Audio API
 </div>
- <div class="hero-tiles">
- <a class="hero-tile" onclick="jumpToLesson(1)">
-01 Events &amp; Listeners</a>
- <a class="hero-tile" onclick="jumpToLesson(2)">
-02 Timers &amp; Timing</a>
- <a class="hero-tile" onclick="jumpToLesson(3)">
-03 The Web Audio API</a>
- <a class="hero-tile" onclick="jumpToLesson(4)">
-04 Beat Machine</a>
- </div>
- </div>
- </section>
- <div class="icebreaker-wrapper" id="icebreakerWrapper">
- <section class="icebreaker" id="icebreaker">
- <div class="ib-header">
- <div class="ib-eyebrow">
-◈ &nbsp; ICEBREAKER &nbsp; · &nbsp; BEATBOX</div>
- <h2 class="ib-title">
-Echo's Beatbox</h2>
- <p class="ib-sub">
-Freeplay a beat of your own, or step into Challenge mode and match Echo's pattern before it grows too long.</p>
- </div>
- <div class="bb-mode-tabs">
- <button class="bb-mode-tab active" id="bbTabFreeplay" onclick="bbSwitchMode('freeplay')">
-🎛️ Freeplay</button>
- <button class="bb-mode-tab" id="bbTabChallenge" onclick="bbSwitchMode('challenge')">
-🎯 Challenge</button>
- </div>
- <div class="bb-panel" id="bb-freeplay-panel">
- <div class="bb-freeplay-note">
-No scoring here — just tap steps to build your own beat.</div>
- <div class="beat-machine" style="margin:0;">
- <div class="beat-grid" id="bbFreeGrid">
+ 
+<div class="hero-name">
+ Echo
 </div>
- <div class="beat-controls">
- <button class="beat-play-btn" id="bbFreePlayBtn" onclick="bbToggleFreeplay()">
-▶ PLAY</button>
- <div class="beat-tempo">
+ 
+<div class="hero-catchphrase">
+ Sound is my language.
+</div>
+ 
+<div class="hero-role">
+ The Signal DJ
+</div>
+ 
+<div class="hero-quote">
+ "
 <span>
-BPM</span>
-<input type="range" id="bbFreeTempo" min="60" max="180" value="120" oninput="bbUpdateFreeTempo(this.value)" />
-<span id="bbFreeTempoVal">
-120</span>
-</div>
- <button class="beat-play-btn" style="background:rgba(0,229,255,0.15);color:var(--cyan);border:1px solid var(--cyan);" onclick="bbClearFreeplay()">
-✕ CLEAR</button>
- <div class="beat-step-indicator" id="bbFreeStepIndicator">
-STEP: --</div>
- </div>
- </div>
- </div>
- <div class="bb-panel" id="bb-challenge-panel" style="display:none;">
- <div class="bb-score-row">
-<div>
-ROUND <span id="bbRound">
-0</span>
-</div>
-<div>
-BEST <span id="bbBest">
-0</span>
-</div>
-</div>
- <div class="bb-status" id="bbStatus">
-Tap Start to hear the first beat.</div>
- <div class="bb-pads-row" id="bbPadsRow">
-</div>
- <div style="text-align:center;">
- <button class="ib-start-btn" id="bbStartBtn" onclick="bbStartChallenge()" style="padding:0.7rem 2rem;font-size:0.75rem;">
-Start Challenge ◈</button>
- </div>
- </div>
- </section>
- </div>
- <div class="lesson-strip">
- <button class="lesson-tab" id="tab-1" onclick="openLesson(1)">
-01 — Events &amp; Listeners</button>
- <button class="lesson-tab" id="tab-2" onclick="openLesson(2)">
-02 — Timers &amp; Timing</button>
- <button class="lesson-tab" id="tab-3" onclick="openLesson(3)">
-03 — Web Audio API</button>
- <button class="lesson-tab" id="tab-4" onclick="openLesson(4)">
-04 — Beat Machine</button>
- <button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">
-◈ Cheat Sheet</button>
- </div>
- <!-- ===================== LESSON 1 ===================== -->
- <div class="lesson-panel" id="lesson-1">
- <aside class="lesson-sidebar">
- <div class="sidebar-label">
-Lesson 01</div>
- <button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read">
-<span class="sidebar-icon">
-📖</span>
- Read</button>
- <button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms">
-<span class="sidebar-icon">
-🔑</span>
- Terms</button>
- <button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build">
-<span class="sidebar-icon">
-⚙️</span>
- Build</button>
- <button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect">
-<span class="sidebar-icon">
-💭</span>
- Reflect</button>
- <div class="sidebar-divider">
-</div>
- <a href="echo-game.html" class="sidebar-game-link">
-◈ Echo's Game World</a>
- </aside>
- <div class="lesson-content">
- <div class="content-block active" id="block-1-read">
- <div class="section-header">
-Events &amp; Listeners</div>
- <div class="section-sub">
-LESSON 01</div>
- <div class="read-card">
- <div class="read-card-num">
-01 / 05</div>
- <h3>
-Code That Waits</h3>
- <p>
-Most of the code you've learned so far runs immediately. But real web pages do something different -- they <strong>
-wait</strong>
-. They wait for a click, a keystroke, a scroll. This kind of code is called <strong>
-event-driven</strong>
-, and it's how the web actually works.</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-02 / 05</div>
- <h3>
-What Is an Event?</h3>
- <p>
-An <strong>
-event</strong>
- is anything that happens in the browser -- a user clicking a button, moving the mouse, pressing a key, or a page finishing loading. The browser tracks all of these moments automatically. Your job is to tell it what to do when one occurs.</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-03 / 05</div>
- <h3>
-addEventListener</h3>
- <p>
-The method <code>
-addEventListener</code>
- connects an element to a function. When the event fires, the function runs. The function is called an <strong>
-event handler</strong>
- or <strong>
-callback</strong>
- -- a function that gets called later, not right now.</p>
- <div class="code-block">
-<span class="kw">
-const</span>
- btn = <span class="fn">
-document</span>
-.<span class="fn">
-getElementById</span>
-(<span class="str">
-"myBtn"</span>
-); btn.<span class="fn">
-addEventListener</span>
-(<span class="str">
-"click"</span>
-, <span class="kw">
-function</span>
-() { <span class="fn">
-console</span>
-.<span class="fn">
-log</span>
-(<span class="str">
-"Button was clicked!"</span>
-); });</div>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-04 / 05</div>
- <h3>
-The Event Object</h3>
- <p>
-When an event fires, the browser passes an <strong>
-event object</strong>
- to your handler. It contains information about what happened -- which key was pressed, where the mouse was, which element triggered it.</p>
- <div class="code-block">
-btn.<span class="fn">
-addEventListener</span>
-(<span class="str">
-"click"</span>
-, <span class="kw">
-function</span>
-(e) { <span class="fn">
-console</span>
-.<span class="fn">
-log</span>
-(<span class="str">
-"Clicked at X: "</span>
- + e.<span class="prop">
-clientX</span>
-); });</div>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-05 / 05</div>
- <h3>
-Common Event Types</h3>
- <p>
-The browser supports dozens of event types you'll use often:</p>
- <div class="code-block">
-<span class="str">
-"click"</span>
- <span class="cm">
-// user clicks an element</span>
- <span class="str">
-"keydown"</span>
- <span class="cm">
-// user presses a key</span>
- <span class="str">
-"input"</span>
- <span class="cm">
-// value in a text field changes</span>
- <span class="str">
-"load"</span>
- <span class="cm">
-// page or resource finishes loading</span>
-</div>
- </div>
- </div>
- <div class="content-block" id="block-1-terms">
- <div class="section-header">
-Key Terms</div>
- <div class="section-sub">
-LESSON 01 · TAP TO EXPAND</div>
- <div class="terms-grid">
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-Event <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Something that happens in the browser -- a click, keypress, scroll, or page load.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-Event listener <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Code that "listens" for an event on an element and runs a function when it fires.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-addEventListener <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-The method used to attach a listener to an element.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-Callback function <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-A function passed to another function to be called later.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-Event object <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-The object the browser passes to your handler with details about the event.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-Event-driven <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-A style of programming where code waits for events before running.</div>
-</div>
- </div>
- </div>
- <div class="content-block" id="block-1-build">
- <div class="section-header">
-Build It</div>
- <div class="section-sub">
-LESSON 01 · EVENT TRACKER</div>
- <div class="build-section">
- <h3>
-Click Counter</h3>
- <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">
-This code tracks clicks. Edit it to also log the X and Y position using the event object <code>
-e</code>
-.</p>
- <div class="editor-wrap">
- <div class="editor-toolbar">
-<span>
-JAVASCRIPT · EVENTS</span>
-<button class="editor-run-btn" onclick="runEditor('l1')">
-▶ RUN</button>
-</div>
- <textarea class="code-editor" id="editor-l1">
-let clicks = 0; function handleClick(e) { clicks++; console.log("Click #" + clicks); // Add: log e.clientX and e.clientY } handleClick({ clientX: 120, clientY: 340 }); handleClick({ clientX: 88, clientY: 200 });</textarea>
- </div>
- <div class="preview-label">
-CONSOLE OUTPUT</div>
- <div class="console-output" id="output-l1">
-Output will appear here...</div>
- </div>
- <br>
- <div class="quiz-card">
- <div class="quiz-q">
-What does <code>
-addEventListener("click", myFn)</code>
- do?</div>
- <div class="quiz-options">
- <button class="quiz-opt" onclick="checkQuiz(this, false, 'It doesn\'t run immediately -- it registers for later.')">
-Runs myFn immediately</button>
- <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. It registers myFn to be called when a click occurs.')">
-Registers myFn to run when the element is clicked</button>
- <button class="quiz-opt" onclick="checkQuiz(this, false, 'It attaches to a specific element, not the whole page.')">
-Listens for clicks anywhere on the page</button>
- </div>
- <div class="quiz-feedback" id="qfb-0">
-</div>
- </div>
- </div>
- <div class="content-block" id="block-1-reflect">
- <div class="section-header">
-Reflect</div>
- <div class="section-sub">
-LESSON 01 · YOUR THOUGHTS</div>
- <div class="reflect-prompt">
- <div class="reflect-q">
-Think of a website you use often. What events do you think are being listened for?</div>
- <textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here...">
-</textarea>
- <div style="display:flex;align-items:center;gap:1rem;">
- <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">
-Save</button>
- <span class="reflect-saved" id="saved-1-1">
-✓ Saved</span>
- </div>
- </div>
- <div class="lesson-complete" id="complete-1">
- <h3>
-◈ &nbsp; Lesson 1 Complete</h3>
- <p>
-Events. Listeners. Callbacks. The web is always listening. Now you know how to respond.</p>
- <div class="lesson-joke" id="joke-1">
-</div>
- </div>
- </div>
- </div>
- </div>
- <!-- ===================== LESSON 2 ===================== -->
- <div class="lesson-panel" id="lesson-2">
- <aside class="lesson-sidebar">
- <div class="sidebar-label">
-Lesson 02</div>
- <button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read">
-<span class="sidebar-icon">
-📖</span>
- Read</button>
- <button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms">
-<span class="sidebar-icon">
-🔑</span>
- Terms</button>
- <button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build">
-<span class="sidebar-icon">
-⚙️</span>
- Build</button>
- <button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect">
-<span class="sidebar-icon">
-💭</span>
- Reflect</button>
- <div class="sidebar-divider">
-</div>
- <a href="echo-game.html" class="sidebar-game-link">
-◈ Echo's Game World</a>
- </aside>
- <div class="lesson-content">
- <div class="locked-panel" id="lock-2">
- <div class="locked-icon">
-🔒</div>
- <h2>
-Sparks Membership Required</h2>
- <p>
-Lesson 2 is available to Sparks members and above.</p>
- <button class="gate-btn" onclick="goUpgrade()">
-Upgrade Now</button>
- </div>
- <div class="content-block" id="block-2-read" style="display:none">
- <div class="section-header">
-Timers &amp; Timing</div>
- <div class="section-sub">
-LESSON 02 · SPARKS+</div>
- <div class="read-card">
- <div class="read-card-num">
-01 / 05</div>
- <h3>
-Time Is an Event Too</h3>
- <p>
-Not all events come from users. Some come from <strong>
-time itself</strong>
-. JavaScript can schedule code to run after a delay, or on a repeating interval.</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-02 / 05</div>
- <h3>
-setTimeout -- Run Once After a Delay</h3>
- <p>
-<code>
-setTimeout</code>
- runs a function <strong>
-one time</strong>
-, after a specified number of milliseconds.</p>
- <div class="code-block">
-<span class="fn">
-setTimeout</span>
-(<span class="kw">
-function</span>
-() { <span class="fn">
-console</span>
-.<span class="fn">
-log</span>
-(<span class="str">
-"3 seconds later..."</span>
-); }, <span class="num">
-3000</span>
-);</div>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-03 / 05</div>
- <h3>
-setInterval -- Run Repeatedly</h3>
- <p>
-<code>
-setInterval</code>
- runs a function <strong>
-over and over</strong>
- at a fixed interval until you stop it.</p>
- <div class="code-block">
-<span class="kw">
-const</span>
- timer = <span class="fn">
-setInterval</span>
-(myFn, <span class="num">
-500</span>
-);</div>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-04 / 05</div>
- <h3>
-clearInterval -- Stopping the Loop</h3>
- <p>
-Always save the return value of <code>
-setInterval</code>
- so you can pass it to <code>
-clearInterval</code>
-.</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-05 / 05</div>
- <h3>
-Milliseconds and the DJ's Grid</h3>
- <p>
-At 120 BPM, one beat lasts <strong>
-500ms</strong>
-. Formula: <code>
-60000 / BPM</code>
-.</p>
- </div>
- </div>
- <div class="content-block" id="block-2-terms" style="display:none">
- <div class="section-header">
-Key Terms</div>
- <div class="section-sub">
-LESSON 02 · TAP TO EXPAND</div>
- <div class="terms-grid">
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-setTimeout <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Runs a function once, after a delay in milliseconds.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-setInterval <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Runs a function repeatedly until stopped.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-clearInterval <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Stops a setInterval.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-BPM <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Beats Per Minute. Convert to ms: 60000 / BPM.</div>
-</div>
- </div>
- </div>
- <div class="content-block" id="block-2-build" style="display:none">
- <div class="section-header">
-Build It</div>
- <div class="section-sub">
-LESSON 02 · TEMPO CALCULATOR</div>
- <div class="build-section">
- <h3>
-BPM to Milliseconds</h3>
- <div class="editor-wrap">
- <div class="editor-toolbar">
-<span>
-JAVASCRIPT · TIMERS</span>
-<button class="editor-run-btn" onclick="runEditor('l2')">
-▶ RUN</button>
-</div>
- <textarea class="code-editor" id="editor-l2">
-function bpmToMs(bpm) { return 0; // replace this } let tempos = [80, 120, 160]; for (let i = 0; i < tempos.length; i++) { console.log(tempos[i] + " BPM = " + bpmToMs(tempos[i]) + "ms"); }</textarea>
- </div>
- <div class="preview-label">
-CONSOLE OUTPUT</div>
- <div class="console-output" id="output-l2">
-Output will appear here...</div>
- </div>
- <br>
- <div class="quiz-card">
- <div class="quiz-q">
-At 120 BPM, how many milliseconds is one beat?</div>
- <div class="quiz-options">
- <button class="quiz-opt" onclick="checkQuiz(this, false, '60000 / 120 = 500, not 600.')">
-600ms</button>
- <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. 60000 ÷ 120 = 500ms.')">
-500ms</button>
- <button class="quiz-opt" onclick="checkQuiz(this, false, 'That would be nearly 500 BPM.')">
-120ms</button>
- </div>
- <div class="quiz-feedback" id="qfb-2">
-</div>
- </div>
- </div>
- <div class="content-block" id="block-2-reflect" style="display:none">
- <div class="section-header">
-Reflect</div>
- <div class="section-sub">
-LESSON 02 · YOUR THOUGHTS</div>
- <div class="reflect-prompt">
- <div class="reflect-q">
-Where else on the web do you see timers in action?</div>
- <textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here...">
-</textarea>
- <div style="display:flex;align-items:center;gap:1rem;">
- <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">
-Save</button>
- <span class="reflect-saved" id="saved-2-1">
-✓ Saved</span>
- </div>
- </div>
- <div class="lesson-complete show" id="complete-2">
- <h3>
-◈ &nbsp; Lesson 2 Complete</h3>
- <p>
-setTimeout. setInterval. clearInterval. You control time now.</p>
- <div class="lesson-joke" id="joke-2">
-</div>
- </div>
- </div>
- </div>
- </div>
- <!-- ===================== LESSON 3 ===================== -->
- <div class="lesson-panel" id="lesson-3">
- <aside class="lesson-sidebar">
- <div class="sidebar-label">
-Lesson 03</div>
- <button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read">
-<span class="sidebar-icon">
-📖</span>
- Read</button>
- <button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms">
-<span class="sidebar-icon">
-🔑</span>
- Terms</button>
- <button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build">
-<span class="sidebar-icon">
-⚙️</span>
- Build</button>
- <button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect">
-<span class="sidebar-icon">
-💭</span>
- Reflect</button>
- <div class="sidebar-divider">
-</div>
- <a href="echo-game.html" class="sidebar-game-link">
-◈ Echo's Game World</a>
- </aside>
- <div class="lesson-content">
- <div class="locked-panel" id="lock-3">
- <div class="locked-icon">
-🔒</div>
- <h2>
-Builders Membership Required</h2>
- <p>
-Lesson 3 is available to Builders members and above.</p>
- <button class="gate-btn" onclick="goUpgrade()">
-Upgrade Now</button>
- </div>
- <div class="content-block" id="block-3-read" style="display:none">
- <div class="section-header">
-The Web Audio API</div>
- <div class="section-sub">
-LESSON 03 · BUILDERS+</div>
- <div class="read-card">
- <div class="read-card-num">
-01 / 05</div>
- <h3>
-Browsers Can Make Sound</h3>
- <p>
-The <strong>
-Web Audio API</strong>
- is a built-in browser tool for creating and controlling audio with JavaScript. No plugins needed.</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-02 / 05</div>
- <h3>
-AudioContext -- The Studio</h3>
- <p>
-Everything happens inside an <strong>
-AudioContext</strong>
-. Think of it as the mixing board.</p>
- <div class="code-block">
-<span class="kw">
-const</span>
- ctx = <span class="kw">
-new</span>
- <span class="fn">
-AudioContext</span>
-();</div>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-03 / 05</div>
- <h3>
-OscillatorNode -- Generating Tone</h3>
- <p>
-An <strong>
-OscillatorNode</strong>
- generates a pure tone. Frequency is measured in Hz -- 440 Hz is the note A4.</p>
- <div class="code-block">
-<span class="kw">
-const</span>
- osc = ctx.<span class="fn">
-createOscillator</span>
-(); osc.<span class="prop">
-frequency</span>
-.<span class="prop">
-value</span>
- = <span class="num">
-440</span>
-; osc.<span class="fn">
-connect</span>
-(ctx.<span class="prop">
-destination</span>
-); osc.<span class="fn">
-start</span>
-();</div>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-04 / 05</div>
- <h3>
-GainNode -- Controlling Volume</h3>
- <p>
-A <strong>
-GainNode</strong>
- controls the volume of a signal. 1 = full volume, 0 = silent.</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-05 / 05</div>
- <h3>
-The Audio Signal Chain</h3>
- <p>
-Signals flow through a <strong>
-chain of nodes</strong>
- -- source, processing, then destination.</p>
- </div>
- </div>
- <div class="content-block" id="block-3-terms" style="display:none">
- <div class="section-header">
-Key Terms</div>
- <div class="section-sub">
-LESSON 03 · TAP TO EXPAND</div>
- <div class="terms-grid">
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-Web Audio API <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Browser system for creating and controlling audio with JavaScript.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-AudioContext <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-The main object all audio nodes connect through.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-OscillatorNode <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Generates a pure tone at a set frequency.</div>
-</div>
- <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">
-GainNode <span class="term-arrow">
-›</span>
-</div>
-<div class="term-def">
-Controls the volume of a signal.</div>
-</div>
- </div>
- </div>
- <div class="content-block" id="block-3-build" style="display:none">
- <div class="section-header">
-Build It</div>
- <div class="section-sub">
-LESSON 03 · PLAY A NOTE</div>
- <div class="build-section">
- <h3>
-Tone Generator</h3>
- <p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;">
-Click to play a tone using real Web Audio API.</p>
- <div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.5rem;">
- <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;" onclick="playNote(261.6,'sine',0.4)">
-C4 · Sine</button>
- <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--blue);" onclick="playNote(329.6,'square',0.3)">
-E4 · Square</button>
- <button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--purple);" onclick="playNote(392,'sawtooth',0.25)">
-G4 · Sawtooth</button>
- </div>
- </div>
- <div class="quiz-card">
- <div class="quiz-q">
-What does a GainNode control?</div>
- <div class="quiz-options">
- <button class="quiz-opt" onclick="checkQuiz(this, false, 'Pitch is controlled by the OscillatorNode.')">
-The pitch of the sound</button>
- <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. GainNode controls amplitude -- how loud it is.')">
-The volume (amplitude) of the signal</button>
- <button class="quiz-opt" onclick="checkQuiz(this, false, 'Wave type is set on the OscillatorNode.')">
-The wave shape</button>
- </div>
- <div class="quiz-feedback" id="qfb-4">
-</div>
- </div>
- </div>
- <div class="content-block" id="block-3-reflect" style="display:none">
- <div class="section-header">
-Reflect</div>
- <div class="section-sub">
-LESSON 03 · YOUR THOUGHTS</div>
- <div class="reflect-prompt">
- <div class="reflect-q">
-What kind of web project would you want to build using the Web Audio API?</div>
- <textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here...">
-</textarea>
- <div style="display:flex;align-items:center;gap:1rem;">
- <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">
-Save</button>
- <span class="reflect-saved" id="saved-3-1">
-✓ Saved</span>
- </div>
- </div>
- <div class="lesson-complete show" id="complete-3">
- <h3>
-◈ &nbsp; Lesson 3 Complete</h3>
- <p>
-AudioContext. Oscillators. Gain. Signal chains. The studio is open.</p>
- <div class="lesson-joke" id="joke-3">
-</div>
- </div>
- </div>
- </div>
- </div>
- <!-- ===================== LESSON 4 ===================== -->
- <div class="lesson-panel" id="lesson-4">
- <aside class="lesson-sidebar">
- <div class="sidebar-label">
-Lesson 04</div>
- <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read">
-<span class="sidebar-icon">
-📖</span>
- Read</button>
- <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build">
-<span class="sidebar-icon">
-⚙️</span>
- Build</button>
- <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect">
-<span class="sidebar-icon">
-💭</span>
- Reflect</button>
- <div class="sidebar-divider">
-</div>
- <a href="echo-game.html" class="sidebar-game-link">
-◈ Echo's Game World</a>
- </aside>
- <div class="lesson-content">
- <div class="locked-panel" id="lock-4">
- <div class="locked-icon">
-🔒</div>
- <h2>
-Coders Membership Required</h2>
- <p>
-Lesson 4 is available to Coders members only.</p>
- <button class="gate-btn" onclick="goUpgrade()">
-Upgrade Now</button>
- </div>
- <div class="content-block" id="block-4-read" style="display:none">
- <div class="section-header">
-Beat Machine</div>
- <div class="section-sub">
-LESSON 04 · CODERS</div>
- <div class="read-card">
- <div class="read-card-num">
-01 / 04</div>
- <h3>
-What Is a Beat Machine?</h3>
- <p>
-A <strong>
-step sequencer</strong>
- divides time into equal steps -- usually 16 per bar -- and plays a sound at each active step.</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-02 / 04</div>
- <h3>
-The Data Behind the Grid</h3>
- <p>
-Each row is an <strong>
-array of booleans</strong>
- -- 16 values, each true (on) or false (off).</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-03 / 04</div>
- <h3>
-The Sequencer Loop</h3>
- <p>
-A <code>
-setInterval</code>
- advances a step counter, checking each row for that step.</p>
- </div>
- <div class="read-card">
- <div class="read-card-num">
-04 / 04</div>
- <h3>
-Click Events Toggle the Grid</h3>
- <p>
-Each button's click event <strong>
-toggles its boolean</strong>
- from false to true or back.</p>
- </div>
- </div>
- <div class="content-block" id="block-4-build" style="display:none">
- <div class="section-header">
-Beat Machine</div>
- <div class="section-sub">
-LESSON 04 · BUILD THE BEAT</div>
- <div class="beat-machine">
- <h3>
-◈ Echo's Step Sequencer</h3>
- <div class="beat-grid" id="beatGrid">
-</div>
- <div class="beat-controls">
- <button class="beat-play-btn" id="beatPlayBtn" onclick="toggleBeat()">
-▶ PLAY</button>
- <div class="beat-tempo">
-<span>
-BPM</span>
-<input type="range" id="tempoSlider" min="60" max="180" value="120" oninput="updateTempo(this.value)" />
-<span id="tempoVal">
-120</span>
-</div>
- <button class="beat-play-btn" style="background:rgba(0,229,255,0.15);color:var(--cyan);border:1px solid var(--cyan);" onclick="clearBeat()">
-✕ CLEAR</button>
- <div class="beat-step-indicator" id="stepIndicator">
-STEP: --</div>
- </div>
- </div>
- <div class="quiz-card">
- <div class="quiz-q">
-In the beat machine, what does toggling a grid button actually change?</div>
- <div class="quiz-options">
- <button class="quiz-opt" onclick="checkQuiz(this, false, 'The CSS class just reflects the underlying data.')">
-The button's CSS class only</button>
- <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The boolean in the grid array is flipped.')">
-A boolean in the grid data array</button>
- <button class="quiz-opt" onclick="checkQuiz(this, false, 'The sound plays on the next sequencer tick.')">
-A sound plays immediately</button>
- </div>
- <div class="quiz-feedback" id="qfb-6">
-</div>
- </div>
- </div>
- <div class="content-block" id="block-4-reflect" style="display:none">
- <div class="section-header">
-Reflect</div>
- <div class="section-sub">
-LESSON 04 · YOUR THOUGHTS</div>
- <div class="reflect-prompt">
- <div class="reflect-q">
-The beat machine uses events, timers, and audio all at once. Describe how they work together.</div>
- <textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here...">
-</textarea>
- <div style="display:flex;align-items:center;gap:1rem;">
- <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">
-Save</button>
- <span class="reflect-saved" id="saved-4-1">
-✓ Saved</span>
- </div>
- </div>
- <div class="lesson-complete show" id="complete-4">
- <h3>
-◈ &nbsp; Echo's Studio Complete</h3>
- <p>
-Events. Timers. Audio. Beat machines. You heard the signal. Now you know how to send one.</p>
- <div class="lesson-joke" id="joke-4">
-</div>
- </div>
- </div>
- </div>
- </div>
- <div class="lesson-panel" id="lesson-cheat">
- <div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
- <div class="section-header">
-Echo's Cheat Sheet</div>
- <div class="section-sub">
-ALL FOUR LESSONS · COMBINED REFERENCE</div>
- <div class="cheat-card">
- <h3>
-◈ Lesson 1 — Events &amp; Listeners</h3>
- <div class="cheat-items">
- <div class="cheat-item">
-<div class="cheat-term">
-Event</div>
-<div class="cheat-desc">
-Something that happens in the browser — a click, keypress, scroll, or page load.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-addEventListener</div>
-<div class="cheat-desc">
-Attaches a listener to an element. el.addEventListener("click", fn)</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-Callback</div>
-<div class="cheat-desc">
-A function passed to another function to be called later.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-Event object</div>
-<div class="cheat-desc">
-Details about what happened. function(e) { e.clientX }</div>
-</div>
- </div>
- <div class="code-block">
-btn.addEventListener("click", function(e) {<br>
-&nbsp;&nbsp;console.log("Clicked at X: " + e.clientX);<br>
-});</div>
- </div>
- <div class="cheat-card">
- <h3>
-◈ Lesson 2 — Timers &amp; Timing</h3>
- <div class="cheat-items">
- <div class="cheat-item">
-<div class="cheat-term">
-setTimeout(fn, ms)</div>
-<div class="cheat-desc">
-Runs a function once, after a delay.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-setInterval(fn, ms)</div>
-<div class="cheat-desc">
-Runs a function repeatedly until stopped.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-clearInterval(id)</div>
-<div class="cheat-desc">
-Stops a running setInterval.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-BPM formula</div>
-<div class="cheat-desc">
-60000 / BPM = milliseconds per beat.</div>
-</div>
- </div>
- <div class="code-block">
-const timer = setInterval(tick, 500);<br>
-// later: clearInterval(timer);</div>
- </div>
- <div class="cheat-card">
- <h3>
-◈ Lesson 3 — The Web Audio API</h3>
- <div class="cheat-items">
- <div class="cheat-item">
-<div class="cheat-term">
-AudioContext</div>
-<div class="cheat-desc">
-The studio every sound connects through.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-OscillatorNode</div>
-<div class="cheat-desc">
-Generates a pure tone at a set frequency (Hz).</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-GainNode</div>
-<div class="cheat-desc">
-Controls volume — 1 is full, 0 is silent.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-A4 = 440 Hz</div>
-<div class="cheat-desc">
-Concert A, the standard tuning pitch.</div>
-</div>
- </div>
- <div class="code-block">
-const ctx = new AudioContext();<br>
-const osc = ctx.createOscillator();<br>
-osc.frequency.value = 440;<br>
-osc.connect(ctx.destination);<br>
-osc.start();</div>
- </div>
- <div class="cheat-card">
- <h3>
-◈ Lesson 4 — Beat Machine</h3>
- <div class="cheat-items">
- <div class="cheat-item">
-<div class="cheat-term">
-Step sequencer</div>
-<div class="cheat-desc">
-A timer advances through a grid, playing active steps.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-Grid data</div>
-<div class="cheat-desc">
-A 2D array of booleans — one row per sound, 16 steps each.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-Step wrap</div>
-<div class="cheat-desc">
-step = (step + 1) % 16 — loops back to 0 after the last step.</div>
-</div>
- </div>
- <div class="code-block">
-let step = 0;<br>
-setInterval(() =>
- {<br>
-&nbsp;&nbsp;rows.forEach(row =>
- { if (row[step]) playSound(row); });<br>
-&nbsp;&nbsp;step = (step + 1) % 16;<br>
-}, msPerStep);</div>
- </div>
- <div class="cheat-card">
- <h3>
-◈ Signal Chain Symbols</h3>
- <div class="cheat-items">
- <div class="cheat-item">
-<div class="cheat-term">
-( )</div>
-<div class="cheat-desc">
-Parentheses — call a function, or hold its arguments.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-.</div>
-<div class="cheat-desc">
-Dot — accesses a property or method on an object, like ctx.createOscillator().</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-' '</div>
-<div class="cheat-desc">
-Quotes — wrap text values (strings), like 'click' or 'keydown'.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-=</div>
-<div class="cheat-desc">
-Equals sign — assigns a value, like osc.frequency.value = 440.</div>
-</div>
- <div class="cheat-item">
-<div class="cheat-term">
-,</div>
-<div class="cheat-desc">
-Comma — separates multiple arguments inside parentheses.</div>
-</div>
- </div>
- <div class="cheat-btn-row">
- <a href="echo-cheatsheet.pdf" download class="cheat-download-btn">
-⬇ Download Full PDF Cheat Sheet</a>
- <button class="cheat-download-btn secondary" onclick="downloadCheat()">
-Quick Text Reference</button>
- </div>
- </div>
- </div>
- </div>
- <div class="echo-companion" id="echoCompanion">
- <img src="echo-idle.gif" alt="Echo" title="Echo is here if you need help!" onerror="this.parentElement.style.display='none'" onclick="companionClick()">
- </div>
- <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">
-🔊</button>
- <div class="portal-modal" id="portalModal">
- <img src="echo-mim-underground-portal.png" alt="MiM Underground" onerror="this.style.display='none'">
- <p>
-MiM Underground — signal strength: -18.4 LUFS. Echo mixes down here when the beat needs work. You're not supposed to see this yet.</p>
- <button class="portal-close" onclick="closePortal()">
-Close the Portal</button>
- </div>
- <div class="egg-popup" id="eggPopup">
- <h4>
-◈ Secret Found!</h4>
- <p id="eggText">
+ Every click is a cue.
+</span>
+ Every timer is a beat. Code doesn't just run -- it responds."
+</div>
+ 
+<div class="fact-ticker" id="factTicker">
+ 
+</div>
+ 
+<div class="hero-tiles">
+ 
+<div class="hero-lesson-grid">
+ 
+<a class="hero-tile" onclick="jumpToLesson(1)">
+ 01 Events &amp; Listeners
+</a>
+ 
+<a class="hero-tile" onclick="jumpToLesson(2)">
+ 02 Timers &amp; Timing
+</a>
+ 
+<a class="hero-tile" onclick="jumpToLesson(3)">
+ 03 The Web Audio API
+</a>
+ 
+<a class="hero-tile" onclick="jumpToLesson(4)">
+ 04 Beat Machine
+</a>
+ 
+</div>
+ 
+<button class="hero-game-tile" onclick="ibToggleWrapper()" aria-label="Open the Beatbox icebreaker game">
+ 
+<span class="hero-game-icon">
+ ◈
+</span>
+ 
+<span class="hero-game-label">
+ BEATBOX
+</span>
+ 
+<span class="hero-game-cta">
+ Boot Game →
+</span>
+ 
+</button>
+ 
+</div>
+ 
+</div>
+ 
+</section>
+ 
+<div class="icebreaker-wrapper" id="icebreakerWrapper">
+ 
+<section class="icebreaker" id="icebreaker">
+ 
+<div class="ib-header">
+ 
+<div class="ib-eyebrow">
+ ◈ &nbsp; ICEBREAKER &nbsp; · &nbsp; BEATBOX
+</div>
+ 
+<h2 class="ib-title">
+ Echo's Beatbox
+</h2>
+ 
+<p class="ib-sub">
+ Freeplay a beat of your own, or step into Challenge mode and match Echo's pattern before it grows too long.
 </p>
- </div>
- <script type="module" src="auth-init.js"></script>
- <script> let currentLesson = null;
+ 
+</div>
+ 
+<div class="bb-mode-tabs">
+ 
+<button class="bb-mode-tab active" id="bbTabFreeplay" onclick="bbSwitchMode('freeplay')">
+ 🎛️ Freeplay
+</button>
+ 
+<button class="bb-mode-tab" id="bbTabChallenge" onclick="bbSwitchMode('challenge')">
+ 🎯 Challenge
+</button>
+ 
+</div>
+ 
+<div class="bb-panel" id="bb-freeplay-panel">
+ 
+<div class="bb-freeplay-note">
+ No scoring here — just tap steps to build your own beat.
+</div>
+ 
+<div class="beat-machine" style="margin:0;">
+ 
+<div class="beat-grid" id="bbFreeGrid">
+ 
+</div>
+ 
+<div class="beat-controls">
+ 
+<button class="beat-play-btn" id="bbFreePlayBtn" onclick="bbToggleFreeplay()">
+ ▶ PLAY
+</button>
+ 
+<div class="beat-tempo">
+ 
+<span>
+ BPM
+</span>
+ 
+<input type="range" id="bbFreeTempo" min="60" max="180" value="120" oninput="bbUpdateFreeTempo(this.value)" />
+ 
+<span id="bbFreeTempoVal">
+ 120
+</span>
+ 
+</div>
+ 
+<button class="beat-play-btn" style="background:rgba(0,229,255,0.15);color:var(--cyan);border:1px solid var(--cyan);" onclick="bbClearFreeplay()">
+ ✕ CLEAR
+</button>
+ 
+<div class="beat-step-indicator" id="bbFreeStepIndicator">
+ STEP: --
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="bb-panel" id="bb-challenge-panel" style="display:none;">
+ 
+<div class="bb-score-row">
+ 
+<div>
+ ROUND 
+<span id="bbRound">
+ 0
+</span>
+ 
+</div>
+ 
+<div>
+ BEST 
+<span id="bbBest">
+ 0
+</span>
+ 
+</div>
+ 
+</div>
+ 
+<div class="bb-status" id="bbStatus">
+ Tap Start to hear the first beat.
+</div>
+ 
+<div class="bb-pads-row" id="bbPadsRow">
+ 
+</div>
+ 
+<div style="text-align:center;">
+ 
+<button class="ib-start-btn" id="bbStartBtn" onclick="bbStartChallenge()" style="padding:0.7rem 2rem;font-size:0.75rem;">
+ Start Challenge ◈
+</button>
+ 
+</div>
+ 
+</div>
+ 
+</section>
+ 
+</div>
+ 
+<div class="lesson-strip">
+ 
+<button class="lesson-tab" id="tab-1" onclick="openLesson(1)">
+ 01 — Events &amp; Listeners
+</button>
+ 
+<button class="lesson-tab" id="tab-2" onclick="openLesson(2)">
+ 02 — Timers &amp; Timing
+</button>
+ 
+<button class="lesson-tab" id="tab-3" onclick="openLesson(3)">
+ 03 — Web Audio API
+</button>
+ 
+<button class="lesson-tab" id="tab-4" onclick="openLesson(4)">
+ 04 — Beat Machine
+</button>
+ 
+<button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">
+ ◈ Cheat Sheet
+</button>
+ 
+</div>
+ 
+<!-- ===================== LESSON 1 ===================== -->
+ 
+<div class="lesson-panel" id="lesson-1">
+ 
+<aside class="lesson-sidebar">
+ 
+<div class="sidebar-label">
+ Lesson 01
+</div>
+ 
+<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read">
+ 
+<span class="sidebar-icon">
+ 📖
+</span>
+ Read
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms">
+ 
+<span class="sidebar-icon">
+ 🔑
+</span>
+ Terms
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build">
+ 
+<span class="sidebar-icon">
+ ⚙️
+</span>
+ Build
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect">
+ 
+<span class="sidebar-icon">
+ 💭
+</span>
+ Reflect
+</button>
+ 
+<div class="sidebar-divider">
+ 
+</div>
+ 
+<a href="echo-game.html" class="sidebar-game-link">
+ ◈ Echo's Game World
+</a>
+ 
+</aside>
+ 
+<div class="lesson-content">
+ 
+<div class="content-block active" id="block-1-read">
+ 
+<div class="section-header">
+ Events &amp; Listeners
+</div>
+ 
+<div class="section-sub">
+ LESSON 01
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 01 / 05
+</div>
+ 
+<h3>
+ Code That Waits
+</h3>
+ 
+<p>
+ Most of the code you've learned so far runs immediately. But real web pages do something different -- they 
+<strong>
+ wait
+</strong>
+ . They wait for a click, a keystroke, a scroll. This kind of code is called 
+<strong>
+ event-driven
+</strong>
+ , and it's how the web actually works.
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 02 / 05
+</div>
+ 
+<h3>
+ What Is an Event?
+</h3>
+ 
+<p>
+ An 
+<strong>
+ event
+</strong>
+ is anything that happens in the browser -- a user clicking a button, moving the mouse, pressing a key, or a page finishing loading. The browser tracks all of these moments automatically. Your job is to tell it what to do when one occurs.
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 03 / 05
+</div>
+ 
+<h3>
+ addEventListener
+</h3>
+ 
+<p>
+ The method 
+<code>
+ addEventListener
+</code>
+ connects an element to a function. When the event fires, the function runs. The function is called an 
+<strong>
+ event handler
+</strong>
+ or 
+<strong>
+ callback
+</strong>
+ -- a function that gets called later, not right now.
+</p>
+ 
+<div class="code-block">
+ 
+<span class="kw">
+ const
+</span>
+ btn = 
+<span class="fn">
+ document
+</span>
+ .
+<span class="fn">
+ getElementById
+</span>
+ (
+<span class="str">
+ "myBtn"
+</span>
+ ); btn.
+<span class="fn">
+ addEventListener
+</span>
+ (
+<span class="str">
+ "click"
+</span>
+ , 
+<span class="kw">
+ function
+</span>
+ () { 
+<span class="fn">
+ console
+</span>
+ .
+<span class="fn">
+ log
+</span>
+ (
+<span class="str">
+ "Button was clicked!"
+</span>
+ ); });
+</div>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 04 / 05
+</div>
+ 
+<h3>
+ The Event Object
+</h3>
+ 
+<p>
+ When an event fires, the browser passes an 
+<strong>
+ event object
+</strong>
+ to your handler. It contains information about what happened -- which key was pressed, where the mouse was, which element triggered it.
+</p>
+ 
+<div class="code-block">
+ btn.
+<span class="fn">
+ addEventListener
+</span>
+ (
+<span class="str">
+ "click"
+</span>
+ , 
+<span class="kw">
+ function
+</span>
+ (e) { 
+<span class="fn">
+ console
+</span>
+ .
+<span class="fn">
+ log
+</span>
+ (
+<span class="str">
+ "Clicked at X: "
+</span>
+ + e.
+<span class="prop">
+ clientX
+</span>
+ ); });
+</div>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 05 / 05
+</div>
+ 
+<h3>
+ Common Event Types
+</h3>
+ 
+<p>
+ The browser supports dozens of event types you'll use often:
+</p>
+ 
+<div class="code-block">
+ 
+<span class="str">
+ "click"
+</span>
+ 
+<span class="cm">
+ // user clicks an element
+</span>
+ 
+<span class="str">
+ "keydown"
+</span>
+ 
+<span class="cm">
+ // user presses a key
+</span>
+ 
+<span class="str">
+ "input"
+</span>
+ 
+<span class="cm">
+ // value in a text field changes
+</span>
+ 
+<span class="str">
+ "load"
+</span>
+ 
+<span class="cm">
+ // page or resource finishes loading
+</span>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="locked-panel" id="anon-lock-1">
+ 
+<div class="locked-icon">
+ ◈
+</div>
+ 
+<h2>
+ Free to Explore, Free to Sign Up
+</h2>
+ 
+<p>
+ Create a free account to unlock quizzes, the build tools, and reflections for every one of Echo's lessons.
+</p>
+ 
+<button class="gate-btn" onclick="goUpgrade()">
+ Sign Up Free
+</button>
+ 
+</div>
+ 
+<div id="anon-gated-1">
+ 
+<div class="content-block" id="block-1-terms">
+ 
+<div class="section-header">
+ Key Terms
+</div>
+ 
+<div class="section-sub">
+ LESSON 01 · TAP TO EXPAND
+</div>
+ 
+<div class="terms-grid">
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ Event 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Something that happens in the browser -- a click, keypress, scroll, or page load.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ Event listener 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Code that "listens" for an event on an element and runs a function when it fires.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ addEventListener 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ The method used to attach a listener to an element.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ Callback function 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ A function passed to another function to be called later.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ Event object 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ The object the browser passes to your handler with details about the event.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ Event-driven 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ A style of programming where code waits for events before running.
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-1-build">
+ 
+<div class="section-header">
+ Build It
+</div>
+ 
+<div class="section-sub">
+ LESSON 01 · EVENT TRACKER
+</div>
+ 
+<div class="build-section">
+ 
+<h3>
+ Click Counter
+</h3>
+ 
+<p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;line-height:1.6;">
+ This code tracks clicks. Edit it to also log the X and Y position using the event object 
+<code>
+ e
+</code>
+ .
+</p>
+ 
+<div class="editor-wrap">
+ 
+<div class="editor-toolbar">
+ 
+<span>
+ JAVASCRIPT · EVENTS
+</span>
+ 
+<button class="editor-run-btn" onclick="runEditor('l1')">
+ ▶ RUN
+</button>
+ 
+</div>
+ 
+<textarea class="code-editor" id="editor-l1">
+ let clicks = 0; function handleClick(e) { clicks++; console.log("Click #" + clicks); // Add: log e.clientX and e.clientY } handleClick({ clientX: 120, clientY: 340 }); handleClick({ clientX: 88, clientY: 200 });
+</textarea>
+ 
+</div>
+ 
+<div class="preview-label">
+ CONSOLE OUTPUT
+</div>
+ 
+<div class="console-output" id="output-l1">
+ Output will appear here...
+</div>
+ 
+</div>
+ 
+<br>
+ 
+<div class="quiz-card">
+ 
+<div class="quiz-q">
+ What does 
+<code>
+ addEventListener("click", myFn)
+</code>
+ do?
+</div>
+ 
+<div class="quiz-options">
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'It doesn\'t run immediately -- it registers for later.')">
+ Runs myFn immediately
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. It registers myFn to be called when a click occurs.')">
+ Registers myFn to run when the element is clicked
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'It attaches to a specific element, not the whole page.')">
+ Listens for clicks anywhere on the page
+</button>
+ 
+</div>
+ 
+<div class="quiz-feedback" id="qfb-0">
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-1-reflect">
+ 
+<div class="section-header">
+ Reflect
+</div>
+ 
+<div class="section-sub">
+ LESSON 01 · YOUR THOUGHTS
+</div>
+ 
+<div class="reflect-prompt">
+ 
+<div class="reflect-q">
+ Think of a website you use often. What events do you think are being listened for?
+</div>
+ 
+<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here...">
+ 
+</textarea>
+ 
+<div style="display:flex;align-items:center;gap:1rem;">
+ 
+<button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">
+ Save
+</button>
+ 
+<span class="reflect-saved" id="saved-1-1">
+ ✓ Saved
+</span>
+ 
+</div>
+ 
+</div>
+ 
+<div class="lesson-complete" id="complete-1">
+ 
+<h3>
+ ◈ &nbsp; Lesson 1 Complete
+</h3>
+ 
+<p>
+ Events. Listeners. Callbacks. The web is always listening. Now you know how to respond.
+</p>
+ 
+<div class="lesson-joke" id="joke-1">
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<!-- ===================== LESSON 2 ===================== -->
+ 
+<div class="lesson-panel" id="lesson-2">
+ 
+<aside class="lesson-sidebar">
+ 
+<div class="sidebar-label">
+ Lesson 02
+</div>
+ 
+<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read">
+ 
+<span class="sidebar-icon">
+ 📖
+</span>
+ Read
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms">
+ 
+<span class="sidebar-icon">
+ 🔑
+</span>
+ Terms
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build">
+ 
+<span class="sidebar-icon">
+ ⚙️
+</span>
+ Build
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect">
+ 
+<span class="sidebar-icon">
+ 💭
+</span>
+ Reflect
+</button>
+ 
+<div class="sidebar-divider">
+ 
+</div>
+ 
+<a href="echo-game.html" class="sidebar-game-link">
+ ◈ Echo's Game World
+</a>
+ 
+</aside>
+ 
+<div class="lesson-content">
+ 
+<div class="locked-panel" id="lock-2">
+ 
+<div class="locked-icon">
+ 🔒
+</div>
+ 
+<h2>
+ Sparks Membership Required
+</h2>
+ 
+<p>
+ Lesson 2 is available to Sparks members and above.
+</p>
+ 
+<button class="gate-btn" onclick="goUpgrade()">
+ Upgrade Now
+</button>
+ 
+</div>
+ 
+<div class="content-block" id="block-2-read" style="display:none">
+ 
+<div class="section-header">
+ Timers &amp; Timing
+</div>
+ 
+<div class="section-sub">
+ LESSON 02 · SPARKS+
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 01 / 05
+</div>
+ 
+<h3>
+ Time Is an Event Too
+</h3>
+ 
+<p>
+ Not all events come from users. Some come from 
+<strong>
+ time itself
+</strong>
+ . JavaScript can schedule code to run after a delay, or on a repeating interval.
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 02 / 05
+</div>
+ 
+<h3>
+ setTimeout -- Run Once After a Delay
+</h3>
+ 
+<p>
+ 
+<code>
+ setTimeout
+</code>
+ runs a function 
+<strong>
+ one time
+</strong>
+ , after a specified number of milliseconds.
+</p>
+ 
+<div class="code-block">
+ 
+<span class="fn">
+ setTimeout
+</span>
+ (
+<span class="kw">
+ function
+</span>
+ () { 
+<span class="fn">
+ console
+</span>
+ .
+<span class="fn">
+ log
+</span>
+ (
+<span class="str">
+ "3 seconds later..."
+</span>
+ ); }, 
+<span class="num">
+ 3000
+</span>
+ );
+</div>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 03 / 05
+</div>
+ 
+<h3>
+ setInterval -- Run Repeatedly
+</h3>
+ 
+<p>
+ 
+<code>
+ setInterval
+</code>
+ runs a function 
+<strong>
+ over and over
+</strong>
+ at a fixed interval until you stop it.
+</p>
+ 
+<div class="code-block">
+ 
+<span class="kw">
+ const
+</span>
+ timer = 
+<span class="fn">
+ setInterval
+</span>
+ (myFn, 
+<span class="num">
+ 500
+</span>
+ );
+</div>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 04 / 05
+</div>
+ 
+<h3>
+ clearInterval -- Stopping the Loop
+</h3>
+ 
+<p>
+ Always save the return value of 
+<code>
+ setInterval
+</code>
+ so you can pass it to 
+<code>
+ clearInterval
+</code>
+ .
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 05 / 05
+</div>
+ 
+<h3>
+ Milliseconds and the DJ's Grid
+</h3>
+ 
+<p>
+ At 120 BPM, one beat lasts 
+<strong>
+ 500ms
+</strong>
+ . Formula: 
+<code>
+ 60000 / BPM
+</code>
+ .
+</p>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-2-terms" style="display:none">
+ 
+<div class="section-header">
+ Key Terms
+</div>
+ 
+<div class="section-sub">
+ LESSON 02 · TAP TO EXPAND
+</div>
+ 
+<div class="terms-grid">
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ setTimeout 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Runs a function once, after a delay in milliseconds.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ setInterval 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Runs a function repeatedly until stopped.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ clearInterval 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Stops a setInterval.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ BPM 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Beats Per Minute. Convert to ms: 60000 / BPM.
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-2-build" style="display:none">
+ 
+<div class="section-header">
+ Build It
+</div>
+ 
+<div class="section-sub">
+ LESSON 02 · TEMPO CALCULATOR
+</div>
+ 
+<div class="build-section">
+ 
+<h3>
+ BPM to Milliseconds
+</h3>
+ 
+<div class="editor-wrap">
+ 
+<div class="editor-toolbar">
+ 
+<span>
+ JAVASCRIPT · TIMERS
+</span>
+ 
+<button class="editor-run-btn" onclick="runEditor('l2')">
+ ▶ RUN
+</button>
+ 
+</div>
+ 
+<textarea class="code-editor" id="editor-l2">
+ function bpmToMs(bpm) { return 0; // replace this } let tempos = [80, 120, 160]; for (let i = 0; i 
+< tempos.length; i++) { console.log(tempos[i] + " BPM = " + bpmToMs(tempos[i]) + "ms"); }</textarea>
+ 
+</div>
+ 
+<div class="preview-label">
+ CONSOLE OUTPUT
+</div>
+ 
+<div class="console-output" id="output-l2">
+ Output will appear here...
+</div>
+ 
+</div>
+ 
+<br>
+ 
+<div class="quiz-card">
+ 
+<div class="quiz-q">
+ At 120 BPM, how many milliseconds is one beat?
+</div>
+ 
+<div class="quiz-options">
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, '60000 / 120 = 500, not 600.')">
+ 600ms
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. 60000 ÷ 120 = 500ms.')">
+ 500ms
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'That would be nearly 500 BPM.')">
+ 120ms
+</button>
+ 
+</div>
+ 
+<div class="quiz-feedback" id="qfb-2">
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-2-reflect" style="display:none">
+ 
+<div class="section-header">
+ Reflect
+</div>
+ 
+<div class="section-sub">
+ LESSON 02 · YOUR THOUGHTS
+</div>
+ 
+<div class="reflect-prompt">
+ 
+<div class="reflect-q">
+ Where else on the web do you see timers in action?
+</div>
+ 
+<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here...">
+ 
+</textarea>
+ 
+<div style="display:flex;align-items:center;gap:1rem;">
+ 
+<button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">
+ Save
+</button>
+ 
+<span class="reflect-saved" id="saved-2-1">
+ ✓ Saved
+</span>
+ 
+</div>
+ 
+</div>
+ 
+<div class="lesson-complete show" id="complete-2">
+ 
+<h3>
+ ◈ &nbsp; Lesson 2 Complete
+</h3>
+ 
+<p>
+ setTimeout. setInterval. clearInterval. You control time now.
+</p>
+ 
+<div class="lesson-joke" id="joke-2">
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<!-- ===================== LESSON 3 ===================== -->
+ 
+<div class="lesson-panel" id="lesson-3">
+ 
+<aside class="lesson-sidebar">
+ 
+<div class="sidebar-label">
+ Lesson 03
+</div>
+ 
+<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read">
+ 
+<span class="sidebar-icon">
+ 📖
+</span>
+ Read
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms">
+ 
+<span class="sidebar-icon">
+ 🔑
+</span>
+ Terms
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build">
+ 
+<span class="sidebar-icon">
+ ⚙️
+</span>
+ Build
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect">
+ 
+<span class="sidebar-icon">
+ 💭
+</span>
+ Reflect
+</button>
+ 
+<div class="sidebar-divider">
+ 
+</div>
+ 
+<a href="echo-game.html" class="sidebar-game-link">
+ ◈ Echo's Game World
+</a>
+ 
+</aside>
+ 
+<div class="lesson-content">
+ 
+<div class="locked-panel" id="lock-3">
+ 
+<div class="locked-icon">
+ 🔒
+</div>
+ 
+<h2>
+ Coders Membership Required
+</h2>
+ 
+<p>
+ Lesson 3 is available to Coders members.
+</p>
+ 
+<button class="gate-btn" onclick="goUpgrade()">
+ Upgrade Now
+</button>
+ 
+</div>
+ 
+<div class="content-block" id="block-3-read" style="display:none">
+ 
+<div class="section-header">
+ The Web Audio API
+</div>
+ 
+<div class="section-sub">
+ LESSON 03 · CODERS
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 01 / 05
+</div>
+ 
+<h3>
+ Browsers Can Make Sound
+</h3>
+ 
+<p>
+ The 
+<strong>
+ Web Audio API
+</strong>
+ is a built-in browser tool for creating and controlling audio with JavaScript. No plugins needed.
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 02 / 05
+</div>
+ 
+<h3>
+ AudioContext -- The Studio
+</h3>
+ 
+<p>
+ Everything happens inside an 
+<strong>
+ AudioContext
+</strong>
+ . Think of it as the mixing board.
+</p>
+ 
+<div class="code-block">
+ 
+<span class="kw">
+ const
+</span>
+ ctx = 
+<span class="kw">
+ new
+</span>
+ 
+<span class="fn">
+ AudioContext
+</span>
+ ();
+</div>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 03 / 05
+</div>
+ 
+<h3>
+ OscillatorNode -- Generating Tone
+</h3>
+ 
+<p>
+ An 
+<strong>
+ OscillatorNode
+</strong>
+ generates a pure tone. Frequency is measured in Hz -- 440 Hz is the note A4.
+</p>
+ 
+<div class="code-block">
+ 
+<span class="kw">
+ const
+</span>
+ osc = ctx.
+<span class="fn">
+ createOscillator
+</span>
+ (); osc.
+<span class="prop">
+ frequency
+</span>
+ .
+<span class="prop">
+ value
+</span>
+ = 
+<span class="num">
+ 440
+</span>
+ ; osc.
+<span class="fn">
+ connect
+</span>
+ (ctx.
+<span class="prop">
+ destination
+</span>
+ ); osc.
+<span class="fn">
+ start
+</span>
+ ();
+</div>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 04 / 05
+</div>
+ 
+<h3>
+ GainNode -- Controlling Volume
+</h3>
+ 
+<p>
+ A 
+<strong>
+ GainNode
+</strong>
+ controls the volume of a signal. 1 = full volume, 0 = silent.
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 05 / 05
+</div>
+ 
+<h3>
+ The Audio Signal Chain
+</h3>
+ 
+<p>
+ Signals flow through a 
+<strong>
+ chain of nodes
+</strong>
+ -- source, processing, then destination.
+</p>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-3-terms" style="display:none">
+ 
+<div class="section-header">
+ Key Terms
+</div>
+ 
+<div class="section-sub">
+ LESSON 03 · TAP TO EXPAND
+</div>
+ 
+<div class="terms-grid">
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ Web Audio API 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Browser system for creating and controlling audio with JavaScript.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ AudioContext 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ The main object all audio nodes connect through.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ OscillatorNode 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Generates a pure tone at a set frequency.
+</div>
+ 
+</div>
+ 
+<div class="term-card" onclick="toggleTerm(this)">
+ 
+<div class="term-name">
+ GainNode 
+<span class="term-arrow">
+ ›
+</span>
+ 
+</div>
+ 
+<div class="term-def">
+ Controls the volume of a signal.
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-3-build" style="display:none">
+ 
+<div class="section-header">
+ Build It
+</div>
+ 
+<div class="section-sub">
+ LESSON 03 · PLAY A NOTE
+</div>
+ 
+<div class="build-section">
+ 
+<h3>
+ Tone Generator
+</h3>
+ 
+<p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;">
+ Click to play a tone using real Web Audio API.
+</p>
+ 
+<div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.5rem;">
+ 
+<button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;" onclick="playNote(261.6,'sine',0.4)">
+ C4 · Sine
+</button>
+ 
+<button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--blue);" onclick="playNote(329.6,'square',0.3)">
+ E4 · Square
+</button>
+ 
+<button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--purple);" onclick="playNote(392,'sawtooth',0.25)">
+ G4 · Sawtooth
+</button>
+ 
+</div>
+ 
+</div>
+ 
+<div class="quiz-card">
+ 
+<div class="quiz-q">
+ What does a GainNode control?
+</div>
+ 
+<div class="quiz-options">
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Pitch is controlled by the OscillatorNode.')">
+ The pitch of the sound
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. GainNode controls amplitude -- how loud it is.')">
+ The volume (amplitude) of the signal
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wave type is set on the OscillatorNode.')">
+ The wave shape
+</button>
+ 
+</div>
+ 
+<div class="quiz-feedback" id="qfb-4">
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-3-reflect" style="display:none">
+ 
+<div class="section-header">
+ Reflect
+</div>
+ 
+<div class="section-sub">
+ LESSON 03 · YOUR THOUGHTS
+</div>
+ 
+<div class="reflect-prompt">
+ 
+<div class="reflect-q">
+ What kind of web project would you want to build using the Web Audio API?
+</div>
+ 
+<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here...">
+ 
+</textarea>
+ 
+<div style="display:flex;align-items:center;gap:1rem;">
+ 
+<button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">
+ Save
+</button>
+ 
+<span class="reflect-saved" id="saved-3-1">
+ ✓ Saved
+</span>
+ 
+</div>
+ 
+</div>
+ 
+<div class="lesson-complete show" id="complete-3">
+ 
+<h3>
+ ◈ &nbsp; Lesson 3 Complete
+</h3>
+ 
+<p>
+ AudioContext. Oscillators. Gain. Signal chains. The studio is open.
+</p>
+ 
+<div class="lesson-joke" id="joke-3">
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<!-- ===================== LESSON 4 ===================== -->
+ 
+<div class="lesson-panel" id="lesson-4">
+ 
+<aside class="lesson-sidebar">
+ 
+<div class="sidebar-label">
+ Lesson 04
+</div>
+ 
+<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read">
+ 
+<span class="sidebar-icon">
+ 📖
+</span>
+ Read
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build">
+ 
+<span class="sidebar-icon">
+ ⚙️
+</span>
+ Build
+</button>
+ 
+<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect">
+ 
+<span class="sidebar-icon">
+ 💭
+</span>
+ Reflect
+</button>
+ 
+<div class="sidebar-divider">
+ 
+</div>
+ 
+<a href="echo-game.html" class="sidebar-game-link">
+ ◈ Echo's Game World
+</a>
+ 
+</aside>
+ 
+<div class="lesson-content">
+ 
+<div class="locked-panel" id="lock-4">
+ 
+<div class="locked-icon">
+ 🔒
+</div>
+ 
+<h2>
+ Coders Membership Required
+</h2>
+ 
+<p>
+ Lesson 4 is available to Coders members only.
+</p>
+ 
+<button class="gate-btn" onclick="goUpgrade()">
+ Upgrade Now
+</button>
+ 
+</div>
+ 
+<div class="content-block" id="block-4-read" style="display:none">
+ 
+<div class="section-header">
+ Beat Machine
+</div>
+ 
+<div class="section-sub">
+ LESSON 04 · CODERS
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 01 / 04
+</div>
+ 
+<h3>
+ What Is a Beat Machine?
+</h3>
+ 
+<p>
+ A 
+<strong>
+ step sequencer
+</strong>
+ divides time into equal steps -- usually 16 per bar -- and plays a sound at each active step.
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 02 / 04
+</div>
+ 
+<h3>
+ The Data Behind the Grid
+</h3>
+ 
+<p>
+ Each row is an 
+<strong>
+ array of booleans
+</strong>
+ -- 16 values, each true (on) or false (off).
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 03 / 04
+</div>
+ 
+<h3>
+ The Sequencer Loop
+</h3>
+ 
+<p>
+ A 
+<code>
+ setInterval
+</code>
+ advances a step counter, checking each row for that step.
+</p>
+ 
+</div>
+ 
+<div class="read-card">
+ 
+<div class="read-card-num">
+ 04 / 04
+</div>
+ 
+<h3>
+ Click Events Toggle the Grid
+</h3>
+ 
+<p>
+ Each button's click event 
+<strong>
+ toggles its boolean
+</strong>
+ from false to true or back.
+</p>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-4-build" style="display:none">
+ 
+<div class="section-header">
+ Beat Machine
+</div>
+ 
+<div class="section-sub">
+ LESSON 04 · BUILD THE BEAT
+</div>
+ 
+<div class="beat-machine">
+ 
+<h3>
+ ◈ Echo's Step Sequencer
+</h3>
+ 
+<div class="beat-grid" id="beatGrid">
+ 
+</div>
+ 
+<div class="beat-controls">
+ 
+<button class="beat-play-btn" id="beatPlayBtn" onclick="toggleBeat()">
+ ▶ PLAY
+</button>
+ 
+<div class="beat-tempo">
+ 
+<span>
+ BPM
+</span>
+ 
+<input type="range" id="tempoSlider" min="60" max="180" value="120" oninput="updateTempo(this.value)" />
+ 
+<span id="tempoVal">
+ 120
+</span>
+ 
+</div>
+ 
+<button class="beat-play-btn" style="background:rgba(0,229,255,0.15);color:var(--cyan);border:1px solid var(--cyan);" onclick="clearBeat()">
+ ✕ CLEAR
+</button>
+ 
+<div class="beat-step-indicator" id="stepIndicator">
+ STEP: --
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="quiz-card">
+ 
+<div class="quiz-q">
+ In the beat machine, what does toggling a grid button actually change?
+</div>
+ 
+<div class="quiz-options">
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'The CSS class just reflects the underlying data.')">
+ The button's CSS class only
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The boolean in the grid array is flipped.')">
+ A boolean in the grid data array
+</button>
+ 
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'The sound plays on the next sequencer tick.')">
+ A sound plays immediately
+</button>
+ 
+</div>
+ 
+<div class="quiz-feedback" id="qfb-6">
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="content-block" id="block-4-reflect" style="display:none">
+ 
+<div class="section-header">
+ Reflect
+</div>
+ 
+<div class="section-sub">
+ LESSON 04 · YOUR THOUGHTS
+</div>
+ 
+<div class="reflect-prompt">
+ 
+<div class="reflect-q">
+ The beat machine uses events, timers, and audio all at once. Describe how they work together.
+</div>
+ 
+<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here...">
+ 
+</textarea>
+ 
+<div style="display:flex;align-items:center;gap:1rem;">
+ 
+<button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">
+ Save
+</button>
+ 
+<span class="reflect-saved" id="saved-4-1">
+ ✓ Saved
+</span>
+ 
+</div>
+ 
+</div>
+ 
+<div class="lesson-complete show" id="complete-4">
+ 
+<h3>
+ ◈ &nbsp; Echo's Studio Complete
+</h3>
+ 
+<p>
+ Events. Timers. Audio. Beat machines. You heard the signal. Now you know how to send one.
+</p>
+ 
+<div class="lesson-joke" id="joke-4">
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="lesson-panel" id="lesson-cheat">
+ 
+<div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
+ 
+<div class="section-header">
+ Echo's Cheat Sheet
+</div>
+ 
+<div class="section-sub">
+ ALL FOUR LESSONS · COMBINED REFERENCE
+</div>
+ 
+<div class="cheat-card">
+ 
+<h3>
+ ◈ Lesson 1 — Events &amp; Listeners
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ Event
+</div>
+ 
+<div class="cheat-desc">
+ Something that happens in the browser — a click, keypress, scroll, or page load.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ addEventListener
+</div>
+ 
+<div class="cheat-desc">
+ Attaches a listener to an element. el.addEventListener("click", fn)
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ Callback
+</div>
+ 
+<div class="cheat-desc">
+ A function passed to another function to be called later.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ Event object
+</div>
+ 
+<div class="cheat-desc">
+ Details about what happened. function(e) { e.clientX }
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="code-block">
+ btn.addEventListener("click", function(e) {
+<br>
+ &nbsp;&nbsp;console.log("Clicked at X: " + e.clientX);
+<br>
+ });
+</div>
+ 
+</div>
+ 
+<div class="cheat-card">
+ 
+<h3>
+ ◈ Lesson 2 — Timers &amp; Timing
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ setTimeout(fn, ms)
+</div>
+ 
+<div class="cheat-desc">
+ Runs a function once, after a delay.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ setInterval(fn, ms)
+</div>
+ 
+<div class="cheat-desc">
+ Runs a function repeatedly until stopped.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ clearInterval(id)
+</div>
+ 
+<div class="cheat-desc">
+ Stops a running setInterval.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ BPM formula
+</div>
+ 
+<div class="cheat-desc">
+ 60000 / BPM = milliseconds per beat.
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="code-block">
+ const timer = setInterval(tick, 500);
+<br>
+ // later: clearInterval(timer);
+</div>
+ 
+</div>
+ 
+<div class="cheat-card">
+ 
+<h3>
+ ◈ Lesson 3 — The Web Audio API
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ AudioContext
+</div>
+ 
+<div class="cheat-desc">
+ The studio every sound connects through.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ OscillatorNode
+</div>
+ 
+<div class="cheat-desc">
+ Generates a pure tone at a set frequency (Hz).
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ GainNode
+</div>
+ 
+<div class="cheat-desc">
+ Controls volume — 1 is full, 0 is silent.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ A4 = 440 Hz
+</div>
+ 
+<div class="cheat-desc">
+ Concert A, the standard tuning pitch.
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="code-block">
+ const ctx = new AudioContext();
+<br>
+ const osc = ctx.createOscillator();
+<br>
+ osc.frequency.value = 440;
+<br>
+ osc.connect(ctx.destination);
+<br>
+ osc.start();
+</div>
+ 
+</div>
+ 
+<div class="cheat-card">
+ 
+<h3>
+ ◈ Lesson 4 — Beat Machine
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ Step sequencer
+</div>
+ 
+<div class="cheat-desc">
+ A timer advances through a grid, playing active steps.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ Grid data
+</div>
+ 
+<div class="cheat-desc">
+ A 2D array of booleans — one row per sound, 16 steps each.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ Step wrap
+</div>
+ 
+<div class="cheat-desc">
+ step = (step + 1) % 16 — loops back to 0 after the last step.
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="code-block">
+ let step = 0;
+<br>
+ setInterval(() => {
+<br>
+ &nbsp;&nbsp;rows.forEach(row => { if (row[step]) playSound(row); });
+<br>
+ &nbsp;&nbsp;step = (step + 1) % 16;
+<br>
+ }, msPerStep);
+</div>
+ 
+</div>
+ 
+<div class="cheat-card">
+ 
+<h3>
+ ◈ Signal Chain Symbols
+</h3>
+ 
+<div class="cheat-items">
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ ( )
+</div>
+ 
+<div class="cheat-desc">
+ Parentheses — call a function, or hold its arguments.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ .
+</div>
+ 
+<div class="cheat-desc">
+ Dot — accesses a property or method on an object, like ctx.createOscillator().
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ ' '
+</div>
+ 
+<div class="cheat-desc">
+ Quotes — wrap text values (strings), like 'click' or 'keydown'.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ =
+</div>
+ 
+<div class="cheat-desc">
+ Equals sign — assigns a value, like osc.frequency.value = 440.
+</div>
+ 
+</div>
+ 
+<div class="cheat-item">
+ 
+<div class="cheat-term">
+ ,
+</div>
+ 
+<div class="cheat-desc">
+ Comma — separates multiple arguments inside parentheses.
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<div class="cheat-btn-row">
+ 
+<a href="echo-cheatsheet.pdf" download class="cheat-download-btn">
+ ⬇ Download Full PDF Cheat Sheet
+</a>
+ 
+<button class="cheat-download-btn secondary" onclick="downloadCheat()">
+ Quick Text Reference
+</button>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+</div>
+ 
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">
+ 🔊
+</button>
+ 
+<div class="portal-modal" id="portalModal">
+ 
+<img src="echo-mim-underground-portal.png" alt="MiM Underground" onerror="this.style.display='none'">
+ 
+<p>
+ MiM Underground — signal strength: -18.4 LUFS. Echo mixes down here when the beat needs work. You're not supposed to see this yet.
+</p>
+ 
+<button class="portal-close" onclick="closePortal()">
+ Close the Portal
+</button>
+ 
+</div>
+ 
+<div class="egg-popup" id="eggPopup">
+ 
+<h4>
+ ◈ Secret Found!
+</h4>
+ 
+<p id="eggText">
+ 
+</p>
+ 
+</div>
+ 
+<script type="module" src="auth-init.js">
+
+</script>
+ 
+<script>
+ let currentLesson = null;
  let currentTier = null;
- const TIER_ORDER = ['explorer', 'sparks', 'builders', 'coders'];
+ const TIER_ORDER = ['explorer', 'sparks', 'coders'];
  function tierLevel(t) {
  return TIER_ORDER.indexOf((t || '').toLowerCase());
-
-}
+ }
  window.setNavUser = function(email) {
  const u = document.getElementById('navUser');
  const b = document.getElementById('navLogout');
  if (u) {
  u.textContent = email;
  u.style.display = 'inline';
-
-}
+ }
  if (b) b.style.display = 'inline-block';
-
-}
-;
+ }
+ ;
  window.handleTierUnlock = function(tier) {
  currentTier = tier;
+ const loggedIn = !!tier && tier !== 'logged-out';
+ const anonLock = document.getElementById('anon-lock-1');
+ const anonGated = document.getElementById('anon-gated-1');
+ if (loggedIn) {
+ if (anonLock) anonLock.style.display = 'none';
+ if (anonGated) anonGated.style.display = 'block';
+ }
+ else {
+ if (anonLock) anonLock.style.display = 'block';
+ if (anonGated) anonGated.style.display = 'none';
+ }
  const lvl = tierLevel(tier);
  if (lvl >= tierLevel('sparks')) {
  document.getElementById('lock-2').style.display = 'none';
  ['read','terms','build','reflect'].forEach(b => {
  const el = document.getElementById('block-2-' + b);
  if (el) el.style.removeProperty('display');
-
-}
-);
-
-}
- if (lvl >= tierLevel('builders')) {
+ }
+ );
+ }
+ if (lvl >= tierLevel('coders')) {
  document.getElementById('lock-3').style.display = 'none';
+ document.getElementById('lock-4').style.display = 'none';
  ['read','terms','build','reflect'].forEach(b => {
  const el = document.getElementById('block-3-' + b);
  if (el) el.style.removeProperty('display');
-
-}
-);
-
-}
- if (lvl >= tierLevel('coders')) {
- document.getElementById('lock-4').style.display = 'none';
+ }
+ );
  ['read','build','reflect'].forEach(b => {
  const el = document.getElementById('block-4-' + b);
  if (el) el.style.removeProperty('display');
-
-}
-);
-
-}
+ }
+ );
+ }
  loadReflects();
-
-}
-;
+ }
+ ;
  function enterStudio() {
  const overlay = document.getElementById('discoveryOverlay');
  const finishEntrance = () => {
@@ -3523,17 +4135,13 @@ Close the Portal</button>
  if (st) st.classList.add('visible');
  try {
  startAmbient();
-
-}
+ }
  catch (e) {
- /* ambient audio optional */
-}
-
-}
-, 700);
-
-}
-;
+ /* ambient audio optional */ }
+ }
+ , 700);
+ }
+ ;
  try {
  document.getElementById('discoveryEnterBtn').style.display = 'none';
  document.querySelector('.echo-mark').style.display = 'none';
@@ -3541,14 +4149,11 @@ Close the Portal</button>
  document.getElementById('discoverySub').style.display = 'none';
  const stage = document.getElementById('hologramStage');
  stage.style.display = 'block';
-
-}
+ }
  catch (e) {
- /* hologram cosmetics optional, overlay must still dismiss */
-}
+ /* hologram cosmetics optional, overlay must still dismiss */ }
  setTimeout(finishEntrance, 3000);
-
-}
+ }
  function openLesson(n) {
  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
@@ -3558,21 +4163,17 @@ Close the Portal</button>
  if (tab) tab.classList.add('active');
  currentLesson = n;
  panel?.scrollIntoView({
- behavior: 'smooth', block: 'start'
-}
-);
+ behavior: 'smooth', block: 'start' }
+ );
+ if (n !== 'cheat') showBlock(n, 'read');
  playUISound(330);
- const companion = document.getElementById('echoCompanion');
- if (companion && n !== 'cheat') companion.classList.add('visible');
  const wrapper = document.getElementById('icebreakerWrapper');
  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
-
-}
+ }
  function jumpToLesson(n) {
  openLesson(n);
  showBlock(n, 'read');
-
-}
+ }
  function showBlock(lesson, block) {
  const panel = document.getElementById('lesson-' + lesson);
  if (!panel) return;
@@ -3583,13 +4184,11 @@ Close the Portal</button>
  const btn = document.getElementById('sb-' + lesson + '-' + block);
  if (btn) btn.classList.add('active');
  playUISound(392);
-
-}
+ }
  function toggleTerm(card) {
  card.classList.toggle('open');
  playUISound(440);
-
-}
+ }
  let uiAudioCtx = null;
  function playUISound(freq) {
  try {
@@ -3604,13 +4203,10 @@ Close the Portal</button>
  gain.connect(uiAudioCtx.destination);
  osc.start();
  osc.stop(uiAudioCtx.currentTime + 0.18);
-
-}
+ }
  catch (e) {
- /* audio unavailable, silently continue */
-}
-
-}
+ /* audio unavailable, silently continue */ }
+ }
  function checkQuiz(btn, correct, feedback) {
  const opts = btn.closest('.quiz-options');
  if (opts.querySelector('.correct')) return;
@@ -3620,31 +4216,24 @@ Close the Portal</button>
  if (fb) {
  fb.textContent = '✓ ' + feedback;
  fb.className = 'quiz-feedback show correct';
-
-}
-
-}
+ }
+ }
  else {
  btn.classList.add('wrong');
  if (fb) {
  fb.textContent = '✗ ' + feedback;
  fb.className = 'quiz-feedback show wrong';
-
-}
+ }
  setTimeout(() => {
  btn.classList.remove('wrong');
  if (fb) fb.classList.remove('show');
-
-}
-, 1400);
-
-}
-
-}
+ }
+ , 1400);
+ }
+ }
  const REFLECT_RESPONSES = {
- 'ref-1-1': v => `◈ "${v}" — Good ear. The web is always listening, once you know where to look.`, 'ref-2-1': v => `◈ "${v}" — Timing is everywhere once you notice it.`, 'ref-3-1': v => `◈ "${v}" — That's a great use of Web Audio. Build it.`, 'ref-4-1': v => `◈ "${v}" — Events, timers, and audio in sync — that's the whole signal chain.`
-}
-;
+ 'ref-1-1': v => `◈ "${v}" — Good ear. The web is always listening, once you know where to look.`, 'ref-2-1': v => `◈ "${v}" — Timing is everywhere once you notice it.`, 'ref-3-1': v => `◈ "${v}" — That's a great use of Web Audio. Build it.`, 'ref-4-1': v => `◈ "${v}" — Events, timers, and audio in sync — that's the whole signal chain.` }
+ ;
  function saveReflect(inputId, savedId) {
  const val = document.getElementById(inputId)?.value;
  if (val === undefined) return;
@@ -3653,57 +4242,47 @@ Close the Portal</button>
  if (saved) {
  saved.style.display = 'inline';
  setTimeout(() => saved.style.display = 'none', 2000);
-
-}
+ }
  const lessonNum = inputId.split('-')[1];
  const complete = document.getElementById('complete-' + lessonNum);
  if (complete) {
  complete.classList.add('show');
  const jokeEl = document.getElementById('joke-' + lessonNum);
  if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
-
-}
-
-}
+ }
+ }
  function loadReflects() {
  document.querySelectorAll('.reflect-input').forEach(el => {
  const stored = localStorage.getItem('echo_' + el.id);
  if (stored) el.value = stored;
-
-}
-);
-
-}
+ }
+ );
+ }
  function runEditor(id) {
  const code = document.getElementById('editor-' + id)?.value || '';
  const outputEl = document.getElementById('output-' + id);
  if (!outputEl) return;
  const logs = [];
  const fakeCon = {
- log: (...a) => logs.push(a.join(' '))
-}
-;
+ log: (...a) => logs.push(a.join(' ')) }
+ ;
  try {
  const fn = new Function('console', code);
  fn(fakeCon);
  outputEl.textContent = logs.join('\n') || '(no output)';
  outputEl.style.color = '#00e5ff';
-
-}
+ }
  catch(e) {
  outputEl.textContent = 'Error: ' + e.message;
  outputEl.style.color = '#ff6b6b';
-
-}
-
-}
+ }
+ }
  let audioCtx = null;
  function getAudioCtx() {
  if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
  if (audioCtx.state === 'suspended') audioCtx.resume();
  return audioCtx;
-
-}
+ }
  function playNote(freq, type, duration) {
  try {
  const ctx = getAudioCtx();
@@ -3717,32 +4296,24 @@ Close the Portal</button>
  gain.connect(ctx.destination);
  osc.start(ctx.currentTime);
  osc.stop(ctx.currentTime + (duration || 0.3));
-
-}
+ }
  catch(e) {
  console.warn('Audio error:', e);
-
-}
-
-}
+ }
+ }
  const ROWS = [ {
- label: 'KICK', freq: 80, type: 'sine', dur: 0.2
-}
-, {
- label: 'SNARE', freq: 250, type: 'square', dur: 0.1
-}
-, {
- label: 'HIHAT', freq: 800, type: 'sawtooth', dur: 0.06
-}
-, {
- label: 'CLAP', freq: 400, type: 'triangle', dur: 0.12
-}
-, ];
+ label: 'KICK', freq: 80, type: 'sine', dur: 0.2 }
+ , {
+ label: 'SNARE', freq: 250, type: 'square', dur: 0.1 }
+ , {
+ label: 'HIHAT', freq: 800, type: 'sawtooth', dur: 0.06 }
+ , {
+ label: 'CLAP', freq: 400, type: 'triangle', dur: 0.12 }
+ , ];
  const STEPS = 16;
  let beatGrid = Array.from({
- length: ROWS.length
-}
-, () => new Array(STEPS).fill(false));
+ length: ROWS.length }
+ , () => new Array(STEPS).fill(false));
  let beatPlaying = false;
  let beatInterval = null;
  let beatStep = 0;
@@ -3766,22 +4337,17 @@ Close the Portal</button>
  btn.onclick = function() {
  beatGrid[r][s] = !beatGrid[r][s];
  btn.classList.toggle('active', beatGrid[r][s]);
-
-}
-;
+ }
+ ;
  container.appendChild(btn);
-
-}
-
-}
-);
-
-}
+ }
+ }
+ );
+ }
  function playBeatSound(row) {
  const r = ROWS[row];
  playNote(r.freq, r.type, r.dur);
-
-}
+ }
  function tickBeat() {
  document.querySelectorAll('.beat-btn.playing').forEach(b => b.classList.remove('playing'));
  for (let r = 0;
@@ -3790,13 +4356,11 @@ Close the Portal</button>
  if (beatGrid[r][beatStep]) playBeatSound(r);
  const btn = document.querySelector(`.beat-btn[data-row="${r}"][data-step="${beatStep}"]`);
  if (btn) btn.classList.add('playing');
-
-}
+ }
  const ind = document.getElementById('stepIndicator');
  if (ind) ind.textContent = 'STEP: ' + (beatStep + 1);
  beatStep = (beatStep + 1) % STEPS;
-
-}
+ }
  function toggleBeat() {
  const btn = document.getElementById('beatPlayBtn');
  if (beatPlaying) {
@@ -3808,18 +4372,15 @@ Close the Portal</button>
  if (btn) btn.textContent = '▶ PLAY';
  const ind = document.getElementById('stepIndicator');
  if (ind) ind.textContent = 'STEP: --';
-
-}
+ }
  else {
  getAudioCtx();
  beatPlaying = true;
  const ms = (60000 / beatBpm) / 4;
  beatInterval = setInterval(tickBeat, ms);
  if (btn) btn.textContent = '■ STOP';
-
-}
-
-}
+ }
+ }
  function updateTempo(val) {
  beatBpm = parseInt(val);
  document.getElementById('tempoVal').textContent = val;
@@ -3827,29 +4388,23 @@ Close the Portal</button>
  clearInterval(beatInterval);
  const ms = (60000 / beatBpm) / 4;
  beatInterval = setInterval(tickBeat, ms);
-
-}
-
-}
+ }
+ }
  function clearBeat() {
  beatGrid = Array.from({
- length: ROWS.length
-}
-, () => new Array(STEPS).fill(false));
+ length: ROWS.length }
+ , () => new Array(STEPS).fill(false));
  document.querySelectorAll('.beat-btn').forEach(b => {
  b.classList.remove('active');
  b.classList.remove('playing');
-
-}
-);
-
-}
+ }
+ );
+ }
  function downloadCheat() {
  const content = "ECHO'S SIGNAL STUDIO — FULL CHEAT SHEET\n\n" + "LESSON 1 — Events & Listeners\nEVENT: something that happens in the browser.\naddEventListener(event, fn) — attaches a listener.\nCallback: a function called later.\nEvent object: function(e) { e.clientX }\nCommon events: click, keydown, input, load\nLINE YOU'LL USE:\nbtn.addEventListener(\"click\", function(e) {\n console.log(\"Clicked at X: \" + e.clientX);\n});\n\n" + "LESSON 2 — Timers & Timing\nsetTimeout(fn, ms) — once\nsetInterval(fn, ms) — repeating\nclearInterval(id) — stops it\nBPM formula: 60000 / BPM = ms per beat\nLINE YOU'LL USE:\nconst timer = setInterval(tick, 500);\n\n" + "LESSON 3 — The Web Audio API\nconst ctx = new AudioContext()\nctx.createOscillator() — tone\nctx.createGain() — volume\nA4 = 440 Hz\nLINE YOU'LL USE:\nconst osc = ctx.createOscillator();\nosc.frequency.value = 440;\nosc.connect(ctx.destination);\nosc.start();\n\n" + "LESSON 4 — Beat Machine\nStep sequencer: timer advances through a grid\nGrid data: 2D array of booleans\nstep = (step + 1) % 16\n\n" + "SIGNAL CHAIN SYMBOLS\n( ) parentheses — call a function, or hold its arguments\n. dot — accesses a property or method, like ctx.createOscillator()\n' ' quotes — wrap text values, like 'click' or 'keydown'\n= equals sign — assigns a value, like osc.frequency.value = 440\n, comma — separates multiple arguments inside parentheses";
  const blob = new Blob([content], {
- type: 'text/plain'
-}
-);
+ type: 'text/plain' }
+ );
  const url = URL.createObjectURL(blob);
  const a = document.createElement('a');
  a.href = url;
@@ -3858,32 +4413,24 @@ Close the Portal</button>
  a.click();
  document.body.removeChild(a);
  URL.revokeObjectURL(url);
-
-}
+ }
  function goUpgrade() {
  if (window.firebaseAuth && window.firebaseAuth.currentUser) {
  window.location.href = 'membership.html';
-
-}
+ }
  else {
  document.dispatchEvent(new CustomEvent('mim-auth', {
  detail: {
- action: 'signup'
-}
-
-}
-));
-
-}
-
-}
+ action: 'signup' }
+ }
+ ));
+ }
+ }
  function handleLogout() {
  if (window.firebaseAuth) {
  window.firebaseAuth.signOut().then(() => location.reload());
-
-}
-
-}
+ }
+ }
  /* ══════════════════ IMMERSION LAYER ══════════════════ */ const FACTS = [ "the Web Audio API can generate sound entirely from code — no audio files needed at all.", "the human ear can generally hear frequencies from 20 Hz to 20,000 Hz.", "concert A (440 Hz) wasn't standardized worldwide until 1955.", "a 'sine wave' is the smoothest, purest tone possible — no harmonics, just one frequency.", "the term 'debounce' comes from electrical engineering — it originally described filtering out noisy switch signals.", "the first drum machine, the Rhythmicon, was built in 1931 — decades before computers existed.", "milliseconds matter: human reaction time to sound is about 150ms, faster than reaction to light.", "'echo' as a sound effect is really just a delayed, repeated copy of the original signal — same idea as a setTimeout." ];
  let factIndex = 0;
  function cycleFacts() {
@@ -3894,11 +4441,9 @@ Close the Portal</button>
  el.textContent = FACTS[factIndex % FACTS.length];
  el.classList.add('show');
  factIndex++;
-
-}
-, 400);
-
-}
+ }
+ , 400);
+ }
  cycleFacts();
  setInterval(cycleFacts, 6500);
  const JOKES = [ "Why did the sound wave break up with the speaker? It needed some space.", "I made a joke about UDP but I'm not sure you got it.", "Why don't developers like silence? Because there's always a bug making noise somewhere.", "Echo told a joke. It told it again. And again.", "Why did the oscillator go to therapy? It had too many unresolved frequencies.", "What's a DJ's favorite type of loop? An infinite one — as long as someone remembers clearInterval.", "Why was the beat machine so calm? Nothing throws it off — it's always on tempo." ];
@@ -3908,29 +4453,23 @@ Close the Portal</button>
  if (companionClicks === 5 && !localStorage.getItem('echo_egg_found')) {
  localStorage.setItem('echo_egg_found', '1');
  showEgg("You found Echo's hidden track! Secret catchphrase unlocked: \"Good sound. Good mood. Good code.\" ◈");
-
-}
+ }
  else if (companionClicks % 5 === 0) {
  showEgg("Echo nods to the beat. You've already found this one — but the signal's always live.");
-
-}
-
-}
+ }
+ }
  function showEgg(text) {
  const popup = document.getElementById('eggPopup');
  document.getElementById('eggText').textContent = text;
  popup.classList.add('show');
  setTimeout(() => popup.classList.remove('show'), 5000);
-
-}
+ }
  function openPortal() {
  document.getElementById('portalModal').classList.add('open');
-
-}
+ }
  function closePortal() {
  document.getElementById('portalModal').classList.remove('open');
-
-}
+ }
  let ambientCtx = null, droneOsc = null, droneGain = null, soundOn = true;
  function startAmbient() {
  try {
@@ -3943,14 +4482,11 @@ Close the Portal</button>
  droneOsc.connect(droneGain);
  droneGain.connect(ambientCtx.destination);
  droneOsc.start();
-
-}
+ }
  catch (e) {
  console.warn('Ambient audio unavailable:', e);
-
-}
-
-}
+ }
+ }
  function toggleSound() {
  const btn = document.getElementById('soundToggle');
  if (!ambientCtx) return;
@@ -3958,30 +4494,23 @@ Close the Portal</button>
  droneGain.gain.value = soundOn ? 0.015 : 0;
  btn.textContent = soundOn ? '🔊' : '🔇';
  btn.classList.toggle('muted', !soundOn);
-
-}
+ }
  function ibToggleWrapper() {
  const wrapper = document.getElementById('icebreakerWrapper');
  const opening = !wrapper.classList.contains('open');
  wrapper.classList.toggle('open');
  if (opening) wrapper.scrollIntoView({
- behavior: 'smooth', block: 'start'
-}
-);
-
-}
+ behavior: 'smooth', block: 'start' }
+ );
+ }
  /* ══════════════════ BEATBOX ICEBREAKER ══════════════════ */ const BB_PADS = [ {
- label: 'KICK', icon: '🥁', freq: 80, type: 'sine', dur: 0.2, color: '#00e5ff'
-}
-, {
- label: 'SNARE', icon: '🪘', freq: 250, type: 'square', dur: 0.1, color: '#448aff'
-}
-, {
- label: 'HIHAT', icon: '🔔', freq: 800, type: 'sawtooth', dur: 0.06, color: '#7c4dff'
-}
-, {
- label: 'CLAP', icon: '👏', freq: 400, type: 'triangle', dur: 0.12, color: '#ffe066'
-}
+ label: 'KICK', icon: '🥁', freq: 80, type: 'sine', dur: 0.2, color: '#00e5ff' }
+ , {
+ label: 'SNARE', icon: '🪘', freq: 250, type: 'square', dur: 0.1, color: '#448aff' }
+ , {
+ label: 'HIHAT', icon: '🔔', freq: 800, type: 'sawtooth', dur: 0.06, color: '#7c4dff' }
+ , {
+ label: 'CLAP', icon: '👏', freq: 400, type: 'triangle', dur: 0.12, color: '#ffe066' }
  ];
  const BB_STEPS = 16;
  let bbAudioCtx = null;
@@ -3989,8 +4518,7 @@ Close the Portal</button>
  if (!bbAudioCtx) bbAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
  if (bbAudioCtx.state === 'suspended') bbAudioCtx.resume();
  return bbAudioCtx;
-
-}
+ }
  function bbPlayPad(padIndex) {
  try {
  const p = BB_PADS[padIndex];
@@ -4005,14 +4533,11 @@ Close the Portal</button>
  gain.connect(ctx.destination);
  osc.start(ctx.currentTime);
  osc.stop(ctx.currentTime + p.dur);
-
-}
+ }
  catch (e) {
  console.warn('Beatbox audio error:', e);
-
-}
-
-}
+ }
+ }
  function bbSwitchMode(mode) {
  document.getElementById('bbTabFreeplay').classList.toggle('active', mode === 'freeplay');
  document.getElementById('bbTabChallenge').classList.toggle('active', mode === 'challenge');
@@ -4020,18 +4545,14 @@ Close the Portal</button>
  document.getElementById('bb-challenge-panel').style.display = mode === 'challenge' ? 'block' : 'none';
  if (mode === 'freeplay') {
  bbStopChallenge();
-
-}
+ }
  else {
  bbStopFreeplay();
-
-}
-
-}
+ }
+ }
  /* -------- Freeplay: layered step sequencer -------- */ let bbFreeGrid = Array.from({
- length: BB_PADS.length
-}
-, () => new Array(BB_STEPS).fill(false));
+ length: BB_PADS.length }
+ , () => new Array(BB_STEPS).fill(false));
  let bbFreePlaying = false;
  let bbFreeInterval = null;
  let bbFreeStep = 0;
@@ -4056,17 +4577,13 @@ Close the Portal</button>
  bbFreeGrid[r][s] = !bbFreeGrid[r][s];
  btn.classList.toggle('active', bbFreeGrid[r][s]);
  bbPlayPad(r);
-
-}
-;
+ }
+ ;
  container.appendChild(btn);
-
-}
-
-}
-);
-
-}
+ }
+ }
+ );
+ }
  function bbTickFreeplay() {
  document.querySelectorAll('#bbFreeGrid .beat-btn.playing').forEach(b => b.classList.remove('playing'));
  for (let r = 0;
@@ -4075,29 +4592,24 @@ Close the Portal</button>
  if (bbFreeGrid[r][bbFreeStep]) bbPlayPad(r);
  const btn = document.querySelector('#bbFreeGrid .beat-btn[data-row="' + r + '"][data-step="' + bbFreeStep + '"]');
  if (btn) btn.classList.add('playing');
-
-}
+ }
  const ind = document.getElementById('bbFreeStepIndicator');
  if (ind) ind.textContent = 'STEP: ' + (bbFreeStep + 1);
  bbFreeStep = (bbFreeStep + 1) % BB_STEPS;
-
-}
+ }
  function bbToggleFreeplay() {
  const btn = document.getElementById('bbFreePlayBtn');
  if (bbFreePlaying) {
  bbStopFreeplay();
-
-}
+ }
  else {
  bbGetAudioCtx();
  bbFreePlaying = true;
  const ms = (60000 / bbFreeBpm) / 4;
  bbFreeInterval = setInterval(bbTickFreeplay, ms);
  if (btn) btn.textContent = '■ STOP';
-
-}
-
-}
+ }
+ }
  function bbStopFreeplay() {
  const btn = document.getElementById('bbFreePlayBtn');
  clearInterval(bbFreeInterval);
@@ -4108,8 +4620,7 @@ Close the Portal</button>
  if (btn) btn.textContent = '▶ PLAY';
  const ind = document.getElementById('bbFreeStepIndicator');
  if (ind) ind.textContent = 'STEP: --';
-
-}
+ }
  function bbUpdateFreeTempo(val) {
  bbFreeBpm = parseInt(val);
  const label = document.getElementById('bbFreeTempoVal');
@@ -4118,23 +4629,18 @@ Close the Portal</button>
  clearInterval(bbFreeInterval);
  const ms = (60000 / bbFreeBpm) / 4;
  bbFreeInterval = setInterval(bbTickFreeplay, ms);
-
-}
-
-}
+ }
+ }
  function bbClearFreeplay() {
  bbFreeGrid = Array.from({
- length: BB_PADS.length
-}
-, () => new Array(BB_STEPS).fill(false));
+ length: BB_PADS.length }
+ , () => new Array(BB_STEPS).fill(false));
  document.querySelectorAll('#bbFreeGrid .beat-btn').forEach(b => {
  b.classList.remove('active');
  b.classList.remove('playing');
-
-}
-);
-
-}
+ }
+ );
+ }
  /* -------- Challenge: Simon-style pattern match -------- */ let bbPattern = [];
  let bbPlayerProgress = 0;
  let bbChallengeActive = false;
@@ -4143,15 +4649,13 @@ Close the Portal</button>
  const row = document.getElementById('bbPadsRow');
  if (!row) return;
  row.innerHTML = BB_PADS.map((p, idx) => '<div class="bb-pad" id="bbPad' + idx + '" style="border-color:' + p.color + ';color:' + p.color + ';--c:' + p.color + '" onclick="bbPadClick(' + idx + ')">' + '<span class="bb-pad-icon">' + p.icon + '</span>' + p.label + '</div>' ).join('');
-
-}
+ }
  function bbLoadBest() {
  const stored = parseInt(localStorage.getItem('echo_beatbox_best') || '0');
  const el = document.getElementById('bbBest');
  if (el) el.textContent = stored;
  return stored;
-
-}
+ }
  function bbStartChallenge() {
  bbPattern = [];
  bbPlayerProgress = 0;
@@ -4160,21 +4664,18 @@ Close the Portal</button>
  bbLoadBest();
  document.getElementById('bbStartBtn').textContent = 'Restart ◈';
  bbNextRound();
-
-}
+ }
  function bbStopChallenge() {
  bbChallengeActive = false;
  bbChallengePlaying = false;
-
-}
+ }
  function bbNextRound() {
  const nextStep = Math.floor(Math.random() * BB_PADS.length);
  bbPattern.push(nextStep);
  bbPlayerProgress = 0;
  document.getElementById('bbRound').textContent = bbPattern.length;
  bbPlayPattern();
-
-}
+ }
  function bbPlayPattern() {
  bbChallengePlaying = true;
  const statusEl = document.getElementById('bbStatus');
@@ -4185,8 +4686,7 @@ Close the Portal</button>
  bbChallengePlaying = false;
  statusEl.textContent = 'Your turn — repeat it back!';
  return;
-
-}
+ }
  const idx = bbPattern[step];
  const pad = document.getElementById('bbPad' + idx);
  if (pad) pad.classList.add('lit');
@@ -4195,14 +4695,11 @@ Close the Portal</button>
  if (pad) pad.classList.remove('lit');
  step++;
  setTimeout(playNext, 220);
-
-}
-, 420);
-
-}
+ }
+ , 420);
+ }
  setTimeout(playNext, 500);
-
-}
+ }
  function bbPadClick(idx) {
  if (!bbChallengeActive || bbChallengePlaying) return;
  const pad = document.getElementById('bbPad' + idx);
@@ -4210,46 +4707,43 @@ Close the Portal</button>
  bbPlayPad(idx);
  setTimeout(() => {
  if (pad) pad.classList.remove('lit');
-
-}
-, 220);
+ }
+ , 220);
  if (bbPattern[bbPlayerProgress] !== idx) {
  if (pad) pad.classList.add('wrong');
  document.getElementById('bbStatus').textContent = 'Not quite — game over. Tap Restart to try again.';
  setTimeout(() => {
  if (pad) pad.classList.remove('wrong');
-
-}
-, 400);
+ }
+ , 400);
  const best = bbLoadBest();
  const reached = bbPattern.length - 1;
  if (reached > best) {
  localStorage.setItem('echo_beatbox_best', reached);
  document.getElementById('bbBest').textContent = reached;
-
-}
+ }
  bbChallengeActive = false;
  document.getElementById('bbStartBtn').textContent = 'Start Challenge ◈';
  return;
-
-}
+ }
  bbPlayerProgress++;
  if (bbPlayerProgress === bbPattern.length) {
  document.getElementById('bbStatus').textContent = '◈ Nice! Next round...';
  setTimeout(() => bbNextRound(), 700);
-
-}
-
-}
+ }
+ }
  document.addEventListener('DOMContentLoaded', () => {
  buildBeatGrid();
  loadReflects();
  bbBuildFreeGrid();
  bbRenderPads();
  bbLoadBest();
-
-}
-);
- </script>
- </body>
- </html>
+ handleTierUnlock(null);
+ }
+ );
+ 
+</script>
+ 
+</body>
+ 
+</html>
