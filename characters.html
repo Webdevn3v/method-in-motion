@@ -3,96 +3,33 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Meet the Crew — Method in Motion</title>
+<title>Meet the Crew — Method in Motion</title> 
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
+ 
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DJ3Q488K7W');</script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{
---void:#050508;--deep:#080b14;--card:#0f1525;
---border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
---white:#fff;--off:#c8cce0;--muted:#5a6080;
---pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;
---grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
---display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
-}
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7;}
-a{color:inherit;text-decoration:none}
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;}
-.nav-logo-mark{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#000;}
-.nav-links{display:flex;gap:24px;list-style:none}
-.nav-links a{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s;}
-.nav-links a:hover,.nav-links a.active{color:#fff}
-.nav-right{display:flex;gap:10px;align-items:center;}
-.nav-btn{font-family:var(--display);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;border:1px solid rgba(198,107,255,.35);color:var(--purple);border-radius:100px;background:none;cursor:pointer;}
-@media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
-/* HERO */
-.page-hero{padding:120px 48px 60px;text-align:center;position:relative;overflow:hidden;background:var(--deep);}
-.page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(198,107,255,.08),transparent 60%),radial-gradient(ellipse at 20% 0%,rgba(255,107,170,.06),transparent 50%);pointer-events:none;}
-.page-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:block;}
-.page-title{font-family:var(--display);font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;}
-.page-desc{font-size:1rem;color:var(--off);max-width:560px;margin:0 auto;line-height:1.8;}
-/* CHARACTER SECTIONS — alternating layout */
-.char-section{padding:80px 0;border-top:1px solid var(--border);position:relative;overflow:hidden;}
-.char-section:nth-child(even){background:rgba(8,11,20,0.6);}
-.char__inner{max-width:1200px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;}
-.char-section:nth-child(even) .char__inner{direction:rtl;}
-.char-section:nth-child(even) .char-info{direction:ltr;}
-.char-section:nth-child(even) .char-visual{direction:ltr;}
-@media(max-width:900px){.char__inner{grid-template-columns:1fr;direction:ltr!important;gap:32px;}.char-section:nth-child(even) .char__inner{direction:ltr;}}
-/* VISUAL SIDE */
-.char-visual{position:relative;border-radius:20px;overflow:hidden;}
-.char-entrance-img{width:100%;display:block;border-radius:20px;box-shadow:0 20px 80px rgba(0,0,0,.6);transition:transform .4s ease;}
-.char-visual:hover .char-entrance-img{transform:scale(1.02);}
-.char-idle-overlay{position:absolute;bottom:2%;left:50%;transform:translateX(-50%);width:56%;max-height:88%;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px var(--cc,rgba(198,107,255,.55)));pointer-events:none;transition:transform .4s ease;}
-.char-visual:hover .char-idle-overlay{transform:translateX(-50%) scale(1.04);}
-.char-visual-glow{position:absolute;inset:0;border-radius:20px;pointer-events:none;box-shadow:inset 0 0 60px rgba(0,0,0,.3);z-index:3;}
-/* INFO SIDE */
-.char-eyebrow{font-family:var(--display);font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px;}
-.char-eyebrow::after{content:'';flex:1;height:1px;background:var(--cc,var(--purple));opacity:.3;max-width:60px;}
-.char-id{opacity:.5;}
-.char-name{font-family:var(--display);font-size:clamp(2.5rem,5vw,4rem);font-weight:900;line-height:.95;letter-spacing:-.01em;margin-bottom:6px;color:var(--cc,var(--purple));text-shadow:0 0 40px var(--cc,rgba(198,107,255,.4));}
-.char-role{font-family:var(--heading);font-size:1rem;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:6px;}
-.char-world{font-family:var(--display);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cc,var(--purple));margin-bottom:16px;opacity:.75;}
-.char-quote{font-family:var(--heading);font-size:1.1rem;font-weight:700;color:var(--white);border-left:3px solid var(--cc,var(--purple));padding-left:16px;margin-bottom:20px;line-height:1.5;font-style:italic;}
-.char-about{font-size:.92rem;color:var(--off);line-height:1.85;margin-bottom:24px;}
-.char-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;}
-.char-tag{font-family:var(--display);font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:100px;border:1px solid var(--cc,var(--purple));color:var(--cc,var(--purple));background:rgba(0,0,0,.3);}
-/* LESSONS LIST */
-.char-lessons{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px;}
-.char-lessons-header{padding:12px 18px;border-bottom:1px solid var(--border);font-family:var(--display);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cc,var(--purple));}
-.char-lesson-row{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,.03);}
-.char-lesson-row:last-child{border-bottom:none;}
-.char-lesson-num{font-family:var(--display);font-size:.45rem;font-weight:700;color:var(--cc,var(--purple));opacity:.6;min-width:24px;}
-.char-lesson-name{font-size:.82rem;color:var(--off);}
-.char-lesson-badge{font-family:var(--display);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:linear-gradient(135deg,#00e8ff,#c66bff);color:#000;font-weight:700;margin-left:auto;flex-shrink:0;}
-.char-lesson-tier{font-family:var(--display);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:100px;border:1px solid var(--border-md);color:var(--muted);margin-left:auto;flex-shrink:0;}
-/* CTA BUTTONS */
-.char-ctas{display:flex;gap:10px;flex-wrap:wrap;}
-.char-btn-primary{font-family:var(--display);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:13px 28px;border-radius:100px;border:none;cursor:pointer;font-weight:700;transition:all .2s;background:var(--cc-grad,var(--grad));color:#000;box-shadow:0 6px 24px rgba(0,0,0,.3);}
-.char-btn-primary:hover{transform:translateY(-2px);opacity:.9;}
-.char-btn-secondary{font-family:var(--display);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:13px 28px;border-radius:100px;border:1px solid var(--cc,var(--purple));color:var(--cc,var(--purple));background:rgba(0,0,0,.2);cursor:pointer;transition:all .2s;}
-.char-btn-secondary:hover{background:rgba(0,0,0,.4);}
-/* SIGIL decoration */
-.char-sigil{position:absolute;top:24px;right:24px;font-size:3rem;opacity:.08;font-family:var(--display);}
-/* BOTTOM CTA */
-.crew-cta{background:var(--deep);padding:80px 48px;text-align:center;border-top:1px solid var(--border);}
-.crew-cta__inner{max-width:600px;margin:0 auto;}
-</style>
-</head>
+ <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"> 
+<style> :root{ --void:#050508;--deep:#080b14;--card:#0f1525; --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12); --white:#fff;--off:#c8cce0;--muted:#5a6080; --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff; --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff); --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif; } *,*::before,*::after{box-sizing:border-box;margin:0;padding:0} html{scroll-behavior:smooth} body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7;} a{color:inherit;text-decoration:none} /* NAV */ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;} .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;} .nav-logo-mark{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#000;} .nav-links{display:flex;gap:24px;list-style:none} .nav-links a{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s;} .nav-links a:hover,.nav-links a.active{color:#fff} .nav-right{display:flex;gap:10px;align-items:center;} .nav-btn{font-family:var(--display);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:7px 16px;border:1px solid rgba(198,107,255,.35);color:var(--purple);border-radius:100px;background:none;cursor:pointer;} @media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}} /* HERO */ .page-hero{padding:120px 48px 60px;text-align:center;position:relative;overflow:hidden;background:var(--deep);} .page-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,rgba(198,107,255,.08),transparent 60%),radial-gradient(ellipse at 20% 0%,rgba(255,107,170,.06),transparent 50%);pointer-events:none;} .page-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:block;} .page-title{font-family:var(--display);font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;} .page-desc{font-size:1rem;color:var(--off);max-width:560px;margin:0 auto;line-height:1.8;} /* CHARACTER SECTIONS — alternating layout */ .char-section{padding:80px 0;border-top:1px solid var(--border);position:relative;overflow:hidden;} .char-section:nth-child(even){background:rgba(8,11,20,0.6);} .char__inner{max-width:1200px;margin:0 auto;padding:0 48px;display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:center;} .char-section:nth-child(even) .char__inner{direction:rtl;} .char-section:nth-child(even) .char-info{direction:ltr;} .char-section:nth-child(even) .char-visual{direction:ltr;} @media(max-width:900px){.char__inner{grid-template-columns:1fr;direction:ltr!important;gap:32px;}.char-section:nth-child(even) .char__inner{direction:ltr;}} /* VISUAL SIDE */ .char-visual{position:relative;border-radius:20px;overflow:hidden;} .char-entrance-img{width:100%;display:block;border-radius:20px;box-shadow:0 20px 80px rgba(0,0,0,.6);transition:transform .4s ease;} .char-visual:hover .char-entrance-img{transform:scale(1.02);} .char-idle-overlay{position:absolute;bottom:2%;left:50%;transform:translateX(-50%);width:56%;max-height:88%;object-fit:contain;z-index:2;filter:drop-shadow(0 0 30px var(--cc,rgba(198,107,255,.55)));pointer-events:none;transition:transform .4s ease;} .char-visual:hover .char-idle-overlay{transform:translateX(-50%) scale(1.04);} .char-visual-glow{position:absolute;inset:0;border-radius:20px;pointer-events:none;box-shadow:inset 0 0 60px rgba(0,0,0,.3);z-index:3;} /* INFO SIDE */ .char-eyebrow{font-family:var(--display);font-size:.5rem;letter-spacing:.28em;text-transform:uppercase;margin-bottom:10px;display:flex;align-items:center;gap:10px;} .char-eyebrow::after{content:'';flex:1;height:1px;background:var(--cc,var(--purple));opacity:.3;max-width:60px;} .char-id{opacity:.5;} .char-name{font-family:var(--display);font-size:clamp(2.5rem,5vw,4rem);font-weight:900;line-height:.95;letter-spacing:-.01em;margin-bottom:6px;color:var(--cc,var(--purple));text-shadow:0 0 40px var(--cc,rgba(198,107,255,.4));} .char-role{font-family:var(--heading);font-size:1rem;font-weight:700;color:rgba(255,255,255,.6);margin-bottom:6px;} .char-world{font-family:var(--display);font-size:.52rem;letter-spacing:.2em;text-transform:uppercase;color:var(--cc,var(--purple));margin-bottom:16px;opacity:.75;} .char-quote{font-family:var(--heading);font-size:1.1rem;font-weight:700;color:var(--white);border-left:3px solid var(--cc,var(--purple));padding-left:16px;margin-bottom:20px;line-height:1.5;font-style:italic;} .char-about{font-size:.92rem;color:var(--off);line-height:1.85;margin-bottom:24px;} .char-meta{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px;} .char-tag{font-family:var(--display);font-size:.44rem;letter-spacing:.12em;text-transform:uppercase;padding:5px 12px;border-radius:100px;border:1px solid var(--cc,var(--purple));color:var(--cc,var(--purple));background:rgba(0,0,0,.3);} /* LESSONS LIST */ .char-lessons{background:rgba(0,0,0,.25);border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:24px;} .char-lessons-header{padding:12px 18px;border-bottom:1px solid var(--border);font-family:var(--display);font-size:.5rem;letter-spacing:.18em;text-transform:uppercase;color:var(--cc,var(--purple));} .char-lesson-row{display:flex;align-items:center;gap:12px;padding:10px 18px;border-bottom:1px solid rgba(255,255,255,.03);} .char-lesson-row:last-child{border-bottom:none;} .char-lesson-num{font-family:var(--display);font-size:.45rem;font-weight:700;color:var(--cc,var(--purple));opacity:.6;min-width:24px;} .char-lesson-name{font-size:.82rem;color:var(--off);} .char-lesson-badge{font-family:var(--display);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:100px;background:linear-gradient(135deg,#00e8ff,#c66bff);color:#000;font-weight:700;margin-left:auto;flex-shrink:0;} .char-lesson-tier{font-family:var(--display);font-size:.38rem;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:100px;border:1px solid var(--border-md);color:var(--muted);margin-left:auto;flex-shrink:0;} /* CTA BUTTONS */ .char-ctas{display:flex;gap:10px;flex-wrap:wrap;} .char-btn-primary{font-family:var(--display);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:13px 28px;border-radius:100px;border:none;cursor:pointer;font-weight:700;transition:all .2s;background:var(--cc-grad,var(--grad));color:#000;box-shadow:0 6px 24px rgba(0,0,0,.3);} .char-btn-primary:hover{transform:translateY(-2px);opacity:.9;} .char-btn-secondary{font-family:var(--display);font-size:.58rem;letter-spacing:.12em;text-transform:uppercase;padding:13px 28px;border-radius:100px;border:1px solid var(--cc,var(--purple));color:var(--cc,var(--purple));background:rgba(0,0,0,.2);cursor:pointer;transition:all .2s;} .char-btn-secondary:hover{background:rgba(0,0,0,.4);} /* SIGIL decoration */ .char-sigil{position:absolute;top:24px;right:24px;font-size:3rem;opacity:.08;font-family:var(--display);} /* BOTTOM CTA */ .crew-cta{background:var(--deep);padding:80px 48px;text-align:center;border-top:1px solid var(--border);} .crew-cta__inner{max-width:600px;margin:0 auto;} </style>
+ </head>
 <body>
 <nav>
-<a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
+<a href="index.html" class="nav-logo">
+<div class="nav-logo-mark">&gt;</div>method in motion</a>
 <ul class="nav-links">
-<li><a href="index.html#crew">Crew</a></li>
-<li><a href="index.html#membership">Membership</a></li>
-<li><a href="games.html">Games</a></li>
-<li><a href="library.html">Library</a></li>
-<li><a href="characters.html" class="active">Characters</a></li>
+<li>
+<a href="index.html#crew">Crew</a>
+</li>
+<li>
+<a href="index.html#membership">Membership</a>
+</li>
+<li>
+<a href="games.html">Games</a>
+</li>
+<li>
+<a href="library.html">Library</a>
+</li>
+<li>
+<a href="characters.html" class="active">Characters</a>
+</li>
 </ul>
 <div class="nav-right">
 <a href="dashboard.html" class="nav-btn">Dashboard</a>
@@ -110,10 +47,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 <div class="char-visual">
 <img class="char-entrance-img" src="zen-title-entrance.png" alt="Zen's Coding Realm">
 <img class="char-idle-overlay" src="zen-motion.gif" alt="Zen">
-<div class="char-visual-glow"></div>
+<div class="char-visual-glow">
+</div>
 </div>
 <div class="char-info">
-<div class="char-eyebrow" style="color:#ff6baa;"><span class="char-id">MIM-001</span></div>
+<div class="char-eyebrow" style="color:#ff6baa;">
+<span class="char-id">MIM-001</span>
+</div>
 <div class="char-name">Zen</div>
 <div class="char-role">The Creative Coder</div>
 <div class="char-world">⬡ Zen's Coding Realm · CSS</div>
@@ -127,10 +67,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 </div>
 <div class="char-lessons">
 <div class="char-lessons-header">4 Lessons · Zen's Coding Realm</div>
-<div class="char-lesson-row"><span class="char-lesson-num">L1</span><span class="char-lesson-name">What is Code?</span><span class="char-lesson-badge">FREE</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L2</span><span class="char-lesson-name">Your First HTML Tag</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L3</span><span class="char-lesson-name">Colors &amp; Style with CSS</span><span class="char-lesson-tier">Builders+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L4</span><span class="char-lesson-name">Build Your Own Page</span><span class="char-lesson-tier">Coders</span></div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L1</span>
+<span class="char-lesson-name">What is Code?</span>
+<span class="char-lesson-badge">FREE</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L2</span>
+<span class="char-lesson-name">Your First HTML Tag</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L3</span>
+<span class="char-lesson-name">Colors &amp; Style with CSS</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L4</span>
+<span class="char-lesson-name">Build Your Own Page</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
 </div>
 <div class="char-ctas">
 <a href="zen.html" class="char-btn-primary">Enter Zen's World</a>
@@ -145,10 +101,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 <div class="char-visual">
 <img class="char-entrance-img" src="byte-title-entrance.png" alt="Byte's Code City">
 <img class="char-idle-overlay" src="byte-motion.gif" alt="Byte">
-<div class="char-visual-glow"></div>
+<div class="char-visual-glow">
+</div>
 </div>
 <div class="char-info">
-<div class="char-eyebrow" style="color:#c66bff;"><span class="char-id">MIM-002</span></div>
+<div class="char-eyebrow" style="color:#c66bff;">
+<span class="char-id">MIM-002</span>
+</div>
 <div class="char-name">Byte</div>
 <div class="char-role">The Glitch Cat</div>
 <div class="char-world">◈ Byte's Code City · Debugging</div>
@@ -162,10 +121,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 </div>
 <div class="char-lessons">
 <div class="char-lessons-header">4 Lessons · Byte's Code City</div>
-<div class="char-lesson-row"><span class="char-lesson-num">L1</span><span class="char-lesson-name">Bug Thinking</span><span class="char-lesson-badge">FREE</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L2</span><span class="char-lesson-name">Error Messages</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L3</span><span class="char-lesson-name">Logic Tracing</span><span class="char-lesson-tier">Builders+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L4</span><span class="char-lesson-name">Debug Challenge</span><span class="char-lesson-tier">Coders</span></div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L1</span>
+<span class="char-lesson-name">Bug Thinking</span>
+<span class="char-lesson-badge">FREE</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L2</span>
+<span class="char-lesson-name">Error Messages</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L3</span>
+<span class="char-lesson-name">Logic Tracing</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L4</span>
+<span class="char-lesson-name">Debug Challenge</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
 </div>
 <div class="char-ctas">
 <a href="byte.html" class="char-btn-primary">Enter Byte's World</a>
@@ -180,12 +155,15 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 <div class="char-visual">
 <img class="char-entrance-img" src="loop-title-entrance.png" alt="Loop's Challenge Course">
 <img class="char-idle-overlay" src="loop-motion.gif" alt="Loop">
-<div class="char-visual-glow"></div>
+<div class="char-visual-glow">
+</div>
 </div>
 <div class="char-info">
-<div class="char-eyebrow" style="color:#00e8ff;"><span class="char-id">MIM-003</span></div>
+<div class="char-eyebrow" style="color:#00e8ff;">
+<span class="char-id">MIM-003</span>
+</div>
 <div class="char-name">Loop</div>
-<div class="char-role">The Flow Guide</div>
+<div class="char-role">The Flow Master</div>
 <div class="char-world">∞ Loop's Challenge Course · JavaScript</div>
 <div class="char-quote">"Every pattern has a reason."</div>
 <p class="char-about">Loop is calm, strategic, and always thinking three steps ahead. They see patterns everywhere and teach kids to use those patterns to make computers do the work. Loops, conditions, and functions — the building blocks of real logic. Loop's world runs on rhythm and flow, and once you understand it, everything else in code starts to make sense.</p>
@@ -197,10 +175,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 </div>
 <div class="char-lessons">
 <div class="char-lessons-header">4 Lessons · Loop's Challenge Course</div>
-<div class="char-lesson-row"><span class="char-lesson-num">L1</span><span class="char-lesson-name">Thinking in Patterns</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L2</span><span class="char-lesson-name">For Loops</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L3</span><span class="char-lesson-name">Conditionals &amp; Flow Control</span><span class="char-lesson-tier">Builders+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L4</span><span class="char-lesson-name">Flow Challenge</span><span class="char-lesson-tier">Coders</span></div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L1</span>
+<span class="char-lesson-name">Thinking in Patterns</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L2</span>
+<span class="char-lesson-name">For Loops</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L3</span>
+<span class="char-lesson-name">Conditionals &amp; Flow Control</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L4</span>
+<span class="char-lesson-name">Flow Challenge</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
 </div>
 <div class="char-ctas">
 <a href="loop.html" class="char-btn-primary">Enter Loop's World</a>
@@ -215,10 +209,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 <div class="char-visual">
 <img class="char-entrance-img" src="nova-title-entrance.png" alt="Nova's Discovery Dome">
 <img class="char-idle-overlay" src="nova-motion.gif" alt="Nova">
-<div class="char-visual-glow"></div>
+<div class="char-visual-glow">
+</div>
 </div>
 <div class="char-info">
-<div class="char-eyebrow" style="color:#ffe066;"><span class="char-id">MIM-004</span></div>
+<div class="char-eyebrow" style="color:#ffe066;">
+<span class="char-id">MIM-004</span>
+</div>
 <div class="char-name">Nova</div>
 <div class="char-role">The Builder Bot</div>
 <div class="char-world">⬡ Nova's Discovery Dome · HTML</div>
@@ -232,10 +229,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 </div>
 <div class="char-lessons">
 <div class="char-lessons-header">4 Lessons · Nova's Discovery Dome</div>
-<div class="char-lesson-row"><span class="char-lesson-num">L1</span><span class="char-lesson-name">Blueprint Thinking</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L2</span><span class="char-lesson-name">Building Blocks</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L3</span><span class="char-lesson-name">Layout &amp; Nesting</span><span class="char-lesson-tier">Builders+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L4</span><span class="char-lesson-name">Build Your Page</span><span class="char-lesson-tier">Coders</span></div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L1</span>
+<span class="char-lesson-name">Blueprint Thinking</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L2</span>
+<span class="char-lesson-name">Building Blocks</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L3</span>
+<span class="char-lesson-name">Layout &amp; Nesting</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L4</span>
+<span class="char-lesson-name">Build Your Page</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
 </div>
 <div class="char-ctas">
 <a href="nova.html" class="char-btn-primary">Enter Nova's World</a>
@@ -250,10 +263,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 <div class="char-visual">
 <img class="char-entrance-img" src="bug-title-entrance.png" alt="Bug's Debug Garage">
 <img class="char-idle-overlay" src="bug-motion.gif" alt="Bug">
-<div class="char-visual-glow"></div>
+<div class="char-visual-glow">
+</div>
 </div>
 <div class="char-info">
-<div class="char-eyebrow" style="color:#84cc16;"><span class="char-id">MIM-005</span></div>
+<div class="char-eyebrow" style="color:#84cc16;">
+<span class="char-id">MIM-005</span>
+</div>
 <div class="char-name">Bug</div>
 <div class="char-role">The Debug Gremlin</div>
 <div class="char-world">⚠ Bug's Debug Garage · JS Logic</div>
@@ -267,10 +283,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 </div>
 <div class="char-lessons">
 <div class="char-lessons-header">4 Lessons · Bug's Debug Garage</div>
-<div class="char-lesson-row"><span class="char-lesson-num">L1</span><span class="char-lesson-name">What Is a Bug?</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L2</span><span class="char-lesson-name">Reading Errors</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L3</span><span class="char-lesson-name">Logic Tracing</span><span class="char-lesson-tier">Builders+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L4</span><span class="char-lesson-name">Debug Challenge</span><span class="char-lesson-tier">Coders</span></div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L1</span>
+<span class="char-lesson-name">What Is a Bug?</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L2</span>
+<span class="char-lesson-name">Reading Errors</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L3</span>
+<span class="char-lesson-name">Logic Tracing</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L4</span>
+<span class="char-lesson-name">Debug Challenge</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
 </div>
 <div class="char-ctas">
 <a href="bug.html" class="char-btn-primary">Enter Bug's World</a>
@@ -285,10 +317,13 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 <div class="char-visual">
 <img class="char-entrance-img" src="echo-title-entrance.png" alt="Echo's Sound Studio">
 <img class="char-idle-overlay" src="echo-motion.gif" alt="Echo">
-<div class="char-visual-glow"></div>
+<div class="char-visual-glow">
+</div>
 </div>
 <div class="char-info">
-<div class="char-eyebrow" style="color:#38bdf8;"><span class="char-id">MIM-006</span></div>
+<div class="char-eyebrow" style="color:#38bdf8;">
+<span class="char-id">MIM-006</span>
+</div>
 <div class="char-name">Echo</div>
 <div class="char-role">The Signal DJ</div>
 <div class="char-world">◈ Echo's Sound Studio · Web Audio API</div>
@@ -302,10 +337,26 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 </div>
 <div class="char-lessons">
 <div class="char-lessons-header">4 Lessons · Echo's Sound Studio</div>
-<div class="char-lesson-row"><span class="char-lesson-num">L1</span><span class="char-lesson-name">Events &amp; Listeners</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L2</span><span class="char-lesson-name">Timers &amp; Timing</span><span class="char-lesson-tier">Sparks+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L3</span><span class="char-lesson-name">The Web Audio API</span><span class="char-lesson-tier">Builders+</span></div>
-<div class="char-lesson-row"><span class="char-lesson-num">L4</span><span class="char-lesson-name">Beat Machine</span><span class="char-lesson-tier">Coders</span></div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L1</span>
+<span class="char-lesson-name">Events &amp; Listeners</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L2</span>
+<span class="char-lesson-name">Timers &amp; Timing</span>
+<span class="char-lesson-tier">Sparks+</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L3</span>
+<span class="char-lesson-name">The Web Audio API</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
+<div class="char-lesson-row">
+<span class="char-lesson-num">L4</span>
+<span class="char-lesson-name">Beat Machine</span>
+<span class="char-lesson-tier">Coders</span>
+</div>
 </div>
 <div class="char-ctas">
 <a href="echo.html" class="char-btn-primary">Enter Echo's World</a>
@@ -325,7 +376,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 48px;background
 <a href="games.html" style="font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 32px;border:1px solid rgba(255,255,255,.2);color:rgba(255,255,255,.75);border-radius:100px;display:inline-block;">Explore the Game World</a>
 </div>
 </div>
-</section>
+</section> 
 <script type="module" src="auth-init.js"></script>
-</body>
+ </body>
 </html>
