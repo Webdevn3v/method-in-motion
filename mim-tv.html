@@ -4,118 +4,83 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>MiM TV | Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
-<style>
-:root{
-  --amber:#ffb020; --teal:#2ee6c8; --violet:#9d6bff;
-  --bg:#0b0b12; --bg-mid:#12121c; --bg-card:#17172a; --bg-panel:#0e0e17;
-  --text:#eceaf5; --text-dim:#a9a4c0; --text-muted:#5e587a;
-  --border:rgba(255,176,32,0.18); --border-bright:rgba(255,176,32,0.5);
-  --glow:0 0 18px rgba(255,176,32,0.3); --glow-strong:0 0 36px rgba(255,176,32,0.5);
-  --font-display:'Orbitron',monospace; --font-body:'Space Grotesk',sans-serif; --font-mono:'Space Mono',monospace;
-}
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(11,11,18,0.96);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)}
-.nav-logo{font-family:var(--font-display);font-size:0.85rem;font-weight:700;color:var(--amber);text-decoration:none;letter-spacing:0.1em}
-.nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none}
-.nav-links a{font-family:var(--font-body);font-size:0.82rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:0.05em;transition:color .2s}
-.nav-links a:hover{color:var(--amber)}
-
-/* HERO — retro TV room */
-.hero{margin-top:60px;min-height:520px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;
-  background:radial-gradient(ellipse 70% 60% at 50% 30%, rgba(255,176,32,0.10), transparent 65%), var(--bg);}
-/* PLACEHOLDER: swap this block's background-image for the retro-room asset once the filename is confirmed */
-.hero-room-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.5;
-  background-image:linear-gradient(180deg, rgba(157,107,255,0.12), rgba(46,230,200,0.08));}
-.hero-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,176,32,0.02) 2px,rgba(255,176,32,0.02) 4px)}
-.hero-content{position:relative;z-index:5;text-align:center;padding:2rem}
-.hero-eyebrow{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem}
-.hero-title{font-family:var(--font-display);font-size:clamp(2.6rem,8vw,5rem);font-weight:900;color:#fff;text-shadow:var(--glow-strong);margin-bottom:0.6rem}
-.hero-title span{color:var(--amber)}
-.hero-sub{font-size:1rem;color:var(--text-dim);max-width:480px;margin:0 auto;line-height:1.7}
-
-/* CHANNEL GRID */
-.channels{padding:5rem 2rem;max-width:1100px;margin:0 auto}
-.section-label{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);display:block;text-align:center;margin-bottom:0.8rem}
-.section-title{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;text-align:center;margin-bottom:0.6rem;color:#fff}
-.section-desc{font-size:0.9rem;color:var(--text-dim);text-align:center;max-width:520px;margin:0 auto 3rem;line-height:1.7}
-.channel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem}
-@media(max-width:820px){.channel-grid{grid-template-columns:1fr}}
-.channel-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s;position:relative}
-.channel-card:hover{border-color:var(--border-bright);transform:translateY(-4px)}
-.channel-screen{aspect-ratio:16/10;background:radial-gradient(ellipse at 50% 40%, rgba(255,176,32,0.14), var(--bg-panel) 70%);display:flex;align-items:center;justify-content:center;position:relative}
-.channel-screen::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px)}
-.channel-play{width:52px;height:52px;border-radius:50%;background:rgba(255,176,32,0.9);color:#0b0b12;font-size:1.2rem;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;box-shadow:0 0 20px rgba(255,176,32,0.5)}
-.channel-body{padding:1.1rem 1.2rem 1.3rem}
-.channel-tag{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-bottom:0.3rem}
-.channel-name{font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:0.4rem}
-.channel-desc{font-size:0.8rem;color:var(--text-dim);line-height:1.5}
-.coming-badge{display:inline-block;margin-top:0.7rem;font-family:var(--font-mono);font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--violet);background:rgba(157,107,255,0.12);border:1px solid rgba(157,107,255,0.3);padding:0.2rem 0.6rem;border-radius:100px}
-
-footer{background:var(--bg-panel);border-top:1px solid var(--border);padding:2.2rem;text-align:center;font-family:var(--font-mono);font-size:0.68rem;color:var(--text-muted);letter-spacing:0.1em}
-footer a{color:var(--amber);text-decoration:none}
-</style>
-</head>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" /> 
+<style> :root{ --amber:#ffb020; --teal:#2ee6c8; --violet:#9d6bff; --bg:#0b0b12; --bg-mid:#12121c; --bg-card:#17172a; --bg-panel:#0e0e17; --text:#eceaf5; --text-dim:#a9a4c0; --text-muted:#5e587a; --border:rgba(255,176,32,0.18); --border-bright:rgba(255,176,32,0.5); --glow:0 0 18px rgba(255,176,32,0.3); --glow-strong:0 0 36px rgba(255,176,32,0.5); --font-display:'Orbitron',monospace; --font-body:'Space Grotesk',sans-serif; --font-mono:'Space Mono',monospace; } *{box-sizing:border-box;margin:0;padding:0} body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden} nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(11,11,18,0.96);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)} .nav-logo{font-family:var(--font-display);font-size:0.85rem;font-weight:700;color:var(--amber);text-decoration:none;letter-spacing:0.1em} .nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none} .nav-links a{font-family:var(--font-body);font-size:0.82rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:0.05em;transition:color .2s} .nav-links a:hover{color:var(--amber)} /* HERO — retro TV room, compressed-mim-tv-hero.mp4 background video */ .hero{margin-top:60px;min-height:520px;position:relative;display:flex;align-items:center;justify-content:center;overflow:hidden;background:var(--bg);} .hero-bg-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0.55;} .hero-room-bg{position:absolute;inset:0;background:linear-gradient(180deg, rgba(11,11,18,0.35), rgba(11,11,18,0.85)), radial-gradient(ellipse 70% 60% at 50% 30%, rgba(255,176,32,0.10), transparent 65%);} .hero-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,176,32,0.02) 2px,rgba(255,176,32,0.02) 4px)} .hero-content{position:relative;z-index:5;text-align:center;padding:2rem} .hero-eyebrow{font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem} .hero-title{font-family:var(--font-display);font-size:clamp(2.6rem,8vw,5rem);font-weight:900;color:#fff;text-shadow:var(--glow-strong);margin-bottom:0.6rem} .hero-title span{color:var(--amber)} .hero-sub{font-size:1rem;color:var(--text-dim);max-width:480px;margin:0 auto;line-height:1.7} /* CHANNEL GRID */ .channels{padding:5rem 2rem;max-width:1100px;margin:0 auto} .section-label{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--amber);display:block;text-align:center;margin-bottom:0.8rem} .section-title{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;text-align:center;margin-bottom:0.6rem;color:#fff} .section-desc{font-size:0.9rem;color:var(--text-dim);text-align:center;max-width:520px;margin:0 auto 3rem;line-height:1.7} .channel-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem} @media(max-width:820px){.channel-grid{grid-template-columns:1fr}} .channel-card{background:var(--bg-card);border:1px solid var(--border);border-radius:14px;overflow:hidden;transition:all .3s;position:relative} .channel-card:hover{border-color:var(--border-bright);transform:translateY(-4px)} .channel-screen{aspect-ratio:16/10;background:radial-gradient(ellipse at 50% 40%, rgba(255,176,32,0.14), var(--bg-panel) 70%);display:flex;align-items:center;justify-content:center;position:relative} .channel-screen::after{content:'';position:absolute;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.15) 3px,rgba(0,0,0,0.15) 4px)} .channel-play{width:52px;height:52px;border-radius:50%;background:rgba(255,176,32,0.9);color:#0b0b12;font-size:1.2rem;display:flex;align-items:center;justify-content:center;position:relative;z-index:2;box-shadow:0 0 20px rgba(255,176,32,0.5)} .channel-body{padding:1.1rem 1.2rem 1.3rem} .channel-tag{font-family:var(--font-mono);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--teal);margin-bottom:0.3rem} .channel-name{font-family:var(--font-display);font-size:1.05rem;font-weight:700;color:#fff;margin-bottom:0.4rem} .channel-desc{font-size:0.8rem;color:var(--text-dim);line-height:1.5} .coming-badge{display:inline-block;margin-top:0.7rem;font-family:var(--font-mono);font-size:0.56rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--violet);background:rgba(157,107,255,0.12);border:1px solid rgba(157,107,255,0.3);padding:0.2rem 0.6rem;border-radius:100px} footer{background:var(--bg-panel);border-top:1px solid var(--border);padding:2.2rem;text-align:center;font-family:var(--font-mono);font-size:0.68rem;color:var(--text-muted);letter-spacing:0.1em} footer a{color:var(--amber);text-decoration:none} </style>
+ </head>
 <body>
 <nav>
-  <a href="index.html" class="nav-logo">MiM</a>
-  <ul class="nav-links">
-    <li><a href="games.html">Games</a></li>
-    <li><a href="broken-syntax.html">Broken Syntax</a></li>
-    <li><a href="mim-tv.html">MiM TV</a></li>
-    <li><a href="index.html#membership">Membership</a></li>
-  </ul>
+<a href="index.html" class="nav-logo">MiM</a>
+<ul class="nav-links">
+<li>
+<a href="games.html">Games</a>
+</li>
+<li>
+<a href="broken-syntax.html">Broken Syntax</a>
+</li>
+<li>
+<a href="mim-tv.html">MiM TV</a>
+</li>
+<li>
+<a href="index.html#membership">Membership</a>
+</li>
+</ul>
 </nav>
-
 <section class="hero">
-  <div class="hero-room-bg"></div>
-  <div class="hero-scan"></div>
-  <div class="hero-content">
-    <div class="hero-eyebrow">Broadcasting from the Underground</div>
-    <h1 class="hero-title">MiM <span>TV</span></h1>
-    <p class="hero-sub">Interviews, behind-the-scenes clips, and short takes from everyone in the MiM universe — all on one channel.</p>
-  </div>
+<video class="hero-bg-video" autoplay muted loop playsinline>
+<source src="compressed-mim-tv-hero.mp4" type="video/mp4">
+</video>
+<div class="hero-room-bg">
+</div>
+<div class="hero-scan">
+</div>
+<div class="hero-content">
+<div class="hero-eyebrow">Broadcasting from the Underground</div>
+<h1 class="hero-title">MiM <span>TV</span>
+</h1>
+<p class="hero-sub">Interviews, behind-the-scenes clips, and short takes from everyone in the MiM universe — all on one channel.</p>
+</div>
 </section>
-
 <section class="channels">
-  <span class="section-label">On the Air</span>
-  <h2 class="section-title">Pick a Channel</h2>
-  <p class="section-desc">New clips are added as they're filmed. This lineup will grow along with the universe.</p>
-
-  <div class="channel-grid">
-    <div class="channel-card">
-      <div class="channel-screen"><div class="channel-play">▶</div></div>
-      <div class="channel-body">
-        <div class="channel-tag">Interview</div>
-        <div class="channel-name">Behind Broken Syntax</div>
-        <div class="channel-desc">Bug, Zen, and Loop talk about writing their first single.</div>
-        <span class="coming-badge">Coming Soon</span>
-      </div>
-    </div>
-    <div class="channel-card">
-      <div class="channel-screen"><div class="channel-play">▶</div></div>
-      <div class="channel-body">
-        <div class="channel-tag">Shorts</div>
-        <div class="channel-name">Debug Diaries</div>
-        <div class="channel-desc">Quick clips of Bug walking through real bugs, live.</div>
-        <span class="coming-badge">Coming Soon</span>
-      </div>
-    </div>
-    <div class="channel-card">
-      <div class="channel-screen"><div class="channel-play">▶</div></div>
-      <div class="channel-body">
-        <div class="channel-tag">Studio</div>
-        <div class="channel-name">Sound Check with Echo</div>
-        <div class="channel-desc">A look inside the Sound Studio's audio experiments.</div>
-        <span class="coming-badge">Coming Soon</span>
-      </div>
-    </div>
-  </div>
+<span class="section-label">On the Air</span>
+<h2 class="section-title">Pick a Channel</h2>
+<p class="section-desc">New clips are added as they're filmed. This lineup will grow along with the universe.</p>
+<div class="channel-grid">
+<div class="channel-card">
+<div class="channel-screen">
+<div class="channel-play">▶</div>
+</div>
+<div class="channel-body">
+<div class="channel-tag">Interview</div>
+<div class="channel-name">Behind Broken Syntax</div>
+<div class="channel-desc">Bug, Zen, and Loop talk about writing their first single.</div>
+<span class="coming-badge">Coming Soon</span>
+</div>
+</div>
+<div class="channel-card">
+<div class="channel-screen">
+<div class="channel-play">▶</div>
+</div>
+<div class="channel-body">
+<div class="channel-tag">Shorts</div>
+<div class="channel-name">Debug Diaries</div>
+<div class="channel-desc">Quick clips of Bug walking through real bugs, live.</div>
+<span class="coming-badge">Coming Soon</span>
+</div>
+</div>
+<div class="channel-card">
+<div class="channel-screen">
+<div class="channel-play">▶</div>
+</div>
+<div class="channel-body">
+<div class="channel-tag">Studio</div>
+<div class="channel-name">Sound Check with Echo</div>
+<div class="channel-desc">A look inside the Sound Studio's audio experiments.</div>
+<span class="coming-badge">Coming Soon</span>
+</div>
+</div>
+</div>
 </section>
-
-<footer>
-  Method in Motion &nbsp;·&nbsp; <a href="broken-syntax.html">Broken Syntax</a> &nbsp;·&nbsp; <a href="index.html">Back to the Universe</a>
+<footer> Method in Motion &nbsp;·&nbsp; <a href="broken-syntax.html">Broken Syntax</a> &nbsp;·&nbsp; <a href="index.html">Back to the Universe</a>
 </footer>
 </body>
 </html>
