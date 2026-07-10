@@ -1,203 +1,1463 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){ dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-DJ3Q488K7W');
+</script>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Broken Syntax | Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" /> 
-
-<style> :root{ --hot:#ff2f6e; --amber:#ffb020; --tape:#f4ead2; --bg:#0a0508; --bg-mid:#120a10; --bg-card:#170d16; --bg-panel:#0d070c; --text:#f4ead2; --text-dim:#c9a9b8; --text-muted:#6d4a5c; --border:rgba(255,47,110,0.2); --border-bright:rgba(255,47,110,0.5); --glow:0 0 18px rgba(255,47,110,0.35); --glow-strong:0 0 40px rgba(255,47,110,0.55); --bug-c:#b8ff3c; --zen-c:#ff6bad; --loop-c:#00f5d4; --font-display:'Orbitron',monospace; --font-body:'Space Grotesk',sans-serif; --font-mono:'Space Mono',monospace; } *{box-sizing:border-box;margin:0;padding:0} body{font-family:var(--font-body);background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden} nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-between;padding:0 2rem;height:60px;background:rgba(10,5,8,0.96);border-bottom:1px solid var(--border);backdrop-filter:blur(10px)} .nav-logo{font-family:var(--font-display);font-size:0.85rem;font-weight:700;color:var(--hot);text-decoration:none;letter-spacing:0.1em} .nav-links{display:flex;align-items:center;gap:1.5rem;list-style:none} .nav-links a{font-family:var(--font-body);font-size:0.82rem;font-weight:500;color:var(--text-dim);text-decoration:none;letter-spacing:0.05em;transition:color .2s} .nav-links a:hover{color:var(--hot)} /* HERO */ .hero{margin-top:60px;padding:5rem 2rem 4rem;position:relative;overflow:hidden;text-align:center;min-height:560px;background: radial-gradient(ellipse 70% 50% at 50% 0%, rgba(255,47,110,0.16), transparent 60%), radial-gradient(ellipse 60% 40% at 80% 90%, rgba(255,176,32,0.10), transparent 60%), var(--bg);} @media(max-width:860px){.hero{min-height:auto}} .hero-bg{position:absolute;inset:0;background-image:url('broken-syntax-preformance.png');background-size:cover;background-position:center 30%;opacity:0.32;pointer-events:none;} .hero-scan{position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(255,47,110,0.02) 2px,rgba(255,47,110,0.02) 4px)} .hero-eyebrow{position:relative;z-index:2;font-family:var(--font-mono);font-size:0.72rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem} .hero-title{position:relative;z-index:2;font-family:var(--font-display);font-size:clamp(2.6rem,8vw,5.5rem);font-weight:900;line-height:0.9;letter-spacing:0.02em;color:#fff;text-shadow:var(--glow-strong);transform:skewX(-4deg);margin-bottom:0.6rem;animation:titleGlitch 7s infinite} @keyframes titleGlitch{0%,96%,100%{transform:skewX(-4deg) translate(0,0);text-shadow:var(--glow-strong)}97%{transform:skewX(-4deg) translate(-2px,1px);text-shadow:2px 0 var(--hot),-2px 0 var(--amber)}98%{transform:skewX(-4deg) translate(2px,-1px);text-shadow:-2px 0 var(--hot),2px 0 var(--amber)}99%{transform:skewX(-4deg) translate(0,0);text-shadow:var(--glow-strong)}} .hero-title span{color:var(--hot)} .hero-sub{position:relative;z-index:2;font-size:1rem;color:var(--text-dim);max-width:520px;margin:0 auto 2rem;line-height:1.7} .hero-tag{position:relative;z-index:2;font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--text-muted)} .genre-tags{position:relative;z-index:2;display:flex;justify-content:center;gap:0.5rem;flex-wrap:wrap;margin-top:1rem} .tag-pill{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--text-dim);border:1px solid var(--border);padding:0.3rem 0.7rem;border-radius:100px;background:rgba(255,255,255,0.03);transition:all .2s;cursor:default} .tag-pill:hover{border-color:var(--hot);color:var(--hot);box-shadow:0 0 10px rgba(255,47,110,0.3);transform:translateY(-2px)} .hero-particle-field{position:absolute;inset:0;z-index:1;pointer-events:none;overflow:hidden} .hero-spark{position:absolute;width:3px;height:3px;border-radius:50%;background:var(--hot);box-shadow:0 0 8px 2px rgba(255,47,110,0.6);opacity:0;animation:sparkFloat linear infinite} .hero-spark:nth-child(odd){background:var(--amber);box-shadow:0 0 8px 2px rgba(255,176,32,0.6)} @keyframes sparkFloat{0%{transform:translateY(0);opacity:0}10%{opacity:.9}90%{opacity:.3}100%{transform:translateY(-320px);opacity:0}} /* NOW PLAYING CASSETTE */ .player-wrap{position:absolute;top:6rem;right:2rem;width:360px;max-width:38vw;z-index:6;text-align:left} @media(max-width:860px){.player-wrap{position:static;width:100%;max-width:420px;margin:2.5rem auto 0;padding:0 1.5rem}} .cassette{background:var(--bg-card);border:1px solid var(--border-bright);border-radius:16px;padding:1.4rem;display:flex;gap:1.2rem;align-items:center;box-shadow:var(--glow);position:relative;overflow:hidden;transition:box-shadow .3s} .cassette:hover{box-shadow:var(--glow-strong)} .cassette::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,rgba(255,47,110,0.06),rgba(255,176,32,0.04));pointer-events:none} .cassette-art{position:relative;flex-shrink:0;width:96px;height:96px;border-radius:10px;overflow:hidden;box-shadow:0 6px 24px rgba(0,0,0,0.5)} .cassette-art img{width:100%;height:100%;object-fit:cover;display:block;transition:transform .4s ease} .cassette:hover .cassette-art img{transform:scale(1.05)} .eq-bars{display:flex;align-items:flex-end;gap:3px;height:22px;flex-shrink:0} .eq-bars span{width:3px;background:linear-gradient(to top,var(--hot),var(--amber));border-radius:2px;height:4px;display:block} .cassette.playing .eq-bars span{animation:eqBounce 0.9s ease-in-out infinite} .cassette.playing .eq-bars span:nth-child(1){animation-delay:0s} .cassette.playing .eq-bars span:nth-child(2){animation-delay:.15s} .cassette.playing .eq-bars span:nth-child(3){animation-delay:.3s} .cassette.playing .eq-bars span:nth-child(4){animation-delay:.45s} @keyframes eqBounce{0%,100%{height:4px}50%{height:20px}} .cassette-body{flex:1;min-width:0;position:relative;z-index:1} .cassette-label{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.16em;color:var(--amber);text-transform:uppercase;margin-bottom:0.3rem} .cassette-title{font-family:var(--font-display);font-size:1rem;font-weight:700;color:#fff;margin-bottom:0.15rem;line-height:1.3} .cassette-artist{font-size:0.82rem;color:var(--text-dim);margin-bottom:0.8rem} .cassette-controls{display:flex;align-items:center;gap:0.8rem} .play-btn{width:40px;height:40px;border-radius:50%;background:var(--hot);border:none;color:#0a0508;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:transform .15s;box-shadow:0 0 16px rgba(255,47,110,0.5)} .play-btn:hover{transform:scale(1.06)} .progress-wrap{flex:1;display:flex;align-items:center;gap:0.6rem;min-width:0} .progress-bar{flex:1;height:4px;background:rgba(255,255,255,0.12);border-radius:100px;position:relative;cursor:pointer;overflow:hidden} .progress-fill{position:absolute;left:0;top:0;bottom:0;width:0%;background:linear-gradient(90deg,var(--hot),var(--amber));border-radius:100px} .time-label{font-family:var(--font-mono);font-size:0.62rem;color:var(--text-muted);min-width:66px;text-align:right} .player-note{text-align:left;font-family:var(--font-mono);font-size:0.66rem;color:var(--text-muted);letter-spacing:0.08em;margin-top:0.9rem} /* BAND SECTION */ .band{padding:5rem 2rem;max-width:1000px;margin:0 auto} .section-label{font-family:var(--font-mono);font-size:0.62rem;letter-spacing:0.28em;text-transform:uppercase;color:var(--hot);display:block;text-align:center;margin-bottom:0.8rem} .section-title{font-family:var(--font-display);font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;text-align:center;margin-bottom:0.6rem;color:#fff} .section-desc{font-size:0.9rem;color:var(--text-dim);text-align:center;max-width:480px;margin:0 auto 3rem;line-height:1.7} .band-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.2rem} @media(max-width:820px){.band-grid{grid-template-columns:1fr}} .member-card{background:var(--bg-card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:border-color .3s,transform .3s,box-shadow .3s;--mc:var(--hot)} .member-card:nth-child(odd):hover{transform:translateY(-6px) rotate(-0.4deg)} .member-card:nth-child(even):hover{transform:translateY(-6px) rotate(0.4deg)} .member-card:hover{border-color:var(--mc);box-shadow:0 14px 34px rgba(0,0,0,0.45),0 0 26px color-mix(in srgb, var(--mc) 35%, transparent)} .member-photo{aspect-ratio:1/1;position:relative;background:radial-gradient(ellipse at 50% 35%,color-mix(in srgb, var(--mc) 22%, transparent),transparent 70%),var(--bg-card);display:flex;align-items:center;justify-content:center;overflow:hidden} .member-photo::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom, transparent 55%, var(--bg-card) 100%);pointer-events:none} .member-photo img{width:100%;height:100%;object-fit:cover;object-position:center 18%;filter:drop-shadow(0 0 24px var(--mc));-webkit-mask-image:radial-gradient(circle at 50% 38%, #000 0%, #000 42%, transparent 74%);mask-image:radial-gradient(circle at 50% 38%, #000 0%, #000 42%, transparent 74%);transition:transform .4s ease,filter .4s ease} .member-card:hover .member-photo img{transform:scale(1.06);filter:drop-shadow(0 0 30px var(--mc)) brightness(1.06)} .member-body{padding:1.3rem 1.4rem 1.5rem} .member-role{font-family:var(--font-mono);font-size:0.6rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--mc);margin-bottom:0.3rem} .member-name{font-family:var(--font-display);font-size:1.3rem;font-weight:800;color:#fff;margin-bottom:0.4rem} .member-line{font-size:0.82rem;color:var(--text-dim);line-height:1.5;font-style:italic;margin-bottom:1rem} .interview-toggle{width:100%;background:rgba(255,255,255,0.04);border:1px solid var(--border);color:var(--mc);font-family:var(--font-mono);font-size:0.68rem;letter-spacing:0.1em;text-transform:uppercase;padding:0.7rem;border-radius:8px;cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:space-between} .interview-toggle:hover{background:rgba(255,255,255,0.08);border-color:var(--mc)} .interview-toggle .arrow{transition:transform .3s} .interview-toggle.open .arrow{transform:rotate(180deg)} .interview-panel{max-height:0;overflow:hidden;transition:max-height .4s ease} .interview-panel.open{max-height:900px} .interview-inner{padding-top:1rem;display:flex;flex-direction:column;gap:0.9rem} .qa{border-top:1px solid var(--border);padding-top:0.8rem} .qa:first-child{border-top:none;padding-top:0} .qa-q{font-family:var(--font-mono);font-size:0.72rem;color:var(--mc);letter-spacing:0.02em;margin-bottom:0.35rem} .qa-a{font-size:0.84rem;color:var(--text-dim);line-height:1.6} /* MORE SONGS */ .more-strip{padding:3rem 2rem 5rem;text-align:center} .more-card{max-width:520px;margin:0 auto;background:var(--bg-card);border:1px dashed var(--border-bright);border-radius:14px;padding:1.6rem;font-family:var(--font-mono);font-size:0.74rem;color:var(--text-dim);letter-spacing:0.04em;line-height:1.7} .more-card strong{color:var(--amber)} .merch-strip{padding:1rem 2rem 5rem;text-align:center} .merch-teaser{display:flex;justify-content:center;gap:1.2rem;margin:2rem 0 1.4rem;flex-wrap:wrap} .merch-item{width:72px;height:72px;border-radius:16px;background:var(--bg-card);border:1px dashed var(--border-bright);display:flex;align-items:center;justify-content:center;font-size:1.8rem;transition:transform .3s,box-shadow .3s} .merch-item:hover{transform:translateY(-5px) rotate(-4deg);box-shadow:var(--glow)} .merch-item:nth-child(2):hover{transform:translateY(-5px) rotate(4deg)} footer{background:var(--bg-panel);border-top:1px solid var(--border);padding:2.2rem;text-align:center;font-family:var(--font-mono);font-size:0.68rem;color:var(--text-muted);letter-spacing:0.1em} footer a{color:var(--hot);text-decoration:none} </style>
-
- </head>
+<title>
+Zen's Coding Realm | Method in Motion
+</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<style>
+:root {
+--pink: #ff6baa;
+--pink-dim: #e0568f;
+--purple: #c66bff;
+--purple-dim: #a34fe0;
+--bg: #0a0512;
+--bg-mid: #120a1e;
+--bg-card: #150c22;
+--bg-panel: #0d0718;
+--text: #f5e8f5;
+--text-dim: #b083c4;
+--text-muted: #5a3a6e;
+--border: rgba(255,107,170,0.15);
+--border-bright: rgba(255,107,170,0.4);
+--border-purple: rgba(198,107,255,0.3);
+--glow: 0 0 18px rgba(255,107,170,0.3);
+--glow-strong: 0 0 36px rgba(255,107,170,0.55);
+--cyan: #7fe8ff;
+--border-cyan: rgba(0,229,255,0.45);
+--font-display: 'Orbitron', monospace;
+--font-body: 'Space Grotesk', sans-serif;
+--font-mono: 'Space Mono', monospace;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(10,5,18,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
+.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--pink); text-decoration: none; letter-spacing: 0.1em; }
+.nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
+.nav-links a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--pink); }
+.nav-user { font-family: var(--font-mono); font-size: 0.75rem; color: var(--pink); display: none; }
+.nav-logout { background: none; border: 1px solid var(--border); color: var(--text-dim); font-family: var(--font-body); font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: none; }
+.nav-logout:hover { border-color: var(--pink); color: var(--pink); }
+.hero { margin-top: 60px; min-height: 640px; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
+.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); }
+.hero-gradient { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(10,5,18,0.96) 0%, rgba(10,5,18,0.5) 30%, rgba(10,5,18,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(10,5,18,0.55) 0%, rgba(10,5,18,0.1) 40%, transparent 70%); pointer-events: none; }
+.hero-pulse { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(ellipse 55% 45% at 50% 65%, rgba(198,107,255,0.14) 0%, transparent 65%); animation: pulseGlow 5s ease-in-out infinite; }
+@keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+.particle-field { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
+.particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 8px 2px rgba(255,107,170,0.6); opacity: 0; animation: floatUp linear infinite; }
+.particle:nth-child(odd) { background: var(--purple); box-shadow: 0 0 8px 2px rgba(198,107,255,0.6); }
+@keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
+.hero-zen-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(255,107,170,0.4)); pointer-events: none; }
+@media (max-width: 768px) { .hero-zen-gif { display: none; } }
+.hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
+.hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--pink); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(255,107,170,0.6); }
+.hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
+.hero-catchphrase { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple); background: rgba(198,107,255,0.12); border: 1px solid var(--border-purple); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; backdrop-filter: blur(4px); }
+.hero-role { font-family: var(--font-display); font-size: clamp(0.75rem, 1.5vw, 0.95rem); font-weight: 600; color: var(--pink); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; }
+.hero-quote { font-size: 1.05rem; color: var(--text-dim); line-height: 1.6; max-width: 460px; margin-bottom: 1rem; font-style: italic; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
+.hero-quote span { color: var(--pink); font-style: normal; font-weight: 600; }
+.hero-hint { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.04em; margin-bottom: 1rem; opacity: 0.85; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+.fact-ticker { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); max-width: 460px; min-height: 32px; margin-bottom: 1.2rem; line-height: 1.5; opacity: 0; transition: opacity 0.5s; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
+.fact-ticker.show { opacity: 1; }
+.fact-ticker::before { content: '✦ DID YOU KNOW — '; color: var(--purple); }
+.hero-tiles { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: stretch; }
+.hero-tile { background: rgba(255,107,170,0.08); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; backdrop-filter: blur(4px); }
+.hero-tile:hover { background: rgba(255,107,170,0.18); border-color: var(--pink); color: var(--pink); box-shadow: var(--glow); transform: translateY(-2px); }
+.hero-lesson-grid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 0.6rem; }
+.hero-game-tile { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.35rem; min-width: 128px; max-width: 150px; border-radius: 12px; border: 2px solid var(--pink); background: linear-gradient(160deg, rgba(255,107,170,0.22), rgba(198,107,255,0.14)); color: #fff; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-align: center; padding: 0.75rem 0.6rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 22px rgba(255,107,170,0.3), inset 0 0 16px rgba(255,107,170,0.08); animation: heroGameFloat 3.4s ease-in-out infinite; }
+.hero-game-tile:hover { background: linear-gradient(160deg, rgba(255,107,170,0.34), rgba(198,107,255,0.22)); box-shadow: 0 0 32px rgba(255,107,170,0.5), inset 0 0 20px rgba(255,107,170,0.14); transform: translateY(-3px) scale(1.03); }
+@keyframes heroGameFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
+.hero-game-icon { font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(255,107,170,0.7)); }
+.hero-game-label { font-family: var(--font-display); font-size: 0.74rem; letter-spacing: 0.06em; }
+.hero-game-cta { font-size: 0.6rem; opacity: 0.9; color: var(--pink); }
+@media (max-width: 768px) { .hero-zen-gif { display: none; } .hero-tiles { flex-wrap: wrap; } }
+.icebreaker { background: var(--bg-mid); border-bottom: 1px solid var(--border); padding: 3rem 2rem 3.5rem; }
+.ib-header { max-width: 640px; margin: 0 auto 2.2rem; text-align: center; }
+.ib-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; color: var(--purple); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
+.ib-title { font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem); color: #fff; font-weight: 900; margin-bottom: 0.6rem; text-shadow: var(--glow); }
+.ib-sub { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
+.ib-phase { max-width: 760px; margin: 0 auto; }
+.ib-terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin-bottom: 2rem; }
+.ib-term-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 10px; padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: center; }
+.ib-term-card:hover { transform: translateY(-2px); }
+.ib-term-code { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; }
+.ib-term-def { font-size: 0.76rem; color: var(--text-dim); line-height: 1.5; display: none; }
+.ib-term-card.open .ib-term-def { display: block; }
+.ib-start-btn { display: block; margin: 0 auto; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #000; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 0.9rem 2.4rem; border-radius: 100px; border: none; cursor: pointer; letter-spacing: 0.08em; box-shadow: var(--glow-strong); transition: transform 0.2s; }
+.ib-start-btn:hover { transform: scale(1.03); }
+.ib-build-stage { background: var(--bg-card); border-radius: 14px; padding: 2rem; text-align: center; }
+.ib-build-eyebrow { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.14em; margin-bottom: 0.6rem; }
+.ib-build-def { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; max-width: 480px; margin: 0 auto 1.6rem; }
+.ib-slots { display: flex; flex-direction: column; align-items: center; gap: 1.4rem; margin-bottom: 1.6rem; }
+.ib-slot { width: 84px; height: 52px; border: 2px dashed var(--border-bright); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-muted); background: rgba(255,255,255,0.02); transition: all 0.2s; }
+.ib-slot.filled { border-style: solid; color: #fff; font-weight: 700; }
+.ib-pieces-tray { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; }
+.ib-piece { padding: 0.7rem 1.1rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; cursor: grab; user-select: none; border: 2px solid; transition: all 0.2s; background: rgba(255,255,255,0.04); }
+.ib-piece:active { cursor: grabbing; }
+.ib-piece.placed { opacity: 0.25; pointer-events: none; }
+.ib-build-feedback { font-family: var(--font-mono); font-size: 0.78rem; color: var(--pink); min-height: 22px; margin-bottom: 0.6rem; }
+.ib-check-btn { background: var(--pink); color: var(--bg); border: none; padding: 0.6rem 1.6rem; border-radius: 100px; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; }
+.ib-sequence-stage { background: var(--bg-card); border-radius: 14px; padding: 2rem; text-align: center; }
+.ib-seq-status { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em; margin-bottom: 1.4rem; min-height: 20px; }
+.ib-seq-board { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; max-width: 680px; margin: 0 auto; }
+.ib-seq-card { min-width: 84px; min-height: 84px; padding: 0.5rem 0.9rem; border-radius: 12px; border: 2px solid; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; background: rgba(255,255,255,0.03); text-align: center; line-height: 1.3; word-break: break-word; }
+.ib-seq-card.lit { transform: scale(1.15); box-shadow: 0 0 28px var(--c, currentColor); background: var(--c, currentColor); color: #0a0512 !important; }
+.ib-seq-card.wrong { animation: shake 0.3s ease; }
+.ib-complete-card { background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 14px; padding: 2.5rem 2rem; text-align: center; }
+.ib-complete-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--pink); margin-bottom: 0.8rem; text-shadow: var(--glow); }
+.ib-complete-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.4rem; }
+.ib-replay-btn { background: none; border: 1px solid var(--border-bright); color: var(--pink); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.4rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; }
+.ib-skip-btn { display: block; margin: 1.6rem auto 0; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.2s; }
+.ib-skip-btn:hover { color: var(--text-dim); border-color: var(--border-bright); }
+@media (max-width: 600px) { .ib-slot { width: 64px; height: 46px; font-size: 0.78rem; } .ib-seq-card { min-width: 64px; height: 64px; font-size: 0.8rem; } }
+.icebreaker-wrapper { display: none; }
+.icebreaker-wrapper.open { display: block; }
+.icebreaker-wrapper.open .icebreaker { animation: ibPowerOn 0.6s ease; }
+@keyframes ibPowerOn { 0% { opacity: 0; transform: scale(0.92); filter: brightness(3.5) saturate(1.6); } 15% { opacity: 1; filter: brightness(2.4) saturate(1.4); } 45% { transform: scale(1.015); filter: brightness(1.3); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
+.ib-slot-group { margin-bottom: 0; padding-bottom: 1.2rem; border-bottom: 1px dashed var(--border); width: 100%; }
+.ib-slot-group:last-child { border-bottom: none; padding-bottom: 0; }
+.ib-slot-group-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 0.5rem; }
+.ib-doc-panel { background: #0c0614; border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.6rem; margin: 0 auto 1.6rem; max-width: 420px; text-align: left; font-family: var(--font-mono); font-size: 0.82rem; line-height: 2; }
+.ib-doc-line { color: var(--text-muted); opacity: 0.35; transition: all 0.4s ease; white-space: pre; }
+.ib-doc-line.revealed { opacity: 1; font-weight: 700; }
+.ib-doc-line.clickable { cursor: pointer; border-radius: 4px; }
+.ib-doc-line.clickable:hover { background: rgba(255,255,255,0.06); }
+.ib-doc-line.lit-line { background: rgba(255,255,255,0.15); box-shadow: 0 0 14px currentColor; }
+.ib-doc-line.wrong-line { animation: shake 0.3s ease; }
+.lesson-strip { position: sticky; top: 60px; z-index: 90; background: rgba(10,5,18,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; overflow-x: auto; scrollbar-width: none; }
+.lesson-strip::-webkit-scrollbar { display: none; }
+.lesson-tab { flex-shrink: 0; padding: 0.9rem 1.6rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; background: none; border-top: none; border-left: none; border-right: none; }
+.lesson-tab:hover { color: var(--pink); text-shadow: 0 0 8px rgba(255,107,170,0.5); transform: translateY(-1px); }
+.lesson-tab.active { color: var(--pink); border-bottom-color: var(--pink); text-shadow: 0 0 8px rgba(255,107,170,0.5); }
+.lesson-panel { display: none; }
+.lesson-panel.open { display: grid; grid-template-columns: 220px 1fr; min-height: 80vh; }
+.lesson-sidebar { background: var(--bg-panel); border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: sticky; top: calc(60px + 42px); height: calc(100vh - 102px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
+.sidebar-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
+.sidebar-nav-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.65rem 0.8rem; margin-bottom: 0.2rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
+.sidebar-nav-btn:hover { background: rgba(255,107,170,0.07); color: var(--pink); transform: translateX(3px); }
+.sidebar-nav-btn.active { background: rgba(255,107,170,0.11); color: var(--pink); font-weight: 600; }
+.sidebar-icon { font-size: 0.9rem; }
+.lesson-content { padding: 2.5rem 3rem; max-width: 900px; }
+.content-block { display: none; }
+.content-block.active { display: block; }
+.section-header { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
+.section-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; font-family: var(--font-mono); letter-spacing: 0.05em; }
+.read-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem 2rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
+.read-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--pink), var(--purple)); }
+.read-card-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--pink); letter-spacing: 0.2em; margin-bottom: 0.6rem; opacity: 0.7; }
+.read-card h3 { font-family: var(--font-display); font-size: 0.95rem; color: #fff; margin-bottom: 0.8rem; font-weight: 700; }
+.read-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
+.read-card p strong { color: var(--pink); font-weight: 600; }
+.read-card code { font-family: var(--font-mono); font-size: 0.85rem; background: rgba(255,107,170,0.1); color: var(--pink); padding: 0.15em 0.4em; border-radius: 4px; }
+.code-block, .demo-console { background: #0c0614; border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.85; color: #e8c8f0; overflow-x: auto; }
+.code-tag { color: #ff6baa; font-weight: 700; }
+.code-str { color: #ffe066; }
+.code-comment { color: #5a3a6e; font-style: italic; }
+.code-attr { color: #c66bff; }
+.code-val { color: #80deea; }
+.demo-console .line { display: flex; gap: 12px; opacity: 0; transform: translateX(-8px); transition: opacity 0.4s, transform 0.4s; }
+.demo-console .line.visible { opacity: 1; transform: none; }
+.terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
+.term-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; }
+.term-card:hover { border-color: var(--pink); box-shadow: 0 0 14px rgba(255,107,170,0.2); transform: translateY(-2px); }
+.term-card.open { border-color: var(--pink); }
+.term-name { font-family: var(--font-mono); font-size: 0.8rem; color: var(--pink); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
+.term-arrow { transition: transform 0.2s; color: var(--text-muted); }
+.term-card.open .term-arrow { transform: rotate(90deg); }
+.term-def { display: none; font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
+.term-card.open .term-def { display: block; }
+.term-example { display: block; margin-top: 0.5rem; font-size: 0.78rem; color: var(--text-muted); font-style: italic; }
+.demo-card { background: var(--bg-card); border: 1px solid var(--border-purple); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.2rem; position: relative; }
+.demo-card::before { content: '✦ TRY IT'; position: absolute; top: -1px; right: 12px; background: var(--purple); color: #000; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 0 0 4px 4px; letter-spacing: 0.1em; }
+.demo-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--purple); margin-bottom: 0.8rem; font-weight: 700; }
+.demo-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 0.8rem; }
+.run-btn { background: var(--pink); color: var(--bg); border: none; padding: 0.55rem 1.4rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; cursor: pointer; letter-spacing: 0.1em; transition: opacity 0.2s; }
+.run-btn:hover { opacity: 0.85; }
+.demo-output { background: #0c0614; border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.9rem; color: var(--text); display: none; line-height: 1.8; }
+.demo-output.show { display: block; }
+.drag-blocks { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; }
+.drag-item { padding: 0.8rem 1rem; background: rgba(255,107,170,0.06); border: 1px solid var(--border); border-radius: 8px; cursor: grab; display: flex; align-items: center; gap: 0.8rem; transition: all 0.2s; font-size: 0.85rem; color: var(--text-dim); }
+.drag-item:hover { background: rgba(255,107,170,0.1); border-color: var(--border-bright); }
+.drag-item.dragging { opacity: 0.4; cursor: grabbing; }
+.drag-handle { color: var(--text-muted); font-size: 0.7rem; flex-shrink: 0; }
+.drag-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,107,170,0.15); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.65rem; color: var(--pink); flex-shrink: 0; }
+.check-btn { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1.4rem; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #000; font-weight: 700; border: none; border-radius: 100px; cursor: pointer; transition: opacity 0.2s; }
+.check-btn:hover { opacity: 0.88; }
+.build-slots { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; }
+.build-slot { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--text-dim); flex-wrap: wrap; }
+.build-slot label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); min-width: 110px; }
+.build-slot select, .build-slot input[type="text"] { background: var(--bg-panel); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 0.7rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; outline: none; transition: border-color 0.2s; }
+.build-slot select:focus, .build-slot input:focus { border-color: var(--pink); }
+.build-slot input[type="color"] { width: 44px; height: 34px; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; background: none; padding: 2px; }
+.build-slot input[type="range"] { accent-color: var(--pink); width: 130px; }
+.quiz-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+.quiz-q { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; }
+.quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
+.quiz-opt { background: rgba(255,107,170,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; font-size: 0.88rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-align: left; font-family: var(--font-body); }
+.quiz-opt:hover { border-color: var(--pink); color: var(--pink); }
+.quiz-opt.correct { border-color: #ff6baa; background: rgba(255,107,170,0.1); color: #ff6baa; }
+.quiz-opt.wrong { border-color: #c66bff; background: rgba(198,107,255,0.08); color: #d9a3ff; animation: shake 0.3s ease; }
+@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
+.quiz-feedback { font-size: 0.82rem; margin-top: 0.6rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; }
+.quiz-feedback.show { display: block; }
+.quiz-feedback.correct { background: rgba(255,107,170,0.08); color: #ff9ac4; border: 1px solid rgba(255,107,170,0.2); }
+.quiz-feedback.wrong { background: rgba(198,107,255,0.07); color: #d9a3ff; border: 1px solid rgba(198,107,255,0.2); }
+.reflect-prompt { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
+.reflect-q { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.8rem; line-height: 1.5; }
+.reflect-input { width: 100%; background: rgba(255,107,170,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--text); resize: vertical; min-height: 80px; outline: none; transition: border-color 0.2s; }
+.reflect-input:focus { border-color: var(--pink); }
+.reflect-save-btn { margin-top: 0.5rem; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.35rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; }
+.reflect-save-btn:hover { border-color: var(--pink); color: var(--pink); }
+.reflect-saved { font-family: var(--font-mono); font-size: 0.68rem; color: var(--pink); margin-top: 0.4rem; display: none; }
+.reflect-response { margin-top: 0.8rem; padding: 0.9rem 1rem; background: rgba(198,107,255,0.06); border: 1px solid var(--border-purple); border-radius: 8px; font-size: 0.85rem; color: var(--purple); display: none; line-height: 1.7; }
+.reflect-response.show { display: block; }
+.cheat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.8rem; margin-bottom: 1rem; }
+.cheat-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--pink); margin-bottom: 1rem; font-weight: 700; }
+.cheat-items { display: flex; flex-direction: column; gap: 0.7rem; }
+.cheat-item { display: flex; gap: 1rem; align-items: flex-start; padding-bottom: 0.7rem; border-bottom: 1px solid rgba(255,107,170,0.06); }
+.cheat-item:last-child { border-bottom: none; padding-bottom: 0; }
+.cheat-term { font-family: var(--font-mono); font-size: 0.78rem; color: var(--pink); min-width: 140px; font-weight: 700; }
+.cheat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
+.cheat-btn-row { display: flex; gap: 0.7rem; margin-top: 1.2rem; flex-wrap: wrap; }
+.cheat-download-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,107,170,0.07); border: 1px solid var(--border-bright); color: var(--pink); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.08em; }
+.cheat-download-btn:hover { background: rgba(255,107,170,0.16); box-shadow: var(--glow); }
+.cheat-download-btn.secondary { background: none; border-color: var(--border); color: var(--text-muted); font-size: 0.65rem; }
+.cheat-download-btn.secondary:hover { color: var(--text-dim); border-color: var(--border-bright); }
+.locked-panel { padding: 4rem 3rem; text-align: center; }
+.locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.45; }
+.locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; }
+.locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+.gate-btn { display: inline-block; background: var(--pink); color: var(--bg); font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; padding: 0.8rem 2rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; letter-spacing: 0.08em; transition: opacity 0.2s; }
+.gate-btn:hover { opacity: 0.85; }
+.lesson-complete { background: linear-gradient(135deg, rgba(255,107,170,0.07), rgba(198,107,255,0.05)); border: 1px solid var(--border-bright); border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; display: none; }
+.lesson-complete.show { display: block; }
+.lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--pink); margin-bottom: 0.5rem; }
+.lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
+.lesson-joke { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--purple); font-style: italic; }
+.discovery-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(10,5,18,0.97); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; }
+.discovery-overlay.hidden { display: none; }
+.zen-mark { font-family: var(--font-mono); font-size: 2rem; color: var(--pink); margin-bottom: 1rem; letter-spacing: 0.3em; text-shadow: var(--glow-strong); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+.discovery-title { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; color: var(--pink); text-shadow: var(--glow-strong); margin-bottom: 0.8rem; }
+.discovery-sub { font-size: 1rem; color: var(--text-dim); max-width: 460px; line-height: 1.6; margin-bottom: 2rem; }
+.discovery-enter-btn { background: var(--pink); color: var(--bg); font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 1rem 2.5rem; border-radius: 8px; border: none; cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s; box-shadow: var(--glow-strong); }
+.discovery-enter-btn:hover { transform: scale(1.03); }
+.discovery-overlay.fading { opacity: 0; transition: opacity 0.7s ease; pointer-events: none; }
+.hologram-stage { display: none; position: relative; width: min(420px, 86vw); margin: 0 auto; }
+.hologram-frame { position: relative; border: 1px solid var(--border-cyan); border-radius: 12px; overflow: hidden; box-shadow: 0 0 40px rgba(0,229,255,0.35), 0 0 80px rgba(198,107,255,0.2); animation: hologramMaterialize 1.1s ease-out, hologramFlicker 2.4s steps(1) infinite 1.1s; }
+.hologram-frame::before, .hologram-frame::after { content: ''; position: absolute; width: 22px; height: 22px; border: 2px solid var(--cyan); z-index: 5; }
+.hologram-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.hologram-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
+.hologram-video { width: 100%; display: block; filter: saturate(1.2) brightness(1.05); }
+.hologram-scanlines { position: absolute; inset: 0; z-index: 4; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0,229,255,0.08) 0px, transparent 2px, transparent 4px); mix-blend-mode: overlay; }
+.hologram-scan-sweep { position: absolute; left: 0; right: 0; height: 40%; z-index: 6; pointer-events: none; background: linear-gradient(to bottom, transparent, rgba(0,229,255,0.25), transparent); animation: hologramSweep 1.6s ease-in-out infinite; }
+.hologram-caption { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--cyan); text-shadow: 0 0 10px rgba(0,229,255,0.6); animation: pulse 1.2s ease-in-out infinite; }
+@keyframes hologramMaterialize { 0% { opacity: 0; transform: scale(0.85) translateY(10px); clip-path: inset(0 0 100% 0); } 40% { opacity: 1; clip-path: inset(0 0 0 0); } 100% { opacity: 1; transform: scale(1) translateY(0); clip-path: inset(0 0 0 0); } }
+@keyframes hologramFlicker { 0%, 100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.6; } 94% { opacity: 1; } 96% { opacity: 0.75; } 97% { opacity: 1; } }
+@keyframes hologramSweep { 0% { top: -40%; } 100% { top: 100%; } }
+@keyframes companionFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+.sound-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: rgba(21,12,34,0.9); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; opacity: 0; pointer-events: none; }
+.sound-toggle.visible { opacity: 1; pointer-events: auto; }
+.sound-toggle:hover { box-shadow: var(--glow); border-color: var(--pink); }
+.sound-toggle.muted { opacity: 0.5; }
+.egg-popup { position: fixed; bottom: 100px; right: 24px; z-index: 250; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 1.2rem 1.4rem; max-width: 260px; box-shadow: var(--glow-strong); display: none; }
+.egg-popup.show { display: block; animation: eggPop 0.4s ease; }
+@keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
+.egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--pink); margin-bottom: 0.5rem; }
+.egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
+@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .fact-ticker { display: none; } .sound-toggle { bottom: 24px; } }
+</style>
+</head>
 <body>
+<div class="discovery-overlay" id="discoveryOverlay">
+<div class="zen-mark">✦ ✦ ✦</div>
+<div class="discovery-title">Zen's Coding Realm</div>
+<div class="discovery-sub">Every idea starts as nothing.<br>One line of code turns it into something real.</div>
+<button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterRealm()">Enter the Realm</button>
+<div class="hologram-stage" id="hologramStage">
+<div class="hologram-frame">
+<img class="hologram-video" id="entranceVideo" src="zen-entrance.gif" alt="Zen materializing">
+<div class="hologram-scanlines"></div>
+<div class="hologram-scan-sweep"></div>
+</div>
+<div class="hologram-caption">✦ MATERIALIZING...</div>
+</div>
+</div>
 <nav>
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
-<li>
-<a href="games.html">Games</a>
-</li>
-<li>
-<a href="mim-tv.html">MiM TV</a>
-</li>
-<li>
-<a href="broken-syntax.html">Broken Syntax</a>
-</li>
-<li>
-<a href="index.html#membership">Membership</a>
-</li>
+<li><a href="games.html">Games</a></li>
+<li><a href="pdfs.html">PDFs</a></li>
+<li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="broken-syntax.html">Broken Syntax</a></li>
+<li><a href="mim-tv.html">MiM TV</a></li>
+<li><a href="comic.html">Comics</a></li>
+<li><a href="index.html#membership">Membership</a></li>
 </ul>
+<span class="nav-user" id="navUser"></span>
+<button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
 </nav>
-<section class="hero">
-<div class="hero-bg">
+<section class="hero" id="zenHero">
+<video class="hero-video" autoplay muted loop playsinline poster="zen-hero.png">
+<source src="zen-hero.mp4" type="video/mp4">
+</video>
+<div class="hero-gradient"></div>
+<div class="hero-pulse"></div>
+<div class="particle-field" id="particleField"></div>
+<img class="hero-zen-gif" src="corrected-zen-idle.gif" alt="Zen" onerror="this.style.display='none'" onclick="companionClick()" style="pointer-events:auto;cursor:pointer;">
+<div class="hero-content">
+<div class="hero-eyebrow">✦ &nbsp; Creative Coder &nbsp; · &nbsp; HTML &amp; CSS</div>
+<div class="hero-name">Zen</div>
+<div class="hero-catchphrase">Style is my superpower.</div>
+<div class="hero-role">The Creative Coder</div>
+<div class="hero-quote">"<span>Every idea starts as nothing.</span> Then you write one line of code, and it becomes something real."</div>
+<div class="fact-ticker" id="factTicker"></div>
+<div class="hero-tiles">
+<div class="hero-lesson-grid">
+<a class="hero-tile" onclick="jumpToLesson(1)">01 What Is Code?</a>
+<a class="hero-tile" onclick="jumpToLesson(2)">02 Your First Tag</a>
+<a class="hero-tile" onclick="jumpToLesson(3)">03 Colors &amp; Style</a>
+<a class="hero-tile" onclick="jumpToLesson(4)">04 Build Your Page</a>
 </div>
-<div class="hero-scan">
-</div>
-<div class="hero-particle-field" id="heroParticleField">
-</div>
-<div class="hero-eyebrow">MiM Underground · Recording Artists</div>
-<h1 class="hero-title">BROKEN <span>SYNTAX</span>
-</h1>
-<p class="hero-sub">Three glitches, one groove. Bug, Zen, and Loop write songs about the messy, glorious process of building something that actually works.</p>
-<p class="hero-tag">Lead Vocals + Guitar · Drums · Bass</p>
-<div class="genre-tags">
-<span class="tag-pill">Pop-Punk</span>
-<span class="tag-pill">Emo</span>
-<span class="tag-pill">MiM Underground</span>
-</div>
-<div class="player-wrap">
-<div class="cassette" id="cassetteEl">
-<div class="cassette-art" id="cassetteArt">
-<img src="html-single.png" alt="HTML (How NOT To Make Lasagna) single cover">
-</div>
-<div class="cassette-body">
-<div class="cassette-label">Now Playing · Single</div>
-<div class="cassette-title">HTML (How NOT To Make Lasagna)</div>
-<div class="cassette-artist">Broken Syntax</div>
-<div class="cassette-controls">
-<button class="play-btn" id="playBtn" onclick="togglePlay()">▶</button>
-<div class="eq-bars" id="eqBars">
-<span>
-</span>
-<span>
-</span>
-<span>
-</span>
-<span>
-</span>
-</div>
-<div class="progress-wrap">
-<div class="progress-bar" id="progressBar" onclick="seek(event)">
-<div class="progress-fill" id="progressFill">
-</div>
-</div>
-<span class="time-label" id="timeLabel">0:00 / 0:00</span>
-</div>
-</div>
-</div>
-</div>
-<p class="player-note">More tracks drop soon — check back for the rest of the album.</p>
-</div>
-</section>
-<section class="band">
-<span class="section-label">Meet the Band</span>
-<h2 class="section-title">Who's Behind the Noise</h2>
-<p class="section-desc">Tap a band member to read their interview — straight from the MiM Underground press room.</p>
-<div class="band-grid">
-<!-- BUG -->
-<div class="member-card" style="--mc:var(--bug-c)">
-<div class="member-photo">
-<img src="bug-broken-syntax.png" alt="Bug" onerror="this.style.display='none'">
-</div>
-<div class="member-body">
-<div class="member-role">Lead Vocals &amp; Guitar</div>
-<div class="member-name">Bug</div>
-<div class="member-line">"Every bug is just a clue — turns out that works for lyrics too."</div>
-<button class="interview-toggle" onclick="toggleInterview(this)">
-<span>Read the Interview</span>
-<span class="arrow">▾</span>
+<button class="hero-game-tile" onclick="ibToggleWrapper()" aria-label="Open the Memory Matrix icebreaker game">
+<span class="hero-game-icon">✦</span>
+<span class="hero-game-label">MEMORY<br>MATRIX</span>
+<span class="hero-game-cta">Boot Game →</span>
 </button>
-<div class="interview-panel">
-<div class="interview-inner">
-<div class="qa">
-<div class="qa-q">Q: What's "HTML (How NOT To Make Lasagna)" actually about?</div>
-<div class="qa-a">Nesting things wrong. You stack layer after layer and forget to close one, and suddenly the whole dish collapses. Same thing happens with tags. I wrote it after a very bad dinner and a worse bug.</div>
-</div>
-<div class="qa">
-<div class="qa-q">Q: Loudest part of being in this band?</div>
-<div class="qa-a">Me. Obviously. Someone has to be the alarm going off when things break — might as well make it sound good.</div>
-</div>
-<div class="qa">
-<div class="qa-q">Q: Any advice for someone starting their first song, or their first line of code?</div>
-<div class="qa-a">Make the mess first. You can't fix something that doesn't exist yet.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- ZEN -->
-<div class="member-card" style="--mc:var(--zen-c)">
-<div class="member-photo">
-<img src="zen-broken-syntax-pose.png" alt="Zen" onerror="this.style.display='none'">
-</div>
-<div class="member-body">
-<div class="member-role">Drums</div>
-<div class="member-name">Zen</div>
-<div class="member-line">"If you can imagine the beat, you can play it."</div>
-<button class="interview-toggle" onclick="toggleInterview(this)">
-<span>Read the Interview</span>
-<span class="arrow">▾</span>
-</button>
-<div class="interview-panel">
-<div class="interview-inner">
-<div class="qa">
-<div class="qa-q">Q: Why drums, out of everything?</div>
-<div class="qa-a">Rhythm is just structure you can feel. I spend all day thinking about layout and spacing — drums are the same idea, just louder and way more fun.</div>
-</div>
-<div class="qa">
-<div class="qa-q">Q: What's it like writing with Bug and Loop?</div>
-<div class="qa-a">Bug brings the chaos, Loop keeps the count, and I just try to make it all look good on stage. It works better than it should.</div>
-</div>
-<div class="qa">
-<div class="qa-q">Q: One thing you want people to take from the song?</div>
-<div class="qa-a">Messy first drafts are allowed. The good version comes after, not instead of.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- LOOP -->
-<div class="member-card" style="--mc:var(--loop-c)">
-<div class="member-photo">
-<img src="loop-broken-syntax.png" alt="Loop" onerror="this.style.display='none'">
-</div>
-<div class="member-body">
-<div class="member-role">Bass</div>
-<div class="member-name">Loop</div>
-<div class="member-line">"Every pattern has a reason — including this bassline."</div>
-<button class="interview-toggle" onclick="toggleInterview(this)">
-<span>Read the Interview</span>
-<span class="arrow">▾</span>
-</button>
-<div class="interview-panel">
-<div class="interview-inner">
-<div class="qa">
-<div class="qa-q">Q: How does bass connect to what you teach about loops?</div>
-<div class="qa-a">A bassline is a loop you can dance to. Same start, same stop, same step, repeating until the song tells it otherwise.</div>
-</div>
-<div class="qa">
-<div class="qa-q">Q: What's your role in the band, really?</div>
-<div class="qa-a">I hold the pattern steady so Bug can be loud and Zen can get creative on top of it. Someone has to keep the count.</div>
-</div>
-<div class="qa">
-<div class="qa-q">Q: Favorite part of recording the single?</div>
-<div class="qa-a">Watching Bug try to explain lasagna nesting to a producer who had never made lasagna. Took four takes.</div>
-</div>
-</div>
-</div>
-</div>
 </div>
 </div>
 </section>
-<section class="more-strip">
-<div class="more-card">
-<strong>More tracks incoming.</strong> The rest of the Broken Syntax album is still in the studio — check back soon for new songs, new interviews, and behind-the-scenes clips from MiM TV.</div>
-</section>
-<section class="merch-strip">
-<span class="section-label">MiM Underground Shop</span>
-<h2 class="section-title">Merch — Coming Soon</h2>
-<p class="section-desc">Tees, stickers, and pins from Broken Syntax. Gear up before the next drop.</p>
-<div class="merch-teaser">
-<div class="merch-item">👕</div>
-<div class="merch-item">📌</div>
-<div class="merch-item">🎧</div>
+<div class="icebreaker-wrapper" id="icebreakerWrapper">
+<section class="icebreaker" id="icebreaker">
+<div class="ib-header">
+<div class="ib-eyebrow">✦ &nbsp; ICEBREAKER &nbsp; · &nbsp; HTML TAG RECOGNITION</div>
+<h2 class="ib-title">Learn the Building Blocks</h2>
+<p class="ib-sub">Every tag on a real page has an opening half and a closing half wrapped around content. Learn each one, build both halves, then lock the whole sequence into memory.</p>
+</div>
+<div class="ib-phase" id="ib-intro">
+<div class="ib-terms-grid" id="ibTermsGrid"></div>
+<button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">Start the Game ✦</button>
+</div>
+<div class="ib-phase" id="ib-game" style="display:none;">
+<div class="ib-doc-panel" id="ibDocPanel"></div>
+<div class="ib-build-stage" id="ibBuildStage"></div>
+<div class="ib-sequence-stage" id="ibSequenceStage" style="display:none;"></div>
+</div>
+<div class="ib-phase" id="ib-complete" style="display:none;">
+<div class="ib-complete-card">
+<h3>✦ Muscle Memory Unlocked</h3>
+<p>DOCTYPE. html. head. title. body. h1. p. That's the skeleton of every website on the internet — and it's in your memory now.</p>
+<button class="ib-replay-btn" onclick="ibReset()">Play Again</button>
+<button class="ib-replay-btn" onclick="ibToggleWrapper()" style="margin-left:0.6rem;">Close</button>
+</div>
 </div>
 </section>
-<footer> Method in Motion &nbsp;·&nbsp; <a href="mim-tv.html">MiM TV</a> &nbsp;·&nbsp; <a href="index.html">Back to the Universe</a>
-</footer>
-<audio id="audioEl" src="HTML%20Single.mp3" preload="metadata">
-</audio> 
-
-<script> const audio = document.getElementById('audioEl'); const playBtn = document.getElementById('playBtn'); const progressFill = document.getElementById('progressFill'); const progressBar = document.getElementById('progressBar'); const timeLabel = document.getElementById('timeLabel'); const cassetteEl = document.getElementById('cassetteEl'); function formatTime(s) { if (!isFinite(s)) return '0:00'; const m = Math.floor(s / 60); const sec = Math.floor(s % 60).toString().padStart(2, '0'); return m + ':' + sec; } function togglePlay() { if (audio.paused) { audio.play().catch(() => {}); playBtn.textContent = '❚❚'; cassetteEl.classList.add('playing'); } else { audio.pause(); playBtn.textContent = '▶'; cassetteEl.classList.remove('playing'); } } audio.addEventListener('timeupdate', () => { const pct = audio.duration ? (audio.currentTime / audio.duration) * 100 : 0; progressFill.style.width = pct + '%'; timeLabel.textContent = formatTime(audio.currentTime) + ' / ' + formatTime(audio.duration); }); audio.addEventListener('loadedmetadata', () => { timeLabel.textContent = formatTime(0) + ' / ' + formatTime(audio.duration); }); audio.addEventListener('ended', () => { playBtn.textContent = '▶'; cassetteEl.classList.remove('playing'); }); function seek(e) { const rect = progressBar.getBoundingClientRect(); const pct = (e.clientX - rect.left) / rect.width; if (audio.duration) audio.currentTime = pct * audio.duration; } function toggleInterview(btn) { btn.classList.toggle('open'); const panel = btn.nextElementSibling; panel.classList.toggle('open'); } function spawnHeroSpark() { const field = document.getElementById('heroParticleField'); if (!field) return; const p = document.createElement('div'); p.className = 'hero-spark'; const startX = Math.random() * 100; const duration = 7 + Math.random() * 9; const delay = Math.random() * 2; p.style.left = startX + '%'; p.style.bottom = '0'; p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's'; field.appendChild(p); setTimeout(() => p.remove(), (duration + delay) * 1000 + 500); } for (let i = 0; i < 12; i++) setTimeout(spawnHeroSpark, i * 450); setInterval(spawnHeroSpark, 950); </script>
-
- </body>
+</div>
+<div class="lesson-strip">
+<button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — What Is Code?</button>
+<button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Your First Tag</button>
+<button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Colors &amp; Style</button>
+<button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Build Your Page</button>
+<button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">✦ Cheat Sheet</button>
+</div>
+<div class="lesson-panel" id="lesson-1">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 01</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+</aside>
+<div class="lesson-content">
+<div class="content-block active" id="block-1-read">
+<div class="section-header">What Is Code?</div>
+<div class="section-sub">LESSON 01</div>
+<div class="read-card">
+<div class="read-card-num">01 / 04</div>
+<h3>Instructions, Not Magic</h3>
+<p>"Hey, I'm Zen. I build things with code — websites, animations, digital art. Before I learned how, I had one question: what even IS this stuff?"</p>
+<p>Code is just a set of instructions. That's it.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">02 / 04</div>
+<h3>Computers Follow Instructions Fast</h3>
+<p>The language we use to write instructions for websites is called <strong>HTML</strong>. It's made of <strong>tags</strong> — labels that tell the browser what to do with your content.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">03 / 04</div>
+<h3>The Browser Reads Your Instructions</h3>
+<p>A browser is just reading your instructions and turning them into something visual. You're the one writing the instructions. That makes you the coder.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">04 / 04</div>
+<h3>Every Website Started This Way</h3>
+<p>Every single website you've ever visited was built with HTML at its core.</p>
+</div>
+</div>
+<div class="locked-panel" id="anon-lock-1">
+<div class="locked-icon">✦</div>
+<h2>Free to Explore, Free to Sign Up</h2>
+<p>Create a free account to unlock quizzes, the build tools, and reflections for every one of Zen's lessons.</p>
+<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
+</div>
+<div id="anon-gated-1">
+<div class="content-block" id="block-1-terms">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Code <span class="term-arrow">›</span></div><div class="term-def">A set of step-by-step instructions written in a language a computer can understand. <span class="term-example">Example: Telling a browser "make this text a heading" is code.</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">HTML <span class="term-arrow">›</span></div><div class="term-def">HyperText Markup Language. The language used to build every webpage. <span class="term-example">Example: Every website you've visited was built with HTML.</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Tag <span class="term-arrow">›</span></div><div class="term-def">A label in angle brackets that tells the browser what content is. <span class="term-example">Example: &lt;h1&gt;This is a heading&lt;/h1&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Browser <span class="term-arrow">›</span></div><div class="term-def">The program that reads HTML and turns it into a visual webpage. <span class="term-example">Example: Chrome, Safari, Firefox.</span></div></div>
+</div>
+</div>
+<div class="content-block" id="block-1-build">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 01 · SEE IT LIVE</div>
+<div class="demo-card">
+<h3>Your First Lines of HTML</h3>
+<p>Watch how HTML tags turn plain text into a real webpage.</p>
+<div class="demo-console" id="codeDemo1">
+<div class="line" id="c1l1"><span class="code-comment">/* HTML tells the browser what things are */</span></div>
+<div class="line" id="c1l2"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Hello, I'm Zen.</span><span class="code-tag">&lt;/h1&gt;</span></div>
+<div class="line" id="c1l3"><span class="code-tag">&lt;p&gt;</span><span class="code-str">I build things with code.</span><span class="code-tag">&lt;/p&gt;</span></div>
+<div class="line" id="c1l4"><span class="code-tag">&lt;p&gt;</span><span class="code-str">What will YOU build?</span><span class="code-tag">&lt;/p&gt;</span></div>
+</div>
+<button class="run-btn" onclick="runCode1()">▶ Run the Code</button>
+<div class="demo-output" id="output1">
+<strong style="font-size:1.2rem;display:block;margin-bottom:6px;color:#fff">Hello, I'm Zen.</strong>
+<span style="color:var(--text-dim)">I build things with code.</span><br>
+<span style="color:var(--text-dim)">What will YOU build?</span>
+</div>
+</div>
+<div class="demo-card">
+<h3>Put the Steps in Order</h3>
+<p>Zen is building her first webpage. Drag these steps into the right order.</p>
+<div class="drag-blocks" id="dragList1">
+<div class="drag-item" draggable="true" data-order="3"><span class="drag-handle">⠿</span><span class="drag-num">?</span> Add HTML tags to label each piece of content</div>
+<div class="drag-item" draggable="true" data-order="1"><span class="drag-handle">⠿</span><span class="drag-num">?</span> Have an idea for what to build</div>
+<div class="drag-item" draggable="true" data-order="4"><span class="drag-handle">⠿</span><span class="drag-num">?</span> Open your browser and see it appear</div>
+<div class="drag-item" draggable="true" data-order="2"><span class="drag-handle">⠿</span><span class="drag-num">?</span> Write your content — words, titles, sentences</div>
+</div>
+<button class="check-btn" onclick="checkDrag1()">Check My Answer →</button>
+<div class="demo-output" id="drag1Result"></div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">What does HTML stand for?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'HTML stands for HyperText Markup Language.')">HyperText Making Language</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. HTML stands for HyperText Markup Language.')">HyperText Markup Language</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'HTML stands for HyperText Markup Language.')">High Tech Markup Logic</button>
+</div>
+<div class="quiz-feedback" id="qfb-1-0"></div>
+</div>
+</div>
+<div class="content-block" id="block-1-reflect">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
+<div class="reflect-prompt">
+<div class="reflect-q">If you could build one thing on the internet — anything at all — what would it be?</div>
+<textarea class="reflect-input" id="ref-1-1" placeholder="I would build..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
+<span class="reflect-saved" id="saved-1-1">✓ Saved</span>
+</div>
+<div class="reflect-response" id="resp-1-1"></div>
+</div>
+<div class="lesson-complete" id="complete-1">
+<h3>✦ &nbsp; Lesson 1 Complete</h3>
+<p>What code is. What HTML stands for. How tags work.</p>
+<div class="lesson-joke" id="joke-1"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lesson-panel" id="lesson-2">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 02</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-2">
+<div class="locked-icon">🔒</div>
+<h2>Sign Up Free</h2>
+<p>Create a free account to unlock all of Zen's lessons.</p>
+<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
+</div>
+<div class="content-block" id="block-2-read" style="display:none">
+<div class="section-header">Your First HTML Tag</div>
+<div class="section-sub">LESSON 02</div>
+<div class="read-card">
+<div class="read-card-num">01 / 04</div>
+<h3>Labels for the Browser</h3>
+<p>An <strong>opening tag</strong> tells the browser where something starts. A <strong>closing tag</strong> (with a slash) tells it where it ends.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">02 / 04</div>
+<h3>Every Tag Has a Job</h3>
+<p>Once you know a tag's job, you own it forever.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">03 / 04</div>
+<h3>Mistakes Aren't Permanent</h3>
+<p>Browsers are forgiving. Fix it and try again.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">04 / 04</div>
+<h3>Attributes Add Extra Info</h3>
+<p>The most common is <code>href</code> on a link.</p>
+<div class="code-block"><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-str">"https://..."</span><span class="code-tag">&gt;</span>Click here<span class="code-tag">&lt;/a&gt;</span></div>
+</div>
+</div>
+<div class="content-block" id="block-2-terms" style="display:none">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Opening Tag <span class="term-arrow">›</span></div><div class="term-def">The start of an element. <span class="term-example">Example: &lt;p&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Closing Tag <span class="term-arrow">›</span></div><div class="term-def">The end of an element, with a slash. <span class="term-example">Example: &lt;/p&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Element <span class="term-arrow">›</span></div><div class="term-def">Opening tag + content + closing tag together. <span class="term-example">Example: &lt;h1&gt;My Title&lt;/h1&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Attribute <span class="term-arrow">›</span></div><div class="term-def">Extra info inside an opening tag. <span class="term-example">Example: href sets a link's destination.</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Anchor Tag (&lt;a&gt;) <span class="term-arrow">›</span></div><div class="term-def">Creates a clickable link. <span class="term-example">Example: &lt;a href="..."&gt;Click here&lt;/a&gt;</span></div></div>
+</div>
+</div>
+<div class="content-block" id="block-2-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 02 · SEE IT LIVE</div>
+<div class="demo-card">
+<h3>Different Tags, Different Jobs</h3>
+<div class="demo-console" id="codeDemo2">
+<div class="line" id="c2l1"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Zen's Coding Realm</span><span class="code-tag">&lt;/h1&gt;</span></div>
+<div class="line" id="c2l2"><span class="code-tag">&lt;p&gt;</span><span class="code-str">This is a paragraph.</span><span class="code-tag">&lt;/p&gt;</span></div>
+<div class="line" id="c2l3"><span class="code-tag">&lt;a</span> <span class="code-attr">href=</span><span class="code-str">"#"</span><span class="code-tag">&gt;</span><span class="code-str">This is a link</span><span class="code-tag">&lt;/a&gt;</span></div>
+</div>
+<button class="run-btn" onclick="runCode2()">▶ Run the Code</button>
+<div class="demo-output" id="output2">
+<strong style="font-size:1.3rem;display:block;margin-bottom:4px;color:#fff">Zen's Coding Realm</strong>
+<p style="color:var(--text-dim);margin-bottom:8px">This is a paragraph.</p>
+<a href="#" style="color:var(--purple);text-decoration:underline">This is a link</a>
+</div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">Which of these is a correctly written HTML element?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wrong syntax.')">&lt;p Hello World /p&gt;</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct.')">&lt;p&gt;Hello World&lt;/p&gt;</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Missing the slash.')">&lt;p&gt;Hello World&lt;p&gt;</button>
+</div>
+<div class="quiz-feedback" id="qfb-2-0"></div>
+</div>
+</div>
+<div class="content-block" id="block-2-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
+<div class="reflect-prompt">
+<div class="reflect-q">Think about a website you use every day. What tags might be on that page?</div>
+<textarea class="reflect-input" id="ref-2-1" placeholder="I think..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
+<span class="reflect-saved" id="saved-2-1">✓ Saved</span>
+</div>
+</div>
+<div class="lesson-complete show" id="complete-2">
+<h3>✦ &nbsp; Lesson 2 Complete</h3>
+<p>You just wrote real HTML.</p>
+<div class="lesson-joke" id="joke-2"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="lesson-panel" id="lesson-3">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 03</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-3">
+<div class="locked-icon">🔒</div>
+<h2>Sign Up Free</h2>
+<p>Create a free account to unlock all of Zen's lessons.</p>
+<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
+</div>
+<div class="content-block" id="block-3-read" style="display:none">
+<div class="section-header">Colors &amp; Style with CSS</div>
+<div class="section-sub">LESSON 03</div>
+<div class="read-card">
+<div class="read-card-num">01 / 04</div>
+<h3>The Skeleton and the Style</h3>
+<p>CSS stands for <strong>Cascading Style Sheets</strong>. While HTML says "this is a heading," CSS says "make that heading pink."</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">02 / 04</div>
+<h3>Select, Then Style</h3>
+<div class="code-block"><span class="code-tag">h1</span> <span class="code-comment">{</span><br>&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">#ff6baa</span>;<br><span class="code-comment">}</span></div>
+</div>
+<div class="read-card">
+<div class="read-card-num">03 / 04</div>
+<h3>Why It's Called "Cascading"</h3>
+<p>Styles flow down from parent to child.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">04 / 04</div>
+<h3>Hex Colors</h3>
+<p>Six characters starting with #.</p>
+</div>
+</div>
+<div class="content-block" id="block-3-terms" style="display:none">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">CSS <span class="term-arrow">›</span></div><div class="term-def">Cascading Style Sheets. <span class="term-example">Example: color: pink;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Selector <span class="term-arrow">›</span></div><div class="term-def">Targets which element to style. <span class="term-example">Example: h1 {}</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Property <span class="term-arrow">›</span></div><div class="term-def">What you want to change. <span class="term-example">Example: color, font-size.</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Value <span class="term-arrow">›</span></div><div class="term-def">What you set the property to. <span class="term-example">Example: red is the value in color: red;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Hex Color <span class="term-arrow">›</span></div><div class="term-def">A six-character code representing an exact color. <span class="term-example">Example: #ff6baa is Zen's pink.</span></div></div>
+</div>
+</div>
+<div class="content-block" id="block-3-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 03 · SEE IT LIVE</div>
+<div class="demo-card">
+<h3>Style Your Own Heading</h3>
+<div class="build-slots">
+<div class="build-slot"><label>Color</label><input type="color" id="colorPicker" value="#ff6baa" oninput="updatePreview3()"><span id="colorHex" style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted)">#ff6baa</span></div>
+<div class="build-slot"><label>Font Size</label><input type="range" id="sizeSlider" min="16" max="64" value="32" oninput="updatePreview3()"><span id="sizeVal" style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted)">32px</span></div>
+<div class="build-slot"><label>Your Text</label><input type="text" id="styleText" placeholder="Type something..." oninput="updatePreview3()"></div>
+</div>
+<div class="demo-output show" id="stylePreview">
+<div id="styleOutput" style="font-size:32px;color:#ff6baa;font-weight:700;font-family:var(--font-display)">Your styled heading</div>
+</div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">In CSS, what does a selector do?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wrong.')">Writes the HTML</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct.')">Targets which element to style</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wrong.')">Sets background color</button>
+</div>
+<div class="quiz-feedback" id="qfb-3-0"></div>
+</div>
+</div>
+<div class="content-block" id="block-3-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
+<div class="reflect-prompt">
+<div class="reflect-q">What colors would you use if designing your own site?</div>
+<textarea class="reflect-input" id="ref-3-1" placeholder="My site would feel..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
+<span class="reflect-saved" id="saved-3-1">✓ Saved</span>
+</div>
+</div>
+<div class="lesson-complete show" id="complete-3">
+<h3>✦ &nbsp; Lesson 3 Complete</h3>
+<p>Color, fonts, style — you've got it.</p>
+<div class="lesson-joke" id="joke-3"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="lesson-panel" id="lesson-4">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 04</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-4">
+<div class="locked-icon">🔒</div>
+<h2>Sign Up Free</h2>
+<p>Create a free account to unlock all of Zen's lessons.</p>
+<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
+</div>
+<div class="content-block" id="block-4-read" style="display:none">
+<div class="section-header">Build Your Own Page</div>
+<div class="section-sub">LESSON 04</div>
+<div class="read-card">
+<div class="read-card-num">01 / 03</div>
+<h3>The First Page I Ever Built</h3>
+<p>Every real webpage starts with an HTML file.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">02 / 03</div>
+<h3>Head vs. Body</h3>
+<p>The <strong>head</strong> holds settings. The <strong>body</strong> holds everything visible.</p>
+</div>
+<div class="read-card">
+<div class="read-card-num">03 / 03</div>
+<h3>No Wrong Way to Start</h3>
+<p>Pick a topic you care about.</p>
+</div>
+</div>
+<div class="content-block" id="block-4-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 04 · CAPSTONE</div>
+<div class="demo-card">
+<h3>Capstone: Build Your Own Page</h3>
+<div class="build-slots">
+<div class="build-slot"><label>Page Title</label><input type="text" id="cap-title" placeholder="My page is about..." oninput="updateCapstone()"></div>
+<div class="build-slot"><label>Heading</label><input type="text" id="cap-h1" placeholder="Welcome to..." oninput="updateCapstone()"></div>
+<div class="build-slot"><label>Paragraph</label><input type="text" id="cap-p" placeholder="This page is about..." oninput="updateCapstone()"></div>
+<div class="build-slot"><label>Color</label><input type="color" id="cap-color" value="#ff6baa" oninput="updateCapstone()"></div>
+</div>
+<div class="demo-output show" id="capPreview">
+<div id="capOutput"></div>
+</div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">Which section holds content visitors actually see?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wrong.')">The &lt;head&gt; section</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct.')">The &lt;body&gt; section</button>
+</div>
+<div class="quiz-feedback" id="qfb-4-0"></div>
+</div>
+</div>
+<div class="content-block" id="block-4-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 04</div>
+<div class="reflect-prompt">
+<div class="reflect-q">How does it feel to understand what's underneath every site on the internet?</div>
+<textarea class="reflect-input" id="ref-4-1" placeholder="It feels..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
+<span class="reflect-saved" id="saved-4-1">✓ Saved</span>
+</div>
+</div>
+<div class="lesson-complete show" id="complete-4">
+<h3>✦ &nbsp; Zen's Realm Complete</h3>
+<p>You finished all four lessons.</p>
+<div class="lesson-joke" id="joke-4"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="lesson-panel" id="lesson-cheat">
+<div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
+<div class="section-header">Zen's Cheat Sheet</div>
+<div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
+<div class="cheat-card">
+<h3>✦ Lesson 1 — What Is Code?</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Code</div><div class="cheat-desc">Step-by-step instructions a computer can read and follow.</div></div>
+<div class="cheat-item"><div class="cheat-term">HTML</div><div class="cheat-desc">HyperText Markup Language — the language of web pages.</div></div>
+<div class="cheat-item"><div class="cheat-term">Tag</div><div class="cheat-desc">Labels in angle brackets that tell the browser what content is.</div></div>
+<div class="cheat-item"><div class="cheat-term">Browser</div><div class="cheat-desc">The program that reads HTML and displays it as a webpage.</div></div>
+</div>
+<div class="code-block"><span class="code-tag">&lt;h1&gt;</span>Hello, I'm Zen.<span class="code-tag">&lt;/h1&gt;</span><br><span class="code-tag">&lt;p&gt;</span>I build things with code.<span class="code-tag">&lt;/p&gt;</span></div>
+</div>
+<div class="cheat-card">
+<h3>✦ Lesson 2 — Your First HTML Tag</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Opening Tag</div><div class="cheat-desc">Starts an element. Written as &lt;tagname&gt;</div></div>
+<div class="cheat-item"><div class="cheat-term">Closing Tag</div><div class="cheat-desc">Ends an element. Written as &lt;/tagname&gt;</div></div>
+<div class="cheat-item"><div class="cheat-term">Element</div><div class="cheat-desc">Opening tag + content + closing tag together.</div></div>
+<div class="cheat-item"><div class="cheat-term">Attribute</div><div class="cheat-desc">Extra info inside an opening tag, like href.</div></div>
+</div>
+<div class="code-block"><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-str">"https://..."</span><span class="code-tag">&gt;</span>Click here<span class="code-tag">&lt;/a&gt;</span></div>
+</div>
+<div class="cheat-card">
+<h3>✦ Lesson 3 — Colors &amp; Style with CSS</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">CSS</div><div class="cheat-desc">The language that styles HTML — colors, fonts, spacing.</div></div>
+<div class="cheat-item"><div class="cheat-term">Selector</div><div class="cheat-desc">Targets which element to style. Example: h1 {}</div></div>
+<div class="cheat-item"><div class="cheat-term">Property</div><div class="cheat-desc">What to change: color, font-size, background.</div></div>
+<div class="cheat-item"><div class="cheat-term">Value</div><div class="cheat-desc">What to set it to: pink, 2rem, #ff6baa.</div></div>
+</div>
+<div class="code-block"><span class="code-tag">h1</span> {<br>&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">#ff6baa</span>;<br>&nbsp;&nbsp;<span class="code-attr">font-size</span>: <span class="code-val">2rem</span>;<br>}</div>
+</div>
+<div class="cheat-card">
+<h3>✦ Lesson 4 — Build Your Own Page</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">&lt;!DOCTYPE html&gt;</div><div class="cheat-desc">Tells the browser this is an HTML5 document. Always goes first.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;head&gt;</div><div class="cheat-desc">Settings section. Not visible. Holds title, styles, fonts.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;body&gt;</div><div class="cheat-desc">Everything the visitor sees goes here.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;style&gt;</div><div class="cheat-desc">Write CSS inside this tag, inside the head.</div></div>
+</div>
+<div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&nbsp;&lt;head&gt;&lt;title&gt;My Page&lt;/title&gt;&lt;/head&gt;<br>&nbsp;&lt;body&gt;&lt;h1&gt;Hello!&lt;/h1&gt;&lt;p&gt;A paragraph.&lt;/p&gt;&lt;/body&gt;<br>&lt;/html&gt;</div>
+</div>
+<div class="cheat-card">
+<h3>✦ Symbols Reference</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">&lt;</div><div class="cheat-desc">Opening bracket. Starts every tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">&gt;</div><div class="cheat-desc">Closing bracket. Ends every tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;/</div><div class="cheat-desc">Opening bracket + slash. Starts a closing tag — this is how a tag says "I'm done."</div></div>
+<div class="cheat-item"><div class="cheat-term">!</div><div class="cheat-desc">Exclamation point. Only used once, in &lt;!DOCTYPE html&gt;, to mark it as a special declaration rather than a normal tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">{}</div><div class="cheat-desc">Curly braces. Wrap the style rules in CSS, right after a selector.</div></div>
+<div class="cheat-item"><div class="cheat-term">:</div><div class="cheat-desc">Colon. Separates a CSS property from its value, like color: pink;</div></div>
+<div class="cheat-item"><div class="cheat-term">;</div><div class="cheat-desc">Semicolon. Ends a CSS line, like a period ends a sentence.</div></div>
+<div class="cheat-item"><div class="cheat-term">#</div><div class="cheat-desc">Pound sign. Starts a hex color code, like #ff6baa.</div></div>
+</div>
+<div class="cheat-btn-row">
+<a href="zen-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
+<button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
+</div>
+</div>
+</div>
+</div>
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+<div class="egg-popup" id="eggPopup">
+<h4>✦ Secret Found!</h4>
+<p id="eggText"></p>
+</div>
+<script type="module" src="auth-init.js"></script>
+<script>
+let currentLesson = null;
+let currentTier = null;
+const TIER_ORDER = ['explorer', 'sparks', 'coders'];
+function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
+window.setNavUser = function(email) {
+  const u = document.getElementById('navUser');
+  const b = document.getElementById('navLogout');
+  if (u) { u.textContent = email; u.style.display = 'inline'; }
+  if (b) b.style.display = 'inline-block';
+};
+window.handleTierUnlock = function(tier) {
+  currentTier = tier;
+  const loggedIn = !!tier && tier !== 'logged-out';
+  const anonLock = document.getElementById('anon-lock-1');
+  const anonGated = document.getElementById('anon-gated-1');
+  if (loggedIn) {
+    if (anonLock) anonLock.style.display = 'none';
+    if (anonGated) anonGated.style.display = 'block';
+    ['2','3','4'].forEach(n => {
+      const l = document.getElementById('lock-' + n);
+      if (l) l.style.display = 'none';
+      const blocks = n === '4' ? ['read','build','reflect'] : ['read','terms','build','reflect'];
+      blocks.forEach(b => {
+        const el = document.getElementById('block-' + n + '-' + b);
+        if (el) el.style.removeProperty('display');
+      });
+    });
+  } else {
+    if (anonLock) anonLock.style.display = 'block';
+    if (anonGated) anonGated.style.display = 'none';
+  }
+  loadReflects();
+};
+function enterRealm() {
+  document.getElementById('discoveryEnterBtn').style.display = 'none';
+  document.querySelector('.zen-mark').style.display = 'none';
+  document.querySelector('.discovery-title').style.display = 'none';
+  document.querySelector('.discovery-sub').style.display = 'none';
+  const stage = document.getElementById('hologramStage');
+  stage.style.display = 'block';
+  const finishEntrance = () => {
+    const overlay = document.getElementById('discoveryOverlay');
+    overlay.classList.add('fading');
+    setTimeout(() => {
+      overlay.classList.add('hidden');
+      document.getElementById('soundToggle').classList.add('visible');
+      startAmbient();
+    }, 700);
+  };
+  setTimeout(finishEntrance, 3000);
+}
+function openLesson(n) {
+  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+  const panel = document.getElementById('lesson-' + n);
+  const tab = document.getElementById('tab-' + n);
+  if (panel) panel.classList.add('open');
+  if (tab) tab.classList.add('active');
+  currentLesson = n;
+  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  if (n !== 'cheat') showBlock(n, 'read');
+  playUISound(330);
+  const wrapper = document.getElementById('icebreakerWrapper');
+  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
+}
+function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
+function showBlock(lesson, block) {
+  const panel = document.getElementById('lesson-' + lesson);
+  if (!panel) return;
+  panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+  panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+  const target = document.getElementById('block-' + lesson + '-' + block);
+  if (target) target.classList.add('active');
+  const btn = document.getElementById('sb-' + lesson + '-' + block);
+  if (btn) btn.classList.add('active');
+  playUISound(392);
+}
+function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); }
+let ibUIAudioCtx = null;
+function playUISound(freq) {
+  try {
+    if (!ibUIAudioCtx) ibUIAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ibUIAudioCtx.createOscillator();
+    const gain = ibUIAudioCtx.createGain();
+    osc.type = 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.05, ibUIAudioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ibUIAudioCtx.currentTime + 0.18);
+    osc.connect(gain); gain.connect(ibUIAudioCtx.destination);
+    osc.start(); osc.stop(ibUIAudioCtx.currentTime + 0.18);
+  } catch (e) { /* audio unavailable, silently continue */ }
+}
+function checkQuiz(btn, correct, feedback) {
+  const opts = btn.closest('.quiz-options');
+  if (opts.querySelector('.correct')) return;
+  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+  if (correct) {
+    btn.classList.add('correct');
+    if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
+  } else {
+    btn.classList.add('wrong');
+    if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
+    setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
+  }
+}
+const REFLECT_RESPONSES = {
+  'ref-1-1': v => '✦ "' + v + '" — That\'s a real idea. Write it down and keep it.',
+  'ref-2-1': v => '✦ "' + v + '" — Good observation.',
+  'ref-3-1': v => '✦ "' + v + '" — That\'s your design direction.',
+  'ref-4-1': v => '✦ "' + v + '" — Hold onto that feeling.'
+};
+function saveReflect(inputId, savedId) {
+  const val = document.getElementById(inputId)?.value;
+  if (val === undefined) return;
+  localStorage.setItem('zen_' + inputId, val);
+  const saved = document.getElementById(savedId);
+  if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
+  const respEl = document.getElementById('resp-' + inputId.replace('ref-', ''));
+  if (val.trim() && REFLECT_RESPONSES[inputId] && respEl) {
+    respEl.textContent = REFLECT_RESPONSES[inputId](val.trim());
+    respEl.classList.add('show');
+  }
+  const lessonNum = inputId.split('-')[1];
+  const complete = document.getElementById('complete-' + lessonNum);
+  if (complete) {
+    complete.classList.add('show');
+    const jokeEl = document.getElementById('joke-' + lessonNum);
+    if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
+  }
+  localStorage.setItem('zen_lesson_complete_' + lessonNum, '1');
+}
+function loadReflects() {
+  document.querySelectorAll('.reflect-input').forEach(el => {
+    const stored = localStorage.getItem('zen_' + el.id);
+    if (stored) el.value = stored;
+  });
+}
+function revealLines(ids, then) {
+  ids.forEach((id, i) => setTimeout(() => { const el = document.getElementById(id); if (el) el.classList.add('visible'); }, i * 220));
+  if (then) setTimeout(then, ids.length * 220 + 150);
+}
+function runCode1() { revealLines(['c1l1','c1l2','c1l3','c1l4'], () => document.getElementById('output1').classList.add('show')); }
+function runCode2() { revealLines(['c2l1','c2l2','c2l3'], () => document.getElementById('output2').classList.add('show')); }
+function setupDrag(listId) {
+  let dragSrc = null;
+  const list = document.getElementById(listId);
+  if (!list) return;
+  list.querySelectorAll('.drag-item').forEach(item => {
+    item.addEventListener('dragstart', () => { dragSrc = item; item.classList.add('dragging'); });
+    item.addEventListener('dragend', () => item.classList.remove('dragging'));
+    item.addEventListener('dragover', e => e.preventDefault());
+    item.addEventListener('drop', e => {
+      e.preventDefault();
+      if (dragSrc !== item) {
+        const items = [...list.querySelectorAll('.drag-item')];
+        if (items.indexOf(dragSrc) < items.indexOf(item)) item.after(dragSrc); else item.before(dragSrc);
+      }
+    });
+  });
+}
+setupDrag('dragList1');
+function checkDrag1() {
+  const items = [...document.getElementById('dragList1').querySelectorAll('.drag-item')];
+  const correct = items.map(i => parseInt(i.dataset.order)).every((v, i) => v === i + 1);
+  items.forEach((item, i) => item.querySelector('.drag-num').textContent = i + 1);
+  const res = document.getElementById('drag1Result');
+  res.className = 'demo-output show';
+  res.innerHTML = correct ? '✦ Perfect!' : 'Not quite — try again.';
+}
+function updatePreview3() {
+  const color = document.getElementById('colorPicker').value;
+  const size = document.getElementById('sizeSlider').value;
+  const text = document.getElementById('styleText').value || 'Your styled heading';
+  document.getElementById('styleOutput').style.color = color;
+  document.getElementById('styleOutput').style.fontSize = size + 'px';
+  document.getElementById('styleOutput').textContent = text;
+  document.getElementById('colorHex').textContent = color;
+  document.getElementById('sizeVal').textContent = size + 'px';
+}
+function updateCapstone() {
+  const title = document.getElementById('cap-title').value || 'My Page';
+  const h1 = document.getElementById('cap-h1').value;
+  const p = document.getElementById('cap-p').value;
+  const color = document.getElementById('cap-color').value;
+  const out = document.getElementById('capOutput');
+  out.innerHTML = '<div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-bottom:12px">Page: "' + title + '"</div>' +
+    (h1 ? '<div style="font-size:1.4rem;font-weight:700;color:' + color + ';margin-bottom:8px;">' + h1 + '</div>' : '') +
+    (p ? '<div style="font-size:.9rem;color:var(--text-dim);">' + p + '</div>' : '');
+}
+function downloadCheat() {
+  const content = "ZEN'S CODING REALM — FULL CHEAT SHEET\n\n" +
+    "LESSON 1 — What Is Code?\nCODE: Step-by-step instructions.\nHTML: HyperText Markup Language.\nTAG: Labels in angle brackets: <tag> and </tag>\nBROWSER: Reads HTML, displays it as a webpage.\nLINES YOU'LL USE:\n<h1>Hello, I'm Zen.</h1>\n<p>I build things with code.</p>\n\n" +
+    "LESSON 2 — Your First HTML Tag\nOPENING TAG <tagname>\nCLOSING TAG </tagname>\nELEMENT: tag+content+closing tag\nATTRIBUTE: extra info in opening tag\nLINES YOU'LL USE:\n<a href=\"https://...\">Click here</a>\n\n" +
+    "LESSON 3 — Colors & Style with CSS\nCSS styles HTML.\nSELECTOR: h1 {}\nPROPERTY: color, font-size\nVALUE: pink, 2rem, #ff6baa\nLINES YOU'LL USE:\nh1 {\n  color: #ff6baa;\n  font-size: 2rem;\n}\n\n" +
+    "LESSON 4 — Build Your Own Page\n<!DOCTYPE html> — always first\n<head> — settings, not visible\n<body> — everything visible\n<style> — CSS goes here\nLINES YOU'LL USE:\n<!DOCTYPE html>\n<html>\n  <head><title>My Page</title></head>\n  <body><h1>Hello!</h1><p>A paragraph.</p></body>\n</html>\n\n" +
+    "SYMBOLS REFERENCE\n< opening bracket — starts every tag\n> closing bracket — ends every tag\n</ opening bracket + slash — starts a closing tag\n! used once, in <!DOCTYPE html>, marks it as a special declaration\n{} curly braces — wrap CSS style rules\n: colon — separates a CSS property from its value\n; semicolon — ends a CSS line\n# pound sign — starts a hex color code, like #ff6baa";
+  const blob = new Blob([content], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'zen-cheatsheet.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+function goUpgrade() {
+  if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+    window.location.href = 'membership.html';
+  } else {
+    document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
+  }
+}
+function handleLogout() {
+  if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); }
+}
+function spawnParticle() {
+  const field = document.getElementById('particleField');
+  if (!field) return;
+  const p = document.createElement('div');
+  p.className = 'particle';
+  const startX = Math.random() * 100;
+  const duration = 8 + Math.random() * 10;
+  const delay = Math.random() * 2;
+  p.style.left = startX + '%'; p.style.bottom = '0';
+  p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
+  field.appendChild(p);
+  setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
+}
+for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400);
+setInterval(spawnParticle, 900);
+const FACTS = [
+  "the first ever website is still online — info.cern.ch, made in 1991.",
+  "CSS was proposed in 1994, three years after HTML existed.",
+  "the '404 Not Found' error is named after a room number at CERN.",
+  "JavaScript was built in just 10 days in 1995.",
+  "the pink hex code #ff6baa is technically called 'French Rose.'",
+  "the first computer 'bug' was an actual moth stuck in a machine in 1947.",
+  "there are more possible chess games than atoms in the universe.",
+  "the <marquee> tag used to make text scroll. It's basically retired now."
+];
+let factIndex = 0;
+function cycleFacts() {
+  const el = document.getElementById('factTicker');
+  if (!el) return;
+  el.classList.remove('show');
+  setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400);
+}
+cycleFacts();
+setInterval(cycleFacts, 6500);
+const JOKES = [
+  "Why do coders prefer dark mode? Because light attracts bugs.",
+  "There are 10 types of people: those who understand binary, and those who don't.",
+  "A CSS developer walks into a bar... and leaves because there was no style.",
+  "Why did the developer go broke? Because they used up all their cache.",
+  "HTML and CSS walk into a bar. The bartender says 'we don't serve your type here.'",
+  "Why do programmers hate nature? Too many bugs.",
+  "I'd tell you a UDP joke, but you might not get it."
+];
+let companionClicks = 0;
+function companionClick() {
+  companionClicks++;
+  if (companionClicks === 5 && !localStorage.getItem('zen_egg_found')) {
+    localStorage.setItem('zen_egg_found', '1');
+    showEgg("You found Zen's hidden stash! Secret catchphrase unlocked: \"Bugs are just ideas that aren't finished yet.\" ✦");
+  } else if (companionClicks % 5 === 0) {
+    showEgg("Zen waves. She's already found this easter egg with you before.");
+  }
+}
+function showEgg(text) {
+  const popup = document.getElementById('eggPopup');
+  document.getElementById('eggText').textContent = text;
+  popup.classList.add('show');
+  setTimeout(() => popup.classList.remove('show'), 5000);
+}
+let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
+function startAmbient() {
+  try {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain();
+    droneOsc.type = 'sine'; droneOsc.frequency.value = 82; droneGain.gain.value = 0.015;
+    droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start();
+  } catch (e) { console.warn('Ambient audio unavailable:', e); }
+}
+function toggleSound() {
+  const btn = document.getElementById('soundToggle');
+  if (!audioCtx) return;
+  soundOn = !soundOn;
+  droneGain.gain.value = soundOn ? 0.015 : 0;
+  btn.textContent = soundOn ? '🔊' : '🔇';
+  btn.classList.toggle('muted', !soundOn);
+}
+/* ══════════════════ ICEBREAKER — HTML TAG RECOGNITION GAME ══════════════════ */
+const IB_TAGS = [
+  { id: 'doctype', hasClose: false, pieces: ['<', '!DOCTYPE', 'html', '>'], code: '<!DOCTYPE html>', def: 'Tells the browser this is a modern HTML5 document. It always goes first, before anything else.', color: '#ff6baa', freq: 196, wave: 'sine' },
+  { id: 'html', hasClose: true, pieces: ['<', 'html', '>', '</', 'html', '>'], code: '<html>', def: 'Wraps the entire page. Everything else lives inside this tag — opening at the very top, closing at the very bottom.', color: '#c66bff', freq: 261, wave: 'triangle' },
+  { id: 'head', hasClose: true, pieces: ['<', 'head', '>', '</', 'head', '>'], code: '<head>', def: "Holds settings the browser needs. Nothing inside it shows up on the page itself.", color: '#00d9ff', freq: 329, wave: 'square' },
+  { id: 'title', hasClose: true, pieces: ['<', 'title', '>', '</', 'title', '>'], code: '<title>', def: 'Sets the name shown on the browser tab.', color: '#ffe066', freq: 392, wave: 'sine' },
+  { id: 'body', hasClose: true, pieces: ['<', 'body', '>', '</', 'body', '>'], code: '<body>', def: 'Holds everything a visitor actually sees on the page.', color: '#ff7a3d', freq: 466, wave: 'triangle' },
+  { id: 'h1', hasClose: true, pieces: ['<', 'h1', '>', '</', 'h1', '>'], code: '<h1>', def: 'A big heading — the most important title on the page.', color: '#39ff8f', freq: 554, wave: 'sawtooth' },
+  { id: 'p', hasClose: true, pieces: ['<', 'p', '>', '</', 'p', '>'], code: '<p>', def: 'A paragraph — regular text content.', color: '#ff4fc3', freq: 659, wave: 'square' }
+];
+const IB_DOC_LINES = [
+  { tag: 'doctype', text: '<!DOCTYPE html>' },
+  { tag: 'html', text: '<html>' },
+  { tag: 'head', text: '  <head>' },
+  { tag: 'title', text: '    <title></title>' },
+  { tag: 'head', text: '  </head>' },
+  { tag: 'body', text: '  <body>' },
+  { tag: 'h1', text: '    <h1></h1>' },
+  { tag: 'p', text: '    <p></p>' },
+  { tag: 'body', text: '  </body>' },
+  { tag: 'html', text: '</html>' }
+];
+let ibIndex = 0;
+let ibSlotsFilled = [];
+let ibPiecesState = [];
+let ibMasterPattern = [];
+let ibPiecePool = [];
+let ibLocalPattern = [];
+let ibLocalPool = [];
+let ibLocalRound = 0;
+const IB_LOCAL_MAX_ROUNDS = 10;
+let ibSeqPlayer = [];
+let ibSeqPlaying = false;
+let ibUnlockedCount = 0;
+let ibFinalePattern = [];
+let ibCurrentPhase = null;
+let ibAudioCtx = null;
+function ibPlayTone(freq, dur, wave) {
+  try {
+    if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    const osc = ibAudioCtx.createOscillator();
+    const gain = ibAudioCtx.createGain();
+    osc.type = wave || 'sine'; osc.frequency.value = freq;
+    gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.35));
+    osc.connect(gain); gain.connect(ibAudioCtx.destination);
+    osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.35));
+  } catch (e) { /* audio unavailable, silently continue */ }
+}
+function ibToggleWrapper() {
+  const wrapper = document.getElementById('icebreakerWrapper');
+  const opening = !wrapper.classList.contains('open');
+  wrapper.classList.toggle('open');
+  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+function ibRenderIntro() {
+  const grid = document.getElementById('ibTermsGrid');
+  if (!grid) return;
+  grid.innerHTML = IB_TAGS.map(t =>
+    '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' +
+    '<div class="ib-term-code" style="color:' + t.color + '">' + t.code.replace(/</g, '&lt;').replace(/>/g, '&gt;') + (t.hasClose ? ' ... ' + t.code.replace('<', '</').replace(/</g, '&lt;').replace(/>/g, '&gt;') : '') + '</div>' +
+    '<div class="ib-term-def">' + t.def + '</div>' +
+    '</div>'
+  ).join('');
+}
+function ibRenderDocPanel() {
+  const panel = document.getElementById('ibDocPanel');
+  panel.innerHTML = IB_DOC_LINES.map((l, i) =>
+    '<div class="ib-doc-line" id="ibDocLine' + i + '" data-tag="' + l.tag + '">' + l.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>'
+  ).join('');
+}
+function ibRevealDocTag(tagId, color) {
+  document.querySelectorAll('.ib-doc-line[data-tag="' + tagId + '"]').forEach(el => {
+    el.classList.add('revealed'); el.style.color = color;
+  });
+}
+function ibStartGame() {
+  document.getElementById('ib-intro').style.display = 'none';
+  document.getElementById('ib-game').style.display = 'block';
+  ibIndex = 0; ibMasterPattern = []; ibUnlockedCount = 0; ibPiecePool = [];
+  ibRenderDocPanel();
+  ibBeginBuild(0);
+}
+function ibShuffle(arr) {
+  const a = arr.slice();
+  for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; }
+  return a;
+}
+function ibBeginBuild(i) {
+  const tag = IB_TAGS[i];
+  document.getElementById('ibSequenceStage').style.display = 'none';
+  const stage = document.getElementById('ibBuildStage');
+  stage.style.display = 'block';
+  ibSlotsFilled = new Array(tag.pieces.length).fill(null);
+  const order = ibShuffle(tag.pieces.map((p, idx) => idx));
+  ibPiecesState = order.map(idx => ({ text: tag.pieces[idx], correctIndex: idx, placed: false }));
+  stage.innerHTML =
+    '<div class="ib-build-eyebrow">TAG ' + (i + 1) + ' OF ' + IB_TAGS.length + ' &nbsp;·&nbsp; BUILD IT' + (tag.hasClose ? ' — OPEN &amp; CLOSE' : '') + '</div>' +
+    '<div class="ib-build-def">' + tag.def + '</div>' +
+    '<div class="ib-slots" id="ibSlots"></div>' +
+    '<div class="ib-pieces-tray" id="ibPiecesTray"></div>' +
+    '<div class="ib-build-feedback" id="ibBuildFeedback"></div>' +
+    '<button class="ib-check-btn" onclick="ibCheckBuild(' + i + ')">Check My Order →</button>';
+  ibRenderSlots(tag);
+  ibRenderPieces(tag);
+}
+function ibRenderSlots(tag) {
+  const slots = document.getElementById('ibSlots');
+  const rowHtml = (indices) => '<div class="ib-slots-row" style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">' +
+    indices.map(idx => '<div class="ib-slot" id="ibSlot' + idx + '" style="border-color:' + tag.color + '" ondragover="event.preventDefault()" ondrop="ibDropPiece(event,' + idx + ')"></div>').join('') +
+    '</div>';
+  if (!tag.hasClose) {
+    slots.innerHTML = '<div class="ib-slot-group"><div class="ib-slot-group-label">THE FULL DECLARATION</div>' + rowHtml([0, 1, 2, 3]) + '</div>';
+  } else {
+    slots.innerHTML =
+      '<div class="ib-slot-group"><div class="ib-slot-group-label">OPENING TAG</div>' + rowHtml([0, 1, 2]) + '</div>' +
+      '<div class="ib-slot-group"><div class="ib-slot-group-label">CLOSING TAG</div>' + rowHtml([3, 4, 5]) + '</div>';
+  }
+}
+function ibRenderPieces(tag) {
+  const tray = document.getElementById('ibPiecesTray');
+  tray.innerHTML = ibPiecesState.map((p, i) =>
+    '<div class="ib-piece" draggable="true" data-piece-i="' + i + '" style="border-color:' + tag.color + '" ondragstart="event.dataTransfer.setData(\'text\',' + i + ')">' + p.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>'
+  ).join('');
+}
+function ibDropPiece(e, slotIdx) {
+  e.preventDefault();
+  const pieceI = parseInt(e.dataTransfer.getData('text'));
+  const piece = ibPiecesState[pieceI];
+  if (!piece || piece.placed) return;
+  const slotEl = document.getElementById('ibSlot' + slotIdx);
+  if (slotEl.classList.contains('filled')) return;
+  piece.placed = true;
+  ibSlotsFilled[slotIdx] = piece;
+  slotEl.textContent = piece.text;
+  slotEl.classList.add('filled');
+  const pieceEl = document.querySelector('[data-piece-i="' + pieceI + '"]');
+  if (pieceEl) pieceEl.classList.add('placed');
+}
+function ibCheckBuild(i) {
+  const tag = IB_TAGS[i];
+  const fb = document.getElementById('ibBuildFeedback');
+  const correct = ibSlotsFilled.every((p, idx) => p && p.text === tag.pieces[idx]);
+  if (!correct) { fb.textContent = 'Not quite in order yet — check the pieces again.'; fb.style.color = 'var(--purple)'; return; }
+  fb.textContent = '✦ Perfect! ' + tag.code + (tag.hasClose ? ' ... ' + tag.code.replace('<', '</') : '') + ' is locked in.';
+  fb.style.color = tag.color;
+  ibPlayTone(tag.freq, 0.4, tag.wave);
+  ibRevealDocTag(tag.id, tag.color);
+  if (!tag.hasClose) {
+    ibPiecePool.push({ text: tag.code, color: tag.color, freq: tag.freq, wave: tag.wave });
+  } else {
+    ibPiecePool.push({ text: tag.code, color: tag.color, freq: tag.freq, wave: tag.wave });
+    ibPiecePool.push({ text: tag.code.replace('<', '</'), color: tag.color, freq: tag.freq + 20, wave: tag.wave });
+  }
+  setTimeout(() => ibBeginLocalDrill(i), 900);
+}
+function ibBeginLocalDrill(i) {
+  const tag = IB_TAGS[i];
+  ibCurrentPhase = 'local';
+  ibLocalPool = tag.pieces.map((text, idx) => ({ text: text, color: tag.color, freq: tag.freq + idx * 14, wave: tag.wave }));
+  ibLocalPattern = []; ibLocalRound = 0;
+  document.getElementById('ibBuildStage').style.display = 'none';
+  const stage = document.getElementById('ibSequenceStage');
+  stage.style.display = 'block';
+  stage.innerHTML =
+    '<div class="ib-build-eyebrow">FOCUS DRILL &nbsp;·&nbsp; ' + tag.code + (tag.hasClose ? ' &amp; ' + tag.code.replace('<', '</') : '') + '</div>' +
+    '<div class="ib-seq-status" id="ibSeqStatus">Watch the pattern...</div>' +
+    '<div class="ib-seq-board" id="ibSeqBoard"></div>' +
+    '<button class="ib-skip-btn" onclick="ibSkipSequence()">Skip this part →</button>';
+  const board = document.getElementById('ibSeqBoard');
+  board.innerHTML = ibLocalPool.map((p, idx) =>
+    '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + p.color + ';color:' + p.color + ';--c:' + p.color + '" onclick="ibLocalSeqClick(' + idx + ',' + i + ')">' + p.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>'
+  ).join('');
+  ibLocalNextRound(i);
+}
+function ibLocalNextRound(i) {
+  ibLocalRound++;
+  const nextStep = Math.floor(Math.random() * ibLocalPool.length);
+  ibLocalPattern.push(nextStep);
+  ibPlayLocalPattern(i);
+}
+function ibPlayLocalPattern(i) {
+  ibSeqPlayer = []; ibSeqPlaying = true;
+  const statusEl = document.getElementById('ibSeqStatus');
+  statusEl.textContent = 'Round ' + ibLocalRound + ' — watch...';
+  let step = 0;
+  function playNext() {
+    if (step >= ibLocalPattern.length) { ibSeqPlaying = false; statusEl.textContent = 'Your turn!'; return; }
+    const idx = ibLocalPattern[step];
+    const card = document.getElementById('ibSeqCard' + idx);
+    card.classList.add('lit');
+    ibPlayTone(ibLocalPool[idx].freq, 0.3, ibLocalPool[idx].wave);
+    setTimeout(() => { card.classList.remove('lit'); step++; setTimeout(playNext, 200); }, 400);
+  }
+  setTimeout(playNext, 500);
+}
+function ibLocalSeqClick(idx, i) {
+  if (ibSeqPlaying) return;
+  const card = document.getElementById('ibSeqCard' + idx);
+  card.classList.add('lit');
+  ibPlayTone(ibLocalPool[idx].freq, 0.25, ibLocalPool[idx].wave);
+  setTimeout(() => card.classList.remove('lit'), 300);
+  ibSeqPlayer.push(idx);
+  const step = ibSeqPlayer.length - 1;
+  if (ibSeqPlayer[step] !== ibLocalPattern[step]) {
+    card.classList.add('wrong');
+    document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
+    setTimeout(() => { card.classList.remove('wrong'); ibPlayLocalPattern(i); }, 700);
+    return;
+  }
+  if (ibSeqPlayer.length === ibLocalPattern.length) {
+    const seenAll = new Set(ibLocalPattern).size === ibLocalPool.length;
+    const hitSafetyCap = ibLocalPattern.length >= IB_LOCAL_MAX_ROUNDS;
+    if (seenAll || hitSafetyCap) {
+      document.getElementById('ibSeqStatus').textContent = "✦ Locked in! Now let's mix it with everything else...";
+      setTimeout(() => ibBeginSequence(i + 1), 1200);
+    } else {
+      document.getElementById('ibSeqStatus').textContent = '✦ Nice!';
+      setTimeout(() => ibLocalNextRound(i), 700);
+    }
+  }
+}
+function ibBeginSequence(tagProgress) {
+  ibUnlockedCount = tagProgress;
+  ibCurrentPhase = 'global';
+  const poolSize = ibPiecePool.length;
+  const nextStep = Math.floor(Math.random() * poolSize);
+  ibMasterPattern.push(nextStep);
+  document.getElementById('ibBuildStage').style.display = 'none';
+  const stage = document.getElementById('ibSequenceStage');
+  stage.style.display = 'block';
+  stage.innerHTML =
+    '<div class="ib-build-eyebrow">SEQUENCE RECALL &nbsp;·&nbsp; PATTERN LENGTH ' + ibMasterPattern.length + '</div>' +
+    '<div class="ib-seq-status" id="ibSeqStatus">Watch the pattern...</div>' +
+    '<div class="ib-seq-board" id="ibSeqBoard"></div>' +
+    '<button class="ib-skip-btn" onclick="ibSkipSequence()">Skip this part →</button>';
+  const board = document.getElementById('ibSeqBoard');
+  board.innerHTML = ibPiecePool.map((p, idx) =>
+    '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + p.color + ';color:' + p.color + ';--c:' + p.color + '" onclick="ibSeqClick(' + idx + ')">' + p.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>'
+  ).join('');
+  ibPlayPattern();
+}
+function ibPlayPattern() {
+  ibSeqPlayer = []; ibSeqPlaying = true;
+  document.getElementById('ibSeqStatus').textContent = 'Watch the pattern...';
+  let step = 0;
+  function playNext() {
+    if (step >= ibMasterPattern.length) { ibSeqPlaying = false; document.getElementById('ibSeqStatus').textContent = 'Your turn — repeat the pattern.'; return; }
+    const idx = ibMasterPattern[step];
+    const card = document.getElementById('ibSeqCard' + idx);
+    card.classList.add('lit');
+    ibPlayTone(ibPiecePool[idx].freq, 0.3, ibPiecePool[idx].wave);
+    setTimeout(() => { card.classList.remove('lit'); step++; setTimeout(playNext, 200); }, 400);
+  }
+  setTimeout(playNext, 500);
+}
+function ibSeqClick(idx) {
+  if (ibSeqPlaying) return;
+  const card = document.getElementById('ibSeqCard' + idx);
+  card.classList.add('lit');
+  ibPlayTone(ibPiecePool[idx].freq, 0.25, ibPiecePool[idx].wave);
+  setTimeout(() => card.classList.remove('lit'), 300);
+  ibSeqPlayer.push(idx);
+  const step = ibSeqPlayer.length - 1;
+  if (ibSeqPlayer[step] !== ibMasterPattern[step]) {
+    card.classList.add('wrong');
+    document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
+    setTimeout(() => { card.classList.remove('wrong'); ibPlayPattern(); }, 700);
+    return;
+  }
+  if (ibSeqPlayer.length === ibMasterPattern.length) {
+    document.getElementById('ibSeqStatus').textContent = '✦ Perfect sequence!';
+    setTimeout(() => ibAdvanceAfterSequence(), 800);
+  }
+}
+function ibSkipSequence() {
+  ibSeqPlaying = false;
+  if (ibCurrentPhase === 'local') { ibBeginSequence(ibIndex + 1); }
+  else if (ibCurrentPhase === 'global') { ibAdvanceAfterSequence(); }
+  else if (ibCurrentPhase === 'finale') { ibComplete(); }
+}
+function ibAdvanceAfterSequence() {
+  if (ibUnlockedCount < IB_TAGS.length) { ibIndex = ibUnlockedCount; ibBeginBuild(ibIndex); }
+  else { ibBeginFinale(); }
+}
+function ibBeginFinale() {
+  ibCurrentPhase = 'finale';
+  document.getElementById('ibBuildStage').style.display = 'none';
+  const stage = document.getElementById('ibSequenceStage');
+  stage.style.display = 'block';
+  stage.innerHTML =
+    '<div class="ib-build-eyebrow">FINAL PRACTICE &nbsp;·&nbsp; THE REAL PAGE</div>' +
+    '<div class="ib-seq-status" id="ibSeqStatus">Watch the whole page come together...</div>' +
+    '<button class="ib-skip-btn" onclick="ibSkipSequence()">Skip this part →</button>';
+  IB_DOC_LINES.forEach((l, idx) => {
+    const el = document.getElementById('ibDocLine' + idx);
+    if (el) { el.classList.add('clickable'); el.onclick = () => ibFinaleClick(idx); }
+  });
+  ibFinalePattern = IB_DOC_LINES.map((_, idx) => idx);
+  ibPlayFinalePattern();
+}
+function ibPlayFinalePattern() {
+  ibSeqPlayer = []; ibSeqPlaying = true;
+  const statusEl = document.getElementById('ibSeqStatus');
+  statusEl.textContent = 'Watch the whole page come together...';
+  let step = 0;
+  function playNext() {
+    if (step >= ibFinalePattern.length) { ibSeqPlaying = false; statusEl.textContent = 'Your turn — click through the whole page in order!'; return; }
+    const idx = ibFinalePattern[step];
+    const el = document.getElementById('ibDocLine' + idx);
+    const tagDef = IB_TAGS.find(t => t.id === IB_DOC_LINES[idx].tag);
+    el.classList.add('lit-line');
+    ibPlayTone(tagDef.freq, 0.28, tagDef.wave);
+    setTimeout(() => { el.classList.remove('lit-line'); step++; setTimeout(playNext, 150); }, 350);
+  }
+  setTimeout(playNext, 500);
+}
+function ibFinaleClick(idx) {
+  if (ibSeqPlaying) return;
+  const el = document.getElementById('ibDocLine' + idx);
+  const tagDef = IB_TAGS.find(t => t.id === IB_DOC_LINES[idx].tag);
+  el.classList.add('lit-line');
+  ibPlayTone(tagDef.freq, 0.22, tagDef.wave);
+  setTimeout(() => el.classList.remove('lit-line'), 300);
+  ibSeqPlayer.push(idx);
+  const step = ibSeqPlayer.length - 1;
+  if (ibSeqPlayer[step] !== ibFinalePattern[step]) {
+    el.classList.add('wrong-line');
+    document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
+    setTimeout(() => { el.classList.remove('wrong-line'); ibPlayFinalePattern(); }, 700);
+    return;
+  }
+  if (ibSeqPlayer.length === ibFinalePattern.length) {
+    document.getElementById('ibSeqStatus').textContent = '✦ You built the whole page!';
+    setTimeout(() => ibComplete(), 1000);
+  }
+}
+function ibComplete() {
+  document.getElementById('ib-game').style.display = 'none';
+  document.getElementById('ib-complete').style.display = 'block';
+}
+function ibReset() {
+  document.getElementById('ib-complete').style.display = 'none';
+  document.getElementById('ib-intro').style.display = 'block';
+  ibIndex = 0; ibMasterPattern = []; ibUnlockedCount = 0; ibPiecePool = [];
+}
+document.addEventListener('DOMContentLoaded', () => {
+  loadReflects();
+  ibRenderIntro();
+  handleTierUnlock(null);
+});
+</script>
+</body>
 </html>
