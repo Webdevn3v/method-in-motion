@@ -13,15 +13,7 @@ gtag('config', 'G-DJ3Q488K7W');
 <title>Byte's Code City | Method in Motion</title>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
-:root {
-  --purple: #c66bff; --purple-dim: #a34fe0; --pink: #ff6baa; --pink-dim: #e0568f;
-  --bg: #07050f; --bg-mid: #0f0d1a; --bg-card: #131022; --bg-panel: #0a0714;
-  --text: #f0eaff; --text-dim: #a89fc0; --text-muted: #4a3f6a;
-  --border: rgba(198,107,255,0.15); --border-bright: rgba(198,107,255,0.4); --border-pink: rgba(255,107,170,0.3);
-  --glow: 0 0 18px rgba(198,107,255,0.3); --glow-strong: 0 0 36px rgba(198,107,255,0.55);
-  --cyan: #7fe8ff; --border-cyan: rgba(0,229,255,0.45);
-  --font-display: 'Orbitron', monospace; --font-body: 'Space Grotesk', sans-serif; --font-mono: 'Space Mono', monospace;
-}
+:root { --purple: #c66bff; --purple-dim: #a34fe0; --pink: #ff6baa; --pink-dim: #e0568f; --bg: #07050f; --bg-mid: #0f0d1a; --bg-card: #131022; --bg-panel: #0a0714; --text: #f0eaff; --text-dim: #a89fc0; --text-muted: #4a3f6a; --border: rgba(198,107,255,0.15); --border-bright: rgba(198,107,255,0.4); --border-pink: rgba(255,107,170,0.3); --glow: 0 0 18px rgba(198,107,255,0.3); --glow-strong: 0 0 36px rgba(198,107,255,0.55); --cyan: #7fe8ff; --border-cyan: rgba(0,229,255,0.45); --font-display: 'Orbitron', monospace; --font-body: 'Space Grotesk', sans-serif; --font-mono: 'Space Mono', monospace; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(7,5,15,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
@@ -250,6 +242,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <li><a href="games.html">Games</a></li>
 <li><a href="pdfs.html">PDFs</a></li>
 <li><a href="dashboard.html">Dashboard</a></li>
+<li><a href="broken-syntax.html">Broken Syntax</a></li>
+<li><a href="mim-tv.html">MiM TV</a></li>
+<li><a href="comic.html">Comics</a></li>
 <li><a href="index.html#membership">Membership</a></li>
 </ul>
 <span class="nav-user" id="navUser"></span>
@@ -326,7 +321,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Byte's Data Challenge</button>
 <button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">◈ Cheat Sheet</button>
 </div>
-<!-- ===================== LESSON 1 ===================== -->
 <div class="lesson-panel" id="lesson-1">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 01</div>
@@ -355,9 +349,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="read-card-num">03 / 04</div>
 <h3>Storing Data in a Variable</h3>
 <p>A <strong>variable</strong> is a labeled container that holds a piece of data so code can use it later.</p>
-<div class="code-block"><span class="code-tag">let</span> name = <span class="code-str">"Byte"</span>;
-<span class="code-tag">let</span> score = <span class="code-val">100</span>;
-<span class="code-tag">let</span> isReady = <span class="code-val">true</span>;</div>
+<div class="code-block"><span class="code-tag">let</span> name = <span class="code-str">"Byte"</span>; <span class="code-tag">let</span> score = <span class="code-val">100</span>; <span class="code-tag">let</span> isReady = <span class="code-val">true</span>;</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">04 / 04</div>
@@ -439,7 +431,6 @@ console.log(isReady);
 </div>
 </div>
 </div>
-<!-- ===================== LESSON 2 ===================== -->
 <div class="lesson-panel" id="lesson-2">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 02</div>
@@ -536,7 +527,6 @@ console.log(songs[2]);
 </div>
 </div>
 </div>
-<!-- ===================== LESSON 3 ===================== -->
 <div class="lesson-panel" id="lesson-3">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 03</div>
@@ -566,11 +556,7 @@ console.log(songs[2]);
 <div class="read-card-num">02 / 04</div>
 <h3>Key-Value Pairs</h3>
 <p>An object stores data as <strong>key-value pairs</strong> — a label (key) connected to a piece of data (value).</p>
-<div class="code-block"><span class="code-tag">let</span> character = {
-&nbsp;&nbsp;<span class="code-attr">name</span>: <span class="code-str">"Byte"</span>,
-&nbsp;&nbsp;<span class="code-attr">role</span>: <span class="code-str">"Data Tracker"</span>,
-&nbsp;&nbsp;<span class="code-attr">level</span>: <span class="code-val">4</span>
-};</div>
+<div class="code-block"><span class="code-tag">let</span> character = {<br>&nbsp;&nbsp;<span class="code-attr">name</span>: <span class="code-str">"Byte"</span>,<br>&nbsp;&nbsp;<span class="code-attr">role</span>: <span class="code-str">"Data Tracker"</span>,<br>&nbsp;&nbsp;<span class="code-attr">level</span>: <span class="code-val">4</span><br>};</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">03 / 04</div>
@@ -601,7 +587,11 @@ console.log(songs[2]);
 <div class="demo-card">
 <h3>Read a Character Profile</h3>
 <p>This object organizes info about a character. Log different properties.</p>
-<textarea class="debug-editor" id="debug-d3">let character = { name: "Byte", role: "Data Tracker", level: 4 };
+<textarea class="debug-editor" id="debug-d3">let character = {
+  name: "Byte",
+  role: "Data Tracker",
+  level: 4
+};
 console.log(character.name);
 console.log(character.role);
 console.log(character.level);
@@ -638,7 +628,6 @@ console.log(character.level);
 </div>
 </div>
 </div>
-<!-- ===================== LESSON 4 ===================== -->
 <div class="lesson-panel" id="lesson-4">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 04</div>
@@ -667,10 +656,7 @@ console.log(character.level);
 <div class="read-card-num">02 / 03</div>
 <h3>A List of Objects</h3>
 <p>The most powerful combination in data is an <strong>array of objects</strong> — a list where every item is its own organized profile.</p>
-<div class="code-block"><span class="code-tag">let</span> crew = [
-&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-str">"Zen"</span>, <span class="code-attr">role</span>: <span class="code-str">"Creative Coder"</span> },
-&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-str">"Byte"</span>, <span class="code-attr">role</span>: <span class="code-str">"Data Tracker"</span> }
-];</div>
+<div class="code-block"><span class="code-tag">let</span> crew = [<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-str">"Zen"</span>, <span class="code-attr">role</span>: <span class="code-str">"Creative Coder"</span> },<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-str">"Byte"</span>, <span class="code-attr">role</span>: <span class="code-str">"Data Tracker"</span> }<br>];</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">03 / 03</div>
@@ -882,14 +868,11 @@ function playUISound(freq) {
     if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const osc = uiAudioCtx.createOscillator();
     const gain = uiAudioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = freq;
+    osc.type = 'sine'; osc.frequency.value = freq;
     gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
-    osc.connect(gain);
-    gain.connect(uiAudioCtx.destination);
-    osc.start();
-    osc.stop(uiAudioCtx.currentTime + 0.18);
+    osc.connect(gain); gain.connect(uiAudioCtx.destination);
+    osc.start(); osc.stop(uiAudioCtx.currentTime + 0.18);
   } catch (e) { /* audio unavailable, silently continue */ }
 }
 function checkQuiz(btn, correct, feedback) {
@@ -953,11 +936,8 @@ function downloadCheat() {
   const blob = new Blob([content], { type: 'text/plain' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
-  a.href = url;
-  a.download = 'byte-cheatsheet.txt';
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  a.href = url; a.download = 'byte-cheatsheet.txt';
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
 function goUpgrade() {
@@ -967,7 +947,9 @@ function goUpgrade() {
     document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
   }
 }
-function handleLogout() { if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); } }
+function handleLogout() {
+  if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); }
+}
 function spawnParticle() {
   const field = document.getElementById('particleField');
   if (!field) return;
@@ -976,10 +958,8 @@ function spawnParticle() {
   const startX = Math.random() * 100;
   const duration = 8 + Math.random() * 10;
   const delay = Math.random() * 2;
-  p.style.left = startX + '%';
-  p.style.bottom = '0';
-  p.style.animationDuration = duration + 's';
-  p.style.animationDelay = delay + 's';
+  p.style.left = startX + '%'; p.style.bottom = '0';
+  p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
   field.appendChild(p);
   setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
 }
@@ -1000,11 +980,7 @@ function cycleFacts() {
   const el = document.getElementById('factTicker');
   if (!el) return;
   el.classList.remove('show');
-  setTimeout(() => {
-    el.textContent = FACTS[factIndex % FACTS.length];
-    el.classList.add('show');
-    factIndex++;
-  }, 400);
+  setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400);
 }
 cycleFacts();
 setInterval(cycleFacts, 6500);
@@ -1037,14 +1013,9 @@ let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
 function startAmbient() {
   try {
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    droneOsc = audioCtx.createOscillator();
-    droneGain = audioCtx.createGain();
-    droneOsc.type = 'sine';
-    droneOsc.frequency.value = 78;
-    droneGain.gain.value = 0.015;
-    droneOsc.connect(droneGain);
-    droneGain.connect(audioCtx.destination);
-    droneOsc.start();
+    droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain();
+    droneOsc.type = 'sine'; droneOsc.frequency.value = 78; droneGain.gain.value = 0.015;
+    droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start();
   } catch (e) { console.warn('Ambient audio unavailable:', e); }
 }
 function toggleSound() {
@@ -1071,14 +1042,11 @@ function ibPlayTone(freq, dur) {
     if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
     const osc = ibAudioCtx.createOscillator();
     const gain = ibAudioCtx.createGain();
-    osc.type = 'sine';
-    osc.frequency.value = freq;
+    osc.type = 'sine'; osc.frequency.value = freq;
     gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
     gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
-    osc.connect(gain);
-    gain.connect(ibAudioCtx.destination);
-    osc.start();
-    osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
+    osc.connect(gain); gain.connect(ibAudioCtx.destination);
+    osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
   } catch (e) { /* audio unavailable, silently continue */ }
 }
 function ibToggleWrapper() {
@@ -1092,9 +1060,9 @@ function ibRenderIntro() {
   if (!grid) return;
   grid.innerHTML = IB_DATA_TYPES.map(t =>
     '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' +
-      '<div class="ib-term-bug-icon">' + t.icon + '</div>' +
-      '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' +
-      '<div class="ib-term-def">' + t.def + '</div>' +
+    '<div class="ib-term-bug-icon">' + t.icon + '</div>' +
+    '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' +
+    '<div class="ib-term-def">' + t.def + '</div>' +
     '</div>'
   ).join('');
 }
@@ -1114,14 +1082,14 @@ function ibRenderBins() {
 function ibStartGame() {
   document.getElementById('ib-intro').style.display = 'none';
   document.getElementById('ib-game').style.display = 'block';
-  ibPattern = [];
-  ibPlayerProgress = 0;
-  ibLives = 3;
+  ibPattern = []; ibPlayerProgress = 0; ibLives = 3;
   ibRenderBins();
   ibUpdateLives();
   ibNextRound();
 }
-function ibUpdateLives() { document.getElementById('ibLivesLabel').textContent = '♥ '.repeat(ibLives).trim() || '—'; }
+function ibUpdateLives() {
+  document.getElementById('ibLivesLabel').textContent = '♥ '.repeat(ibLives).trim() || '—';
+}
 function ibNextRound() {
   const nextStep = Math.floor(Math.random() * IB_DATA_TYPES.length);
   ibPattern.push(nextStep);
@@ -1135,20 +1103,12 @@ function ibPlayPattern() {
   let step = 0;
   window.ibPlaying = true;
   function playNext() {
-    if (step >= ibPattern.length) {
-      window.ibPlaying = false;
-      status.textContent = 'Your turn -- repeat it back!';
-      return;
-    }
+    if (step >= ibPattern.length) { window.ibPlaying = false; status.textContent = 'Your turn -- repeat it back!'; return; }
     const idx = ibPattern[step];
     const bin = document.getElementById('ibBin-' + idx);
     if (bin) bin.classList.add('flash');
     ibPlayTone(220 + idx * 60, 0.3);
-    setTimeout(() => {
-      if (bin) bin.classList.remove('flash');
-      step++;
-      setTimeout(playNext, 220);
-    }, 420);
+    setTimeout(() => { if (bin) bin.classList.remove('flash'); step++; setTimeout(playNext, 220); }, 420);
   }
   setTimeout(playNext, 500);
 }
@@ -1165,9 +1125,7 @@ function ibBinClick(idx) {
     ibUpdateLives();
     document.getElementById('ibCatchStatus').textContent = 'Not quite -- watch the pattern again.';
     if (ibLives <= 0) {
-      ibLives = 3;
-      ibUpdateLives();
-      ibPattern = [];
+      ibLives = 3; ibUpdateLives(); ibPattern = [];
       setTimeout(() => ibNextRound(), 900);
     } else {
       setTimeout(() => ibPlayPattern(), 900);
@@ -1193,9 +1151,7 @@ function ibComplete() {
 function ibReset() {
   document.getElementById('ib-complete').style.display = 'none';
   document.getElementById('ib-intro').style.display = 'block';
-  ibPattern = [];
-  ibPlayerProgress = 0;
-  ibLives = 3;
+  ibPattern = []; ibPlayerProgress = 0; ibLives = 3;
 }
 document.addEventListener('DOMContentLoaded', () => {
   loadReflects();
