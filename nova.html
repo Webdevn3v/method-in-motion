@@ -259,8 +259,10 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="hologram-stage" id="hologramStage">
 <div class="hologram-frame">
 <img class="hologram-video" id="entranceVideo" src="corrected-nova.gif" alt="Nova materializing">
-<div class="hologram-scanlines"></div>
-<div class="hologram-scan-sweep"></div>
+<div class="hologram-scanlines">
+</div>
+<div class="hologram-scan-sweep">
+</div>
 </div>
 <div class="hologram-caption">▲ ASSEMBLING STRUCTURE...</div>
 </div>
@@ -268,32 +270,51 @@ textarea.code-ed:focus { border-color: var(--y); }
 <nav>
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
-<li><a href="games.html">Games</a></li>
-<li><a href="pdfs.html">PDFs</a></li>
-<li><a href="dashboard.html">Dashboard</a></li>
-<li><a href="broken-syntax.html">Broken Syntax</a></li>
-<li><a href="mim-tv.html">MiM TV</a></li>
-<li><a href="comic.html">Comics</a></li>
-<li><a href="index.html#membership">Membership</a></li>
+<li>
+<a href="games.html">Games</a>
+</li>
+<li>
+<a href="pdfs.html">PDFs</a>
+</li>
+<li>
+<a href="library.html">Library</a>
+</li>
+<li>
+<a href="characters.html">Characters</a>
+</li>
+<li>
+<a href="broken-syntax.html">Broken Syntax</a>
+</li>
+<li>
+<a href="mim-tv.html">MiM TV</a>
+</li>
+<li>
+<a href="comic.html">Comics</a>
+</li>
 </ul>
-<span class="nav-user" id="navUser"></span>
+<span class="nav-user" id="navUser">
+</span>
 <button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
 </nav>
 <section class="hero" id="novaHero">
 <video class="hero-video" autoplay muted loop playsinline poster="nova-entrance.png">
 <source src="nova-hero.mp4" type="video/mp4">
 </video>
-<div class="hero-gradient"></div>
-<div class="hero-pulse"></div>
-<div class="particle-field" id="particleField"></div>
+<div class="hero-gradient">
+</div>
+<div class="hero-pulse">
+</div>
+<div class="particle-field" id="particleField">
+</div>
 <img class="hero-nova-gif" src="nova-motion.gif" alt="Nova" onerror="this.style.display='none'" onclick="companionClick()">
 <div class="hero-content">
 <div class="hero-eyebrow">▲ &nbsp; Curious Coder &nbsp; · &nbsp; HTML Structure</div>
 <div class="hero-name">Nova</div>
-<div class="hero-catchphrase">I never stop exploring.</div>
+<div class="hero-catchphrase">The answers are out there!</div>
 <div class="hero-role">The Curious Coder</div>
 <div class="hero-quote">"<span>Every website has a skeleton before it has a face.</span> Learn the structure first, and everything after makes sense."</div>
-<div class="fact-ticker" id="factTicker"></div>
+<div class="fact-ticker" id="factTicker">
+</div>
 <div class="hero-tiles">
 <div class="hero-lesson-grid">
 <a class="hero-tile" onclick="jumpToLesson(1)">01 Blueprint Thinking</a>
@@ -317,13 +338,17 @@ textarea.code-ed:focus { border-color: var(--y); }
 <p class="ib-sub">Every webpage is a stack of labeled sections before it's anything else. Drag the right tag onto the right shape, then watch it become real nested code.</p>
 </div>
 <div class="ib-phase" id="ib-intro">
-<div class="ib-terms-grid" id="ibTermsGrid"></div>
+<div class="ib-terms-grid" id="ibTermsGrid">
+</div>
 <button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">Start Stacking ▲</button>
 </div>
 <div class="ib-phase" id="ib-game" style="display:none;">
-<div class="ib-xray-stage" id="ibXrayStage"></div>
-<div class="ib-build-stage" id="ibBuildStage" style="display:none;margin-top:1.4rem;"></div>
-<div class="ib-sequence-stage" id="ibSequenceStage" style="display:none;margin-top:1.4rem;"></div>
+<div class="ib-xray-stage" id="ibXrayStage">
+</div>
+<div class="ib-build-stage" id="ibBuildStage" style="display:none;margin-top:1.4rem;">
+</div>
+<div class="ib-sequence-stage" id="ibSequenceStage" style="display:none;margin-top:1.4rem;">
+</div>
 <button class="ib-skip-btn" onclick="ibSkipGame()">Skip this part →</button>
 </div>
 <div class="ib-phase" id="ib-complete" style="display:none;">
@@ -347,11 +372,16 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="lesson-panel" id="lesson-1">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 01</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
+<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read">
+<span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms">
+<span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build">
+<span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect">
+<span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider">
+</div>
 <a href="nova-game.html" class="sidebar-game-link">▲ Nova's Game World</a>
 </aside>
 <div class="lesson-content">
@@ -377,11 +407,13 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="read-card-num">04 / 04</div>
 <h3>The Browser Reads Top to Bottom</h3>
 <p>When you open a site, the browser downloads your HTML file and reads every line in order.</p>
-<div class="code-block"><span class="ct">&lt;!DOCTYPE html&gt;</span>
+<div class="code-block">
+<span class="ct">&lt;!DOCTYPE html&gt;</span>
 <span class="ct">&lt;html&gt;</span>
 <span class="ct">&lt;head&gt;&lt;title&gt;</span>My First Page<span class="ct">&lt;/title&gt;&lt;/head&gt;</span>
 <span class="ct">&lt;body&gt;&lt;h1&gt;</span>Hello, World!<span class="ct">&lt;/h1&gt;&lt;/body&gt;</span>
-<span class="ct">&lt;/html&gt;</span></div>
+<span class="ct">&lt;/html&gt;</span>
+</div>
 </div>
 </div>
 <div class="locked-panel" id="anon-lock-1">
@@ -395,12 +427,36 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
 <div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">HTML <span class="term-arrow">›</span></div><div class="term-def">HyperText Markup Language — the code that builds the structure of every webpage.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Element <span class="term-arrow">›</span></div><div class="term-def">A single HTML component. Every visible thing on a page is an element.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Tag <span class="term-arrow">›</span></div><div class="term-def">The code that marks where an element starts and ends.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Browser <span class="term-arrow">›</span></div><div class="term-def">The program that reads HTML and turns it into a visible page.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">&lt;head&gt; <span class="term-arrow">›</span></div><div class="term-def">Invisible section. Holds the page title and setup info.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">&lt;body&gt; <span class="term-arrow">›</span></div><div class="term-def">Everything visitors actually see goes here.</div></div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">HTML <span class="term-arrow">›</span>
+</div>
+<div class="term-def">HyperText Markup Language — the code that builds the structure of every webpage.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Element <span class="term-arrow">›</span>
+</div>
+<div class="term-def">A single HTML component. Every visible thing on a page is an element.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Tag <span class="term-arrow">›</span>
+</div>
+<div class="term-def">The code that marks where an element starts and ends.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Browser <span class="term-arrow">›</span>
+</div>
+<div class="term-def">The program that reads HTML and turns it into a visible page.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">&lt;head&gt; <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Invisible section. Holds the page title and setup info.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">&lt;body&gt; <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Everything visitors actually see goes here.</div>
+</div>
 </div>
 </div>
 <div class="content-block" id="block-1-build">
@@ -410,17 +466,13 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="editor-wrap">
 <div class="editor-pane">
 <label>HTML Editor</label>
-<textarea class="code-ed" id="editor-1">&lt;!DOCTYPE html&gt;
-&lt;html&gt;
-&lt;head&gt;&lt;title&gt;My Page&lt;/title&gt;&lt;/head&gt;
-&lt;body&gt;
-  &lt;h1&gt;Welcome!&lt;/h1&gt;
-  &lt;p&gt;Change this to YOUR own words!&lt;/p&gt;
-&lt;/body&gt;
-&lt;/html&gt;</textarea>
+<textarea class="code-ed" id="editor-1">&lt;!DOCTYPE html&gt; &lt;html&gt; &lt;head&gt;&lt;title&gt;My Page&lt;/title&gt;&lt;/head&gt; &lt;body&gt; &lt;h1&gt;Welcome!&lt;/h1&gt; &lt;p&gt;Change this to YOUR own words!&lt;/p&gt; &lt;/body&gt; &lt;/html&gt;</textarea>
 <button class="run-btn" onclick="runCode('editor-1','preview-1')">Run</button>
 </div>
-<div class="preview-box"><iframe id="preview-1"></iframe></div>
+<div class="preview-box">
+<iframe id="preview-1">
+</iframe>
+</div>
 </div>
 <div class="quiz-card">
 <div class="quiz-q">Which section do visitors actually see?</div>
@@ -428,7 +480,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button class="quiz-opt" onclick="checkQuiz(this, false, 'The head is invisible setup info.')">&lt;head&gt;</button>
 <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct — everything in body is visible.')">&lt;body&gt;</button>
 </div>
-<div class="quiz-feedback" id="qfb-1a"></div>
+<div class="quiz-feedback" id="qfb-1a">
+</div>
 </div>
 </div>
 <div class="content-block" id="block-1-reflect">
@@ -436,7 +489,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
 <div class="reflect-q">In your own words, what is HTML? Explain it like you're describing it to a friend.</div>
-<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
+<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here...">
+</textarea>
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
 <span class="reflect-saved" id="saved-1-1">✓ Saved</span>
@@ -445,7 +499,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="lesson-complete" id="complete-1">
 <h3>▲ &nbsp; Lesson 1 Complete</h3>
 <p>HTML, CSS, JavaScript. Structure, style, behavior. You know the layers now.</p>
-<div class="lesson-joke" id="joke-1"></div>
+<div class="lesson-joke" id="joke-1">
 </div>
 </div>
 </div>
@@ -455,11 +509,16 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="lesson-panel" id="lesson-2">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 02</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
+<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read">
+<span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms">
+<span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build">
+<span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect">
+<span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider">
+</div>
 <a href="nova-game.html" class="sidebar-game-link">▲ Nova's Game World</a>
 </aside>
 <div class="lesson-content">
@@ -502,10 +561,26 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
 <div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">&lt;h1&gt;-&lt;h6&gt; <span class="term-arrow">›</span></div><div class="term-def">Heading tags. h1 is most important, never skip levels.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">&lt;img&gt; <span class="term-arrow">›</span></div><div class="term-def">Self-closing image tag. Needs src= and alt=.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">&lt;a&gt; <span class="term-arrow">›</span></div><div class="term-def">Anchor tag. Creates a link. href= sets the destination.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Attribute <span class="term-arrow">›</span></div><div class="term-def">Extra info inside a tag, written as name="value".</div></div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">&lt;h1&gt;-&lt;h6&gt; <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Heading tags. h1 is most important, never skip levels.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">&lt;img&gt; <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Self-closing image tag. Needs src= and alt=.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">&lt;a&gt; <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Anchor tag. Creates a link. href= sets the destination.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Attribute <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Extra info inside a tag, written as name="value".</div>
+</div>
 </div>
 </div>
 <div class="content-block" id="block-2-build" style="display:none">
@@ -514,15 +589,13 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="editor-wrap">
 <div class="editor-pane">
 <label>HTML Editor</label>
-<textarea class="code-ed" id="editor-2">&lt;h1&gt;My Name&lt;/h1&gt;
-&lt;p&gt;I like exploring new ideas and asking questions.&lt;/p&gt;
-&lt;ul&gt;
-  &lt;li&gt;Coding&lt;/li&gt;
-  &lt;li&gt;Art&lt;/li&gt;
-&lt;/ul&gt;</textarea>
+<textarea class="code-ed" id="editor-2">&lt;h1&gt;My Name&lt;/h1&gt; &lt;p&gt;I like exploring new ideas and asking questions.&lt;/p&gt; &lt;ul&gt; &lt;li&gt;Coding&lt;/li&gt; &lt;li&gt;Art&lt;/li&gt; &lt;/ul&gt;</textarea>
 <button class="run-btn" onclick="runCode('editor-2','preview-2')">Run</button>
 </div>
-<div class="preview-box"><iframe id="preview-2"></iframe></div>
+<div class="preview-box">
+<iframe id="preview-2">
+</iframe>
+</div>
 </div>
 <div class="quiz-card">
 <div class="quiz-q">Which attribute in &lt;img&gt; points to the image file?</div>
@@ -530,7 +603,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button class="quiz-opt" onclick="checkQuiz(this, false, 'href is used on links, not images.')">href=</button>
 <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct — src points to the image file.')">src=</button>
 </div>
-<div class="quiz-feedback" id="qfb-2a"></div>
+<div class="quiz-feedback" id="qfb-2a">
+</div>
 </div>
 </div>
 <div class="content-block" id="block-2-reflect" style="display:none">
@@ -538,7 +612,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
 <div class="reflect-q">Why is alt text on images important? Think of someone who cannot see the screen.</div>
-<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
+<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here...">
+</textarea>
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
 <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
@@ -547,7 +622,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="lesson-complete show" id="complete-2">
 <h3>▲ &nbsp; Lesson 2 Complete</h3>
 <p>Headings, paragraphs, images, links, lists — you know every core building block now.</p>
-<div class="lesson-joke" id="joke-2"></div>
+<div class="lesson-joke" id="joke-2">
+</div>
 </div>
 </div>
 </div>
@@ -555,11 +631,16 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="lesson-panel" id="lesson-3">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 03</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
+<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read">
+<span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms">
+<span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build">
+<span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect">
+<span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider">
+</div>
 <a href="nova-game.html" class="sidebar-game-link">▲ Nova's Game World</a>
 </aside>
 <div class="lesson-content">
@@ -591,21 +672,40 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="read-card-num">04 / 04</div>
 <h3>The Box Model</h3>
 <p>Every element is a box: content, padding, border, and margin.</p>
-<div class="code-block"><span class="ct">&lt;header&gt;</span>
-&nbsp;&lt;nav&gt;<span class="ct">&lt;a </span><span class="ca">href</span>=<span class="cv">"/"</span><span class="ct">&gt;</span>Home<span class="ct">&lt;/a&gt;&lt;/nav&gt;</span>
+<div class="code-block">
+<span class="ct">&lt;header&gt;</span> &nbsp;&lt;nav&gt;<span class="ct">&lt;a </span>
+<span class="ca">href</span>=<span class="cv">"/"</span>
+<span class="ct">&gt;</span>Home<span class="ct">&lt;/a&gt;&lt;/nav&gt;</span>
 <span class="ct">&lt;/header&gt;</span>
 <span class="ct">&lt;main&gt;&lt;section&gt;&lt;h1&gt;</span>Welcome<span class="ct">&lt;/h1&gt;&lt;/section&gt;&lt;/main&gt;</span>
-<span class="ct">&lt;footer&gt;</span>Built with MiM<span class="ct">&lt;/footer&gt;</span></div>
+<span class="ct">&lt;footer&gt;</span>Built with MiM<span class="ct">&lt;/footer&gt;</span>
+</div>
 </div>
 </div>
 <div class="content-block" id="block-3-terms" style="display:none">
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
 <div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">&lt;div&gt; <span class="term-arrow">›</span></div><div class="term-def">Generic container. No visual appearance on its own.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Nesting <span class="term-arrow">›</span></div><div class="term-def">Placing elements inside other elements. Inner = child, outer = parent.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">&lt;main&gt; <span class="term-arrow">›</span></div><div class="term-def">Primary content of the page. Only one per page.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Box Model <span class="term-arrow">›</span></div><div class="term-def">Every element is content + padding + border + margin.</div></div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">&lt;div&gt; <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Generic container. No visual appearance on its own.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Nesting <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Placing elements inside other elements. Inner = child, outer = parent.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">&lt;main&gt; <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Primary content of the page. Only one per page.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Box Model <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Every element is content + padding + border + margin.</div>
+</div>
 </div>
 </div>
 <div class="content-block" id="block-3-build" style="display:none">
@@ -614,18 +714,13 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="editor-wrap">
 <div class="editor-pane">
 <label>HTML Editor</label>
-<textarea class="code-ed" id="editor-3">&lt;header style="background:#ffe066;padding:1rem"&gt;
-  &lt;h1&gt;My Website&lt;/h1&gt;
-&lt;/header&gt;
-&lt;main style="padding:2rem"&gt;
-  &lt;section&gt;&lt;h2&gt;Welcome&lt;/h2&gt;&lt;/section&gt;
-&lt;/main&gt;
-&lt;footer style="background:#333;color:#fff;padding:1rem"&gt;
-  Built by me
-&lt;/footer&gt;</textarea>
+<textarea class="code-ed" id="editor-3">&lt;header style="background:#ffe066;padding:1rem"&gt; &lt;h1&gt;My Website&lt;/h1&gt; &lt;/header&gt; &lt;main style="padding:2rem"&gt; &lt;section&gt;&lt;h2&gt;Welcome&lt;/h2&gt;&lt;/section&gt; &lt;/main&gt; &lt;footer style="background:#333;color:#fff;padding:1rem"&gt; Built by me &lt;/footer&gt;</textarea>
 <button class="run-btn" onclick="runCode('editor-3','preview-3')">Run</button>
 </div>
-<div class="preview-box"><iframe id="preview-3"></iframe></div>
+<div class="preview-box">
+<iframe id="preview-3">
+</iframe>
+</div>
 </div>
 <div class="quiz-card">
 <div class="quiz-q">Which tag holds the primary content of a page?</div>
@@ -633,7 +728,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button class="quiz-opt" onclick="checkQuiz(this, false, 'That is not a real semantic tag.')">&lt;content&gt;</button>
 <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct — main holds the primary content.')">&lt;main&gt;</button>
 </div>
-<div class="quiz-feedback" id="qfb-3a"></div>
+<div class="quiz-feedback" id="qfb-3a">
+</div>
 </div>
 </div>
 <div class="content-block" id="block-3-reflect" style="display:none">
@@ -641,7 +737,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
 <div class="reflect-q">What is the difference between &lt;div&gt; and &lt;section&gt;? When would you use each?</div>
-<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
+<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here...">
+</textarea>
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
 <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
@@ -650,7 +747,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="lesson-complete show" id="complete-3">
 <h3>▲ &nbsp; Lesson 3 Complete</h3>
 <p>Semantic tags, nesting rules, the box model — you can structure a full page now.</p>
-<div class="lesson-joke" id="joke-3"></div>
+<div class="lesson-joke" id="joke-3">
+</div>
 </div>
 </div>
 </div>
@@ -658,10 +756,14 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="lesson-panel" id="lesson-4">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 04</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(4,'builder')" id="sb-4-builder"><span class="sidebar-icon">🏗️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
+<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read">
+<span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'builder')" id="sb-4-builder">
+<span class="sidebar-icon">🏗️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect">
+<span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider">
+</div>
 <a href="nova-game.html" class="sidebar-game-link">▲ Nova's Game World</a>
 </aside>
 <div class="lesson-content">
@@ -709,17 +811,23 @@ textarea.code-ed:focus { border-color: var(--y); }
 <label>Site Tagline</label>
 <input type="text" id="pb-tagline" placeholder="Curious. Creator. Coder.">
 <label>About You</label>
-<textarea id="pb-about" placeholder="I like exploring new ideas and building things with code."></textarea>
+<textarea id="pb-about" placeholder="I like exploring new ideas and building things with code.">
+</textarea>
 <label>3 Things About You (one per line)</label>
-<textarea id="pb-facts" placeholder="I love coding&#10;I built this with HTML&#10;HTML is my superpower"></textarea>
+<textarea id="pb-facts" placeholder="I love coding&#10;I built this with HTML&#10;HTML is my superpower">
+</textarea>
 <label>Nav Links (Label|url, one per line)</label>
-<textarea id="pb-nav" placeholder="Home|#&#10;About|#about"></textarea>
+<textarea id="pb-nav" placeholder="Home|#&#10;About|#about">
+</textarea>
 <button class="builder-btn" onclick="buildPreview()">Preview My Page</button>
 <button class="builder-btn dl-btn" onclick="downloadPage()">Download My HTML File</button>
 </div>
 <div class="builder-preview-wrap">
 <label>Live Preview</label>
-<div class="builder-preview"><iframe id="pb-preview"></iframe></div>
+<div class="builder-preview">
+<iframe id="pb-preview">
+</iframe>
+</div>
 <div class="builder-note">Your page will look plain right now — that's intentional. CSS comes in a future MiM lesson.</div>
 </div>
 </div>
@@ -729,7 +837,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="section-sub">LESSON 04 · FINAL REFLECTION</div>
 <div class="reflect-prompt">
 <div class="reflect-q">You completed all four of Nova's lessons. What changed most about how you see websites?</div>
-<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
+<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here...">
+</textarea>
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
 <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
@@ -738,7 +847,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="lesson-complete show" id="complete-4">
 <h3>▲ &nbsp; Nova's Dome Complete</h3>
 <p>Blueprint thinking. Building blocks. Layout and nesting. Your first real HTML page. That's the whole foundation.</p>
-<div class="lesson-joke" id="joke-4"></div>
+<div class="lesson-joke" id="joke-4">
+</div>
 </div>
 </div>
 </div>
@@ -750,39 +860,78 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="cheat-card">
 <h3>▲ Lesson 1 — Blueprint Thinking</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">HTML</div><div class="cheat-desc">HyperText Markup Language — the structure of every webpage.</div></div>
-<div class="cheat-item"><div class="cheat-term">&lt;head&gt; / &lt;body&gt;</div><div class="cheat-desc">head = invisible setup. body = everything visible.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">HTML</div>
+<div class="cheat-desc">HyperText Markup Language — the structure of every webpage.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">&lt;head&gt; / &lt;body&gt;</div>
+<div class="cheat-desc">head = invisible setup. body = everything visible.</div>
+</div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>▲ Lesson 2 — Building Blocks</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">&lt;h1&gt;-&lt;h6&gt;</div><div class="cheat-desc">Headings — h1 is most important, never skip levels.</div></div>
-<div class="cheat-item"><div class="cheat-term">&lt;img src alt&gt;</div><div class="cheat-desc">src finds the file, alt describes it.</div></div>
-<div class="cheat-item"><div class="cheat-term">&lt;a href&gt;</div><div class="cheat-desc">Creates a link — href sets the destination.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">&lt;h1&gt;-&lt;h6&gt;</div>
+<div class="cheat-desc">Headings — h1 is most important, never skip levels.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">&lt;img src alt&gt;</div>
+<div class="cheat-desc">src finds the file, alt describes it.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">&lt;a href&gt;</div>
+<div class="cheat-desc">Creates a link — href sets the destination.</div>
+</div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>▲ Lesson 3 — Layout &amp; Nesting</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">&lt;div&gt;</div><div class="cheat-desc">Generic container, no style of its own.</div></div>
-<div class="cheat-item"><div class="cheat-term">Semantic tags</div><div class="cheat-desc">header, nav, main, section, footer.</div></div>
-<div class="cheat-item"><div class="cheat-term">Box model</div><div class="cheat-desc">content + padding + border + margin.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">&lt;div&gt;</div>
+<div class="cheat-desc">Generic container, no style of its own.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">Semantic tags</div>
+<div class="cheat-desc">header, nav, main, section, footer.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">Box model</div>
+<div class="cheat-desc">content + padding + border + margin.</div>
+</div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>▲ Lesson 4 — Page Skeleton</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">&lt;!DOCTYPE html&gt;</div><div class="cheat-desc">Always goes first — declares an HTML5 document.</div></div>
-<div class="cheat-item"><div class="cheat-term">Full skeleton</div><div class="cheat-desc">html &gt; head + body — the shape every page shares.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">&lt;!DOCTYPE html&gt;</div>
+<div class="cheat-desc">Always goes first — declares an HTML5 document.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">Full skeleton</div>
+<div class="cheat-desc">html &gt; head + body — the shape every page shares.</div>
+</div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>▲ Symbols Reference</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">&lt; &gt;</div><div class="cheat-desc">Angle brackets — wrap every tag name.</div></div>
-<div class="cheat-item"><div class="cheat-term">&lt;/ &gt;</div><div class="cheat-desc">Closing tag — says "this element is done."</div></div>
-<div class="cheat-item"><div class="cheat-term">=</div><div class="cheat-desc">Assigns an attribute value, like src="photo.jpg".</div></div>
+<div class="cheat-item">
+<div class="cheat-term">&lt; &gt;</div>
+<div class="cheat-desc">Angle brackets — wrap every tag name.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">&lt;/ &gt;</div>
+<div class="cheat-desc">Closing tag — says "this element is done."</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">=</div>
+<div class="cheat-desc">Assigns an attribute value, like src="photo.jpg".</div>
+</div>
 </div>
 <div class="cheat-btn-row">
 <a href="nova-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
@@ -794,278 +943,360 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
 <div class="egg-popup" id="eggPopup">
 <h4>▲ Secret Found!</h4>
-<p id="eggText"></p>
+<p id="eggText">
+</p>
 </div>
-<script type="module" src="auth-init.js"></script>
+<script type="module" src="auth-init.js">
+</script>
 <script>
 let currentLesson = null;
 let currentTier = null;
 const TIER_ORDER = ['explorer', 'sparks', 'coders'];
-function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
+function tierLevel(t) {
+return TIER_ORDER.indexOf((t || '').toLowerCase());
+}
 window.setNavUser = function(email) {
-  const u = document.getElementById('navUser');
-  const b = document.getElementById('navLogout');
-  if (u) { u.textContent = email; u.style.display = 'inline'; }
-  if (b) b.style.display = 'inline-block';
-};
+const u = document.getElementById('navUser');
+const b = document.getElementById('navLogout');
+if (u) {
+u.textContent = email;
+u.style.display = 'inline';
+}
+if (b) b.style.display = 'inline-block';
+}
+;
 window.handleTierUnlock = function(tier) {
-  const loggedIn = !!tier && tier !== 'logged-out';
-  const anonLock = document.getElementById('anon-lock-1');
-  const anonGated = document.getElementById('anon-gated-1');
-  if (loggedIn) {
-    if (anonLock) anonLock.style.display = 'none';
-    if (anonGated) anonGated.style.display = 'block';
-  } else {
-    if (anonLock) anonLock.style.display = 'block';
-    if (anonGated) anonGated.style.display = 'none';
-  }
-  currentTier = tier;
-  const lvl = tierLevel(tier);
-  if (lvl >= tierLevel('sparks')) { unlockLesson(2); } else { lockLesson(2); }
-  if (lvl >= tierLevel('coders')) { unlockLesson(3); unlockLesson(4); } else { lockLesson(3); lockLesson(4); }
-  loadReflects();
-};
-function lockLesson(n) { const l = document.getElementById('lock-' + n); if (l) l.style.display = 'block'; }
-function unlockLesson(n) { const l = document.getElementById('lock-' + n); if (l) l.style.display = 'none'; }
+const loggedIn = !!tier && tier !== 'logged-out';
+const anonLock = document.getElementById('anon-lock-1');
+const anonGated = document.getElementById('anon-gated-1');
+if (loggedIn) {
+if (anonLock) anonLock.style.display = 'none';
+if (anonGated) anonGated.style.display = 'block';
+}
+else {
+if (anonLock) anonLock.style.display = 'block';
+if (anonGated) anonGated.style.display = 'none';
+}
+currentTier = tier;
+const lvl = tierLevel(tier);
+if (lvl >= tierLevel('sparks')) {
+unlockLesson(2);
+}
+else {
+lockLesson(2);
+}
+if (lvl >= tierLevel('coders')) {
+unlockLesson(3);
+unlockLesson(4);
+}
+else {
+lockLesson(3);
+lockLesson(4);
+}
+loadReflects();
+}
+;
+function lockLesson(n) {
+const l = document.getElementById('lock-' + n);
+if (l) l.style.display = 'block';
+}
+function unlockLesson(n) {
+const l = document.getElementById('lock-' + n);
+if (l) l.style.display = 'none';
+}
 function enterDome() {
-  const overlay = document.getElementById('discoveryOverlay');
-  const finishEntrance = () => {
-    overlay.classList.add('fading');
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-      const st = document.getElementById('soundToggle');
-      if (st) st.classList.add('visible');
-      try { startAmbient(); } catch (e) { /* ambient audio optional */ }
-    }, 700);
-  };
-  try {
-    document.getElementById('discoveryEnterBtn').style.display = 'none';
-    document.querySelector('.nova-mark').style.display = 'none';
-    document.getElementById('discoveryTitle').style.display = 'none';
-    document.getElementById('discoverySub').style.display = 'none';
-    const stage = document.getElementById('hologramStage');
-    stage.style.display = 'block';
-  } catch (e) { /* hologram cosmetics optional, overlay must still dismiss */ }
-  setTimeout(finishEntrance, 3000);
+const overlay = document.getElementById('discoveryOverlay');
+const finishEntrance = () => {
+overlay.classList.add('fading');
+setTimeout(() => {
+overlay.classList.add('hidden');
+const st = document.getElementById('soundToggle');
+if (st) st.classList.add('visible');
+try {
+startAmbient();
+}
+catch (e) {
+/* ambient audio optional */ }
+}
+, 700);
+}
+;
+try {
+document.getElementById('discoveryEnterBtn').style.display = 'none';
+document.querySelector('.nova-mark').style.display = 'none';
+document.getElementById('discoveryTitle').style.display = 'none';
+document.getElementById('discoverySub').style.display = 'none';
+const stage = document.getElementById('hologramStage');
+stage.style.display = 'block';
+}
+catch (e) {
+/* hologram cosmetics optional, overlay must still dismiss */ }
+setTimeout(finishEntrance, 3000);
 }
 function openLesson(n) {
-  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
-  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
-  const panel = document.getElementById('lesson-' + n);
-  const tab = document.getElementById('tab-' + n);
-  if (panel) panel.classList.add('open');
-  if (tab) tab.classList.add('active');
-  currentLesson = n;
-  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  if (n !== 'cheat') showBlock(n, 'read');
-  playUISound(330);
-  const wrapper = document.getElementById('icebreakerWrapper');
-  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
+document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+const panel = document.getElementById('lesson-' + n);
+const tab = document.getElementById('tab-' + n);
+if (panel) panel.classList.add('open');
+if (tab) tab.classList.add('active');
+currentLesson = n;
+panel?.scrollIntoView({
+behavior: 'smooth', block: 'start' }
+);
+if (n !== 'cheat') showBlock(n, 'read');
+playUISound(330);
+const wrapper = document.getElementById('icebreakerWrapper');
+if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
 }
-function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
+function jumpToLesson(n) {
+openLesson(n);
+showBlock(n, 'read');
+}
 function showBlock(lesson, block) {
-  const panel = document.getElementById('lesson-' + lesson);
-  if (!panel) return;
-  panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
-  panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-  const target = document.getElementById('block-' + lesson + '-' + block);
-  if (target) target.classList.add('active');
-  const btn = document.getElementById('sb-' + lesson + '-' + block);
-  if (btn) btn.classList.add('active');
-  playUISound(392);
+const panel = document.getElementById('lesson-' + lesson);
+if (!panel) return;
+panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+const target = document.getElementById('block-' + lesson + '-' + block);
+if (target) target.classList.add('active');
+const btn = document.getElementById('sb-' + lesson + '-' + block);
+if (btn) btn.classList.add('active');
+playUISound(392);
 }
-function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); }
+function toggleTerm(card) {
+card.classList.toggle('open');
+playUISound(440);
+}
 let uiAudioCtx = null;
 function playUISound(freq) {
-  try {
-    if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = uiAudioCtx.createOscillator();
-    const gain = uiAudioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
-    osc.connect(gain); gain.connect(uiAudioCtx.destination);
-    osc.start(); osc.stop(uiAudioCtx.currentTime + 0.18);
-  } catch (e) { /* audio unavailable, silently continue */ }
+try {
+if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const osc = uiAudioCtx.createOscillator();
+const gain = uiAudioCtx.createGain();
+osc.type = 'sine';
+osc.frequency.value = freq;
+gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
+osc.connect(gain);
+gain.connect(uiAudioCtx.destination);
+osc.start();
+osc.stop(uiAudioCtx.currentTime + 0.18);
+}
+catch (e) {
+/* audio unavailable, silently continue */ }
 }
 function checkQuiz(btn, correct, feedback) {
-  const opts = btn.closest('.quiz-options');
-  if (opts.querySelector('.correct')) return;
-  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
-  if (correct) {
-    btn.classList.add('correct');
-    if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
-  } else {
-    btn.classList.add('wrong');
-    if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
-    setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
-  }
+const opts = btn.closest('.quiz-options');
+if (opts.querySelector('.correct')) return;
+const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+if (correct) {
+btn.classList.add('correct');
+if (fb) {
+fb.textContent = '✓ ' + feedback;
+fb.className = 'quiz-feedback show correct';
+}
+}
+else {
+btn.classList.add('wrong');
+if (fb) {
+fb.textContent = '✗ ' + feedback;
+fb.className = 'quiz-feedback show wrong';
+}
+setTimeout(() => {
+btn.classList.remove('wrong');
+if (fb) fb.classList.remove('show');
+}
+, 1400);
+}
 }
 function saveReflect(inputId, savedId) {
-  const val = document.getElementById(inputId)?.value;
-  if (val === undefined) return;
-  localStorage.setItem('nova_' + inputId, val);
-  const saved = document.getElementById(savedId);
-  if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
-  const lessonNum = inputId.split('-')[1];
-  const complete = document.getElementById('complete-' + lessonNum);
-  if (complete) {
-    complete.classList.add('show');
-    const jokeEl = document.getElementById('joke-' + lessonNum);
-    if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
-  }
+const val = document.getElementById(inputId)?.value;
+if (val === undefined) return;
+localStorage.setItem('nova_' + inputId, val);
+const saved = document.getElementById(savedId);
+if (saved) {
+saved.style.display = 'inline';
+setTimeout(() => saved.style.display = 'none', 2000);
+}
+const lessonNum = inputId.split('-')[1];
+const complete = document.getElementById('complete-' + lessonNum);
+if (complete) {
+complete.classList.add('show');
+const jokeEl = document.getElementById('joke-' + lessonNum);
+if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
+}
 }
 function loadReflects() {
-  document.querySelectorAll('.reflect-input').forEach(el => {
-    const stored = localStorage.getItem('nova_' + el.id);
-    if (stored) el.value = stored;
-  });
+document.querySelectorAll('.reflect-input').forEach(el => {
+const stored = localStorage.getItem('nova_' + el.id);
+if (stored) el.value = stored;
+}
+);
 }
 function runCode(edId, pvId) {
-  const code = document.getElementById(edId).value;
-  const iframe = document.getElementById(pvId);
-  const doc = iframe.contentDocument || iframe.contentWindow.document;
-  doc.open(); doc.write(code); doc.close();
+const code = document.getElementById(edId).value;
+const iframe = document.getElementById(pvId);
+const doc = iframe.contentDocument || iframe.contentWindow.document;
+doc.open();
+doc.write(code);
+doc.close();
 }
 function downloadCheat() {
-  const content = "NOVA'S DISCOVERY DOME — FULL CHEAT SHEET\n\n" +
-    "LESSON 1 — Blueprint Thinking\nHTML: structure of every webpage\nhead: invisible setup / body: everything visible\n\n" +
-    "LESSON 2 — Building Blocks\nh1-h6: headings, never skip levels\nimg src= alt=: image + description\na href=: link destination\n\n" +
-    "LESSON 3 — Layout & Nesting\ndiv: generic container\nSemantic tags: header, nav, main, section, footer\nBox model: content + padding + border + margin\n\n" +
-    "LESSON 4 — Page Skeleton\n<!DOCTYPE html> always first\nhtml > head + body\n\n" +
-    "SYMBOLS REFERENCE\n< > wraps every tag name\n</ > closing tag\n= assigns an attribute value";
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'nova-cheatsheet.txt';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+const content = "NOVA'S DISCOVERY DOME — FULL CHEAT SHEET\n\n" + "LESSON 1 — Blueprint Thinking\nHTML: structure of every webpage\nhead: invisible setup / body: everything visible\n\n" + "LESSON 2 — Building Blocks\nh1-h6: headings, never skip levels\nimg src= alt=: image + description\na href=: link destination\n\n" + "LESSON 3 — Layout & Nesting\ndiv: generic container\nSemantic tags: header, nav, main, section, footer\nBox model: content + padding + border + margin\n\n" + "LESSON 4 — Page Skeleton\n<!DOCTYPE html> always first\nhtml > head + body\n\n" + "SYMBOLS REFERENCE\n< > wraps every tag name\n</ > closing tag\n= assigns an attribute value";
+const blob = new Blob([content], {
+type: 'text/plain' }
+);
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'nova-cheatsheet.txt';
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
 }
 function goUpgrade() {
-  if (window.firebaseAuth && window.firebaseAuth.currentUser) {
-    window.location.href = 'membership.html';
-  } else {
-    document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
-  }
+if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+window.location.href = 'membership.html';
+}
+else {
+document.dispatchEvent(new CustomEvent('mim-auth', {
+detail: {
+action: 'signup' }
+}
+));
+}
 }
 function handleLogout() {
-  if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); }
+if (window.firebaseAuth) {
+window.firebaseAuth.signOut().then(() => location.reload());
+}
 }
 function spawnParticle() {
-  const field = document.getElementById('particleField');
-  if (!field) return;
-  const p = document.createElement('div');
-  p.className = 'particle';
-  const startX = Math.random() * 100;
-  const duration = 8 + Math.random() * 10;
-  const delay = Math.random() * 2;
-  p.style.left = startX + '%'; p.style.bottom = '0';
-  p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
-  field.appendChild(p);
-  setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
+const field = document.getElementById('particleField');
+if (!field) return;
+const p = document.createElement('div');
+p.className = 'particle';
+const startX = Math.random() * 100;
+const duration = 8 + Math.random() * 10;
+const delay = Math.random() * 2;
+p.style.left = startX + '%';
+p.style.bottom = '0';
+p.style.animationDuration = duration + 's';
+p.style.animationDelay = delay + 's';
+field.appendChild(p);
+setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
 }
-for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400);
+for (let i = 0;
+i < 14;
+i++) setTimeout(spawnParticle, i * 400);
 setInterval(spawnParticle, 900);
-const FACTS = [
-  "the very first website ever built, info.cern.ch, is still online today.",
-  "the <marquee> tag used to make text scroll across the screen -- it's basically retired now.",
-  "HTML doesn't stand for 'Hyper Text Modern Language' -- it's HyperText Markup Language.",
-  "the average webpage today uses over 30 different HTML elements just to build one layout.",
-  "semantic tags like <header> and <footer> weren't added to HTML until version 5, in 2014.",
-  "browsers are very forgiving -- they'll try to render broken HTML instead of just refusing to load it.",
-  "the <div> tag is the single most-used HTML element on the entire internet.",
-  "screen readers rely entirely on your alt text to describe images to visitors who can't see them."
-];
+const FACTS = [ "the very first website ever built, info.cern.ch, is still online today.", "the <marquee> tag used to make text scroll across the screen -- it's basically retired now.", "HTML doesn't stand for 'Hyper Text Modern Language' -- it's HyperText Markup Language.", "the average webpage today uses over 30 different HTML elements just to build one layout.", "semantic tags like <header> and <footer> weren't added to HTML until version 5, in 2014.", "browsers are very forgiving -- they'll try to render broken HTML instead of just refusing to load it.", "the <div> tag is the single most-used HTML element on the entire internet.", "screen readers rely entirely on your alt text to describe images to visitors who can't see them." ];
 let factIndex = 0;
 function cycleFacts() {
-  const el = document.getElementById('factTicker');
-  if (!el) return;
-  el.classList.remove('show');
-  setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400);
+const el = document.getElementById('factTicker');
+if (!el) return;
+el.classList.remove('show');
+setTimeout(() => {
+el.textContent = FACTS[factIndex % FACTS.length];
+el.classList.add('show');
+factIndex++;
+}
+, 400);
 }
 cycleFacts();
 setInterval(cycleFacts, 6500);
-const JOKES = [
-  "Why did the <div> go to therapy? It had no sense of identity without a class.",
-  "I would tell you a joke about UDP, but you might not get it.",
-  "Why do web developers love nature? Because of all the <trees>... I mean DOM trees.",
-  "Nova's favorite tag? <strong>, obviously.",
-  "Why did the HTML tag break up with CSS? It needed more space... and a margin.",
-  "What did the <header> say to the <footer>? We really need to talk more in the <main>.",
-  "Why don't semantic tags ever get lost? They always know their <section>."
-];
+const JOKES = [ "Why did the <div> go to therapy? It had no sense of identity without a class.", "I would tell you a joke about UDP, but you might not get it.", "Why do web developers love nature? Because of all the <trees>... I mean DOM trees.", "Nova's favorite tag? <strong>, obviously.", "Why did the HTML tag break up with CSS? It needed more space... and a margin.", "What did the <header> say to the <footer>? We really need to talk more in the <main>.", "Why don't semantic tags ever get lost? They always know their <section>." ];
 let companionClicks = 0;
 function companionClick() {
-  companionClicks++;
-  if (companionClicks === 5 && !localStorage.getItem('nova_egg_found')) {
-    localStorage.setItem('nova_egg_found', '1');
-    showEgg("You found Nova's blueprint! Secret catchphrase unlocked: \"Structure first, everything else follows.\" ▲");
-  } else if (companionClicks % 5 === 0) {
-    showEgg("Nova hums a build tone. You've already found this one — but the structure's always there.");
-  }
+companionClicks++;
+if (companionClicks === 5 && !localStorage.getItem('nova_egg_found')) {
+localStorage.setItem('nova_egg_found', '1');
+showEgg("You found Nova's blueprint! Secret catchphrase unlocked: \"Structure first, everything else follows.\" ▲");
+}
+else if (companionClicks % 5 === 0) {
+showEgg("Nova hums a build tone. You've already found this one — but the structure's always there.");
+}
 }
 function showEgg(text) {
-  const popup = document.getElementById('eggPopup');
-  document.getElementById('eggText').textContent = text;
-  popup.classList.add('show');
-  setTimeout(() => popup.classList.remove('show'), 5000);
+const popup = document.getElementById('eggPopup');
+document.getElementById('eggText').textContent = text;
+popup.classList.add('show');
+setTimeout(() => popup.classList.remove('show'), 5000);
 }
 let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
 function startAmbient() {
-  try {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain();
-    droneOsc.type = 'triangle'; droneOsc.frequency.value = 98; droneGain.gain.value = 0.013;
-    droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start();
-  } catch (e) { console.warn('Ambient audio unavailable:', e); }
+try {
+audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+droneOsc = audioCtx.createOscillator();
+droneGain = audioCtx.createGain();
+droneOsc.type = 'triangle';
+droneOsc.frequency.value = 98;
+droneGain.gain.value = 0.013;
+droneOsc.connect(droneGain);
+droneGain.connect(audioCtx.destination);
+droneOsc.start();
+}
+catch (e) {
+console.warn('Ambient audio unavailable:', e);
+}
 }
 function toggleSound() {
-  const btn = document.getElementById('soundToggle');
-  if (!audioCtx) return;
-  soundOn = !soundOn;
-  droneGain.gain.value = soundOn ? 0.013 : 0;
-  btn.textContent = soundOn ? '🔊' : '🔇';
-  btn.classList.toggle('muted', !soundOn);
+const btn = document.getElementById('soundToggle');
+if (!audioCtx) return;
+soundOn = !soundOn;
+droneGain.gain.value = soundOn ? 0.013 : 0;
+btn.textContent = soundOn ? '🔊' : '🔇';
+btn.classList.toggle('muted', !soundOn);
 }
 function getBuilderHTML() {
-  const name = document.getElementById('pb-name').value || 'Your Name';
-  const tagline = document.getElementById('pb-tagline').value || 'Curious. Creator. Coder.';
-  const about = document.getElementById('pb-about').value || 'I am learning to build things with code.';
-  const factsRaw = document.getElementById('pb-facts').value || 'I love coding\nI built this with HTML\nHTML is my superpower';
-  const navRaw = document.getElementById('pb-nav').value || 'Home|#\nAbout|#about';
-  const facts = factsRaw.split('\n').filter(f => f.trim()).map(f => '<li>' + f.trim() + '</li>').join('\n  ');
-  const navLinks = navRaw.split('\n').filter(n => n.trim()).map(n => {
-    const parts = (n + '|#').split('|');
-    return '<a href="' + parts[1].trim() + '">' + parts[0].trim() + '</a>';
-  }).join('\n    ');
-  return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>' + name + ' | Personal Site</title>\n</head>\n<body>\n<header>\n  <h1>' + name + '</h1>\n  <nav>\n    ' + navLinks + '\n  </nav>\n</header>\n<main>\n  <section id="hero">\n    <h2>Welcome to My Site</h2>\n    <p>' + tagline + '</p>\n    <p>' + about + '</p>\n  </section>\n  <section id="about">\n    <h2>About Me</h2>\n    <ul>\n  ' + facts + '\n    </ul>\n  </section>\n</main>\n<footer>\n  <p>Built by ' + name + ' with HTML and Method in Motion</p>\n</footer>\n</body>\n</html>';
+const name = document.getElementById('pb-name').value || 'Your Name';
+const tagline = document.getElementById('pb-tagline').value || 'Curious. Creator. Coder.';
+const about = document.getElementById('pb-about').value || 'I am learning to build things with code.';
+const factsRaw = document.getElementById('pb-facts').value || 'I love coding\nI built this with HTML\nHTML is my superpower';
+const navRaw = document.getElementById('pb-nav').value || 'Home|#\nAbout|#about';
+const facts = factsRaw.split('\n').filter(f => f.trim()).map(f => '<li>' + f.trim() + '</li>').join('\n ');
+const navLinks = navRaw.split('\n').filter(n => n.trim()).map(n => {
+const parts = (n + '|#').split('|');
+return '<a href="' + parts[1].trim() + '">' + parts[0].trim() + '</a>';
+}
+).join('\n ');
+return '<!DOCTYPE html>\n<html lang="en">\n<head>\n<meta charset="UTF-8">\n<title>' + name + ' | Personal Site</title>\n</head>\n<body>\n<header>\n <h1>' + name + '</h1>\n <nav>\n ' + navLinks + '\n </nav>\n</header>\n<main>\n <section id="hero">\n <h2>Welcome to My Site</h2>\n <p>' + tagline + '</p>\n <p>' + about + '</p>\n </section>\n <section id="about">\n <h2>About Me</h2>\n <ul>\n ' + facts + '\n </ul>\n </section>\n</main>\n<footer>\n <p>Built by ' + name + ' with HTML and Method in Motion</p>\n</footer>\n</body>\n</html>';
 }
 function buildPreview() {
-  const h = getBuilderHTML();
-  const i = document.getElementById('pb-preview');
-  const d = i.contentDocument || i.contentWindow.document;
-  d.open(); d.write(h); d.close();
+const h = getBuilderHTML();
+const i = document.getElementById('pb-preview');
+const d = i.contentDocument || i.contentWindow.document;
+d.open();
+d.write(h);
+d.close();
 }
 function downloadPage() {
-  buildPreview();
-  const h = getBuilderHTML();
-  const blob = new Blob([h], { type: 'text/html' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  const n = (document.getElementById('pb-name').value || 'my-site').toLowerCase().replace(/\s+/g, '-');
-  a.download = n + '-step1-html.html';
-  a.click();
-  URL.revokeObjectURL(url);
+buildPreview();
+const h = getBuilderHTML();
+const blob = new Blob([h], {
+type: 'text/html' }
+);
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+const n = (document.getElementById('pb-name').value || 'my-site').toLowerCase().replace(/\s+/g, '-');
+a.download = n + '-step1-html.html';
+a.click();
+URL.revokeObjectURL(url);
 }
-const IB_TAGS = [
-  { id: 'header', label: '<header>', def: "The top of the page — usually holds the site name and navigation.", color: '#ffe066' },
-  { id: 'main', label: '<main>', def: "The primary content of the page. Every page has exactly one.", color: '#00e5ff' },
-  { id: 'footer', label: '<footer>', def: "The bottom of the page — usually holds credits or contact info.", color: '#ff6bad' }
+const IB_TAGS = [ {
+id: 'header', label: '<header>', def: "The top of the page — usually holds the site name and navigation.", color: '#ffe066' }
+, {
+id: 'main', label: '<main>', def: "The primary content of the page. Every page has exactly one.", color: '#00e5ff' }
+, {
+id: 'footer', label: '<footer>', def: "The bottom of the page — usually holds credits or contact info.", color: '#ff6bad' }
 ];
-const IB_ROUNDS_DATA = [
-  { shapes: ['header','main','footer'], code: ['<header>','<main>','<footer>'] },
-  { shapes: ['header','main','main','footer'], code: ['<header>','<main>',' <section>','<footer>'] }
+const IB_ROUNDS_DATA = [ {
+shapes: ['header','main','footer'], code: ['<header>','<main>','<footer>'] }
+, {
+shapes: ['header','main','main','footer'], code: ['<header>','<main>',' <section>','<footer>'] }
 ];
 let ibRound = 0;
 let ibXrayAssigned = [];
@@ -1073,169 +1304,190 @@ let ibSelectedTag = null;
 let ibCollectedPieces = [];
 let ibAudioCtx = null;
 function ibPlayTone(freq, dur) {
-  try {
-    if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ibAudioCtx.createOscillator();
-    const gain = ibAudioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
-    osc.connect(gain); gain.connect(ibAudioCtx.destination);
-    osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
-  } catch (e) { /* audio unavailable, silently continue */ }
+try {
+if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const osc = ibAudioCtx.createOscillator();
+const gain = ibAudioCtx.createGain();
+osc.type = 'sine';
+osc.frequency.value = freq;
+gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
+osc.connect(gain);
+gain.connect(ibAudioCtx.destination);
+osc.start();
+osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
+}
+catch (e) {
+/* audio unavailable, silently continue */ }
 }
 function ibToggleWrapper() {
-  const wrapper = document.getElementById('icebreakerWrapper');
-  const opening = !wrapper.classList.contains('open');
-  wrapper.classList.toggle('open');
-  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+const wrapper = document.getElementById('icebreakerWrapper');
+const opening = !wrapper.classList.contains('open');
+wrapper.classList.toggle('open');
+if (opening) wrapper.scrollIntoView({
+behavior: 'smooth', block: 'start' }
+);
 }
 function ibRenderIntro() {
-  const grid = document.getElementById('ibTermsGrid');
-  if (!grid) return;
-  grid.innerHTML = IB_TAGS.map(t =>
-    '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' +
-    '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' +
-    '<div class="ib-term-def">' + t.def + '</div>' +
-    '</div>'
-  ).join('');
+const grid = document.getElementById('ibTermsGrid');
+if (!grid) return;
+grid.innerHTML = IB_TAGS.map(t => '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' + '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' + '<div class="ib-term-def">' + t.def + '</div>' + '</div>' ).join('');
 }
 function ibStartGame() {
-  document.getElementById('ib-intro').style.display = 'none';
-  document.getElementById('ib-game').style.display = 'block';
-  ibRound = 0; ibCollectedPieces = [];
-  ibBeginRound();
+document.getElementById('ib-intro').style.display = 'none';
+document.getElementById('ib-game').style.display = 'block';
+ibRound = 0;
+ibCollectedPieces = [];
+ibBeginRound();
 }
 function ibBeginRound() {
-  const data = IB_ROUNDS_DATA[ibRound];
-  ibXrayAssigned = new Array(data.shapes.length).fill(null);
-  ibSelectedTag = null;
-  document.getElementById('ibBuildStage').style.display = 'none';
-  document.getElementById('ibSequenceStage').style.display = 'none';
-  const stage = document.getElementById('ibXrayStage');
-  stage.style.display = 'block';
-  stage.innerHTML =
-    '<div class="ib-round-label">ROUND ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' +
-    '<div class="ib-xray-goal">Tap a tag below, then tap the shape it belongs to.</div>' +
-    '<div class="ib-xray-page" id="ibXrayPage"></div>' +
-    '<div class="ib-tag-tray" id="ibTagTray"></div>' +
-    '<div class="ib-xray-status" id="ibXrayStatus"></div>';
-  const page = document.getElementById('ibXrayPage');
-  page.innerHTML = data.shapes.map((s, idx) => '<div class="ib-xray-shape" id="ibShape' + idx + '" onclick="ibShapeClick(' + idx + ')">Untitled section</div>').join('');
-  const tray = document.getElementById('ibTagTray');
-  tray.innerHTML = IB_TAGS.map(t => '<div class="ib-tag-chip" id="ibChip-' + t.id + '" style="border-color:' + t.color + ';color:' + t.color + '" onclick="ibChipClick(\'' + t.id + '\')">' + t.label + '</div>').join('');
+const data = IB_ROUNDS_DATA[ibRound];
+ibXrayAssigned = new Array(data.shapes.length).fill(null);
+ibSelectedTag = null;
+document.getElementById('ibBuildStage').style.display = 'none';
+document.getElementById('ibSequenceStage').style.display = 'none';
+const stage = document.getElementById('ibXrayStage');
+stage.style.display = 'block';
+stage.innerHTML = '<div class="ib-round-label">ROUND ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' + '<div class="ib-xray-goal">Tap a tag below, then tap the shape it belongs to.</div>' + '<div class="ib-xray-page" id="ibXrayPage"></div>' + '<div class="ib-tag-tray" id="ibTagTray"></div>' + '<div class="ib-xray-status" id="ibXrayStatus"></div>';
+const page = document.getElementById('ibXrayPage');
+page.innerHTML = data.shapes.map((s, idx) => '<div class="ib-xray-shape" id="ibShape' + idx + '" onclick="ibShapeClick(' + idx + ')">Untitled section</div>').join('');
+const tray = document.getElementById('ibTagTray');
+tray.innerHTML = IB_TAGS.map(t => '<div class="ib-tag-chip" id="ibChip-' + t.id + '" style="border-color:' + t.color + ';color:' + t.color + '" onclick="ibChipClick(\'' + t.id + '\')">' + t.label + '</div>').join('');
 }
 function ibChipClick(tagId) {
-  ibSelectedTag = tagId;
-  document.getElementById('ibXrayStatus').textContent = 'Now tap the shape that should be ' + tagId + '.';
+ibSelectedTag = tagId;
+document.getElementById('ibXrayStatus').textContent = 'Now tap the shape that should be ' + tagId + '.';
 }
 function ibShapeClick(idx) {
-  if (!ibSelectedTag) { document.getElementById('ibXrayStatus').textContent = 'Pick a tag first!'; return; }
-  const data = IB_ROUNDS_DATA[ibRound];
-  const shapeEl = document.getElementById('ibShape' + idx);
-  const tagDef = IB_TAGS.find(t => t.id === ibSelectedTag);
-  if (data.shapes[idx] === ibSelectedTag) {
-    ibXrayAssigned[idx] = ibSelectedTag;
-    shapeEl.textContent = tagDef.label;
-    shapeEl.style.color = tagDef.color;
-    shapeEl.classList.add('filled');
-    ibPlayTone(400, 0.3);
-    document.getElementById('ibXrayStatus').textContent = '✓ Correct!';
-    const chip = document.getElementById('ibChip-' + ibSelectedTag);
-    if (chip && data.shapes.filter(s => s === ibSelectedTag).length <= data.shapes.filter((s,i) => s === ibSelectedTag && ibXrayAssigned[i]).length) {
-      chip.classList.add('used');
-    }
-    ibSelectedTag = null;
-    if (ibXrayAssigned.every(a => a !== null)) { setTimeout(() => ibRevealPiece(), 800); }
-  } else {
-    ibPlayTone(130, 0.3);
-    document.getElementById('ibXrayStatus').textContent = 'Not quite — think about where that section belongs on a real page.';
-  }
+if (!ibSelectedTag) {
+document.getElementById('ibXrayStatus').textContent = 'Pick a tag first!';
+return;
+}
+const data = IB_ROUNDS_DATA[ibRound];
+const shapeEl = document.getElementById('ibShape' + idx);
+const tagDef = IB_TAGS.find(t => t.id === ibSelectedTag);
+if (data.shapes[idx] === ibSelectedTag) {
+ibXrayAssigned[idx] = ibSelectedTag;
+shapeEl.textContent = tagDef.label;
+shapeEl.style.color = tagDef.color;
+shapeEl.classList.add('filled');
+ibPlayTone(400, 0.3);
+document.getElementById('ibXrayStatus').textContent = '✓ Correct!';
+const chip = document.getElementById('ibChip-' + ibSelectedTag);
+if (chip && data.shapes.filter(s => s === ibSelectedTag).length <= data.shapes.filter((s,i) => s === ibSelectedTag && ibXrayAssigned[i]).length) {
+chip.classList.add('used');
+}
+ibSelectedTag = null;
+if (ibXrayAssigned.every(a => a !== null)) {
+setTimeout(() => ibRevealPiece(), 800);
+}
+}
+else {
+ibPlayTone(130, 0.3);
+document.getElementById('ibXrayStatus').textContent = 'Not quite — think about where that section belongs on a real page.';
+}
 }
 function ibRevealPiece() {
-  const data = IB_ROUNDS_DATA[ibRound];
-  ibCollectedPieces = ibCollectedPieces.concat(data.code);
-  document.getElementById('ibXrayStage').style.display = 'none';
-  const build = document.getElementById('ibBuildStage');
-  build.style.display = 'block';
-  build.innerHTML =
-    '<div class="ib-build-eyebrow">PAGE ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' +
-    '<div class="ib-build-def">Your labeled X-ray just became real nested HTML:</div>' +
-    '<div class="code-block" style="text-align:left;">' + data.code.map(c => c.replace(/</g,'&lt;').replace(/>/g,'&gt;')).join('<br>') + '</div>' +
-    '<button class="ib-check-btn" onclick="ibAdvanceRound()">Continue →</button>';
+const data = IB_ROUNDS_DATA[ibRound];
+ibCollectedPieces = ibCollectedPieces.concat(data.code);
+document.getElementById('ibXrayStage').style.display = 'none';
+const build = document.getElementById('ibBuildStage');
+build.style.display = 'block';
+build.innerHTML = '<div class="ib-build-eyebrow">PAGE ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' + '<div class="ib-build-def">Your labeled X-ray just became real nested HTML:</div>' + '<div class="code-block" style="text-align:left;">' + data.code.map(c => c.replace(/</g,'&lt;').replace(/>/g,'&gt;')).join('<br>') + '</div>' + '<button class="ib-check-btn" onclick="ibAdvanceRound()">Continue →</button>';
 }
 function ibAdvanceRound() {
-  ibRound++;
-  if (ibRound >= IB_ROUNDS_DATA.length) { ibBeginSequence(); } else { ibBeginRound(); }
+ibRound++;
+if (ibRound >= IB_ROUNDS_DATA.length) {
+ibBeginSequence();
+}
+else {
+ibBeginRound();
+}
 }
 function ibBeginSequence() {
-  document.getElementById('ibBuildStage').style.display = 'none';
-  const stage = document.getElementById('ibSequenceStage');
-  stage.style.display = 'block';
-  const uniqueTags = ['header','main','footer'];
-  const colors = { header: '#ffe066', main: '#00e5ff', footer: '#ff6bad' };
-  stage.innerHTML =
-    '<div class="ib-build-eyebrow">FINAL PRACTICE &nbsp;·&nbsp; THE PAGE SKELETON</div>' +
-    '<div class="ib-seq-status" id="ibSeqStatus">Watch the skeleton fire in order...</div>' +
-    '<div class="ib-seq-board" id="ibSeqBoard"></div>';
-  const board = document.getElementById('ibSeqBoard');
-  board.innerHTML = uniqueTags.map((t, idx) => '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + colors[t] + ';color:' + colors[t] + ';--c:' + colors[t] + '" onclick="ibSeqClick(' + idx + ')">&lt;' + t + '&gt;</div>').join('');
-  window.ibSeqPattern = [0,1,2];
-  window.ibSeqPlayer = [];
-  ibPlaySeq(colors, uniqueTags);
+document.getElementById('ibBuildStage').style.display = 'none';
+const stage = document.getElementById('ibSequenceStage');
+stage.style.display = 'block';
+const uniqueTags = ['header','main','footer'];
+const colors = {
+header: '#ffe066', main: '#00e5ff', footer: '#ff6bad' }
+;
+stage.innerHTML = '<div class="ib-build-eyebrow">FINAL PRACTICE &nbsp;·&nbsp; THE PAGE SKELETON</div>' + '<div class="ib-seq-status" id="ibSeqStatus">Watch the skeleton fire in order...</div>' + '<div class="ib-seq-board" id="ibSeqBoard"></div>';
+const board = document.getElementById('ibSeqBoard');
+board.innerHTML = uniqueTags.map((t, idx) => '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + colors[t] + ';color:' + colors[t] + ';--c:' + colors[t] + '" onclick="ibSeqClick(' + idx + ')">&lt;' + t + '&gt;</div>').join('');
+window.ibSeqPattern = [0,1,2];
+window.ibSeqPlayer = [];
+ibPlaySeq(colors, uniqueTags);
 }
 function ibPlaySeq(colors, tags) {
-  window.ibSeqPlaying = true;
-  window.ibSeqPlayer = [];
-  const statusEl = document.getElementById('ibSeqStatus');
-  statusEl.textContent = 'Watch the skeleton fire in order...';
-  let step = 0;
-  function playNext() {
-    if (step >= window.ibSeqPattern.length) { window.ibSeqPlaying = false; statusEl.textContent = 'Your turn — click header, main, footer in order.'; return; }
-    const idx = window.ibSeqPattern[step];
-    const card = document.getElementById('ibSeqCard' + idx);
-    card.classList.add('lit');
-    ibPlayTone(350 + idx * 60, 0.3);
-    setTimeout(() => { card.classList.remove('lit'); step++; setTimeout(playNext, 200); }, 400);
-  }
-  setTimeout(playNext, 500);
-  window._ibSeqColors = colors;
-  window._ibSeqTags = tags;
+window.ibSeqPlaying = true;
+window.ibSeqPlayer = [];
+const statusEl = document.getElementById('ibSeqStatus');
+statusEl.textContent = 'Watch the skeleton fire in order...';
+let step = 0;
+function playNext() {
+if (step >= window.ibSeqPattern.length) {
+window.ibSeqPlaying = false;
+statusEl.textContent = 'Your turn — click header, main, footer in order.';
+return;
+}
+const idx = window.ibSeqPattern[step];
+const card = document.getElementById('ibSeqCard' + idx);
+card.classList.add('lit');
+ibPlayTone(350 + idx * 60, 0.3);
+setTimeout(() => {
+card.classList.remove('lit');
+step++;
+setTimeout(playNext, 200);
+}
+, 400);
+}
+setTimeout(playNext, 500);
+window._ibSeqColors = colors;
+window._ibSeqTags = tags;
 }
 function ibSeqClick(idx) {
-  if (window.ibSeqPlaying) return;
-  const card = document.getElementById('ibSeqCard' + idx);
-  card.classList.add('lit');
-  ibPlayTone(350 + idx * 60, 0.25);
-  setTimeout(() => card.classList.remove('lit'), 300);
-  window.ibSeqPlayer.push(idx);
-  const step = window.ibSeqPlayer.length - 1;
-  if (window.ibSeqPlayer[step] !== window.ibSeqPattern[step]) {
-    card.classList.add('wrong');
-    document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
-    setTimeout(() => { card.classList.remove('wrong'); ibPlaySeq(window._ibSeqColors, window._ibSeqTags); }, 700);
-    return;
-  }
-  if (window.ibSeqPlayer.length === window.ibSeqPattern.length) {
-    document.getElementById('ibSeqStatus').textContent = '✓ Perfect sequence!';
-    setTimeout(() => ibComplete(), 800);
-  }
+if (window.ibSeqPlaying) return;
+const card = document.getElementById('ibSeqCard' + idx);
+card.classList.add('lit');
+ibPlayTone(350 + idx * 60, 0.25);
+setTimeout(() => card.classList.remove('lit'), 300);
+window.ibSeqPlayer.push(idx);
+const step = window.ibSeqPlayer.length - 1;
+if (window.ibSeqPlayer[step] !== window.ibSeqPattern[step]) {
+card.classList.add('wrong');
+document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
+setTimeout(() => {
+card.classList.remove('wrong');
+ibPlaySeq(window._ibSeqColors, window._ibSeqTags);
 }
-function ibSkipGame() { ibComplete(); }
+, 700);
+return;
+}
+if (window.ibSeqPlayer.length === window.ibSeqPattern.length) {
+document.getElementById('ibSeqStatus').textContent = '✓ Perfect sequence!';
+setTimeout(() => ibComplete(), 800);
+}
+}
+function ibSkipGame() {
+ibComplete();
+}
 function ibComplete() {
-  document.getElementById('ib-game').style.display = 'none';
-  document.getElementById('ib-complete').style.display = 'block';
+document.getElementById('ib-game').style.display = 'none';
+document.getElementById('ib-complete').style.display = 'block';
 }
 function ibReset() {
-  document.getElementById('ib-complete').style.display = 'none';
-  document.getElementById('ib-intro').style.display = 'block';
-  ibRound = 0; ibCollectedPieces = [];
+document.getElementById('ib-complete').style.display = 'none';
+document.getElementById('ib-intro').style.display = 'block';
+ibRound = 0;
+ibCollectedPieces = [];
 }
 document.addEventListener('DOMContentLoaded', () => {
-  loadReflects();
-  ibRenderIntro();
-  handleTierUnlock(null);
-});
+loadReflects();
+ibRenderIntro();
+handleTierUnlock(null);
+}
+);
 </script>
 </body>
 </html>
