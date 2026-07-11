@@ -4,26 +4,24 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Library — Method in Motion</title>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','G-DJ3Q488K7W');</script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W">
+</script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){
+dataLayer.push(arguments)}
+gtag('js',new Date());
+gtag('config','G-DJ3Q488K7W');
+</script>
 <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --void:#050508;--deep:#080b14;--card:#0f1525;
-  --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12);
-  --white:#fff;--off:#c8cce0;--muted:#5a6080;
-  --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;--yellow:#fbbf24;--lime:#84cc16;--orange:#fb923c;--blue:#38bdf8;
-  --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
-  --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;
-}
+:root{ --void:#050508;--deep:#080b14;--card:#0f1525; --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12); --white:#fff;--off:#c8cce0;--muted:#5a6080; --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;--yellow:#fbbf24;--lime:#84cc16;--orange:#fb923c;--blue:#38bdf8; --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff); --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif; }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
 body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7;}
 a{color:inherit;text-decoration:none}
 img{display:block;max-width:100%}
-
-/* NAV */
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+/* NAV */ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;}
 .nav-logo-mark{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#000;}
 .nav-links{display:flex;gap:24px;list-style:none}
@@ -36,25 +34,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 #nav-dashboard-link{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(0,232,255,.3);color:var(--cyan);border-radius:100px;}
 #nav-logout-btn{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.15);background:none;color:rgba(255,255,255,.4);border-radius:100px;cursor:pointer}
 @media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
-
-/* HERO */
-.page-hero{position:relative;padding:140px 48px 80px;text-align:center;overflow:hidden;background:var(--deep);}
+/* HERO */ .page-hero{position:relative;padding:140px 48px 80px;text-align:center;overflow:hidden;background:var(--deep);}
 .page-hero::before{content:'';position:absolute;inset:0;background-image:url('MiM_Library.png');background-size:cover;background-position:center;opacity:.55;z-index:0;}
 .page-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,11,20,0.2) 0%,rgba(8,11,20,0.4) 50%,var(--deep) 100%);z-index:1;}
 .page-hero-content{position:relative;z-index:2;}
 .page-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:block;}
 .page-title{font-family:var(--display);font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;}
 .page-desc{font-size:1rem;color:var(--off);max-width:520px;margin:0 auto;line-height:1.9;}
-
-/* SECTION NAV */
-.section-nav{position:sticky;top:56px;z-index:90;background:rgba(5,5,8,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 48px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
+/* SECTION NAV */ .section-nav{position:sticky;top:56px;z-index:90;background:rgba(5,5,8,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 48px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
 .section-nav::-webkit-scrollbar{display:none}
 .snav-item{font-family:var(--display);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:14px 18px;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;text-decoration:none;display:block;}
 .snav-item:hover{color:#fff}
 .snav-item.active{color:var(--cyan);border-bottom-color:var(--cyan);}
-
-/* SHARED SECTION LAYOUT */
-.lib-section{padding:72px 0;}
+/* SHARED SECTION LAYOUT */ .lib-section{padding:72px 0;}
 .lib-section:nth-child(even){background:rgba(8,11,20,0.5);}
 .lib__inner{max-width:1100px;margin:0 auto;padding:0 48px;}
 .lib-block{margin-bottom:64px;}
@@ -63,9 +55,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .lib-block-title{font-family:var(--heading);font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:800;margin-bottom:8px;}
 .lib-block-desc{font-size:.9rem;color:var(--muted);margin-bottom:28px;line-height:1.8;max-width:600px;}
 .section-divider{border:none;border-top:1px solid var(--border);margin:64px 0;}
-
-/* FACT GRID */
-.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+/* FACT GRID */ .fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 @media(max-width:800px){.fact-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.fact-grid{grid-template-columns:1fr}}
 .fact-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;transition:all .3s;}
@@ -79,9 +69,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .fact-card.accent-yellow{border-color:rgba(251,191,36,.15);}
 .fact-card.accent-lime{border-color:rgba(132,204,22,.15);}
 .fact-card.accent-orange{border-color:rgba(251,146,60,.15);}
-
-/* TIMELINE */
-.timeline{display:flex;flex-direction:column;gap:0;position:relative;}
+/* TIMELINE */ .timeline{display:flex;flex-direction:column;gap:0;position:relative;}
 .timeline::before{content:'';position:absolute;left:76px;top:0;bottom:0;width:1px;background:var(--border);}
 .timeline-item{display:flex;gap:28px;align-items:flex-start;padding:22px 0;position:relative;}
 .timeline-item:last-child{padding-bottom:0}
@@ -91,9 +79,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .timeline-event{font-family:var(--heading);font-size:1rem;font-weight:700;margin-bottom:4px;}
 .timeline-desc{font-size:.82rem;color:var(--muted);line-height:1.7;}
 .timeline-tag{display:inline-block;font-family:var(--display);font-size:.42rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid;margin-bottom:6px;}
-
-/* PIONEER CARDS */
-.pioneer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+/* PIONEER CARDS */ .pioneer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
 @media(max-width:800px){.pioneer-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:480px){.pioneer-grid{grid-template-columns:1fr}}
 .pioneer-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:24px;transition:all .3s;position:relative;overflow:hidden;}
@@ -103,18 +89,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .pioneer-name{font-family:var(--heading);font-size:1.1rem;font-weight:800;margin-bottom:4px;}
 .pioneer-role{font-size:.78rem;color:var(--muted);margin-bottom:12px;line-height:1.5;}
 .pioneer-fact{font-size:.8rem;color:var(--off);line-height:1.7;border-left:2px solid;border-color:var(--pc-color,var(--purple));padding-left:10px;}
-
-/* LANGUAGES GRID */
-.lang-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
+/* LANGUAGES GRID */ .lang-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
 @media(max-width:800px){.lang-grid{grid-template-columns:repeat(2,1fr)}}
 .lang-card{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:16px;transition:all .3s;}
 .lang-card:hover{border-color:var(--lc,var(--cyan));transform:translateY(-2px);}
 .lang-name{font-family:var(--display);font-size:.72rem;font-weight:700;color:var(--lc,var(--cyan));margin-bottom:4px;}
 .lang-year{font-size:.7rem;color:var(--muted);margin-bottom:8px;}
 .lang-use{font-size:.78rem;color:var(--off);line-height:1.6;}
-
-/* COMPUTER HISTORY */
-.computer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+/* COMPUTER HISTORY */ .computer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
 @media(max-width:600px){.computer-grid{grid-template-columns:1fr}}
 .computer-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;transition:all .3s;display:flex;gap:16px;align-items:flex-start;}
 .computer-card:hover{transform:translateY(-2px);border-color:var(--cyan);}
@@ -123,27 +105,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .computer-name{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:4px;}
 .computer-year{font-family:var(--display);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px;display:block;}
 .computer-desc{font-size:.8rem;color:var(--muted);line-height:1.7;}
-
-/* INTERNET TIMELINE */
-.internet-steps{display:flex;flex-direction:column;gap:12px;}
+/* INTERNET TIMELINE */ .internet-steps{display:flex;flex-direction:column;gap:12px;}
 .internet-step{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;transition:all .3s;}
 .internet-step:hover{border-color:rgba(0,232,255,.3);}
 .step-year{font-family:var(--display);font-size:.8rem;font-weight:900;color:var(--cyan);min-width:52px;flex-shrink:0;padding-top:2px;}
 .step-info{}
 .step-event{font-family:var(--heading);font-size:.92rem;font-weight:700;margin-bottom:3px;}
 .step-desc{font-size:.78rem;color:var(--muted);line-height:1.6;}
-
-/* HOW IT WORKS */
-.how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+/* HOW IT WORKS */ .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 @media(max-width:700px){.how-grid{grid-template-columns:1fr}}
 .how-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;text-align:center;transition:all .3s;}
 .how-card:hover{transform:translateY(-3px);border-color:var(--hc,var(--pink));}
 .how-num{font-family:var(--display);font-size:2rem;font-weight:900;color:var(--hc,var(--pink));margin-bottom:10px;opacity:.4;}
 .how-title{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:8px;}
 .how-desc{font-size:.8rem;color:var(--muted);line-height:1.7;}
-
-/* MINI GAMES */
-.mini-games-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+/* MINI GAMES */ .mini-games-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 @media(max-width:700px){.mini-games-grid{grid-template-columns:1fr}}
 .mini-game-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;text-align:center;transition:all .3s;position:relative;overflow:hidden;}
 .mini-game-card::before{content:'';position:absolute;inset:0;background:var(--mg-bg,radial-gradient(circle at 50% 0%,rgba(198,107,255,.08),transparent 60%));pointer-events:none;}
@@ -152,9 +128,7 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .mini-game-title{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:6px;}
 .mini-game-desc{font-size:.76rem;color:var(--muted);line-height:1.7;margin-bottom:14px;}
 .mini-game-tag{font-family:var(--display);font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px;border:1px solid;display:inline-block;}
-
-/* CLIPS */
-.clips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
+/* CLIPS */ .clips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
 @media(max-width:700px){.clips-grid{grid-template-columns:1fr}}
 .clip-card{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow:hidden;transition:all .3s;}
 .clip-card:hover{transform:translateY(-3px);border-color:var(--cc,var(--pink));}
@@ -164,25 +138,19 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .clip-info{padding:14px;}
 .clip-char{font-family:var(--display);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:3px;}
 .clip-title{font-family:var(--heading);font-size:.88rem;font-weight:700;}
-
-/* COMING SOON */
-.coming-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:7px 18px;border-radius:100px;border:1px solid rgba(0,232,255,.2);color:var(--cyan);margin-bottom:16px;}
+/* COMING SOON */ .coming-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:7px 18px;border-radius:100px;border:1px solid rgba(0,232,255,.2);color:var(--cyan);margin-bottom:16px;}
 .coming-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:blink 1.4s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
 .coming-card{background:var(--deep);border-radius:14px;border:1px solid var(--border);padding:36px;text-align:center;}
 .coming-title{font-family:var(--heading);font-size:1.1rem;font-weight:800;margin-bottom:8px;color:rgba(255,255,255,.45);}
 .coming-desc{font-size:.84rem;color:var(--muted);max-width:360px;margin:0 auto;}
-
-/* GLOSSARY */
-.glossary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
+/* GLOSSARY */ .glossary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
 @media(max-width:600px){.glossary-grid{grid-template-columns:1fr}}
 .glossary-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;transition:all .2s;}
 .glossary-item:hover{border-color:rgba(0,232,255,.2);}
 .glossary-term{font-family:var(--display);font-size:.6rem;font-weight:700;color:var(--cyan);letter-spacing:.1em;margin-bottom:4px;}
 .glossary-def{font-size:.8rem;color:var(--muted);line-height:1.6;}
-
-/* AUTH MODAL */
-.auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
+/* AUTH MODAL */ .auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
 .auth-modal-overlay.active{display:flex}
 .auth-modal-box{background:#0a0a1a;border:1px solid rgba(0,240,255,.2);border-radius:16px;padding:2.4rem 2rem;width:100%;max-width:420px;position:relative;}
 .auth-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.4rem;cursor:pointer;}
@@ -192,7 +160,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .auth-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.6rem}
 .auth-tab{flex:1;background:none;border:none;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.7rem 0;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
 .auth-tab.active{color:#00f0ff;border-bottom-color:#00f0ff}
-.auth-form{display:none}.auth-form.active{display:block}
+.auth-form{display:none}
+.auth-form.active{display:block}
 .auth-field{margin-bottom:1rem}
 .auth-field label{display:block;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.35rem}
 .auth-field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.68rem .88rem;color:#fff;font-family:'Syne',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;box-sizing:border-box}
@@ -205,721 +174,809 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 </style>
 </head>
 <body>
-
 <nav>
-  <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
-  <ul class="nav-links">
-    <li><a href="index.html#crew">Crew</a></li>
-    <li><a href="membership.html">Membership</a></li>
-    <li><a href="games.html">Games</a></li>
-    <li><a href="pdfs.html">PDFs</a></li>
-    <li><a href="library.html" class="active">Library</a></li>
-    <li><a href="dashboard.html">Dashboard</a></li>
-  </ul>
-  <div class="nav-right">
-    <div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
-      <a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
-      <button id="nav-logout-btn">Sign Out</button>
-    </div>
-    <button class="nav-cta" onclick="openAuthModal('login')">Log In</button>
-    <button class="nav-join" onclick="openAuthModal('signup')">Join Free →</button>
-  </div>
+<a href="index.html" class="nav-logo">
+<div class="nav-logo-mark">&gt;</div>method in motion</a>
+<ul class="nav-links">
+<li>
+<a href="games.html">Games</a>
+</li>
+<li>
+<a href="pdfs.html">PDFs</a>
+</li>
+<li>
+<a href="library.html" class="active">Library</a>
+</li>
+<li>
+<a href="characters.html">Characters</a>
+</li>
+<li>
+<a href="broken-syntax.html">Broken Syntax</a>
+</li>
+<li>
+<a href="mim-tv.html">MiM TV</a>
+</li>
+<li>
+<a href="comic.html">Comics</a>
+</li>
+</ul>
+<div class="nav-right">
+<div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
+<a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
+<button id="nav-logout-btn">Sign Out</button>
+</div>
+<button class="nav-cta" onclick="openAuthModal('login')">Log In</button>
+<button class="nav-join" onclick="openAuthModal('signup')">Join Free →</button>
+</div>
 </nav>
-
 <section class="page-hero">
-  <div class="page-hero-content">
-    <span class="page-eyebrow">Method in Motion · Knowledge Base</span>
-    <h1 class="page-title">The Library</h1>
-    <p class="page-desc">Coding history, tech pioneers, computer evolution, fun facts, and free mini-games. No account needed — just curiosity.</p>
-  </div>
+<div class="page-hero-content">
+<span class="page-eyebrow">Method in Motion · Knowledge Base</span>
+<h1 class="page-title">The Library</h1>
+<p class="page-desc">Coding history, tech pioneers, computer evolution, fun facts, and free mini-games. No account needed — just curiosity.</p>
+</div>
 </section>
-
 <!-- STICKY SECTION NAV -->
 <nav class="section-nav">
-  <a class="snav-item active" href="#did-you-know">Did You Know</a>
-  <a class="snav-item" href="#history">History of Coding</a>
-  <a class="snav-item" href="#computers">Computers</a>
-  <a class="snav-item" href="#internet">The Internet</a>
-  <a class="snav-item" href="#pioneers">Pioneers</a>
-  <a class="snav-item" href="#languages">Languages</a>
-  <a class="snav-item" href="#how-it-works">How It Works</a>
-  <a class="snav-item" href="#glossary">Glossary</a>
-  <a class="snav-item" href="#mini-games">Mini Games</a>
-  <a class="snav-item" href="#clips">Character Clips</a>
+<a class="snav-item active" href="#did-you-know">Did You Know</a>
+<a class="snav-item" href="#history">History of Coding</a>
+<a class="snav-item" href="#computers">Computers</a>
+<a class="snav-item" href="#internet">The Internet</a>
+<a class="snav-item" href="#pioneers">Pioneers</a>
+<a class="snav-item" href="#languages">Languages</a>
+<a class="snav-item" href="#how-it-works">How It Works</a>
+<a class="snav-item" href="#glossary">Glossary</a>
+<a class="snav-item" href="#mini-games">Mini Games</a>
+<a class="snav-item" href="#clips">Character Clips</a>
 </nav>
-
 <section class="lib-section" id="did-you-know">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">Did You Know?</span>
-      <h2 class="lib-block-title">Facts that'll blow your mind.</h2>
-      <p class="lib-block-desc">Real facts about coding, computers, and the internet — the kind that make you go "wait, seriously?"</p>
-      <div class="fact-grid">
-        <div class="fact-card accent-orange">
-          <div class="fact-icon">🐛</div>
-          <div class="fact-title">The First Bug Was Real</div>
-          <div class="fact-body">In 1947, a moth was found stuck inside a computer at Harvard. Grace Hopper's team taped it into their logbook and wrote "First actual case of bug being found." The word stuck forever.</div>
-        </div>
-        <div class="fact-card accent-cyan">
-          <div class="fact-icon">🌐</div>
-          <div class="fact-title">The Web Is Only 35 Years Old</div>
-          <div class="fact-body">Tim Berners-Lee invented the World Wide Web in 1989. The entire internet as we know it is younger than most of your teachers.</div>
-        </div>
-        <div class="fact-card accent-purple">
-          <div class="fact-icon">🚀</div>
-          <div class="fact-title">Apollo Had Less Power Than Your Phone</div>
-          <div class="fact-body">The computer that landed humans on the moon had 4KB of RAM. Your phone has around 8 million times more memory. You are literally holding moon-landing power in your pocket.</div>
-        </div>
-        <div class="fact-card accent-pink">
-          <div class="fact-icon">🎮</div>
-          <div class="fact-title">The First Video Game Was in 1958</div>
-          <div class="fact-body">Tennis for Two was created on an oscilloscope by physicist William Higinbotham — decades before consoles existed. It was deleted after the exhibit ended. Nobody thought it mattered.</div>
-        </div>
-        <div class="fact-card accent-yellow">
-          <div class="fact-icon">👩‍💻</div>
-          <div class="fact-title">The First Programmer Was a Woman</div>
-          <div class="fact-body">Ada Lovelace wrote the first computer algorithm in 1843 — for a machine that hadn't even been built yet. She also predicted computers could compose music and create graphics. In 1843.</div>
-        </div>
-        <div class="fact-card accent-lime">
-          <div class="fact-icon">📱</div>
-          <div class="fact-title">There Are Over 1.5 Billion Websites</div>
-          <div class="fact-body">Every single one started as a blank HTML file. The average website takes less than 24 hours to build. Yours could exist by tomorrow.</div>
-        </div>
-        <div class="fact-card accent-cyan">
-          <div class="fact-icon">⚡</div>
-          <div class="fact-title">JavaScript Was Built in 10 Days</div>
-          <div class="fact-body">Brendan Eich wrote the first version of JavaScript in just 10 days in 1995. It now runs on 98% of all websites and is one of the most used languages on Earth.</div>
-        </div>
-        <div class="fact-card accent-purple">
-          <div class="fact-icon">🔢</div>
-          <div class="fact-title">Computers Only Speak in 1s and 0s</div>
-          <div class="fact-body">Every image, song, video, game, and message you've ever seen on a screen is just billions of 1s and 0s arranged in a very specific order. That's it. Binary is everything.</div>
-        </div>
-        <div class="fact-card accent-pink">
-          <div class="fact-icon">🌍</div>
-          <div class="fact-title">More People Have Phones Than Toilets</div>
-          <div class="fact-body">Around 7 billion people on Earth have mobile phones. Only 6 billion have access to toilets. Technology spreads faster than plumbing. That's a fact.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">Did You Know?</span>
+<h2 class="lib-block-title">Facts that'll blow your mind.</h2>
+<p class="lib-block-desc">Real facts about coding, computers, and the internet — the kind that make you go "wait, seriously?"</p>
+<div class="fact-grid">
+<div class="fact-card accent-orange">
+<div class="fact-icon">🐛</div>
+<div class="fact-title">The First Bug Was Real</div>
+<div class="fact-body">In 1947, a moth was found stuck inside a computer at Harvard. Grace Hopper's team taped it into their logbook and wrote "First actual case of bug being found." The word stuck forever.</div>
+</div>
+<div class="fact-card accent-cyan">
+<div class="fact-icon">🌐</div>
+<div class="fact-title">The Web Is Only 35 Years Old</div>
+<div class="fact-body">Tim Berners-Lee invented the World Wide Web in 1989. The entire internet as we know it is younger than most of your teachers.</div>
+</div>
+<div class="fact-card accent-purple">
+<div class="fact-icon">🚀</div>
+<div class="fact-title">Apollo Had Less Power Than Your Phone</div>
+<div class="fact-body">The computer that landed humans on the moon had 4KB of RAM. Your phone has around 8 million times more memory. You are literally holding moon-landing power in your pocket.</div>
+</div>
+<div class="fact-card accent-pink">
+<div class="fact-icon">🎮</div>
+<div class="fact-title">The First Video Game Was in 1958</div>
+<div class="fact-body">Tennis for Two was created on an oscilloscope by physicist William Higinbotham — decades before consoles existed. It was deleted after the exhibit ended. Nobody thought it mattered.</div>
+</div>
+<div class="fact-card accent-yellow">
+<div class="fact-icon">👩‍💻</div>
+<div class="fact-title">The First Programmer Was a Woman</div>
+<div class="fact-body">Ada Lovelace wrote the first computer algorithm in 1843 — for a machine that hadn't even been built yet. She also predicted computers could compose music and create graphics. In 1843.</div>
+</div>
+<div class="fact-card accent-lime">
+<div class="fact-icon">📱</div>
+<div class="fact-title">There Are Over 1.5 Billion Websites</div>
+<div class="fact-body">Every single one started as a blank HTML file. The average website takes less than 24 hours to build. Yours could exist by tomorrow.</div>
+</div>
+<div class="fact-card accent-cyan">
+<div class="fact-icon">⚡</div>
+<div class="fact-title">JavaScript Was Built in 10 Days</div>
+<div class="fact-body">Brendan Eich wrote the first version of JavaScript in just 10 days in 1995. It now runs on 98% of all websites and is one of the most used languages on Earth.</div>
+</div>
+<div class="fact-card accent-purple">
+<div class="fact-icon">🔢</div>
+<div class="fact-title">Computers Only Speak in 1s and 0s</div>
+<div class="fact-body">Every image, song, video, game, and message you've ever seen on a screen is just billions of 1s and 0s arranged in a very specific order. That's it. Binary is everything.</div>
+</div>
+<div class="fact-card accent-pink">
+<div class="fact-icon">🌍</div>
+<div class="fact-title">More People Have Phones Than Toilets</div>
+<div class="fact-body">Around 7 billion people on Earth have mobile phones. Only 6 billion have access to toilets. Technology spreads faster than plumbing. That's a fact.</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="history">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">History of Coding</span>
-      <h2 class="lib-block-title">How we got here.</h2>
-      <p class="lib-block-desc">From looms and punch cards to AI and quantum computing — the full story of how coding became the most important skill on the planet.</p>
-      <div class="timeline">
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#f472b6;">1843</div>
-          <div class="timeline-dot" style="border-color:#f472b6;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">Mathematics</div>
-            <div class="timeline-event">Ada Lovelace Writes the First Algorithm</div>
-            <div class="timeline-desc">For Charles Babbage's Analytical Engine — a computer that existed only on paper. Ada saw what machines could do before any machine could actually do it. She is the world's first programmer.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#a855f7;">1890</div>
-          <div class="timeline-dot" style="border-color:#a855f7;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#a855f7;color:#a855f7;">Hardware</div>
-            <div class="timeline-event">Herman Hollerith Invents Punch Cards</div>
-            <div class="timeline-desc">To speed up the US Census, Hollerith created machines that read data from punched holes in cards. This became the dominant way to input computer data for over 70 years. His company eventually became IBM.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#00f5d4;">1936</div>
-          <div class="timeline-dot" style="border-color:#00f5d4;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#00f5d4;color:#00f5d4;">Theory</div>
-            <div class="timeline-event">Alan Turing Invents the Concept of Computing</div>
-            <div class="timeline-desc">Alan Turing's paper "On Computable Numbers" described a theoretical machine that could solve any problem expressible in a mathematical form. This "Turing Machine" is the foundation of every computer ever built.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#fbbf24;">1940s</div>
-          <div class="timeline-dot" style="border-color:#fbbf24;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#fbbf24;color:#fbbf24;">Hardware</div>
-            <div class="timeline-event">The First Electronic Computers</div>
-            <div class="timeline-desc">ENIAC (1945) filled an entire room with 18,000 vacuum tubes and could do 5,000 additions per second. It weighed 30 tons and required its own cooling system. Your phone does billions of calculations per second.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#84cc16;">1957</div>
-          <div class="timeline-dot" style="border-color:#84cc16;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#84cc16;color:#84cc16;">Languages</div>
-            <div class="timeline-event">FORTRAN — The First High-Level Language</div>
-            <div class="timeline-desc">Before FORTRAN, programmers wrote machine code by hand. FORTRAN let scientists write equations that looked almost like math. It was revolutionary — and is still used in scientific computing today.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#38bdf8;">1969</div>
-          <div class="timeline-dot" style="border-color:#38bdf8;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#38bdf8;color:#38bdf8;">Internet</div>
-            <div class="timeline-event">ARPANET Sends Its First Message</div>
-            <div class="timeline-desc">The US Defense Department connected four university computers. The first message was supposed to be "login." The system crashed after "lo." The internet started with a typo.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#f472b6;">1972</div>
-          <div class="timeline-dot" style="border-color:#f472b6;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">Languages</div>
-            <div class="timeline-event">C Language Is Born</div>
-            <div class="timeline-desc">Dennis Ritchie created C at Bell Labs to build the Unix operating system. C became the foundation for C++, Java, Python, JavaScript, and almost every modern language. It's still in use everywhere.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#a855f7;">1984</div>
-          <div class="timeline-dot" style="border-color:#a855f7;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#a855f7;color:#a855f7;">Consumer Tech</div>
-            <div class="timeline-event">The Macintosh Changes Personal Computing</div>
-            <div class="timeline-desc">Apple's Macintosh introduced the graphical user interface and the mouse to everyday people. Before this, computers had no pictures — just a blinking cursor and a command line. This was the beginning of computers for everyone.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#fbbf24;">1989</div>
-          <div class="timeline-dot" style="border-color:#fbbf24;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#fbbf24;color:#fbbf24;">Web</div>
-            <div class="timeline-event">Tim Berners-Lee Invents the World Wide Web</div>
-            <div class="timeline-desc">Originally called "Information Management: A Proposal," it was a system to help scientists share research. His boss wrote "Vague but exciting" on the cover. It accidentally became the entire internet.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#84cc16;">1995</div>
-          <div class="timeline-dot" style="border-color:#84cc16;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#84cc16;color:#84cc16;">Languages</div>
-            <div class="timeline-event">JavaScript Created in 10 Days</div>
-            <div class="timeline-desc">Netscape hired Brendan Eich with one instruction: make the web interactive, fast. He did it in 10 days. Despite a rocky start, JavaScript became the language of the web. It now runs everywhere — browsers, servers, apps, and robots.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#38bdf8;">2007</div>
-          <div class="timeline-dot" style="border-color:#38bdf8;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#38bdf8;color:#38bdf8;">Mobile</div>
-            <div class="timeline-event">The First iPhone Ships</div>
-            <div class="timeline-desc">Steve Jobs called it "an iPod, a phone, and an internet communicator" in one device. The audience laughed when he said it. Within five years, smartphones changed how 4 billion people lived every single day.</div>
-          </div>
-        </div>
-
-        <div class="timeline-item">
-          <div class="timeline-year" style="color:#f472b6;">2022</div>
-          <div class="timeline-dot" style="border-color:#f472b6;"></div>
-          <div class="timeline-info">
-            <div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">AI</div>
-            <div class="timeline-event">ChatGPT Reaches 1 Million Users in 5 Days</div>
-            <div class="timeline-desc">It took Netflix 3.5 years and Facebook 10 months to reach 1 million users. ChatGPT did it in 5 days. AI moved from science fiction to everyday tool almost overnight. The coders who understand the fundamentals are the ones who'll shape what comes next.</div>
-          </div>
-        </div>
-
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">History of Coding</span>
+<h2 class="lib-block-title">How we got here.</h2>
+<p class="lib-block-desc">From looms and punch cards to AI and quantum computing — the full story of how coding became the most important skill on the planet.</p>
+<div class="timeline">
+<div class="timeline-item">
+<div class="timeline-year" style="color:#f472b6;">1843</div>
+<div class="timeline-dot" style="border-color:#f472b6;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">Mathematics</div>
+<div class="timeline-event">Ada Lovelace Writes the First Algorithm</div>
+<div class="timeline-desc">For Charles Babbage's Analytical Engine — a computer that existed only on paper. Ada saw what machines could do before any machine could actually do it. She is the world's first programmer.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#a855f7;">1890</div>
+<div class="timeline-dot" style="border-color:#a855f7;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#a855f7;color:#a855f7;">Hardware</div>
+<div class="timeline-event">Herman Hollerith Invents Punch Cards</div>
+<div class="timeline-desc">To speed up the US Census, Hollerith created machines that read data from punched holes in cards. This became the dominant way to input computer data for over 70 years. His company eventually became IBM.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#00f5d4;">1936</div>
+<div class="timeline-dot" style="border-color:#00f5d4;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#00f5d4;color:#00f5d4;">Theory</div>
+<div class="timeline-event">Alan Turing Invents the Concept of Computing</div>
+<div class="timeline-desc">Alan Turing's paper "On Computable Numbers" described a theoretical machine that could solve any problem expressible in a mathematical form. This "Turing Machine" is the foundation of every computer ever built.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#fbbf24;">1940s</div>
+<div class="timeline-dot" style="border-color:#fbbf24;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#fbbf24;color:#fbbf24;">Hardware</div>
+<div class="timeline-event">The First Electronic Computers</div>
+<div class="timeline-desc">ENIAC (1945) filled an entire room with 18,000 vacuum tubes and could do 5,000 additions per second. It weighed 30 tons and required its own cooling system. Your phone does billions of calculations per second.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#84cc16;">1957</div>
+<div class="timeline-dot" style="border-color:#84cc16;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#84cc16;color:#84cc16;">Languages</div>
+<div class="timeline-event">FORTRAN — The First High-Level Language</div>
+<div class="timeline-desc">Before FORTRAN, programmers wrote machine code by hand. FORTRAN let scientists write equations that looked almost like math. It was revolutionary — and is still used in scientific computing today.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#38bdf8;">1969</div>
+<div class="timeline-dot" style="border-color:#38bdf8;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#38bdf8;color:#38bdf8;">Internet</div>
+<div class="timeline-event">ARPANET Sends Its First Message</div>
+<div class="timeline-desc">The US Defense Department connected four university computers. The first message was supposed to be "login." The system crashed after "lo." The internet started with a typo.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#f472b6;">1972</div>
+<div class="timeline-dot" style="border-color:#f472b6;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">Languages</div>
+<div class="timeline-event">C Language Is Born</div>
+<div class="timeline-desc">Dennis Ritchie created C at Bell Labs to build the Unix operating system. C became the foundation for C++, Java, Python, JavaScript, and almost every modern language. It's still in use everywhere.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#a855f7;">1984</div>
+<div class="timeline-dot" style="border-color:#a855f7;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#a855f7;color:#a855f7;">Consumer Tech</div>
+<div class="timeline-event">The Macintosh Changes Personal Computing</div>
+<div class="timeline-desc">Apple's Macintosh introduced the graphical user interface and the mouse to everyday people. Before this, computers had no pictures — just a blinking cursor and a command line. This was the beginning of computers for everyone.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#fbbf24;">1989</div>
+<div class="timeline-dot" style="border-color:#fbbf24;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#fbbf24;color:#fbbf24;">Web</div>
+<div class="timeline-event">Tim Berners-Lee Invents the World Wide Web</div>
+<div class="timeline-desc">Originally called "Information Management: A Proposal," it was a system to help scientists share research. His boss wrote "Vague but exciting" on the cover. It accidentally became the entire internet.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#84cc16;">1995</div>
+<div class="timeline-dot" style="border-color:#84cc16;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#84cc16;color:#84cc16;">Languages</div>
+<div class="timeline-event">JavaScript Created in 10 Days</div>
+<div class="timeline-desc">Netscape hired Brendan Eich with one instruction: make the web interactive, fast. He did it in 10 days. Despite a rocky start, JavaScript became the language of the web. It now runs everywhere — browsers, servers, apps, and robots.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#38bdf8;">2007</div>
+<div class="timeline-dot" style="border-color:#38bdf8;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#38bdf8;color:#38bdf8;">Mobile</div>
+<div class="timeline-event">The First iPhone Ships</div>
+<div class="timeline-desc">Steve Jobs called it "an iPod, a phone, and an internet communicator" in one device. The audience laughed when he said it. Within five years, smartphones changed how 4 billion people lived every single day.</div>
+</div>
+</div>
+<div class="timeline-item">
+<div class="timeline-year" style="color:#f472b6;">2022</div>
+<div class="timeline-dot" style="border-color:#f472b6;">
+</div>
+<div class="timeline-info">
+<div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">AI</div>
+<div class="timeline-event">ChatGPT Reaches 1 Million Users in 5 Days</div>
+<div class="timeline-desc">It took Netflix 3.5 years and Facebook 10 months to reach 1 million users. ChatGPT did it in 5 days. AI moved from science fiction to everyday tool almost overnight. The coders who understand the fundamentals are the ones who'll shape what comes next.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="computers">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">History of Computers</span>
-      <h2 class="lib-block-title">From room-sized to pocket-sized.</h2>
-      <p class="lib-block-desc">The evolution of the machines themselves — from mechanical gears to quantum chips.</p>
-      <div class="computer-grid">
-        <div class="computer-card">
-          <div class="computer-icon">⚙️</div>
-          <div class="computer-info">
-            <span class="computer-year">1822</span>
-            <div class="computer-name">Babbage's Difference Engine</div>
-            <div class="computer-desc">A hand-cranked mechanical calculator designed to compute mathematical tables. It was never completed in Babbage's lifetime, but a working model was built in 1991 — and it worked perfectly.</div>
-          </div>
-        </div>
-        <div class="computer-card">
-          <div class="computer-icon">💡</div>
-          <div class="computer-info">
-            <span class="computer-year">1945</span>
-            <div class="computer-name">ENIAC</div>
-            <div class="computer-desc">The first general-purpose electronic computer. It filled an 1,800 square foot room, consumed 150 kilowatts of power, and had to be rewired by hand to change its program.</div>
-          </div>
-        </div>
-        <div class="computer-card">
-          <div class="computer-icon">🔬</div>
-          <div class="computer-info">
-            <span class="computer-year">1958</span>
-            <div class="computer-name">The Transistor Revolution</div>
-            <div class="computer-desc">Vacuum tubes gave way to transistors — tiny switches that could be etched onto silicon chips. This made computers smaller, cheaper, and faster by orders of magnitude. Everything since then is built on this moment.</div>
-          </div>
-        </div>
-        <div class="computer-card">
-          <div class="computer-icon">🖥️</div>
-          <div class="computer-info">
-            <span class="computer-year">1977</span>
-            <div class="computer-name">Apple II — The First Home Computer</div>
-            <div class="computer-desc">The Apple II brought computing to homes and schools for the first time. It came with a keyboard, color display, and the ability to run programs. It sold over 5 million units and changed who computers were for.</div>
-          </div>
-        </div>
-        <div class="computer-card">
-          <div class="computer-icon">💾</div>
-          <div class="computer-info">
-            <span class="computer-year">1981</span>
-            <div class="computer-name">IBM PC & the Rise of Windows</div>
-            <div class="computer-desc">IBM's personal computer and Microsoft's DOS operating system standardized the industry. IBM's "open architecture" meant anyone could build compatible machines — creating the entire PC industry as we know it.</div>
-          </div>
-        </div>
-        <div class="computer-card">
-          <div class="computer-icon">📱</div>
-          <div class="computer-info">
-            <span class="computer-year">2007</span>
-            <div class="computer-name">The Smartphone Era</div>
-            <div class="computer-desc">Modern smartphones contain more computing power than all of NASA had during the Apollo missions combined. The computer in your pocket would have been science fiction 40 years ago.</div>
-          </div>
-        </div>
-        <div class="computer-card">
-          <div class="computer-icon">🧠</div>
-          <div class="computer-info">
-            <span class="computer-year">2019</span>
-            <div class="computer-name">Google's Quantum Supremacy</div>
-            <div class="computer-desc">Google's quantum computer solved a calculation in 200 seconds that would take the world's fastest supercomputer 10,000 years. Quantum computing works by harnessing quantum physics — a completely different kind of logic.</div>
-          </div>
-        </div>
-        <div class="computer-card">
-          <div class="computer-icon">⚡</div>
-          <div class="computer-info">
-            <span class="computer-year">Today</span>
-            <div class="computer-name">The Cloud Era</div>
-            <div class="computer-desc">Today's computers don't just sit on desks — they exist as vast networks of servers distributed around the world. When you use Google, Netflix, or any app, you're using computing power spread across thousands of machines.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">History of Computers</span>
+<h2 class="lib-block-title">From room-sized to pocket-sized.</h2>
+<p class="lib-block-desc">The evolution of the machines themselves — from mechanical gears to quantum chips.</p>
+<div class="computer-grid">
+<div class="computer-card">
+<div class="computer-icon">⚙️</div>
+<div class="computer-info">
+<span class="computer-year">1822</span>
+<div class="computer-name">Babbage's Difference Engine</div>
+<div class="computer-desc">A hand-cranked mechanical calculator designed to compute mathematical tables. It was never completed in Babbage's lifetime, but a working model was built in 1991 — and it worked perfectly.</div>
+</div>
+</div>
+<div class="computer-card">
+<div class="computer-icon">💡</div>
+<div class="computer-info">
+<span class="computer-year">1945</span>
+<div class="computer-name">ENIAC</div>
+<div class="computer-desc">The first general-purpose electronic computer. It filled an 1,800 square foot room, consumed 150 kilowatts of power, and had to be rewired by hand to change its program.</div>
+</div>
+</div>
+<div class="computer-card">
+<div class="computer-icon">🔬</div>
+<div class="computer-info">
+<span class="computer-year">1958</span>
+<div class="computer-name">The Transistor Revolution</div>
+<div class="computer-desc">Vacuum tubes gave way to transistors — tiny switches that could be etched onto silicon chips. This made computers smaller, cheaper, and faster by orders of magnitude. Everything since then is built on this moment.</div>
+</div>
+</div>
+<div class="computer-card">
+<div class="computer-icon">🖥️</div>
+<div class="computer-info">
+<span class="computer-year">1977</span>
+<div class="computer-name">Apple II — The First Home Computer</div>
+<div class="computer-desc">The Apple II brought computing to homes and schools for the first time. It came with a keyboard, color display, and the ability to run programs. It sold over 5 million units and changed who computers were for.</div>
+</div>
+</div>
+<div class="computer-card">
+<div class="computer-icon">💾</div>
+<div class="computer-info">
+<span class="computer-year">1981</span>
+<div class="computer-name">IBM PC & the Rise of Windows</div>
+<div class="computer-desc">IBM's personal computer and Microsoft's DOS operating system standardized the industry. IBM's "open architecture" meant anyone could build compatible machines — creating the entire PC industry as we know it.</div>
+</div>
+</div>
+<div class="computer-card">
+<div class="computer-icon">📱</div>
+<div class="computer-info">
+<span class="computer-year">2007</span>
+<div class="computer-name">The Smartphone Era</div>
+<div class="computer-desc">Modern smartphones contain more computing power than all of NASA had during the Apollo missions combined. The computer in your pocket would have been science fiction 40 years ago.</div>
+</div>
+</div>
+<div class="computer-card">
+<div class="computer-icon">🧠</div>
+<div class="computer-info">
+<span class="computer-year">2019</span>
+<div class="computer-name">Google's Quantum Supremacy</div>
+<div class="computer-desc">Google's quantum computer solved a calculation in 200 seconds that would take the world's fastest supercomputer 10,000 years. Quantum computing works by harnessing quantum physics — a completely different kind of logic.</div>
+</div>
+</div>
+<div class="computer-card">
+<div class="computer-icon">⚡</div>
+<div class="computer-info">
+<span class="computer-year">Today</span>
+<div class="computer-name">The Cloud Era</div>
+<div class="computer-desc">Today's computers don't just sit on desks — they exist as vast networks of servers distributed around the world. When you use Google, Netflix, or any app, you're using computing power spread across thousands of machines.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="internet">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">History of the Internet</span>
-      <h2 class="lib-block-title">The network that connected everything.</h2>
-      <p class="lib-block-desc">The internet didn't appear overnight — it was built in layers, each decade adding something new.</p>
-      <div class="internet-steps">
-        <div class="internet-step">
-          <div class="step-year" style="color:#f472b6;">1969</div>
-          <div class="step-info">
-            <div class="step-event">ARPANET — Four Computers, One Network</div>
-            <div class="step-desc">The US military connects computers at UCLA, Stanford, UC Santa Barbara, and University of Utah. The internet begins as a defense project with four nodes. Today there are over 5 billion connected devices.</div>
-          </div>
-        </div>
-        <div class="internet-step">
-          <div class="step-year" style="color:#a855f7;">1972</div>
-          <div class="step-info">
-            <div class="step-event">Email Is Invented</div>
-            <div class="step-desc">Ray Tomlinson sends the first email between two computers. He also chose the @ symbol to separate user names from machine names — a decision that shapes every email address still used today.</div>
-          </div>
-        </div>
-        <div class="internet-step">
-          <div class="step-year" style="color:#00f5d4;">1983</div>
-          <div class="step-info">
-            <div class="step-event">TCP/IP — The Language of the Internet</div>
-            <div class="step-desc">The internet switches to TCP/IP — the set of rules that still governs how data travels across networks. January 1st, 1983 is considered the official birthday of the modern internet.</div>
-          </div>
-        </div>
-        <div class="internet-step">
-          <div class="step-year" style="color:#fbbf24;">1989</div>
-          <div class="step-info">
-            <div class="step-event">The World Wide Web Is Born</div>
-            <div class="step-desc">Tim Berners-Lee proposes a system of linked documents accessible over the internet. He calls it the World Wide Web. His boss writes "Vague but exciting" on the cover page. It becomes the layer we call "the internet" today.</div>
-          </div>
-        </div>
-        <div class="internet-step">
-          <div class="step-year" style="color:#84cc16;">1993</div>
-          <div class="step-info">
-            <div class="step-event">Mosaic — The First Web Browser</div>
-            <div class="step-desc">The first browser with images. Before Mosaic, the web was text only. Adding images made it feel like a real experience — and the number of web users exploded from thousands to millions within a year.</div>
-          </div>
-        </div>
-        <div class="internet-step">
-          <div class="step-year" style="color:#38bdf8;">1998</div>
-          <div class="step-info">
-            <div class="step-event">Google Launches in a Garage</div>
-            <div class="step-desc">Larry Page and Sergey Brin start Google as a Stanford PhD project. Their insight: rank pages by how many other pages link to them, not just keywords. This was so obvious in hindsight that it's wild nobody thought of it first.</div>
-          </div>
-        </div>
-        <div class="internet-step">
-          <div class="step-year" style="color:#f472b6;">2004</div>
-          <div class="step-info">
-            <div class="step-event">Social Media Changes Everything</div>
-            <div class="step-desc">Facebook, YouTube, and later Twitter transform the internet from a place you browse into a place where you participate. Users start creating as much content as they consume. This is where "don't be a consumer, be a creator" starts to mean something real.</div>
-          </div>
-        </div>
-        <div class="internet-step">
-          <div class="step-year" style="color:#a855f7;">2023</div>
-          <div class="step-info">
-            <div class="step-event">The AI Internet</div>
-            <div class="step-desc">AI tools become widely available. Writing, images, code, music, and video can all be generated in seconds. The internet is now a place where AI and humans create together — and understanding how it all works is more important than ever.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">History of the Internet</span>
+<h2 class="lib-block-title">The network that connected everything.</h2>
+<p class="lib-block-desc">The internet didn't appear overnight — it was built in layers, each decade adding something new.</p>
+<div class="internet-steps">
+<div class="internet-step">
+<div class="step-year" style="color:#f472b6;">1969</div>
+<div class="step-info">
+<div class="step-event">ARPANET — Four Computers, One Network</div>
+<div class="step-desc">The US military connects computers at UCLA, Stanford, UC Santa Barbara, and University of Utah. The internet begins as a defense project with four nodes. Today there are over 5 billion connected devices.</div>
+</div>
+</div>
+<div class="internet-step">
+<div class="step-year" style="color:#a855f7;">1972</div>
+<div class="step-info">
+<div class="step-event">Email Is Invented</div>
+<div class="step-desc">Ray Tomlinson sends the first email between two computers. He also chose the @ symbol to separate user names from machine names — a decision that shapes every email address still used today.</div>
+</div>
+</div>
+<div class="internet-step">
+<div class="step-year" style="color:#00f5d4;">1983</div>
+<div class="step-info">
+<div class="step-event">TCP/IP — The Language of the Internet</div>
+<div class="step-desc">The internet switches to TCP/IP — the set of rules that still governs how data travels across networks. January 1st, 1983 is considered the official birthday of the modern internet.</div>
+</div>
+</div>
+<div class="internet-step">
+<div class="step-year" style="color:#fbbf24;">1989</div>
+<div class="step-info">
+<div class="step-event">The World Wide Web Is Born</div>
+<div class="step-desc">Tim Berners-Lee proposes a system of linked documents accessible over the internet. He calls it the World Wide Web. His boss writes "Vague but exciting" on the cover page. It becomes the layer we call "the internet" today.</div>
+</div>
+</div>
+<div class="internet-step">
+<div class="step-year" style="color:#84cc16;">1993</div>
+<div class="step-info">
+<div class="step-event">Mosaic — The First Web Browser</div>
+<div class="step-desc">The first browser with images. Before Mosaic, the web was text only. Adding images made it feel like a real experience — and the number of web users exploded from thousands to millions within a year.</div>
+</div>
+</div>
+<div class="internet-step">
+<div class="step-year" style="color:#38bdf8;">1998</div>
+<div class="step-info">
+<div class="step-event">Google Launches in a Garage</div>
+<div class="step-desc">Larry Page and Sergey Brin start Google as a Stanford PhD project. Their insight: rank pages by how many other pages link to them, not just keywords. This was so obvious in hindsight that it's wild nobody thought of it first.</div>
+</div>
+</div>
+<div class="internet-step">
+<div class="step-year" style="color:#f472b6;">2004</div>
+<div class="step-info">
+<div class="step-event">Social Media Changes Everything</div>
+<div class="step-desc">Facebook, YouTube, and later Twitter transform the internet from a place you browse into a place where you participate. Users start creating as much content as they consume. This is where "don't be a consumer, be a creator" starts to mean something real.</div>
+</div>
+</div>
+<div class="internet-step">
+<div class="step-year" style="color:#a855f7;">2023</div>
+<div class="step-info">
+<div class="step-event">The AI Internet</div>
+<div class="step-desc">AI tools become widely available. Writing, images, code, music, and video can all be generated in seconds. The internet is now a place where AI and humans create together — and understanding how it all works is more important than ever.</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="pioneers">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">Tech Pioneers</span>
-      <h2 class="lib-block-title">The people who built everything.</h2>
-      <p class="lib-block-desc">Every device, language, and platform you use was created by someone. Here are some of the people who changed everything.</p>
-      <div class="pioneer-grid">
-        <div class="pioneer-card" style="--pc-color:#f472b6;--pc-bg:radial-gradient(circle at 80% 0%,rgba(244,114,182,.08),transparent 55%);">
-          <span class="pioneer-era">1843 · Mathematics</span>
-          <div class="pioneer-name">Ada Lovelace</div>
-          <div class="pioneer-role">World's First Programmer</div>
-          <div class="pioneer-fact">Wrote the first algorithm for a machine that didn't exist yet. She also predicted computers would eventually create graphics and music — 100 years before they could.</div>
-        </div>
-        <div class="pioneer-card" style="--pc-color:#00f5d4;--pc-bg:radial-gradient(circle at 80% 0%,rgba(0,245,212,.07),transparent 55%);">
-          <span class="pioneer-era">1936 · Computer Science</span>
-          <div class="pioneer-name">Alan Turing</div>
-          <div class="pioneer-role">Father of Computer Science</div>
-          <div class="pioneer-fact">Invented the theoretical model for all modern computers. During WWII, he cracked the Nazis' Enigma code, shortening the war by an estimated 2 years. His reward was criminal prosecution by the British government. History owes him more than it gave.</div>
-        </div>
-        <div class="pioneer-card" style="--pc-color:#a855f7;--pc-bg:radial-gradient(circle at 80% 0%,rgba(168,85,247,.07),transparent 55%);">
-          <span class="pioneer-era">1940s · Programming</span>
-          <div class="pioneer-name">Grace Hopper</div>
-          <div class="pioneer-role">Inventor of the Compiler</div>
-          <div class="pioneer-fact">A US Navy admiral who invented the first compiler — a program that translates human-readable code into machine code. She also found the first actual computer bug (the moth). She popularized the term "debugging."</div>
-        </div>
-        <div class="pioneer-card" style="--pc-color:#fbbf24;--pc-bg:radial-gradient(circle at 80% 0%,rgba(251,191,36,.07),transparent 55%);">
-          <span class="pioneer-era">1970s · Software</span>
-          <div class="pioneer-name">Bill Gates</div>
-          <div class="pioneer-role">Co-Founder of Microsoft</div>
-          <div class="pioneer-fact">Dropped out of Harvard at 19 to start Microsoft. His bet that every home would eventually have a personal computer was considered absurd in 1975. He was right. DOS and Windows became the operating systems of an entire generation.</div>
-        </div>
-        <div class="pioneer-card" style="--pc-color:#84cc16;--pc-bg:radial-gradient(circle at 80% 0%,rgba(132,204,22,.07),transparent 55%);">
-          <span class="pioneer-era">1976 · Hardware</span>
-          <div class="pioneer-name">Steve Wozniak</div>
-          <div class="pioneer-role">The Engineer Behind Apple</div>
-          <div class="pioneer-fact">The quiet genius who actually built the Apple I and Apple II. Wozniak designed a computer so elegant that engineers still study it. He gave the schematics away for free because he wanted everyone to learn. Without Woz, there's no Apple.</div>
-        </div>
-        <div class="pioneer-card" style="--pc-color:#38bdf8;--pc-bg:radial-gradient(circle at 80% 0%,rgba(56,189,248,.07),transparent 55%);">
-          <span class="pioneer-era">1989 · Web</span>
-          <div class="pioneer-name">Tim Berners-Lee</div>
-          <div class="pioneer-role">Inventor of the World Wide Web</div>
-          <div class="pioneer-fact">Invented the web and then gave it away — no patents, no fees, no royalties. He could have been a billionaire. Instead he said the web should belong to everyone. He still advocates for an open internet today.</div>
-        </div>
-        <div class="pioneer-card" style="--pc-color:#f472b6;--pc-bg:radial-gradient(circle at 80% 0%,rgba(244,114,182,.08),transparent 55%);">
-          <span class="pioneer-era">1998 · Search</span>
-          <div class="pioneer-name">Larry Page & Sergey Brin</div>
-          <div class="pioneer-role">Founders of Google</div>
-          <div class="pioneer-fact">Started Google as a PhD project at Stanford. They tried to sell it for $1 million in 1998 and nobody bought it. Google is now worth over $1 trillion. The person who passed on that deal probably thinks about it every day.</div>
-        </div>
-        <div class="pioneer-card" style="--pc-color:#a855f7;--pc-bg:radial-gradient(circle at 80% 0%,rgba(168,85,247,.07),transparent 55%);">
-          <span class="pioneer-era">1984 · Diversity</span>
-          <div class="pioneer-name">Katherine Johnson</div>
-          <div class="pioneer-role">NASA Mathematician & Hidden Figure</div>
-          <div class="pioneer-fact">Her orbital calculations were so accurate that astronaut John Glenn refused to launch until she personally verified the computer's numbers. She calculated the trajectory for Apollo 11's moon landing. Her work was classified for decades.</div>
-        </div>
-        <div class="pioneer-card" style="--pc-color:#fbbf24;--pc-bg:radial-gradient(circle at 80% 0%,rgba(251,191,36,.07),transparent 55%);">
-          <span class="pioneer-era">2003 · AI</span>
-          <div class="pioneer-name">Geoffrey Hinton</div>
-          <div class="pioneer-role">The Godfather of Deep Learning</div>
-          <div class="pioneer-fact">Spent decades being ignored for his belief that neural networks could learn like brains. When he was finally proven right, AI went from a fringe idea to the biggest technological shift since the internet. He's since spoken publicly about the risks of what he helped create.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">Tech Pioneers</span>
+<h2 class="lib-block-title">The people who built everything.</h2>
+<p class="lib-block-desc">Every device, language, and platform you use was created by someone. Here are some of the people who changed everything.</p>
+<div class="pioneer-grid">
+<div class="pioneer-card" style="--pc-color:#f472b6;--pc-bg:radial-gradient(circle at 80% 0%,rgba(244,114,182,.08),transparent 55%);">
+<span class="pioneer-era">1843 · Mathematics</span>
+<div class="pioneer-name">Ada Lovelace</div>
+<div class="pioneer-role">World's First Programmer</div>
+<div class="pioneer-fact">Wrote the first algorithm for a machine that didn't exist yet. She also predicted computers would eventually create graphics and music — 100 years before they could.</div>
+</div>
+<div class="pioneer-card" style="--pc-color:#00f5d4;--pc-bg:radial-gradient(circle at 80% 0%,rgba(0,245,212,.07),transparent 55%);">
+<span class="pioneer-era">1936 · Computer Science</span>
+<div class="pioneer-name">Alan Turing</div>
+<div class="pioneer-role">Father of Computer Science</div>
+<div class="pioneer-fact">Invented the theoretical model for all modern computers. During WWII, he cracked the Nazis' Enigma code, shortening the war by an estimated 2 years. His reward was criminal prosecution by the British government. History owes him more than it gave.</div>
+</div>
+<div class="pioneer-card" style="--pc-color:#a855f7;--pc-bg:radial-gradient(circle at 80% 0%,rgba(168,85,247,.07),transparent 55%);">
+<span class="pioneer-era">1940s · Programming</span>
+<div class="pioneer-name">Grace Hopper</div>
+<div class="pioneer-role">Inventor of the Compiler</div>
+<div class="pioneer-fact">A US Navy admiral who invented the first compiler — a program that translates human-readable code into machine code. She also found the first actual computer bug (the moth). She popularized the term "debugging."</div>
+</div>
+<div class="pioneer-card" style="--pc-color:#fbbf24;--pc-bg:radial-gradient(circle at 80% 0%,rgba(251,191,36,.07),transparent 55%);">
+<span class="pioneer-era">1970s · Software</span>
+<div class="pioneer-name">Bill Gates</div>
+<div class="pioneer-role">Co-Founder of Microsoft</div>
+<div class="pioneer-fact">Dropped out of Harvard at 19 to start Microsoft. His bet that every home would eventually have a personal computer was considered absurd in 1975. He was right. DOS and Windows became the operating systems of an entire generation.</div>
+</div>
+<div class="pioneer-card" style="--pc-color:#84cc16;--pc-bg:radial-gradient(circle at 80% 0%,rgba(132,204,22,.07),transparent 55%);">
+<span class="pioneer-era">1976 · Hardware</span>
+<div class="pioneer-name">Steve Wozniak</div>
+<div class="pioneer-role">The Engineer Behind Apple</div>
+<div class="pioneer-fact">The quiet genius who actually built the Apple I and Apple II. Wozniak designed a computer so elegant that engineers still study it. He gave the schematics away for free because he wanted everyone to learn. Without Woz, there's no Apple.</div>
+</div>
+<div class="pioneer-card" style="--pc-color:#38bdf8;--pc-bg:radial-gradient(circle at 80% 0%,rgba(56,189,248,.07),transparent 55%);">
+<span class="pioneer-era">1989 · Web</span>
+<div class="pioneer-name">Tim Berners-Lee</div>
+<div class="pioneer-role">Inventor of the World Wide Web</div>
+<div class="pioneer-fact">Invented the web and then gave it away — no patents, no fees, no royalties. He could have been a billionaire. Instead he said the web should belong to everyone. He still advocates for an open internet today.</div>
+</div>
+<div class="pioneer-card" style="--pc-color:#f472b6;--pc-bg:radial-gradient(circle at 80% 0%,rgba(244,114,182,.08),transparent 55%);">
+<span class="pioneer-era">1998 · Search</span>
+<div class="pioneer-name">Larry Page & Sergey Brin</div>
+<div class="pioneer-role">Founders of Google</div>
+<div class="pioneer-fact">Started Google as a PhD project at Stanford. They tried to sell it for $1 million in 1998 and nobody bought it. Google is now worth over $1 trillion. The person who passed on that deal probably thinks about it every day.</div>
+</div>
+<div class="pioneer-card" style="--pc-color:#a855f7;--pc-bg:radial-gradient(circle at 80% 0%,rgba(168,85,247,.07),transparent 55%);">
+<span class="pioneer-era">1984 · Diversity</span>
+<div class="pioneer-name">Katherine Johnson</div>
+<div class="pioneer-role">NASA Mathematician & Hidden Figure</div>
+<div class="pioneer-fact">Her orbital calculations were so accurate that astronaut John Glenn refused to launch until she personally verified the computer's numbers. She calculated the trajectory for Apollo 11's moon landing. Her work was classified for decades.</div>
+</div>
+<div class="pioneer-card" style="--pc-color:#fbbf24;--pc-bg:radial-gradient(circle at 80% 0%,rgba(251,191,36,.07),transparent 55%);">
+<span class="pioneer-era">2003 · AI</span>
+<div class="pioneer-name">Geoffrey Hinton</div>
+<div class="pioneer-role">The Godfather of Deep Learning</div>
+<div class="pioneer-fact">Spent decades being ignored for his belief that neural networks could learn like brains. When he was finally proven right, AI went from a fringe idea to the biggest technological shift since the internet. He's since spoken publicly about the risks of what he helped create.</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="languages">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">Programming Languages</span>
-      <h2 class="lib-block-title">The languages computers speak.</h2>
-      <p class="lib-block-desc">There are over 700 programming languages. Here are the ones that matter most — and why.</p>
-      <div class="lang-grid">
-        <div class="lang-card" style="--lc:#fbbf24;">
-          <div class="lang-name">Python</div>
-          <div class="lang-year">Created 1991 · Guido van Rossum</div>
-          <div class="lang-use">AI, data science, automation, and beginners. Designed to be readable like English. The most popular language in the world right now.</div>
-        </div>
-        <div class="lang-card" style="--lc:#f7df1e;">
-          <div class="lang-name">JavaScript</div>
-          <div class="lang-year">Created 1995 · Brendan Eich</div>
-          <div class="lang-use">Powers every interactive website. The only language that runs natively in browsers. Also runs on servers, mobile apps, and even robots.</div>
-        </div>
-        <div class="lang-card" style="--lc:#e34f26;">
-          <div class="lang-name">HTML</div>
-          <div class="lang-year">Created 1991 · Tim Berners-Lee</div>
-          <div class="lang-use">The structure of every webpage ever made. Not technically a "programming" language but the foundation of the entire web. Nova's specialty.</div>
-        </div>
-        <div class="lang-card" style="--lc:#264de4;">
-          <div class="lang-name">CSS</div>
-          <div class="lang-year">Created 1996 · Håkon Wium Lie</div>
-          <div class="lang-use">Controls how everything looks on the web — colors, fonts, layouts, animations. Without CSS, every website is just plain black text on a white background. Zen's domain.</div>
-        </div>
-        <div class="lang-card" style="--lc:#b07219;">
-          <div class="lang-name">Java</div>
-          <div class="lang-year">Created 1995 · James Gosling</div>
-          <div class="lang-use">"Write once, run anywhere." Used in Android apps, enterprise software, and Minecraft. One of the most taught languages in schools.</div>
-        </div>
-        <div class="lang-card" style="--lc:#00ADD8;">
-          <div class="lang-name">Go</div>
-          <div class="lang-year">Created 2009 · Google</div>
-          <div class="lang-use">Built for speed and simplicity by Google engineers who were tired of C++. Powers YouTube, Dropbox, and many major cloud systems.</div>
-        </div>
-        <div class="lang-card" style="--lc:#dea584;">
-          <div class="lang-name">Rust</div>
-          <div class="lang-year">Created 2010 · Mozilla</div>
-          <div class="lang-use">Designed to be blazing fast AND safe — almost impossible to write memory bugs in. Used in browsers, operating systems, and is growing fast in AI infrastructure.</div>
-        </div>
-        <div class="lang-card" style="--lc:#a97bff;">
-          <div class="lang-name">Swift</div>
-          <div class="lang-year">Created 2014 · Apple</div>
-          <div class="lang-use">Apple's language for building iPhone, iPad, and Mac apps. Replaced Objective-C. Designed to be fast to write and difficult to break. If you use an iPhone, you use Swift every day.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">Programming Languages</span>
+<h2 class="lib-block-title">The languages computers speak.</h2>
+<p class="lib-block-desc">There are over 700 programming languages. Here are the ones that matter most — and why.</p>
+<div class="lang-grid">
+<div class="lang-card" style="--lc:#fbbf24;">
+<div class="lang-name">Python</div>
+<div class="lang-year">Created 1991 · Guido van Rossum</div>
+<div class="lang-use">AI, data science, automation, and beginners. Designed to be readable like English. The most popular language in the world right now.</div>
+</div>
+<div class="lang-card" style="--lc:#f7df1e;">
+<div class="lang-name">JavaScript</div>
+<div class="lang-year">Created 1995 · Brendan Eich</div>
+<div class="lang-use">Powers every interactive website. The only language that runs natively in browsers. Also runs on servers, mobile apps, and even robots.</div>
+</div>
+<div class="lang-card" style="--lc:#e34f26;">
+<div class="lang-name">HTML</div>
+<div class="lang-year">Created 1991 · Tim Berners-Lee</div>
+<div class="lang-use">The structure of every webpage ever made. Not technically a "programming" language but the foundation of the entire web. Nova's specialty.</div>
+</div>
+<div class="lang-card" style="--lc:#264de4;">
+<div class="lang-name">CSS</div>
+<div class="lang-year">Created 1996 · Håkon Wium Lie</div>
+<div class="lang-use">Controls how everything looks on the web — colors, fonts, layouts, animations. Without CSS, every website is just plain black text on a white background. Zen's domain.</div>
+</div>
+<div class="lang-card" style="--lc:#b07219;">
+<div class="lang-name">Java</div>
+<div class="lang-year">Created 1995 · James Gosling</div>
+<div class="lang-use">"Write once, run anywhere." Used in Android apps, enterprise software, and Minecraft. One of the most taught languages in schools.</div>
+</div>
+<div class="lang-card" style="--lc:#00ADD8;">
+<div class="lang-name">Go</div>
+<div class="lang-year">Created 2009 · Google</div>
+<div class="lang-use">Built for speed and simplicity by Google engineers who were tired of C++. Powers YouTube, Dropbox, and many major cloud systems.</div>
+</div>
+<div class="lang-card" style="--lc:#dea584;">
+<div class="lang-name">Rust</div>
+<div class="lang-year">Created 2010 · Mozilla</div>
+<div class="lang-use">Designed to be blazing fast AND safe — almost impossible to write memory bugs in. Used in browsers, operating systems, and is growing fast in AI infrastructure.</div>
+</div>
+<div class="lang-card" style="--lc:#a97bff;">
+<div class="lang-name">Swift</div>
+<div class="lang-year">Created 2014 · Apple</div>
+<div class="lang-use">Apple's language for building iPhone, iPad, and Mac apps. Replaced Objective-C. Designed to be fast to write and difficult to break. If you use an iPhone, you use Swift every day.</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="how-it-works">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">How It Works</span>
-      <h2 class="lib-block-title">What actually happens when you visit a website.</h2>
-      <p class="lib-block-desc">Every time you type a URL, hundreds of things happen in less than a second. Here's the story.</p>
-      <div class="how-grid">
-        <div class="how-card" style="--hc:#f472b6;">
-          <div class="how-num">01</div>
-          <div class="how-title">You Type a URL</div>
-          <div class="how-desc">Your browser takes the address (like google.com) and asks a DNS server to translate it into a real IP address — a number like 142.250.80.46. DNS is the internet's phone book.</div>
-        </div>
-        <div class="how-card" style="--hc:#a855f7;">
-          <div class="how-num">02</div>
-          <div class="how-title">Your Browser Finds the Server</div>
-          <div class="how-desc">Using that IP address, your browser sends a request to a web server somewhere in the world — possibly thousands of miles away. This round trip often happens in under 50 milliseconds.</div>
-        </div>
-        <div class="how-card" style="--hc:#00f5d4;">
-          <div class="how-num">03</div>
-          <div class="how-title">The Server Sends Back Files</div>
-          <div class="how-desc">The server responds with HTML, CSS, and JavaScript files. These are just text documents — the same kind you write in a code editor. The magic is in how the browser reads them.</div>
-        </div>
-        <div class="how-card" style="--hc:#fbbf24;">
-          <div class="how-num">04</div>
-          <div class="how-title">The Browser Reads HTML</div>
-          <div class="how-desc">Your browser reads the HTML top to bottom, building a tree of elements called the DOM (Document Object Model). Every heading, paragraph, and div becomes a node in this tree.</div>
-        </div>
-        <div class="how-card" style="--hc:#84cc16;">
-          <div class="how-num">05</div>
-          <div class="how-title">CSS Paints the Picture</div>
-          <div class="how-desc">CSS rules are applied to the DOM — colors, fonts, sizes, positions. The browser calculates exactly how every pixel should look. This process is called "rendering" and it happens dozens of times per second for animations.</div>
-        </div>
-        <div class="how-card" style="--hc:#38bdf8;">
-          <div class="how-num">06</div>
-          <div class="how-title">JavaScript Brings It to Life</div>
-          <div class="how-desc">JavaScript runs and starts listening for events — clicks, scrolls, keyboard input. When something happens, JS updates the DOM and CSS in real time. That's how websites respond to you without reloading the whole page.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="lib-block">
-      <span class="lib-label">Binary & Data</span>
-      <h2 class="lib-block-title">How computers actually store information.</h2>
-      <p class="lib-block-desc">Every piece of data — text, images, music, video — is stored as numbers. And every number is made of 1s and 0s.</p>
-      <div class="how-grid">
-        <div class="how-card" style="--hc:#f472b6;">
-          <div class="how-num">BIT</div>
-          <div class="how-title">The Smallest Unit</div>
-          <div class="how-desc">A bit is a single 1 or 0. That's it. The word comes from "binary digit." Everything a computer stores is made of bits — billions and billions of them.</div>
-        </div>
-        <div class="how-card" style="--hc:#a855f7;">
-          <div class="how-num">BYTE</div>
-          <div class="how-title">8 Bits = 1 Letter</div>
-          <div class="how-desc">8 bits make a byte. A byte can represent 256 different values (2 to the power of 8). One byte is enough to store one character of text — like the letter "A."</div>
-        </div>
-        <div class="how-card" style="--hc:#00f5d4;">
-          <div class="how-num">KB → TB</div>
-          <div class="how-title">Scaling Up</div>
-          <div class="how-desc">1,000 bytes = 1 kilobyte. 1,000 KB = 1 megabyte. 1,000 MB = 1 gigabyte. A typical photo is about 3–5 MB. A movie is about 4 GB. The internet moves about 400 exabytes (400 billion gigabytes) per day.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">How It Works</span>
+<h2 class="lib-block-title">What actually happens when you visit a website.</h2>
+<p class="lib-block-desc">Every time you type a URL, hundreds of things happen in less than a second. Here's the story.</p>
+<div class="how-grid">
+<div class="how-card" style="--hc:#f472b6;">
+<div class="how-num">01</div>
+<div class="how-title">You Type a URL</div>
+<div class="how-desc">Your browser takes the address (like google.com) and asks a DNS server to translate it into a real IP address — a number like 142.250.80.46. DNS is the internet's phone book.</div>
+</div>
+<div class="how-card" style="--hc:#a855f7;">
+<div class="how-num">02</div>
+<div class="how-title">Your Browser Finds the Server</div>
+<div class="how-desc">Using that IP address, your browser sends a request to a web server somewhere in the world — possibly thousands of miles away. This round trip often happens in under 50 milliseconds.</div>
+</div>
+<div class="how-card" style="--hc:#00f5d4;">
+<div class="how-num">03</div>
+<div class="how-title">The Server Sends Back Files</div>
+<div class="how-desc">The server responds with HTML, CSS, and JavaScript files. These are just text documents — the same kind you write in a code editor. The magic is in how the browser reads them.</div>
+</div>
+<div class="how-card" style="--hc:#fbbf24;">
+<div class="how-num">04</div>
+<div class="how-title">The Browser Reads HTML</div>
+<div class="how-desc">Your browser reads the HTML top to bottom, building a tree of elements called the DOM (Document Object Model). Every heading, paragraph, and div becomes a node in this tree.</div>
+</div>
+<div class="how-card" style="--hc:#84cc16;">
+<div class="how-num">05</div>
+<div class="how-title">CSS Paints the Picture</div>
+<div class="how-desc">CSS rules are applied to the DOM — colors, fonts, sizes, positions. The browser calculates exactly how every pixel should look. This process is called "rendering" and it happens dozens of times per second for animations.</div>
+</div>
+<div class="how-card" style="--hc:#38bdf8;">
+<div class="how-num">06</div>
+<div class="how-title">JavaScript Brings It to Life</div>
+<div class="how-desc">JavaScript runs and starts listening for events — clicks, scrolls, keyboard input. When something happens, JS updates the DOM and CSS in real time. That's how websites respond to you without reloading the whole page.</div>
+</div>
+</div>
+</div>
+<div class="lib-block">
+<span class="lib-label">Binary & Data</span>
+<h2 class="lib-block-title">How computers actually store information.</h2>
+<p class="lib-block-desc">Every piece of data — text, images, music, video — is stored as numbers. And every number is made of 1s and 0s.</p>
+<div class="how-grid">
+<div class="how-card" style="--hc:#f472b6;">
+<div class="how-num">BIT</div>
+<div class="how-title">The Smallest Unit</div>
+<div class="how-desc">A bit is a single 1 or 0. That's it. The word comes from "binary digit." Everything a computer stores is made of bits — billions and billions of them.</div>
+</div>
+<div class="how-card" style="--hc:#a855f7;">
+<div class="how-num">BYTE</div>
+<div class="how-title">8 Bits = 1 Letter</div>
+<div class="how-desc">8 bits make a byte. A byte can represent 256 different values (2 to the power of 8). One byte is enough to store one character of text — like the letter "A."</div>
+</div>
+<div class="how-card" style="--hc:#00f5d4;">
+<div class="how-num">KB → TB</div>
+<div class="how-title">Scaling Up</div>
+<div class="how-desc">1,000 bytes = 1 kilobyte. 1,000 KB = 1 megabyte. 1,000 MB = 1 gigabyte. A typical photo is about 3–5 MB. A movie is about 4 GB. The internet moves about 400 exabytes (400 billion gigabytes) per day.</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="glossary">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">Glossary</span>
-      <h2 class="lib-block-title">Words every coder should know.</h2>
-      <p class="lib-block-desc">Tech has a language of its own. Here's a decoder ring for the most common terms.</p>
-      <div class="glossary-grid">
-        <div class="glossary-item"><div class="glossary-term">Algorithm</div><div class="glossary-def">A step-by-step set of instructions for solving a problem. Every recipe, playlist, and search result is powered by an algorithm.</div></div>
-        <div class="glossary-item"><div class="glossary-term">API</div><div class="glossary-def">Application Programming Interface. A set of rules that lets two programs talk to each other. When an app uses Google Maps, it's using an API.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Backend</div><div class="glossary-def">The part of a website or app that users never see — the server, database, and logic that power everything behind the scenes.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Binary</div><div class="glossary-def">A number system with only two digits: 0 and 1. All computer data is stored and processed in binary at the hardware level.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Cache</div><div class="glossary-def">Temporary storage that saves copies of data so you can access it faster next time. Your browser caches images so websites load quicker on repeat visits.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Cloud</div><div class="glossary-def">Servers accessed over the internet rather than on your local machine. When you store a photo in iCloud or Google Drive, it's sitting on a server somewhere in a building.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Compiler</div><div class="glossary-def">A program that translates human-readable code into machine code (0s and 1s) that a computer can actually execute. Grace Hopper invented the first one.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Database</div><div class="glossary-def">An organized collection of data that can be searched, sorted, and updated. Every app that remembers your preferences or history uses one.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Debugging</div><div class="glossary-def">The process of finding and fixing errors in code. Bug's entire world. Every programmer spends more time debugging than writing new code.</div></div>
-        <div class="glossary-item"><div class="glossary-term">DOM</div><div class="glossary-def">Document Object Model. The browser's internal representation of an HTML page as a tree of objects. JavaScript manipulates the DOM to update what you see without reloading the page.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Framework</div><div class="glossary-def">A pre-built collection of code that gives developers a structure to build apps faster. React, Vue, and Angular are JavaScript frameworks. Think of it as a building's skeleton.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Frontend</div><div class="glossary-def">Everything the user sees and interacts with directly — the HTML, CSS, and JavaScript in a browser. Zen's territory.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Function</div><div class="glossary-def">A reusable block of code that performs a specific task. You define it once and can call it as many times as you want. Functions are how code stays organized.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Git</div><div class="glossary-def">A version control system that tracks changes to code over time. Lets developers collaborate without overwriting each other's work, and roll back mistakes to any previous version.</div></div>
-        <div class="glossary-item"><div class="glossary-term">HTTP / HTTPS</div><div class="glossary-def">The protocol that browsers and servers use to communicate. The S in HTTPS stands for Secure — it means the connection is encrypted. Always look for the padlock.</div></div>
-        <div class="glossary-item"><div class="glossary-term">IDE</div><div class="glossary-def">Integrated Development Environment. A fancy text editor for writing code — with built-in tools for running, debugging, and managing projects. VS Code is the most popular one today.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Loop</div><div class="glossary-def">A block of code that repeats until a condition is met. Loop's entire world. The foundation of automation — making computers do repetitive tasks so humans don't have to.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Open Source</div><div class="glossary-def">Code that anyone can view, use, and contribute to. Linux, Python, and React are all open source. The internet runs largely on software that was built by volunteers.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Repository (Repo)</div><div class="glossary-def">A folder where a project's code and its full history of changes are stored. GitHub hosts millions of repos. MiM's site lives in one.</div></div>
-        <div class="glossary-item"><div class="glossary-term">Variable</div><div class="glossary-def">A named container that holds a value. Like a labeled box. You can put anything in it and change the contents whenever you want. The most fundamental building block in all of coding.</div></div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">Glossary</span>
+<h2 class="lib-block-title">Words every coder should know.</h2>
+<p class="lib-block-desc">Tech has a language of its own. Here's a decoder ring for the most common terms.</p>
+<div class="glossary-grid">
+<div class="glossary-item">
+<div class="glossary-term">Algorithm</div>
+<div class="glossary-def">A step-by-step set of instructions for solving a problem. Every recipe, playlist, and search result is powered by an algorithm.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">API</div>
+<div class="glossary-def">Application Programming Interface. A set of rules that lets two programs talk to each other. When an app uses Google Maps, it's using an API.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Backend</div>
+<div class="glossary-def">The part of a website or app that users never see — the server, database, and logic that power everything behind the scenes.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Binary</div>
+<div class="glossary-def">A number system with only two digits: 0 and 1. All computer data is stored and processed in binary at the hardware level.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Cache</div>
+<div class="glossary-def">Temporary storage that saves copies of data so you can access it faster next time. Your browser caches images so websites load quicker on repeat visits.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Cloud</div>
+<div class="glossary-def">Servers accessed over the internet rather than on your local machine. When you store a photo in iCloud or Google Drive, it's sitting on a server somewhere in a building.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Compiler</div>
+<div class="glossary-def">A program that translates human-readable code into machine code (0s and 1s) that a computer can actually execute. Grace Hopper invented the first one.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Database</div>
+<div class="glossary-def">An organized collection of data that can be searched, sorted, and updated. Every app that remembers your preferences or history uses one.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Debugging</div>
+<div class="glossary-def">The process of finding and fixing errors in code. Bug's entire world. Every programmer spends more time debugging than writing new code.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">DOM</div>
+<div class="glossary-def">Document Object Model. The browser's internal representation of an HTML page as a tree of objects. JavaScript manipulates the DOM to update what you see without reloading the page.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Framework</div>
+<div class="glossary-def">A pre-built collection of code that gives developers a structure to build apps faster. React, Vue, and Angular are JavaScript frameworks. Think of it as a building's skeleton.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Frontend</div>
+<div class="glossary-def">Everything the user sees and interacts with directly — the HTML, CSS, and JavaScript in a browser. Zen's territory.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Function</div>
+<div class="glossary-def">A reusable block of code that performs a specific task. You define it once and can call it as many times as you want. Functions are how code stays organized.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Git</div>
+<div class="glossary-def">A version control system that tracks changes to code over time. Lets developers collaborate without overwriting each other's work, and roll back mistakes to any previous version.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">HTTP / HTTPS</div>
+<div class="glossary-def">The protocol that browsers and servers use to communicate. The S in HTTPS stands for Secure — it means the connection is encrypted. Always look for the padlock.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">IDE</div>
+<div class="glossary-def">Integrated Development Environment. A fancy text editor for writing code — with built-in tools for running, debugging, and managing projects. VS Code is the most popular one today.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Loop</div>
+<div class="glossary-def">A block of code that repeats until a condition is met. Loop's entire world. The foundation of automation — making computers do repetitive tasks so humans don't have to.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Open Source</div>
+<div class="glossary-def">Code that anyone can view, use, and contribute to. Linux, Python, and React are all open source. The internet runs largely on software that was built by volunteers.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Repository (Repo)</div>
+<div class="glossary-def">A folder where a project's code and its full history of changes are stored. GitHub hosts millions of repos. MiM's site lives in one.</div>
+</div>
+<div class="glossary-item">
+<div class="glossary-term">Variable</div>
+<div class="glossary-def">A named container that holds a value. Like a labeled box. You can put anything in it and change the contents whenever you want. The most fundamental building block in all of coding.</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="mini-games">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">Free Mini Games</span>
-      <h2 class="lib-block-title">Play for free. No account needed.</h2>
-      <p class="lib-block-desc">Quick challenges — a taste of each character's world. Full games unlock with Coders membership.</p>
-      <div class="mini-games-grid">
-        <div class="mini-game-card" style="--mg-color:#f472b6;--mg-bg:radial-gradient(circle at 50% 0%,rgba(244,114,182,.1),transparent 60%);">
-          <div class="mini-game-icon">🎨</div>
-          <div class="mini-game-title">CSS Color Match</div>
-          <div class="mini-game-desc">Match hex codes to colors before time runs out. Zen's warm-up for new coders.</div>
-          <div class="mini-game-tag" style="border-color:#f472b6;color:#f472b6;">Coming Soon</div>
-        </div>
-        <div class="mini-game-card" style="--mg-color:#a855f7;--mg-bg:radial-gradient(circle at 50% 0%,rgba(168,85,247,.1),transparent 60%);">
-          <div class="mini-game-icon">🐾</div>
-          <div class="mini-game-title">Byte's Bug Finder</div>
-          <div class="mini-game-desc">Find the typo in the code before Byte does. A mini debug challenge for all levels.</div>
-          <div class="mini-game-tag" style="border-color:#a855f7;color:#a855f7;">Coming Soon</div>
-        </div>
-        <div class="mini-game-card" style="--mg-color:#00f5d4;--mg-bg:radial-gradient(circle at 50% 0%,rgba(0,245,212,.08),transparent 60%);">
-          <div class="mini-game-icon">♾️</div>
-          <div class="mini-game-title">Loop's Sequence Puzzle</div>
-          <div class="mini-game-desc">Put the steps in the right order. Loop teaches pattern thinking through puzzles.</div>
-          <div class="mini-game-tag" style="border-color:#00f5d4;color:#00f5d4;">Coming Soon</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">Free Mini Games</span>
+<h2 class="lib-block-title">Play for free. No account needed.</h2>
+<p class="lib-block-desc">Quick challenges — a taste of each character's world. Full games unlock with Coders membership.</p>
+<div class="mini-games-grid">
+<div class="mini-game-card" style="--mg-color:#f472b6;--mg-bg:radial-gradient(circle at 50% 0%,rgba(244,114,182,.1),transparent 60%);">
+<div class="mini-game-icon">🎨</div>
+<div class="mini-game-title">CSS Color Match</div>
+<div class="mini-game-desc">Match hex codes to colors before time runs out. Zen's warm-up for new coders.</div>
+<div class="mini-game-tag" style="border-color:#f472b6;color:#f472b6;">Coming Soon</div>
+</div>
+<div class="mini-game-card" style="--mg-color:#a855f7;--mg-bg:radial-gradient(circle at 50% 0%,rgba(168,85,247,.1),transparent 60%);">
+<div class="mini-game-icon">🐾</div>
+<div class="mini-game-title">Byte's Bug Finder</div>
+<div class="mini-game-desc">Find the typo in the code before Byte does. A mini debug challenge for all levels.</div>
+<div class="mini-game-tag" style="border-color:#a855f7;color:#a855f7;">Coming Soon</div>
+</div>
+<div class="mini-game-card" style="--mg-color:#00f5d4;--mg-bg:radial-gradient(circle at 50% 0%,rgba(0,245,212,.08),transparent 60%);">
+<div class="mini-game-icon">♾️</div>
+<div class="mini-game-title">Loop's Sequence Puzzle</div>
+<div class="mini-game-desc">Put the steps in the right order. Loop teaches pattern thinking through puzzles.</div>
+<div class="mini-game-tag" style="border-color:#00f5d4;color:#00f5d4;">Coming Soon</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <section class="lib-section" id="clips">
-  <div class="lib__inner">
-    <div class="lib-block">
-      <span class="lib-label">Character Clips</span>
-      <h2 class="lib-block-title">Meet the crew in motion.</h2>
-      <p class="lib-block-desc">Short clips of each character doing their signature thing. Watch, share, get inspired.</p>
-      <div class="clips-grid">
-        <div class="clip-card" style="--cc:#f472b6;">
-          <div class="clip-thumb">
-            <div class="clip-thumb-bg" style="background:linear-gradient(135deg,#1a0020,#0d0f1e);"></div>
-            <div class="clip-play">▶</div>
-          </div>
-          <div class="clip-info">
-            <div class="clip-char" style="color:#f472b6;">Zen · Coding Realm</div>
-            <div class="clip-title">Skateboard Trick at the Coding Realm</div>
-          </div>
-        </div>
-        <div class="clip-card" style="--cc:#a855f7;">
-          <div class="clip-thumb">
-            <div class="clip-thumb-bg" style="background:linear-gradient(135deg,#0d0020,#0d0f1e);"></div>
-            <div class="clip-play">▶</div>
-          </div>
-          <div class="clip-info">
-            <div class="clip-char" style="color:#a855f7;">Byte · Code City</div>
-            <div class="clip-title">Playing Video Games in Code City</div>
-          </div>
-        </div>
-        <div class="clip-card" style="--cc:#38bdf8;">
-          <div class="clip-thumb">
-            <div class="clip-thumb-bg" style="background:linear-gradient(135deg,#001a2a,#0d0f1e);"></div>
-            <div class="clip-play">▶</div>
-          </div>
-          <div class="clip-info">
-            <div class="clip-char" style="color:#38bdf8;">Echo · Sound Studio</div>
-            <div class="clip-title">Dancing in the Sound Studio</div>
-          </div>
-        </div>
-      </div>
-      <div style="margin-top:16px;">
-        <div class="coming-card">
-          <div class="coming-badge">Coming Soon</div>
-          <div class="coming-title">Nova, Bug, and Loop's Clips</div>
-          <div class="coming-desc">More character clips from the Discovery Dome, Debug Garage, and Challenge Course are in production.</div>
-        </div>
-      </div>
-    </div>
-  </div>
+<div class="lib__inner">
+<div class="lib-block">
+<span class="lib-label">Character Clips</span>
+<h2 class="lib-block-title">Meet the crew in motion.</h2>
+<p class="lib-block-desc">Short clips of each character doing their signature thing. Watch, share, get inspired.</p>
+<div class="clips-grid">
+<div class="clip-card" style="--cc:#f472b6;">
+<div class="clip-thumb">
+<div class="clip-thumb-bg" style="background:linear-gradient(135deg,#1a0020,#0d0f1e);">
+</div>
+<div class="clip-play">▶</div>
+</div>
+<div class="clip-info">
+<div class="clip-char" style="color:#f472b6;">Zen · Coding Realm</div>
+<div class="clip-title">Skateboard Trick at the Coding Realm</div>
+</div>
+</div>
+<div class="clip-card" style="--cc:#a855f7;">
+<div class="clip-thumb">
+<div class="clip-thumb-bg" style="background:linear-gradient(135deg,#0d0020,#0d0f1e);">
+</div>
+<div class="clip-play">▶</div>
+</div>
+<div class="clip-info">
+<div class="clip-char" style="color:#a855f7;">Byte · Code City</div>
+<div class="clip-title">Playing Video Games in Code City</div>
+</div>
+</div>
+<div class="clip-card" style="--cc:#38bdf8;">
+<div class="clip-thumb">
+<div class="clip-thumb-bg" style="background:linear-gradient(135deg,#001a2a,#0d0f1e);">
+</div>
+<div class="clip-play">▶</div>
+</div>
+<div class="clip-info">
+<div class="clip-char" style="color:#38bdf8;">Echo · Sound Studio</div>
+<div class="clip-title">Dancing in the Sound Studio</div>
+</div>
+</div>
+</div>
+<div style="margin-top:16px;">
+<div class="coming-card">
+<div class="coming-badge">Coming Soon</div>
+<div class="coming-title">Nova, Bug, and Loop's Clips</div>
+<div class="coming-desc">More character clips from the Discovery Dome, Debug Garage, and Challenge Course are in production.</div>
+</div>
+</div>
+</div>
+</div>
 </section>
-
 <!-- AUTH MODAL -->
 <div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
-  <div class="auth-modal-box">
-    <button class="auth-close" id="auth-close-btn">&times;</button>
-    <div class="auth-modal-header"><div class="auth-logo-mark">MiM</div><p class="auth-tagline">Create. Don't Consume.</p></div>
-    <div class="auth-tabs">
-      <button class="auth-tab active" data-tab="login">Log In</button>
-      <button class="auth-tab" data-tab="signup">Join the Crew</button>
-    </div>
-    <div id="login-form" class="auth-form active">
-      <div class="auth-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/></div>
-      <div class="auth-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/></div>
-      <p class="auth-error" id="login-error"></p>
-      <button class="auth-submit" id="login-submit-btn">Log In</button>
-      <p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button></p>
-    </div>
-    <div id="signup-form" class="auth-form">
-      <div class="auth-field"><label>Display Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"/></div>
-      <div class="auth-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"/></div>
-      <div class="auth-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"/></div>
-      <p class="auth-error" id="signup-error"></p>
-      <button class="auth-submit" id="signup-submit-btn">Create Free Account</button>
-      <p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button></p>
-    </div>
-  </div>
+<div class="auth-modal-box">
+<button class="auth-close" id="auth-close-btn">&times;</button>
+<div class="auth-modal-header">
+<div class="auth-logo-mark">MiM</div>
+<p class="auth-tagline">Create. Don't Consume.</p>
 </div>
-
+<div class="auth-tabs">
+<button class="auth-tab active" data-tab="login">Log In</button>
+<button class="auth-tab" data-tab="signup">Join the Crew</button>
+</div>
+<div id="login-form" class="auth-form active">
+<div class="auth-field">
+<label>Email</label>
+<input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/>
+</div>
+<div class="auth-field">
+<label>Password</label>
+<input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/>
+</div>
+<p class="auth-error" id="login-error">
+</p>
+<button class="auth-submit" id="login-submit-btn">Log In</button>
+<p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button>
+</p>
+</div>
+<div id="signup-form" class="auth-form">
+<div class="auth-field">
+<label>Display Name</label>
+<input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"/>
+</div>
+<div class="auth-field">
+<label>Email</label>
+<input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"/>
+</div>
+<div class="auth-field">
+<label>Password</label>
+<input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"/>
+</div>
+<p class="auth-error" id="signup-error">
+</p>
+<button class="auth-submit" id="signup-submit-btn">Create Free Account</button>
+<p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button>
+</p>
+</div>
+</div>
+</div>
 <script>
-function openAuthModal(tab){document.getElementById('auth-modal').classList.add('active');switchTab(tab);}
-function switchTab(tab){document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));document.querySelector('.auth-tab[data-tab="'+tab+'"]').classList.add('active');document.getElementById(tab+'-form').classList.add('active');}
+function openAuthModal(tab){
+document.getElementById('auth-modal').classList.add('active');
+switchTab(tab);
+}
+function switchTab(tab){
+document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));
+document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));
+document.querySelector('.auth-tab[data-tab="'+tab+'"]').classList.add('active');
+document.getElementById(tab+'-form').classList.add('active');
+}
 document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
 document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
 document.getElementById('auth-close-btn').addEventListener('click',()=>document.getElementById('auth-modal').classList.remove('active'));
-document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').classList.remove('active');});
-
-// Section nav active state on scroll
-const sections=document.querySelectorAll('section[id]');
-const navItems=document.querySelectorAll('.snav-item');
-window.addEventListener('scroll',()=>{
-  let current='';
-  sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)current=s.id;});
-  navItems.forEach(n=>{n.classList.toggle('active',n.getAttribute('href')==='#'+current);});
-},passive=true);
+document.getElementById('auth-modal').addEventListener('click',e=>{
+if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').classList.remove('active');
+}
+);
+// Section nav active state on scroll const sections=document.querySelectorAll('section[id]'); const navItems=document.querySelectorAll('.snav-item'); window.addEventListener('scroll',()=>{ let current=''; sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)current=s.id;}); navItems.forEach(n=>{n.classList.toggle('active',n.getAttribute('href')==='#'+current);}); },passive=true);
 </script>
-<script type="module" src="auth-init.js"></script>
+<script type="module" src="auth-init.js">
+</script>
 </body>
 </html>
