@@ -241,8 +241,10 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="hologram-stage" id="hologramStage">
 <div class="hologram-frame">
 <img class="hologram-video" id="entranceVideo" src="loop-loop.gif" alt="Loop materializing">
-<div class="hologram-scanlines"></div>
-<div class="hologram-scan-sweep"></div>
+<div class="hologram-scanlines">
+</div>
+<div class="hologram-scan-sweep">
+</div>
 </div>
 <div class="hologram-caption">∞ SYNCING PATTERN...</div>
 </div>
@@ -250,32 +252,51 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <nav>
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
-<li><a href="games.html">Games</a></li>
-<li><a href="pdfs.html">PDFs</a></li>
-<li><a href="dashboard.html">Dashboard</a></li>
-<li><a href="broken-syntax.html">Broken Syntax</a></li>
-<li><a href="mim-tv.html">MiM TV</a></li>
-<li><a href="comic.html">Comics</a></li>
-<li><a href="index.html#membership">Membership</a></li>
+<li>
+<a href="games.html">Games</a>
+</li>
+<li>
+<a href="pdfs.html">PDFs</a>
+</li>
+<li>
+<a href="library.html">Library</a>
+</li>
+<li>
+<a href="characters.html">Characters</a>
+</li>
+<li>
+<a href="broken-syntax.html">Broken Syntax</a>
+</li>
+<li>
+<a href="mim-tv.html">MiM TV</a>
+</li>
+<li>
+<a href="comic.html">Comics</a>
+</li>
 </ul>
-<span class="nav-user" id="navUser"></span>
+<span class="nav-user" id="navUser">
+</span>
 <button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
 </nav>
 <section class="hero" id="loopHero">
 <video class="hero-video" autoplay muted loop playsinline poster="loop-entrance.png">
 <source src="loop-hero.mp4" type="video/mp4">
 </video>
-<div class="hero-gradient"></div>
-<div class="hero-pulse"></div>
-<div class="particle-field" id="particleField"></div>
+<div class="hero-gradient">
+</div>
+<div class="hero-pulse">
+</div>
+<div class="particle-field" id="particleField">
+</div>
 <img class="hero-loop-gif" src="loop-idle.gif" alt="Loop" onerror="this.style.display='none'" onclick="companionClick()">
 <div class="hero-content">
 <div class="hero-eyebrow">∞ &nbsp; Flow Master &nbsp; · &nbsp; JavaScript</div>
 <div class="hero-name">Loop</div>
-<div class="hero-catchphrase">I keep things moving.</div>
+<div class="hero-catchphrase">The flow never stops.</div>
 <div class="hero-role">The Flow Master</div>
 <div class="hero-quote">"<span>Every pattern has a reason.</span> Learn to see it, and you'll know what to build next."</div>
-<div class="fact-ticker" id="factTicker"></div>
+<div class="fact-ticker" id="factTicker">
+</div>
 <div class="hero-tiles">
 <div class="hero-lesson-grid">
 <a class="hero-tile" onclick="jumpToLesson(1)">01 Thinking in Patterns</a>
@@ -299,13 +320,17 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <p class="ib-sub">Every for loop is just a start, a stop, and a step. Set the runner's path to match the highlighted track, then watch the real code build itself.</p>
 </div>
 <div class="ib-phase" id="ib-intro">
-<div class="ib-terms-grid" id="ibTermsGrid"></div>
+<div class="ib-terms-grid" id="ibTermsGrid">
+</div>
 <button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">Start the Course ∞</button>
 </div>
 <div class="ib-phase" id="ib-game" style="display:none;">
-<div class="ib-track-stage" id="ibTrackStage"></div>
-<div class="ib-build-stage" id="ibBuildStage" style="display:none;margin-top:1.4rem;"></div>
-<div class="ib-sequence-stage" id="ibSequenceStage" style="display:none;margin-top:1.4rem;"></div>
+<div class="ib-track-stage" id="ibTrackStage">
+</div>
+<div class="ib-build-stage" id="ibBuildStage" style="display:none;margin-top:1.4rem;">
+</div>
+<div class="ib-sequence-stage" id="ibSequenceStage" style="display:none;margin-top:1.4rem;">
+</div>
 <button class="ib-skip-btn" onclick="ibSkipGame()">Skip this part →</button>
 </div>
 <div class="ib-phase" id="ib-complete" style="display:none;">
@@ -329,11 +354,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="lesson-panel" id="lesson-1">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 01</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
+<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read">
+<span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms">
+<span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build">
+<span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect">
+<span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider">
+</div>
 <a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
 </aside>
 <div class="lesson-content">
@@ -354,18 +384,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="read-card-num">03 / 05</div>
 <h3>Sequences Come First</h3>
 <p>Before loops, there are <strong>sequences</strong> — a list of steps in order. Code runs top to bottom, one line at a time.</p>
-<div class="code-block"><span class="cm">// A sequence — each step in order</span>
-<span class="kw">let</span> egg = <span class="str">"cracked"</span>;
-<span class="kw">let</span> batter = <span class="str">"mixed"</span>;
-<span class="kw">let</span> result = <span class="str">"cooked"</span>;</div>
+<div class="code-block">
+<span class="cm">// A sequence — each step in order</span>
+<span class="kw">let</span> egg = <span class="str">"cracked"</span>; <span class="kw">let</span> batter = <span class="str">"mixed"</span>; <span class="kw">let</span> result = <span class="str">"cooked"</span>;</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">04 / 05</div>
 <h3>Loops Are Patterns in Code</h3>
 <p>Instead of writing the same line 10 times, you write it <strong>once inside a loop</strong>.</p>
-<div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Step "</span> + i);
-}</div>
+<div class="code-block">
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) { &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Step "</span> + i); }</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">05 / 05</div>
@@ -384,12 +412,36 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
 <div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Pattern <span class="term-arrow">›</span></div><div class="term-def">Something that repeats in a predictable way. A signal to use a loop instead of repeating code.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Sequence <span class="term-arrow">›</span></div><div class="term-def">Steps in a specific order. Code runs top to bottom, one line at a time.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Loop <span class="term-arrow">›</span></div><div class="term-def">A block of code that runs repeatedly until a condition tells it to stop.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Flow <span class="term-arrow">›</span></div><div class="term-def">The path a program follows as it runs.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Iteration <span class="term-arrow">›</span></div><div class="term-def">One single pass through a loop.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Automate <span class="term-arrow">›</span></div><div class="term-def">To make a computer do a task without doing it manually each time.</div></div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Pattern <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Something that repeats in a predictable way. A signal to use a loop instead of repeating code.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Sequence <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Steps in a specific order. Code runs top to bottom, one line at a time.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Loop <span class="term-arrow">›</span>
+</div>
+<div class="term-def">A block of code that runs repeatedly until a condition tells it to stop.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Flow <span class="term-arrow">›</span>
+</div>
+<div class="term-def">The path a program follows as it runs.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Iteration <span class="term-arrow">›</span>
+</div>
+<div class="term-def">One single pass through a loop.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Automate <span class="term-arrow">›</span>
+</div>
+<div class="term-def">To make a computer do a task without doing it manually each time.</div>
+</div>
 </div>
 </div>
 <div class="content-block" id="block-1-build">
@@ -400,10 +452,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <span>JAVASCRIPT · FLOW LAB</span>
 <button class="editor-run-btn" onclick="runEditor('l1')">▶ RUN</button>
 </div>
-<textarea class="code-editor" id="editor-l1">// Change the loop to count 1 through 8
-for (let i = 1; i <= 5; i++) {
-  console.log("Count: " + i);
-}</textarea>
+<textarea class="code-editor" id="editor-l1">// Change the loop to count 1 through 8 for (let i = 1; i <= 5; i++) { console.log("Count: " + i); }</textarea>
 </div>
 <div class="preview-label">CONSOLE OUTPUT</div>
 <div class="console-output" id="output-l1">Output will appear here...</div>
@@ -415,7 +464,8 @@ for (let i = 1; i <= 5; i++) {
 <button class="quiz-opt" onclick="checkQuiz(this, true, 'Exactly right. Loops run the same block as many times as you tell them to.')">Repeat the same block of code automatically</button>
 <button class="quiz-opt" onclick="checkQuiz(this, false, 'Loops don\'t make code faster to read on their own.')">Make code run faster</button>
 </div>
-<div class="quiz-feedback" id="qfb-0"></div>
+<div class="quiz-feedback" id="qfb-0">
+</div>
 </div>
 </div>
 <div class="content-block" id="block-1-reflect">
@@ -423,7 +473,8 @@ for (let i = 1; i <= 5; i++) {
 <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
 <div class="reflect-q">Think of something in your daily life that is a pattern. How could a loop automate it?</div>
-<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
+<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here...">
+</textarea>
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
 <span class="reflect-saved" id="saved-1-1">✓ Saved</span>
@@ -432,7 +483,8 @@ for (let i = 1; i <= 5; i++) {
 <div class="lesson-complete" id="complete-1">
 <h3>∞ &nbsp; Lesson 1 Complete</h3>
 <p>Patterns. Sequences. Flow. The foundation is set.</p>
-<div class="lesson-joke" id="joke-1"></div>
+<div class="lesson-joke" id="joke-1">
+</div>
 </div>
 </div>
 </div>
@@ -441,11 +493,16 @@ for (let i = 1; i <= 5; i++) {
 <div class="lesson-panel" id="lesson-2">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 02</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
+<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read">
+<span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms">
+<span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build">
+<span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect">
+<span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider">
+</div>
 <a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
 </aside>
 <div class="lesson-content">
@@ -462,10 +519,8 @@ for (let i = 1; i <= 5; i++) {
 <div class="read-card-num">01 / 05</div>
 <h3>Anatomy of a For Loop</h3>
 <p>A <strong>for loop</strong> has three parts: where to <strong>start</strong>, when to <strong>stop</strong>, and how to <strong>step</strong> forward.</p>
-<div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {
-&nbsp;&nbsp;<span class="cm">// runs 5 times: i = 0, 1, 2, 3, 4</span>
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(i);
-}</div>
+<div class="code-block">
+<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) { &nbsp;&nbsp;<span class="cm">// runs 5 times: i = 0, 1, 2, 3, 4</span> &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(i); }</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">02 / 05</div>
@@ -481,10 +536,8 @@ for (let i = 1; i <= 5; i++) {
 <div class="read-card-num">04 / 05</div>
 <h3>Looping Over an Array</h3>
 <p>Use <code>i</code> as the index to access each item one at a time in a list (array).</p>
-<div class="code-block"><span class="kw">let</span> crew = [<span class="str">"Loop"</span>, <span class="str">"Zen"</span>, <span class="str">"Nova"</span>, <span class="str">"Byte"</span>];
-<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; crew.length; i++) {
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(crew[i]);
-}</div>
+<div class="code-block">
+<span class="kw">let</span> crew = [<span class="str">"Loop"</span>, <span class="str">"Zen"</span>, <span class="str">"Nova"</span>, <span class="str">"Byte"</span>]; <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; crew.length; i++) { &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(crew[i]); }</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">05 / 05</div>
@@ -496,12 +549,36 @@ for (let i = 1; i <= 5; i++) {
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
 <div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">for loop <span class="term-arrow">›</span></div><div class="term-def">A loop with a built-in counter — you define the start, stop, and step.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Counter variable <span class="term-arrow">›</span></div><div class="term-def">Usually named i, tracks which iteration the loop is on.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Array <span class="term-arrow">›</span></div><div class="term-def">A list of values stored in one variable, zero-indexed.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Index <span class="term-arrow">›</span></div><div class="term-def">The position of an item in an array, starting at 0.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">i++ / i-- <span class="term-arrow">›</span></div><div class="term-def">Shorthand for adding or subtracting 1 from i each pass.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">.length <span class="term-arrow">›</span></div><div class="term-def">Tells you how many items are in an array.</div></div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">for loop <span class="term-arrow">›</span>
+</div>
+<div class="term-def">A loop with a built-in counter — you define the start, stop, and step.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Counter variable <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Usually named i, tracks which iteration the loop is on.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Array <span class="term-arrow">›</span>
+</div>
+<div class="term-def">A list of values stored in one variable, zero-indexed.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Index <span class="term-arrow">›</span>
+</div>
+<div class="term-def">The position of an item in an array, starting at 0.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">i++ / i-- <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Shorthand for adding or subtracting 1 from i each pass.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">.length <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Tells you how many items are in an array.</div>
+</div>
 </div>
 </div>
 <div class="content-block" id="block-2-build" style="display:none">
@@ -512,10 +589,7 @@ for (let i = 1; i <= 5; i++) {
 <span>JAVASCRIPT · FOR LOOPS</span>
 <button class="editor-run-btn" onclick="runEditor('l2')">▶ RUN</button>
 </div>
-<textarea class="code-editor" id="editor-l2">let crew = ["Loop", "Zen", "Nova", "Byte"];
-for (let i = 0; i < crew.length; i++) {
-  console.log("Present: " + crew[i]);
-}</textarea>
+<textarea class="code-editor" id="editor-l2">let crew = ["Loop", "Zen", "Nova", "Byte"]; for (let i = 0; i < crew.length; i++) { console.log("Present: " + crew[i]); }</textarea>
 </div>
 <div class="preview-label">CONSOLE OUTPUT</div>
 <div class="console-output" id="output-l2">Output will appear here...</div>
@@ -527,7 +601,8 @@ for (let i = 0; i < crew.length; i++) {
 <button class="quiz-opt" onclick="checkQuiz(this, true, 'Right. The condition is checked before each iteration.')">Checks if the loop should keep going</button>
 <button class="quiz-opt" onclick="checkQuiz(this, false, 'The step is handled by i++.')">Adds 1 to i each time</button>
 </div>
-<div class="quiz-feedback" id="qfb-2"></div>
+<div class="quiz-feedback" id="qfb-2">
+</div>
 </div>
 </div>
 <div class="content-block" id="block-2-reflect" style="display:none">
@@ -535,7 +610,8 @@ for (let i = 0; i < crew.length; i++) {
 <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
 <div class="reflect-q">What real-world list (array) would you want to loop through in a program?</div>
-<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
+<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here...">
+</textarea>
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
 <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
@@ -544,7 +620,8 @@ for (let i = 0; i < crew.length; i++) {
 <div class="lesson-complete show" id="complete-2">
 <h3>∞ &nbsp; Lesson 2 Complete</h3>
 <p>For loops mastered. Arrays looped.</p>
-<div class="lesson-joke" id="joke-2"></div>
+<div class="lesson-joke" id="joke-2">
+</div>
 </div>
 </div>
 </div>
@@ -552,11 +629,16 @@ for (let i = 0; i < crew.length; i++) {
 <div class="lesson-panel" id="lesson-3">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 03</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-icon">🔑</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
+<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read">
+<span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms">
+<span class="sidebar-icon">🔑</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build">
+<span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect">
+<span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider">
+</div>
 <a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
 </aside>
 <div class="lesson-content">
@@ -573,9 +655,9 @@ for (let i = 0; i < crew.length; i++) {
 <div class="read-card-num">01 / 05</div>
 <h3>Making Decisions in Code</h3>
 <p>An <code>if</code> statement checks whether something is true, and only runs a block of code if it is.</p>
-<div class="code-block"><span class="kw">if</span> (temperature > <span class="num">80</span>) {
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Wear sunscreen!"</span>);
-}</div>
+<div class="code-block">
+<span class="kw">if</span> (temperature >
+<span class="num">80</span>) { &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Wear sunscreen!"</span>); }</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">02 / 05</div>
@@ -602,12 +684,36 @@ for (let i = 0; i < crew.length; i++) {
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
 <div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Conditional <span class="term-arrow">›</span></div><div class="term-def">A statement that only runs if a condition is true.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">if statement <span class="term-arrow">›</span></div><div class="term-def">Checks a condition, runs code if true.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">else <span class="term-arrow">›</span></div><div class="term-def">The block that runs when if is false.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">else if <span class="term-arrow">›</span></div><div class="term-def">Adds more branches, checked in order.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Boolean <span class="term-arrow">›</span></div><div class="term-def">A value that is either true or false.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">=== vs == <span class="term-arrow">›</span></div><div class="term-def">=== checks value AND type. Always prefer ===.</div></div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Conditional <span class="term-arrow">›</span>
+</div>
+<div class="term-def">A statement that only runs if a condition is true.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">if statement <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Checks a condition, runs code if true.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">else <span class="term-arrow">›</span>
+</div>
+<div class="term-def">The block that runs when if is false.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">else if <span class="term-arrow">›</span>
+</div>
+<div class="term-def">Adds more branches, checked in order.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">Boolean <span class="term-arrow">›</span>
+</div>
+<div class="term-def">A value that is either true or false.</div>
+</div>
+<div class="term-card" onclick="toggleTerm(this)">
+<div class="term-name">=== vs == <span class="term-arrow">›</span>
+</div>
+<div class="term-def">=== checks value AND type. Always prefer ===.</div>
+</div>
 </div>
 </div>
 <div class="content-block" id="block-3-build" style="display:none">
@@ -618,10 +724,7 @@ for (let i = 0; i < crew.length; i++) {
 <span>JAVASCRIPT · CONDITIONALS</span>
 <button class="editor-run-btn" onclick="runEditor('l3')">▶ RUN</button>
 </div>
-<textarea class="code-editor" id="editor-l3">let scores = [95, 82, 74, 58, 88];
-for (let i = 0; i < scores.length; i++) {
-  console.log(scores[i]);
-}</textarea>
+<textarea class="code-editor" id="editor-l3">let scores = [95, 82, 74, 58, 88]; for (let i = 0; i < scores.length; i++) { console.log(scores[i]); }</textarea>
 </div>
 <div class="preview-label">CONSOLE OUTPUT</div>
 <div class="console-output" id="output-l3">Output will appear here...</div>
@@ -633,7 +736,8 @@ for (let i = 0; i < scores.length; i++) {
 <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. === checks that both the value and the type match.')">Both the value and the data type</button>
 <button class="quiz-opt" onclick="checkQuiz(this, false, 'That\'s not what == or === compare.')">Which variable was declared first</button>
 </div>
-<div class="quiz-feedback" id="qfb-4"></div>
+<div class="quiz-feedback" id="qfb-4">
+</div>
 </div>
 </div>
 <div class="content-block" id="block-3-reflect" style="display:none">
@@ -641,7 +745,8 @@ for (let i = 0; i < scores.length; i++) {
 <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
 <div class="reflect-q">Think of a decision you make every day. How would you write it as an if / else if / else chain?</div>
-<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
+<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here...">
+</textarea>
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
 <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
@@ -650,7 +755,8 @@ for (let i = 0; i < scores.length; i++) {
 <div class="lesson-complete show" id="complete-3">
 <h3>∞ &nbsp; Lesson 3 Complete</h3>
 <p>Conditionals unlocked. Code now makes decisions.</p>
-<div class="lesson-joke" id="joke-3"></div>
+<div class="lesson-joke" id="joke-3">
+</div>
 </div>
 </div>
 </div>
@@ -658,10 +764,14 @@ for (let i = 0; i < scores.length; i++) {
 <div class="lesson-panel" id="lesson-4">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 04</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-icon">📖</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon">⚙️</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon">💭</span> Reflect</button>
-<div class="sidebar-divider"></div>
+<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read">
+<span class="sidebar-icon">📖</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build">
+<span class="sidebar-icon">⚙️</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect">
+<span class="sidebar-icon">💭</span> Reflect</button>
+<div class="sidebar-divider">
+</div>
 <a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
 </aside>
 <div class="lesson-content">
@@ -683,11 +793,9 @@ for (let i = 0; i < scores.length; i++) {
 <div class="read-card-num">02 / 04</div>
 <h3>While Loops</h3>
 <p>A <strong>while loop</strong> keeps running as long as a condition stays true. Use it when you don't know exactly how many times the loop needs to run.</p>
-<div class="code-block"><span class="kw">let</span> energy = <span class="num">10</span>;
-<span class="kw">while</span> (energy > <span class="num">0</span>) {
-&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Energy: "</span> + energy);
-&nbsp;&nbsp;energy -= <span class="num">3</span>;
-}</div>
+<div class="code-block">
+<span class="kw">let</span> energy = <span class="num">10</span>; <span class="kw">while</span> (energy >
+<span class="num">0</span>) { &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Energy: "</span> + energy); &nbsp;&nbsp;energy -= <span class="num">3</span>; }</div>
 </div>
 <div class="read-card">
 <div class="read-card-num">03 / 04</div>
@@ -697,7 +805,8 @@ for (let i = 0; i < scores.length; i++) {
 <div class="read-card">
 <div class="read-card-num">04 / 04</div>
 <h3>break and continue</h3>
-<p><strong>break</strong> exits a loop immediately. <strong>continue</strong> skips the rest of the current iteration.</p>
+<p>
+<strong>break</strong> exits a loop immediately. <strong>continue</strong> skips the rest of the current iteration.</p>
 </div>
 </div>
 <div class="content-block" id="block-4-build" style="display:none">
@@ -708,10 +817,7 @@ for (let i = 0; i < scores.length; i++) {
 <span>JAVASCRIPT · NESTED LOOPS</span>
 <button class="editor-run-btn" onclick="runEditor('l4a')">▶ RUN</button>
 </div>
-<textarea class="code-editor" id="editor-l4a">// Build a 3x3 multiplication grid
-for (let row = 1; row <= 3; row++) {
-  // Add the inner loop here
-}</textarea>
+<textarea class="code-editor" id="editor-l4a">// Build a 3x3 multiplication grid for (let row = 1; row <= 3; row++) { // Add the inner loop here }</textarea>
 </div>
 <div class="preview-label">CONSOLE OUTPUT</div>
 <div class="console-output" id="output-l4a">Output will appear here...</div>
@@ -723,7 +829,8 @@ for (let row = 1; row <= 3; row++) {
 <button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. break exits the loop; continue skips to the next iteration.')">break exits the loop; continue skips to the next iteration</button>
 <button class="quiz-opt" onclick="checkQuiz(this, false, 'They have different effects.')">They do the same thing</button>
 </div>
-<div class="quiz-feedback" id="qfb-6"></div>
+<div class="quiz-feedback" id="qfb-6">
+</div>
 </div>
 </div>
 <div class="content-block" id="block-4-reflect" style="display:none">
@@ -731,7 +838,8 @@ for (let row = 1; row <= 3; row++) {
 <div class="section-sub">LESSON 04 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
 <div class="reflect-q">When would you choose a while loop over a for loop?</div>
-<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
+<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here...">
+</textarea>
 <div style="display:flex;align-items:center;gap:1rem;">
 <button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
 <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
@@ -740,7 +848,8 @@ for (let row = 1; row <= 3; row++) {
 <div class="lesson-complete show" id="complete-4">
 <h3>∞ &nbsp; Flow Challenge Complete</h3>
 <p>Sequences. Loops. Conditionals. Nested logic. You think in flow now.</p>
-<div class="lesson-joke" id="joke-4"></div>
+<div class="lesson-joke" id="joke-4">
+</div>
 </div>
 </div>
 </div>
@@ -752,42 +861,90 @@ for (let row = 1; row <= 3; row++) {
 <div class="cheat-card">
 <h3>∞ Lesson 1 — Patterns &amp; Sequences</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">Pattern</div><div class="cheat-desc">Something that repeats predictably — the signal to use a loop.</div></div>
-<div class="cheat-item"><div class="cheat-term">Sequence</div><div class="cheat-desc">Code executes top to bottom, one line at a time.</div></div>
-<div class="cheat-item"><div class="cheat-term">Iteration</div><div class="cheat-desc">One single pass through a loop.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">Pattern</div>
+<div class="cheat-desc">Something that repeats predictably — the signal to use a loop.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">Sequence</div>
+<div class="cheat-desc">Code executes top to bottom, one line at a time.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">Iteration</div>
+<div class="cheat-desc">One single pass through a loop.</div>
+</div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>∞ Lesson 2 — For Loops</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">for loop</div><div class="cheat-desc">for (let i = 0; i &lt; n; i++) { }</div></div>
-<div class="cheat-item"><div class="cheat-term">Count up / down</div><div class="cheat-desc">i++ adds 1, i-- subtracts 1 each pass.</div></div>
-<div class="cheat-item"><div class="cheat-term">Array index</div><div class="cheat-desc">Starts at 0. A 5-item array has indices 0 through 4.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">for loop</div>
+<div class="cheat-desc">for (let i = 0; i &lt; n; i++) { }</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">Count up / down</div>
+<div class="cheat-desc">i++ adds 1, i-- subtracts 1 each pass.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">Array index</div>
+<div class="cheat-desc">Starts at 0. A 5-item array has indices 0 through 4.</div>
+</div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>∞ Lesson 3 — Conditionals</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">if</div><div class="cheat-desc">if (condition) { } — runs only when true.</div></div>
-<div class="cheat-item"><div class="cheat-term">else / else if</div><div class="cheat-desc">Adds more branches, checked top to bottom.</div></div>
-<div class="cheat-item"><div class="cheat-term">===</div><div class="cheat-desc">Checks value AND type — always prefer over ==.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">if</div>
+<div class="cheat-desc">if (condition) { } — runs only when true.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">else / else if</div>
+<div class="cheat-desc">Adds more branches, checked top to bottom.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">===</div>
+<div class="cheat-desc">Checks value AND type — always prefer over ==.</div>
+</div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>∞ Lesson 4 — Flow Control</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">while loop</div><div class="cheat-desc">while (condition) { } — runs until condition is false.</div></div>
-<div class="cheat-item"><div class="cheat-term">Nested loop</div><div class="cheat-desc">A loop inside another loop.</div></div>
-<div class="cheat-item"><div class="cheat-term">break / continue</div><div class="cheat-desc">break exits the loop; continue skips to the next pass.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">while loop</div>
+<div class="cheat-desc">while (condition) { } — runs until condition is false.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">Nested loop</div>
+<div class="cheat-desc">A loop inside another loop.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">break / continue</div>
+<div class="cheat-desc">break exits the loop; continue skips to the next pass.</div>
+</div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>∞ Symbols Reference</h3>
 <div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">( )</div><div class="cheat-desc">Holds the loop's start, stop, and step.</div></div>
-<div class="cheat-item"><div class="cheat-term">;</div><div class="cheat-desc">Separates the 3 parts of a for loop.</div></div>
-<div class="cheat-item"><div class="cheat-term">&lt; / &lt;=</div><div class="cheat-desc">Less than / less than or equal — controls the stop condition.</div></div>
-<div class="cheat-item"><div class="cheat-term">++ / --</div><div class="cheat-desc">Increment / decrement — the step.</div></div>
+<div class="cheat-item">
+<div class="cheat-term">( )</div>
+<div class="cheat-desc">Holds the loop's start, stop, and step.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">;</div>
+<div class="cheat-desc">Separates the 3 parts of a for loop.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">&lt; / &lt;=</div>
+<div class="cheat-desc">Less than / less than or equal — controls the stop condition.</div>
+</div>
+<div class="cheat-item">
+<div class="cheat-term">++ / --</div>
+<div class="cheat-desc">Increment / decrement — the step.</div>
+</div>
 </div>
 <div class="cheat-btn-row">
 <a href="loop-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
@@ -799,479 +956,553 @@ for (let row = 1; row <= 3; row++) {
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
 <div class="egg-popup" id="eggPopup">
 <h4>∞ Secret Found!</h4>
-<p id="eggText"></p>
+<p id="eggText">
+</p>
 </div>
-<script type="module" src="auth-init.js"></script>
+<script type="module" src="auth-init.js">
+</script>
 <script>
 let currentLesson = null;
 let currentTier = null;
 const TIER_ORDER = ['explorer', 'sparks', 'coders'];
-function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
+function tierLevel(t) {
+return TIER_ORDER.indexOf((t || '').toLowerCase());
+}
 window.setNavUser = function(email) {
-  const u = document.getElementById('navUser');
-  const b = document.getElementById('navLogout');
-  if (u) { u.textContent = email; u.style.display = 'inline'; }
-  if (b) b.style.display = 'inline-block';
-};
+const u = document.getElementById('navUser');
+const b = document.getElementById('navLogout');
+if (u) {
+u.textContent = email;
+u.style.display = 'inline';
+}
+if (b) b.style.display = 'inline-block';
+}
+;
 window.handleTierUnlock = function(tier) {
-  currentTier = tier;
-  const loggedIn = !!tier && tier !== 'logged-out';
-  const anonLock = document.getElementById('anon-lock-1');
-  const anonGated = document.getElementById('anon-gated-1');
-  if (loggedIn) {
-    if (anonLock) anonLock.style.display = 'none';
-    if (anonGated) anonGated.style.display = 'block';
-  } else {
-    if (anonLock) anonLock.style.display = 'block';
-    if (anonGated) anonGated.style.display = 'none';
-  }
-  const lvl = tierLevel(tier);
-  if (lvl >= tierLevel('sparks')) {
-    document.getElementById('lock-2').style.display = 'none';
-    ['read','terms','build','reflect'].forEach(b => {
-      const el = document.getElementById('block-2-' + b);
-      if (el) el.style.removeProperty('display');
-    });
-  }
-  if (lvl >= tierLevel('coders')) {
-    document.getElementById('lock-3').style.display = 'none';
-    document.getElementById('lock-4').style.display = 'none';
-    ['read','terms','build','reflect'].forEach(b => {
-      const el = document.getElementById('block-3-' + b);
-      if (el) el.style.removeProperty('display');
-    });
-    ['read','build','reflect'].forEach(b => {
-      const el = document.getElementById('block-4-' + b);
-      if (el) el.style.removeProperty('display');
-    });
-  }
-  loadReflects();
-};
+currentTier = tier;
+const loggedIn = !!tier && tier !== 'logged-out';
+const anonLock = document.getElementById('anon-lock-1');
+const anonGated = document.getElementById('anon-gated-1');
+if (loggedIn) {
+if (anonLock) anonLock.style.display = 'none';
+if (anonGated) anonGated.style.display = 'block';
+}
+else {
+if (anonLock) anonLock.style.display = 'block';
+if (anonGated) anonGated.style.display = 'none';
+}
+const lvl = tierLevel(tier);
+if (lvl >= tierLevel('sparks')) {
+document.getElementById('lock-2').style.display = 'none';
+['read','terms','build','reflect'].forEach(b => {
+const el = document.getElementById('block-2-' + b);
+if (el) el.style.removeProperty('display');
+}
+);
+}
+if (lvl >= tierLevel('coders')) {
+document.getElementById('lock-3').style.display = 'none';
+document.getElementById('lock-4').style.display = 'none';
+['read','terms','build','reflect'].forEach(b => {
+const el = document.getElementById('block-3-' + b);
+if (el) el.style.removeProperty('display');
+}
+);
+['read','build','reflect'].forEach(b => {
+const el = document.getElementById('block-4-' + b);
+if (el) el.style.removeProperty('display');
+}
+);
+}
+loadReflects();
+}
+;
 function enterCourse() {
-  const overlay = document.getElementById('discoveryOverlay');
-  const finishEntrance = () => {
-    overlay.classList.add('fading');
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-      const st = document.getElementById('soundToggle');
-      if (st) st.classList.add('visible');
-      try { startAmbient(); } catch (e) { /* ambient audio optional */ }
-    }, 700);
-  };
-  try {
-    document.getElementById('discoveryEnterBtn').style.display = 'none';
-    document.querySelector('.loop-mark').style.display = 'none';
-    document.getElementById('discoveryTitle').style.display = 'none';
-    document.getElementById('discoverySub').style.display = 'none';
-    const stage = document.getElementById('hologramStage');
-    stage.style.display = 'block';
-  } catch (e) { /* hologram cosmetics optional, overlay must still dismiss */ }
-  setTimeout(finishEntrance, 3000);
+const overlay = document.getElementById('discoveryOverlay');
+const finishEntrance = () => {
+overlay.classList.add('fading');
+setTimeout(() => {
+overlay.classList.add('hidden');
+const st = document.getElementById('soundToggle');
+if (st) st.classList.add('visible');
+try {
+startAmbient();
+}
+catch (e) {
+/* ambient audio optional */ }
+}
+, 700);
+}
+;
+try {
+document.getElementById('discoveryEnterBtn').style.display = 'none';
+document.querySelector('.loop-mark').style.display = 'none';
+document.getElementById('discoveryTitle').style.display = 'none';
+document.getElementById('discoverySub').style.display = 'none';
+const stage = document.getElementById('hologramStage');
+stage.style.display = 'block';
+}
+catch (e) {
+/* hologram cosmetics optional, overlay must still dismiss */ }
+setTimeout(finishEntrance, 3000);
 }
 function openLesson(n) {
-  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
-  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
-  const panel = document.getElementById('lesson-' + n);
-  const tab = document.getElementById('tab-' + n);
-  if (panel) panel.classList.add('open');
-  if (tab) tab.classList.add('active');
-  currentLesson = n;
-  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  if (n !== 'cheat') showBlock(n, 'read');
-  playUISound(330);
-  const wrapper = document.getElementById('icebreakerWrapper');
-  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
+document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
+document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
+const panel = document.getElementById('lesson-' + n);
+const tab = document.getElementById('tab-' + n);
+if (panel) panel.classList.add('open');
+if (tab) tab.classList.add('active');
+currentLesson = n;
+panel?.scrollIntoView({
+behavior: 'smooth', block: 'start' }
+);
+if (n !== 'cheat') showBlock(n, 'read');
+playUISound(330);
+const wrapper = document.getElementById('icebreakerWrapper');
+if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
 }
-function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
+function jumpToLesson(n) {
+openLesson(n);
+showBlock(n, 'read');
+}
 function showBlock(lesson, block) {
-  const panel = document.getElementById('lesson-' + lesson);
-  if (!panel) return;
-  panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
-  panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-  const target = document.getElementById('block-' + lesson + '-' + block);
-  if (target) target.classList.add('active');
-  const btn = document.getElementById('sb-' + lesson + '-' + block);
-  if (btn) btn.classList.add('active');
-  playUISound(392);
+const panel = document.getElementById('lesson-' + lesson);
+if (!panel) return;
+panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
+panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
+const target = document.getElementById('block-' + lesson + '-' + block);
+if (target) target.classList.add('active');
+const btn = document.getElementById('sb-' + lesson + '-' + block);
+if (btn) btn.classList.add('active');
+playUISound(392);
 }
-function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); }
+function toggleTerm(card) {
+card.classList.toggle('open');
+playUISound(440);
+}
 let uiAudioCtx = null;
 function playUISound(freq) {
-  try {
-    if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = uiAudioCtx.createOscillator();
-    const gain = uiAudioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
-    osc.connect(gain); gain.connect(uiAudioCtx.destination);
-    osc.start(); osc.stop(uiAudioCtx.currentTime + 0.18);
-  } catch (e) { /* audio unavailable, silently continue */ }
+try {
+if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const osc = uiAudioCtx.createOscillator();
+const gain = uiAudioCtx.createGain();
+osc.type = 'sine';
+osc.frequency.value = freq;
+gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
+osc.connect(gain);
+gain.connect(uiAudioCtx.destination);
+osc.start();
+osc.stop(uiAudioCtx.currentTime + 0.18);
+}
+catch (e) {
+/* audio unavailable, silently continue */ }
 }
 function checkQuiz(btn, correct, feedback) {
-  const opts = btn.closest('.quiz-options');
-  if (opts.querySelector('.correct')) return;
-  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
-  if (correct) {
-    btn.classList.add('correct');
-    if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
-  } else {
-    btn.classList.add('wrong');
-    if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
-    setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
-  }
+const opts = btn.closest('.quiz-options');
+if (opts.querySelector('.correct')) return;
+const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
+if (correct) {
+btn.classList.add('correct');
+if (fb) {
+fb.textContent = '✓ ' + feedback;
+fb.className = 'quiz-feedback show correct';
+}
+}
+else {
+btn.classList.add('wrong');
+if (fb) {
+fb.textContent = '✗ ' + feedback;
+fb.className = 'quiz-feedback show wrong';
+}
+setTimeout(() => {
+btn.classList.remove('wrong');
+if (fb) fb.classList.remove('show');
+}
+, 1400);
+}
 }
 function saveReflect(inputId, savedId) {
-  const val = document.getElementById(inputId)?.value;
-  if (val === undefined) return;
-  localStorage.setItem('loop_' + inputId, val);
-  const saved = document.getElementById(savedId);
-  if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
-  const lessonNum = inputId.split('-')[1];
-  const complete = document.getElementById('complete-' + lessonNum);
-  if (complete) {
-    complete.classList.add('show');
-    const jokeEl = document.getElementById('joke-' + lessonNum);
-    if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
-  }
+const val = document.getElementById(inputId)?.value;
+if (val === undefined) return;
+localStorage.setItem('loop_' + inputId, val);
+const saved = document.getElementById(savedId);
+if (saved) {
+saved.style.display = 'inline';
+setTimeout(() => saved.style.display = 'none', 2000);
+}
+const lessonNum = inputId.split('-')[1];
+const complete = document.getElementById('complete-' + lessonNum);
+if (complete) {
+complete.classList.add('show');
+const jokeEl = document.getElementById('joke-' + lessonNum);
+if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
+}
 }
 function loadReflects() {
-  document.querySelectorAll('.reflect-input').forEach(el => {
-    const stored = localStorage.getItem('loop_' + el.id);
-    if (stored) el.value = stored;
-  });
+document.querySelectorAll('.reflect-input').forEach(el => {
+const stored = localStorage.getItem('loop_' + el.id);
+if (stored) el.value = stored;
+}
+);
 }
 function runEditor(id) {
-  const code = document.getElementById('editor-' + id)?.value || '';
-  const outputEl = document.getElementById('output-' + id);
-  if (!outputEl) return;
-  const logs = [];
-  const fakeCon = { log: (...a) => logs.push(a.join(' ')) };
-  try {
-    const fn = new Function('console', code);
-    fn(fakeCon);
-    outputEl.textContent = logs.join('\n') || '(no output)';
-    outputEl.style.color = '#00f5d4';
-  } catch(e) {
-    outputEl.textContent = 'Error: ' + e.message;
-    outputEl.style.color = '#ff6b6b';
-  }
+const code = document.getElementById('editor-' + id)?.value || '';
+const outputEl = document.getElementById('output-' + id);
+if (!outputEl) return;
+const logs = [];
+const fakeCon = {
+log: (...a) => logs.push(a.join(' ')) }
+;
+try {
+const fn = new Function('console', code);
+fn(fakeCon);
+outputEl.textContent = logs.join('\n') || '(no output)';
+outputEl.style.color = '#00f5d4';
+}
+catch(e) {
+outputEl.textContent = 'Error: ' + e.message;
+outputEl.style.color = '#ff6b6b';
+}
 }
 function downloadCheat() {
-  const content = "LOOP'S CHALLENGE COURSE — FULL CHEAT SHEET\n\n" +
-    "LESSON 1 — Patterns & Sequences\nPattern: repeats predictably\nSequence: top to bottom, one line at a time\nIteration: one pass through a loop\n\n" +
-    "LESSON 2 — For Loops\nfor (let i = 0; i < n; i++) { }\ni++ / i-- adjusts the counter\nArray index starts at 0\n\n" +
-    "LESSON 3 — Conditionals\nif (condition) { }\nelse / else if adds branches\n=== checks value AND type\n\n" +
-    "LESSON 4 — Flow Control\nwhile (condition) { }\nNested loop: a loop inside another loop\nbreak exits, continue skips to next pass\n\n" +
-    "SYMBOLS REFERENCE\n( ) holds start, stop, step\n; separates the 3 for-loop parts\n< <= controls the stop condition\n++ -- the step";
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'loop-cheatsheet.txt';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+const content = "LOOP'S CHALLENGE COURSE — FULL CHEAT SHEET\n\n" + "LESSON 1 — Patterns & Sequences\nPattern: repeats predictably\nSequence: top to bottom, one line at a time\nIteration: one pass through a loop\n\n" + "LESSON 2 — For Loops\nfor (let i = 0; i < n; i++) { }\ni++ / i-- adjusts the counter\nArray index starts at 0\n\n" + "LESSON 3 — Conditionals\nif (condition) { }\nelse / else if adds branches\n=== checks value AND type\n\n" + "LESSON 4 — Flow Control\nwhile (condition) { }\nNested loop: a loop inside another loop\nbreak exits, continue skips to next pass\n\n" + "SYMBOLS REFERENCE\n( ) holds start, stop, step\n; separates the 3 for-loop parts\n< <= controls the stop condition\n++ -- the step";
+const blob = new Blob([content], {
+type: 'text/plain' }
+);
+const url = URL.createObjectURL(blob);
+const a = document.createElement('a');
+a.href = url;
+a.download = 'loop-cheatsheet.txt';
+document.body.appendChild(a);
+a.click();
+document.body.removeChild(a);
+URL.revokeObjectURL(url);
 }
 function goUpgrade() {
-  if (window.firebaseAuth && window.firebaseAuth.currentUser) {
-    window.location.href = 'membership.html';
-  } else {
-    document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
-  }
+if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+window.location.href = 'membership.html';
+}
+else {
+document.dispatchEvent(new CustomEvent('mim-auth', {
+detail: {
+action: 'signup' }
+}
+));
+}
 }
 function handleLogout() {
-  if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); }
+if (window.firebaseAuth) {
+window.firebaseAuth.signOut().then(() => location.reload());
+}
 }
 function spawnParticle() {
-  const field = document.getElementById('particleField');
-  if (!field) return;
-  const p = document.createElement('div');
-  p.className = 'particle';
-  const startX = Math.random() * 100;
-  const duration = 8 + Math.random() * 10;
-  const delay = Math.random() * 2;
-  p.style.left = startX + '%'; p.style.bottom = '0';
-  p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
-  field.appendChild(p);
-  setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
+const field = document.getElementById('particleField');
+if (!field) return;
+const p = document.createElement('div');
+p.className = 'particle';
+const startX = Math.random() * 100;
+const duration = 8 + Math.random() * 10;
+const delay = Math.random() * 2;
+p.style.left = startX + '%';
+p.style.bottom = '0';
+p.style.animationDuration = duration + 's';
+p.style.animationDelay = delay + 's';
+field.appendChild(p);
+setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
 }
-for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400);
+for (let i = 0;
+i < 14;
+i++) setTimeout(spawnParticle, i * 400);
 setInterval(spawnParticle, 900);
-const FACTS = [
-  "the word 'algorithm' comes from the name of a 9th-century Persian mathematician, al-Khwarizmi.",
-  "the very first for loop appeared in FORTRAN, one of the earliest programming languages, back in 1957.",
-  "loops are so fundamental that almost every programming language ever created has some version of one.",
-  "a loop with no exit condition is called an infinite loop — and it's one of the most common beginner bugs.",
-  "the 'while' loop and the 'for' loop do the same basic job — but for loops are better when you know your count ahead of time.",
-  "some of the earliest computers used physical punch cards to represent loop instructions.",
-  "nested loops are how video game grids, spreadsheets, and pixel art all get built row by row.",
-  "the term 'iteration' comes from the Latin word 'iterare,' meaning 'to repeat.'"
-];
+const FACTS = [ "the word 'algorithm' comes from the name of a 9th-century Persian mathematician, al-Khwarizmi.", "the very first for loop appeared in FORTRAN, one of the earliest programming languages, back in 1957.", "loops are so fundamental that almost every programming language ever created has some version of one.", "a loop with no exit condition is called an infinite loop — and it's one of the most common beginner bugs.", "the 'while' loop and the 'for' loop do the same basic job — but for loops are better when you know your count ahead of time.", "some of the earliest computers used physical punch cards to represent loop instructions.", "nested loops are how video game grids, spreadsheets, and pixel art all get built row by row.", "the term 'iteration' comes from the Latin word 'iterare,' meaning 'to repeat.'" ];
 let factIndex = 0;
 function cycleFacts() {
-  const el = document.getElementById('factTicker');
-  if (!el) return;
-  el.classList.remove('show');
-  setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400);
+const el = document.getElementById('factTicker');
+if (!el) return;
+el.classList.remove('show');
+setTimeout(() => {
+el.textContent = FACTS[factIndex % FACTS.length];
+el.classList.add('show');
+factIndex++;
+}
+, 400);
 }
 cycleFacts();
 setInterval(cycleFacts, 6500);
-const JOKES = [
-  "Why did the for loop break up with the while loop? It needed more structure.",
-  "I'd tell you an infinite loop joke, but I'd tell you an infinite loop joke, but...",
-  "Why do loops make great friends? They always come back around.",
-  "There are two hard problems in computer science: naming things, cache invalidation, and off-by-one errors.",
-  "Why did the counter variable go to therapy? It kept getting incremented against its will.",
-  "What did the array say to the loop? Index me, baby.",
-  "Loop's favorite dance move? The repeat."
-];
+const JOKES = [ "Why did the for loop break up with the while loop? It needed more structure.", "I'd tell you an infinite loop joke, but I'd tell you an infinite loop joke, but...", "Why do loops make great friends? They always come back around.", "There are two hard problems in computer science: naming things, cache invalidation, and off-by-one errors.", "Why did the counter variable go to therapy? It kept getting incremented against its will.", "What did the array say to the loop? Index me, baby.", "Loop's favorite dance move? The repeat." ];
 let companionClicks = 0;
 function companionClick() {
-  companionClicks++;
-  if (companionClicks === 5 && !localStorage.getItem('loop_egg_found')) {
-    localStorage.setItem('loop_egg_found', '1');
-    showEgg("You found Loop's hidden track! Secret catchphrase unlocked: \"Around and around, until it's right.\" ∞");
-  } else if (companionClicks % 5 === 0) {
-    showEgg("Loop nods calmly. You've already found this one — but the pattern's always there.");
-  }
+companionClicks++;
+if (companionClicks === 5 && !localStorage.getItem('loop_egg_found')) {
+localStorage.setItem('loop_egg_found', '1');
+showEgg("You found Loop's hidden track! Secret catchphrase unlocked: \"Around and around, until it's right.\" ∞");
+}
+else if (companionClicks % 5 === 0) {
+showEgg("Loop nods calmly. You've already found this one — but the pattern's always there.");
+}
 }
 function showEgg(text) {
-  const popup = document.getElementById('eggPopup');
-  document.getElementById('eggText').textContent = text;
-  popup.classList.add('show');
-  setTimeout(() => popup.classList.remove('show'), 5000);
+const popup = document.getElementById('eggPopup');
+document.getElementById('eggText').textContent = text;
+popup.classList.add('show');
+setTimeout(() => popup.classList.remove('show'), 5000);
 }
 let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
 function startAmbient() {
-  try {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain();
-    droneOsc.type = 'sine'; droneOsc.frequency.value = 90; droneGain.gain.value = 0.015;
-    droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start();
-  } catch (e) { console.warn('Ambient audio unavailable:', e); }
+try {
+audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+droneOsc = audioCtx.createOscillator();
+droneGain = audioCtx.createGain();
+droneOsc.type = 'sine';
+droneOsc.frequency.value = 90;
+droneGain.gain.value = 0.015;
+droneOsc.connect(droneGain);
+droneGain.connect(audioCtx.destination);
+droneOsc.start();
+}
+catch (e) {
+console.warn('Ambient audio unavailable:', e);
+}
 }
 function toggleSound() {
-  const btn = document.getElementById('soundToggle');
-  if (!audioCtx) return;
-  soundOn = !soundOn;
-  droneGain.gain.value = soundOn ? 0.015 : 0;
-  btn.textContent = soundOn ? '🔊' : '🔇';
-  btn.classList.toggle('muted', !soundOn);
+const btn = document.getElementById('soundToggle');
+if (!audioCtx) return;
+soundOn = !soundOn;
+droneGain.gain.value = soundOn ? 0.015 : 0;
+btn.textContent = soundOn ? '🔊' : '🔇';
+btn.classList.toggle('muted', !soundOn);
 }
-/* ══════════════════ ICEBREAKER — STEP COUNTER GAME ══════════════════ */
-const IB_TERMS = [
-  { id: 'start', label: 'START', def: "The number a loop begins counting from. In for (let i = 0; ...), the start is 0.", color: '#00f5d4' },
-  { id: 'stop', label: 'STOP', def: "The condition that ends the loop. In i < 5, the loop stops once i reaches 5.", color: '#4fc3f7' },
-  { id: 'step', label: 'STEP', def: "How much the counter changes each pass. i++ means the step is 1.", color: '#ff6bad' }
+/* ══════════════════ ICEBREAKER — STEP COUNTER GAME ══════════════════ */ const IB_TERMS = [ {
+id: 'start', label: 'START', def: "The number a loop begins counting from. In for (let i = 0; ...), the start is 0.", color: '#00f5d4' }
+, {
+id: 'stop', label: 'STOP', def: "The condition that ends the loop. In i < 5, the loop stops once i reaches 5.", color: '#4fc3f7' }
+, {
+id: 'step', label: 'STEP', def: "How much the counter changes each pass. i++ means the step is 1.", color: '#ff6bad' }
 ];
-const IB_ROUNDS_DATA = [
-  { start: 0, stop: 3, step: 1, hops: 3, piece: 'let i = 0' },
-  { start: 0, stop: 6, step: 2, hops: 3, piece: 'i < 6' },
-  { start: 1, stop: 5, step: 1, hops: 4, piece: 'i++' }
+const IB_ROUNDS_DATA = [ {
+start: 0, stop: 3, step: 1, hops: 3, piece: 'let i = 0' }
+, {
+start: 0, stop: 6, step: 2, hops: 3, piece: 'i < 6' }
+, {
+start: 1, stop: 5, step: 1, hops: 4, piece: 'i++' }
 ];
 let ibRound = 0;
-let ibVals = { start: 0, stop: 0, step: 1 };
+let ibVals = {
+start: 0, stop: 0, step: 1 }
+;
 let ibCollectedPieces = [];
 let ibAudioCtx = null;
 let ibSeqPattern = [];
 let ibSeqPlayer = [];
 let ibSeqPlaying = false;
 function ibPlayTone(freq, dur) {
-  try {
-    if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ibAudioCtx.createOscillator();
-    const gain = ibAudioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
-    osc.connect(gain); gain.connect(ibAudioCtx.destination);
-    osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
-  } catch (e) { /* audio unavailable, silently continue */ }
+try {
+if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
+const osc = ibAudioCtx.createOscillator();
+const gain = ibAudioCtx.createGain();
+osc.type = 'sine';
+osc.frequency.value = freq;
+gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
+gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
+osc.connect(gain);
+gain.connect(ibAudioCtx.destination);
+osc.start();
+osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
+}
+catch (e) {
+/* audio unavailable, silently continue */ }
 }
 function ibToggleWrapper() {
-  const wrapper = document.getElementById('icebreakerWrapper');
-  const opening = !wrapper.classList.contains('open');
-  wrapper.classList.toggle('open');
-  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+const wrapper = document.getElementById('icebreakerWrapper');
+const opening = !wrapper.classList.contains('open');
+wrapper.classList.toggle('open');
+if (opening) wrapper.scrollIntoView({
+behavior: 'smooth', block: 'start' }
+);
 }
 function ibRenderIntro() {
-  const grid = document.getElementById('ibTermsGrid');
-  if (!grid) return;
-  grid.innerHTML = IB_TERMS.map(t =>
-    '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' +
-    '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' +
-    '<div class="ib-term-def">' + t.def + '</div>' +
-    '</div>'
-  ).join('');
+const grid = document.getElementById('ibTermsGrid');
+if (!grid) return;
+grid.innerHTML = IB_TERMS.map(t => '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' + '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' + '<div class="ib-term-def">' + t.def + '</div>' + '</div>' ).join('');
 }
 function ibStartGame() {
-  document.getElementById('ib-intro').style.display = 'none';
-  document.getElementById('ib-game').style.display = 'block';
-  ibRound = 0; ibCollectedPieces = [];
-  ibBeginRound();
+document.getElementById('ib-intro').style.display = 'none';
+document.getElementById('ib-game').style.display = 'block';
+ibRound = 0;
+ibCollectedPieces = [];
+ibBeginRound();
 }
 function ibBeginRound() {
-  const data = IB_ROUNDS_DATA[ibRound];
-  ibVals = { start: 0, stop: 0, step: 1 };
-  document.getElementById('ibBuildStage').style.display = 'none';
-  document.getElementById('ibSequenceStage').style.display = 'none';
-  const stage = document.getElementById('ibTrackStage');
-  stage.style.display = 'block';
-  stage.innerHTML =
-    '<div class="ib-round-label">ROUND ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' +
-    '<div class="ib-track-goal">Set the runner\'s START, STOP, and STEP to hit every pink dot — then press Run.</div>' +
-    '<div class="ib-track" id="ibTrack"></div>' +
-    '<div class="ib-controls-row">' + ibControlHTML('start') + ibControlHTML('stop') + ibControlHTML('step') + '</div>' +
-    '<button class="ib-run-btn" onclick="ibRunTrack()">▶ Run</button>' +
-    '<div class="ib-track-status" id="ibTrackStatus"></div>';
-  ibRenderTrack(data);
-  ibUpdateControlDisplays();
+const data = IB_ROUNDS_DATA[ibRound];
+ibVals = {
+start: 0, stop: 0, step: 1 }
+;
+document.getElementById('ibBuildStage').style.display = 'none';
+document.getElementById('ibSequenceStage').style.display = 'none';
+const stage = document.getElementById('ibTrackStage');
+stage.style.display = 'block';
+stage.innerHTML = '<div class="ib-round-label">ROUND ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' + '<div class="ib-track-goal">Set the runner\'s START, STOP, and STEP to hit every pink dot — then press Run.</div>' + '<div class="ib-track" id="ibTrack"></div>' + '<div class="ib-controls-row">' + ibControlHTML('start') + ibControlHTML('stop') + ibControlHTML('step') + '</div>' + '<button class="ib-run-btn" onclick="ibRunTrack()">▶ Run</button>' + '<div class="ib-track-status" id="ibTrackStatus"></div>';
+ibRenderTrack(data);
+ibUpdateControlDisplays();
 }
 function ibControlHTML(key) {
-  return '<div class="ib-control"><label>' + key + '</label><div class="ib-control-row">' +
-    '<button class="ib-step-btn" onclick="ibAdjust(\'' + key + '\',-1)">−</button>' +
-    '<span class="ib-control-val" id="ibVal-' + key + '">0</span>' +
-    '<button class="ib-step-btn" onclick="ibAdjust(\'' + key + '\',1)">+</button>' +
-    '</div></div>';
+return '<div class="ib-control"><label>' + key + '</label><div class="ib-control-row">' + '<button class="ib-step-btn" onclick="ibAdjust(\'' + key + '\',-1)">−</button>' + '<span class="ib-control-val" id="ibVal-' + key + '">0</span>' + '<button class="ib-step-btn" onclick="ibAdjust(\'' + key + '\',1)">+</button>' + '</div></div>';
 }
 function ibAdjust(key, dir) {
-  const min = key === 'step' ? 1 : 0;
-  ibVals[key] = Math.max(min, Math.min(10, ibVals[key] + dir));
-  ibUpdateControlDisplays();
-  ibPlayTone(300, 0.1);
+const min = key === 'step' ? 1 : 0;
+ibVals[key] = Math.max(min, Math.min(10, ibVals[key] + dir));
+ibUpdateControlDisplays();
+ibPlayTone(300, 0.1);
 }
 function ibUpdateControlDisplays() {
-  ['start','stop','step'].forEach(k => {
-    const el = document.getElementById('ibVal-' + k);
-    if (el) el.textContent = ibVals[k];
-  });
+['start','stop','step'].forEach(k => {
+const el = document.getElementById('ibVal-' + k);
+if (el) el.textContent = ibVals[k];
+}
+);
 }
 function ibRenderTrack(data) {
-  const track = document.getElementById('ibTrack');
-  const maxPos = Math.max(data.stop, 8);
-  track.innerHTML = '<div class="ib-track-runner" id="ibRunner" style="left:2%;">🏃</div>';
-  let hop = data.start;
-  while (hop <= data.stop) {
-    const pct = 4 + (hop / maxPos) * 90;
-    const dot = document.createElement('div');
-    dot.className = 'ib-track-dot target';
-    dot.style.left = pct + '%';
-    track.appendChild(dot);
-    hop += data.step;
-  }
+const track = document.getElementById('ibTrack');
+const maxPos = Math.max(data.stop, 8);
+track.innerHTML = '<div class="ib-track-runner" id="ibRunner" style="left:2%;">🏃</div>';
+let hop = data.start;
+while (hop <= data.stop) {
+const pct = 4 + (hop / maxPos) * 90;
+const dot = document.createElement('div');
+dot.className = 'ib-track-dot target';
+dot.style.left = pct + '%';
+track.appendChild(dot);
+hop += data.step;
+}
 }
 function ibRunTrack() {
-  const data = IB_ROUNDS_DATA[ibRound];
-  const status = document.getElementById('ibTrackStatus');
-  const runner = document.getElementById('ibRunner');
-  const maxPos = Math.max(data.stop, 8);
-  if (ibVals.start !== data.start || ibVals.stop !== data.stop || ibVals.step !== data.step) {
-    status.textContent = 'Not quite matching the dots yet — adjust start, stop, or step and try again.';
-    runner.style.left = (4 + (ibVals.start / maxPos) * 90) + '%';
-    ibPlayTone(140, 0.3);
-    return;
-  }
-  status.textContent = 'Watch the runner hop the pattern...';
-  let hop = data.start;
-  let step = 0;
-  const totalHops = Math.floor((data.stop - data.start) / data.step) + 1;
-  function nextHop() {
-    if (step >= totalHops) {
-      status.textContent = '✓ Perfect run! That pattern is now real code.';
-      ibPlayTone(500, 0.4);
-      setTimeout(() => ibRevealPiece(), 700);
-      return;
-    }
-    const pct = 4 + (hop / maxPos) * 90;
-    runner.style.left = pct + '%';
-    ibPlayTone(320 + step * 30, 0.15);
-    hop += data.step;
-    step++;
-    setTimeout(nextHop, 500);
-  }
-  nextHop();
+const data = IB_ROUNDS_DATA[ibRound];
+const status = document.getElementById('ibTrackStatus');
+const runner = document.getElementById('ibRunner');
+const maxPos = Math.max(data.stop, 8);
+if (ibVals.start !== data.start || ibVals.stop !== data.stop || ibVals.step !== data.step) {
+status.textContent = 'Not quite matching the dots yet — adjust start, stop, or step and try again.';
+runner.style.left = (4 + (ibVals.start / maxPos) * 90) + '%';
+ibPlayTone(140, 0.3);
+return;
+}
+status.textContent = 'Watch the runner hop the pattern...';
+let hop = data.start;
+let step = 0;
+const totalHops = Math.floor((data.stop - data.start) / data.step) + 1;
+function nextHop() {
+if (step >= totalHops) {
+status.textContent = '✓ Perfect run! That pattern is now real code.';
+ibPlayTone(500, 0.4);
+setTimeout(() => ibRevealPiece(), 700);
+return;
+}
+const pct = 4 + (hop / maxPos) * 90;
+runner.style.left = pct + '%';
+ibPlayTone(320 + step * 30, 0.15);
+hop += data.step;
+step++;
+setTimeout(nextHop, 500);
+}
+nextHop();
 }
 function ibRevealPiece() {
-  const data = IB_ROUNDS_DATA[ibRound];
-  ibCollectedPieces.push(data.piece);
-  document.getElementById('ibTrackStage').style.display = 'none';
-  const build = document.getElementById('ibBuildStage');
-  build.style.display = 'block';
-  build.innerHTML =
-    '<div class="ib-build-eyebrow">CODE PIECE ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' +
-    '<div class="ib-build-def">Your run just matched this piece of real for-loop code:</div>' +
-    '<div class="ib-slots"><div class="ib-slot filled" style="border-color:#00f5d4;color:#00f5d4;">' + data.piece + '</div></div>' +
-    '<div class="ib-build-feedback">◈ Locked in.</div>' +
-    '<button class="ib-check-btn" onclick="ibAdvanceRound()">Continue →</button>';
+const data = IB_ROUNDS_DATA[ibRound];
+ibCollectedPieces.push(data.piece);
+document.getElementById('ibTrackStage').style.display = 'none';
+const build = document.getElementById('ibBuildStage');
+build.style.display = 'block';
+build.innerHTML = '<div class="ib-build-eyebrow">CODE PIECE ' + (ibRound + 1) + ' OF ' + IB_ROUNDS_DATA.length + '</div>' + '<div class="ib-build-def">Your run just matched this piece of real for-loop code:</div>' + '<div class="ib-slots"><div class="ib-slot filled" style="border-color:#00f5d4;color:#00f5d4;">' + data.piece + '</div></div>' + '<div class="ib-build-feedback">◈ Locked in.</div>' + '<button class="ib-check-btn" onclick="ibAdvanceRound()">Continue →</button>';
 }
 function ibAdvanceRound() {
-  ibRound++;
-  if (ibRound >= IB_ROUNDS_DATA.length) { ibBeginSequence(); } else { ibBeginRound(); }
+ibRound++;
+if (ibRound >= IB_ROUNDS_DATA.length) {
+ibBeginSequence();
+}
+else {
+ibBeginRound();
+}
 }
 function ibBeginSequence() {
-  document.getElementById('ibBuildStage').style.display = 'none';
-  const stage = document.getElementById('ibSequenceStage');
-  stage.style.display = 'block';
-  const colors = ['#00f5d4', '#4fc3f7', '#ff6bad'];
-  stage.innerHTML =
-    '<div class="ib-build-eyebrow">FINAL PRACTICE &nbsp;·&nbsp; THE WHOLE LOOP</div>' +
-    '<div class="ib-seq-status" id="ibSeqStatus">Watch the full line come together...</div>' +
-    '<div class="ib-seq-board" id="ibSeqBoard"></div>';
-  const board = document.getElementById('ibSeqBoard');
-  board.innerHTML = ibCollectedPieces.map((p, idx) =>
-    '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + colors[idx] + ';color:' + colors[idx] + ';--c:' + colors[idx] + '" onclick="ibSeqClick(' + idx + ')">' + p + '</div>'
-  ).join('');
-  ibSeqPattern = ibCollectedPieces.map((_, idx) => idx);
-  ibPlaySeqPattern(colors);
+document.getElementById('ibBuildStage').style.display = 'none';
+const stage = document.getElementById('ibSequenceStage');
+stage.style.display = 'block';
+const colors = ['#00f5d4', '#4fc3f7', '#ff6bad'];
+stage.innerHTML = '<div class="ib-build-eyebrow">FINAL PRACTICE &nbsp;·&nbsp; THE WHOLE LOOP</div>' + '<div class="ib-seq-status" id="ibSeqStatus">Watch the full line come together...</div>' + '<div class="ib-seq-board" id="ibSeqBoard"></div>';
+const board = document.getElementById('ibSeqBoard');
+board.innerHTML = ibCollectedPieces.map((p, idx) => '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + colors[idx] + ';color:' + colors[idx] + ';--c:' + colors[idx] + '" onclick="ibSeqClick(' + idx + ')">' + p + '</div>' ).join('');
+ibSeqPattern = ibCollectedPieces.map((_, idx) => idx);
+ibPlaySeqPattern(colors);
 }
 function ibPlaySeqPattern(colors) {
-  ibSeqPlayer = []; ibSeqPlaying = true;
-  const statusEl = document.getElementById('ibSeqStatus');
-  statusEl.textContent = 'Watch the full line come together...';
-  let step = 0;
-  function playNext() {
-    if (step >= ibSeqPattern.length) { ibSeqPlaying = false; statusEl.textContent = 'Your turn — click the pieces in order.'; return; }
-    const idx = ibSeqPattern[step];
-    const card = document.getElementById('ibSeqCard' + idx);
-    card.classList.add('lit');
-    ibPlayTone(350 + idx * 60, 0.3);
-    setTimeout(() => { card.classList.remove('lit'); step++; setTimeout(playNext, 200); }, 400);
-  }
-  setTimeout(playNext, 500);
+ibSeqPlayer = [];
+ibSeqPlaying = true;
+const statusEl = document.getElementById('ibSeqStatus');
+statusEl.textContent = 'Watch the full line come together...';
+let step = 0;
+function playNext() {
+if (step >= ibSeqPattern.length) {
+ibSeqPlaying = false;
+statusEl.textContent = 'Your turn — click the pieces in order.';
+return;
+}
+const idx = ibSeqPattern[step];
+const card = document.getElementById('ibSeqCard' + idx);
+card.classList.add('lit');
+ibPlayTone(350 + idx * 60, 0.3);
+setTimeout(() => {
+card.classList.remove('lit');
+step++;
+setTimeout(playNext, 200);
+}
+, 400);
+}
+setTimeout(playNext, 500);
 }
 function ibSeqClick(idx) {
-  if (ibSeqPlaying) return;
-  const card = document.getElementById('ibSeqCard' + idx);
-  card.classList.add('lit');
-  ibPlayTone(350 + idx * 60, 0.25);
-  setTimeout(() => card.classList.remove('lit'), 300);
-  ibSeqPlayer.push(idx);
-  const step = ibSeqPlayer.length - 1;
-  if (ibSeqPlayer[step] !== ibSeqPattern[step]) {
-    card.classList.add('wrong');
-    document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
-    setTimeout(() => { card.classList.remove('wrong'); ibPlaySeqPattern(['#00f5d4','#4fc3f7','#ff6bad']); }, 700);
-    return;
-  }
-  if (ibSeqPlayer.length === ibSeqPattern.length) {
-    document.getElementById('ibSeqStatus').textContent = '✓ Perfect sequence!';
-    setTimeout(() => ibComplete(), 800);
-  }
+if (ibSeqPlaying) return;
+const card = document.getElementById('ibSeqCard' + idx);
+card.classList.add('lit');
+ibPlayTone(350 + idx * 60, 0.25);
+setTimeout(() => card.classList.remove('lit'), 300);
+ibSeqPlayer.push(idx);
+const step = ibSeqPlayer.length - 1;
+if (ibSeqPlayer[step] !== ibSeqPattern[step]) {
+card.classList.add('wrong');
+document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.';
+setTimeout(() => {
+card.classList.remove('wrong');
+ibPlaySeqPattern(['#00f5d4','#4fc3f7','#ff6bad']);
 }
-function ibSkipGame() { ibComplete(); }
+, 700);
+return;
+}
+if (ibSeqPlayer.length === ibSeqPattern.length) {
+document.getElementById('ibSeqStatus').textContent = '✓ Perfect sequence!';
+setTimeout(() => ibComplete(), 800);
+}
+}
+function ibSkipGame() {
+ibComplete();
+}
 function ibComplete() {
-  document.getElementById('ib-game').style.display = 'none';
-  document.getElementById('ib-complete').style.display = 'block';
+document.getElementById('ib-game').style.display = 'none';
+document.getElementById('ib-complete').style.display = 'block';
 }
 function ibReset() {
-  document.getElementById('ib-complete').style.display = 'none';
-  document.getElementById('ib-intro').style.display = 'block';
-  ibRound = 0; ibCollectedPieces = [];
+document.getElementById('ib-complete').style.display = 'none';
+document.getElementById('ib-intro').style.display = 'block';
+ibRound = 0;
+ibCollectedPieces = [];
 }
 document.addEventListener('DOMContentLoaded', () => {
-  loadReflects();
-  ibRenderIntro();
-  handleTierUnlock(null);
-});
+loadReflects();
+ibRenderIntro();
+handleTierUnlock(null);
+}
+);
 </script>
 </body>
 </html>
