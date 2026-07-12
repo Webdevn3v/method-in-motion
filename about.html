@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
+<script> window.dataLayer = window.dataLayer || []; function gtag(){dataLayer.push(arguments);} gtag('js', new Date()); gtag('config', 'G-DJ3Q488K7W'); </script>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About — Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--void:#050508;--pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;--yellow:#fbbf24;--lime:#84cc16;--orange:#fb923c;--blue:#38bdf8;--grad:linear-gradient(135deg,#ff6baa,#c66bff);--display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif;}
+html{scroll-behavior:smooth;}
+body{background:var(--void);color:#fff;font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.8;}
+a{text-decoration:none;color:inherit;}
+
+/* ═══════════ NAV ═══════════ */
+nav{position:fixed;top:0;left:0;right:0;z-index:200;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,0.9);backdrop-filter:blur(16px);border-bottom:1px solid rgba(255,255,255,0.06);}
+.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:0.75rem;letter-spacing:0.12em;}
+.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#000;}
+.nav-links{display:flex;align-items:center;gap:22px;}
+.nav-link{font-family:var(--display);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);transition:color 0.2s;white-space:nowrap;}
+.nav-link:hover,.nav-link.active{color:var(--cyan);}
+.nav-drop{position:relative;}
+.nav-drop-trigger{display:flex;align-items:center;gap:5px;font-family:var(--display);font-size:0.58rem;letter-spacing:0.14em;text-transform:uppercase;color:rgba(255,255,255,0.55);cursor:pointer;background:none;border:none;padding:0;transition:color 0.2s;}
+.nav-drop-trigger:hover,.nav-drop.open .nav-drop-trigger{color:var(--cyan);}
+.nav-drop-arrow{font-size:0.5rem;transition:transform 0.2s;}
+.nav-drop.open .nav-drop-arrow{transform:rotate(180deg);}
+.nav-drop-menu{position:absolute;top:calc(100% + 18px);left:50%;transform:translateX(-50%);min-width:170px;background:rgba(10,10,16,0.98);border:1px solid rgba(255,255,255,0.08);border-radius:12px;padding:8px;opacity:0;pointer-events:none;transform-origin:top center;transition:opacity 0.2s,transform 0.2s;box-shadow:0 20px 50px rgba(0,0,0,0.5);}
+.nav-drop.open .nav-drop-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0);}
+.nav-drop-item{display:block;padding:10px 14px;font-family:var(--display);font-size:0.56rem;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.65);border-radius:7px;transition:all 0.15s;}
+.nav-drop-item:hover{background:rgba(0,232,255,0.1);color:var(--cyan);}
+.nav-right{display:flex;align-items:center;gap:12px;}
+.nav-pill{font-family:var(--display);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;padding:8px 18px;border-radius:100px;border:1px solid rgba(0,232,255,0.35);color:var(--cyan);transition:all 0.2s;}
+.nav-pill:hover{background:rgba(0,232,255,0.12);}
+.nav-pill.solid{background:var(--grad);color:#000;border:none;font-weight:700;}
+@media(max-width:1000px){.nav-links{display:none;}}
+
+/* ═══════════ HERO ═══════════ */
+.about-hero{padding:180px 24px 90px;text-align:center;position:relative;overflow:hidden;}
+.about-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 30% 20%,rgba(255,107,170,0.12) 0%,transparent 55%),radial-gradient(ellipse at 70% 60%,rgba(0,232,255,0.08) 0%,transparent 50%);pointer-events:none;}
+.eyebrow{font-family:var(--display);font-size:0.6rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:20px;position:relative;}
+.about-title{font-family:var(--heading);font-weight:800;font-size:clamp(2.4rem,6vw,4.6rem);line-height:1.08;margin-bottom:28px;position:relative;}
+.about-lede{max-width:720px;margin:0 auto;font-size:1.05rem;color:rgba(255,255,255,0.7);line-height:1.9;position:relative;}
+.about-lede strong{color:#fff;font-weight:500;}
+.tagline-badge{display:inline-flex;margin-top:36px;font-family:var(--display);font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;padding:14px 34px;border-radius:100px;background:var(--grad);color:#000;font-weight:700;box-shadow:0 12px 40px rgba(255,107,170,0.3);position:relative;}
+
+/* ═══════════ SECTIONS ═══════════ */
+.section{max-width:900px;margin:0 auto;padding:80px 24px;}
+.section-tight{max-width:1100px;}
+.section-label{font-family:var(--display);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:18px;}
+.section h2{font-family:var(--heading);font-weight:800;font-size:clamp(1.7rem,4vw,2.6rem);margin-bottom:28px;line-height:1.15;}
+.section h2 span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.section p{font-size:0.98rem;color:rgba(255,255,255,0.7);margin-bottom:18px;line-height:1.9;}
+.section p:last-child{margin-bottom:0;}
+.section p.emphasis{font-family:var(--heading);font-size:1.15rem;font-weight:700;color:#fff;}
+.divider{height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);max-width:900px;margin:0 auto;}
+
+/* World cards */
+.world-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:36px;}
+.world-card{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:20px;padding:36px 30px;position:relative;overflow:hidden;}
+.world-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+.world-card.university::before{background:linear-gradient(90deg,var(--pink),var(--purple));}
+.world-card.underground::before{background:linear-gradient(90deg,var(--cyan),var(--blue));}
+.world-card h3{font-family:var(--display);font-size:1rem;letter-spacing:0.06em;margin-bottom:14px;}
+.world-card.university h3{color:var(--pink);}
+.world-card.underground h3{color:var(--cyan);}
+.world-card p{font-size:0.9rem;color:rgba(255,255,255,0.6);margin-bottom:14px;}
+@media(max-width:700px){.world-grid{grid-template-columns:1fr;}}
+
+/* Crew grid */
+.crew-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:36px;}
+.crew-chip{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.08);border-radius:14px;padding:22px 20px;transition:transform 0.25s,border-color 0.25s;}
+.crew-chip:hover{transform:translateY(-4px);}
+.crew-chip .name{font-family:var(--display);font-size:0.85rem;letter-spacing:0.06em;margin-bottom:8px;}
+.crew-chip .desc{font-size:0.85rem;color:rgba(255,255,255,0.6);}
+.crew-chip.zen{border-color:rgba(244,114,182,0.25);}.crew-chip.zen .name{color:#f472b6;}
+.crew-chip.byte{border-color:rgba(168,85,247,0.25);}.crew-chip.byte .name{color:#a855f7;}
+.crew-chip.nova{border-color:rgba(251,191,36,0.25);}.crew-chip.nova .name{color:#fbbf24;}
+.crew-chip.echo{border-color:rgba(56,189,248,0.25);}.crew-chip.echo .name{color:#38bdf8;}
+.crew-chip.loop{border-color:rgba(0,245,212,0.25);}.crew-chip.loop .name{color:#00f5d4;}
+.crew-chip.bug{border-color:rgba(132,204,22,0.25);}.crew-chip.bug .name{color:#84cc16;}
+@media(max-width:700px){.crew-grid{grid-template-columns:1fr 1fr;}}
+@media(max-width:460px){.crew-grid{grid-template-columns:1fr;}}
+
+/* Built together — evolving tags */
+.evolve-row{display:flex;flex-wrap:wrap;gap:12px;margin:28px 0;}
+.evolve-tag{font-family:var(--display);font-size:0.6rem;letter-spacing:0.1em;text-transform:uppercase;padding:9px 18px;border-radius:100px;border:1px solid rgba(255,255,255,0.12);color:rgba(255,255,255,0.55);}
+
+/* Heart section */
+.heart-section{background:linear-gradient(135deg,rgba(255,107,170,0.05),rgba(198,107,255,0.05));border-top:1px solid rgba(255,255,255,0.06);border-bottom:1px solid rgba(255,255,255,0.06);}
+.feedback-box{margin-top:28px;padding:22px 26px;background:rgba(0,232,255,0.05);border:1px solid rgba(0,232,255,0.2);border-radius:14px;font-size:0.9rem;color:rgba(255,255,255,0.7);}
+.feedback-box strong{color:var(--cyan);}
+
+/* CTA */
+.cta-section{text-align:center;padding:100px 24px;}
+.cta-card{max-width:760px;margin:0 auto;background:linear-gradient(135deg,rgba(255,107,170,0.06),rgba(198,107,255,0.06));border:1px solid rgba(255,107,170,0.2);border-radius:24px;padding:56px 40px;}
+.cta-card p{font-size:1rem;color:rgba(255,255,255,0.7);margin-bottom:26px;}
+.cta-final{font-family:var(--heading);font-weight:800;font-size:1.6rem;margin-bottom:30px;}
+.cta-final span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.cta-btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-size:0.68rem;letter-spacing:0.14em;text-transform:uppercase;padding:16px 36px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;transition:transform 0.2s,box-shadow 0.2s;}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(255,107,170,0.4);}
+
+footer{text-align:center;padding:36px 24px;border-top:1px solid rgba(255,255,255,0.05);color:rgba(255,255,255,0.25);font-size:0.75rem;letter-spacing:0.06em;}
+footer a{color:var(--cyan);}
+</style>
+</head>
+<body>
+
+<nav>
+<a href="index.html" class="nav-logo">
+<div class="nav-logo-mark">&gt;</div>method in motion</a>
+
+<div class="nav-links">
+<a href="index.html#crew" class="nav-link">Crew</a>
+<a href="index.html#membership" class="nav-link">Membership</a>
+<a href="games.html" class="nav-link">Games</a>
+<a href="tag-wall.html" class="nav-link">Tag Wall</a>
+
+<div class="nav-drop" id="exploreDrop">
+<button class="nav-drop-trigger" onclick="toggleDrop('exploreDrop')">Explore <span class="nav-drop-arrow">▾</span></button>
+<div class="nav-drop-menu">
+<a href="pdfs.html" class="nav-drop-item">PDFs</a>
+<a href="library.html" class="nav-drop-item">Library</a>
+<a href="characters.html" class="nav-drop-item">Characters</a>
+<a href="about.html" class="nav-drop-item">About</a>
+</div>
+</div>
+
+<div class="nav-drop" id="communityDrop">
+<button class="nav-drop-trigger" onclick="toggleDrop('communityDrop')">Community <span class="nav-drop-arrow">▾</span></button>
+<div class="nav-drop-menu">
+<a href="broken-syntax.html" class="nav-drop-item">Broken Syntax</a>
+<a href="mim-tv.html" class="nav-drop-item">MiM TV</a>
+<a href="comic.html" class="nav-drop-item">Comics</a>
+</div>
+</div>
+</div>
+
+<div class="nav-right">
+<a href="dashboard.html" class="nav-pill">Dashboard</a>
+</div>
+</nav>
+
+<!-- HERO -->
+<section class="about-hero">
+<div class="eyebrow">Our Story</div>
+<h1 class="about-title">Welcome to<br>Method in Motion</h1>
+<p class="about-lede">Method in Motion isn't just another coding website. It's an entire universe built to help kids become <strong>creators instead of consumers</strong>. Around here, every lesson is an adventure, every mistake is part of the story, and every bug is simply another clue waiting to be solved.</p>
+<div class="tagline-badge">Create. Don't Consume.</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- A DIFFERENT WAY TO LEARN -->
+<section class="section">
+<div class="section-label">Our Philosophy</div>
+<h2>A Different <span>Way to Learn</span></h2>
+<p>Most coding platforms teach programming like another school subject. We believe kids learn best when they're having fun.</p>
+<p>Instead of memorizing endless syntax, Method in Motion teaches coding through characters, stories, games, music, comics, challenges, creativity, and exploration.</p>
+<p class="emphasis">Children don't just read about coding. They experience it. They build it. They remember it.</p>
+</section>
+
+<div class="divider"></div>
+
+<!-- THE UNIVERSE -->
+<section class="section section-tight">
+<div class="section-label">The Universe</div>
+<h2>Welcome to the <span>Universe</span></h2>
+<p>The Method in Motion Universe is made up of connected worlds where every adventure teaches a real programming skill.</p>
+<div class="world-grid">
+<div class="world-card university">
+<h3>MiM University</h3>
+<p>This is where new creators begin. Inside MiM University you'll meet our coding crew, discover new ideas, learn programming concepts, unlock printable activities, and build confidence one lesson at a time.</p>
+</div>
+<div class="world-card underground">
+<h3>MiM Underground</h3>
+<p>Hidden beneath the university is MiM Underground — the creative maker space where imagination comes to life. Here you'll find games, experiments, projects, hidden surprises, and opportunities to put everything you've learned into action.</p>
+<p style="margin-bottom:0;font-style:italic;color:rgba(255,255,255,0.5);">Learning doesn't stop here. This is where creating begins.</p>
+</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- MEET THE CREW -->
+<section class="section section-tight">
+<div class="section-label">The Characters</div>
+<h2>Meet the <span>Crew</span></h2>
+<p>Every character represents a different way of thinking. Together, they show that everyone can become a creator.</p>
+<div class="crew-grid">
+<div class="crew-chip zen"><div class="name">Zen</div><div class="desc">Inspires creativity.</div></div>
+<div class="crew-chip byte"><div class="name">Byte</div><div class="desc">Discovers patterns in data.</div></div>
+<div class="crew-chip nova"><div class="name">Nova</div><div class="desc">Asks big questions.</div></div>
+<div class="crew-chip echo"><div class="name">Echo</div><div class="desc">Connects ideas.</div></div>
+<div class="crew-chip loop"><div class="name">Loop</div><div class="desc">Teaches discipline and repetition.</div></div>
+<div class="crew-chip bug"><div class="name">Bug</div><div class="desc">Reminds us mistakes are part of every great invention.</div></div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<!-- BUILT TOGETHER -->
+<section class="section">
+<div class="section-label">Always Growing</div>
+<h2>Built <span>Together</span></h2>
+<p>Method in Motion is still growing. This universe is constantly evolving.</p>
+<div class="evolve-row">
+<span class="evolve-tag">New Lessons</span>
+<span class="evolve-tag">New Worlds</span>
+<span class="evolve-tag">New Games</span>
+<span class="evolve-tag">New Music</span>
+<span class="evolve-tag">New Comics</span>
+<span class="evolve-tag">New Surprises</span>
+</div>
+<p>As our community grows, so will Method in Motion.</p>
+</section>
+
+<!-- BUILT WITH HEART -->
+<section class="heart-section">
+<div class="section">
+<div class="section-label">The Origin</div>
+<h2>Built with <span>Heart</span></h2>
+<p>Method in Motion started with one laptop, one big dream, and the imagination of a mom and her young daughter.</p>
+<p>Rather than waiting until everything was perfect, we decided to start building. You'll probably discover a few glitches along the way — and that's okay. Every update makes this universe better.</p>
+<div class="feedback-box">
+<strong>Found something?</strong> If you find a typo, bug, broken link, or have an idea for something fun, we'd love to hear from you. You're helping build Method in Motion alongside us.
+</div>
+</div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+<div class="cta-card">
+<div class="section-label" style="text-align:center;">The Adventure Starts Here</div>
+<p>Whether you're writing your very first HTML tag, solving your first coding challenge, creating music with Broken Syntax, exploring MiM TV, reading MiM Chron, or discovering hidden secrets throughout the universe...<br><br>Remember why you're here.</p>
+<div class="cta-final">Create. <span>Don't Consume.</span></div>
+<a href="index.html#membership" class="cta-btn">Start Your Journey →</a>
+</div>
+</section>
+
+<footer>Method in Motion &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="index.html#membership">Membership</a> &nbsp;·&nbsp; "Create, Don't Consume."</footer>
+
+<script>
+function toggleDrop(id) {
+  const drop = document.getElementById(id);
+  const isOpen = drop.classList.contains('open');
+  document.querySelectorAll('.nav-drop').forEach(d => d.classList.remove('open'));
+  if (!isOpen) drop.classList.add('open');
+}
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-drop')) {
+    document.querySelectorAll('.nav-drop').forEach(d => d.classList.remove('open'));
+  }
+});
+</script>
+
+</body>
+</html>
