@@ -129,7 +129,7 @@ nav {
   display:flex;
   justify-content:center;
   gap:8px;
-  margin:28px auto 20px;
+  margin:28px auto 24px;
 }
 .toggle-pill {
   font-family:var(--display);
@@ -148,10 +148,67 @@ nav {
   background:var(--grad);
   border-color:transparent;
 }
-.wall-stage-wrap {
-  max-width:980px;
+
+/* ═══════════ MAIN LAYOUT: side rails + stage ═══════════ */
+.wall-main {
+  display:flex;
+  gap:16px;
+  max-width:1400px;
   margin:0 auto;
   padding:0 20px;
+  align-items:flex-start;
+}
+.side-tray {
+  flex:0 0 176px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  max-height:680px;
+  overflow-y:auto;
+  padding:14px 12px;
+  background:var(--deep);
+  border:1px solid var(--border);
+  border-radius:16px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border-md) transparent;
+}
+.side-tray::-webkit-scrollbar { width:6px; }
+.side-tray::-webkit-scrollbar-thumb { background:var(--border-md); border-radius:10px; }
+.side-tray-label {
+  font-family:var(--display);
+  font-size:.56rem;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  color:var(--muted);
+  padding:0 2px 4px;
+}
+.side-tray-grid {
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.tray-sticker {
+  width:100%;
+  aspect-ratio:1;
+  object-fit:contain;
+  padding:8px;
+  border-radius:12px;
+  background:var(--card);
+  border:1px solid var(--border);
+  cursor:grab;
+  transition:border-color .15s,transform .15s;
+  touch-action:none;
+  -webkit-user-drag:none;
+  user-select:none;
+}
+.tray-sticker:hover {
+  border-color:var(--purple);
+  transform:translateY(-2px) scale(1.04);
+}
+
+.wall-stage-wrap {
+  flex:1;
+  min-width:0;
 }
 .wall-stage {
   position:relative;
@@ -166,8 +223,8 @@ nav {
 }
 .placed-sticker {
   position:absolute;
-  width:80px;
-  height:80px;
+  width:150px;
+  height:150px;
   object-fit:contain;
   transform-origin:center center;
   cursor:grab;
@@ -180,11 +237,6 @@ nav {
   cursor:grabbing;
   filter:drop-shadow(0 14px 24px rgba(0,0,0,.65));
   z-index:999 !important;
-}
-.placed-sticker.selected {
-  outline:2px dashed var(--cyan);
-  outline-offset:6px;
-  border-radius:6px;
 }
 @keyframes peelIn {
   0% {
@@ -226,110 +278,59 @@ nav {
   border:1px solid var(--border-md);
   backdrop-filter:blur(6px);
 }
-.sticker-toolbar {
+
+/* ═══════════ SELECTION FRAME + HANDLES (attached to the sticker) ═══════════ */
+.sel-frame {
   position:absolute;
-  transform:translate(-50%,-100%);
-  display:flex;
-  gap:6px;
-  background:rgba(10,8,16,.94);
-  border:1px solid var(--border-md);
+  border:3px dashed var(--cyan);
   border-radius:10px;
-  padding:6px;
-  backdrop-filter:blur(10px);
-  box-shadow:0 8px 24px rgba(0,0,0,.5);
-  z-index:1000;
+  pointer-events:none;
   display:none;
+  z-index:998;
 }
-.sticker-toolbar.show {
-  display:flex;
-}
-.tb-btn {
-  width:30px;
-  height:30px;
-  border-radius:6px;
-  border:none;
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  font-size:.85rem;
+.sel-frame.show { display:block; }
+.sel-handle {
+  position:absolute;
+  width:34px;
+  height:34px;
+  border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  transition:background .15s;
+  font-size:1rem;
+  font-weight:700;
+  pointer-events:auto;
+  cursor:pointer;
+  box-shadow:0 6px 16px rgba(0,0,0,.55);
+  border:2px solid rgba(5,5,8,.6);
+  transition:transform .12s;
 }
-.tb-btn:hover {
-  background:rgba(255,255,255,.14)
+.sel-handle:hover { transform:scale(1.12); }
+.sel-delete {
+  top:-17px;
+  right:-17px;
+  background:var(--pink);
+  color:#1a0510;
 }
-.tb-btn.danger:hover {
-  background:rgba(255,107,170,.25);
-  color:var(--pink)
-}
-.tray-wrap {
-  max-width:980px;
-  margin:26px auto 0;
-  padding:0 20px;
-}
-.tray-label {
-  font-family:var(--display);
-  font-size:.58rem;
-  letter-spacing:.2em;
-  text-transform:uppercase;
-  color:var(--muted);
-  margin-bottom:10px;
-  padding-left:2px;
-}
-.sticker-tray {
-  display:flex;
-  gap:10px;
-  overflow-x:auto;
-  padding:14px;
-  background:var(--deep);
-  border:1px solid var(--border);
-  border-radius:14px;
-  scrollbar-width:thin;
-  scrollbar-color:var(--border-md) transparent;
-}
-.sticker-tray::-webkit-scrollbar {
-  height:6px
-}
-.sticker-tray::-webkit-scrollbar-thumb {
-  background:var(--border-md);
-  border-radius:10px
-}
-.tray-sticker {
-  flex-shrink:0;
-  width:56px;
-  height:56px;
-  object-fit:contain;
-  padding:6px;
-  border-radius:10px;
-  background:var(--card);
-  border:1px solid var(--border);
+.sel-rotate {
+  top:-17px;
+  left:-17px;
+  background:var(--cyan);
+  color:#04141a;
   cursor:grab;
-  transition:border-color .15s,transform .15s;
-  touch-action:none;
-  -webkit-user-drag:none;
-  user-select:none;
 }
-.tray-sticker:hover {
-  border-color:var(--purple);
-  transform:translateY(-2px);
+.sel-rotate:active { cursor:grabbing; }
+.sel-resize {
+  bottom:-17px;
+  right:-17px;
+  background:var(--purple);
+  color:#1c0a2b;
+  cursor:nwse-resize;
 }
-.tray-sticker.ghost-source {
-  opacity:.3
-}
-.drag-ghost {
-  position:fixed;
-  width:64px;
-  height:64px;
-  object-fit:contain;
-  pointer-events:none;
-  z-index:5000;
-  filter:drop-shadow(0 10px 20px rgba(0,0,0,.6));
-  transform:translate(-50%,-50%) scale(1.1);
-}
+
 .action-bar {
-  max-width:980px;
-  margin:22px auto 80px;
+  max-width:1400px;
+  margin:24px auto 80px;
   padding:0 20px;
   display:flex;
   flex-wrap:wrap;
@@ -438,24 +439,44 @@ nav {
   transition:opacity .25s,transform .25s;
   z-index:3000;
   pointer-events:none;
+  max-width:80vw;
+  text-align:center;
 }
 .toast.show {
   opacity:1;
   transform:translateX(-50%) translateY(0);
 }
+@media(max-width:1000px) {
+  .wall-main {
+  flex-direction:column;
+}
+.side-tray {
+  flex:none;
+  width:100%;
+  max-height:none;
+  flex-direction:row;
+  overflow-x:auto;
+  overflow-y:hidden;
+}
+.side-tray-label {
+  writing-mode:horizontal-tb;
+  flex-shrink:0;
+  padding:8px 6px 0 0;
+}
+.side-tray-grid {
+  grid-template-columns:none;
+  grid-auto-flow:column;
+  grid-auto-columns:76px;
+}
+}
 @media(max-width:640px) {
   .wall-hero {
   padding:100px 20px 24px
 }
-.tray-sticker {
-  width:48px;
-  height:48px
-}
 .placed-sticker {
-  width:64px;
-  height:64px
+  width:100px;
+  height:100px
 }
-
 }
 </style> </head>
 <body>
@@ -494,25 +515,27 @@ nav {
 <button class="toggle-pill active" data-wall="underground">Underground</button>
 <button class="toggle-pill" data-wall="uni">University</button>
 </div>
+<div class="wall-main" id="wallMain">
+<aside class="side-tray" id="sideTrayLeft">
+<div class="side-tray-label">✦ Stickers</div>
+<div class="side-tray-grid" id="trayGridLeft"></div>
+</aside>
 <div class="wall-stage-wrap">
 <div class="wall-stage" id="wallStage">
 <div class="empty-hint" id="emptyHint">
-<p>✦ Drag a sticker down here to start</p>
+<p>✦ Drag a sticker onto the wall</p>
+</div>
+<div class="sel-frame" id="selFrame">
+<button class="sel-handle sel-delete" id="selDelete" title="Delete">✕</button>
+<div class="sel-handle sel-rotate" id="selRotate" title="Drag to rotate">⟳</div>
+<div class="sel-handle sel-resize" id="selResize" title="Drag to resize">⤡</div>
 </div>
 </div>
 </div>
-<div class="sticker-toolbar" id="stickerToolbar">
-<button class="tb-btn" id="tbRotateLeft" title="Rotate left">⟲</button>
-<button class="tb-btn" id="tbRotateRight" title="Rotate right">⟳</button>
-<button class="tb-btn" id="tbSmaller" title="Smaller">−</button>
-<button class="tb-btn" id="tbBigger" title="Bigger">+</button>
-<button class="tb-btn" id="tbFront" title="Bring to front">▲</button>
-<button class="tb-btn danger" id="tbDelete" title="Remove">✕</button>
-</div>
-<div class="tray-wrap">
-<div class="tray-label">✦ Sticker Pack &nbsp;·&nbsp; drag any onto the wall</div>
-<div class="sticker-tray" id="stickerTray">
-</div>
+<aside class="side-tray" id="sideTrayRight">
+<div class="side-tray-label">✦ More</div>
+<div class="side-tray-grid" id="trayGridRight"></div>
+</aside>
 </div>
 <div class="action-bar">
 <button class="act-btn ghost" id="randomizeBtn">✦ Surprise Me</button>
@@ -535,34 +558,42 @@ nav {
 const WALLS = { underground: 'mim-underground-grafetti-wall.png', uni: 'mim-uni-grafetti-wall.png' };
  const STICKERS = [ 'pink.neon.cursor.stick.png','blue.neon.cursor.stick.png','loading.bar.stick.png', 'ideas.into.adventures.stick.png','build.learn.level.up.stick.png','logo.stick.png', 'left.brace.stick.png','HTML.stick.png','closing.tag.stick.png','spray.can.stick.png', 'skateboard.stick.png','pink.pixle.heart.stick.png','spray.infinity.stick.png', 'echo.headphones.stick.png','magnifying.glass.stick.png','pixle.paw.stick.png', 'pink.lightening.bolt.stick.png','crown.stick.png','spray.star.stick.png', 'filled.thought.bubble.stick.png','mim.tv.stick.png','create.not.consume.stick.png', 'bugs.are.proof.stick.png','mim.underground.stick.png','mim.uni.stick.png','m.stick.png', 'top.secret.stick.png','error.page.stick.png','web.page.stick.png', 'empty.element.tag.stick.png','left.bracket.stick.png','right.bracket.stick.png', 'right.brace.stick.png','cat.spray.tag.stick.png','blank.thought.bubble.stick.png', 'gameboy.stick.png','comic.stick.png','VHS.stick.png','mim.underground.portal.stick.png', 'mim.uni.portal.stick.png','bug.fuel.stick.png','full.battery.stick.png', 'pink.neon.double.arrow.stick.png','green.neon.right.double.arrow.stick.png' ];
  const DOWNLOAD_PRESETS = { phone: { w: 1170, h: 2532 }, desktop: { w: 1920, h: 1080 }, square: { w: 1080, h: 1080 } };
+ const STICKER_BASE = 150;
+ const FRAME_PAD = 16;
  let currentWall = 'underground';
  let placed = [];
  let nextId = 1;
  let selectedId = null;
  let dragState = null;
  const wallStage = document.getElementById('wallStage');
- const stickerTray = document.getElementById('stickerTray');
- const stickerToolbar = document.getElementById('stickerToolbar');
+ const trayGridLeft = document.getElementById('trayGridLeft');
+ const trayGridRight = document.getElementById('trayGridRight');
+ const selFrame = document.getElementById('selFrame');
  const emptyHint = document.getElementById('emptyHint');
  const toast = document.getElementById('toast');
  function showToast(msg) { toast.textContent = msg;
  toast.classList.add('show');
  clearTimeout(showToast._t);
- showToast._t = setTimeout(() => toast.classList.remove('show'), 1800);
+ showToast._t = setTimeout(() => toast.classList.remove('show'), 2400);
  } function storageKey(wall) { return 'mim_tagwall_' + wall;
  } function saveToStorage(silent) { try { localStorage.setItem(storageKey(currentWall), JSON.stringify(placed)); if (!silent) showToast('✓ Saved to this browser'); } catch (e) { if (!silent) showToast('Could not save — storage full?'); } } function loadFromStorage() { try { const raw = localStorage.getItem(storageKey(currentWall)); placed = raw ? JSON.parse(raw) : []; } catch (e) { placed = []; } nextId = placed.reduce((m, s) => Math.max(m, s.id), 0) + 1;
  } function setWall(wall) { currentWall = wall;
- wallStage.style.backgroundImage = "url('" + WALLS[wall] + "')";
+ const bgUrl = WALLS[wall];
+ wallStage.style.backgroundImage = "url('" + bgUrl + "')";
+ const testImg = new Image();
+ testImg.onerror = () => showToast('⚠ Wall image missing: ' + bgUrl);
+ testImg.src = bgUrl;
  document.querySelectorAll('.toggle-pill').forEach(p => p.classList.toggle('active', p.dataset.wall === wall));
  loadFromStorage();
  renderPlaced(false);
  deselect();
- } function renderTray() { stickerTray.innerHTML = '';
- STICKERS.forEach(file => { const img = document.createElement('img'); img.className = 'tray-sticker'; img.src = file; img.alt = file.replace(/\.stick\.png$/, '').replace(/\./g, ' '); img.draggable = false; img.addEventListener('pointerdown', e => startTrayDrag(e, file)); stickerTray.appendChild(img); });
+ } function renderTray() { trayGridLeft.innerHTML = '';
+ trayGridRight.innerHTML = '';
+ STICKERS.forEach((file, idx) => { const img = document.createElement('img'); img.className = 'tray-sticker'; img.src = file; img.alt = file.replace(/\.stick\.png$/, '').replace(/\./g, ' '); img.draggable = false; img.addEventListener('pointerdown', e => startTrayDrag(e, file)); (idx % 2 === 0 ? trayGridLeft : trayGridRight).appendChild(img); });
  } function renderPlaced(animateNew) { wallStage.querySelectorAll('.placed-sticker').forEach(el => el.remove());
  emptyHint.style.display = placed.length ? 'none' : 'flex';
  placed.forEach(s => { const img = document.createElement('img'); img.className = 'placed-sticker'; img.src = s.file; img.dataset.id = s.id; img.style.left = s.x + '%'; img.style.top = s.y + '%'; img.style.setProperty('--rot', s.rot + 'deg'); img.style.setProperty('--scl', s.scale); img.style.transform = 'translate(-50%,-50%) rotate(' + s.rot + 'deg) scale(' + s.scale + ')'; img.style.zIndex = s.z; if (animateNew && s.id === animateNew) { img.classList.add('peel'); img.addEventListener('animationend', () => img.classList.remove('peel'), { once: true }); } img.addEventListener('pointerdown', e => startPlacedDrag(e, s.id)); wallStage.appendChild(img); });
- if (selectedId !== null) positionToolbar();
+ positionSelFrame();
  } function topZ() { return placed.reduce((m, s) => Math.max(m, s.z), 0) + 1;
  } function addSticker(file, xPercent, yPercent) { const id = nextId++;
  placed.push({ id, file, x: clampPct(xPercent), y: clampPct(yPercent), rot: (Math.random() * 24 - 12), scale: 1, z: topZ() });
@@ -574,7 +605,7 @@ const WALLS = { underground: 'mim-underground-grafetti-wall.png', uni: 'mim-uni-
  } function startTrayDrag(e, file) { e.preventDefault();
  const ghost = document.createElement('img');
  ghost.src = file;
- ghost.className = 'drag-ghost';
+ ghost.style.cssText = 'position:fixed;width:64px;height:64px;object-fit:contain;pointer-events:none;z-index:5000;filter:drop-shadow(0 10px 20px rgba(0,0,0,.6));transform:translate(-50%,-50%) scale(1.15);';
  document.body.appendChild(ghost);
  moveGhost(ghost, e.clientX, e.clientY);
  dragState = { type: 'new', file, ghost };
@@ -609,40 +640,68 @@ const WALLS = { underground: 'mim-underground-grafetti-wall.png', uni: 'mim-uni-
  const el = wallStage.querySelector('.placed-sticker[data-id="' + s.id + '"]');
  el.style.left = xPct + '%';
  el.style.top = yPct + '%';
- positionToolbar();
+ positionSelFrame();
  } function onPlacedDragEnd() { window.removeEventListener('pointermove', onPlacedDragMove);
  if (dragState && dragState.type === 'move') { const el = wallStage.querySelector('.placed-sticker[data-id="' + dragState.id + '"]'); if (el) el.classList.remove('dragging'); saveToStorage(true); } dragState = null;
  } function selectSticker(id) { selectedId = id;
- wallStage.querySelectorAll('.placed-sticker').forEach(el => el.classList.toggle('selected', Number(el.dataset.id) === id));
- stickerToolbar.classList.add('show');
- positionToolbar();
+ const s = placed.find(p => p.id === id);
+ if (s) { s.z = topZ(); const el = wallStage.querySelector('.placed-sticker[data-id="' + id + '"]'); if (el) el.style.zIndex = s.z; } positionSelFrame();
  } function deselect() { selectedId = null;
- wallStage.querySelectorAll('.placed-sticker').forEach(el => el.classList.remove('selected'));
- stickerToolbar.classList.remove('show');
- } function positionToolbar() { if (selectedId === null) return;
- const el = wallStage.querySelector('.placed-sticker[data-id="' + selectedId + '"]');
- if (!el) return;
- const stageRect = wallStage.getBoundingClientRect();
- const elRect = el.getBoundingClientRect();
- const left = elRect.left - stageRect.left + elRect.width / 2;
- const top = elRect.top - stageRect.top;
- stickerToolbar.style.left = left + 'px';
- stickerToolbar.style.top = Math.max(46, top) + 'px';
+ selFrame.classList.remove('show');
+ } function positionSelFrame() { if (selectedId === null) { selFrame.classList.remove('show'); return; } const s = placed.find(p => p.id === selectedId);
+ if (!s) { selFrame.classList.remove('show'); return; } const size = STICKER_BASE * s.scale + FRAME_PAD * 2;
+ selFrame.style.width = size + 'px';
+ selFrame.style.height = size + 'px';
+ selFrame.style.left = s.x + '%';
+ selFrame.style.top = s.y + '%';
+ selFrame.style.transform = 'translate(-50%,-50%) rotate(' + s.rot + 'deg)';
+ selFrame.classList.add('show');
  } wallStage.addEventListener('pointerdown', e => { if (e.target === wallStage || e.target === emptyHint || e.target.closest('.empty-hint')) deselect(); });
- function withSelected(fn) { const s = placed.find(p => p.id === selectedId);
- if (!s) return;
- fn(s);
- const el = wallStage.querySelector('.placed-sticker[data-id="' + s.id + '"]');
- el.style.transform = 'translate(-50%,-50%) rotate(' + s.rot + 'deg) scale(' + s.scale + ')';
- positionToolbar();
+ document.getElementById('selDelete').addEventListener('click', e => { e.stopPropagation();
+ placed = placed.filter(p => p.id !== selectedId);
+ renderPlaced(false);
+ deselect();
  saveToStorage(true);
- } document.getElementById('tbRotateLeft').addEventListener('click', () => withSelected(s => s.rot -= 15));
- document.getElementById('tbRotateRight').addEventListener('click', () => withSelected(s => s.rot += 15));
- document.getElementById('tbSmaller').addEventListener('click', () => withSelected(s => s.scale = Math.max(.4, +(s.scale - .15).toFixed(2))));
- document.getElementById('tbBigger').addEventListener('click', () => withSelected(s => s.scale = Math.min(2.2, +(s.scale + .15).toFixed(2))));
- document.getElementById('tbFront').addEventListener('click', () => withSelected(s => { s.z = topZ(); const el = wallStage.querySelector('.placed-sticker[data-id="' + s.id + '"]'); el.style.zIndex = s.z; }));
- document.getElementById('tbDelete').addEventListener('click', () => { placed = placed.filter(p => p.id !== selectedId); renderPlaced(false); deselect(); saveToStorage(true); playDeleteSound(); });
- document.querySelectorAll('.toggle-pill').forEach(pill => { pill.addEventListener('click', () => setWall(pill.dataset.wall)); });
+ playDeleteSound();
+ }); document.getElementById('selRotate').addEventListener('pointerdown', e => { e.preventDefault();
+ e.stopPropagation();
+ const s = placed.find(p => p.id === selectedId);
+ if (!s) return;
+ const el = wallStage.querySelector('.placed-sticker[data-id="' + s.id + '"]');
+ const rect = el.getBoundingClientRect();
+ const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+ function onMove(ev) { const ang = Math.atan2(ev.clientY - cy, ev.clientX - cx) * 180 / Math.PI;
+ s.rot = Math.round(ang + 90);
+ el.style.setProperty('--rot', s.rot + 'deg');
+ el.style.transform = 'translate(-50%,-50%) rotate(' + s.rot + 'deg) scale(' + s.scale + ')';
+ positionSelFrame();
+ } function onUp() { window.removeEventListener('pointermove', onMove);
+ window.removeEventListener('pointerup', onUp);
+ saveToStorage(true);
+ } window.addEventListener('pointermove', onMove);
+ window.addEventListener('pointerup', onUp);
+ }); document.getElementById('selResize').addEventListener('pointerdown', e => { e.preventDefault();
+ e.stopPropagation();
+ const s = placed.find(p => p.id === selectedId);
+ if (!s) return;
+ const el = wallStage.querySelector('.placed-sticker[data-id="' + s.id + '"]');
+ const rect = el.getBoundingClientRect();
+ const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+ const startDist = Math.max(20, Math.hypot(e.clientX - cx, e.clientY - cy));
+ const startScale = s.scale;
+ function onMove(ev) { const dist = Math.hypot(ev.clientX - cx, ev.clientY - cy);
+ let newScale = startScale * (dist / startDist);
+ newScale = Math.max(.4, Math.min(3.5, newScale));
+ s.scale = +newScale.toFixed(2);
+ el.style.setProperty('--scl', s.scale);
+ el.style.transform = 'translate(-50%,-50%) rotate(' + s.rot + 'deg) scale(' + s.scale + ')';
+ positionSelFrame();
+ } function onUp() { window.removeEventListener('pointermove', onMove);
+ window.removeEventListener('pointerup', onUp);
+ saveToStorage(true);
+ } window.addEventListener('pointermove', onMove);
+ window.addEventListener('pointerup', onUp);
+ }); document.querySelectorAll('.toggle-pill').forEach(pill => { pill.addEventListener('click', () => setWall(pill.dataset.wall)); });
  document.getElementById('randomizeBtn').addEventListener('click', () => { const starter = ['spray.can.stick.png','skateboard.stick.png','pink.pixle.heart.stick.png','crown.stick.png','spray.star.stick.png','mim.underground.stick.png','HTML.stick.png','pink.lightening.bolt.stick.png','cat.spray.tag.stick.png','gameboy.stick.png','pixle.paw.stick.png','comic.stick.png']; placed = []; nextId = 1; starter.forEach(file => { const id = nextId++; placed.push({ id, file, x: clampPct(15 + Math.random() * 70), y: clampPct(15 + Math.random() * 70), rot: Math.random() * 30 - 15, scale: .8 + Math.random() * .5, z: id }); }); renderPlaced(false); saveToStorage(true); deselect(); showToast('✦ Fresh tag dropped'); });
  document.getElementById('clearBtn').addEventListener('click', () => { if (!placed.length) return; if (!confirm('Clear every sticker off this wall?')) return; placed = []; renderPlaced(false); deselect(); saveToStorage(true); });
  document.getElementById('saveBtn').addEventListener('click', () => saveToStorage(false));
@@ -658,11 +717,11 @@ const WALLS = { underground: 'mim-underground-grafetti-wall.png', uni: 'mim-uni-
  canvas.width = preset.w;
  canvas.height = preset.h;
  const ctx = canvas.getContext('2d');
- try { const bgImg = await loadImage(WALLS[currentWall]); const srcRatio = bgImg.width / bgImg.height; const dstRatio = preset.w / preset.h; let sx, sy, sw, sh; if (srcRatio > dstRatio) { sh = bgImg.height; sw = sh * dstRatio; sx = (bgImg.width - sw) / 2; sy = 0; } else { sw = bgImg.width; sh = sw / dstRatio; sx = 0; sy = (bgImg.height - sh) / 2; } ctx.drawImage(bgImg, sx, sy, sw, sh, 0, 0, preset.w, preset.h); const stickerBaseSize = Math.min(preset.w, preset.h) * 0.11; for (const s of [...placed].sort((a, b) => a.z - b.z)) { const img = await loadImage(s.file); const size = stickerBaseSize * s.scale; const cx = (s.x / 100) * preset.w; const cy = (s.y / 100) * preset.h; ctx.save(); ctx.translate(cx, cy); ctx.rotate((s.rot * Math.PI) / 180); const ratio = img.width / img.height; let dw = size, dh = size / ratio; if (dh > size) { dh = size; dw = size * ratio; } ctx.drawImage(img, -dw / 2, -dh / 2, dw, dh); ctx.restore(); } canvas.toBlob(blob => { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'mim-underground-wall-' + presetKey + '.png'; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(() => URL.revokeObjectURL(url), 4000); showToast('✓ Wallpaper downloaded'); }, 'image/png'); } catch (err) { console.error(err); showToast('Something broke — try again?'); } downloadMenu.classList.remove('open');
+ try { const bgImg = await loadImage(WALLS[currentWall]); const srcRatio = bgImg.width / bgImg.height; const dstRatio = preset.w / preset.h; let sx, sy, sw, sh; if (srcRatio > dstRatio) { sh = bgImg.height; sw = sh * dstRatio; sx = (bgImg.width - sw) / 2; sy = 0; } else { sw = bgImg.width; sh = sw / dstRatio; sx = 0; sy = (bgImg.height - sh) / 2; } ctx.drawImage(bgImg, sx, sy, sw, sh, 0, 0, preset.w, preset.h); const stickerBaseSize = Math.min(preset.w, preset.h) * 0.16; for (const s of [...placed].sort((a, b) => a.z - b.z)) { const img = await loadImage(s.file); const size = stickerBaseSize * s.scale; const cx = (s.x / 100) * preset.w; const cy = (s.y / 100) * preset.h; ctx.save(); ctx.translate(cx, cy); ctx.rotate((s.rot * Math.PI) / 180); const ratio = img.width / img.height; let dw = size, dh = size / ratio; if (dh > size) { dh = size; dw = size * ratio; } ctx.drawImage(img, -dw / 2, -dh / 2, dw, dh); ctx.restore(); } canvas.toBlob(blob => { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'mim-' + currentWall + '-wall-' + presetKey + '.png'; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(() => URL.revokeObjectURL(url), 4000); showToast('✓ Wallpaper downloaded'); }, 'image/png'); } catch (err) { console.error(err); showToast('Background image failed to load — check the wall filename'); } downloadMenu.classList.remove('open');
  } let audioCtx = null;
  function ctx_() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
  return audioCtx;
- } function playPlaceSound() { try { const ac = ctx_(); const bufferSize = ac.sampleRate * 0.12; const buffer = ac.createBuffer(1, bufferSize, ac.sampleRate); const data = buffer.getChannelData(0); for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize); const noise = ac.createBufferSource(); noise.buffer = buffer; const filter = ac.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 1800; const gain = ac.createGain(); gain.gain.setValueAtTime(0.12, ac.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12); noise.connect(filter); filter.connect(gain); gain.connect(ac.destination); noise.start(); } catch (e) { } } function playDeleteSound() { try { const ac = ctx_(); const osc = ac.createOscillator(); const gain = ac.createGain(); osc.type = 'triangle'; osc.frequency.setValueAtTime(320, ac.currentTime); osc.frequency.exponentialRampToValueAtTime(120, ac.currentTime + 0.15); gain.gain.setValueAtTime(0.08, ac.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.15); osc.connect(gain); gain.connect(ac.destination); osc.start(); osc.stop(ac.currentTime + 0.15); } catch (e) { } } window.addEventListener('resize', () => { if (selectedId !== null) positionToolbar(); });
+ } function playPlaceSound() { try { const ac = ctx_(); const bufferSize = ac.sampleRate * 0.12; const buffer = ac.createBuffer(1, bufferSize, ac.sampleRate); const data = buffer.getChannelData(0); for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize); const noise = ac.createBufferSource(); noise.buffer = buffer; const filter = ac.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 1800; const gain = ac.createGain(); gain.gain.setValueAtTime(0.12, ac.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12); noise.connect(filter); filter.connect(gain); gain.connect(ac.destination); noise.start(); } catch (e) { } } function playDeleteSound() { try { const ac = ctx_(); const osc = ac.createOscillator(); const gain = ac.createGain(); osc.type = 'triangle'; osc.frequency.setValueAtTime(320, ac.currentTime); osc.frequency.exponentialRampToValueAtTime(120, ac.currentTime + 0.15); gain.gain.setValueAtTime(0.08, ac.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.15); osc.connect(gain); gain.connect(ac.destination); osc.start(); osc.stop(ac.currentTime + 0.15); } catch (e) { } } window.addEventListener('resize', () => { positionSelFrame(); });
  renderTray();
  setWall('underground');
 </script> </body>
