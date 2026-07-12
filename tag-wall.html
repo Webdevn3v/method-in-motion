@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Tag The Wall | Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500;700&display=swap" rel="stylesheet" /> <style>
+:root {
+  --void:#050508;
+  --deep:#0c0a14;
+  --card:#150f22;
+  --card-2:#1b1329;
+  --border:rgba(255,255,255,.08);
+  --border-md:rgba(255,255,255,.14);
+  --white:#fff;
+  --off:#c8cce0;
+  --muted:#6a6088;
+  --pink:#ff6baa;
+  --purple:#c66bff;
+  --cyan:#00e8ff;
+  --spray:#9dff5e;
+  --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+  --display:'Orbitron',monospace;
+  --heading:'Syne',sans-serif;
+  --body:'DM Sans',sans-serif;
+}
+*,*::before,*::after {
+  box-sizing:border-box;
+  margin:0;
+  padding:0
+}
+html {
+  scroll-behavior:smooth
+}
+body {
+  background:var(--void);
+  color:var(--white);
+  font-family:var(--body);
+  font-weight:300;
+  line-height:1.6;
+  overflow-x:hidden;
+}
+a {
+  color:inherit;
+  text-decoration:none
+}
+img {
+  display:block;
+  max-width:100%
+}
+button {
+  font-family:inherit;
+  cursor:pointer
+}
+nav {
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  z-index:200;
+  padding:16px 32px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  background:rgba(5,5,8,.9);
+  backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--border);
+}
+.nav-logo {
+  font-family:var(--display);
+  font-size:.78rem;
+  letter-spacing:.12em;
+}
+.nav-links {
+  display:flex;
+  gap:22px;
+  list-style:none;
+}
+.nav-links a {
+  font-size:.62rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.45);
+  transition:color .2s;
+}
+.nav-links a:hover {
+  color:#fff
+}
+@media(max-width:900px) {
+  .nav-links {
+  display:none
+}
+
+}
+.wall-hero {
+  padding:120px 24px 32px;
+  text-align:center;
+  max-width:640px;
+  margin:0 auto;
+}
+.wall-eyebrow {
+  font-family:var(--display);
+  font-size:.6rem;
+  letter-spacing:.32em;
+  text-transform:uppercase;
+  color:var(--spray);
+  margin-bottom:14px;
+  text-shadow:0 0 16px rgba(157,255,94,.5);
+}
+.wall-title {
+  font-family:var(--display);
+  font-weight:900;
+  font-size:clamp(2.2rem,6vw,3.6rem);
+  letter-spacing:.02em;
+  line-height:1;
+  background:var(--grad);
+  -webkit-background-clip:text;
+  -webkit-text-fill-color:transparent;
+  background-clip:text;
+  margin-bottom:14px;
+  filter:drop-shadow(0 0 30px rgba(198,107,255,.25));
+}
+.wall-sub {
+  font-size:.92rem;
+  color:var(--off);
+  line-height:1.7;
+}
+.wall-toggle {
+  display:flex;
+  justify-content:center;
+  gap:8px;
+  margin:28px auto 20px;
+}
+.toggle-pill {
+  font-family:var(--display);
+  font-size:.6rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:10px 22px;
+  border-radius:100px;
+  border:1px solid var(--border-md);
+  background:var(--card);
+  color:var(--muted);
+  transition:all .2s;
+}
+.toggle-pill.active {
+  color:#000;
+  background:var(--grad);
+  border-color:transparent;
+}
+.wall-stage-wrap {
+  max-width:980px;
+  margin:0 auto;
+  padding:0 20px;
+}
+.wall-stage {
+  position:relative;
+  width:100%;
+  aspect-ratio:3/2;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid var(--border-md);
+  box-shadow:0 20px 60px rgba(0,0,0,.5);
+  background:var(--card) center/cover no-repeat;
+  touch-action:none;
+}
+.placed-sticker {
+  position:absolute;
+  width:80px;
+  height:80px;
+  object-fit:contain;
+  transform-origin:center center;
+  cursor:grab;
+  filter:drop-shadow(0 6px 14px rgba(0,0,0,.5));
+  touch-action:none;
+  user-select:none;
+  -webkit-user-drag:none;
+}
+.placed-sticker.dragging {
+  cursor:grabbing;
+  filter:drop-shadow(0 14px 24px rgba(0,0,0,.65));
+  z-index:999 !important;
+}
+.placed-sticker.selected {
+  outline:2px dashed var(--cyan);
+  outline-offset:6px;
+  border-radius:6px;
+}
+@keyframes peelIn {
+  0% {
+  opacity:0;
+  transform:translate(-50%,-50%) rotate(var(--rot)) scale(.25);
+}
+55% {
+  opacity:1;
+  transform:translate(-50%,-50%) rotate(var(--rot)) scale(1.12);
+}
+100% {
+  opacity:1;
+  transform:translate(-50%,-50%) rotate(var(--rot)) scale(var(--scl));
+}
+
+}
+.placed-sticker.peel {
+  animation:peelIn .38s cubic-bezier(.34,1.56,.64,1) both;
+}
+.empty-hint {
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:20px;
+  pointer-events:none;
+}
+.empty-hint p {
+  font-family:var(--display);
+  font-size:.66rem;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:rgba(255,255,255,.55);
+  background:rgba(5,5,8,.55);
+  padding:10px 18px;
+  border-radius:100px;
+  border:1px solid var(--border-md);
+  backdrop-filter:blur(6px);
+}
+.sticker-toolbar {
+  position:absolute;
+  transform:translate(-50%,-100%);
+  display:flex;
+  gap:6px;
+  background:rgba(10,8,16,.94);
+  border:1px solid var(--border-md);
+  border-radius:10px;
+  padding:6px;
+  backdrop-filter:blur(10px);
+  box-shadow:0 8px 24px rgba(0,0,0,.5);
+  z-index:1000;
+  display:none;
+}
+.sticker-toolbar.show {
+  display:flex;
+}
+.tb-btn {
+  width:30px;
+  height:30px;
+  border-radius:6px;
+  border:none;
+  background:rgba(255,255,255,.06);
+  color:#fff;
+  font-size:.85rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:background .15s;
+}
+.tb-btn:hover {
+  background:rgba(255,255,255,.14)
+}
+.tb-btn.danger:hover {
+  background:rgba(255,107,170,.25);
+  color:var(--pink)
+}
+.tray-wrap {
+  max-width:980px;
+  margin:26px auto 0;
+  padding:0 20px;
+}
+.tray-label {
+  font-family:var(--display);
+  font-size:.58rem;
+  letter-spacing:.2em;
+  text-transform:uppercase;
+  color:var(--muted);
+  margin-bottom:10px;
+  padding-left:2px;
+}
+.sticker-tray {
+  display:flex;
+  gap:10px;
+  overflow-x:auto;
+  padding:14px;
+  background:var(--deep);
+  border:1px solid var(--border);
+  border-radius:14px;
+  scrollbar-width:thin;
+  scrollbar-color:var(--border-md) transparent;
+}
+.sticker-tray::-webkit-scrollbar {
+  height:6px
+}
+.sticker-tray::-webkit-scrollbar-thumb {
+  background:var(--border-md);
+  border-radius:10px
+}
+.tray-sticker {
+  flex-shrink:0;
+  width:56px;
+  height:56px;
+  object-fit:contain;
+  padding:6px;
+  border-radius:10px;
+  background:var(--card);
+  border:1px solid var(--border);
+  cursor:grab;
+  transition:border-color .15s,transform .15s;
+  touch-action:none;
+  -webkit-user-drag:none;
+  user-select:none;
+}
+.tray-sticker:hover {
+  border-color:var(--purple);
+  transform:translateY(-2px);
+}
+.tray-sticker.ghost-source {
+  opacity:.3
+}
+.drag-ghost {
+  position:fixed;
+  width:64px;
+  height:64px;
+  object-fit:contain;
+  pointer-events:none;
+  z-index:5000;
+  filter:drop-shadow(0 10px 20px rgba(0,0,0,.6));
+  transform:translate(-50%,-50%) scale(1.1);
+}
+.action-bar {
+  max-width:980px;
+  margin:22px auto 80px;
+  padding:0 20px;
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:center;
+}
+.act-btn {
+  font-family:var(--display);
+  font-size:.62rem;
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  padding:12px 20px;
+  border-radius:100px;
+  border:1px solid var(--border-md);
+  background:var(--card);
+  color:var(--off);
+  transition:all .2s;
+}
+.act-btn:hover {
+  border-color:var(--purple);
+  color:#fff;
+}
+.act-btn.ghost {
+  background:none;
+}
+.download-wrap {
+  position:relative;
+}
+.download-btn {
+  font-family:var(--display);
+  font-size:.66rem;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  padding:13px 26px;
+  border-radius:100px;
+  border:none;
+  background:var(--grad);
+  color:#000;
+  font-weight:700;
+  box-shadow:0 8px 26px rgba(198,107,255,.35);
+  transition:transform .15s;
+}
+.download-btn:hover {
+  transform:translateY(-1px)
+}
+.download-btn:active {
+  transform:translateY(1px) scale(.98)
+}
+.download-menu {
+  position:absolute;
+  bottom:calc(100% + 10px);
+  left:50%;
+  transform:translateX(-50%);
+  background:var(--card-2);
+  border:1px solid var(--border-md);
+  border-radius:12px;
+  padding:8px;
+  display:none;
+  flex-direction:column;
+  gap:4px;
+  min-width:190px;
+  box-shadow:0 16px 40px rgba(0,0,0,.5);
+  z-index:100;
+}
+.download-menu.open {
+  display:flex;
+}
+.download-opt {
+  text-align:left;
+  background:none;
+  border:none;
+  color:var(--off);
+  font-family:var(--body);
+  font-size:.82rem;
+  padding:9px 12px;
+  border-radius:8px;
+  transition:background .15s;
+}
+.download-opt:hover {
+  background:rgba(255,255,255,.06);
+  color:#fff;
+}
+.download-opt span {
+  display:block;
+  font-family:var(--display);
+  font-size:.56rem;
+  letter-spacing:.08em;
+  color:var(--muted);
+  margin-top:2px;
+}
+.toast {
+  position:fixed;
+  bottom:28px;
+  left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--card-2);
+  border:1px solid var(--border-md);
+  color:#fff;
+  font-family:var(--display);
+  font-size:.68rem;
+  letter-spacing:.1em;
+  padding:12px 22px;
+  border-radius:100px;
+  opacity:0;
+  transition:opacity .25s,transform .25s;
+  z-index:3000;
+  pointer-events:none;
+}
+.toast.show {
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
+}
+@media(max-width:640px) {
+  .wall-hero {
+  padding:100px 20px 24px
+}
+.tray-sticker {
+  width:48px;
+  height:48px
+}
+.placed-sticker {
+  width:64px;
+  height:64px
+}
+
+}
+</style> </head>
+<body>
+<nav>
+<a href="index.html" class="nav-logo">MiM</a>
+<ul class="nav-links">
+<li>
+<a href="games.html">Games</a>
+</li>
+<li>
+<a href="pdfs.html">PDFs</a>
+</li>
+<li>
+<a href="library.html">Library</a>
+</li>
+<li>
+<a href="characters.html">Characters</a>
+</li>
+<li>
+<a href="broken-syntax.html">Broken Syntax</a>
+</li>
+<li>
+<a href="mim-tv.html">MiM TV</a>
+</li>
+<li>
+<a href="comic.html">Comics</a>
+</li>
+</ul>
+</nav>
+<div class="wall-hero">
+<div class="wall-eyebrow">✦ MiM Underground</div>
+<h1 class="wall-title">Tag The Wall</h1>
+<p class="wall-sub">Drag stickers onto the wall, make it yours, then download it as your own wallpaper. Nothing here is saved anywhere but your own browser.</p>
+</div>
+<div class="wall-toggle" id="wallToggle">
+<button class="toggle-pill active" data-wall="underground">Underground</button>
+<button class="toggle-pill" data-wall="uni">University</button>
+</div>
+<div class="wall-stage-wrap">
+<div class="wall-stage" id="wallStage">
+<div class="empty-hint" id="emptyHint">
+<p>✦ Drag a sticker down here to start</p>
+</div>
+</div>
+</div>
+<div class="sticker-toolbar" id="stickerToolbar">
+<button class="tb-btn" id="tbRotateLeft" title="Rotate left">⟲</button>
+<button class="tb-btn" id="tbRotateRight" title="Rotate right">⟳</button>
+<button class="tb-btn" id="tbSmaller" title="Smaller">−</button>
+<button class="tb-btn" id="tbBigger" title="Bigger">+</button>
+<button class="tb-btn" id="tbFront" title="Bring to front">▲</button>
+<button class="tb-btn danger" id="tbDelete" title="Remove">✕</button>
+</div>
+<div class="tray-wrap">
+<div class="tray-label">✦ Sticker Pack &nbsp;·&nbsp; drag any onto the wall</div>
+<div class="sticker-tray" id="stickerTray">
+</div>
+</div>
+<div class="action-bar">
+<button class="act-btn ghost" id="randomizeBtn">✦ Surprise Me</button>
+<button class="act-btn ghost" id="clearBtn">Clear Wall</button>
+<button class="act-btn ghost" id="saveBtn">Save My Progress</button>
+<div class="download-wrap">
+<button class="download-btn" id="downloadBtn">⬇ Download My Wall</button>
+<div class="download-menu" id="downloadMenu">
+<button class="download-opt" data-preset="phone">Phone Wallpaper<span>1170 × 2532</span>
+</button>
+<button class="download-opt" data-preset="desktop">Desktop Wallpaper<span>1920 × 1080</span>
+</button>
+<button class="download-opt" data-preset="square">Square<span>1080 × 1080 · for sharing</span>
+</button>
+</div>
+</div>
+</div>
+<div class="toast" id="toast">
+</div> <script>
+const WALLS = { underground: 'mim-underground-grafetti-wall.png', uni: 'mim-uni-grafetti-wall.png' };
+ const STICKERS = [ 'pink.neon.cursor.stick.png','blue.neon.cursor.stick.png','loading.bar.stick.png', 'ideas.into.adventures.stick.png','build.learn.level.up.stick.png','logo.stick.png', 'left.brace.stick.png','HTML.stick.png','closing.tag.stick.png','spray.can.stick.png', 'skateboard.stick.png','pink.pixle.heart.stick.png','spray.infinity.stick.png', 'echo.headphones.stick.png','magnifying.glass.stick.png','pixle.paw.stick.png', 'pink.lightening.bolt.stick.png','crown.stick.png','spray.star.stick.png', 'filled.thought.bubble.stick.png','mim.tv.stick.png','create.not.consume.stick.png', 'bugs.are.proof.stick.png','mim.underground.stick.png','mim.uni.stick.png','m.stick.png', 'top.secret.stick.png','error.page.stick.png','web.page.stick.png', 'empty.element.tag.stick.png','left.bracket.stick.png','right.bracket.stick.png', 'right.brace.stick.png','cat.spray.tag.stick.png','blank.thought.bubble.stick.png', 'gameboy.stick.png','comic.stick.png','VHS.stick.png','mim.underground.portal.stick.png', 'mim.uni.portal.stick.png','bug.fuel.stick.png','full.battery.stick.png', 'pink.neon.double.arrow.stick.png','green.neon.right.double.arrow.stick.png' ];
+ const DOWNLOAD_PRESETS = { phone: { w: 1170, h: 2532 }, desktop: { w: 1920, h: 1080 }, square: { w: 1080, h: 1080 } };
+ let currentWall = 'underground';
+ let placed = [];
+ let nextId = 1;
+ let selectedId = null;
+ let dragState = null;
+ const wallStage = document.getElementById('wallStage');
+ const stickerTray = document.getElementById('stickerTray');
+ const stickerToolbar = document.getElementById('stickerToolbar');
+ const emptyHint = document.getElementById('emptyHint');
+ const toast = document.getElementById('toast');
+ function showToast(msg) { toast.textContent = msg;
+ toast.classList.add('show');
+ clearTimeout(showToast._t);
+ showToast._t = setTimeout(() => toast.classList.remove('show'), 1800);
+ } function storageKey(wall) { return 'mim_tagwall_' + wall;
+ } function saveToStorage(silent) { try { localStorage.setItem(storageKey(currentWall), JSON.stringify(placed)); if (!silent) showToast('✓ Saved to this browser'); } catch (e) { if (!silent) showToast('Could not save — storage full?'); } } function loadFromStorage() { try { const raw = localStorage.getItem(storageKey(currentWall)); placed = raw ? JSON.parse(raw) : []; } catch (e) { placed = []; } nextId = placed.reduce((m, s) => Math.max(m, s.id), 0) + 1;
+ } function setWall(wall) { currentWall = wall;
+ wallStage.style.backgroundImage = "url('" + WALLS[wall] + "')";
+ document.querySelectorAll('.toggle-pill').forEach(p => p.classList.toggle('active', p.dataset.wall === wall));
+ loadFromStorage();
+ renderPlaced(false);
+ deselect();
+ } function renderTray() { stickerTray.innerHTML = '';
+ STICKERS.forEach(file => { const img = document.createElement('img'); img.className = 'tray-sticker'; img.src = file; img.alt = file.replace(/\.stick\.png$/, '').replace(/\./g, ' '); img.draggable = false; img.addEventListener('pointerdown', e => startTrayDrag(e, file)); stickerTray.appendChild(img); });
+ } function renderPlaced(animateNew) { wallStage.querySelectorAll('.placed-sticker').forEach(el => el.remove());
+ emptyHint.style.display = placed.length ? 'none' : 'flex';
+ placed.forEach(s => { const img = document.createElement('img'); img.className = 'placed-sticker'; img.src = s.file; img.dataset.id = s.id; img.style.left = s.x + '%'; img.style.top = s.y + '%'; img.style.setProperty('--rot', s.rot + 'deg'); img.style.setProperty('--scl', s.scale); img.style.transform = 'translate(-50%,-50%) rotate(' + s.rot + 'deg) scale(' + s.scale + ')'; img.style.zIndex = s.z; if (animateNew && s.id === animateNew) { img.classList.add('peel'); img.addEventListener('animationend', () => img.classList.remove('peel'), { once: true }); } img.addEventListener('pointerdown', e => startPlacedDrag(e, s.id)); wallStage.appendChild(img); });
+ if (selectedId !== null) positionToolbar();
+ } function topZ() { return placed.reduce((m, s) => Math.max(m, s.z), 0) + 1;
+ } function addSticker(file, xPercent, yPercent) { const id = nextId++;
+ placed.push({ id, file, x: clampPct(xPercent), y: clampPct(yPercent), rot: (Math.random() * 24 - 12), scale: 1, z: topZ() });
+ renderPlaced(id);
+ saveToStorage(true);
+ playPlaceSound();
+ selectSticker(id);
+ } function clampPct(v) { return Math.max(4, Math.min(96, v));
+ } function startTrayDrag(e, file) { e.preventDefault();
+ const ghost = document.createElement('img');
+ ghost.src = file;
+ ghost.className = 'drag-ghost';
+ document.body.appendChild(ghost);
+ moveGhost(ghost, e.clientX, e.clientY);
+ dragState = { type: 'new', file, ghost };
+ window.addEventListener('pointermove', onTrayDragMove);
+ window.addEventListener('pointerup', onTrayDragEnd, { once: true });
+ } function moveGhost(ghost, x, y) { ghost.style.left = x + 'px';
+ ghost.style.top = y + 'px';
+ } function onTrayDragMove(e) { if (!dragState || dragState.type !== 'new') return;
+ moveGhost(dragState.ghost, e.clientX, e.clientY);
+ } function onTrayDragEnd(e) { window.removeEventListener('pointermove', onTrayDragMove);
+ if (!dragState || dragState.type !== 'new') return;
+ const rect = wallStage.getBoundingClientRect();
+ if (e.clientX >= rect.left && e.clientX <= rect.right && e.clientY >= rect.top && e.clientY <= rect.bottom) { const xPct = ((e.clientX - rect.left) / rect.width) * 100; const yPct = ((e.clientY - rect.top) / rect.height) * 100; addSticker(dragState.file, xPct, yPct); } dragState.ghost.remove();
+ dragState = null;
+ } function startPlacedDrag(e, id) { e.preventDefault();
+ e.stopPropagation();
+ selectSticker(id);
+ const el = wallStage.querySelector('.placed-sticker[data-id="' + id + '"]');
+ el.classList.add('dragging');
+ const rect = wallStage.getBoundingClientRect();
+ dragState = { type: 'move', id, rect };
+ window.addEventListener('pointermove', onPlacedDragMove);
+ window.addEventListener('pointerup', onPlacedDragEnd, { once: true });
+ } function onPlacedDragMove(e) { if (!dragState || dragState.type !== 'move') return;
+ const rect = dragState.rect;
+ const xPct = clampPct(((e.clientX - rect.left) / rect.width) * 100);
+ const yPct = clampPct(((e.clientY - rect.top) / rect.height) * 100);
+ const s = placed.find(p => p.id === dragState.id);
+ if (!s) return;
+ s.x = xPct;
+ s.y = yPct;
+ const el = wallStage.querySelector('.placed-sticker[data-id="' + s.id + '"]');
+ el.style.left = xPct + '%';
+ el.style.top = yPct + '%';
+ positionToolbar();
+ } function onPlacedDragEnd() { window.removeEventListener('pointermove', onPlacedDragMove);
+ if (dragState && dragState.type === 'move') { const el = wallStage.querySelector('.placed-sticker[data-id="' + dragState.id + '"]'); if (el) el.classList.remove('dragging'); saveToStorage(true); } dragState = null;
+ } function selectSticker(id) { selectedId = id;
+ wallStage.querySelectorAll('.placed-sticker').forEach(el => el.classList.toggle('selected', Number(el.dataset.id) === id));
+ stickerToolbar.classList.add('show');
+ positionToolbar();
+ } function deselect() { selectedId = null;
+ wallStage.querySelectorAll('.placed-sticker').forEach(el => el.classList.remove('selected'));
+ stickerToolbar.classList.remove('show');
+ } function positionToolbar() { if (selectedId === null) return;
+ const el = wallStage.querySelector('.placed-sticker[data-id="' + selectedId + '"]');
+ if (!el) return;
+ const stageRect = wallStage.getBoundingClientRect();
+ const elRect = el.getBoundingClientRect();
+ const left = elRect.left - stageRect.left + elRect.width / 2;
+ const top = elRect.top - stageRect.top;
+ stickerToolbar.style.left = left + 'px';
+ stickerToolbar.style.top = Math.max(46, top) + 'px';
+ } wallStage.addEventListener('pointerdown', e => { if (e.target === wallStage || e.target === emptyHint || e.target.closest('.empty-hint')) deselect(); });
+ function withSelected(fn) { const s = placed.find(p => p.id === selectedId);
+ if (!s) return;
+ fn(s);
+ const el = wallStage.querySelector('.placed-sticker[data-id="' + s.id + '"]');
+ el.style.transform = 'translate(-50%,-50%) rotate(' + s.rot + 'deg) scale(' + s.scale + ')';
+ positionToolbar();
+ saveToStorage(true);
+ } document.getElementById('tbRotateLeft').addEventListener('click', () => withSelected(s => s.rot -= 15));
+ document.getElementById('tbRotateRight').addEventListener('click', () => withSelected(s => s.rot += 15));
+ document.getElementById('tbSmaller').addEventListener('click', () => withSelected(s => s.scale = Math.max(.4, +(s.scale - .15).toFixed(2))));
+ document.getElementById('tbBigger').addEventListener('click', () => withSelected(s => s.scale = Math.min(2.2, +(s.scale + .15).toFixed(2))));
+ document.getElementById('tbFront').addEventListener('click', () => withSelected(s => { s.z = topZ(); const el = wallStage.querySelector('.placed-sticker[data-id="' + s.id + '"]'); el.style.zIndex = s.z; }));
+ document.getElementById('tbDelete').addEventListener('click', () => { placed = placed.filter(p => p.id !== selectedId); renderPlaced(false); deselect(); saveToStorage(true); playDeleteSound(); });
+ document.querySelectorAll('.toggle-pill').forEach(pill => { pill.addEventListener('click', () => setWall(pill.dataset.wall)); });
+ document.getElementById('randomizeBtn').addEventListener('click', () => { const starter = ['spray.can.stick.png','skateboard.stick.png','pink.pixle.heart.stick.png','crown.stick.png','spray.star.stick.png','mim.underground.stick.png','HTML.stick.png','pink.lightening.bolt.stick.png','cat.spray.tag.stick.png','gameboy.stick.png','pixle.paw.stick.png','comic.stick.png']; placed = []; nextId = 1; starter.forEach(file => { const id = nextId++; placed.push({ id, file, x: clampPct(15 + Math.random() * 70), y: clampPct(15 + Math.random() * 70), rot: Math.random() * 30 - 15, scale: .8 + Math.random() * .5, z: id }); }); renderPlaced(false); saveToStorage(true); deselect(); showToast('✦ Fresh tag dropped'); });
+ document.getElementById('clearBtn').addEventListener('click', () => { if (!placed.length) return; if (!confirm('Clear every sticker off this wall?')) return; placed = []; renderPlaced(false); deselect(); saveToStorage(true); });
+ document.getElementById('saveBtn').addEventListener('click', () => saveToStorage(false));
+ const downloadBtn = document.getElementById('downloadBtn');
+ const downloadMenu = document.getElementById('downloadMenu');
+ downloadBtn.addEventListener('click', e => { e.stopPropagation(); downloadMenu.classList.toggle('open'); });
+ document.addEventListener('click', () => downloadMenu.classList.remove('open'));
+ document.querySelectorAll('.download-opt').forEach(btn => { btn.addEventListener('click', () => exportWall(btn.dataset.preset)); });
+ function loadImage(src) { return new Promise((resolve, reject) => { const img = new Image(); img.onload = () => resolve(img); img.onerror = reject; img.src = src; });
+ } async function exportWall(presetKey) { if (!placed.length) { showToast('Add a few stickers first ✦'); return; } showToast('Building your wallpaper...');
+ const preset = DOWNLOAD_PRESETS[presetKey];
+ const canvas = document.createElement('canvas');
+ canvas.width = preset.w;
+ canvas.height = preset.h;
+ const ctx = canvas.getContext('2d');
+ try { const bgImg = await loadImage(WALLS[currentWall]); const srcRatio = bgImg.width / bgImg.height; const dstRatio = preset.w / preset.h; let sx, sy, sw, sh; if (srcRatio > dstRatio) { sh = bgImg.height; sw = sh * dstRatio; sx = (bgImg.width - sw) / 2; sy = 0; } else { sw = bgImg.width; sh = sw / dstRatio; sx = 0; sy = (bgImg.height - sh) / 2; } ctx.drawImage(bgImg, sx, sy, sw, sh, 0, 0, preset.w, preset.h); const stickerBaseSize = Math.min(preset.w, preset.h) * 0.11; for (const s of [...placed].sort((a, b) => a.z - b.z)) { const img = await loadImage(s.file); const size = stickerBaseSize * s.scale; const cx = (s.x / 100) * preset.w; const cy = (s.y / 100) * preset.h; ctx.save(); ctx.translate(cx, cy); ctx.rotate((s.rot * Math.PI) / 180); const ratio = img.width / img.height; let dw = size, dh = size / ratio; if (dh > size) { dh = size; dw = size * ratio; } ctx.drawImage(img, -dw / 2, -dh / 2, dw, dh); ctx.restore(); } canvas.toBlob(blob => { const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'mim-underground-wall-' + presetKey + '.png'; document.body.appendChild(a); a.click(); document.body.removeChild(a); setTimeout(() => URL.revokeObjectURL(url), 4000); showToast('✓ Wallpaper downloaded'); }, 'image/png'); } catch (err) { console.error(err); showToast('Something broke — try again?'); } downloadMenu.classList.remove('open');
+ } let audioCtx = null;
+ function ctx_() { if (!audioCtx) audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+ return audioCtx;
+ } function playPlaceSound() { try { const ac = ctx_(); const bufferSize = ac.sampleRate * 0.12; const buffer = ac.createBuffer(1, bufferSize, ac.sampleRate); const data = buffer.getChannelData(0); for (let i = 0; i < bufferSize; i++) data[i] = (Math.random() * 2 - 1) * (1 - i / bufferSize); const noise = ac.createBufferSource(); noise.buffer = buffer; const filter = ac.createBiquadFilter(); filter.type = 'bandpass'; filter.frequency.value = 1800; const gain = ac.createGain(); gain.gain.setValueAtTime(0.12, ac.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.12); noise.connect(filter); filter.connect(gain); gain.connect(ac.destination); noise.start(); } catch (e) { } } function playDeleteSound() { try { const ac = ctx_(); const osc = ac.createOscillator(); const gain = ac.createGain(); osc.type = 'triangle'; osc.frequency.setValueAtTime(320, ac.currentTime); osc.frequency.exponentialRampToValueAtTime(120, ac.currentTime + 0.15); gain.gain.setValueAtTime(0.08, ac.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ac.currentTime + 0.15); osc.connect(gain); gain.connect(ac.destination); osc.start(); osc.stop(ac.currentTime + 0.15); } catch (e) { } } window.addEventListener('resize', () => { if (selectedId !== null) positionToolbar(); });
+ renderTray();
+ setWall('underground');
+</script> </body>
+</html>
