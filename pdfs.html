@@ -58,8 +58,8 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .cs-card{background:var(--card);border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:all .35s;position:relative;}
 .cs-card:hover{transform:translateY(-6px);border-color:var(--cc,var(--purple));box-shadow:0 20px 60px rgba(0,0,0,.5),0 0 30px rgba(198,107,255,.1);}
 .cs-cover{width:100%;aspect-ratio:1/1;overflow:hidden;background:#0a0a1a;position:relative;}
-.cs-cover img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
-.cs-card:hover .cs-cover img{transform:scale(1.03)}
+.cs-cover img{width:100%;height:100%;object-fit:cover;filter:brightness(.72) saturate(.92);transition:filter .4s,transform .5s;}
+.cs-card:hover .cs-cover img{transform:scale(1.03);filter:brightness(.88) saturate(1);}
 .cs-body{padding:20px;}
 .cs-tag{font-family:var(--display);font-size:.44rem;letter-spacing:.16em;text-transform:uppercase;color:var(--cc,var(--purple));margin-bottom:6px;display:block;}
 .cs-title{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:6px;}
@@ -68,26 +68,14 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .cs-price{font-family:var(--display);font-size:1.1rem;font-weight:900;color:var(--white);}
 .cs-btn{font-family:var(--display);font-size:.52rem;letter-spacing:.12em;text-transform:uppercase;padding:9px 18px;border-radius:100px;border:1px solid var(--cc,var(--purple));color:var(--cc,var(--purple));background:none;cursor:pointer;transition:all .2s;white-space:nowrap;}
 .cs-btn:hover{background:var(--cc,var(--purple));color:#000;}
-.workbooks-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-bottom:72px;}
-@media(max-width:860px){.workbooks-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.workbooks-grid{grid-template-columns:1fr}}
-.wb-card{background:var(--card);border-radius:12px;overflow:hidden;border:1px solid var(--border);transition:all .35s;position:relative;}
-.wb-card:hover{transform:translateY(-5px);border-color:var(--wc,var(--pink));box-shadow:0 16px 50px rgba(0,0,0,.4);}
-.wb-cover{width:100%;aspect-ratio:1;overflow:hidden;background:linear-gradient(135deg,#1a0a2e,#0d0f1e);}
-.wb-cover img{width:100%;height:100%;object-fit:cover;transition:transform .5s;}
-.wb-card:hover .wb-cover img{transform:scale(1.04)}
-.wb-body{padding:16px}
-.wb-char{font-family:var(--display);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;color:var(--wc,var(--pink));margin-bottom:4px;}
-.wb-title{font-family:var(--heading);font-size:.92rem;font-weight:700;margin-bottom:6px;}
-.wb-desc{font-size:.76rem;color:var(--muted);line-height:1.7;margin-bottom:12px}
-.wb-footer{display:flex;align-items:center;justify-content:space-between}
-.wb-price{font-family:var(--display);font-size:.88rem;font-weight:700;}
-.coming-strip{margin-top:60px;background:var(--deep);border-radius:16px;border:1px solid var(--border);padding:40px;text-align:center;}
+.coming-strip{margin-top:0;margin-bottom:72px;background:var(--deep);border-radius:16px;border:1px solid var(--border);padding:40px;text-align:center;}
 .coming-strip-title{font-family:var(--heading);font-size:1.2rem;font-weight:800;margin-bottom:8px;color:rgba(255,255,255,.5);}
-.coming-strip-desc{font-size:.88rem;color:var(--muted);max-width:380px;margin:0 auto;}
+.coming-strip-desc{font-size:.88rem;color:var(--muted);max-width:420px;margin:0 auto;}
 .coming-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:7px 18px;border-radius:100px;border:1px solid rgba(0,232,255,.2);color:var(--cyan);margin-bottom:16px;}
 .coming-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:blink 1.4s ease-in-out infinite;}
 @keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
+.wb-chip-row{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px;}
+.wb-chip{font-family:var(--display);font-size:.56rem;letter-spacing:.12em;text-transform:uppercase;padding:8px 16px;border-radius:100px;border:1px solid var(--wc,var(--purple));color:var(--wc,var(--purple));background:rgba(255,255,255,.02);}
 .auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
 .auth-modal-overlay.active{display:flex}
 .auth-modal-box{background:#0a0a1a;border:1px solid rgba(0,240,255,.2);border-radius:16px;padding:2.4rem 2rem;width:100%;max-width:420px;position:relative;}
@@ -108,6 +96,18 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 .auth-submit{width:100%;background:linear-gradient(135deg,#00f0ff,#7b61ff);border:none;border-radius:8px;padding:.82rem;color:#000;font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;margin-bottom:.9rem}
 .auth-switch{text-align:center;font-family:'Syne',sans-serif;font-size:.76rem;color:rgba(255,255,255,.35)}
 .auth-link{background:none;border:none;color:#00f0ff;font-family:'Syne',sans-serif;font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
+.nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;padding:0;}
+.nav-hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .3s,opacity .3s;}
+.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.nav-hamburger.open span:nth-child(2){opacity:0;}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+@media(max-width:768px){.nav-hamburger{display:flex;}}
+.mobile-drawer-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);}
+.mobile-drawer-overlay.open{display:block;}
+.mobile-drawer{position:fixed;top:0;right:-280px;width:260px;height:100%;z-index:151;background:#0a0a14;border-left:1px solid var(--border-md);padding:80px 24px 24px;transition:right .3s ease;display:flex;flex-direction:column;gap:4px;}
+.mobile-drawer.open{right:0;}
+.mobile-drawer a{font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);padding:14px 6px;border-bottom:1px solid rgba(255,255,255,.06);}
+.mobile-drawer a.active{color:var(--cyan);}
 </style>
 </head>
 <body>
@@ -133,8 +133,21 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 </div>
 <button class="nav-cta" onclick="openAuthModal('login')">Log In</button>
 <button class="nav-join" onclick="openAuthModal('signup')">Join Free</button>
+<button class="nav-hamburger" id="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </div>
 </nav>
+<div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
+<div class="mobile-drawer" id="mobile-drawer">
+<a href="index.html#crew">Crew</a>
+<a href="membership.html">Membership</a>
+<a href="games.html">Games</a>
+<a href="pdfs.html" class="active">PDFs</a>
+<a href="library.html">Library</a>
+<a href="characters.html">Characters</a>
+<a href="broken-syntax.html">Broken Syntax</a>
+<a href="mim-tv.html">MiM TV</a>
+<a href="comic.html">Comics</a>
+</div>
 
 <section class="page-hero">
 <div class="page-hero-content">
@@ -202,97 +215,23 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background
 
 <span class="pdfs-label">Character Workbooks</span>
 <h2 class="pdfs-section-title">Six characters. Six workbooks.</h2>
-<p class="pdfs-section-desc">50-page printable curriculum packs — $7.99 each. Designed for kids, built by creators. Coming soon.</p>
-
-<div class="workbooks-grid">
-
-<div class="wb-card" style="--wc:#f472b6;">
-<div class="wb-cover">
-<img src="zen-motion.gif" alt="Zen Vol 1">
-</div>
-<div class="wb-body">
-<div class="wb-char">Zen · CSS & Design</div>
-<div class="wb-title">Zen's Creative Circuits Vol. 1</div>
-<div class="wb-desc">Think it. Design it. Build it. Coding fundamentals through creative exploration.</div>
-<div class="wb-footer">
-<div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">$7.99 · Coming Soon</div>
-</div>
-</div>
-</div>
-
-<div class="wb-card" style="--wc:#a855f7;">
-<div class="wb-cover">
-<img src="byte-motion.gif" alt="Byte Debug Lab">
-</div>
-<div class="wb-body">
-<div class="wb-char">Byte · Debugging</div>
-<div class="wb-title">Byte's Debug Lab</div>
-<div class="wb-desc">Every glitch is a clue. Find the errors. Trace the logic. Fix the code.</div>
-<div class="wb-footer">
-<div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">$7.99 · Coming Soon</div>
-</div>
-</div>
-</div>
-
-<div class="wb-card" style="--wc:#00f5d4;">
-<div class="wb-cover">
-<img src="loop-motion.gif" alt="Loop Logic Quest">
-</div>
-<div class="wb-body">
-<div class="wb-char">Loop · JavaScript</div>
-<div class="wb-title">Loop's Logic Quest</div>
-<div class="wb-desc">Plan. Code. Flow. Repeat. Master logic and loops with Loop.</div>
-<div class="wb-footer">
-<div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">$7.99 · Coming Soon</div>
-</div>
-</div>
-</div>
-
-<div class="wb-card" style="--wc:#fbbf24;">
-<div class="wb-cover">
-<img src="nova-motion.gif" alt="Nova Builds a Website">
-</div>
-<div class="wb-body">
-<div class="wb-char">Nova · HTML Structure</div>
-<div class="wb-title">Nova Builds a Website</div>
-<div class="wb-desc">Ideas + parts = possibilities. Build with Nova one component at a time.</div>
-<div class="wb-footer">
-<div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">$7.99 · Coming Soon</div>
-</div>
-</div>
-</div>
-
-<div class="wb-card" style="--wc:#84cc16;">
-<div class="wb-cover">
-<img src="bug-motion.gif" alt="Bug Glitch Quest">
-</div>
-<div class="wb-body">
-<div class="wb-char">Bug · JS Logic</div>
-<div class="wb-title">Bug's Glitch Quest</div>
-<div class="wb-desc">Break. Debug. Discover. Mistakes are just happy accidents with Bug.</div>
-<div class="wb-footer">
-<div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">$7.99 · Coming Soon</div>
-</div>
-</div>
-</div>
-
-<div class="wb-card" style="--wc:#38bdf8;">
-<div class="wb-cover">
-<img src="echo-motion.gif" alt="Echo Sound Systems">
-</div>
-<div class="wb-body">
-<div class="wb-char">Echo · Web Audio</div>
-<div class="wb-title">Echo's Sound Systems</div>
-<div class="wb-desc">Feel it. Code it. Play it. Sound, rhythm, and event-driven thinking.</div>
-<div class="wb-footer">
-<div class="wb-price" style="color:var(--muted);font-size:.7rem;letter-spacing:.1em;font-family:var(--display);text-transform:uppercase;">$7.99 · Coming Soon</div>
-</div>
-</div>
-</div>
-
-</div>
+<p class="pdfs-section-desc">50-page printable curriculum packs — $7.99 each. Designed for kids, built by creators.</p>
 
 <div class="coming-strip">
+<div class="coming-badge">Coming Soon</div>
+<div class="coming-strip-title">All Six Workbooks Are In Production</div>
+<div class="coming-strip-desc">Zen, Byte, Loop, Nova, Bug, and Echo are each getting their own 50-page workbook. We'll announce here the moment they're ready to print.</div>
+<div class="wb-chip-row">
+<span class="wb-chip" style="--wc:#f472b6;">Zen</span>
+<span class="wb-chip" style="--wc:#a855f7;">Byte</span>
+<span class="wb-chip" style="--wc:#00f5d4;">Loop</span>
+<span class="wb-chip" style="--wc:#fbbf24;">Nova</span>
+<span class="wb-chip" style="--wc:#84cc16;">Bug</span>
+<span class="wb-chip" style="--wc:#38bdf8;">Echo</span>
+</div>
+</div>
+
+<div class="coming-strip" style="margin-bottom:0;">
 <div class="coming-badge">Coming Soon</div>
 <div class="coming-strip-title">More Cheat Sheets + Full Workbooks</div>
 <div class="coming-strip-desc">More printable packs are in production. Stay in orbit — the universe is always expanding.</div>
@@ -393,6 +332,22 @@ window.handleTierUnlock = function(tier) {
     }
   });
 };
+
+const hamburgerBtn = document.getElementById('nav-hamburger');
+const mobileDrawer = document.getElementById('mobile-drawer');
+const mobileDrawerOverlay = document.getElementById('mobile-drawer-overlay');
+function toggleMobileDrawer(){
+  hamburgerBtn.classList.toggle('open');
+  mobileDrawer.classList.toggle('open');
+  mobileDrawerOverlay.classList.toggle('open');
+}
+hamburgerBtn.addEventListener('click', toggleMobileDrawer);
+mobileDrawerOverlay.addEventListener('click', toggleMobileDrawer);
+document.querySelectorAll('.mobile-drawer a').forEach(a=>{
+  a.addEventListener('click', ()=>{
+    if(mobileDrawer.classList.contains('open')) toggleMobileDrawer();
+  });
+});
 </script>
 <script type="module" src="auth-init.js"></script>
 </body>
