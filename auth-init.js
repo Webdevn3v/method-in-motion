@@ -20,12 +20,18 @@ const authModal = document.getElementById("auth-modal");
 function openAuthModal(tab) {
   if (!authModal) return;
   authModal.classList.add("active");
+  authModal.style.display = "flex";
   if (tab) setAuthTab(tab);
 }
 
+// Closes the auth modal regardless of which technique a given page uses to
+// show/hide it (some pages use a CSS "active" class, others toggle the
+// inline display style directly). Handling both here means this single
+// function works everywhere without having to touch every page's markup.
 function closeAuthModal() {
   if (!authModal) return;
   authModal.classList.remove("active");
+  authModal.style.display = "none";
 }
 
 function setAuthTab(tab) {
@@ -34,6 +40,56 @@ function setAuthTab(tab) {
   });
   document.getElementById("login-form")?.classList.toggle("active", tab === "login");
   document.getElementById("signup-form")?.classList.toggle("active", tab === "signup");
+  if (document.getElementById("login-form")) {
+    document.getElementById("login-form").style.display = tab === "login" ? "block" : "none";
+  }
+  if (document.getElementById("signup-form")) {
+    document.getElementById("signup-form").style.display = tab === "signup" ? "block" : "none";
+  }
+}
+
+// Self-contained success toast. Built with inline styles (not page CSS
+// classes) so it renders consistently no matter which page/template it
+// fires on.
+function showWelcomeToast(message) {
+  const existing = document.getElementById("mim-welcome-toast");
+  if (existing) existing.remove();
+
+  const toast = document.createElement("div");
+  toast.id = "mim-welcome-toast";
+  toast.style.cssText = `
+    position:fixed;
+    top:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(-20px);
+    z-index:99999;
+    background:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+    color:#000;
+    font-family:'Orbitron',monospace;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    font-weight:700;
+    padding:14px 26px;
+    border-radius:100px;
+    box-shadow:0 10px 40px rgba(198,107,255,.45);
+    opacity:0;
+    transition:opacity .35s ease, transform .35s ease;
+    text-align:center;
+    max-width:90vw;
+  `;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.style.opacity = "1";
+    toast.style.transform = "translateX(-50%) translateY(0)";
+  });
+
+  setTimeout(() => {
+    toast.style.opacity = "0";
+    toast.style.transform = "translateX(-50%) translateY(-20px)";
+    setTimeout(() => toast.remove(), 400);
+  }, 3800);
 }
 
 onAuthStateChanged(auth, async (user) => {
@@ -90,8 +146,11 @@ document.getElementById("login-submit-btn")?.addEventListener("click", async () 
   const password = document.getElementById("login-password").value;
   const errorEl = document.getElementById("login-error");
   try {
-    await signInWithEmailAndPassword(auth, email, password);
+    const cred = await signInWithEmailAndPassword(auth, email, password);
     closeAuthModal();
+    const userDoc = await getDoc(doc(db, "users", cred.user.uid));
+    const displayName = userDoc.exists() ? (userDoc.data().displayName || "") : "";
+    showWelcomeToast(displayName ? `Welcome back, ${displayName}! ✦` : "Welcome back! ✦");
   } catch (err) {
     if (errorEl) errorEl.textContent = "Incorrect email or password.";
   }
@@ -115,6 +174,7 @@ document.getElementById("signup-submit-btn")?.addEventListener("click", async ()
       createdAt: new Date().toISOString()
     });
     closeAuthModal();
+    showWelcomeToast(`Welcome to the crew, ${name}! ✦`);
   } catch (err) {
     if (errorEl) errorEl.textContent = err.message || "Something went wrong.";
   }
