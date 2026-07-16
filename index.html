@@ -189,12 +189,20 @@ nav.scrolled { background:rgba(5,5,8,.92); backdrop-filter:blur(20px); padding:1
 .tier-name { font-family:var(--display); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--cc,var(--purple)); margin-bottom:4px; }
 .tier-price { font-family:var(--display); font-size:1.6rem; font-weight:900; line-height:1; margin-bottom:4px; }
 .tier-price span { font-size:.6rem; color:var(--muted); font-weight:400; }
-.tier-desc { font-size:.78rem; color:var(--muted); margin-bottom:14px; line-height:1.5; }
-.tier-perks { list-style:none; margin-bottom:16px; }
-.tier-perks li { font-size:.76rem; color:var(--off); padding:4px 0; border-bottom:1px solid var(--border); display:flex; align-items:center; gap:8px; }
-.tier-perks li:last-child { border-bottom:none; }
-.tier-perks li::before { content:''; width:4px; height:4px; border-radius:50%; background:var(--cc,var(--purple)); flex-shrink:0; }
-.tier-btn { width:100%; font-family:var(--display); font-size:.52rem; letter-spacing:.12em; text-transform:uppercase; padding:10px; border-radius:8px; border:1px solid var(--cc,rgba(198,107,255,.4)); color:var(--cc,var(--purple)); background:none; cursor:pointer; transition:all .2s; }
+.tier-desc { font-size:.82rem; color:var(--off); margin-bottom:16px; line-height:1.65; min-height:54px; }
+.tier-kicker { font-family:var(--display); font-size:.44rem; letter-spacing:.14em; text-transform:uppercase; color:var(--cc,var(--purple)); opacity:.85; margin-bottom:12px; }
+.tier-perks { list-style:none; margin-bottom:18px; display:grid; gap:8px; }
+.tier-perks li { font-size:.76rem; color:var(--off); padding:10px 11px; border:1px solid var(--border); border-radius:9px; display:grid; grid-template-columns:24px 1fr; align-items:start; gap:8px; background:rgba(0,0,0,.22); line-height:1.45; }
+.tier-perks li:last-child { border-bottom:1px solid var(--border); }
+.tier-perks li::before { content:attr(data-icon); width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.05); color:var(--cc,var(--purple)); font-size:.8rem; flex-shrink:0; }
+.tier-upgrade-note { font-size:.72rem; line-height:1.55; color:var(--muted); padding:11px 12px; border-left:2px solid var(--cc,var(--purple)); background:rgba(255,255,255,.025); margin:4px 0 16px; border-radius:0 8px 8px 0; }
+.tier-btn { width:100%; font-family:var(--display); font-size:.52rem; letter-spacing:.12em; text-transform:uppercase; padding:12px; border-radius:8px; border:1px solid var(--cc,rgba(198,107,255,.4)); color:var(--cc,var(--purple)); background:none; cursor:pointer; transition:all .2s; }
+.tier-btn:disabled { opacity:.65; cursor:wait; transform:none; }
+@media(max-width:480px) {
+  .membership-strip { padding:64px 18px; }
+  .tier-card { padding:20px; }
+  .tier-desc { min-height:0; }
+}
 .tier-btn:hover { background:var(--cc,var(--purple)); color:#000; }
 .tier-card.featured .tier-btn { background:var(--grad); border:none; color:#000; font-weight:700; }
 .tier-card.free-tier .tier-btn { border-color:rgba(0,232,255,.4); color:var(--cyan); }
@@ -243,7 +251,11 @@ footer { background:var(--void); border-top:1px solid var(--border); padding:40p
 .modal-field input:focus { border-color:var(--purple); }
 .modal-submit { width:100%; font-family:var(--display); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; padding:13px; background:var(--grad); color:#000; font-weight:700; border-radius:100px; border:none; cursor:pointer; margin-top:6px; transition:transform .2s; }
 .modal-submit:hover { transform:translateY(-1px) }
-.modal-error { font-size:.78rem; color:var(--pink); margin-top:8px; display:none; }
+.modal-error { font-size:.78rem; color:var(--pink); margin-top:8px; display:none; line-height:1.5; }
+.modal-error.visible { display:block; }
+.modal-submit:disabled { opacity:.65; cursor:wait; transform:none; }
+.modal-status { display:none; margin-top:10px; font-size:.76rem; color:var(--cyan); text-align:center; line-height:1.5; }
+.modal-status.visible { display:block; }
 </style>
 </head>
 <body>
@@ -523,54 +535,75 @@ footer { background:var(--void); border-top:1px solid var(--border); padding:40p
 <div class="membership-strip__inner">
 <div class="membership-strip__head">
 <span class="section-label">Choose Your Path</span>
-<h2 class="section-title">Start free. Unlock your universe.</h2>
-<p class="section-desc" style="max-width:520px;margin:0 auto;"> Free account required - no card needed to get started. Create a free account and get all of Zen — every lesson, her cheat sheet, and her icebreaker memory game. Upgrade when you're ready to unlock the rest of the crew, their full game worlds, and everything else the universe has to offer.</p>
+<h2 class="section-title">Sign up and start learning.</h2>
+<p class="section-desc" style="max-width:620px;margin:0 auto;">Our world is growing every day. Start with a free Explorer Pass, then unlock more characters, games, comics, music, printables, and creative tools whenever you are ready.</p>
 </div>
 <div class="membership-grid">
+
 <div class="tier-card free-tier" style="--cc:rgba(0,232,255,.8)">
 <div class="tier-name" style="color:var(--cyan)">Explorer</div>
-<div class="tier-price" style="color:var(--cyan)">$0<span> / always</span></div>
-<div class="tier-desc">No credit card. No catch. Start coding today.</div>
+<div class="tier-price" style="color:var(--cyan)">$0<span> / forever</span></div>
+<div class="tier-kicker">Your free pass into the universe</div>
+<div class="tier-desc">Meet Zen, start coding, and unlock enough of Method in Motion to begin creating today. No credit card. No catch.</div>
 <ul class="tier-perks">
-<li>Free account — forever</li>
-<li>All of Zen — every lesson unlocked</li>
-<li>Zen's downloadable cheat sheet</li>
-<li>Zen's icebreaker memory game</li>
-<li>Never expires</li>
+<li data-icon="🚀"><span><strong>Full Zen access</strong> — all four beginner lessons and her coding world</span></li>
+<li data-icon="🧠"><span>Zen's icebreaker memory challenge</span></li>
+<li data-icon="📄"><span>Zen's downloadable coding cheat sheet</span></li>
+<li data-icon="📚"><span><strong>Explorer Library Pass</strong> with the first MiM collection</span></li>
+<li data-icon="🎸"><span>Broken Syntax's first full single</span></li>
+<li data-icon="📖"><span>The first set of Method in Motion comics</span></li>
+<li data-icon="🎨"><span>Tag Wall access plus a downloadable keepsake background</span></li>
+<li data-icon="∞"><span>Free forever — your Explorer Pass never expires</span></li>
 </ul>
-<button class="tier-btn" onclick="openModal('signup')">Join Free Now</button>
+<div class="tier-upgrade-note">Start here, explore the world, and upgrade only when you are ready for more of the crew.</div>
+<button class="tier-btn" data-plan="explorer" onclick="selectMembershipPlan('explorer')">Join Free &amp; Start Learning</button>
 </div>
-<div class="tier-card" style="--cc:rgba(255,107,170,.6)">
+
+<div class="tier-card" style="--cc:rgba(255,107,170,.75)">
 <div class="tier-name">Sparks</div>
 <div class="tier-price">$5<span> /mo</span></div>
-<div class="tier-desc">Byte and Echo join the crew, full game worlds included.</div>
+<div class="tier-kicker">The crew gets bigger</div>
+<div class="tier-desc"><strong>Everything in Explorer, plus</strong> Byte and Echo, more worlds, more downloads, and more of the MiM universe to explore.</div>
 <ul class="tier-perks">
-<li>Full Byte access — all 4 lessons + her game world</li>
-<li>Full Echo access — all 4 lessons + her game world</li>
-<li>Zen's full game world unlocked</li>
-<li>PDF Vol. 1 included</li>
-<li>Full MiM Library unlocked</li>
-<li>3-day free trial</li>
+<li data-icon="✨"><span><strong>Everything included with Explorer</strong></span></li>
+<li data-icon="🤖"><span>Full Byte access — all four lessons and her complete game world</span></li>
+<li data-icon="📡"><span>Full Echo access — all four lessons and her complete game world</span></li>
+<li data-icon="🎮"><span>Zen's full game world plus Byte and Echo's worlds</span></li>
+<li data-icon="📘"><span>PDF Volume 1 and expanded printable activities</span></li>
+<li data-icon="📚"><span>Full MiM Library access</span></li>
+<li data-icon="🎸"><span>More Broken Syntax music releases</span></li>
+<li data-icon="📖"><span>More MiM comics and story drops</span></li>
+<li data-icon="🎨"><span>Expanded Tag Wall backgrounds and keepsake options</span></li>
+<li data-icon="🎁"><span>Three-day free trial</span></li>
 </ul>
-<button class="tier-btn" onclick="openModal('signup')">Start Free Trial</button>
+<div class="tier-upgrade-note">Ready for the whole universe? Coders unlocks every character, world, game, PDF, comic, song, and premium perk.</div>
+<button class="tier-btn" data-plan="sparks" onclick="selectMembershipPlan('sparks')">Start Sparks Free Trial</button>
 </div>
+
 <div class="tier-card featured" style="--cc:var(--cyan)">
-<div class="tier-featured-badge">Full Access</div>
+<div class="tier-featured-badge">Everything Unlocked</div>
 <div class="tier-name">Coders</div>
 <div class="tier-price">$9<span> /mo</span></div>
-<div class="tier-desc">The full universe — every character, every world, unlocked.</div>
+<div class="tier-kicker">The complete Method in Motion universe</div>
+<div class="tier-desc"><strong>Everything in Sparks, plus absolutely everything else.</strong> Every character. Every world. Every game. Nothing held back.</div>
 <ul class="tier-perks">
-<li>Loop, Nova &amp; Bug unlocked — all lessons + game worlds</li>
-<li>Every PDF, all volumes</li>
-<li>All six games, fully unlocked</li>
-<li>Early access to new comics &amp; songs</li>
-<li>Beta testing access</li>
-<li>Submit ideas — get credited for what you build</li>
-<li>Game of the Month winners get a free referral link to share</li>
-<li>3-day free trial</li>
+<li data-icon="🌌"><span><strong>Everything included with Sparks</strong></span></li>
+<li data-icon="🔄"><span>Loop, Nova, and Bug fully unlocked — all lessons and game worlds</span></li>
+<li data-icon="🎮"><span>All six games and all six character worlds, fully open</span></li>
+<li data-icon="📚"><span>Every MiM Library collection</span></li>
+<li data-icon="📄"><span>Every PDF, cheat sheet, workbook, and printable</span></li>
+<li data-icon="📖"><span>Every Method in Motion comic</span></li>
+<li data-icon="🎸"><span>Every Broken Syntax song and release</span></li>
+<li data-icon="🎨"><span>Complete Tag Wall access, exclusive backgrounds, and early-release keepsakes</span></li>
+<li data-icon="🧪"><span>Beta testing access and early access to new content</span></li>
+<li data-icon="💡"><span>Submit ideas and receive credit for what you help build</span></li>
+<li data-icon="🏆"><span>Game of the Month participation and winner referral keepsake link</span></li>
+<li data-icon="🚀"><span>Future major characters, games, comics, songs, PDFs, and world updates included</span></li>
+<li data-icon="🎁"><span>Three-day free trial</span></li>
 </ul>
-<button class="tier-btn" onclick="openModal('signup')">Start Free Trial</button>
+<button class="tier-btn" data-plan="coders" onclick="selectMembershipPlan('coders')">Unlock the Full Universe</button>
 </div>
+
 </div>
 </div>
 </section>
@@ -648,6 +681,7 @@ footer { background:var(--void); border-top:1px solid var(--border); padding:40p
 </div>
 <p class="modal-error" id="login-error"></p>
 <button class="modal-submit" id="login-submit-btn">Log In</button>
+<p class="modal-status" id="login-status" aria-live="polite"></p>
 <p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">New here? <button class="auth-link" data-tab="signup" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Create an account</button></p>
 </div>
 <div id="signup-form" class="auth-form" style="display:none">
@@ -665,6 +699,7 @@ footer { background:var(--void); border-top:1px solid var(--border); padding:40p
 </div>
 <p class="modal-error" id="signup-error"></p>
 <button class="modal-submit" id="signup-submit-btn">Create Your Account</button>
+<p class="modal-status" id="signup-status" aria-live="polite"></p>
 <p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">Already in the crew? <button class="auth-link" data-tab="login" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Log in</button></p>
 </div>
 </div>
@@ -683,6 +718,20 @@ document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=
 document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
 window.openModal=openModal;
 window.closeModal=closeModal;
+
+function selectMembershipPlan(plan){
+  const allowed=['explorer','sparks','coders'];
+  const selected=allowed.includes(plan)?plan:'explorer';
+  sessionStorage.setItem('mimSelectedPlan',selected);
+  const modalSub=document.querySelector('.modal-sub');
+  if(modalSub){
+    modalSub.textContent=selected==='explorer'
+      ? 'Create your free Explorer account and start learning.'
+      : `Create your account first. Your ${selected.charAt(0).toUpperCase()+selected.slice(1)} upgrade comes next.`;
+  }
+  openModal('signup');
+}
+window.selectMembershipPlan=selectMembershipPlan;
 function toggleCrew(){document.getElementById('crewGridWrap').classList.toggle('open');document.getElementById('crewToggleBtn').classList.toggle('open');}
 window.toggleCrew=toggleCrew;
 function toggleLessons(btn){const lessons=btn.nextElementSibling;btn.classList.toggle('open');lessons.classList.toggle('open');const label=btn.querySelector('.sc-lesson-toggle-label');label.textContent=lessons.classList.contains('open')?'4 Lessons · Hide Journey':'4 Lessons · View Journey';}
