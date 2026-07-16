@@ -1,181 +1,771 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import { getFirestore, doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
-  authDomain: "method-in-motion.firebaseapp.com",
-  projectId: "method-in-motion",
-  storageBucket: "method-in-motion.firebasestorage.app",
-  messagingSenderId: "1067937974009",
-  appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const db = getFirestore(app);
-
-const authModal = document.getElementById("auth-modal");
-
-function openAuthModal(tab) {
-  if (!authModal) return;
-  authModal.classList.add("active");
-  authModal.style.display = "flex";
-  if (tab) setAuthTab(tab);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Method in Motion — Create, Don't Consume.</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
+<script>
+window.dataLayer=window.dataLayer||[];
+function gtag(){dataLayer.push(arguments)}gtag('js',new Date());
+gtag('config','G-DJ3Q488K7W');
+</script>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --void:#050508;
+  --deep:#080b14;
+  --card:#0f1525;
+  --border:rgba(255,255,255,.06);
+  --border-md:rgba(255,255,255,.12);
+  --white:#fff;
+  --off:#c8cce0;
+  --muted:#5a6080;
+  --pink:#ff6baa;
+  --purple:#c66bff;
+  --cyan:#00e8ff;
+  --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+  --grad2:linear-gradient(135deg,#c66bff,#00e8ff);
+  --display:'Orbitron',monospace;
+  --heading:'Syne',sans-serif;
+  --body:'DM Sans',sans-serif;
 }
-
-// Closes the auth modal regardless of which technique a given page uses to
-// show/hide it (some pages use a CSS "active" class, others toggle the
-// inline display style directly). Handling both here means this single
-// function works everywhere without having to touch every page's markup.
-function closeAuthModal() {
-  if (!authModal) return;
-  authModal.classList.remove("active");
-  authModal.style.display = "none";
+*,*::before,*::after { box-sizing:border-box; margin:0; padding:0 }
+html { scroll-behavior:smooth }
+body { background:var(--void); color:var(--white); font-family:var(--body); font-weight:300; overflow-x:hidden; line-height:1.7; cursor:none; }
+a { color:inherit; text-decoration:none }
+img { display:block; max-width:100% }
+.cursor { position:fixed; width:10px; height:10px; border-radius:50%; background:var(--pink); pointer-events:none; z-index:9999; transform:translate(-50%,-50%); transition:width .2s,height .2s; mix-blend-mode:screen; opacity:1; }
+.cursor-ring { position:fixed; width:32px; height:32px; border-radius:50%; border:1px solid rgba(198,107,255,.5); pointer-events:none; z-index:9998; transform:translate(-50%,-50%); transition:transform .15s; opacity:1; }
+nav { position:fixed; top:0; left:0; right:0; z-index:100; padding:18px 48px; display:flex; align-items:center; justify-content:space-between; transition:background .4s,padding .3s; }
+nav.scrolled { background:rgba(5,5,8,.92); backdrop-filter:blur(20px); padding:12px 48px; border-bottom:1px solid var(--border); }
+.nav-logo { display:flex; align-items:center; gap:10px; font-family:var(--display); font-size:.78rem; letter-spacing:.12em; }
+.nav-logo-mark { width:30px; height:30px; background:var(--grad); border-radius:7px; display:flex; align-items:center; justify-content:center; font-size:.72rem; font-weight:700; color:#000; }
+.nav-links { display:flex; gap:24px; list-style:none }
+.nav-links a { font-size:.63rem; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.45); transition:color .3s; }
+.nav-links a:hover { color:#fff }
+.nav-right { display:flex; align-items:center; gap:10px }
+.nav-cta { font-family:var(--display); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; padding:9px 20px; border:1px solid rgba(198,107,255,.4); color:var(--purple); border-radius:100px; transition:all .3s; background:none; cursor:pointer; }
+.nav-cta:hover { background:rgba(198,107,255,.15) }
+.nav-join-btn { font-family:var(--display); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; padding:9px 20px; background:var(--grad); color:#000; font-weight:700; border-radius:100px; border:none; cursor:pointer; transition:transform .2s; }
+.nav-join-btn:hover { transform:translateY(-1px) }
+#nav-user-menu { display:none; align-items:center; gap:10px }
+#nav-username { font-family:var(--display); font-size:.58rem; letter-spacing:.1em; color:rgba(255,255,255,.55) }
+#nav-dashboard-link { font-family:var(--display); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase; padding:7px 14px; border:1px solid rgba(0,232,255,.3); color:var(--cyan); border-radius:100px; transition:all .2s; }
+#nav-dashboard-link:hover { background:rgba(0,232,255,.1) }
+#nav-logout-btn { font-family:var(--display); font-size:.58rem; letter-spacing:.1em; text-transform:uppercase; padding:7px 14px; border:1px solid rgba(255,255,255,.15); background:none; color:rgba(255,255,255,.4); border-radius:100px; cursor:pointer }
+#nav-logout-btn:hover { border-color:var(--pink); color:var(--pink) }
+.nav-hamburger { display:none; flex-direction:column; justify-content:center; align-items:center; gap:5px; width:36px; height:36px; background:none; border:none; cursor:pointer; z-index:160; }
+.nav-hamburger span { display:block; width:22px; height:2px; background:#fff; border-radius:2px; transition:transform .3s,opacity .3s; }
+.nav-hamburger.open span:nth-child(1) { transform:translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity:0; }
+.nav-hamburger.open span:nth-child(3) { transform:translateY(-7px) rotate(-45deg); }
+.mobile-drawer-overlay { display:none; position:fixed; inset:0; background:rgba(5,5,8,.7); backdrop-filter:blur(6px); z-index:150; }
+.mobile-drawer-overlay.open { display:block; }
+.mobile-drawer { position:fixed; top:0; right:-300px; width:280px; max-width:82vw; height:100vh; background:var(--card); border-left:1px solid var(--border-md); z-index:151; padding:28px 22px; transition:right .35s cubic-bezier(.4,0,.2,1); display:flex; flex-direction:column; gap:20px; overflow-y:auto; }
+.mobile-drawer.open { right:0; }
+.mobile-drawer-close { align-self:flex-end; background:none; border:none; color:rgba(255,255,255,.5); font-size:1.2rem; cursor:pointer; }
+.mobile-drawer-links { list-style:none; display:flex; flex-direction:column; gap:2px; }
+.mobile-drawer-links a { display:block; padding:12px 4px; font-family:var(--display); font-size:.66rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.7); border-bottom:1px solid var(--border); }
+.mobile-drawer-links a:hover { color:#fff }
+.mobile-drawer-auth { display:flex; flex-direction:column; gap:10px; margin-top:auto; padding-top:14px; }
+.mobile-drawer-auth .nav-cta,.mobile-drawer-auth .nav-join-btn { width:100%; text-align:center; display:block; }
+@media(max-width:768px) {
+  .nav-links { display:none }
+  .nav-right { display:none }
+  nav { padding:14px 20px }
+  .nav-hamburger { display:flex }
 }
+.hero { position:relative; width:100%; height:100vh; min-height:640px; overflow:hidden; display:flex; align-items:center; justify-content:center; }
+.hero-bg { position:absolute; inset:0; z-index:0; background:var(--void); }
+.hero-universe { position:absolute; inset:0; z-index:1; background-image:url('universe-view.png'); background-size:cover; background-position:center; opacity:0.55; }
+.hero-universe-overlay { position:absolute; inset:0; z-index:2; background:linear-gradient(to bottom,rgba(5,5,8,0.15) 0%,rgba(5,5,8,0.3) 50%,rgba(5,5,8,0.85) 100%); }
+.hero-bg-grad { position:absolute; inset:0; z-index:3; background:radial-gradient(ellipse 80% 60% at 20% 50%,rgba(255,107,170,.08) 0%,transparent 60%),radial-gradient(ellipse 70% 70% at 80% 30%,rgba(0,232,255,.06) 0%,transparent 55%),radial-gradient(ellipse 90% 50% at 50% 80%,rgba(198,107,255,.06) 0%,transparent 60%); animation:bg-breathe 12s ease-in-out infinite alternate; }
+@keyframes bg-breathe { 0% { opacity:.7; transform:scale(1); } 100% { opacity:1; transform:scale(1.04); } }
+.hero-nebula { position:absolute; inset:0; z-index:4; pointer-events:none; }
+.hero-orb { position:absolute; border-radius:50%; filter:blur(90px); z-index:5; pointer-events:none; animation:orb-drift ease-in-out infinite; }
+@keyframes orb-drift { 0%,100% { transform:translate(0,0) } 50% { transform:translate(var(--dx,20px),var(--dy,-20px)) } }
+.orb-a { width:500px; height:500px; top:-10%; left:-8%; background:radial-gradient(circle,rgba(255,107,170,.12),transparent 70%); --dx:40px; --dy:30px; animation-duration:14s; }
+.orb-b { width:400px; height:400px; top:10%; right:-5%; background:radial-gradient(circle,rgba(0,232,255,.09),transparent 70%); --dx:-30px; --dy:35px; animation-duration:17s; animation-delay:3s; }
+.orb-c { width:350px; height:350px; bottom:-5%; left:25%; background:radial-gradient(circle,rgba(198,107,255,.08),transparent 70%); --dx:35px; --dy:-20px; animation-duration:15s; animation-delay:6s; }
+.orb-d { width:280px; height:280px; bottom:20%; right:15%; background:radial-gradient(circle,rgba(255,107,170,.06),transparent 70%); --dx:-20px; --dy:-25px; animation-duration:19s; animation-delay:2s; }
+.hero-grid { position:absolute; inset:0; z-index:6; pointer-events:none; background-image:linear-gradient(rgba(0,232,255,.02) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,255,.02) 1px,transparent 1px); background-size:60px 60px; mask-image:radial-gradient(ellipse 70% 70% at 50% 50%,black 0%,transparent 80%); }
+.hero-scan { position:absolute; inset:0; z-index:7; pointer-events:none; background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,.015) 2px,rgba(0,0,0,.015) 4px); }
+.hero-particles { position:absolute; inset:0; z-index:8; pointer-events:none; }
+.hparticle { position:absolute; border-radius:50%; animation:hp-float linear infinite; }
+@keyframes hp-float { 0% { transform:translateY(100vh); opacity:0 } 10% { opacity:1 } 90% { opacity:.5 } 100% { transform:translateY(-80px); opacity:0 } }
+.hero-overlay-bottom { position:absolute; bottom:0; left:0; right:0; height:35%; z-index:9; background:linear-gradient(to bottom,transparent,var(--void)); pointer-events:none; }
+.hero-content { position:relative; z-index:10; text-align:center; padding:0 24px; max-width:700px; }
+.hero-eyebrow { font-family:var(--display); font-size:.58rem; letter-spacing:.32em; text-transform:uppercase; color:var(--cyan); opacity:.8; margin-bottom:16px; animation:fadeUp .8s .2s both; text-shadow:0 0 20px rgba(0,232,255,.6); }
+.hero-title { font-family:var(--display); font-size:clamp(2.6rem,7vw,6rem); font-weight:900; line-height:1; letter-spacing:.06em; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; margin-bottom:10px; animation:fadeUp 1s .3s both; filter:drop-shadow(0 0 40px rgba(198,107,255,.3)); }
+.hero-sub { font-family:var(--display); font-size:.68rem; letter-spacing:.28em; text-transform:uppercase; color:rgba(255,255,255,.4); margin-bottom:40px; animation:fadeUp .9s .5s both; }
+.hero-actions { display:flex; gap:14px; justify-content:center; flex-wrap:wrap; animation:fadeUp .9s .65s both; }
+.btn-primary { font-family:var(--display); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; padding:14px 32px; background:var(--grad); color:#000; font-weight:700; border-radius:100px; border:none; cursor:pointer; transition:transform .2s,box-shadow .2s; box-shadow:0 8px 30px rgba(198,107,255,.3); }
+.btn-primary:hover { transform:translateY(-2px); box-shadow:0 14px 40px rgba(198,107,255,.5) }
+.btn-outline { font-family:var(--display); font-size:.66rem; letter-spacing:.14em; text-transform:uppercase; padding:14px 32px; border:1px solid rgba(255,255,255,.2); color:rgba(255,255,255,.75); border-radius:100px; transition:all .3s; backdrop-filter:blur(8px); background:rgba(255,255,255,.04); }
+.btn-outline:hover { border-color:#fff; color:#fff; background:rgba(255,255,255,.08) }
+.hero-free-note { animation:fadeUp .9s .8s both; margin-top:20px; font-family:var(--display); font-size:.52rem; letter-spacing:.18em; text-transform:uppercase; color:var(--cyan); opacity:.8; }
+.hero-free-note span { display:inline-block; margin:0 6px; opacity:.4; }
+.hero-scroll { position:absolute; bottom:28px; left:50%; transform:translateX(-50%); z-index:10; display:flex; flex-direction:column; align-items:center; gap:8px; font-family:var(--display); font-size:.52rem; letter-spacing:.22em; text-transform:uppercase; color:rgba(255,255,255,.25); animation:fadeUp .8s 1.2s both; }
+.scroll-line { width:1px; height:44px; background:linear-gradient(to bottom,var(--cyan),transparent); animation:scrollPulse 2s ease-in-out infinite; }
+@keyframes scrollPulse { 0% { transform:scaleY(0); transform-origin:top; opacity:0 } 40% { opacity:1 } 60% { transform:scaleY(1); transform-origin:top } 60.01% { transform-origin:bottom } 100% { transform:scaleY(0); transform-origin:bottom; opacity:0 } }
+@keyframes fadeUp { from { opacity:0; transform:translateY(24px) } to { opacity:1; transform:none } }
+.mission { background:var(--deep); padding:80px 48px; text-align:center; position:relative; overflow:hidden; }
+.mission::before { content:''; position:absolute; top:50%; left:50%; width:600px; height:600px; border-radius:50%; background:radial-gradient(circle,rgba(198,107,255,.05),transparent 70%); transform:translate(-50%,-50%); pointer-events:none; }
+.mission-eyebrow { font-family:var(--display); font-size:.56rem; letter-spacing:.3em; text-transform:uppercase; color:var(--cyan); margin-bottom:10px; display:block; }
+.cdc-statement { font-family:var(--display); font-size:clamp(1.8rem,5vw,4rem); font-weight:900; letter-spacing:.04em; line-height:1; margin-bottom:18px; background:var(--grad); -webkit-background-clip:text; -webkit-text-fill-color:transparent; background-clip:text; filter:drop-shadow(0 0 30px rgba(255,107,170,.25)); }
+.mission-title { font-family:var(--heading); font-size:clamp(1rem,2.5vw,1.4rem); font-weight:700; line-height:1.4; margin-bottom:16px; color:rgba(255,255,255,.8); }
+.mission-body { font-size:.96rem; color:var(--off); max-width:560px; margin:0 auto 28px; line-height:1.9; }
+.mission-pills { display:flex; gap:10px; justify-content:center; flex-wrap:wrap; }
+.mission-pill { padding:6px 16px; border:1px solid var(--border-md); border-radius:100px; font-family:var(--display); font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; color:var(--off); }
+.trust-bar { background:var(--void); border-top:1px solid var(--border); border-bottom:1px solid var(--border); padding:32px 48px; }
+.trust-bar__inner { max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(4,1fr); gap:24px; }
+@media(max-width:768px) { .trust-bar__inner { grid-template-columns:repeat(2,1fr) } }
+@media(max-width:480px) { .trust-bar__inner { grid-template-columns:1fr } }
+.trust-item { text-align:center; padding:20px 16px; }
+.trust-icon { font-size:1.4rem; margin-bottom:8px; display:block; }
+.trust-label { font-family:var(--display); font-size:.52rem; letter-spacing:.16em; text-transform:uppercase; color:var(--cyan); display:block; margin-bottom:4px; }
+.trust-desc { font-size:.78rem; color:var(--muted); line-height:1.5; }
+.crew { background:var(--void); padding:96px 0 80px; scroll-margin-top:64px; }
+.crew__inner { max-width:1240px; margin:0 auto; padding:0 48px }
+.crew__header { text-align:center; margin-bottom:52px }
+.section-label { font-family:var(--display); font-size:.58rem; letter-spacing:.28em; text-transform:uppercase; color:var(--pink); margin-bottom:12px; display:block; }
+.section-title { font-family:var(--heading); font-size:clamp(1.7rem,4vw,3rem); font-weight:800; line-height:1.1; margin-bottom:10px; }
+.section-desc { font-size:.92rem; color:var(--muted); max-width:440px; margin:0 auto; }
+.crew-toggle-wrap { text-align:center; margin-bottom:36px; }
+.crew-toggle-btn { display:inline-flex; align-items:center; gap:12px; font-family:var(--display); font-size:.72rem; letter-spacing:.18em; text-transform:uppercase; padding:18px 40px; border-radius:100px; border:2px solid var(--purple); color:#fff; background:linear-gradient(135deg,rgba(198,107,255,.25),rgba(0,232,255,.1)); cursor:pointer; transition:all .3s; box-shadow:0 0 30px rgba(198,107,255,.25),inset 0 0 20px rgba(198,107,255,.05); animation:toggle-pulse 3s ease-in-out infinite; }
+@keyframes toggle-pulse { 0%,100% { box-shadow:0 0 30px rgba(198,107,255,.25),inset 0 0 20px rgba(198,107,255,.05) } 50% { box-shadow:0 0 50px rgba(198,107,255,.5),0 0 20px rgba(0,232,255,.2),inset 0 0 20px rgba(198,107,255,.1) } }
+.crew-toggle-btn:hover { background:linear-gradient(135deg,rgba(198,107,255,.4),rgba(0,232,255,.15)); border-color:var(--cyan); transform:translateY(-2px); box-shadow:0 8px 40px rgba(198,107,255,.4); }
+.crew-toggle-arrow { display:inline-block; transition:transform .35s; font-style:normal; }
+.crew-toggle-btn.open .crew-toggle-arrow { transform:rotate(180deg); }
+.crew__grid-wrap { overflow:hidden; max-height:0; transition:max-height .55s cubic-bezier(.4,0,.2,1),opacity .4s; opacity:0; }
+.crew__grid-wrap.open { max-height:3000px; opacity:1; }
+.crew__grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; }
+@media(max-width:900px) { .crew__grid { grid-template-columns:repeat(2,1fr) } }
+@media(max-width:540px) { .crew__grid { grid-template-columns:1fr } }
+.stat-card { background:var(--card); border-radius:14px; border:1px solid var(--border); overflow:hidden; position:relative; transition:border-color .35s,transform .3s,box-shadow .35s; cursor:pointer; }
+.stat-card:hover { transform:translateY(-5px); border-color:var(--cc,rgba(198,107,255,.5)); box-shadow:0 16px 50px rgba(0,0,0,.5),0 0 30px rgba(198,107,255,.12); }
+.sc-media { position:relative; aspect-ratio:3/2.6; overflow:hidden; background:radial-gradient(ellipse at 50% 42%, var(--cc,rgba(198,107,255,.22)) 0%, rgba(15,21,37,0) 68%), var(--card); }
+.sc-char-gif { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:74%; height:88%; object-fit:contain; filter:drop-shadow(0 0 24px var(--cc,rgba(198,107,255,.6))); transition:transform .4s cubic-bezier(.34,1.56,.64,1),filter .4s; z-index:2; }
+.stat-card:hover .sc-char-gif { transform:translate(-50%,-50%) scale(1.07); filter:drop-shadow(0 0 40px var(--cc,rgba(198,107,255,.9))); }
+.sc-glow { position:absolute; inset:0; z-index:3; background:linear-gradient(to top,var(--card) 0%,rgba(0,0,0,0) 28%,transparent 100%); pointer-events:none; }
+.sc-body { padding:0 16px 18px; position:relative; z-index:4; }
+.sc-header { display:flex; align-items:flex-start; justify-content:space-between; margin-bottom:8px; }
+.sc-id { font-family:var(--display); font-size:.44rem; letter-spacing:.22em; text-transform:uppercase; color:var(--cc,var(--pink)); opacity:.6; }
+.sc-lang-badge { font-family:var(--display); font-size:.42rem; letter-spacing:.1em; text-transform:uppercase; padding:3px 8px; border-radius:4px; border:1px solid var(--cc,var(--pink)); color:var(--cc,var(--pink)); background:rgba(0,0,0,.3); opacity:.8; }
+.sc-name { font-family:var(--heading); font-size:1.15rem; font-weight:800; margin-bottom:1px; }
+.sc-role { font-size:.74rem; color:var(--muted); margin-bottom:4px; }
+.sc-catchphrase { font-size:.72rem; color:var(--cc,var(--pink)); font-style:italic; margin-bottom:12px; opacity:.9; line-height:1.4; }
+.sc-lesson-toggle { width:100%; display:flex; align-items:center; justify-content:space-between; background:rgba(0,0,0,.3); border:1px solid var(--border); border-radius:8px; padding:8px 12px; margin-bottom:10px; cursor:pointer; transition:border-color .2s,background .2s; }
+.sc-lesson-toggle:hover { border-color:var(--cc,var(--pink)); background:rgba(0,0,0,.5); }
+.sc-lesson-toggle-label { font-family:var(--display); font-size:.42rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); }
+.sc-lesson-toggle-arrow { font-size:.6rem; color:var(--cc,var(--pink)); transition:transform .3s; display:inline-block; }
+.sc-lesson-toggle.open .sc-lesson-toggle-arrow { transform:rotate(180deg); }
+.sc-lessons { overflow:hidden; max-height:0; transition:max-height .4s cubic-bezier(.4,0,.2,1),opacity .3s; opacity:0; margin-bottom:0; }
+.sc-lessons.open { max-height:400px; opacity:1; margin-bottom:10px; }
+.sc-lessons-inner { padding:10px; background:rgba(0,0,0,.3); border-radius:0 0 8px 8px; border:1px solid var(--border); border-top:none; }
+.sc-lesson-item { display:flex; align-items:baseline; gap:6px; padding:4px 0; border-bottom:1px solid rgba(255,255,255,.04); }
+.sc-lesson-item:last-child { border-bottom:none; }
+.sc-lesson-num { font-family:var(--display); font-size:.38rem; color:var(--cc,var(--pink)); opacity:.7; min-width:18px; flex-shrink:0; }
+.sc-lesson-title { font-size:.72rem; color:var(--off); line-height:1.4; }
+.sc-lesson-free { display:inline-block; margin-left:4px; padding:1px 5px; border-radius:100px; font-family:var(--display); font-size:.32rem; font-weight:700; background:linear-gradient(135deg,#00e8ff,#c66bff); color:#000; vertical-align:middle; }
+.sc-actions { display:flex; gap:7px; }
+.sc-btn-game { flex:1; font-family:var(--display); font-size:.48rem; letter-spacing:.1em; text-transform:uppercase; padding:10px 8px; border-radius:7px; border:1px solid var(--cc,var(--pink)); color:var(--cc,var(--pink)); background:rgba(0,0,0,.3); text-align:center; transition:all .2s; position:relative; z-index:5; display:block; }
+.sc-btn-game:hover { background:var(--cc,var(--pink)); color:#000; }
+.sc-btn-game .free-badge { display:inline-block; margin-left:6px; padding:1px 6px; border-radius:100px; font-size:.38rem; letter-spacing:.1em; font-weight:700; background:linear-gradient(135deg,#00e8ff,#c66bff); color:#000; vertical-align:middle; box-shadow:0 0 8px rgba(0,232,255,.5); animation:badge-pulse 2s ease-in-out infinite; }
+@keyframes badge-pulse { 0%,100% { box-shadow:0 0 8px rgba(0,232,255,.5) } 50% { box-shadow:0 0 16px rgba(0,232,255,.9),0 0 24px rgba(198,107,255,.4) } }
+.membership-strip { background:var(--deep); padding:80px 48px; position:relative; overflow:hidden; }
+.membership-strip::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 60% 50%,rgba(198,107,255,.08),transparent 70%); pointer-events:none; }
+.membership-strip__inner { max-width:1100px; margin:0 auto; }
+.membership-strip__head { text-align:center; margin-bottom:32px; }
+.membership-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; align-items:start; max-width:820px; margin:0 auto; }
+@media(max-width:900px) { .membership-grid { grid-template-columns:1fr; max-width:420px; } }
+.tier-card { background:var(--card); border:1px solid var(--border); border-radius:14px; padding:24px; position:relative; transition:border-color .3s,transform .3s; }
+.tier-card:hover { transform:translateY(-4px); border-color:var(--cc,rgba(198,107,255,.4)); }
+.tier-card.featured { border-color:rgba(198,107,255,.4); background:linear-gradient(135deg,rgba(198,107,255,.08),rgba(0,232,255,.04)); }
+.tier-card.free-tier { border-color:rgba(0,232,255,.2); }
+.tier-card.free-tier:hover { border-color:rgba(0,232,255,.5); }
+.tier-featured-badge { position:absolute; top:-10px; left:50%; transform:translateX(-50%); font-family:var(--display); font-size:.38rem; letter-spacing:.14em; text-transform:uppercase; padding:3px 12px; background:var(--grad); color:#000; font-weight:700; border-radius:100px; }
+.tier-name { font-family:var(--display); font-size:.72rem; letter-spacing:.16em; text-transform:uppercase; color:var(--cc,var(--purple)); margin-bottom:4px; }
+.tier-price { font-family:var(--display); font-size:1.6rem; font-weight:900; line-height:1; margin-bottom:4px; }
+.tier-price span { font-size:.6rem; color:var(--muted); font-weight:400; }
+.tier-desc { font-size:.82rem; color:var(--off); margin-bottom:16px; line-height:1.65; min-height:54px; }
+.tier-kicker { font-family:var(--display); font-size:.44rem; letter-spacing:.14em; text-transform:uppercase; color:var(--cc,var(--purple)); opacity:.85; margin-bottom:12px; }
+.tier-perks { list-style:none; margin-bottom:18px; display:grid; gap:8px; }
+.tier-perks li { font-size:.76rem; color:var(--off); padding:10px 11px; border:1px solid var(--border); border-radius:9px; display:grid; grid-template-columns:24px 1fr; align-items:start; gap:8px; background:rgba(0,0,0,.22); line-height:1.45; }
+.tier-perks li:last-child { border-bottom:1px solid var(--border); }
+.tier-perks li::before { content:attr(data-icon); width:24px; height:24px; border-radius:7px; display:flex; align-items:center; justify-content:center; background:rgba(255,255,255,.05); color:var(--cc,var(--purple)); font-size:.8rem; flex-shrink:0; }
+.tier-upgrade-note { font-size:.72rem; line-height:1.55; color:var(--muted); padding:11px 12px; border-left:2px solid var(--cc,var(--purple)); background:rgba(255,255,255,.025); margin:4px 0 16px; border-radius:0 8px 8px 0; }
+.tier-btn { width:100%; font-family:var(--display); font-size:.52rem; letter-spacing:.12em; text-transform:uppercase; padding:12px; border-radius:8px; border:1px solid var(--cc,rgba(198,107,255,.4)); color:var(--cc,var(--purple)); background:none; cursor:pointer; transition:all .2s; }
+.tier-btn:disabled { opacity:.65; cursor:wait; transform:none; }
+@media(max-width:480px) {
+  .membership-strip { padding:64px 18px; }
+  .tier-card { padding:20px; }
+  .tier-desc { min-height:0; }
+}
+.tier-btn:hover { background:var(--cc,var(--purple)); color:#000; }
+.tier-card.featured .tier-btn { background:var(--grad); border:none; color:#000; font-weight:700; }
+.tier-card.free-tier .tier-btn { border-color:rgba(0,232,255,.4); color:var(--cyan); }
+.tier-card.free-tier .tier-btn:hover { background:var(--cyan); color:#000; }
+.workbook-strip { background:var(--void); padding:80px 48px; border-top:1px solid var(--border); }
+.workbook-strip__inner { max-width:900px; margin:0 auto; display:flex; gap:40px; align-items:center; }
+@media(max-width:768px) { .workbook-strip__inner { flex-direction:column; text-align:center } }
+.workbook-strip__text { flex:1; }
+.workbook-strip__visual { flex:0 0 260px; background:var(--card); border:1px solid var(--border); border-radius:14px; padding:28px; text-align:center; position:relative; overflow:hidden; }
+.workbook-strip__visual::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at 50% 0%,rgba(255,107,170,.1),transparent 60%); pointer-events:none; }
+.workbook-preview-title { font-family:var(--display); font-size:.58rem; letter-spacing:.2em; text-transform:uppercase; color:var(--pink); margin-bottom:6px; }
+.workbook-preview-name { font-family:var(--heading); font-size:1.1rem; font-weight:800; margin-bottom:4px; }
+.workbook-preview-sub { font-size:.74rem; color:var(--muted); margin-bottom:16px; }
+.workbook-preview-pages { font-family:var(--display); font-size:.5rem; letter-spacing:.14em; text-transform:uppercase; color:var(--cyan); opacity:.7; }
+.dark-orb-strip { position:relative; padding:80px 48px; overflow:hidden; background:radial-gradient(ellipse at 50% 50%,rgba(198,107,255,.07) 0%,var(--void) 70%); border-top:1px solid var(--border); }
+.dark-orb-strip__inner { max-width:700px; margin:0 auto; text-align:center; }
+.dark-orb { width:140px; height:140px; border-radius:50%; background:radial-gradient(circle at 35% 35%,rgba(198,107,255,.6),rgba(5,5,8,.9)); border:1px solid rgba(198,107,255,.3); margin:0 auto 28px; box-shadow:0 0 60px rgba(198,107,255,.25),inset 0 0 40px rgba(0,0,0,.5); animation:orb-pulse 4s ease-in-out infinite; }
+@keyframes orb-pulse { 0%,100% { box-shadow:0 0 60px rgba(198,107,255,.25),inset 0 0 40px rgba(0,0,0,.5) } 50% { box-shadow:0 0 100px rgba(198,107,255,.45),0 0 40px rgba(0,232,255,.15),inset 0 0 40px rgba(0,0,0,.5) } }
+.newsletter { background:var(--deep); padding:72px 48px; text-align:center; border-top:1px solid var(--border); }
+.newsletter__inner { max-width:480px; margin:0 auto; }
+.newsletter-form { display:flex; gap:10px; margin-top:20px; flex-wrap:wrap; justify-content:center; }
+.newsletter-input { flex:1; min-width:220px; font-family:var(--body); font-size:.88rem; padding:12px 18px; background:var(--card); border:1px solid var(--border-md); border-radius:100px; color:var(--white); outline:none; transition:border-color .2s; }
+.newsletter-input:focus { border-color:var(--purple); }
+.newsletter-input::placeholder { color:var(--muted); }
+.newsletter-btn { font-family:var(--display); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; padding:12px 24px; background:var(--grad); color:#000; font-weight:700; border-radius:100px; border:none; cursor:pointer; transition:transform .2s; }
+.newsletter-btn:hover { transform:translateY(-1px) }
+#newsletter-success { display:none; font-family:var(--display); font-size:.6rem; letter-spacing:.14em; text-transform:uppercase; color:var(--cyan); margin-top:12px; }
+footer { background:var(--void); border-top:1px solid var(--border); padding:40px 48px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px; }
+.footer-logo { font-family:var(--display); font-size:.62rem; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.3); }
+.footer-copy { font-size:.74rem; color:var(--muted); }
+.footer-links { display:flex; gap:20px; }
+.footer-links a { font-family:var(--display); font-size:.52rem; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.25); transition:color .2s; }
+.footer-links a:hover { color:var(--pink); }
+.modal-overlay { display:none; position:fixed; inset:0; z-index:1000; background:rgba(5,5,8,.88); backdrop-filter:blur(16px); align-items:center; justify-content:center; padding:20px; }
+.modal-box { background:var(--card); border:1px solid var(--border-md); border-radius:20px; padding:40px; width:100%; max-width:400px; position:relative; }
+.modal-close { position:absolute; top:16px; right:16px; background:none; border:none; color:rgba(255,255,255,.35); font-size:1.2rem; cursor:pointer; line-height:1; transition:color .2s; }
+.modal-close:hover { color:#fff }
+.modal-title { font-family:var(--display); font-size:.9rem; letter-spacing:.12em; text-transform:uppercase; margin-bottom:6px; }
+.modal-sub { font-size:.82rem; color:var(--muted); margin-bottom:24px; }
+.modal-tabs { display:flex; gap:4px; margin-bottom:24px; background:rgba(0,0,0,.3); border-radius:10px; padding:4px; }
+.modal-tab { flex:1; font-family:var(--display); font-size:.55rem; letter-spacing:.12em; text-transform:uppercase; padding:8px; border-radius:7px; border:none; background:none; color:rgba(255,255,255,.4); cursor:pointer; transition:all .2s; }
+.modal-tab.active { background:rgba(198,107,255,.2); color:var(--purple); }
+.modal-field { margin-bottom:14px; }
+.modal-field label { display:block; font-family:var(--display); font-size:.48rem; letter-spacing:.14em; text-transform:uppercase; color:var(--muted); margin-bottom:5px; }
+.modal-field input { width:100%; padding:11px 14px; background:rgba(0,0,0,.3); border:1px solid var(--border-md); border-radius:8px; color:#fff; font-family:var(--body); font-size:.88rem; outline:none; transition:border-color .2s; }
+.modal-field input:focus { border-color:var(--purple); }
+.modal-submit { width:100%; font-family:var(--display); font-size:.62rem; letter-spacing:.14em; text-transform:uppercase; padding:13px; background:var(--grad); color:#000; font-weight:700; border-radius:100px; border:none; cursor:pointer; margin-top:6px; transition:transform .2s; }
+.modal-submit:hover { transform:translateY(-1px) }
+.modal-error { font-size:.78rem; color:var(--pink); margin-top:8px; display:none; line-height:1.5; }
+.modal-error.visible { display:block; }
+.modal-submit:disabled { opacity:.65; cursor:wait; transform:none; }
+.modal-status { display:none; margin-top:10px; font-size:.76rem; color:var(--cyan); text-align:center; line-height:1.5; }
+.modal-status.visible { display:block; }
+</style>
+</head>
+<body>
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<nav id="mainNav">
+<a href="index.html" class="nav-logo"><div class="nav-logo-mark">M</div> Method in Motion</a>
+<ul class="nav-links">
+<li><a href="#crew">Crew</a></li>
+<li><a href="#membership">Membership</a></li>
+<li><a href="games.html">Games</a></li>
+<li><a href="pdfs.html">PDFs</a></li>
+<li><a href="library.html">Library</a></li>
+<li><a href="characters.html">Characters</a></li>
+<li><a href="broken-syntax.html">Broken Syntax</a></li>
+<li><a href="mim-tv.html">MiM TV</a></li>
+<li><a href="comic.html">Comics</a></li>
+</ul>
+<div class="nav-right">
+<div id="nav-auth-btns" style="display:flex;align-items:center;gap:10px;">
+<button class="nav-cta" id="nav-login" onclick="openModal('login')">Log In</button>
+<button class="nav-join-btn" id="nav-join" onclick="openModal('signup')">Join Free</button>
+</div>
+<div id="nav-user-menu">
+<span id="nav-username"></span>
+<a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
+<button id="nav-logout-btn">Log Out</button>
+</div>
+</div>
+<button class="nav-hamburger" id="navHamburger" aria-label="Open menu" onclick="toggleMobileDrawer()">
+<span></span><span></span><span></span>
+</button>
+</nav>
+<div class="mobile-drawer-overlay" id="mobileDrawerOverlay" onclick="closeMobileDrawer()"></div>
+<div class="mobile-drawer" id="mobileDrawer">
+<button class="mobile-drawer-close" onclick="closeMobileDrawer()" aria-label="Close menu">&#10005;</button>
+<ul class="mobile-drawer-links">
+<li><a href="#crew" onclick="closeMobileDrawer()">Crew</a></li>
+<li><a href="#membership" onclick="closeMobileDrawer()">Membership</a></li>
+<li><a href="games.html">Games</a></li>
+<li><a href="pdfs.html">PDFs</a></li>
+<li><a href="library.html">Library</a></li>
+<li><a href="characters.html">Characters</a></li>
+<li><a href="broken-syntax.html">Broken Syntax</a></li>
+<li><a href="mim-tv.html">MiM TV</a></li>
+<li><a href="comic.html">Comics</a></li>
+</ul>
+<div class="mobile-drawer-auth" id="mobileDrawerAuth">
+<button class="nav-cta" onclick="openModal('login');closeMobileDrawer()">Log In</button>
+<button class="nav-join-btn" onclick="openModal('signup');closeMobileDrawer()">Join Free</button>
+</div>
+</div>
+<section class="hero">
+<div class="hero-bg"><div class="hero-bg-grad"></div></div>
+<div class="hero-universe"></div>
+<div class="hero-universe-overlay"></div>
+<div class="hero-nebula"></div>
+<div class="hero-orb orb-a"></div>
+<div class="hero-orb orb-b"></div>
+<div class="hero-orb orb-c"></div>
+<div class="hero-orb orb-d"></div>
+<div class="hero-grid"></div>
+<div class="hero-scan"></div>
+<div class="hero-particles" id="heroParticles"></div>
+<div class="hero-overlay-bottom"></div>
+<div class="hero-content">
+<p class="hero-eyebrow">A Universe Built for Young Creators</p>
+<h1 class="hero-title">METHOD IN MOTION</h1>
+<p class="hero-sub">Learn &nbsp;·&nbsp; Create &nbsp;·&nbsp; Explore</p>
+<div class="hero-actions">
+<button class="btn-primary" onclick="openModal('signup')">Begin Your Adventure — Free</button>
+<button class="btn-outline" onclick="document.getElementById('crew').scrollIntoView({behavior:'smooth'})">Meet the Crew</button>
+</div>
+<p class="hero-free-note">✦Free account, no card needed <span>·</span> Real code. Real projects. <span>·</span> Upgrade anytime</p>
+</div>
+<div class="hero-scroll"><div class="scroll-line"></div><span>Explore</span></div>
+</section>
+<section class="mission">
+<span class="mission-eyebrow">Why We Exist</span>
+<div class="cdc-statement">Create, Don't Consume.</div>
+<h2 class="mission-title">Six characters. Six worlds. One universe built to make kids creators.</h2>
+<p class="mission-body">Method in Motion teaches kids real coding through a cast of character guides — each one owning a different corner of the web. HTML, CSS, JavaScript, debugging, logic, sound. Real code, written by hand, every lesson. No watered-down shortcuts — just clear steps, real skills, and a game world underground that makes learning feel like an adventure.</p>
+<div class="mission-pills">
+<span class="mission-pill">HTML</span>
+<span class="mission-pill">CSS</span>
+<span class="mission-pill">JavaScript</span>
+<span class="mission-pill">Debugging</span>
+<span class="mission-pill">Logic</span>
+<span class="mission-pill">Web Audio</span>
+</div>
+</section>
+<section class="trust-bar">
+<div class="trust-bar__inner">
+<div class="trust-item">
+<span class="trust-icon">💻</span>
+<span class="trust-label">Real Code</span>
+<p class="trust-desc">Kids write actual HTML, CSS, and JavaScript — not simplified drag-and-drop blocks.</p>
+</div>
+<div class="trust-item">
+<span class="trust-icon">🧠</span>
+<span class="trust-label">Builds Confidence</span>
+<p class="trust-desc">Every lesson ends with a project built from scratch. That feeling is the point.</p>
+</div>
+<div class="trust-item">
+<span class="trust-icon">🎮</span>
+<span class="trust-label">Learning Disguised as Play</span>
+<p class="trust-desc">Zen's world and icebreaker game are free for everyone. Five more game worlds open with membership.</p>
+</div>
+<div class="trust-item">
+<span class="trust-icon">🔒</span>
+<span class="trust-label">Safe &amp; Ad-Free</span>
+<p class="trust-desc">No ads. No distractions. A focused environment designed entirely for young learners.</p>
+</div>
+</div>
+</section>
+<section class="crew" id="crew">
+<div class="crew__inner">
+<div class="crew__header">
+<span class="section-label">Meet the Crew</span>
+<h2 class="section-title">Six guides. Six worlds to explore.</h2>
+<p class="section-desc">Every character teaches a different skill and leads kids through their own corner of the MiM universe.</p>
+</div>
+<div class="crew-toggle-wrap">
+<button class="crew-toggle-btn" id="crewToggleBtn" onclick="toggleCrew()">Choose Your Guide <i class="crew-toggle-arrow">&#8964;</i></button>
+</div>
+<div class="crew__grid-wrap" id="crewGridWrap">
+<div class="crew__grid">
+<div class="stat-card" style="--cc:#ff6baa" onclick="window.location='zen.html'">
+<div class="sc-media"><img class="sc-char-gif" src="zen-motion.gif" alt="Zen"><div class="sc-glow"></div></div>
+<div class="sc-body">
+<div class="sc-header"><span class="sc-id">MIM-001</span><span class="sc-lang-badge">HTML+CSS</span></div>
+<div class="sc-name">Zen</div>
+<div class="sc-role">The Creative Coder · Coding Realm</div>
+<div class="sc-catchphrase">"If you can imagine it, you can code it!"</div>
+<button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
+<span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span>
+<span class="sc-lesson-toggle-arrow">&#8964;</span>
+</button>
+<div class="sc-lessons">
+<div class="sc-lessons-inner">
+<div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">What is Code? <span class="sc-lesson-free">FREE</span></span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Your First HTML Tag <span class="sc-lesson-free">FREE</span></span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Colors &amp; Style with CSS <span class="sc-lesson-free">FREE</span></span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build Your Own Page <span class="sc-lesson-free">FREE</span></span></div>
+</div>
+</div>
+<div class="sc-actions">
+<a href="zen.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Zen's World <span class="free-badge">FREE</span></a>
+</div>
+</div>
+</div>
+<div class="stat-card" style="--cc:#c66bff" onclick="window.location='byte.html'">
+<div class="sc-media"><img class="sc-char-gif" src="byte-motion.gif" alt="Byte"><div class="sc-glow"></div></div>
+<div class="sc-body">
+<div class="sc-header"><span class="sc-id">MIM-002</span><span class="sc-lang-badge">Data</span></div>
+<div class="sc-name">Byte</div>
+<div class="sc-role">The Data Tracker · Code City</div>
+<div class="sc-catchphrase">"Nothing gets by me."</div>
+<button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
+<span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span>
+<span class="sc-lesson-toggle-arrow">&#8964;</span>
+</button>
+<div class="sc-lessons">
+<div class="sc-lessons-inner">
+<div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Data Basics</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Patterns &amp; Sequences</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Organizing Information</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Byte's Data Challenge</span></div>
+</div>
+</div>
+<div class="sc-actions">
+<a href="byte.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Byte's World</a>
+</div>
+</div>
+</div>
+<div class="stat-card" style="--cc:#00e8ff" onclick="window.location='loop.html'">
+<div class="sc-media"><img class="sc-char-gif" src="loop-motion.gif" alt="Loop"><div class="sc-glow"></div></div>
+<div class="sc-body">
+<div class="sc-header"><span class="sc-id">MIM-003</span><span class="sc-lang-badge">JavaScript</span></div>
+<div class="sc-name">Loop</div>
+<div class="sc-role">The Flow Master · Challenge Course</div>
+<div class="sc-catchphrase">"The flow never stops."</div>
+<button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
+<span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span>
+<span class="sc-lesson-toggle-arrow">&#8964;</span>
+</button>
+<div class="sc-lessons">
+<div class="sc-lessons-inner">
+<div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Thinking in Patterns</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">For Loops</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Conditionals</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Flow Challenge</span></div>
+</div>
+</div>
+<div class="sc-actions">
+<a href="loop.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Loop's World</a>
+</div>
+</div>
+</div>
+<div class="stat-card" style="--cc:#ffe066" onclick="window.location='nova.html'">
+<div class="sc-media"><img class="sc-char-gif" src="nova-motion.gif" alt="Nova"><div class="sc-glow"></div></div>
+<div class="sc-body">
+<div class="sc-header"><span class="sc-id">MIM-004</span><span class="sc-lang-badge">HTML</span></div>
+<div class="sc-name">Nova</div>
+<div class="sc-role">The Curious Coder · Discovery Dome</div>
+<div class="sc-catchphrase">"The answers are out there!"</div>
+<button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
+<span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span>
+<span class="sc-lesson-toggle-arrow">&#8964;</span>
+</button>
+<div class="sc-lessons">
+<div class="sc-lessons-inner">
+<div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Blueprint Thinking</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Building Blocks</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Layout &amp; Nesting</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Build Your Page</span></div>
+</div>
+</div>
+<div class="sc-actions">
+<a href="nova.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Nova's World</a>
+</div>
+</div>
+</div>
+<div class="stat-card" style="--cc:#84cc16" onclick="window.location='bug.html'">
+<div class="sc-media"><img class="sc-char-gif" src="bug-motion.gif" alt="Bug"><div class="sc-glow"></div></div>
+<div class="sc-body">
+<div class="sc-header"><span class="sc-id">MIM-005</span><span class="sc-lang-badge">JS Logic</span></div>
+<div class="sc-name">Bug</div>
+<div class="sc-role">The Glitch Hunter · Debug Garage</div>
+<div class="sc-catchphrase">"Every bug is just a clue."</div>
+<button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
+<span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span>
+<span class="sc-lesson-toggle-arrow">&#8964;</span>
+</button>
+<div class="sc-lessons">
+<div class="sc-lessons-inner">
+<div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">What Is a Bug?</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Reading Errors</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">Logic Tracing</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Debug Challenge</span></div>
+</div>
+</div>
+<div class="sc-actions">
+<a href="bug.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Bug's World</a>
+</div>
+</div>
+</div>
+<div class="stat-card" style="--cc:#38bdf8" onclick="window.location='echo.html'">
+<div class="sc-media"><img class="sc-char-gif" src="echo-motion.gif" alt="Echo"><div class="sc-glow"></div></div>
+<div class="sc-body">
+<div class="sc-header"><span class="sc-id">MIM-006</span><span class="sc-lang-badge">Web Audio</span></div>
+<div class="sc-name">Echo</div>
+<div class="sc-role">The Signal Sender · Sound Studio</div>
+<div class="sc-catchphrase">"Sending waves across the universe!"</div>
+<button class="sc-lesson-toggle" onclick="event.stopPropagation();toggleLessons(this)">
+<span class="sc-lesson-toggle-label">4 Lessons &nbsp;·&nbsp; View Journey</span>
+<span class="sc-lesson-toggle-arrow">&#8964;</span>
+</button>
+<div class="sc-lessons">
+<div class="sc-lessons-inner">
+<div class="sc-lesson-item"><span class="sc-lesson-num">L1</span><span class="sc-lesson-title">Events &amp; Listeners</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L2</span><span class="sc-lesson-title">Timers &amp; Timing</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L3</span><span class="sc-lesson-title">The Web Audio API</span></div>
+<div class="sc-lesson-item"><span class="sc-lesson-num">L4</span><span class="sc-lesson-title">Beat Machine</span></div>
+</div>
+</div>
+<div class="sc-actions">
+<a href="echo.html" class="sc-btn-game" onclick="event.stopPropagation()">Enter Echo's World</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section class="membership-strip" id="membership">
+<div class="membership-strip__inner">
+<div class="membership-strip__head">
+<span class="section-label">Choose Your Path</span>
+<h2 class="section-title">Sign up and start learning.</h2>
+<p class="section-desc" style="max-width:620px;margin:0 auto;">Our world is growing every day. Start with a free Explorer Pass, then unlock more characters, games, comics, music, printables, and creative tools whenever you are ready.</p>
+</div>
+<div class="membership-grid">
 
-function setAuthTab(tab) {
-  document.querySelectorAll(".auth-tab").forEach((btn) => {
-    btn.classList.toggle("active", btn.dataset.tab === tab);
-  });
-  document.getElementById("login-form")?.classList.toggle("active", tab === "login");
-  document.getElementById("signup-form")?.classList.toggle("active", tab === "signup");
-  if (document.getElementById("login-form")) {
-    document.getElementById("login-form").style.display = tab === "login" ? "block" : "none";
+<div class="tier-card free-tier" style="--cc:rgba(0,232,255,.8)">
+<div class="tier-name" style="color:var(--cyan)">Explorer</div>
+<div class="tier-price" style="color:var(--cyan)">$0<span> / forever</span></div>
+<div class="tier-kicker">Your free pass into the universe</div>
+<div class="tier-desc">Meet Zen, start coding, and unlock enough of Method in Motion to begin creating today. No credit card. No catch.</div>
+<ul class="tier-perks">
+<li data-icon="🚀"><span><strong>Full Zen access</strong> — all four beginner lessons and her coding world</span></li>
+<li data-icon="🧠"><span>Zen's icebreaker memory challenge</span></li>
+<li data-icon="📄"><span>Zen's downloadable coding cheat sheet</span></li>
+<li data-icon="📚"><span><strong>Explorer Library Pass</strong> with the first MiM collection</span></li>
+<li data-icon="🎸"><span>Broken Syntax's first full single</span></li>
+<li data-icon="📖"><span>The first set of Method in Motion comics</span></li>
+<li data-icon="🎨"><span>Tag Wall access plus a downloadable keepsake background</span></li>
+<li data-icon="∞"><span>Free forever — your Explorer Pass never expires</span></li>
+</ul>
+<div class="tier-upgrade-note">Start here, explore the world, and upgrade only when you are ready for more of the crew.</div>
+<button class="tier-btn" data-plan="explorer" onclick="selectMembershipPlan('explorer')">Join Free &amp; Start Learning</button>
+</div>
+
+<div class="tier-card" style="--cc:rgba(255,107,170,.75)">
+<div class="tier-name">Sparks</div>
+<div class="tier-price">$5<span> /mo</span></div>
+<div class="tier-kicker">The crew gets bigger</div>
+<div class="tier-desc"><strong>Everything in Explorer, plus</strong> Byte and Echo, more worlds, more downloads, and more of the MiM universe to explore.</div>
+<ul class="tier-perks">
+<li data-icon="✨"><span><strong>Everything included with Explorer</strong></span></li>
+<li data-icon="🤖"><span>Full Byte access — all four lessons and her complete game world</span></li>
+<li data-icon="📡"><span>Full Echo access — all four lessons and her complete game world</span></li>
+<li data-icon="🎮"><span>Zen's full game world plus Byte and Echo's worlds</span></li>
+<li data-icon="📘"><span>PDF Volume 1 and expanded printable activities</span></li>
+<li data-icon="📚"><span>Full MiM Library access</span></li>
+<li data-icon="🎸"><span>More Broken Syntax music releases</span></li>
+<li data-icon="📖"><span>More MiM comics and story drops</span></li>
+<li data-icon="🎨"><span>Expanded Tag Wall backgrounds and keepsake options</span></li>
+<li data-icon="🎁"><span>Three-day free trial</span></li>
+</ul>
+<div class="tier-upgrade-note">Ready for the whole universe? Coders unlocks every character, world, game, PDF, comic, song, and premium perk.</div>
+<button class="tier-btn" data-plan="sparks" onclick="selectMembershipPlan('sparks')">Start Sparks Free Trial</button>
+</div>
+
+<div class="tier-card featured" style="--cc:var(--cyan)">
+<div class="tier-featured-badge">Everything Unlocked</div>
+<div class="tier-name">Coders</div>
+<div class="tier-price">$9<span> /mo</span></div>
+<div class="tier-kicker">The complete Method in Motion universe</div>
+<div class="tier-desc"><strong>Everything in Sparks, plus absolutely everything else.</strong> Every character. Every world. Every game. Nothing held back.</div>
+<ul class="tier-perks">
+<li data-icon="🌌"><span><strong>Everything included with Sparks</strong></span></li>
+<li data-icon="🔄"><span>Loop, Nova, and Bug fully unlocked — all lessons and game worlds</span></li>
+<li data-icon="🎮"><span>All six games and all six character worlds, fully open</span></li>
+<li data-icon="📚"><span>Every MiM Library collection</span></li>
+<li data-icon="📄"><span>Every PDF, cheat sheet, workbook, and printable</span></li>
+<li data-icon="📖"><span>Every Method in Motion comic</span></li>
+<li data-icon="🎸"><span>Every Broken Syntax song and release</span></li>
+<li data-icon="🎨"><span>Complete Tag Wall access, exclusive backgrounds, and early-release keepsakes</span></li>
+<li data-icon="🧪"><span>Beta testing access and early access to new content</span></li>
+<li data-icon="💡"><span>Submit ideas and receive credit for what you help build</span></li>
+<li data-icon="🏆"><span>Game of the Month participation and winner referral keepsake link</span></li>
+<li data-icon="🚀"><span>Future major characters, games, comics, songs, PDFs, and world updates included</span></li>
+<li data-icon="🎁"><span>Three-day free trial</span></li>
+</ul>
+<button class="tier-btn" data-plan="coders" onclick="selectMembershipPlan('coders')">Unlock the Full Universe</button>
+</div>
+
+</div>
+</div>
+</section>
+<section class="workbook-strip">
+<div class="workbook-strip__inner">
+<div class="workbook-strip__text">
+<span class="section-label">Printable Workbooks</span>
+<h2 class="section-title" style="font-size:clamp(1.4rem,3vw,2.2rem);margin-bottom:12px;">Take the knowledge offline.</h2>
+<p style="font-size:.9rem;color:var(--off);line-height:1.8;margin-bottom:20px;">Printable cheat sheets covering coding foundations, computer science thinking, and digital world building. Great for kids who learn by writing, drawing, and doing. Full 50-page workbooks ($7.99 each) are coming soon.</p>
+<a href="pdfs.html" class="btn-primary" style="display:inline-block">Browse the Collection</a>
+</div>
+<div class="workbook-strip__visual">
+<div class="workbook-preview-title">Cheat Sheets — Available Now</div>
+<div class="workbook-preview-name">Think Like a Programmer</div>
+<div class="workbook-preview-sub">Vol. 1, 2 &amp; 3</div>
+<div class="workbook-preview-pages">Printable PDF &nbsp;·&nbsp; $3 Each</div>
+</div>
+</div>
+</section>
+<section class="dark-orb-strip">
+<div class="dark-orb-strip__inner">
+<div class="dark-orb"></div>
+<span class="section-label" style="display:block;text-align:center;">The Underground</span>
+<h2 class="section-title" style="text-align:center;margin-bottom:14px;">Six game worlds. One underground universe.</h2>
+<p style="font-size:.9rem;color:var(--off);text-align:center;max-width:520px;margin:0 auto 10px;line-height:1.8;">Every character has a game world hidden below the surface. These aren't bonus activities — they're the moment everything clicks.</p>
+<p style="font-size:.82rem;color:var(--muted);text-align:center;max-width:460px;margin:0 auto 28px;line-height:1.7;">Zen's world and icebreaker game are free for everyone. Sparks unlocks Byte and Echo's full worlds. Coders unlocks Loop, Nova, and Bug — every game world, fully open.</p>
+<div style="text-align:center;">
+<a href="games.html" class="btn-primary" style="display:inline-block">Explore the Game World</a>
+</div>
+</div>
+</section>
+<section class="newsletter">
+<div class="newsletter__inner">
+<span class="section-label" style="display:block;text-align:center">Stay in the Loop</span>
+<h2 class="section-title" style="font-size:1.4rem;text-align:center;margin-bottom:6px;">New worlds drop soon.</h2>
+<p style="font-size:.84rem;color:var(--muted);text-align:center;">Be the first to know when new characters, game worlds, and workbooks arrive in the universe.</p>
+<div class="newsletter-form">
+<input type="email" class="newsletter-input" id="newsletterEmail" placeholder="your@email.com">
+<button class="newsletter-btn" onclick="handleNewsletter()">Notify Me</button>
+</div>
+<div id="newsletter-success">You're in. Welcome to the universe. ✦</div>
+</div>
+</section>
+<footer>
+<div class="footer-logo">Method in Motion</div>
+<div class="footer-copy">© 2026 Method in Motion. Create, Don't Consume.</div>
+<div class="footer-links">
+<a href="pdfs.html">PDFs</a>
+<a href="library.html">Library</a>
+<a href="games.html">Games</a>
+<a href="characters.html">Characters</a>
+<a href="broken-syntax.html">Broken Syntax</a>
+<a href="mim-tv.html">MiM TV</a>
+<a href="comic.html">Comics</a>
+<a href="dashboard.html">Dashboard</a>
+</div>
+</footer>
+<div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true">
+<div class="modal-box">
+<button class="modal-close" id="auth-close-btn">&#10005;</button>
+<div class="modal-title">Method in Motion</div>
+<div class="modal-sub">Your adventure starts here.</div>
+<div class="modal-tabs">
+<button class="modal-tab active auth-tab" data-tab="login">Log In</button>
+<button class="modal-tab auth-tab" data-tab="signup">Sign Up</button>
+</div>
+<div id="login-form" class="auth-form" style="display:block">
+<div class="modal-field">
+<label>Email</label>
+<input type="email" id="login-email" placeholder="your@email.com" autocomplete="email">
+</div>
+<div class="modal-field">
+<label>Password</label>
+<input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password">
+</div>
+<p class="modal-error" id="login-error"></p>
+<button class="modal-submit" id="login-submit-btn">Log In</button>
+<p class="modal-status" id="login-status" aria-live="polite"></p>
+<p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">New here? <button class="auth-link" data-tab="signup" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Create an account</button></p>
+</div>
+<div id="signup-form" class="auth-form" style="display:none">
+<div class="modal-field">
+<label>Name</label>
+<input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname">
+</div>
+<div class="modal-field">
+<label>Email</label>
+<input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email">
+</div>
+<div class="modal-field">
+<label>Password</label>
+<input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password">
+</div>
+<p class="modal-error" id="signup-error"></p>
+<button class="modal-submit" id="signup-submit-btn">Create Your Account</button>
+<p class="modal-status" id="signup-status" aria-live="polite"></p>
+<p style="margin-top:12px;font-size:.75rem;color:var(--muted);text-align:center">Already in the crew? <button class="auth-link" data-tab="login" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--body)">Log in</button></p>
+</div>
+</div>
+</div>
+<script>
+const cursor=document.getElementById('cursor');
+const ring=document.getElementById('cursorRing');
+document.addEventListener('mousemove',e=>{cursor.style.left=e.clientX+'px';cursor.style.top=e.clientY+'px';setTimeout(()=>{ring.style.left=e.clientX+'px';ring.style.top=e.clientY+'px';},80);});
+window.addEventListener('scroll',()=>{document.getElementById('mainNav').classList.toggle('scrolled',window.scrollY>40);});
+function openModal(tab){document.getElementById('auth-modal').style.display='flex';switchTab(tab||'login');}
+function closeModal(){document.getElementById('auth-modal').style.display='none';}
+function switchTab(tab){document.querySelectorAll('.auth-tab').forEach(t=>t.classList.toggle('active',t.dataset.tab===tab));document.getElementById('login-form').style.display=tab==='login'?'block':'none';document.getElementById('signup-form').style.display=tab==='signup'?'block':'none';}
+document.getElementById('auth-close-btn').addEventListener('click',closeModal);
+document.getElementById('auth-modal').addEventListener('click',e=>{if(e.target===document.getElementById('auth-modal'))closeModal();});
+document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
+document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
+window.openModal=openModal;
+window.closeModal=closeModal;
+
+function selectMembershipPlan(plan){
+  const allowed=['explorer','sparks','coders'];
+  const selected=allowed.includes(plan)?plan:'explorer';
+  sessionStorage.setItem('mimSelectedPlan',selected);
+  const modalSub=document.querySelector('.modal-sub');
+  if(modalSub){
+    modalSub.textContent=selected==='explorer'
+      ? 'Create your free Explorer account and start learning.'
+      : `Create your account first. Your ${selected.charAt(0).toUpperCase()+selected.slice(1)} upgrade comes next.`;
   }
-  if (document.getElementById("signup-form")) {
-    document.getElementById("signup-form").style.display = tab === "signup" ? "block" : "none";
-  }
+  openModal('signup');
 }
-
-// Self-contained success toast. Built with inline styles (not page CSS
-// classes) so it renders consistently no matter which page/template it
-// fires on.
-function showWelcomeToast(message) {
-  const existing = document.getElementById("mim-welcome-toast");
-  if (existing) existing.remove();
-
-  const toast = document.createElement("div");
-  toast.id = "mim-welcome-toast";
-  toast.style.cssText = `
-    position:fixed;
-    top:24px;
-    left:50%;
-    transform:translateX(-50%) translateY(-20px);
-    z-index:99999;
-    background:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
-    color:#000;
-    font-family:'Orbitron',monospace;
-    font-size:.72rem;
-    letter-spacing:.08em;
-    font-weight:700;
-    padding:14px 26px;
-    border-radius:100px;
-    box-shadow:0 10px 40px rgba(198,107,255,.45);
-    opacity:0;
-    transition:opacity .35s ease, transform .35s ease;
-    text-align:center;
-    max-width:90vw;
-  `;
-  toast.textContent = message;
-  document.body.appendChild(toast);
-
-  requestAnimationFrame(() => {
-    toast.style.opacity = "1";
-    toast.style.transform = "translateX(-50%) translateY(0)";
-  });
-
-  setTimeout(() => {
-    toast.style.opacity = "0";
-    toast.style.transform = "translateX(-50%) translateY(-20px)";
-    setTimeout(() => toast.remove(), 400);
-  }, 3800);
-}
-
-onAuthStateChanged(auth, async (user) => {
-  const nameEl = document.getElementById("nav-username");
-  const userMenu = document.getElementById("nav-user-menu");
-  const loginBtn = document.getElementById("nav-login");
-  const joinBtn = document.getElementById("nav-join");
-
-  if (user) {
-    const userDoc = await getDoc(doc(db, "users", user.uid));
-    const userData = userDoc.exists() ? userDoc.data() : {};
-    const userTier = userData.tier || "none";
-    if (nameEl) nameEl.textContent = userData.displayName || user.email;
-    if (userMenu) userMenu.style.display = "flex";
-    if (loginBtn) loginBtn.style.display = "none";
-    if (joinBtn) joinBtn.style.display = "none";
-    if (typeof window.handleTierUnlock === "function") { window.handleTierUnlock(userTier); }
+window.selectMembershipPlan=selectMembershipPlan;
+function toggleCrew(){document.getElementById('crewGridWrap').classList.toggle('open');document.getElementById('crewToggleBtn').classList.toggle('open');}
+window.toggleCrew=toggleCrew;
+function toggleLessons(btn){const lessons=btn.nextElementSibling;btn.classList.toggle('open');lessons.classList.toggle('open');const label=btn.querySelector('.sc-lesson-toggle-label');label.textContent=lessons.classList.contains('open')?'4 Lessons · Hide Journey':'4 Lessons · View Journey';}
+window.toggleLessons=toggleLessons;
+window.handleNewsletter=async function(){const email=document.getElementById('newsletterEmail').value;if(!email)return;document.querySelector('.newsletter-form').style.display='none';document.getElementById('newsletter-success').style.display='block';};
+function syncMobileAuthDrawer(){
+  const menu=document.getElementById('nav-user-menu');
+  const loggedIn=menu && getComputedStyle(menu).display!=='none';
+  const box=document.getElementById('mobileDrawerAuth');
+  if(loggedIn){
+    box.innerHTML='<a href="dashboard.html" class="nav-cta" style="text-align:center;display:block" onclick="closeMobileDrawer()">Dashboard</a><button class="nav-join-btn" onclick="var b=document.getElementById(\'nav-logout-btn\');if(b)b.click();closeMobileDrawer()">Log Out</button>';
   } else {
-    if (nameEl) nameEl.textContent = "";
-    if (userMenu) userMenu.style.display = "none";
-    if (loginBtn) loginBtn.style.display = "inline-block";
-    if (joinBtn) joinBtn.style.display = "inline-block";
+    box.innerHTML='<button class="nav-cta" onclick="openModal(\'login\');closeMobileDrawer()">Log In</button><button class="nav-join-btn" onclick="openModal(\'signup\');closeMobileDrawer()">Join Free</button>';
   }
-});
-
-// Open modal
-document.getElementById("nav-login")?.addEventListener("click", (e) => {
-  e.preventDefault();
-  openAuthModal("login");
-});
-document.getElementById("nav-join")?.addEventListener("click", (e) => {
-  e.preventDefault();
-  openAuthModal("signup");
-});
-
-// Close modal
-document.getElementById("auth-close-btn")?.addEventListener("click", closeAuthModal);
-authModal?.addEventListener("click", (e) => {
-  if (e.target === authModal) closeAuthModal();
-});
-
-// Tab switching (top tabs + inline "switch" links)
-document.querySelectorAll(".auth-tab, .auth-link").forEach((el) => {
-  el.addEventListener("click", () => setAuthTab(el.dataset.tab));
-});
-
-// Logout
-document.getElementById("nav-logout-btn")?.addEventListener("click", () => { signOut(auth); });
-
-// Login submit
-document.getElementById("login-submit-btn")?.addEventListener("click", async () => {
-  const { signInWithEmailAndPassword } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
-  const email = document.getElementById("login-email").value.trim();
-  const password = document.getElementById("login-password").value;
-  const errorEl = document.getElementById("login-error");
-  try {
-    const cred = await signInWithEmailAndPassword(auth, email, password);
-    closeAuthModal();
-    const userDoc = await getDoc(doc(db, "users", cred.user.uid));
-    const displayName = userDoc.exists() ? (userDoc.data().displayName || "") : "";
-    showWelcomeToast(displayName ? `Welcome back, ${displayName}! ✦` : "Welcome back! ✦");
-  } catch (err) {
-    if (errorEl) errorEl.textContent = "Incorrect email or password.";
-  }
-});
-
-// Signup submit
-document.getElementById("signup-submit-btn")?.addEventListener("click", async () => {
-  const { createUserWithEmailAndPassword, updateProfile } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js");
-  const { setDoc } = await import("https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js");
-  const name = document.getElementById("signup-name").value.trim();
-  const email = document.getElementById("signup-email").value.trim();
-  const password = document.getElementById("signup-password").value;
-  const errorEl = document.getElementById("signup-error");
-  try {
-    const cred = await createUserWithEmailAndPassword(auth, email, password);
-    await updateProfile(cred.user, { displayName: name });
-    await setDoc(doc(db, "users", cred.user.uid), {
-      displayName: name,
-      email: email,
-      tier: "none",
-      createdAt: new Date().toISOString()
-    });
-    closeAuthModal();
-    showWelcomeToast(`Welcome to the crew, ${name}! ✦`);
-  } catch (err) {
-    if (errorEl) errorEl.textContent = err.message || "Something went wrong.";
-  }
-});
+}
+function toggleMobileDrawer(){
+  const d=document.getElementById('mobileDrawer');
+  const o=document.getElementById('mobileDrawerOverlay');
+  const h=document.getElementById('navHamburger');
+  const isOpen=d.classList.toggle('open');
+  o.classList.toggle('open',isOpen);
+  h.classList.toggle('open',isOpen);
+  if(isOpen)syncMobileAuthDrawer();
+}
+function closeMobileDrawer(){
+  document.getElementById('mobileDrawer').classList.remove('open');
+  document.getElementById('mobileDrawerOverlay').classList.remove('open');
+  document.getElementById('navHamburger').classList.remove('open');
+}
+window.toggleMobileDrawer=toggleMobileDrawer;
+window.closeMobileDrawer=closeMobileDrawer;
+(function(){const canvas=document.createElement('canvas');canvas.style.cssText='position:absolute;inset:0;width:100%;height:100%;pointer-events:none;';document.querySelector('.hero-bg').appendChild(canvas);const ctx=canvas.getContext('2d');function draw(){canvas.width=window.innerWidth;canvas.height=window.innerHeight;ctx.clearRect(0,0,canvas.width,canvas.height);for(let i=0;i<180;i++){ctx.beginPath();ctx.arc(Math.random()*canvas.width,Math.random()*canvas.height,Math.random()*1.2+.2,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${Math.random()*.5+.1})`;ctx.fill();}}draw();window.addEventListener('resize',draw);})();
+(function(){const c=document.getElementById('heroParticles');const cols=['#ff6baa','#c66bff','#00e8ff','#fff'];for(let i=0;i<28;i++){const p=document.createElement('div');p.className='hparticle';const s=Math.random()*3+1;p.style.cssText=`width:${s}px;height:${s}px;left:${Math.random()*100}%;background:${cols[Math.floor(Math.random()*cols.length)]};opacity:${Math.random()*.5+.2};animation-duration:${Math.random()*12+8}s;animation-delay:${Math.random()*10}s;`;c.appendChild(p);}})();
+</script>
+<script type="module" src="auth-init.js"></script>
+</body>
+</html>
