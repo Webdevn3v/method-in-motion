@@ -1,502 +1,321 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-DJ3Q488K7W');
-</script>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>My Dashboard — Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-:root{
-  --void:#050508; --deep:#08080f; --card:rgba(12,10,22,0.9);
-  --border:rgba(255,255,255,0.06); --border-md:rgba(255,255,255,0.1);
-  --text:#e8e8f5; --muted:#5a5a75;
-  --pink:#f472b6; --purple:#a855f7; --cyan:#00f5d4; --yellow:#fbbf24;
-  --lime:#84cc16; --blue:#38bdf8; --orange:#fb923c;
-  --grad:linear-gradient(135deg,#ff6baa,#c66bff);
-  --display:'Orbitron',monospace; --head:'Syne',sans-serif; --body:'DM Sans',sans-serif;
-}
-html{scroll-behavior:smooth;}
-body{background:var(--void);color:var(--text);font-family:var(--body);font-weight:300;min-height:100vh;overflow-x:hidden;}
-a{text-decoration:none;color:inherit;}
-.dash-bg-overlay{position:fixed;inset:0;z-index:0;background:radial-gradient(ellipse at top,rgba(168,85,247,0.06),transparent 60%),linear-gradient(to bottom,rgba(5,5,8,1) 0%,rgba(5,5,8,1) 100%);pointer-events:none;}
-.ambient{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden;}
-.ambient-orb{position:absolute;border-radius:50%;filter:blur(120px);animation:orb-drift ease-in-out infinite;}
-@keyframes orb-drift{0%,100%{transform:translate(0,0)}50%{transform:translate(var(--dx,20px),var(--dy,-20px))}}
-.amb1{width:600px;height:600px;top:-100px;left:-100px;background:radial-gradient(circle,rgba(255,107,170,0.07),transparent);--dx:40px;--dy:30px;animation-duration:14s;}
-.amb2{width:500px;height:500px;top:30%;right:-80px;background:radial-gradient(circle,rgba(168,85,247,0.06),transparent);--dx:-30px;--dy:40px;animation-duration:18s;animation-delay:3s;}
-.amb3{width:400px;height:400px;bottom:10%;left:20%;background:radial-gradient(circle,rgba(0,245,212,0.05),transparent);--dx:25px;--dy:-35px;animation-duration:16s;animation-delay:6s;}
-.star{position:absolute;border-radius:50%;background:#fff;animation:twinkle ease-in-out infinite;}
-@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.9}}
-nav{position:sticky;top:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,0.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);gap:16px;flex-wrap:wrap;}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:0.75rem;letter-spacing:0.12em;flex-shrink:0;}
-.nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:0.7rem;font-weight:700;color:#000;}
-.nav-links{display:flex;align-items:center;gap:1.4rem;list-style:none;flex:1;justify-content:center;flex-wrap:wrap;}
-.nav-links a{font-family:var(--body);font-size:0.78rem;color:var(--muted);text-decoration:none;letter-spacing:0.02em;transition:color 0.2s;}
-.nav-links a:hover{color:var(--cyan);}
-.nav-right{display:flex;align-items:center;gap:16px;flex-shrink:0;}
-.nav-username{font-family:var(--display);font-size:0.6rem;letter-spacing:0.1em;color:var(--muted);}
-#logout-btn{font-family:var(--display);font-size:0.58rem;letter-spacing:0.12em;text-transform:uppercase;background:none;border:1px solid rgba(255,255,255,0.12);color:var(--muted);padding:7px 16px;border-radius:6px;cursor:pointer;transition:all 0.2s;}
-#logout-btn:hover{border-color:rgba(244,114,182,0.5);color:var(--pink);}
-@media(max-width:900px){.nav-links{display:none;}}
-.nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;padding:0;}
-.nav-hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .3s,opacity .3s;}
-.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.nav-hamburger.open span:nth-child(2){opacity:0;}
-.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-@media(max-width:900px){.nav-hamburger{display:flex;}}
-.mobile-drawer-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);}
-.mobile-drawer-overlay.open{display:block;}
-.mobile-drawer{position:fixed;top:0;right:-280px;width:260px;height:100%;z-index:151;background:#0a0a14;border-left:1px solid var(--border-md);padding:80px 24px 24px;transition:right .3s ease;display:flex;flex-direction:column;gap:4px;}
-.mobile-drawer.open{right:0;}
-.mobile-drawer a{font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);padding:14px 6px;border-bottom:1px solid rgba(255,255,255,.06);}
-#loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:16px;color:var(--muted);font-family:var(--display);font-size:0.6rem;letter-spacing:0.2em;text-transform:uppercase;position:relative;z-index:10;}
-.spinner{width:32px;height:32px;border:2px solid rgba(255,255,255,0.06);border-top-color:var(--cyan);border-radius:50%;animation:spin 0.8s linear infinite;}
-@keyframes spin{to{transform:rotate(360deg);}}
-#dashboard{display:none;position:relative;z-index:10;}
-.dash-hero{padding:52px 48px 40px;max-width:1300px;margin:0 auto;display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;}
-.dash-greeting{font-family:var(--display);font-size:0.58rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);margin-bottom:10px;}
-.dash-name{font-family:var(--head);font-size:clamp(2rem,4vw,3.2rem);font-weight:800;line-height:1.05;margin-bottom:6px;}
-.dash-name span{background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.dash-sub{font-size:0.9rem;color:var(--muted);line-height:1.7;}
-.tier-pill{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:0.58rem;letter-spacing:0.16em;text-transform:uppercase;padding:8px 20px;border-radius:999px;border:1px solid;margin-top:16px;}
-.tier-pill.free{border-color:rgba(90,90,117,0.4);color:var(--muted);background:rgba(90,90,117,0.06);}
-.tier-pill.sparks{border-color:rgba(251,191,36,0.4);color:var(--yellow);background:rgba(251,191,36,0.06);}
-.tier-pill.coders{border-color:rgba(0,245,212,0.4);color:var(--cyan);background:rgba(0,245,212,0.06);}
-.tier-pill-dot{width:6px;height:6px;border-radius:50%;background:currentColor;animation:pulse-dot 2s ease-in-out infinite;}
-@keyframes pulse-dot{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.5;transform:scale(0.8);}}
-.universe-status{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:0.5rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-top:14px;opacity:.8;}
-.universe-status .dot{width:6px;height:6px;border-radius:50%;background:var(--cyan);box-shadow:0 0 8px var(--cyan);animation:pulse-dot 2s ease-in-out infinite;}
-.upgrade-strip{margin:0 48px 40px;max-width:calc(1300px - 96px);background:linear-gradient(135deg,rgba(168,85,247,0.08),rgba(0,245,212,0.06));border:1px solid rgba(168,85,247,0.2);border-radius:14px;padding:18px 28px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.upgrade-strip p{font-size:0.88rem;color:var(--muted);line-height:1.6;}
-.upgrade-strip p strong{color:var(--text);}
-.upgrade-strip a{font-family:var(--display);font-size:0.6rem;letter-spacing:0.14em;text-transform:uppercase;background:var(--grad);color:#000;font-weight:700;padding:11px 24px;border-radius:999px;white-space:nowrap;transition:all 0.2s;box-shadow:0 4px 20px rgba(255,107,170,0.25);}
-.upgrade-strip a:hover{transform:translateY(-1px);box-shadow:0 8px 30px rgba(255,107,170,0.4);}
-.dash-section{max-width:1300px;margin:0 auto;padding:0 48px 60px;}
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px;}
-.section-title{font-family:var(--display);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--muted);display:flex;align-items:center;gap:14px;}
-.section-title::after{content:'';width:60px;height:1px;background:var(--border);}
-.section-link{font-family:var(--display);font-size:0.55rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--pink);opacity:0.7;transition:opacity 0.2s;}
-.section-link:hover{opacity:1;}
-.world-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-.world-card{position:relative;border-radius:16px;overflow:hidden;border:1px solid var(--border);background:var(--card);transition:all 0.35s cubic-bezier(0.175,0.885,0.32,1.275);cursor:pointer;}
-.world-card:hover{transform:translateY(-6px);border-color:var(--wc-accent,var(--pink));}
-.world-card.locked{opacity:0.6;}
-.world-card.locked:hover{transform:none;border-color:var(--border);}
-.wc-image{height:120px;background-size:cover;background-position:center top;position:relative;overflow:hidden;}
-.wc-image::after{content:'';position:absolute;bottom:0;left:0;right:0;height:60%;background:linear-gradient(to bottom,transparent,var(--wc-deep,#050508));}
-.wc-glow{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 100%,var(--wc-glow-color,rgba(244,114,182,0.3)),transparent 70%);opacity:0;transition:opacity 0.4s;}
-.world-card:hover .wc-glow{opacity:1;}
-.wc-body{padding:20px 20px 16px;}
-.wc-char-label{font-family:var(--display);font-size:0.5rem;letter-spacing:0.2em;text-transform:uppercase;color:var(--wc-accent,var(--pink));opacity:0.7;margin-bottom:5px;}
-.wc-name{font-family:var(--head);font-size:1.1rem;font-weight:800;margin-bottom:4px;color:var(--wc-accent,var(--pink));text-shadow:0 0 20px var(--wc-glow-color,rgba(244,114,182,0.4));}
-.wc-role{font-size:0.78rem;color:var(--muted);margin-bottom:16px;}
-.wc-status{display:flex;align-items:center;gap:8px;margin-bottom:14px;}
-.wc-status-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.wc-status-text{font-family:var(--display);font-size:0.5rem;letter-spacing:0.14em;text-transform:uppercase;}
-.status-unlocked .wc-status-dot{background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
-.status-unlocked .wc-status-text{color:var(--cyan);}
-.status-partial .wc-status-dot{background:var(--yellow);}
-.status-partial .wc-status-text{color:var(--yellow);}
-.status-locked .wc-status-dot{background:var(--muted);}
-.status-locked .wc-status-text{color:var(--muted);}
-.wc-actions{display:flex;gap:8px;border-top:1px solid var(--border);padding-top:14px;margin-top:4px;}
-.wc-btn{flex:1;font-family:var(--display);font-size:0.5rem;letter-spacing:0.12em;text-transform:uppercase;padding:9px 10px;border-radius:8px;border:1px solid;text-align:center;transition:all 0.2s;cursor:pointer;font-weight:700;}
-.wc-btn-lesson{border-color:rgba(255,255,255,0.1);color:var(--text);background:rgba(255,255,255,0.04);}
-.wc-btn-lesson:hover{border-color:var(--wc-accent,var(--pink));color:var(--wc-accent,var(--pink));background:rgba(255,255,255,0.08);}
-.wc-btn-game{border-color:var(--wc-accent,var(--pink));color:var(--wc-accent,var(--pink));background:rgba(0,0,0,0.3);}
-.wc-btn-game:hover{background:var(--wc-accent,var(--pink));color:#000;}
-.wc-free-badge{position:absolute;top:10px;right:10px;z-index:10;font-family:var(--display);font-size:0.45rem;letter-spacing:0.12em;text-transform:uppercase;background:var(--cyan);color:#000;padding:4px 10px;border-radius:999px;font-weight:700;box-shadow:0 0 12px rgba(0,245,212,0.5);}
-.pdf-vol-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-.pdf-vol-card{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden;transition:all 0.3s;}
-.pdf-vol-card.unlocked:hover{transform:translateY(-4px);border-color:var(--purple);box-shadow:0 16px 40px rgba(168,85,247,0.15);}
-.pdf-vol-cover{width:100%;aspect-ratio:3/4;overflow:hidden;background:#0a0a1a;}
-.pdf-vol-cover img{width:100%;height:100%;object-fit:cover;transition:transform 0.4s;}
-.pdf-vol-card.unlocked:hover .pdf-vol-cover img{transform:scale(1.03);}
-.pdf-vol-body{padding:18px;}
-.pdf-vol-tag{font-family:var(--display);font-size:0.44rem;letter-spacing:0.16em;text-transform:uppercase;color:var(--purple);margin-bottom:6px;display:block;}
-.pdf-vol-title{font-family:var(--head);font-size:0.95rem;font-weight:800;margin-bottom:4px;}
-.pdf-vol-sub{font-size:0.74rem;color:var(--muted);line-height:1.6;margin-bottom:14px;}
-.pdf-vol-download{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-size:0.52rem;letter-spacing:0.12em;text-transform:uppercase;color:var(--cyan);transition:opacity 0.2s;opacity:.85;}
-.pdf-vol-download:hover{opacity:1;}
-.wb-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-.wb-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:22px;display:flex;align-items:center;gap:16px;transition:all 0.2s;}
-.wb-card:hover{border-color:var(--wb-accent,var(--pink));transform:translateY(-2px);}
-.wb-initial{width:44px;height:44px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-family:var(--display);font-size:1.1rem;font-weight:900;flex-shrink:0;border:1px solid;background:rgba(0,0,0,0.4);}
-.wb-info{flex:1;}
-.wb-title{font-size:0.88rem;font-weight:700;margin-bottom:3px;}
-.wb-sub{font-size:0.72rem;color:var(--muted);}
-.wb-tag{font-family:var(--display);font-size:0.48rem;letter-spacing:0.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid;white-space:nowrap;flex-shrink:0;}
-.wb-tag.available{border-color:var(--cyan);color:var(--cyan);background:rgba(0,245,212,0.06);}
-.wb-tag.soon{border-color:var(--border-md);color:var(--muted);}
-.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;max-width:1300px;margin-left:auto;margin-right:auto;padding:0 48px;}
-.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px;}
-.stat-val{font-family:var(--display);font-size:1.6rem;font-weight:900;line-height:1;margin-bottom:4px;}
-.stat-label{font-size:0.72rem;color:var(--muted);letter-spacing:0.06em;}
-@media(max-width:1000px){.world-grid{grid-template-columns:repeat(2,1fr);}.wb-grid{grid-template-columns:repeat(2,1fr);}.stats-strip{grid-template-columns:repeat(2,1fr);}.pdf-vol-grid{grid-template-columns:repeat(2,1fr);}}
-@media(max-width:640px){.world-grid{grid-template-columns:1fr;}.wb-grid{grid-template-columns:1fr;}.stats-strip{grid-template-columns:repeat(2,1fr);}.dash-hero{padding:36px 24px 28px;}.dash-section{padding:0 24px 48px;}.upgrade-strip{margin:0 24px 32px;}.stats-strip{padding:0 24px;}nav{padding:14px 24px;}.pdf-vol-grid{grid-template-columns:1fr;}}
-footer{text-align:center;padding:32px 24px;border-top:1px solid var(--border);color:var(--muted);font-size:0.75rem;letter-spacing:0.06em;position:relative;z-index:10;}
-footer a{color:var(--cyan);}
-</style>
-</head>
-<body>
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import {
+  getAuth,
+  onAuthStateChanged,
+  signOut,
+  signInWithEmailAndPassword,
+  createUserWithEmailAndPassword,
+  updateProfile
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getFirestore,
+  doc,
+  getDoc,
+  setDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-<div class="dash-bg-overlay"></div>
-<div class="ambient" id="ambient">
-<div class="ambient-orb amb1"></div>
-<div class="ambient-orb amb2"></div>
-<div class="ambient-orb amb3"></div>
-</div>
-
-<nav>
-<a href="index.html" class="nav-logo">
-<div class="nav-logo-mark">&gt;</div>method in motion</a>
-<ul class="nav-links">
-<li><a href="games.html">Games</a></li>
-<li><a href="pdfs.html">PDFs</a></li>
-<li><a href="library.html">Library</a></li>
-<li><a href="characters.html">Characters</a></li>
-<li><a href="broken-syntax.html">Broken Syntax</a></li>
-<li><a href="mim-tv.html">MiM TV</a></li>
-<li><a href="comic.html">Comics</a></li>
-</ul>
-<div class="nav-right">
-<span class="nav-username" id="nav-username"></span>
-<button id="logout-btn">Log Out</button>
-<button class="nav-hamburger" id="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-</div>
-</nav>
-<div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
-<div class="mobile-drawer" id="mobile-drawer">
-<a href="games.html">Games</a>
-<a href="pdfs.html">PDFs</a>
-<a href="library.html">Library</a>
-<a href="characters.html">Characters</a>
-<a href="broken-syntax.html">Broken Syntax</a>
-<a href="mim-tv.html">MiM TV</a>
-<a href="comic.html">Comics</a>
-</div>
-
-<div id="loading">
-<div class="spinner"></div>
-<span>Loading your universe...</span>
-</div>
-
-<div id="guest-state" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:2rem;position:relative;z-index:10;">
-<div style="font-family:'Orbitron',monospace;font-size:0.56rem;letter-spacing:0.28em;text-transform:uppercase;color:#00f5d4;margin-bottom:16px;">Method in Motion</div>
-<h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;margin-bottom:14px;">Create a free account to unlock your dashboard.</h2>
-<p style="font-size:0.92rem;color:#5a6080;max-width:420px;line-height:1.8;margin-bottom:28px;">Your worlds, lessons, and progress live here once you're signed in. No card needed to get started.</p>
-<a href="index.html" style="font-family:'Orbitron',monospace;font-size:0.62rem;letter-spacing:0.14em;text-transform:uppercase;padding:14px 32px;background:linear-gradient(135deg,#ff6baa,#c66bff);color:#000;font-weight:700;border-radius:100px;display:inline-block;">Create Free Account →</a>
-</div>
-
-<div id="dashboard">
-<div class="dash-hero">
-<div>
-<div class="dash-greeting">Welcome back</div>
-<div class="dash-name">Hey, <span id="user-name">Coder</span>.</div>
-<div class="dash-sub">Your worlds are waiting. Pick up where you left off.</div>
-<div class="tier-pill free" id="tier-pill">
-<span class="tier-pill-dot"></span>
-<span id="tier-label">Free</span>
-</div>
-<div class="universe-status"><span class="dot"></span>Universe Online</div>
-</div>
-</div>
-
-<div class="upgrade-strip" id="upgrade-strip">
-<p><strong>Unlock more worlds.</strong> Upgrade your plan to access all 6 character lessons and all games.</p>
-<a href="membership.html">Upgrade Plan →</a>
-</div>
-
-<div class="stats-strip" id="stats-strip">
-<div class="stat-card">
-<div class="stat-val" id="stat-worlds" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">0</div>
-<div class="stat-label">Worlds Unlocked</div>
-</div>
-<div class="stat-card">
-<div class="stat-val" id="stat-lessons" style="color:var(--cyan);">0</div>
-<div class="stat-label">Lessons Available</div>
-</div>
-<div class="stat-card">
-<div class="stat-val" id="stat-games" style="color:var(--purple);">0</div>
-<div class="stat-label">Games Unlocked</div>
-</div>
-<div class="stat-card">
-<div class="stat-val" id="stat-workbooks" style="color:var(--yellow);">0</div>
-<div class="stat-label">Workbooks Owned</div>
-</div>
-</div>
-
-<div class="dash-section">
-<div class="section-header">
-<div class="section-title">Character Worlds</div>
-<a href="games.html" class="section-link">Game Universe →</a>
-</div>
-<div class="world-grid" id="world-grid"></div>
-</div>
-
-<div class="dash-section">
-<div class="section-header">
-<div class="section-title">Think Like a Programmer — Cheat Sheets</div>
-<a href="pdfs.html" class="section-link">All PDFs →</a>
-</div>
-<div class="pdf-vol-grid" id="pdf-vol-grid"></div>
-</div>
-
-<div class="dash-section">
-<div class="section-header">
-<div class="section-title">Full Workbooks</div>
-<a href="pdfs.html" class="section-link">All PDFs →</a>
-</div>
-<div class="wb-grid" id="wb-grid"></div>
-</div>
-</div>
-
-<footer>Method in Motion &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="membership.html">Membership</a> &nbsp;·&nbsp; "Create, Don't Consume."</footer>
-
-<script>
-(function(){
-  const ambient=document.getElementById('ambient');
-  const starCount=50;
-  for(let i=0;i<starCount;i++){
-    const s=document.createElement('div');
-    s.className='star';
-    const size=(Math.random()*1.6+0.6).toFixed(2);
-    s.style.width=size+'px';
-    s.style.height=size+'px';
-    s.style.top=(Math.random()*100)+'%';
-    s.style.left=(Math.random()*100)+'%';
-    s.style.animationDuration=(Math.random()*3+2).toFixed(2)+'s';
-    s.style.animationDelay=(Math.random()*3).toFixed(2)+'s';
-    ambient.appendChild(s);
-  }
-})();
-</script>
-
-<script type="module">
-import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
-import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
-import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-
-const firebaseConfig={
-  apiKey:"AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
-  authDomain:"method-in-motion.firebaseapp.com",
-  projectId:"method-in-motion",
-  storageBucket:"method-in-motion.firebasestorage.app",
-  messagingSenderId:"1067937974009",
-  appId:"1:1067937974009:web:5b21e6abe84e0b28234428"
-};
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-
-const CHARS=[
-  {id:'zen',name:'Zen',role:'Creative Coder',accent:'#f472b6',deep:'#0e0510',glowColor:'rgba(244,114,182,0.35)',image:'zen-entrance.png',world:'zen.html',game:'zen-game.html',gameName:'CSS Challenge'},
-  {id:'byte',name:'Byte',role:'Data Tracker',accent:'#a855f7',deep:'#080514',glowColor:'rgba(168,85,247,0.35)',image:'byte-entrance.png',world:'byte.html',game:'byte-game.html',gameName:'Glitch Hunt'},
-  {id:'loop',name:'Loop',role:'Flow Master',accent:'#00f5d4',deep:'#03100e',glowColor:'rgba(0,245,212,0.3)',image:'loop-entrance.png',world:'loop.html',game:'loop-game.html',gameName:'Logic Quest'},
-  {id:'nova',name:'Nova',role:'Curious Coder',accent:'#fbbf24',deep:'#0d0a00',glowColor:'rgba(251,191,36,0.3)',image:'nova-entrance.png',world:'nova.html',game:'nova-game.html',gameName:'Build Lab'},
-  {id:'bug',name:'Bug',role:'Glitch Hunter',accent:'#84cc16',deep:'#060a00',glowColor:'rgba(132,204,22,0.3)',image:'bug-entrance.png',world:'bug.html',game:'bug-game.html',gameName:'Chaos Code'},
-  {id:'echo',name:'Echo',role:'Signal Sender',accent:'#38bdf8',deep:'#030d12',glowColor:'rgba(56,189,248,0.3)',image:'echo-entrance.png',world:'echo.html',game:'echo-game.html',gameName:'Signal Lab'}
-];
-
-const WORKBOOKS=[
-  {char:'Zen',color:'#f472b6',title:"Zen's Creative Circuits",sub:'Vol. 1 · HTML & CSS · $7.99',available:true},
-  {char:'Byte',color:'#a855f7',title:"Byte's Data Lab",sub:'Vol. 1 · Memory & Patterns · $7.99',available:false},
-  {char:'Loop',color:'#00f5d4',title:"Loop's Logic Quest",sub:'Vol. 1 · Loops & Logic · $7.99',available:false},
-  {char:'Nova',color:'#fbbf24',title:"Nova's Build Lab",sub:'Vol. 1 · Projects · $7.99',available:false},
-  {char:'Bug',color:'#84cc16',title:"Bug's Debug Lab",sub:'Vol. 1 · Debugging · $7.99',available:false},
-  {char:'Echo',color:'#38bdf8',title:"Echo's Signal Lab",sub:'Vol. 1 · Events & Timing · $7.99',available:false}
-];
-
-const PDF_VOLS=[
-  {tag:'Vol. 1 · Foundations',title:'Think Like a Programmer',sub:'Problem-solving, pattern recognition, sequencing, and the coder mindset.',cover:'vol.1-think-cover.png',file:'Vol.1_Think_Like_a_Programmer.pdf'},
-  {tag:'Vol. 2 · Systems & Logic',title:'How Computers Think',sub:'Systems, input & output, conditions, and loops — how computers process the world.',cover:'vol.2-think-cover.png',file:'Vol.2_Think_Like_a_Programmer.pdf'},
-  {tag:'Vol. 3 · The Big Picture',title:'Building Digital Worlds',sub:'Websites, apps, games, digital design, and emerging tech for young creators.',cover:'vol.3-think-cover.png',file:'Vol.3_Think_Like_a_Programmer.pdf'}
-];
-
-const TIER_CFG={
-  free:{label:'Free',cls:'free',lessonsPerChar:1,gamesUnlocked:['byte'],worldsUnlocked:6},
-  sparks:{label:'Sparks',cls:'sparks',lessonsPerChar:2,gamesUnlocked:['byte'],worldsUnlocked:6},
-  coders:{label:'Coders',cls:'coders',lessonsPerChar:4,gamesUnlocked:'all',worldsUnlocked:6}
+const firebaseConfig = {
+  apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
+  authDomain: "method-in-motion.firebaseapp.com",
+  projectId: "method-in-motion",
+  storageBucket: "method-in-motion.firebasestorage.app",
+  messagingSenderId: "1067937974009",
+  appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
 };
 
-function getStatusLabel(char,tier){
-  if(tier==='coders')return'All 4 lessons unlocked';
-  if(tier==='sparks')return'Lessons 1–2 unlocked';
-  return'Lesson 1 available';
-}
-function getStatus(tier){
-  if(tier==='coders')return'unlocked';
-  if(tier==='sparks')return'partial';
-  return'partial';
-}
-function canPlayGame(charId,tier){
-  if(tier==='coders')return true;
-  if(charId==='byte')return true;
-  return false;
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+
+const authModal = document.getElementById("auth-modal");
+let authActionInProgress = false;
+
+function setError(id, message = "") {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = message;
+  el.classList.toggle("visible", Boolean(message));
 }
 
-function buildWorldGrid(tier){
-  const grid=document.getElementById('world-grid');
-  const isFreeGame=(id)=>id==='byte';
-  grid.innerHTML=CHARS.map(c=>{
-    const status=getStatus(tier);
-    const statusLabel=getStatusLabel(c,tier);
-    const gameAccess=canPlayGame(c.id,tier);
-    const freeGame=isFreeGame(c.id);
-    return`<div class="world-card" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor};">
-      <div class="wc-image" style="background-image:url('${c.image}');">
-        <div class="wc-glow"></div>
-        ${freeGame?'<div class="wc-free-badge">Free Game</div>':''}
-      </div>
-      <div class="wc-body">
-        <div class="wc-char-label">${c.role}</div>
-        <div class="wc-name">${c.name}</div>
-        <div class="wc-role">${c.gameName}</div>
-        <div class="wc-status status-${status}">
-          <div class="wc-status-dot"></div>
-          <div class="wc-status-text">${statusLabel}</div>
-        </div>
-        <div class="wc-actions">
-          <a href="${c.world}" class="wc-btn wc-btn-lesson">Lessons →</a>
-          ${gameAccess
-            ?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Game →</a>`
-            :freeGame
-              ?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Free →</a>`
-              :`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,0.06);">Unlock Game</a>`
-          }
-        </div>
-      </div>
-    </div>`;
-  }).join('');
+function setStatus(id, message = "") {
+  const el = document.getElementById(id);
+  if (!el) return;
+  el.textContent = message;
+  el.classList.toggle("visible", Boolean(message));
 }
 
-function buildPdfVolGrid(){
-  const grid=document.getElementById('pdf-vol-grid');
-  grid.innerHTML=PDF_VOLS.map(v=>`
-    <div class="pdf-vol-card unlocked">
-      <div class="pdf-vol-cover">
-        <img src="${v.cover}" alt="${v.title}">
-      </div>
-      <div class="pdf-vol-body">
-        <span class="pdf-vol-tag">${v.tag}</span>
-        <div class="pdf-vol-title">${v.title}</div>
-        <div class="pdf-vol-sub">${v.sub}</div>
-        <a href="pdfs.html" class="pdf-vol-download">Download →</a>
-      </div>
-    </div>
-  `).join('');
+function setButtonBusy(button, busy, busyText, normalText) {
+  if (!button) return;
+  button.disabled = busy;
+  button.textContent = busy ? busyText : normalText;
 }
 
-function buildWorkbookGrid(){
-  const grid=document.getElementById('wb-grid');
-  grid.innerHTML=WORKBOOKS.map(wb=>`
-    <div class="wb-card" style="--wb-accent:${wb.color};">
-      <div class="wb-initial" style="color:${wb.color};border-color:${wb.color}30;">${wb.char[0]}</div>
-      <div class="wb-info">
-        <div class="wb-title">${wb.title}</div>
-        <div class="wb-sub">${wb.sub}</div>
-      </div>
-      <div class="wb-tag ${wb.available?'available':'soon'}">${wb.available?'Get It':'Soon'}</div>
-    </div>
-  `).join('');
-}
-
-function animateCount(el,target,suffix){
-  suffix=suffix||'';
-  const duration=800;
-  const start=performance.now();
-  function tick(now){
-    const progress=Math.min((now-start)/duration,1);
-    const eased=1-Math.pow(1-progress,3);
-    const val=Math.round(target*eased);
-    el.textContent=val+suffix;
-    if(progress<1)requestAnimationFrame(tick);
-    else el.textContent=target+suffix;
+function friendlyAuthError(error, action) {
+  const code = error?.code || "";
+  if (code === "auth/email-already-in-use") return "That email already has an account. Try logging in instead.";
+  if (code === "auth/invalid-email") return "Enter a valid email address.";
+  if (code === "auth/weak-password") return "Your password must contain at least six characters.";
+  if (code === "auth/missing-password") return "Enter your password.";
+  if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/user-not-found") {
+    return "The email or password is incorrect.";
   }
-  requestAnimationFrame(tick);
+  if (code === "auth/too-many-requests") return "Too many attempts. Wait a moment and try again.";
+  if (code === "auth/network-request-failed") return "We could not reach the server. Check your connection and try again.";
+  return action === "signup"
+    ? "We could not finish creating your account. Please try again."
+    : "We could not log you in. Please try again.";
 }
 
-function buildStats(tier){
-  const cfg=TIER_CFG[tier]||TIER_CFG.free;
-  animateCount(document.getElementById('stat-worlds'),6);
-  animateCount(document.getElementById('stat-lessons'),cfg.lessonsPerChar,'×6');
-  animateCount(document.getElementById('stat-games'),cfg.gamesUnlocked==='all'?6:1);
-  const ownedWorkbooks=WORKBOOKS.filter(w=>w.available).length;
-  animateCount(document.getElementById('stat-workbooks'),ownedWorkbooks);
+function openAuthModal(tab) {
+  if (!authModal) return;
+  authModal.classList.add("active");
+  authModal.style.display = "flex";
+  if (tab) setAuthTab(tab);
 }
 
-function renderDashboard(user,tier){
-  try{
-    const cfg=TIER_CFG[tier]||TIER_CFG.free;
-    const displayName=(user&&(user.displayName||(user.email||'').split('@')[0]))||'Coder';
-    document.getElementById('nav-username').textContent=displayName;
-    document.getElementById('user-name').textContent=displayName;
-    const pill=document.getElementById('tier-pill');
-    pill.className='tier-pill '+cfg.cls;
-    document.getElementById('tier-label').textContent=cfg.label;
-    document.getElementById('upgrade-strip').style.display=(tier==='coders')?'none':'flex';
-    try{buildStats(tier);}catch(e){console.error('buildStats failed',e);}
-    try{buildWorldGrid(tier);}catch(e){console.error('buildWorldGrid failed',e);}
-    try{buildPdfVolGrid();}catch(e){console.error('buildPdfVolGrid failed',e);}
-    try{buildWorkbookGrid();}catch(e){console.error('buildWorkbookGrid failed',e);}
-  }catch(e){
-    console.error('renderDashboard failed',e);
-  }
-  document.getElementById('loading').style.display='none';
-  document.getElementById('guest-state').style.display='none';
-  document.getElementById('dashboard').style.display='block';
+function closeAuthModal() {
+  if (!authModal || authActionInProgress) return;
+  authModal.classList.remove("active");
+  authModal.style.display = "none";
 }
 
-function showGuestState(){
-  document.getElementById('loading').style.display='none';
-  document.getElementById('dashboard').style.display='none';
-  document.getElementById('guest-state').style.display='flex';
-}
-
-onAuthStateChanged(auth,async(user)=>{
-  if(!user){showGuestState();return;}
-  let tier='free';
-  let timedOut=false;
-  const safetyTimer=setTimeout(()=>{
-    timedOut=true;
-    renderDashboard(user,'free');
-  },6000);
-  try{
-    const snap=await getDoc(doc(db,'users',user.uid));
-    if(snap.exists()&&snap.data().tier)tier=snap.data().tier.toLowerCase();
-  }catch(e){console.error(e);}
-  clearTimeout(safetyTimer);
-  renderDashboard(user,tier);
-});
-
-document.getElementById('logout-btn').addEventListener('click',()=>{
-  signOut(auth).then(()=>window.location.href='index.html');
-});
-
-const hamburgerBtn=document.getElementById('nav-hamburger');
-const mobileDrawer=document.getElementById('mobile-drawer');
-const mobileDrawerOverlay=document.getElementById('mobile-drawer-overlay');
-function toggleMobileDrawer(){
-  hamburgerBtn.classList.toggle('open');
-  mobileDrawer.classList.toggle('open');
-  mobileDrawerOverlay.classList.toggle('open');
-}
-hamburgerBtn.addEventListener('click',toggleMobileDrawer);
-mobileDrawerOverlay.addEventListener('click',toggleMobileDrawer);
-document.querySelectorAll('.mobile-drawer a').forEach(a=>{
-  a.addEventListener('click',()=>{
-    if(mobileDrawer.classList.contains('open'))toggleMobileDrawer();
+function setAuthTab(tab) {
+  document.querySelectorAll(".auth-tab").forEach((btn) => {
+    btn.classList.toggle("active", btn.dataset.tab === tab);
   });
-});
-</script>
 
-</body>
-</html>
+  const loginForm = document.getElementById("login-form");
+  const signupForm = document.getElementById("signup-form");
+
+  loginForm?.classList.toggle("active", tab === "login");
+  signupForm?.classList.toggle("active", tab === "signup");
+
+  if (loginForm) loginForm.style.display = tab === "login" ? "block" : "none";
+  if (signupForm) signupForm.style.display = tab === "signup" ? "block" : "none";
+
+  setError("login-error");
+  setError("signup-error");
+  setStatus("login-status");
+  setStatus("signup-status");
+}
+
+function showWelcomeToast(message) {
+  document.getElementById("mim-welcome-toast")?.remove();
+
+  const toast = document.createElement("div");
+  toast.id = "mim-welcome-toast";
+  toast.setAttribute("role", "status");
+  toast.setAttribute("aria-live", "polite");
+  toast.style.cssText = `
+    position:fixed;
+    top:24px;
+    left:50%;
+    transform:translateX(-50%) translateY(-20px);
+    z-index:99999;
+    background:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+    color:#000;
+    font-family:'Orbitron',monospace;
+    font-size:.72rem;
+    letter-spacing:.08em;
+    font-weight:700;
+    padding:14px 26px;
+    border-radius:100px;
+    box-shadow:0 10px 40px rgba(198,107,255,.45);
+    opacity:0;
+    transition:opacity .35s ease, transform .35s ease;
+    text-align:center;
+    max-width:90vw;
+  `;
+  toast.textContent = message;
+  document.body.appendChild(toast);
+
+  requestAnimationFrame(() => {
+    toast.style.opacity = "1";
+    toast.style.transform = "translateX(-50%) translateY(0)";
+  });
+}
+
+async function readUserProfile(uid) {
+  try {
+    const snap = await getDoc(doc(db, "users", uid));
+    return snap.exists() ? snap.data() : {};
+  } catch (error) {
+    console.error("Could not read user profile:", error);
+    return {};
+  }
+}
+
+function redirectToDashboard(delay = 1100) {
+  window.setTimeout(() => {
+    window.location.assign("dashboard.html");
+  }, delay);
+}
+
+onAuthStateChanged(auth, async (user) => {
+  const nameEl = document.getElementById("nav-username");
+  const userMenu = document.getElementById("nav-user-menu");
+  const authButtons = document.getElementById("nav-auth-btns");
+  const loginBtn = document.getElementById("nav-login");
+  const joinBtn = document.getElementById("nav-join");
+
+  if (user) {
+    const userData = await readUserProfile(user.uid);
+    const userTier = userData.tier || "explorer";
+
+    if (nameEl) nameEl.textContent = userData.displayName || user.displayName || user.email;
+    if (userMenu) userMenu.style.display = "flex";
+    if (authButtons) authButtons.style.display = "none";
+    if (loginBtn) loginBtn.style.display = "none";
+    if (joinBtn) joinBtn.style.display = "none";
+
+    if (typeof window.handleTierUnlock === "function") {
+      window.handleTierUnlock(userTier);
+    }
+  } else {
+    if (nameEl) nameEl.textContent = "";
+    if (userMenu) userMenu.style.display = "none";
+    if (authButtons) authButtons.style.display = "flex";
+    if (loginBtn) loginBtn.style.display = "inline-block";
+    if (joinBtn) joinBtn.style.display = "inline-block";
+  }
+});
+
+document.getElementById("nav-login")?.addEventListener("click", (event) => {
+  event.preventDefault();
+  openAuthModal("login");
+});
+
+document.getElementById("nav-join")?.addEventListener("click", (event) => {
+  event.preventDefault();
+  sessionStorage.setItem("mimSelectedPlan", "explorer");
+  openAuthModal("signup");
+});
+
+document.getElementById("auth-close-btn")?.addEventListener("click", closeAuthModal);
+
+authModal?.addEventListener("click", (event) => {
+  if (event.target === authModal) closeAuthModal();
+});
+
+document.querySelectorAll(".auth-tab, .auth-link").forEach((element) => {
+  element.addEventListener("click", () => setAuthTab(element.dataset.tab));
+});
+
+document.getElementById("nav-logout-btn")?.addEventListener("click", async () => {
+  await signOut(auth);
+  window.location.assign("index.html");
+});
+
+async function handleLogin() {
+  if (authActionInProgress) return;
+
+  const button = document.getElementById("login-submit-btn");
+  const email = document.getElementById("login-email")?.value.trim() || "";
+  const password = document.getElementById("login-password")?.value || "";
+
+  setError("login-error");
+  setStatus("login-status");
+
+  if (!email || !password) {
+    setError("login-error", "Enter both your email and password.");
+    return;
+  }
+
+  authActionInProgress = true;
+  setButtonBusy(button, true, "Logging In…", "Log In");
+
+  try {
+    const credential = await signInWithEmailAndPassword(auth, email, password);
+    const userData = await readUserProfile(credential.user.uid);
+    const displayName = userData.displayName || credential.user.displayName || "";
+
+    setStatus("login-status", "Login successful. Loading your dashboard…");
+    showWelcomeToast(displayName ? `Welcome back, ${displayName}! ✦` : "Welcome back! ✦");
+    authModal?.classList.remove("active");
+    if (authModal) authModal.style.display = "none";
+    redirectToDashboard();
+  } catch (error) {
+    console.error("Login failed:", error);
+    setError("login-error", friendlyAuthError(error, "login"));
+  } finally {
+    authActionInProgress = false;
+    setButtonBusy(button, false, "Logging In…", "Log In");
+  }
+}
+
+async function handleSignup() {
+  if (authActionInProgress) return;
+
+  const button = document.getElementById("signup-submit-btn");
+  const name = document.getElementById("signup-name")?.value.trim() || "";
+  const email = document.getElementById("signup-email")?.value.trim() || "";
+  const password = document.getElementById("signup-password")?.value || "";
+  const selectedPlan = sessionStorage.getItem("mimSelectedPlan") || "explorer";
+
+  setError("signup-error");
+  setStatus("signup-status");
+
+  if (!name) {
+    setError("signup-error", "Enter the name you want the crew to call you.");
+    return;
+  }
+  if (!email) {
+    setError("signup-error", "Enter your email address.");
+    return;
+  }
+  if (password.length < 6) {
+    setError("signup-error", "Your password must contain at least six characters.");
+    return;
+  }
+
+  authActionInProgress = true;
+  setButtonBusy(button, true, "Creating Account…", "Create Your Account");
+
+  try {
+    const credential = await createUserWithEmailAndPassword(auth, email, password);
+    await updateProfile(credential.user, { displayName: name });
+
+    try {
+      await setDoc(doc(db, "users", credential.user.uid), {
+        displayName: name,
+        email,
+        tier: "explorer",
+        selectedPlan,
+        createdAt: new Date().toISOString()
+      }, { merge: true });
+    } catch (profileError) {
+      console.error("Account created, but Firestore profile save failed:", profileError);
+      setStatus(
+        "signup-status",
+        "Your account was created. We are loading your dashboard, but some profile details may need to sync."
+      );
+    }
+
+    showWelcomeToast(`Welcome to the crew, ${name}! ✦`);
+    sessionStorage.setItem("mimPostSignupPlan", selectedPlan);
+    authModal?.classList.remove("active");
+    if (authModal) authModal.style.display = "none";
+    redirectToDashboard();
+  } catch (error) {
+    console.error("Signup failed:", error);
+    setError("signup-error", friendlyAuthError(error, "signup"));
+  } finally {
+    authActionInProgress = false;
+    setButtonBusy(button, false, "Creating Account…", "Create Your Account");
+  }
+}
+
+document.getElementById("login-submit-btn")?.addEventListener("click", handleLogin);
+document.getElementById("signup-submit-btn")?.addEventListener("click", handleSignup);
+
+document.getElementById("login-password")?.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") handleLogin();
+});
+
+document.getElementById("signup-password")?.addEventListener("keydown", (event) => {
+  if (event.key === "Enter") handleSignup();
+});
+
+// Keep the page's existing inline openModal calls working.
+window.openAuthModal = openAuthModal;
+window.closeAuthModal = closeAuthModal;
