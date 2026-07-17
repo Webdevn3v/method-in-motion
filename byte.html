@@ -21,22 +21,35 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
 .nav-links a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
 .nav-links a:hover { color: var(--purple); }
-.nav-user { font-family: var(--font-mono); font-size: 0.75rem; color: var(--purple); display: none; }
-.nav-logout { background: none; border: 1px solid var(--border); color: var(--text-dim); font-family: var(--font-body); font-size: 0.78rem; padding: 0.3rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; display: none; }
-.nav-logout:hover { border-color: var(--purple); color: var(--purple); }
-.nav-hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 32px; height: 32px; background: none; border: none; cursor: pointer; z-index: 210; }
-.nav-hamburger span { display: block; width: 100%; height: 2px; background: var(--purple); border-radius: 2px; transition: transform 0.25s ease, opacity 0.25s ease; }
+.nav-drop { position: relative; }
+.nav-drop-trigger { display: flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--text-dim); background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 7px 14px; border-radius: 100px; cursor: pointer; transition: all 0.2s; }
+.nav-drop-trigger:hover, .nav-drop.open .nav-drop-trigger { color: #fff; background: rgba(198,107,255,0.12); border-color: var(--border-bright); }
+.nav-drop-arrow { font-size: 0.7rem; font-weight: 900; transition: transform 0.2s; display: inline-block; }
+.nav-drop.open .nav-drop-arrow { transform: rotate(180deg); }
+.nav-drop-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); min-width: 180px; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 8px; opacity: 0; pointer-events: none; transition: opacity 0.2s; box-shadow: 0 20px 50px rgba(0,0,0,0.5); z-index: 150; }
+.nav-drop.open .nav-drop-menu { opacity: 1; pointer-events: auto; }
+.nav-drop-item { display: block; padding: 10px 14px; font-family: var(--font-body); font-size: 0.8rem; color: var(--text-dim); border-radius: 7px; transition: all 0.15s; }
+.nav-drop-item:hover { background: rgba(255,107,170,0.1); color: var(--pink); }
+.nav-right { display: flex; align-items: center; gap: 0.7rem; }
+.nav-username { font-family: var(--font-mono); font-size: 0.72rem; color: var(--purple); }
+#nav-user-menu, #nav-auth-btns { align-items: center; gap: 0.55rem; }
+#nav-user-menu a, #nav-user-menu button, #nav-auth-btns button { font-family: var(--font-body); font-size: 0.78rem; border-radius: 6px; padding: 0.38rem 0.8rem; cursor: pointer; transition: all 0.2s; }
+#nav-user-menu a { color: var(--text-dim); text-decoration: none; border: 1px solid var(--border); }
+#nav-user-menu a:hover { color: var(--purple); border-color: var(--purple); }
+#nav-user-menu button, #nav-login { color: var(--text-dim); background: none; border: 1px solid var(--border); }
+#nav-user-menu button:hover, #nav-login:hover { color: var(--purple); border-color: var(--purple); }
+#nav-join { color: var(--bg); background: linear-gradient(135deg, var(--purple), var(--pink)); border: none; font-weight: 700; }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; z-index: 210; }
+.nav-hamburger span { width: 22px; height: 2px; background: var(--text); transition: all 0.25s; }
 .nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .nav-hamburger.open span:nth-child(2) { opacity: 0; }
 .nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mobile-drawer-overlay { position: fixed; inset: 0; background: rgba(7,5,15,0.7); backdrop-filter: blur(3px); z-index: 195; opacity: 0; pointer-events: none; transition: opacity 0.25s ease; }
-.mobile-drawer-overlay.open { opacity: 1; pointer-events: auto; }
-.mobile-drawer { position: fixed; top: 0; right: 0; height: 100vh; width: min(280px, 78vw); background: var(--bg-panel); border-left: 1px solid var(--border-bright); z-index: 200; transform: translateX(100%); transition: transform 0.3s ease; padding: 5rem 1.6rem 2rem; overflow-y: auto; }
-.mobile-drawer.open { transform: translateX(0); }
-.mobile-drawer-links { list-style: none; display: flex; flex-direction: column; gap: 0.4rem; }
-.mobile-drawer-links a { display: block; padding: 0.8rem 0.4rem; font-family: var(--font-body); font-size: 0.95rem; color: var(--text-dim); text-decoration: none; border-bottom: 1px solid var(--border); transition: color 0.2s; }
-.mobile-drawer-links a:hover { color: var(--purple); }
-@media (max-width: 860px) { .nav-links { display: none; } .nav-hamburger { display: flex; } }
+.mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(7,5,15,0.98); backdrop-filter: blur(16px); z-index: 199; padding: 2rem; flex-direction: column; gap: 0.4rem; overflow-y: auto; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a, .mobile-menu-label { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.08em; color: var(--text-dim); padding: 14px 8px; border-bottom: 1px solid var(--border); text-transform: uppercase; text-decoration: none; }
+.mobile-menu a:hover { color: var(--purple); }
+.mobile-menu-label { color: var(--pink); font-size: 0.65rem; letter-spacing: 0.2em; border-bottom: none; padding-bottom: 4px; margin-top: 10px; }
+@media (max-width: 900px) { .nav-links, .nav-right { display: none; } .nav-hamburger { display: flex; } }
 .hero { margin-top: 60px; min-height: 640px; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
 .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); }
 .hero-gradient { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(7,5,15,0.96) 0%, rgba(7,5,15,0.5) 30%, rgba(7,5,15,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(7,5,15,0.55) 0%, rgba(7,5,15,0.1) 40%, transparent 70%); pointer-events: none; }
@@ -206,7 +219,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .locked-panel { padding: 4rem 3rem; text-align: center; }
 .locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.45; }
 .locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; }
-  .locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
+.locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
 .gate-btn { display: inline-block; background: var(--purple); color: var(--bg); font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; padding: 0.8rem 2rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; letter-spacing: 0.08em; transition: opacity 0.2s; }
 .gate-btn:hover { opacity: 0.85; }
 .lesson-complete { background: linear-gradient(135deg, rgba(198,107,255,0.07), rgba(255,107,170,0.05)); border: 1px solid var(--border-bright); border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; display: none; }
@@ -254,31 +267,54 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
 <li><a href="games.html">Games</a></li>
-<li><a href="pdfs.html">PDFs</a></li>
-<li><a href="library.html">Library</a></li>
-<li><a href="characters.html">Characters</a></li>
-<li><a href="broken-syntax.html">Broken Syntax</a></li>
-<li><a href="mim-tv.html">MiM TV</a></li>
-<li><a href="comic.html">Comics</a></li>
+<li><a href="tag-wall.html">Tag Wall</a></li>
+<li class="nav-drop" id="exploreDrop">
+<button class="nav-drop-trigger" onclick="toggleNavDrop('exploreDrop')">Explore <span class="nav-drop-arrow">▾</span></button>
+<div class="nav-drop-menu">
+<a href="pdfs.html" class="nav-drop-item">PDFs</a>
+<a href="library.html" class="nav-drop-item">Library</a>
+<a href="characters.html" class="nav-drop-item">Characters</a>
+<a href="about.html" class="nav-drop-item">About</a>
+</div>
+</li>
+<li class="nav-drop" id="undergroundDrop">
+<button class="nav-drop-trigger" onclick="toggleNavDrop('undergroundDrop')">The Underground <span class="nav-drop-arrow">▾</span></button>
+<div class="nav-drop-menu">
+<a href="broken-syntax.html" class="nav-drop-item">Broken Syntax</a>
+<a href="mim-tv.html" class="nav-drop-item">MiM TV</a>
+<a href="comic.html" class="nav-drop-item">Comics</a>
+</div>
+</li>
 </ul>
-<span class="nav-user" id="navUser"></span>
-<button class="nav-logout" id="navLogout" onclick="handleLogout()">Log Out</button>
-<button class="nav-hamburger" id="navHamburger" onclick="toggleMobileDrawer()" aria-label="Open menu">
-<span></span><span></span><span></span>
-</button>
+<div class="nav-right">
+<span class="nav-username" id="nav-username"></span>
+<div id="nav-user-menu" style="display:none;">
+<a href="dashboard.html">Dashboard</a>
+<button id="nav-logout-btn">Log Out</button>
+</div>
+<div id="nav-auth-btns">
+<button id="nav-login">Log In</button>
+<button id="nav-join">Join Free</button>
+</div>
+</div>
+<button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
 </nav>
-<div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
-<div class="mobile-drawer" id="mobileDrawer">
-<ul class="mobile-drawer-links">
-<li><a href="games.html">Games</a></li>
-<li><a href="pdfs.html">PDFs</a></li>
-<li><a href="library.html">Library</a></li>
-<li><a href="characters.html">Characters</a></li>
-<li><a href="broken-syntax.html">Broken Syntax</a></li>
-<li><a href="mim-tv.html">MiM TV</a></li>
-<li><a href="comic.html">Comics</a></li>
-<li><a href="index.html#membership">Membership</a></li>
-</ul>
+<div class="mobile-menu" id="mobileMenu">
+<a href="index.html#crew">Crew</a>
+<a href="index.html#membership">Membership</a>
+<a href="games.html">Games</a>
+<a href="tag-wall.html">Tag Wall</a>
+<div class="mobile-menu-label">Explore</div>
+<a href="pdfs.html">PDFs</a>
+<a href="library.html">Library</a>
+<a href="characters.html">Characters</a>
+<a href="about.html">About</a>
+<div class="mobile-menu-label">The Underground</div>
+<a href="broken-syntax.html">Broken Syntax</a>
+<a href="mim-tv.html">MiM TV</a>
+<a href="comic.html">Comics</a>
+<div class="mobile-menu-label">&nbsp;</div>
+<a href="dashboard.html">Dashboard</a>
 </div>
 <section class="hero" id="byteHero">
 <video class="hero-video" autoplay muted loop playsinline poster="byte-entrance.png">
@@ -741,6 +777,13 @@ console.log(crew[2].name + " - " + crew[2].role);
 </div>
 <div class="lesson-panel" id="lesson-cheat">
 <div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
+<div class="locked-panel" id="lock-cheat">
+<div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
+<h2>Byte's Cheat Sheet Requires Coders</h2>
+<p>Upgrade to Coders to unlock Byte's complete combined lesson reference.</p>
+<button class="gate-btn" onclick="goUpgrade()">Upgrade to Coders</button>
+</div>
+<div id="cheat-content" style="display:none;">
 <div class="section-header">Byte's Cheat Sheet</div>
 <div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
 <div class="cheat-card">
@@ -791,6 +834,7 @@ console.log(crew[2].name + " - " + crew[2].role);
 </div>
 </div>
 </div>
+</div>
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
 <div class="egg-popup" id="eggPopup">
 <h4>◈ Secret Found!</h4>
@@ -800,18 +844,20 @@ console.log(crew[2].name + " - " + crew[2].role);
 <script>
 let currentLesson = null;
 let currentTier = null;
-window.setNavUser = function(email) {
-  const u = document.getElementById('navUser');
-  const b = document.getElementById('navLogout');
-  if (u) { u.textContent = email; u.style.display = 'inline'; }
-  if (b) b.style.display = 'inline-block';
-};
 window.handleTierUnlock = function(tier) {
   currentTier = tier;
 
   const hasByteAccess =
     typeof window.mimHasAccess === 'function' &&
     window.mimHasAccess('byte', tier, 'lessons');
+
+  const hasGameAccess =
+    typeof window.mimHasAccess === 'function' &&
+    window.mimHasAccess('byte', tier, 'game');
+
+  const hasCheatAccess =
+    typeof window.mimHasAccess === 'function' &&
+    window.mimHasAccess('byte', tier, 'cheat');
 
   if (hasByteAccess) {
     [1, 2, 3, 4].forEach(lesson => {
@@ -822,15 +868,43 @@ window.handleTierUnlock = function(tier) {
       }
 
       ['read', 'terms', 'build', 'reflect'].forEach(block => {
-        const el = document.getElementById(
-          'block-' + lesson + '-' + block
-        );
+        const el = document.getElementById('block-' + lesson + '-' + block);
 
         if (el) {
           el.style.removeProperty('display');
         }
       });
     });
+  }
+
+  document.querySelectorAll('.sidebar-game-link').forEach(link => {
+    if (hasGameAccess) {
+      if (link.tagName.toLowerCase() !== 'a') {
+        const anchor = document.createElement('a');
+        anchor.href = 'byte-game.html';
+        anchor.className = 'sidebar-game-link';
+        anchor.textContent = link.textContent;
+        link.replaceWith(anchor);
+      } else {
+        link.href = 'byte-game.html';
+      }
+    } else if (link.tagName.toLowerCase() === 'a') {
+      const textOnly = document.createElement('span');
+      textOnly.className = 'sidebar-game-link';
+      textOnly.textContent = link.textContent;
+      link.replaceWith(textOnly);
+    }
+  });
+
+  const cheatLock = document.getElementById('lock-cheat');
+  const cheatContent = document.getElementById('cheat-content');
+
+  if (hasCheatAccess) {
+    if (cheatLock) cheatLock.style.display = 'none';
+    if (cheatContent) cheatContent.style.display = 'block';
+  } else {
+    if (cheatLock) cheatLock.style.display = 'block';
+    if (cheatContent) cheatContent.style.display = 'none';
   }
 
   loadReflects();
@@ -962,10 +1036,10 @@ function downloadCheat() {
   URL.revokeObjectURL(url);
 }
 function goUpgrade() {
-  if (window.firebaseAuth && window.firebaseAuth.currentUser) {
+  if (currentTier) {
     window.location.href = 'membership.html';
   } else {
-    document.dispatchEvent(new CustomEvent('mim-auth', { detail: { action: 'signup' } }));
+    window.openAuthModal('signup');
   }
 }
 function handleLogout() {
@@ -1012,7 +1086,7 @@ const JOKES = [
   "There are 10 types of people: those who understand binary, and those who don't.",
   "Why did the boolean break up with the string? It just wasn't true anymore.",
   "My favorite data type? Whatever one doesn't crash the console.",
-  "Why did Byte organize his sock drawer? Nothing gets by him -- not even mismatched socks."
+  "Why did Byte organize the sock drawer? Nothing gets by Byte -- not even mismatched socks."
 ];
 let companionClicks = 0;
 function companionClick() {
@@ -1021,7 +1095,7 @@ function companionClick() {
     localStorage.setItem('byte_egg_found', '1');
     showEgg("You found Byte's secret file! Hidden catchphrase unlocked: \"Every value has a place.\" ◈");
   } else if (companionClicks % 5 === 0) {
-    showEgg("Byte tilts his head. You've already found this one -- but he's still glad you're here.");
+    showEgg("Byte tilts their head. You've already found this one -- but Byte is still glad you're here.");
   }
 }
 function showEgg(text) {
@@ -1047,14 +1121,21 @@ function toggleSound() {
   btn.textContent = soundOn ? '🔊' : '🔇';
   btn.classList.toggle('muted', !soundOn);
 }
-function toggleMobileDrawer() {
-  document.getElementById('navHamburger').classList.toggle('open');
-  document.getElementById('mobileDrawer').classList.toggle('open');
-  document.getElementById('mobileDrawerOverlay').classList.toggle('open');
+function toggleNavDrop(id) {
+  const drop = document.getElementById(id);
+  const isOpen = drop.classList.contains('open');
+  document.querySelectorAll('.nav-drop').forEach(d => d.classList.remove('open'));
+  if (!isOpen) drop.classList.add('open');
 }
-window.toggleMobileDrawer = toggleMobileDrawer;
-document.getElementById('mobileDrawerOverlay').addEventListener('click', toggleMobileDrawer);
-document.querySelectorAll('.mobile-drawer-links a').forEach(a => a.addEventListener('click', toggleMobileDrawer));
+document.addEventListener('click', function(e) {
+  if (!e.target.closest('.nav-drop')) {
+    document.querySelectorAll('.nav-drop').forEach(d => d.classList.remove('open'));
+  }
+});
+function toggleMobileMenu() {
+  document.getElementById('navHamburger').classList.toggle('open');
+  document.getElementById('mobileMenu').classList.toggle('open');
+}
 /* ══════════════════ ICEBREAKER — PATTERN MATCH GAME ══════════════════ */
 const IB_DATA_TYPES = [
   { id: 'string', icon: '🔤', label: 'STRING', color: '#c66bff', def: "Text wrapped in quotes, like \"Byte\" or \"data\"." },
