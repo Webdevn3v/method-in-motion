@@ -385,9 +385,15 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <a href="loop-game.html" class="sidebar-game-link">∞ Loop's Game World</a>
 </aside>
 <div class="lesson-content">
-<div class="content-block active" id="block-1-read">
+<div class="locked-panel" id="lock-1">
+<div class="locked-icon lock-badge">LOCKED</div>
+<h2>Coders Membership Required</h2>
+<p>Loop's full course — all 4 lessons — unlocks with Coders.</p>
+<button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+</div>
+<div class="content-block active" id="block-1-read" style="display:none">
 <div class="section-header">Thinking in Patterns</div>
-<div class="section-sub">LESSON 01 · FREE</div>
+<div class="section-sub">LESSON 01 · CODERS</div>
 <div class="read-card">
 <div class="read-card-num">01 / 05</div>
 <h3>What Is a Pattern?</h3>
@@ -419,14 +425,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <p>Programming isn't just about commands — it's about <strong>controlling the flow</strong> of those commands. You're designing the path the computer follows.</p>
 </div>
 </div>
-<div class="locked-panel" id="anon-lock-1">
-<div class="locked-icon">∞</div>
-<h2>Free to Explore, Free to Sign Up</h2>
-<p>Create a free account to unlock quizzes, the build tools, and reflections for every one of Loop's lessons.</p>
-<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
-</div>
-<div id="anon-gated-1">
-<div class="content-block" id="block-1-terms">
+<div class="content-block" id="block-1-terms" style="display:none">
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
 <div class="terms-grid">
@@ -462,7 +461,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </div>
 </div>
 </div>
-<div class="content-block" id="block-1-build">
+<div class="content-block" id="block-1-build" style="display:none">
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 01 · SPOT THE PATTERN</div>
 <div class="editor-wrap">
@@ -486,7 +485,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </div>
 </div>
 </div>
-<div class="content-block" id="block-1-reflect">
+<div class="content-block" id="block-1-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
@@ -502,7 +501,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <h3>∞ &nbsp; Lesson 1 Complete</h3>
 <p>Patterns. Sequences. Flow. The foundation is set.</p>
 <div class="lesson-joke" id="joke-1">
-</div>
 </div>
 </div>
 </div>
@@ -526,13 +524,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="lesson-content">
 <div class="locked-panel" id="lock-2">
 <div class="locked-icon lock-badge">LOCKED</div>
-<h2>Sparks Membership Required</h2>
-<p>Lesson 2 is available to Sparks members and above.</p>
+<h2>Coders Membership Required</h2>
+<p>Loop's full course — all 4 lessons — unlocks with Coders.</p>
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-2-read" style="display:none">
 <div class="section-header">For Loops</div>
-<div class="section-sub">LESSON 02 · SPARKS+</div>
+<div class="section-sub">LESSON 02 · CODERS</div>
 <div class="read-card">
 <div class="read-card-num">01 / 05</div>
 <h3>Anatomy of a For Loop</h3>
@@ -663,7 +661,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="locked-panel" id="lock-3">
 <div class="locked-icon lock-badge">LOCKED</div>
 <h2>Coders Membership Required</h2>
-<p>Lesson 3 is available to Coders members.</p>
+<p>Loop's full course — all 4 lessons — unlocks with Coders.</p>
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-3-read" style="display:none">
@@ -796,7 +794,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="locked-panel" id="lock-4">
 <div class="locked-icon lock-badge">LOCKED</div>
 <h2>Coders Membership Required</h2>
-<p>Lesson 4 is available to Coders members only.</p>
+<p>Loop's full course — all 4 lessons — unlocks with Coders.</p>
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-4-read" style="display:none">
@@ -982,10 +980,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <script>
 let currentLesson = null;
 let currentTier = null;
-const TIER_ORDER = ['explorer', 'sparks', 'coders'];
-function tierLevel(t) {
-return TIER_ORDER.indexOf((t || '').toLowerCase());
-}
 window.setNavUser = function(email) {
 const u = document.getElementById('navUser');
 const b = document.getElementById('navLogout');
@@ -998,40 +992,29 @@ if (b) b.style.display = 'inline-block';
 ;
 window.handleTierUnlock = function(tier) {
 currentTier = tier;
-const loggedIn = !!tier && tier !== 'logged-out';
-const anonLock = document.getElementById('anon-lock-1');
-const anonGated = document.getElementById('anon-gated-1');
-if (loggedIn) {
-if (anonLock) anonLock.style.display = 'none';
-if (anonGated) anonGated.style.display = 'block';
-}
-else {
-if (anonLock) anonLock.style.display = 'block';
-if (anonGated) anonGated.style.display = 'none';
-}
-const lvl = tierLevel(tier);
-if (lvl >= tierLevel('sparks')) {
-document.getElementById('lock-2').style.display = 'none';
-['read','terms','build','reflect'].forEach(b => {
-const el = document.getElementById('block-2-' + b);
+
+const hasLoopAccess =
+typeof window.mimHasAccess === 'function' &&
+window.mimHasAccess('loop', tier, 'lessons');
+
+if (hasLoopAccess) {
+[1, 2, 3, 4].forEach(lesson => {
+const lock = document.getElementById('lock-' + lesson);
+if (lock) lock.style.display = 'none';
+
+const blocks = lesson === 4
+? ['read', 'build', 'reflect']
+: ['read', 'terms', 'build', 'reflect'];
+
+blocks.forEach(block => {
+const el = document.getElementById('block-' + lesson + '-' + block);
 if (el) el.style.removeProperty('display');
 }
 );
 }
-if (lvl >= tierLevel('coders')) {
-document.getElementById('lock-3').style.display = 'none';
-document.getElementById('lock-4').style.display = 'none';
-['read','terms','build','reflect'].forEach(b => {
-const el = document.getElementById('block-3-' + b);
-if (el) el.style.removeProperty('display');
-}
-);
-['read','build','reflect'].forEach(b => {
-const el = document.getElementById('block-4-' + b);
-if (el) el.style.removeProperty('display');
-}
 );
 }
+
 loadReflects();
 }
 ;
@@ -1528,4 +1511,4 @@ handleTierUnlock(null);
 );
 </script>
 </body>
-</html>          
+</html>
