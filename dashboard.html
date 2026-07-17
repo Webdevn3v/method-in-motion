@@ -321,32 +321,32 @@ const PDF_VOLS=[
   {tag:'Vol. 3 · The Big Picture',title:'Building Digital Worlds',sub:'Websites, apps, games, digital design, and emerging tech for young creators.',cover:'vol.3-think-cover.png',file:'Vol.3_Think_Like_a_Programmer.pdf'}
 ];
 
+// ─── TIER CONFIG — final character-level access model (2026-07-17) ─────────
+// Explorer: full Zen (lessons + game) + Byte's game only (Byte's lessons are Coders-only)
+// Sparks: full Zen + full Bug + full Echo (lessons + games) + Byte's game
+// Coders: everything — all six characters, all lessons, all games
 const TIER_CFG={
   free:{
     label:'Explorer',
     cls:'free',
-    lessonsPerChar:1,
     charactersUnlocked:['zen'],
-    gamesUnlocked:['byte']
+    gamesUnlocked:['zen','byte']
   },
   explorer:{
     label:'Explorer',
     cls:'free',
-    lessonsPerChar:1,
     charactersUnlocked:['zen'],
-    gamesUnlocked:['byte']
+    gamesUnlocked:['zen','byte']
   },
   sparks:{
     label:'Sparks',
     cls:'sparks',
-    lessonsPerChar:2,
-    charactersUnlocked:['zen','byte','echo'],
-    gamesUnlocked:['byte']
+    charactersUnlocked:['zen','bug','echo'],
+    gamesUnlocked:['zen','byte','bug','echo']
   },
   coders:{
     label:'Coders',
     cls:'coders',
-    lessonsPerChar:4,
     charactersUnlocked:'all',
     gamesUnlocked:'all'
   }
@@ -354,30 +354,28 @@ const TIER_CFG={
 
 function canAccessCharacter(charId,tier){
   const cfg=TIER_CFG[tier]||TIER_CFG.free;
-
   return cfg.charactersUnlocked==='all'
     || cfg.charactersUnlocked.includes(charId);
 }
 
-function getStatusLabel(char,tier){
-  if(!canAccessCharacter(char.id,tier))return'Upgrade to unlock';
-  if(tier==='coders')return'All 4 lessons unlocked';
-  if(tier==='sparks')return'Lessons 1–2 unlocked';
-  return'Lesson 1 available';
-}
-
-function getStatus(char,tier){
-  if(!canAccessCharacter(char.id,tier))return'locked';
-  if(tier==='coders')return'unlocked';
-  return'partial';
-}
-
 function canPlayGame(charId,tier){
   const cfg=TIER_CFG[tier]||TIER_CFG.free;
-
   return cfg.gamesUnlocked==='all'
     || cfg.gamesUnlocked.includes(charId);
 }
+
+function getStatus(char,tier){
+  if(canAccessCharacter(char.id,tier))return'unlocked';
+  if(canPlayGame(char.id,tier))return'partial';
+  return'locked';
+}
+
+function getStatusLabel(char,tier){
+  if(canAccessCharacter(char.id,tier))return'All 4 lessons unlocked';
+  if(canPlayGame(char.id,tier))return'Free game · lessons need Coders';
+  return'Upgrade to unlock';
+}
+// ─────────────────────────────────────────────────────────────────────────────
 
 function buildWorldGrid(tier){
   const grid=document.getElementById('world-grid');
@@ -471,9 +469,12 @@ function animateCount(el,target,suffix){
 
 function buildStats(tier){
   const cfg=TIER_CFG[tier]||TIER_CFG.free;
-  animateCount(document.getElementById('stat-worlds'),6);
-  animateCount(document.getElementById('stat-lessons'),cfg.lessonsPerChar,'×6');
-  animateCount(document.getElementById('stat-games'),cfg.gamesUnlocked==='all'?6:1);
+  const worldCount=cfg.charactersUnlocked==='all'?6:cfg.charactersUnlocked.length;
+  const lessonCount=cfg.charactersUnlocked==='all'?24:cfg.charactersUnlocked.length*4;
+  const gameCount=cfg.gamesUnlocked==='all'?6:cfg.gamesUnlocked.length;
+  animateCount(document.getElementById('stat-worlds'),worldCount);
+  animateCount(document.getElementById('stat-lessons'),lessonCount);
+  animateCount(document.getElementById('stat-games'),gameCount);
   const ownedWorkbooks=WORKBOOKS.filter(w=>w.available).length;
   animateCount(document.getElementById('stat-workbooks'),ownedWorkbooks);
 }
