@@ -322,56 +322,101 @@ const PDF_VOLS=[
 ];
 
 const TIER_CFG={
-  free:{label:'Free',cls:'free',lessonsPerChar:1,gamesUnlocked:['byte'],worldsUnlocked:6},
-  sparks:{label:'Sparks',cls:'sparks',lessonsPerChar:2,gamesUnlocked:['byte'],worldsUnlocked:6},
-  coders:{label:'Coders',cls:'coders',lessonsPerChar:4,gamesUnlocked:'all',worldsUnlocked:6}
+  free:{
+    label:'Explorer',
+    cls:'free',
+    lessonsPerChar:1,
+    charactersUnlocked:['zen'],
+    gamesUnlocked:['byte']
+  },
+  explorer:{
+    label:'Explorer',
+    cls:'free',
+    lessonsPerChar:1,
+    charactersUnlocked:['zen'],
+    gamesUnlocked:['byte']
+  },
+  sparks:{
+    label:'Sparks',
+    cls:'sparks',
+    lessonsPerChar:2,
+    charactersUnlocked:['zen','bug','echo'],
+    gamesUnlocked:['byte']
+  },
+  coders:{
+    label:'Coders',
+    cls:'coders',
+    lessonsPerChar:4,
+    charactersUnlocked:'all',
+    gamesUnlocked:'all'
+  }
 };
 
+function canAccessCharacter(charId,tier){
+  const cfg=TIER_CFG[tier]||TIER_CFG.free;
+
+  return cfg.charactersUnlocked==='all'
+    || cfg.charactersUnlocked.includes(charId);
+}
+
 function getStatusLabel(char,tier){
+  if(!canAccessCharacter(char.id,tier))return'Upgrade to unlock';
   if(tier==='coders')return'All 4 lessons unlocked';
   if(tier==='sparks')return'Lessons 1–2 unlocked';
   return'Lesson 1 available';
 }
-function getStatus(tier){
+
+function getStatus(char,tier){
+  if(!canAccessCharacter(char.id,tier))return'locked';
   if(tier==='coders')return'unlocked';
-  if(tier==='sparks')return'partial';
   return'partial';
 }
+
 function canPlayGame(charId,tier){
-  if(tier==='coders')return true;
-  if(charId==='byte')return true;
-  return false;
+  const cfg=TIER_CFG[tier]||TIER_CFG.free;
+
+  return cfg.gamesUnlocked==='all'
+    || cfg.gamesUnlocked.includes(charId);
 }
 
 function buildWorldGrid(tier){
   const grid=document.getElementById('world-grid');
   const isFreeGame=(id)=>id==='byte';
+
   grid.innerHTML=CHARS.map(c=>{
-    const status=getStatus(tier);
+    const characterAccess=canAccessCharacter(c.id,tier);
+    const status=getStatus(c,tier);
     const statusLabel=getStatusLabel(c,tier);
     const gameAccess=canPlayGame(c.id,tier);
     const freeGame=isFreeGame(c.id);
-    return`<div class="world-card" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor};">
+
+    const lessonButton=characterAccess
+      ?`<a href="${c.world}" class="wc-btn wc-btn-lesson">Lessons →</a>`
+      :`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,0.06);">Unlock World</a>`;
+
+    const gameButton=gameAccess
+      ?`<a href="${c.game}" class="wc-btn wc-btn-game">${freeGame?'Play Free →':'Play Game →'}</a>`
+      :`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,0.06);">Unlock Game</a>`;
+
+    return`<div class="world-card ${characterAccess?'':'locked'}" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor};">
       <div class="wc-image" style="background-image:url('${c.image}');">
         <div class="wc-glow"></div>
         ${freeGame?'<div class="wc-free-badge">Free Game</div>':''}
       </div>
+
       <div class="wc-body">
         <div class="wc-char-label">${c.role}</div>
         <div class="wc-name">${c.name}</div>
         <div class="wc-role">${c.gameName}</div>
+
         <div class="wc-status status-${status}">
           <div class="wc-status-dot"></div>
           <div class="wc-status-text">${statusLabel}</div>
         </div>
+
         <div class="wc-actions">
-          <a href="${c.world}" class="wc-btn wc-btn-lesson">Lessons →</a>
-          ${gameAccess
-            ?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Game →</a>`
-            :freeGame
-              ?`<a href="${c.game}" class="wc-btn wc-btn-game">Play Free →</a>`
-              :`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,0.06);">Unlock Game</a>`
-          }
+          ${lessonButton}
+          ${gameButton}
         </div>
       </div>
     </div>`;
