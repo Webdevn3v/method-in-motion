@@ -362,9 +362,15 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
 </aside>
 <div class="lesson-content">
-<div class="content-block active" id="block-1-read">
+<div class="locked-panel" id="lock-1">
+<div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
+<h2>Coders Membership Required</h2>
+<p>Byte's full world — all 4 lessons — unlocks with Coders.</p>
+<button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
+</div>
+<div class="content-block active" id="block-1-read" style="display:none">
 <div class="section-header">Data Basics</div>
-<div class="section-sub">LESSON 01 · FREE</div>
+<div class="section-sub">LESSON 01 · CODERS</div>
 <div class="read-card">
 <div class="read-card-num">01 / 04</div>
 <h3>What Is Data?</h3>
@@ -387,14 +393,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <p>Knowing a value's type tells you what you can do with it. You can add two numbers together, but you can't add two words the same way. Byte always checks the type first.</p>
 </div>
 </div>
-<div class="locked-panel" id="anon-lock-1">
-<div class="locked-icon">◈</div>
-<h2>Free to Explore, Free to Sign Up</h2>
-<p>Create a free account to unlock quizzes, the build tools, and reflections for every one of Byte's lessons.</p>
-<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
-</div>
-<div id="anon-gated-1">
-<div class="content-block" id="block-1-terms">
+<div class="content-block" id="block-1-terms" style="display:none">
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
 <div class="terms-grid">
@@ -406,7 +405,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Data type <span class="term-arrow">›</span></div><div class="term-def">The category a piece of data belongs to — string, number, or boolean.</div></div>
 </div>
 </div>
-<div class="content-block" id="block-1-build">
+<div class="content-block" id="block-1-build" style="display:none">
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 01 · SORT THE DATA</div>
 <div class="demo-card">
@@ -441,7 +440,7 @@ console.log(isReady);
 <div class="quiz-feedback" id="qfb-1-1"></div>
 </div>
 </div>
-<div class="content-block" id="block-1-reflect">
+<div class="content-block" id="block-1-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
 <div class="reflect-prompt">
@@ -460,7 +459,6 @@ console.log(isReady);
 </div>
 </div>
 </div>
-</div>
 <div class="lesson-panel" id="lesson-2">
 <aside class="lesson-sidebar">
 <div class="sidebar-label">Lesson 02</div>
@@ -474,13 +472,13 @@ console.log(isReady);
 <div class="lesson-content">
 <div class="locked-panel" id="lock-2">
 <div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
-<h2>Sparks Membership Required</h2>
-<p>Lesson 2 is available to Sparks members and above.</p>
+<h2>Coders Membership Required</h2>
+<p>Byte's full world — all 4 lessons — unlocks with Coders.</p>
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-2-read" style="display:none">
 <div class="section-header">Patterns &amp; Sequences</div>
-<div class="section-sub">LESSON 02 · SPARKS+</div>
+<div class="section-sub">LESSON 02 · CODERS</div>
 <div class="read-card">
 <div class="read-card-num">01 / 04</div>
 <h3>Data Rarely Travels Alone</h3>
@@ -571,7 +569,7 @@ console.log(songs[2]);
 <div class="locked-panel" id="lock-3">
 <div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
 <h2>Coders Membership Required</h2>
-<p>Lesson 3 is available to Coders members.</p>
+<p>Byte's full world — all 4 lessons — unlocks with Coders.</p>
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-3-read" style="display:none">
@@ -671,7 +669,7 @@ console.log(character.level);
 <div class="locked-panel" id="lock-4">
 <div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
 <h2>Coders Membership Required</h2>
-<p>Lesson 4 is available to Coders members only.</p>
+<p>Byte's full world — all 4 lessons — unlocks with Coders.</p>
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-4-read" style="display:none">
@@ -802,8 +800,6 @@ console.log(crew[2].name + " - " + crew[2].role);
 <script>
 let currentLesson = null;
 let currentTier = null;
-const TIER_ORDER = ['explorer', 'sparks', 'coders'];
-function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); }
 window.setNavUser = function(email) {
   const u = document.getElementById('navUser');
   const b = document.getElementById('navLogout');
@@ -812,36 +808,31 @@ window.setNavUser = function(email) {
 };
 window.handleTierUnlock = function(tier) {
   currentTier = tier;
-  const loggedIn = !!tier && tier !== 'logged-out';
-  const anonLock = document.getElementById('anon-lock-1');
-  const anonGated = document.getElementById('anon-gated-1');
-  if (loggedIn) {
-    if (anonLock) anonLock.style.display = 'none';
-    if (anonGated) anonGated.style.display = 'block';
-  } else {
-    if (anonLock) anonLock.style.display = 'block';
-    if (anonGated) anonGated.style.display = 'none';
-  }
-  const lvl = tierLevel(tier);
-  if (lvl >= tierLevel('sparks')) {
-    document.getElementById('lock-2').style.display = 'none';
-    ['read','terms','build','reflect'].forEach(b => {
-      const el = document.getElementById('block-2-' + b);
-      if (el) el.style.removeProperty('display');
+
+  const hasByteAccess =
+    typeof window.mimHasAccess === 'function' &&
+    window.mimHasAccess('byte', tier, 'lessons');
+
+  if (hasByteAccess) {
+    [1, 2, 3, 4].forEach(lesson => {
+      const lock = document.getElementById('lock-' + lesson);
+
+      if (lock) {
+        lock.style.display = 'none';
+      }
+
+      ['read', 'terms', 'build', 'reflect'].forEach(block => {
+        const el = document.getElementById(
+          'block-' + lesson + '-' + block
+        );
+
+        if (el) {
+          el.style.removeProperty('display');
+        }
+      });
     });
   }
-  if (lvl >= tierLevel('coders')) {
-    document.getElementById('lock-3').style.display = 'none';
-    document.getElementById('lock-4').style.display = 'none';
-    ['read','terms','build','reflect'].forEach(b => {
-      const el = document.getElementById('block-3-' + b);
-      if (el) el.style.removeProperty('display');
-    });
-    ['read','build','reflect'].forEach(b => {
-      const el = document.getElementById('block-4-' + b);
-      if (el) el.style.removeProperty('display');
-    });
-  }
+
   loadReflects();
 };
 function enterCity() {
