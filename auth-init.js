@@ -1,4 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import {
   getAuth,
   onAuthStateChanged,
@@ -7,12 +6,14 @@ import {
   createUserWithEmailAndPassword,
   updateProfile
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
 import {
   getFirestore,
   doc,
   getDoc,
   setDoc
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
 
 const firebaseConfig = {
   apiKey: "AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
@@ -23,18 +24,21 @@ const firebaseConfig = {
   appId: "1:1067937974009:web:5b21e6abe84e0b28234428"
 };
 
+
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
 const authModal = document.getElementById("auth-modal");
+
 let authActionInProgress = false;
 
+
 /*
-  CHARACTER ACCESS RULES
+  CHARACTER ACCESS
 
   Explorer:
-  - Zen only
+  - Zen
 
   Sparks:
   - Zen
@@ -42,16 +46,51 @@ let authActionInProgress = false;
   - Echo
 
   Coders:
-  - All six characters
+  - Zen
+  - Bug
+  - Echo
+  - Byte
+  - Loop
+  - Nova
 */
 const CHARACTER_ACCESS = {
-  zen: ["explorer", "sparks", "coders"],
-  bug: ["sparks", "coders"],
-  echo: ["sparks", "coders"],
-  byte: ["coders"],
-  loop: ["coders"],
-  nova: ["coders"]
+  zen: {
+    tiers: ["explorer", "sparks", "coders"],
+    requiredPlan: "Explorer",
+    characterName: "Zen"
+  },
+
+  bug: {
+    tiers: ["sparks", "coders"],
+    requiredPlan: "Sparks",
+    characterName: "Bug"
+  },
+
+  echo: {
+    tiers: ["sparks", "coders"],
+    requiredPlan: "Sparks",
+    characterName: "Echo"
+  },
+
+  byte: {
+    tiers: ["coders"],
+    requiredPlan: "Coders",
+    characterName: "Byte"
+  },
+
+  loop: {
+    tiers: ["coders"],
+    requiredPlan: "Coders",
+    characterName: "Loop"
+  },
+
+  nova: {
+    tiers: ["coders"],
+    requiredPlan: "Coders",
+    characterName: "Nova"
+  }
 };
+
 
 const currentPage = window.location.pathname
   .split("/")
@@ -59,15 +98,8 @@ const currentPage = window.location.pathname
   .replace(/\.html$/i, "")
   .toLowerCase();
 
-const requiredTiersForPage = CHARACTER_ACCESS[currentPage] || null;
+const currentCharacter = CHARACTER_ACCESS[currentPage] || null;
 
-/*
-  Hide protected pages until Firebase confirms access.
-  This prevents the page from flashing before redirecting.
-*/
-if (requiredTiersForPage) {
-  document.documentElement.style.visibility = "hidden";
-}
 
 function normalizeTier(value) {
   const tier = String(value || "explorer")
@@ -79,13 +111,201 @@ function normalizeTier(value) {
     : tier;
 }
 
-function revealProtectedPage() {
-  document.documentElement.style.visibility = "visible";
+
+function removeCharacterLock() {
+  document
+    .getElementById("mim-character-lock")
+    ?.remove();
+
+  document.body.style.overflow = "";
 }
 
-function redirectToMembership() {
-  window.location.replace("membership.html");
+
+function showCharacterLock({
+  characterName,
+  requiredPlan,
+  signedOut = false
+}) {
+  removeCharacterLock();
+
+  const overlay = document.createElement("div");
+
+  overlay.id = "mim-character-lock";
+
+  overlay.style.cssText = `
+    position:fixed;
+    inset:0;
+    z-index:999999;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+    background:rgba(3,5,10,.78);
+    backdrop-filter:blur(8px);
+    -webkit-backdrop-filter:blur(8px);
+  `;
+
+
+  const card = document.createElement("div");
+
+  card.style.cssText = `
+    width:min(520px, 94vw);
+    border:1px solid rgba(0,232,255,.42);
+    border-radius:20px;
+    padding:34px 28px;
+    text-align:center;
+    background:
+      linear-gradient(
+        145deg,
+        rgba(15,18,32,.98),
+        rgba(7,10,19,.98)
+      );
+    box-shadow:
+      0 0 45px rgba(0,232,255,.18),
+      0 24px 80px rgba(0,0,0,.55);
+    color:#fff;
+  `;
+
+
+  const eyebrow = document.createElement("div");
+
+  eyebrow.style.cssText = `
+    font-family:'Space Mono',monospace;
+    font-size:.68rem;
+    letter-spacing:.17em;
+    text-transform:uppercase;
+    color:#00e8ff;
+    margin-bottom:14px;
+  `;
+
+  eyebrow.textContent = signedOut
+    ? "Membership required"
+    : "Upgrade required";
+
+
+  const title = document.createElement("h2");
+
+  title.style.cssText = `
+    margin:0 0 12px;
+    font-family:'Orbitron',sans-serif;
+    font-size:clamp(1.35rem,4vw,2rem);
+    line-height:1.2;
+    color:#fff;
+  `;
+
+  title.textContent = signedOut
+    ? `Join to unlock ${characterName}'s world`
+    : `Upgrade to ${requiredPlan} to unlock ${characterName}`;
+
+
+  const message = document.createElement("p");
+
+  message.style.cssText = `
+    margin:0 auto 24px;
+    max-width:410px;
+    font-family:'Space Grotesk',sans-serif;
+    font-size:.95rem;
+    line-height:1.65;
+    color:rgba(255,255,255,.72);
+  `;
+
+  message.textContent = signedOut
+    ? `Create an Explorer account or log in to see which character worlds are included with your membership.`
+    : `${characterName}'s lessons are not included with your current membership. The world stays visible, but the learning content remains locked.`;
+
+
+  const buttonRow = document.createElement("div");
+
+  buttonRow.style.cssText = `
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+  `;
+
+
+  const primaryButton = document.createElement("a");
+
+  primaryButton.href = "membership.html";
+
+  primaryButton.style.cssText = `
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:180px;
+    padding:13px 20px;
+    border-radius:999px;
+    text-decoration:none;
+    font-family:'Orbitron',sans-serif;
+    font-size:.75rem;
+    font-weight:700;
+    letter-spacing:.06em;
+    color:#05070d;
+    background:linear-gradient(
+      135deg,
+      #00e8ff,
+      #b8ff3c
+    );
+    box-shadow:0 0 24px rgba(0,232,255,.28);
+  `;
+
+  primaryButton.textContent = signedOut
+    ? "View Memberships"
+    : `Upgrade to ${requiredPlan}`;
+
+
+  buttonRow.appendChild(primaryButton);
+
+
+  if (signedOut) {
+    const loginButton = document.createElement("button");
+
+    loginButton.type = "button";
+
+    loginButton.style.cssText = `
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      min-width:140px;
+      padding:13px 20px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.24);
+      background:rgba(255,255,255,.05);
+      color:#fff;
+      font-family:'Orbitron',sans-serif;
+      font-size:.75rem;
+      font-weight:700;
+      letter-spacing:.06em;
+      cursor:pointer;
+    `;
+
+    loginButton.textContent = "Log In";
+
+    loginButton.addEventListener("click", () => {
+      if (authModal) {
+        openAuthModal("login");
+        return;
+      }
+
+      window.location.assign("index.html");
+    });
+
+    buttonRow.appendChild(loginButton);
+  }
+
+
+  card.appendChild(eyebrow);
+  card.appendChild(title);
+  card.appendChild(message);
+  card.appendChild(buttonRow);
+
+  overlay.appendChild(card);
+
+  document.body.appendChild(overlay);
+
+  document.body.style.overflow = "hidden";
 }
+
 
 function setError(id, message = "") {
   const el = document.getElementById(id);
@@ -93,8 +313,13 @@ function setError(id, message = "") {
   if (!el) return;
 
   el.textContent = message;
-  el.classList.toggle("visible", Boolean(message));
+
+  el.classList.toggle(
+    "visible",
+    Boolean(message)
+  );
 }
+
 
 function setStatus(id, message = "") {
   const el = document.getElementById(id);
@@ -102,17 +327,29 @@ function setStatus(id, message = "") {
   if (!el) return;
 
   el.textContent = message;
-  el.classList.toggle("visible", Boolean(message));
+
+  el.classList.toggle(
+    "visible",
+    Boolean(message)
+  );
 }
 
-function setButtonBusy(button, busy, busyText, normalText) {
+
+function setButtonBusy(
+  button,
+  busy,
+  busyText,
+  normalText
+) {
   if (!button) return;
 
   button.disabled = busy;
+
   button.textContent = busy
     ? busyText
     : normalText;
 }
+
 
 function friendlyAuthError(error, action) {
   const code = error?.code || "";
@@ -154,6 +391,7 @@ function friendlyAuthError(error, action) {
     : "We could not log you in. Please try again.";
 }
 
+
 function openAuthModal(tab) {
   if (!authModal) return;
 
@@ -165,23 +403,34 @@ function openAuthModal(tab) {
   }
 }
 
+
 function closeAuthModal() {
-  if (!authModal || authActionInProgress) return;
+  if (!authModal || authActionInProgress) {
+    return;
+  }
 
   authModal.classList.remove("active");
   authModal.style.display = "none";
 }
 
-function setAuthTab(tab) {
-  document.querySelectorAll(".auth-tab").forEach((btn) => {
-    btn.classList.toggle(
-      "active",
-      btn.dataset.tab === tab
-    );
-  });
 
-  const loginForm = document.getElementById("login-form");
-  const signupForm = document.getElementById("signup-form");
+function setAuthTab(tab) {
+  document
+    .querySelectorAll(".auth-tab")
+    .forEach((button) => {
+      button.classList.toggle(
+        "active",
+        button.dataset.tab === tab
+      );
+    });
+
+
+  const loginForm =
+    document.getElementById("login-form");
+
+  const signupForm =
+    document.getElementById("signup-form");
+
 
   loginForm?.classList.toggle(
     "active",
@@ -193,12 +442,14 @@ function setAuthTab(tab) {
     tab === "signup"
   );
 
+
   if (loginForm) {
     loginForm.style.display =
       tab === "login"
         ? "block"
         : "none";
   }
+
 
   if (signupForm) {
     signupForm.style.display =
@@ -207,30 +458,53 @@ function setAuthTab(tab) {
         : "none";
   }
 
+
   setError("login-error");
   setError("signup-error");
+
   setStatus("login-status");
   setStatus("signup-status");
 }
+
 
 function showWelcomeToast(message) {
   document
     .getElementById("mim-welcome-toast")
     ?.remove();
 
-  const toast = document.createElement("div");
+
+  const toast =
+    document.createElement("div");
+
 
   toast.id = "mim-welcome-toast";
-  toast.setAttribute("role", "status");
-  toast.setAttribute("aria-live", "polite");
+
+  toast.setAttribute(
+    "role",
+    "status"
+  );
+
+  toast.setAttribute(
+    "aria-live",
+    "polite"
+  );
+
 
   toast.style.cssText = `
     position:fixed;
     top:24px;
     left:50%;
-    transform:translateX(-50%) translateY(-20px);
+    transform:
+      translateX(-50%)
+      translateY(-20px);
     z-index:99999;
-    background:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff);
+    background:
+      linear-gradient(
+        135deg,
+        #ff6baa,
+        #c66bff,
+        #00e8ff
+      );
     color:#000;
     font-family:'Orbitron',monospace;
     font-size:.72rem;
@@ -238,23 +512,31 @@ function showWelcomeToast(message) {
     font-weight:700;
     padding:14px 26px;
     border-radius:100px;
-    box-shadow:0 10px 40px rgba(198,107,255,.45);
+    box-shadow:
+      0 10px 40px
+      rgba(198,107,255,.45);
     opacity:0;
-    transition:opacity .35s ease, transform .35s ease;
+    transition:
+      opacity .35s ease,
+      transform .35s ease;
     text-align:center;
     max-width:90vw;
   `;
+
 
   toast.textContent = message;
 
   document.body.appendChild(toast);
 
+
   requestAnimationFrame(() => {
     toast.style.opacity = "1";
+
     toast.style.transform =
       "translateX(-50%) translateY(0)";
   });
 }
+
 
 async function readUserProfile(uid) {
   try {
@@ -275,151 +557,215 @@ async function readUserProfile(uid) {
   }
 }
 
+
 function redirectToDashboard(delay = 1100) {
   window.setTimeout(() => {
-    window.location.assign("dashboard.html");
+    window.location.assign(
+      "dashboard.html"
+    );
   }, delay);
 }
 
-onAuthStateChanged(auth, async (user) => {
-  const nameEl =
-    document.getElementById("nav-username");
 
-  const userMenu =
-    document.getElementById("nav-user-menu");
-
-  const authButtons =
-    document.getElementById("nav-auth-btns");
-
-  const loginBtn =
-    document.getElementById("nav-login");
-
-  const joinBtn =
-    document.getElementById("nav-join");
-
-  if (user) {
-    const userData =
-      await readUserProfile(user.uid);
-
-    const userTier = normalizeTier(
-      userData.tier ||
-      userData.plan ||
-      userData.selectedPlan ||
-      "explorer"
-    );
-
-    /*
-      Block direct URL access when the user's tier
-      does not include the current character.
-    */
-    if (
-      requiredTiersForPage &&
-      !requiredTiersForPage.includes(userTier)
-    ) {
-      redirectToMembership();
-      return;
-    }
-
-    if (nameEl) {
-      nameEl.textContent =
-        userData.displayName ||
-        user.displayName ||
-        user.email;
-    }
-
-    if (userMenu) {
-      userMenu.style.display = "flex";
-    }
-
-    if (authButtons) {
-      authButtons.style.display = "none";
-    }
-
-    if (loginBtn) {
-      loginBtn.style.display = "none";
-    }
-
-    if (joinBtn) {
-      joinBtn.style.display = "none";
-    }
-
-    /*
-      Character pages use this older navigation hook.
-    */
-    if (
-      typeof window.setNavUser === "function"
-    ) {
-      window.setNavUser(
-        user.email ||
-        userData.email ||
-        ""
+onAuthStateChanged(
+  auth,
+  async (user) => {
+    const nameEl =
+      document.getElementById(
+        "nav-username"
       );
-    }
 
-    /*
-      Keep each character page's existing lesson-level
-      locking system working.
-    */
-    if (
-      typeof window.handleTierUnlock === "function"
-    ) {
-      window.handleTierUnlock(userTier);
-    }
+    const userMenu =
+      document.getElementById(
+        "nav-user-menu"
+      );
 
-    if (requiredTiersForPage) {
-      revealProtectedPage();
-    }
-  } else {
-    /*
-      Signed-out visitors cannot open character pages
-      directly.
-    */
-    if (requiredTiersForPage) {
-      redirectToMembership();
-      return;
-    }
+    const authButtons =
+      document.getElementById(
+        "nav-auth-btns"
+      );
 
-    if (nameEl) {
-      nameEl.textContent = "";
-    }
+    const loginBtn =
+      document.getElementById(
+        "nav-login"
+      );
 
-    if (userMenu) {
-      userMenu.style.display = "none";
-    }
+    const joinBtn =
+      document.getElementById(
+        "nav-join"
+      );
 
-    if (authButtons) {
-      authButtons.style.display = "flex";
-    }
 
-    if (loginBtn) {
-      loginBtn.style.display = "inline-block";
-    }
+    if (user) {
+      const userData =
+        await readUserProfile(
+          user.uid
+        );
 
-    if (joinBtn) {
-      joinBtn.style.display = "inline-block";
+
+      const userTier =
+        normalizeTier(
+          userData.tier ||
+          userData.plan ||
+          userData.selectedPlan ||
+          "explorer"
+        );
+
+
+      if (
+        currentCharacter &&
+        !currentCharacter.tiers.includes(
+          userTier
+        )
+      ) {
+        showCharacterLock({
+          characterName:
+            currentCharacter.characterName,
+
+          requiredPlan:
+            currentCharacter.requiredPlan,
+
+          signedOut: false
+        });
+      } else {
+        removeCharacterLock();
+      }
+
+
+      if (nameEl) {
+        nameEl.textContent =
+          userData.displayName ||
+          user.displayName ||
+          user.email;
+      }
+
+
+      if (userMenu) {
+        userMenu.style.display = "flex";
+      }
+
+
+      if (authButtons) {
+        authButtons.style.display = "none";
+      }
+
+
+      if (loginBtn) {
+        loginBtn.style.display = "none";
+      }
+
+
+      if (joinBtn) {
+        joinBtn.style.display = "none";
+      }
+
+
+      if (
+        typeof window.setNavUser ===
+        "function"
+      ) {
+        window.setNavUser(
+          user.email ||
+          userData.email ||
+          ""
+        );
+      }
+
+
+      /*
+        Only unlock lessons when the member
+        actually has access to this character.
+      */
+      const canAccessCharacter =
+        !currentCharacter ||
+        currentCharacter.tiers.includes(
+          userTier
+        );
+
+
+      if (
+        canAccessCharacter &&
+        typeof window.handleTierUnlock ===
+          "function"
+      ) {
+        window.handleTierUnlock(
+          userTier
+        );
+      }
+    } else {
+      if (currentCharacter) {
+        showCharacterLock({
+          characterName:
+            currentCharacter.characterName,
+
+          requiredPlan:
+            currentCharacter.requiredPlan,
+
+          signedOut: true
+        });
+      } else {
+        removeCharacterLock();
+      }
+
+
+      if (nameEl) {
+        nameEl.textContent = "";
+      }
+
+
+      if (userMenu) {
+        userMenu.style.display = "none";
+      }
+
+
+      if (authButtons) {
+        authButtons.style.display = "flex";
+      }
+
+
+      if (loginBtn) {
+        loginBtn.style.display =
+          "inline-block";
+      }
+
+
+      if (joinBtn) {
+        joinBtn.style.display =
+          "inline-block";
+      }
     }
   }
-});
+);
+
 
 document
   .getElementById("nav-login")
-  ?.addEventListener("click", (event) => {
-    event.preventDefault();
-    openAuthModal("login");
-  });
+  ?.addEventListener(
+    "click",
+    (event) => {
+      event.preventDefault();
+
+      openAuthModal("login");
+    }
+  );
+
 
 document
   .getElementById("nav-join")
-  ?.addEventListener("click", (event) => {
-    event.preventDefault();
+  ?.addEventListener(
+    "click",
+    (event) => {
+      event.preventDefault();
 
-    sessionStorage.setItem(
-      "mimSelectedPlan",
-      "explorer"
-    );
+      sessionStorage.setItem(
+        "mimSelectedPlan",
+        "explorer"
+      );
 
-    openAuthModal("signup");
-  });
+      openAuthModal("signup");
+    }
+  );
+
 
 document
   .getElementById("auth-close-btn")
@@ -427,6 +773,7 @@ document
     "click",
     closeAuthModal
   );
+
 
 authModal?.addEventListener(
   "click",
@@ -437,47 +784,70 @@ authModal?.addEventListener(
   }
 );
 
+
 document
-  .querySelectorAll(".auth-tab, .auth-link")
+  .querySelectorAll(
+    ".auth-tab, .auth-link"
+  )
   .forEach((element) => {
     element.addEventListener(
       "click",
       () => {
-        setAuthTab(element.dataset.tab);
+        setAuthTab(
+          element.dataset.tab
+        );
       }
     );
   });
 
+
 document
-  .getElementById("nav-logout-btn")
+  .getElementById(
+    "nav-logout-btn"
+  )
   ?.addEventListener(
     "click",
     async () => {
       await signOut(auth);
-      window.location.assign("index.html");
+
+      window.location.assign(
+        "index.html"
+      );
     }
   );
 
+
 async function handleLogin() {
-  if (authActionInProgress) return;
+  if (authActionInProgress) {
+    return;
+  }
+
 
   const button =
     document.getElementById(
       "login-submit-btn"
     );
 
+
   const email =
     document
-      .getElementById("login-email")
+      .getElementById(
+        "login-email"
+      )
       ?.value.trim() || "";
+
 
   const password =
     document
-      .getElementById("login-password")
+      .getElementById(
+        "login-password"
+      )
       ?.value || "";
+
 
   setError("login-error");
   setStatus("login-status");
+
 
   if (!email || !password) {
     setError(
@@ -488,7 +858,9 @@ async function handleLogin() {
     return;
   }
 
+
   authActionInProgress = true;
+
 
   setButtonBusy(
     button,
@@ -496,6 +868,7 @@ async function handleLogin() {
     "Logging In…",
     "Log In"
   );
+
 
   try {
     const credential =
@@ -505,20 +878,24 @@ async function handleLogin() {
         password
       );
 
+
     const userData =
       await readUserProfile(
         credential.user.uid
       );
+
 
     const displayName =
       userData.displayName ||
       credential.user.displayName ||
       "";
 
+
     setStatus(
       "login-status",
       "Login successful. Loading your dashboard…"
     );
+
 
     showWelcomeToast(
       displayName
@@ -526,22 +903,36 @@ async function handleLogin() {
         : "Welcome back! ✦"
     );
 
-    authModal?.classList.remove("active");
+
+    authModal?.classList.remove(
+      "active"
+    );
+
 
     if (authModal) {
-      authModal.style.display = "none";
+      authModal.style.display =
+        "none";
     }
+
 
     redirectToDashboard();
   } catch (error) {
-    console.error("Login failed:", error);
+    console.error(
+      "Login failed:",
+      error
+    );
+
 
     setError(
       "login-error",
-      friendlyAuthError(error, "login")
+      friendlyAuthError(
+        error,
+        "login"
+      )
     );
   } finally {
     authActionInProgress = false;
+
 
     setButtonBusy(
       button,
@@ -552,36 +943,52 @@ async function handleLogin() {
   }
 }
 
+
 async function handleSignup() {
-  if (authActionInProgress) return;
+  if (authActionInProgress) {
+    return;
+  }
+
 
   const button =
     document.getElementById(
       "signup-submit-btn"
     );
 
+
   const name =
     document
-      .getElementById("signup-name")
+      .getElementById(
+        "signup-name"
+      )
       ?.value.trim() || "";
+
 
   const email =
     document
-      .getElementById("signup-email")
+      .getElementById(
+        "signup-email"
+      )
       ?.value.trim() || "";
+
 
   const password =
     document
-      .getElementById("signup-password")
+      .getElementById(
+        "signup-password"
+      )
       ?.value || "";
+
 
   const selectedPlan =
     sessionStorage.getItem(
       "mimSelectedPlan"
     ) || "explorer";
 
+
   setError("signup-error");
   setStatus("signup-status");
+
 
   if (!name) {
     setError(
@@ -592,6 +999,7 @@ async function handleSignup() {
     return;
   }
 
+
   if (!email) {
     setError(
       "signup-error",
@@ -600,6 +1008,7 @@ async function handleSignup() {
 
     return;
   }
+
 
   if (password.length < 6) {
     setError(
@@ -610,7 +1019,9 @@ async function handleSignup() {
     return;
   }
 
+
   authActionInProgress = true;
+
 
   setButtonBusy(
     button,
@@ -618,6 +1029,7 @@ async function handleSignup() {
     "Creating Account…",
     "Create Your Account"
   );
+
 
   try {
     const credential =
@@ -627,12 +1039,14 @@ async function handleSignup() {
         password
       );
 
+
     await updateProfile(
       credential.user,
       {
         displayName: name
       }
     );
+
 
     try {
       await setDoc(
@@ -641,6 +1055,7 @@ async function handleSignup() {
           "users",
           credential.user.uid
         ),
+
         {
           displayName: name,
           email,
@@ -649,6 +1064,7 @@ async function handleSignup() {
           createdAt:
             new Date().toISOString()
         },
+
         {
           merge: true
         }
@@ -659,26 +1075,35 @@ async function handleSignup() {
         profileError
       );
 
+
       setStatus(
         "signup-status",
         "Your account was created. We are loading your dashboard, but some profile details may need to sync."
       );
     }
 
+
     showWelcomeToast(
       `Welcome to the crew, ${name}! ✦`
     );
+
 
     sessionStorage.setItem(
       "mimPostSignupPlan",
       selectedPlan
     );
 
-    authModal?.classList.remove("active");
+
+    authModal?.classList.remove(
+      "active"
+    );
+
 
     if (authModal) {
-      authModal.style.display = "none";
+      authModal.style.display =
+        "none";
     }
+
 
     redirectToDashboard();
   } catch (error) {
@@ -686,6 +1111,7 @@ async function handleSignup() {
       "Signup failed:",
       error
     );
+
 
     setError(
       "signup-error",
@@ -697,6 +1123,7 @@ async function handleSignup() {
   } finally {
     authActionInProgress = false;
 
+
     setButtonBusy(
       button,
       false,
@@ -706,22 +1133,31 @@ async function handleSignup() {
   }
 }
 
+
 document
-  .getElementById("login-submit-btn")
+  .getElementById(
+    "login-submit-btn"
+  )
   ?.addEventListener(
     "click",
     handleLogin
   );
 
+
 document
-  .getElementById("signup-submit-btn")
+  .getElementById(
+    "signup-submit-btn"
+  )
   ?.addEventListener(
     "click",
     handleSignup
   );
 
+
 document
-  .getElementById("login-password")
+  .getElementById(
+    "login-password"
+  )
   ?.addEventListener(
     "keydown",
     (event) => {
@@ -731,8 +1167,11 @@ document
     }
   );
 
+
 document
-  .getElementById("signup-password")
+  .getElementById(
+    "signup-password"
+  )
   ?.addEventListener(
     "keydown",
     (event) => {
@@ -742,9 +1181,9 @@ document
     }
   );
 
-/*
-  Keep existing inline modal calls working.
-*/
-window.openAuthModal = openAuthModal;
-window.closeAuthModal = closeAuthModal;
 
+window.openAuthModal =
+  openAuthModal;
+
+window.closeAuthModal =
+  closeAuthModal;
