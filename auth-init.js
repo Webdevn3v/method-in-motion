@@ -27,6 +27,38 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
+// ─── SHARED CHARACTER ACCESS SYSTEM ─────────────────────────────────────────
+// One source of truth for which tier unlocks which character's lessons/game.
+// Every character page should call window.mimHasAccess(charId, tier, kind)
+// instead of writing its own tier-comparison logic.
+//
+// kind is 'lessons' or 'game'. Byte is the one character where these differ
+// (game is free at Explorer, lessons are Coders-only) — everyone else has
+// the same requirement for both.
+const CHARACTER_ACCESS = {
+  zen:  { lessons: "explorer", game: "explorer" },
+  byte: { lessons: "coders",   game: "explorer" },
+  bug:  { lessons: "sparks",   game: "sparks"   },
+  echo: { lessons: "sparks",   game: "sparks"   },
+  loop: { lessons: "coders",   game: "coders"   },
+  nova: { lessons: "coders",   game: "coders"   }
+};
+
+const TIER_RANK = { explorer: 1, sparks: 2, coders: 3 };
+
+function mimHasAccess(charId, tier, kind) {
+  const rules = CHARACTER_ACCESS[charId];
+  if (!rules) return false;
+  const required = rules[kind] || "coders";
+  const userRank = TIER_RANK[(tier || "").toLowerCase()] || 0;
+  const requiredRank = TIER_RANK[required] || 99;
+  return userRank >= requiredRank;
+}
+
+window.mimCharacterAccess = CHARACTER_ACCESS;
+window.mimHasAccess = mimHasAccess;
+// ─────────────────────────────────────────────────────────────────────────────
+
 const authModal = document.getElementById("auth-modal");
 let authActionInProgress = false;
 
