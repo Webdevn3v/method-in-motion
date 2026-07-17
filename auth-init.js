@@ -36,12 +36,12 @@ const db = getFirestore(app);
 // (game is free at Explorer, lessons are Coders-only) — everyone else has
 // the same requirement for both.
 const CHARACTER_ACCESS = {
-  zen:  { lessons: "explorer", game: "explorer" },
-  byte: { lessons: "coders",   game: "explorer" },
-  bug:  { lessons: "sparks",   game: "sparks"   },
-  echo: { lessons: "sparks",   game: "sparks"   },
-  loop: { lessons: "coders",   game: "coders"   },
-  nova: { lessons: "coders",   game: "coders"   }
+  zen:  { lessons: "explorer", game: "explorer", cheat: "coders" },
+  byte: { lessons: "coders",   game: "explorer", cheat: "coders" },
+  bug:  { lessons: "sparks",   game: "sparks",   cheat: "coders" },
+  echo: { lessons: "sparks",   game: "sparks",   cheat: "coders" },
+  loop: { lessons: "coders",   game: "coders",   cheat: "coders" },
+  nova: { lessons: "coders",   game: "coders",   cheat: "coders" }
 };
 
 const TIER_RANK = { explorer: 1, sparks: 2, coders: 3 };
