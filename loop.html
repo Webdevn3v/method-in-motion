@@ -288,7 +288,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
 <li><a href="games.html">Games</a></li>
-<li><a href="tag-wall.html">Tag Wall</a></li>
 <li class="nav-drop" id="exploreDrop">
 <button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')" aria-haspopup="true">Explore <span class="nav-drop-arrow">⌄</span></button>
 <div class="nav-drop-menu">
@@ -301,6 +300,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <li class="nav-drop" id="undergroundDrop">
 <button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')" aria-haspopup="true">Underground <span class="nav-drop-arrow">⌄</span></button>
 <div class="nav-drop-menu">
+<a class="nav-drop-item" href="tag-wall.html">Tag Wall</a>
 <a class="nav-drop-item" href="broken-syntax.html">Broken Syntax</a>
 <a class="nav-drop-item" href="mim-tv.html">MiM TV</a>
 <a class="nav-drop-item" href="comic.html">Comics</a>
@@ -324,13 +324,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </nav>
 <div class="mobile-menu" id="mobileMenu">
 <a href="games.html">Games</a>
-<a href="tag-wall.html">Tag Wall</a>
 <div class="mobile-menu-label">Explore</div>
 <a href="pdfs.html">PDFs</a>
 <a href="library.html">Library</a>
 <a href="characters.html">Characters</a>
 <a href="about.html">About</a>
 <div class="mobile-menu-label">Underground</div>
+<a href="tag-wall.html">Tag Wall</a>
 <a href="broken-syntax.html">Broken Syntax</a>
 <a href="mim-tv.html">MiM TV</a>
 <a href="comic.html">Comics</a>
@@ -1385,12 +1385,15 @@ catch (e) {
 /* audio unavailable, silently continue */ }
 }
 function ibToggleWrapper() {
-const wrapper = document.getElementById('icebreakerWrapper');
-const opening = !wrapper.classList.contains('open');
-wrapper.classList.toggle('open');
-if (opening) wrapper.scrollIntoView({
-behavior: 'smooth', block: 'start' }
-);
+  const hasAccess = typeof window.mimHasAccess === 'function' && window.mimHasAccess('loop', currentTier, 'lessons');
+  if (!hasAccess) {
+    if (currentTier) { window.location.href = 'membership.html'; } else { window.openAuthModal('signup'); }
+    return;
+  }
+  const wrapper = document.getElementById('icebreakerWrapper');
+  const opening = !wrapper.classList.contains('open');
+  wrapper.classList.toggle('open');
+  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 function ibRenderIntro() {
 const grid = document.getElementById('ibTermsGrid');
