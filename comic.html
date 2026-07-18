@@ -65,7 +65,7 @@ nav {
   gap:1.5rem;
   list-style:none
 }
-.nav-links a {
+.nav-links > li > a {
   font-family:var(--font-body);
   font-size:0.82rem;
   font-weight:500;
@@ -74,8 +74,219 @@ nav {
   letter-spacing:0.05em;
   transition:color .2s
 }
-.nav-links a:hover {
+.nav-links > li > a:hover {
   color:var(--ink)
+}
+.nav-drop {
+  position:relative
+}
+.nav-drop-trigger {
+  display:flex;
+  align-items:center;
+  gap:0.35rem;
+  background:none;
+  border:none;
+  color:var(--text-dim);
+  font-family:var(--font-body);
+  font-size:0.82rem;
+  font-weight:500;
+  letter-spacing:0.05em;
+  cursor:pointer;
+  transition:color .2s
+}
+.nav-drop-trigger:hover,
+.nav-drop.open .nav-drop-trigger {
+  color:var(--ink)
+}
+.nav-drop-arrow {
+  display:inline-block;
+  color:var(--teal);
+  transition:transform .2s ease
+}
+.nav-drop.open .nav-drop-arrow {
+  transform:rotate(180deg)
+}
+.nav-drop-menu {
+  position:absolute;
+  top:calc(100% + 14px);
+  left:50%;
+  transform:translate(-50%,-6px);
+  min-width:190px;
+  padding:0.55rem;
+  background:rgba(16,13,10,0.99);
+  border:1px solid var(--border-bright);
+  border-radius:10px;
+  box-shadow:0 16px 40px rgba(0,0,0,0.45),0 0 24px rgba(255,77,77,0.12);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:opacity .2s ease,transform .2s ease,visibility .2s
+}
+.nav-drop.open .nav-drop-menu {
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+  transform:translate(-50%,0)
+}
+.nav-drop-item {
+  display:block;
+  padding:0.7rem 0.8rem;
+  border-radius:7px;
+  color:var(--text-dim);
+  font-family:var(--font-body);
+  font-size:0.8rem;
+  text-decoration:none;
+  transition:background .2s,color .2s
+}
+.nav-drop-item:hover {
+  background:rgba(255,77,77,0.09);
+  color:var(--ink)
+}
+.nav-right {
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:0.7rem
+}
+.nav-username {
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:var(--teal);
+  max-width:150px;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap
+}
+#nav-user-menu,
+#nav-auth-btns {
+  display:flex;
+  align-items:center;
+  gap:0.55rem
+}
+#nav-user-menu a,
+#nav-user-menu button,
+#nav-auth-btns button {
+  font-family:var(--font-body);
+  font-size:0.76rem;
+  border-radius:5px;
+  padding:0.42rem 0.75rem;
+  cursor:pointer;
+  transition:all .2s
+}
+#nav-user-menu a {
+  color:var(--text-dim);
+  text-decoration:none;
+  border:1px solid var(--border)
+}
+#nav-user-menu a:hover {
+  color:var(--ink);
+  border-color:var(--ink)
+}
+#nav-user-menu button,
+#nav-login {
+  background:none;
+  color:var(--text-dim);
+  border:1px solid var(--border)
+}
+#nav-user-menu button:hover,
+#nav-login:hover {
+  color:var(--ink);
+  border-color:var(--ink)
+}
+#nav-join {
+  background:linear-gradient(135deg,var(--ink),var(--teal));
+  color:var(--bg);
+  border:none;
+  font-weight:700
+}
+.nav-hamburger {
+  display:none;
+  flex-direction:column;
+  justify-content:center;
+  gap:5px;
+  width:34px;
+  height:34px;
+  padding:5px;
+  background:none;
+  border:none;
+  cursor:pointer;
+  z-index:210
+}
+.nav-hamburger span {
+  display:block;
+  width:100%;
+  height:2px;
+  background:var(--ink);
+  border-radius:2px;
+  transition:transform .25s ease,opacity .25s ease
+}
+.nav-hamburger.open span:nth-child(1) {
+  transform:translateY(7px) rotate(45deg)
+}
+.nav-hamburger.open span:nth-child(2) {
+  opacity:0
+}
+.nav-hamburger.open span:nth-child(3) {
+  transform:translateY(-7px) rotate(-45deg)
+}
+.mobile-menu {
+  display:none;
+  position:fixed;
+  top:60px;
+  left:0;
+  right:0;
+  z-index:99;
+  max-height:calc(100vh - 60px);
+  overflow-y:auto;
+  padding:1rem 1.25rem 1.5rem;
+  background:rgba(12,10,8,0.99);
+  border-bottom:1px solid var(--border-bright);
+  box-shadow:0 18px 40px rgba(0,0,0,0.45)
+}
+.mobile-menu.open {
+  display:block
+}
+.mobile-menu a {
+  display:block;
+  padding:0.8rem 0.4rem;
+  color:var(--text-dim);
+  font-size:0.92rem;
+  text-decoration:none;
+  border-bottom:1px solid var(--border);
+  transition:color .2s,padding-left .2s
+}
+.mobile-menu a:hover {
+  color:var(--ink);
+  padding-left:0.7rem
+}
+.mobile-menu-label {
+  margin-top:0.8rem;
+  padding:0.45rem 0.4rem 0.25rem;
+  font-family:var(--font-mono);
+  font-size:0.64rem;
+  color:var(--teal);
+  letter-spacing:0.16em;
+  text-transform:uppercase
+}
+@media (max-width:980px) {
+  nav {
+    padding:0 1rem
+  }
+  .nav-links {
+    display:none
+  }
+  .nav-right {
+    margin-left:auto
+  }
+  .nav-username {
+    display:none
+  }
+  #nav-user-menu a {
+    display:none
+  }
+  .nav-hamburger {
+    display:flex
+  }
 }
 .hero {
   margin-top:60px;
@@ -164,9 +375,58 @@ nav {
   line-height:1.7
 }
 .strip-list {
-  display:flex;
+  display:none;
   flex-direction:column;
   gap:1.2rem
+}
+.strip-list.unlocked {
+  display:flex
+}
+.comics-lock {
+  display:block;
+  max-width:620px;
+  margin:0 auto;
+  padding:3rem 2rem;
+  text-align:center;
+  background:var(--bg-card);
+  border:1px solid var(--border-bright);
+  border-radius:14px;
+  box-shadow:var(--glow)
+}
+.comics-lock-badge {
+  display:inline-block;
+  margin-bottom:1rem;
+  padding:0.45rem 0.9rem;
+  border:1px solid var(--border-bright);
+  border-radius:100px;
+  color:var(--ink);
+  font-family:var(--font-mono);
+  font-size:0.65rem;
+  font-weight:700;
+  letter-spacing:0.16em
+}
+.comics-lock h3 {
+  margin-bottom:0.65rem;
+  color:#fff;
+  font-family:var(--font-display);
+  font-size:1.2rem
+}
+.comics-lock p {
+  margin-bottom:1.4rem;
+  color:var(--text-dim);
+  line-height:1.7
+}
+.comics-lock button {
+  padding:0.8rem 1.5rem;
+  border:none;
+  border-radius:7px;
+  background:linear-gradient(135deg,var(--ink),var(--teal));
+  color:var(--bg);
+  font-family:var(--font-display);
+  font-size:0.72rem;
+  font-weight:700;
+  letter-spacing:0.08em;
+  cursor:pointer
 }
 .strip-card {
   background:var(--bg-card);
@@ -253,29 +513,58 @@ footer a {
 <nav>
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
-<li>
-<a href="games.html">Games</a>
+<li><a href="games.html">Games</a></li>
+<li class="nav-drop" id="exploreDrop">
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')" aria-haspopup="true">Explore <span class="nav-drop-arrow">⌄</span></button>
+<div class="nav-drop-menu">
+<a class="nav-drop-item" href="pdfs.html">PDFs</a>
+<a class="nav-drop-item" href="library.html">Library</a>
+<a class="nav-drop-item" href="characters.html">Characters</a>
+<a class="nav-drop-item" href="about.html">About</a>
+</div>
 </li>
-<li>
-<a href="pdfs.html">PDFs</a>
-</li>
-<li>
-<a href="library.html">Library</a>
-</li>
-<li>
-<a href="characters.html">Characters</a>
-</li>
-<li>
-<a href="broken-syntax.html">Broken Syntax</a>
-</li>
-<li>
-<a href="mim-tv.html">MiM TV</a>
-</li>
-<li>
-<a href="comic.html">Comics</a>
+<li class="nav-drop" id="undergroundDrop">
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')" aria-haspopup="true">Underground <span class="nav-drop-arrow">⌄</span></button>
+<div class="nav-drop-menu">
+<a class="nav-drop-item" href="tag-wall.html">Tag Wall</a>
+<a class="nav-drop-item" href="broken-syntax.html">Broken Syntax</a>
+<a class="nav-drop-item" href="mim-tv.html">MiM TV</a>
+<a class="nav-drop-item" href="comic.html">Comics</a>
+</div>
 </li>
 </ul>
+<div class="nav-right">
+<span class="nav-username" id="nav-username"></span>
+<div id="nav-user-menu" style="display:none;">
+<a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
+<button id="nav-logout-btn" type="button">Log Out</button>
+</div>
+<div id="nav-auth-btns">
+<button id="nav-login" type="button">Log In</button>
+<button id="nav-join" type="button">Join Free</button>
+</div>
+</div>
+<button class="nav-hamburger" id="navHamburger" type="button" onclick="toggleMobileMenu()" aria-label="Open menu" aria-controls="mobileMenu">
+<span></span>
+<span></span>
+<span></span>
+</button>
 </nav>
+<div class="mobile-menu" id="mobileMenu">
+<a href="games.html">Games</a>
+<div class="mobile-menu-label">Explore</div>
+<a href="pdfs.html">PDFs</a>
+<a href="library.html">Library</a>
+<a href="characters.html">Characters</a>
+<a href="about.html">About</a>
+<div class="mobile-menu-label">Underground</div>
+<a href="tag-wall.html">Tag Wall</a>
+<a href="broken-syntax.html">Broken Syntax</a>
+<a href="mim-tv.html">MiM TV</a>
+<a href="comic.html">Comics</a>
+<div class="mobile-menu-label"></div>
+<a href="dashboard.html">Dashboard</a>
+</div>
 <section class="hero">
 <video class="hero-bg-video" autoplay muted loop playsinline>
 <source src="mim-chron-hero.mp4" type="video/mp4">
@@ -293,7 +582,13 @@ footer a {
 <span class="section-label">The Strips</span>
 <h2 class="section-title">Read the Panels</h2>
 <p class="section-desc">Tap a strip to open it.</p>
-<div class="strip-list">
+<div class="comics-lock" id="comics-lock">
+<span class="comics-lock-badge">FREE ACCOUNT REQUIRED</span>
+<h3>Sign up free to read MiM Comics</h3>
+<p>Create a free Method in Motion account to unlock every comic strip.</p>
+<button type="button" onclick="window.openAuthModal('signup')">Sign Up Free</button>
+</div>
+<div class="strip-list" id="comic-content">
 <div class="strip-card" id="strip-1">
 <button class="strip-header" onclick="toggleStrip(1)">
 <div class="strip-header-left">
@@ -337,5 +632,43 @@ footer a {
 function toggleStrip(n) { const card = document.getElementById('strip-' + n);
  card.classList.toggle('open');
  }
-</script> </body>
+
+window.handleTierUnlock = function(tier) {
+  const isSignedIn = Boolean(tier);
+  const lock = document.getElementById('comics-lock');
+  const content = document.getElementById('comic-content');
+
+  if (lock) lock.style.display = isSignedIn ? 'none' : 'block';
+  if (content) {
+    content.classList.toggle('unlocked', isSignedIn);
+    content.setAttribute('aria-hidden', isSignedIn ? 'false' : 'true');
+  }
+};
+
+function toggleNavDrop(id) {
+  const target = document.getElementById(id);
+  const shouldOpen = target && !target.classList.contains('open');
+  document.querySelectorAll('.nav-drop').forEach(drop => drop.classList.remove('open'));
+  if (shouldOpen) target.classList.add('open');
+}
+
+document.addEventListener('click', event => {
+  if (!event.target.closest('.nav-drop')) {
+    document.querySelectorAll('.nav-drop').forEach(drop => drop.classList.remove('open'));
+  }
+});
+
+function toggleMobileMenu() {
+  const button = document.getElementById('navHamburger');
+  const menu = document.getElementById('mobileMenu');
+  if (button) button.classList.toggle('open');
+  if (menu) menu.classList.toggle('open');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  window.handleTierUnlock(null);
+});
+</script>
+<script type="module" src="auth-init.js"></script>
+</body>
 </html>
