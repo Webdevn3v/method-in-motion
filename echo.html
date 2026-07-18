@@ -268,7 +268,6 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
 <li><a href="games.html">Games</a></li>
-<li><a href="tag-wall.html">Tag Wall</a></li>
 <li class="nav-drop" id="exploreDrop">
 <button class="nav-drop-trigger" onclick="toggleNavDrop('exploreDrop')">Explore <span class="nav-drop-arrow">▾</span></button>
 <div class="nav-drop-menu">
@@ -281,6 +280,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <li class="nav-drop" id="undergroundDrop">
 <button class="nav-drop-trigger" onclick="toggleNavDrop('undergroundDrop')">The Underground <span class="nav-drop-arrow">▾</span></button>
 <div class="nav-drop-menu">
+<a href="tag-wall.html" class="nav-drop-item">Tag Wall</a>
 <a href="broken-syntax.html" class="nav-drop-item">Broken Syntax</a>
 <a href="mim-tv.html" class="nav-drop-item">MiM TV</a>
 <a href="comic.html" class="nav-drop-item">Comics</a>
@@ -306,13 +306,13 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <a href="index.html#crew">Crew</a>
 <a href="index.html#membership">Membership</a>
 <a href="games.html">Games</a>
-<a href="tag-wall.html">Tag Wall</a>
 <div class="mobile-menu-label">Explore</div>
 <a href="pdfs.html">PDFs</a>
 <a href="library.html">Library</a>
 <a href="characters.html">Characters</a>
 <a href="about.html">About</a>
 <div class="mobile-menu-label">The Underground</div>
+<a href="tag-wall.html">Tag Wall</a>
 <a href="broken-syntax.html">Broken Syntax</a>
 <a href="mim-tv.html">MiM TV</a>
 <a href="comic.html">Comics</a>
@@ -802,7 +802,17 @@ function closePortal() { document.getElementById('portalModal').classList.remove
 let ambientCtx = null, droneOsc = null, droneGain = null, soundOn = true;
 function startAmbient() { try { ambientCtx = new (window.AudioContext || window.webkitAudioContext)(); droneOsc = ambientCtx.createOscillator(); droneGain = ambientCtx.createGain(); droneOsc.type = 'sine'; droneOsc.frequency.value = 85; droneGain.gain.value = 0.015; droneOsc.connect(droneGain); droneGain.connect(ambientCtx.destination); droneOsc.start(); } catch (e) { console.warn('Ambient audio unavailable:', e); } }
 function toggleSound() { const btn = document.getElementById('soundToggle'); if (!ambientCtx) return; soundOn = !soundOn; droneGain.gain.value = soundOn ? 0.015 : 0; btn.textContent = soundOn ? '🔊' : '🔇'; btn.classList.toggle('muted', !soundOn); }
-function ibToggleWrapper() { const wrapper = document.getElementById('icebreakerWrapper'); const opening = !wrapper.classList.contains('open'); wrapper.classList.toggle('open'); if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+function ibToggleWrapper() {
+  const hasAccess = typeof window.mimHasAccess === 'function' && window.mimHasAccess('echo', currentTier, 'game');
+  if (!hasAccess) {
+    if (currentTier) { window.location.href = 'membership.html'; } else { window.openAuthModal('signup'); }
+    return;
+  }
+  const wrapper = document.getElementById('icebreakerWrapper');
+  const opening = !wrapper.classList.contains('open');
+  wrapper.classList.toggle('open');
+  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
 const BB_PADS = [ { label: 'KICK', icon: '🥁', freq: 80, type: 'sine', dur: 0.2, color: '#00e5ff' }, { label: 'SNARE', icon: '🪘', freq: 250, type: 'square', dur: 0.1, color: '#448aff' }, { label: 'HIHAT', icon: '🔔', freq: 800, type: 'sawtooth', dur: 0.06, color: '#7c4dff' }, { label: 'CLAP', icon: '👏', freq: 400, type: 'triangle', dur: 0.12, color: '#ffe066' } ];
 const BB_STEPS = 16;
 let bbAudioCtx = null;
