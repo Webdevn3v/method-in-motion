@@ -27,6 +27,16 @@ img{display:block;max-width:100%}
 .nav-links{display:flex;gap:24px;list-style:none}
 .nav-links a{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s;}
 .nav-links a:hover,.nav-links a.active{color:#fff}
+.nav-dropdown{position:relative;display:flex;align-items:center;}
+.nav-drop-trigger{font-family:var(--body);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;transition:color .3s;padding:0;}
+.nav-drop-trigger:hover,.nav-drop-trigger.open{color:#fff;}
+.nav-drop-trigger span{font-size:.58rem;transition:transform .2s;}
+.nav-drop-trigger.open span{transform:rotate(180deg);}
+.nav-drop-menu{display:none;position:absolute;top:calc(100% + 18px);left:50%;transform:translateX(-50%);min-width:180px;background:rgba(8,11,20,.98);border:1px solid var(--border-md);border-radius:12px;padding:8px;box-shadow:0 18px 50px rgba(0,0,0,.45);backdrop-filter:blur(18px);}
+.nav-drop-menu.open{display:block;}
+.nav-drop-menu a{display:block;padding:10px 12px;border-radius:8px;white-space:nowrap;}
+.nav-drop-menu a:hover,.nav-drop-menu a.active{background:rgba(255,255,255,.05);color:#fff;}
+#nav-username{font-family:var(--display);font-size:.58rem;letter-spacing:.08em;color:var(--cyan);white-space:nowrap;}
 .nav-right{display:flex;align-items:center;gap:10px}
 .nav-cta{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(198,107,255,.4);color:var(--purple);border-radius:100px;transition:all .3s;background:none;cursor:pointer;}
 .nav-join{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;}
@@ -186,6 +196,7 @@ img{display:block;max-width:100%}
 .mobile-drawer.open{right:0;}
 .mobile-drawer a{font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);padding:14px 6px;border-bottom:1px solid rgba(255,255,255,.06);}
 .mobile-drawer a.active{color:var(--cyan);}
+.mobile-menu-label{font-family:var(--display);font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--purple);padding:18px 6px 6px;margin-top:4px;}
 /* COLLAPSIBLE SECTIONS */
 .lib-toggle{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;user-select:none;}
 .lib-toggle-chevron{font-family:var(--display);font-size:.9rem;color:var(--muted);flex-shrink:0;transition:transform .25s ease;padding-top:2px;}
@@ -210,29 +221,28 @@ img{display:block;max-width:100%}
 <a href="index.html" class="nav-logo">
 <div class="nav-logo-mark">&gt;</div>method in motion</a>
 <ul class="nav-links">
-<li>
-<a href="games.html">Games</a>
-</li>
-<li>
+<li><a href="games.html">Games</a></li>
+<li class="nav-dropdown">
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop', event)">Explore <span>▾</span></button>
+<div class="nav-drop-menu" id="exploreDrop">
 <a href="pdfs.html">PDFs</a>
-</li>
-<li>
 <a href="library.html" class="active">Library</a>
-</li>
-<li>
 <a href="characters.html">Characters</a>
+<a href="about.html">About</a>
+</div>
 </li>
-<li>
+<li class="nav-dropdown">
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop', event)">Underground <span>▾</span></button>
+<div class="nav-drop-menu" id="undergroundDrop">
+<a href="tag-wall.html">Tag Wall</a>
 <a href="broken-syntax.html">Broken Syntax</a>
-</li>
-<li>
 <a href="mim-tv.html">MiM TV</a>
-</li>
-<li>
 <a href="comic.html">Comics</a>
+</div>
 </li>
 </ul>
 <div class="nav-right">
+<span id="nav-username"></span>
 <div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
 <a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
 <button id="nav-logout-btn">Sign Out</button>
@@ -245,9 +255,13 @@ img{display:block;max-width:100%}
 <div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
 <div class="mobile-drawer" id="mobile-drawer">
 <a href="games.html">Games</a>
+<div class="mobile-menu-label">Explore</div>
 <a href="pdfs.html">PDFs</a>
 <a href="library.html" class="active">Library</a>
 <a href="characters.html">Characters</a>
+<a href="about.html">About</a>
+<div class="mobile-menu-label">The Underground</div>
+<a href="tag-wall.html">Tag Wall</a>
 <a href="broken-syntax.html">Broken Syntax</a>
 <a href="mim-tv.html">MiM TV</a>
 <a href="comic.html">Comics</a>
@@ -355,7 +369,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">Mathematics</div>
 <div class="timeline-event">Ada Lovelace Writes the First Algorithm</div>
-<div class="timeline-desc">For Charles Babbage's Analytical Engine — a computer that existed only on paper. Ada saw what machines could do before any machine could actually do it. She is the world's first programmer. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Ada_Lovelace" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">For Charles Babbage's Analytical Engine — a computer that existed only on paper. Ada saw what machines could do before any machine could actually do it. She is the world's first programmer.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -365,7 +379,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#a855f7;color:#a855f7;">Hardware</div>
 <div class="timeline-event">Herman Hollerith Invents Punch Cards</div>
-<div class="timeline-desc">To speed up the US Census, Hollerith created machines that read data from punched holes in cards. This became the dominant way to input computer data for over 70 years. His company eventually became IBM. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Herman_Hollerith" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">To speed up the US Census, Hollerith created machines that read data from punched holes in cards. This became the dominant way to input computer data for over 70 years. His company eventually became IBM.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -375,7 +389,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#00f5d4;color:#00f5d4;">Theory</div>
 <div class="timeline-event">Alan Turing Invents the Concept of Computing</div>
-<div class="timeline-desc">Alan Turing's paper "On Computable Numbers" described a theoretical machine that could solve any problem expressible in a mathematical form. This "Turing Machine" is the foundation of every computer ever built. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Alan_Turing" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">Alan Turing's paper "On Computable Numbers" described a theoretical machine that could solve any problem expressible in a mathematical form. This "Turing Machine" is the foundation of every computer ever built.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -385,7 +399,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#fbbf24;color:#fbbf24;">Hardware</div>
 <div class="timeline-event">The First Electronic Computers</div>
-<div class="timeline-desc">ENIAC (1945) filled an entire room with 18,000 vacuum tubes and could do 5,000 additions per second. It weighed 30 tons and required its own cooling system. Your phone does billions of calculations per second. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/ENIAC" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">ENIAC (1945) filled an entire room with 18,000 vacuum tubes and could do 5,000 additions per second. It weighed 30 tons and required its own cooling system. Your phone does billions of calculations per second.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -395,7 +409,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#84cc16;color:#84cc16;">Languages</div>
 <div class="timeline-event">FORTRAN — The First High-Level Language</div>
-<div class="timeline-desc">Before FORTRAN, programmers wrote machine code by hand. FORTRAN let scientists write equations that looked almost like math. It was revolutionary — and is still used in scientific computing today. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Fortran" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">Before FORTRAN, programmers wrote machine code by hand. FORTRAN let scientists write equations that looked almost like math. It was revolutionary — and is still used in scientific computing today.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -405,7 +419,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#38bdf8;color:#38bdf8;">Internet</div>
 <div class="timeline-event">ARPANET Sends Its First Message</div>
-<div class="timeline-desc">The US Defense Department connected four university computers. The first message was supposed to be "login." The system crashed after "lo." The internet started with a typo. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/ARPANET" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">The US Defense Department connected four university computers. The first message was supposed to be "login." The system crashed after "lo." The internet started with a typo.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -415,7 +429,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">Languages</div>
 <div class="timeline-event">C Language Is Born</div>
-<div class="timeline-desc">Dennis Ritchie created C at Bell Labs to build the Unix operating system. C became the foundation for C++, Java, Python, JavaScript, and almost every modern language. It's still in use everywhere. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/C_(programming_language)" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">Dennis Ritchie created C at Bell Labs to build the Unix operating system. C became the foundation for C++, Java, Python, JavaScript, and almost every modern language. It's still in use everywhere.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -425,7 +439,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#a855f7;color:#a855f7;">Consumer Tech</div>
 <div class="timeline-event">The Macintosh Changes Personal Computing</div>
-<div class="timeline-desc">Apple's Macintosh introduced the graphical user interface and the mouse to everyday people. Before this, computers had no pictures — just a blinking cursor and a command line. This was the beginning of computers for everyone. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Macintosh_128K" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">Apple's Macintosh introduced the graphical user interface and the mouse to everyday people. Before this, computers had no pictures — just a blinking cursor and a command line. This was the beginning of computers for everyone.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -435,7 +449,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#fbbf24;color:#fbbf24;">Web</div>
 <div class="timeline-event">Tim Berners-Lee Invents the World Wide Web</div>
-<div class="timeline-desc">Originally called "Information Management: A Proposal," it was a system to help scientists share research. His boss wrote "Vague but exciting" on the cover. It accidentally became the entire internet. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Tim_Berners-Lee" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">Originally called "Information Management: A Proposal," it was a system to help scientists share research. His boss wrote "Vague but exciting" on the cover. It accidentally became the entire internet.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -445,7 +459,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#84cc16;color:#84cc16;">Languages</div>
 <div class="timeline-event">JavaScript Created in 10 Days</div>
-<div class="timeline-desc">Netscape hired Brendan Eich with one instruction: make the web interactive, fast. He did it in 10 days. Despite a rocky start, JavaScript became the language of the web. It now runs everywhere — browsers, servers, apps, and robots. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Brendan_Eich" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">Netscape hired Brendan Eich with one instruction: make the web interactive, fast. He did it in 10 days. Despite a rocky start, JavaScript became the language of the web. It now runs everywhere — browsers, servers, apps, and robots.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -455,7 +469,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#38bdf8;color:#38bdf8;">Mobile</div>
 <div class="timeline-event">The First iPhone Ships</div>
-<div class="timeline-desc">Steve Jobs called it "an iPod, a phone, and an internet communicator" in one device. The audience laughed when he said it. Within five years, smartphones changed how 4 billion people lived every single day. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/IPhone_(1st_generation)" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">Steve Jobs called it "an iPod, a phone, and an internet communicator" in one device. The audience laughed when he said it. Within five years, smartphones changed how 4 billion people lived every single day.</div>
 </div>
 </div>
 <div class="timeline-item">
@@ -465,7 +479,7 @@ img{display:block;max-width:100%}
 <div class="timeline-info">
 <div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">AI</div>
 <div class="timeline-event">ChatGPT Reaches 1 Million Users in 5 Days</div>
-<div class="timeline-desc">It took Netflix 3.5 years and Facebook 10 months to reach 1 million users. ChatGPT did it in 5 days. AI moved from science fiction to everyday tool almost overnight. The coders who understand the fundamentals are the ones who'll shape what comes next. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/ChatGPT" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="timeline-desc">It took Netflix 3.5 years and Facebook 10 months to reach 1 million users. ChatGPT did it in 5 days. AI moved from science fiction to everyday tool almost overnight. The coders who understand the fundamentals are the ones who'll shape what comes next.</div>
 </div>
 </div>
 </div>
@@ -491,7 +505,7 @@ img{display:block;max-width:100%}
 <div class="computer-info">
 <span class="computer-year">1822</span>
 <div class="computer-name">Babbage's Difference Engine</div>
-<div class="computer-desc">A hand-cranked mechanical calculator designed to compute mathematical tables. It was never completed in Babbage's lifetime, but a working model was built in 1991 — and it worked perfectly. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Difference_engine" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="computer-desc">A hand-cranked mechanical calculator designed to compute mathematical tables. It was never completed in Babbage's lifetime, but a working model was built in 1991 — and it worked perfectly.</div>
 </div>
 </div>
 <div class="computer-card">
@@ -499,7 +513,7 @@ img{display:block;max-width:100%}
 <div class="computer-info">
 <span class="computer-year">1945</span>
 <div class="computer-name">ENIAC</div>
-<div class="computer-desc">The first general-purpose electronic computer. It filled an 1,800 square foot room, consumed 150 kilowatts of power, and had to be rewired by hand to change its program. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/ENIAC" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="computer-desc">The first general-purpose electronic computer. It filled an 1,800 square foot room, consumed 150 kilowatts of power, and had to be rewired by hand to change its program.</div>
 </div>
 </div>
 <div class="computer-card">
@@ -507,7 +521,7 @@ img{display:block;max-width:100%}
 <div class="computer-info">
 <span class="computer-year">1958</span>
 <div class="computer-name">The Transistor Revolution</div>
-<div class="computer-desc">Vacuum tubes gave way to transistors — tiny switches that could be etched onto silicon chips. This made computers smaller, cheaper, and faster by orders of magnitude. Everything since then is built on this moment. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Transistor" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="computer-desc">Vacuum tubes gave way to transistors — tiny switches that could be etched onto silicon chips. This made computers smaller, cheaper, and faster by orders of magnitude. Everything since then is built on this moment.</div>
 </div>
 </div>
 <div class="computer-card">
@@ -515,7 +529,7 @@ img{display:block;max-width:100%}
 <div class="computer-info">
 <span class="computer-year">1977</span>
 <div class="computer-name">Apple II — The First Home Computer</div>
-<div class="computer-desc">The Apple II brought computing to homes and schools for the first time. It came with a keyboard, color display, and the ability to run programs. It sold over 5 million units and changed who computers were for. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Apple_II" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="computer-desc">The Apple II brought computing to homes and schools for the first time. It came with a keyboard, color display, and the ability to run programs. It sold over 5 million units and changed who computers were for.</div>
 </div>
 </div>
 <div class="computer-card">
@@ -523,7 +537,7 @@ img{display:block;max-width:100%}
 <div class="computer-info">
 <span class="computer-year">1981</span>
 <div class="computer-name">IBM PC & the Rise of Windows</div>
-<div class="computer-desc">IBM's personal computer and Microsoft's DOS operating system standardized the industry. IBM's "open architecture" meant anyone could build compatible machines — creating the entire PC industry as we know it. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/IBM_Personal_Computer" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="computer-desc">IBM's personal computer and Microsoft's DOS operating system standardized the industry. IBM's "open architecture" meant anyone could build compatible machines — creating the entire PC industry as we know it.</div>
 </div>
 </div>
 <div class="computer-card">
@@ -531,7 +545,7 @@ img{display:block;max-width:100%}
 <div class="computer-info">
 <span class="computer-year">2007</span>
 <div class="computer-name">The Smartphone Era</div>
-<div class="computer-desc">Modern smartphones contain more computing power than all of NASA had during the Apollo missions combined. The computer in your pocket would have been science fiction 40 years ago. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Smartphone" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="computer-desc">Modern smartphones contain more computing power than all of NASA had during the Apollo missions combined. The computer in your pocket would have been science fiction 40 years ago.</div>
 </div>
 </div>
 <div class="computer-card">
@@ -539,7 +553,7 @@ img{display:block;max-width:100%}
 <div class="computer-info">
 <span class="computer-year">2019</span>
 <div class="computer-name">Google's Quantum Supremacy</div>
-<div class="computer-desc">Google's quantum computer solved a calculation in 200 seconds that would take the world's fastest supercomputer 10,000 years. Quantum computing works by harnessing quantum physics — a completely different kind of logic. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Quantum_supremacy" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="computer-desc">Google's quantum computer solved a calculation in 200 seconds that would take the world's fastest supercomputer 10,000 years. Quantum computing works by harnessing quantum physics — a completely different kind of logic.</div>
 </div>
 </div>
 <div class="computer-card">
@@ -547,7 +561,7 @@ img{display:block;max-width:100%}
 <div class="computer-info">
 <span class="computer-year">Today</span>
 <div class="computer-name">The Cloud Era</div>
-<div class="computer-desc">Today's computers don't just sit on desks — they exist as vast networks of servers distributed around the world. When you use Google, Netflix, or any app, you're using computing power spread across thousands of machines. <a class="pioneer-source" href="https://en.wikipedia.org/wiki/Cloud_computing" target="_blank" rel="noopener">Source: Wikipedia ↗</a></div>
+<div class="computer-desc">Today's computers don't just sit on desks — they exist as vast networks of servers distributed around the world. When you use Google, Netflix, or any app, you're using computing power spread across thousands of machines.</div>
 </div>
 </div>
 </div>
@@ -647,63 +661,54 @@ img{display:block;max-width:100%}
 <div class="pioneer-name">Ada Lovelace</div>
 <div class="pioneer-role">World's First Programmer</div>
 <div class="pioneer-fact">Wrote the first algorithm for a machine that didn't exist yet. She also predicted computers would eventually create graphics and music — 100 years before they could.</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Ada_Lovelace" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 <div class="pioneer-card" style="--pc-color:#00f5d4;--pc-bg:radial-gradient(circle at 80% 0%,rgba(0,245,212,.07),transparent 55%);">
 <span class="pioneer-era">1936 · Computer Science</span>
 <div class="pioneer-name">Alan Turing</div>
 <div class="pioneer-role">Father of Computer Science</div>
 <div class="pioneer-fact">Invented the theoretical model for all modern computers. During WWII, he cracked the Nazis' Enigma code, shortening the war by an estimated 2 years. His reward was criminal prosecution by the British government. History owes him more than it gave.</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Alan_Turing" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 <div class="pioneer-card" style="--pc-color:#a855f7;--pc-bg:radial-gradient(circle at 80% 0%,rgba(168,85,247,.07),transparent 55%);">
 <span class="pioneer-era">1940s · Programming</span>
 <div class="pioneer-name">Grace Hopper</div>
 <div class="pioneer-role">Inventor of the Compiler</div>
 <div class="pioneer-fact">A US Navy admiral who invented the first compiler — a program that translates human-readable code into machine code. She also found the first actual computer bug (the moth). She popularized the term "debugging."</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Grace_Hopper" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 <div class="pioneer-card" style="--pc-color:#fbbf24;--pc-bg:radial-gradient(circle at 80% 0%,rgba(251,191,36,.07),transparent 55%);">
 <span class="pioneer-era">1970s · Software</span>
 <div class="pioneer-name">Bill Gates</div>
 <div class="pioneer-role">Co-Founder of Microsoft</div>
 <div class="pioneer-fact">Dropped out of Harvard at 19 to start Microsoft. His bet that every home would eventually have a personal computer was considered absurd in 1975. He was right. DOS and Windows became the operating systems of an entire generation.</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Bill_Gates" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 <div class="pioneer-card" style="--pc-color:#84cc16;--pc-bg:radial-gradient(circle at 80% 0%,rgba(132,204,22,.07),transparent 55%);">
 <span class="pioneer-era">1976 · Hardware</span>
 <div class="pioneer-name">Steve Wozniak</div>
 <div class="pioneer-role">The Engineer Behind Apple</div>
 <div class="pioneer-fact">The quiet genius who actually built the Apple I and Apple II. Wozniak designed a computer so elegant that engineers still study it. He gave the schematics away for free because he wanted everyone to learn. Without Woz, there's no Apple.</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Steve_Wozniak" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 <div class="pioneer-card" style="--pc-color:#38bdf8;--pc-bg:radial-gradient(circle at 80% 0%,rgba(56,189,248,.07),transparent 55%);">
 <span class="pioneer-era">1989 · Web</span>
 <div class="pioneer-name">Tim Berners-Lee</div>
 <div class="pioneer-role">Inventor of the World Wide Web</div>
 <div class="pioneer-fact">Invented the web and then gave it away — no patents, no fees, no royalties. He could have been a billionaire. Instead he said the web should belong to everyone. He still advocates for an open internet today.</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Tim_Berners-Lee" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 <div class="pioneer-card" style="--pc-color:#f472b6;--pc-bg:radial-gradient(circle at 80% 0%,rgba(244,114,182,.08),transparent 55%);">
 <span class="pioneer-era">1998 · Search</span>
 <div class="pioneer-name">Larry Page & Sergey Brin</div>
 <div class="pioneer-role">Founders of Google</div>
 <div class="pioneer-fact">Started Google as a PhD project at Stanford. They tried to sell it for $1 million in 1998 and nobody bought it. Google is now worth over $1 trillion. The person who passed on that deal probably thinks about it every day.</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Google" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 <div class="pioneer-card" style="--pc-color:#a855f7;--pc-bg:radial-gradient(circle at 80% 0%,rgba(168,85,247,.07),transparent 55%);">
 <span class="pioneer-era">1984 · Diversity</span>
 <div class="pioneer-name">Katherine Johnson</div>
 <div class="pioneer-role">NASA Mathematician & Hidden Figure</div>
 <div class="pioneer-fact">Her orbital calculations were so accurate that astronaut John Glenn refused to launch until she personally verified the computer's numbers. She calculated the trajectory for Apollo 11's moon landing. Her work was classified for decades.</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Katherine_Johnson" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 <div class="pioneer-card" style="--pc-color:#fbbf24;--pc-bg:radial-gradient(circle at 80% 0%,rgba(251,191,36,.07),transparent 55%);">
 <span class="pioneer-era">2003 · AI</span>
 <div class="pioneer-name">Geoffrey Hinton</div>
 <div class="pioneer-role">The Godfather of Deep Learning</div>
 <div class="pioneer-fact">Spent decades being ignored for his belief that neural networks could learn like brains. When he was finally proven right, AI went from a fringe idea to the biggest technological shift since the internet. He's since spoken publicly about the risks of what he helped create.</div>
-<a class="pioneer-source" href="https://en.wikipedia.org/wiki/Geoffrey_Hinton" target="_blank" rel="noopener">Source: Wikipedia ↗</a>
 </div>
 </div>
 </div>
@@ -1113,6 +1118,28 @@ let current='';
 sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)current=s.id;});
 navItems.forEach(n=>{n.classList.toggle('active',n.getAttribute('href')==='#'+current);});
 },{passive:true});
+
+// DESKTOP NAV DROPDOWNS
+function toggleNavDrop(id,event){
+if(event)event.stopPropagation();
+const target=document.getElementById(id);
+if(!target)return;
+document.querySelectorAll('.nav-drop-menu').forEach(menu=>{
+if(menu!==target)menu.classList.remove('open');
+});
+document.querySelectorAll('.nav-drop-trigger').forEach(trigger=>{
+const controls=trigger.getAttribute('onclick')||'';
+if(!controls.includes(id))trigger.classList.remove('open');
+});
+target.classList.toggle('open');
+if(event&&event.currentTarget)event.currentTarget.classList.toggle('open',target.classList.contains('open'));
+}
+document.addEventListener('click',event=>{
+if(!event.target.closest('.nav-dropdown')){
+document.querySelectorAll('.nav-drop-menu').forEach(menu=>menu.classList.remove('open'));
+document.querySelectorAll('.nav-drop-trigger').forEach(trigger=>trigger.classList.remove('open'));
+}
+});
 
 // MOBILE HAMBURGER DRAWER
 const hamburgerBtn=document.getElementById('nav-hamburger');
