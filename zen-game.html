@@ -1,424 +1,638 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zen's CSS Style Studio · Method in Motion</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
+<script> window.dataLayer = window.dataLayer || []; function gtag(){ dataLayer.push(arguments); } gtag('js', new Date()); gtag('config', 'G-DJ3Q488K7W'); </script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Zen's Coding Realm | Method in Motion</title>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 <style>
-  :root {
-    --pink: #f472b6;
-    --cyan: #22d3ee;
-    --bg: #05050a;
-    --panel: rgba(10,8,20,0.85);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{width:100%;height:100%;overflow:hidden;font-family:'Segoe UI',sans-serif;background:var(--bg);}
-
-  /* WORLD BACKGROUND */
-  #world-bg{position:fixed;inset:0;background-image:url('zen-entrance.png');background-size:cover;background-position:center top;z-index:0;}
-  #world-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(5,5,10,0.6) 0%,rgba(5,5,10,0.78) 50%,rgba(5,5,10,0.97) 100%);z-index:1;}
-  #world-glow{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(244,114,182,0.18) 0%,transparent 60%);z-index:1;pointer-events:none;}
-
-  /* SCANLINES */
-  #scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);z-index:2;pointer-events:none;}
-
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;padding:0 20px;background:rgba(5,5,10,0.9);border-bottom:1px solid rgba(244,114,182,0.2);z-index:100;gap:16px;}
-  .nav-back{color:var(--pink);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;transition:opacity .2s;}
-  .nav-back:hover{opacity:1;}
-  .nav-title{color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;flex:1;text-align:center;}
-  #nav-score{color:var(--cyan);font-size:14px;font-weight:700;font-family:monospace;}
-
-  /* GAME SHELL */
-  #game-shell{position:fixed;inset:52px 0 0 0;display:flex;z-index:10;}
-
-  /* ZEN PANEL - left, huge */
-  #zen-panel{width:320px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 24px 24px;position:relative;}
-  #zen-img{width:300px;height:auto;filter:drop-shadow(0 0 40px rgba(244,114,182,0.6));transition:all .3s;position:relative;z-index:2;}
-  #zen-face{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(244,114,182,0.8));transition:all .4s;z-index:3;border-radius:50%;background:rgba(5,5,10,0.6);padding:8px;}
-  #zen-name{color:var(--pink);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-top:12px;text-align:center;}
-  #zen-quote{color:rgba(255,255,255,0.55);font-size:12px;text-align:center;max-width:240px;margin-top:6px;font-style:italic;line-height:1.5;}
-
-  /* PREVIEW PANEL - middle */
-  #preview-panel{flex:1;display:flex;flex-direction:column;padding:16px 12px;min-width:0;}
-  #preview-label{color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
-  #preview-frame{flex:1;background:#fff;border-radius:12px;overflow:hidden;border:2px solid rgba(244,114,182,0.3);box-shadow:0 0 40px rgba(244,114,182,0.1);position:relative;}
-  #preview-frame iframe{width:100%;height:100%;border:none;}
-  #style-meter-wrap{margin-top:10px;}
-  #style-meter-label{display:flex;justify-content:space-between;color:rgba(255,255,255,0.5);font-size:11px;margin-bottom:5px;}
-  #style-meter-bar{height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
-  #style-meter-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));border-radius:4px;transition:width .4s;}
-
-  /* CHALLENGE PANEL - right */
-  #challenge-panel{width:360px;flex-shrink:0;display:flex;flex-direction:column;padding:16px 24px 16px 12px;}
-  #zone-badge{display:inline-block;background:rgba(244,114,182,0.15);border:1px solid rgba(244,114,182,0.4);color:var(--pink);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
-  #challenge-card{background:var(--panel);border:1px solid rgba(244,114,182,0.2);border-radius:16px;padding:20px;flex:1;display:flex;flex-direction:column;backdrop-filter:blur(16px);}
-  #challenge-property{color:rgba(255,255,255,0.45);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-  #challenge-question{color:#fff;font-size:18px;font-weight:700;line-height:1.4;margin-bottom:6px;}
-  #challenge-hint{color:var(--cyan);font-size:12px;font-family:monospace;margin-bottom:20px;opacity:.7;}
-  #options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;}
-  .option-btn{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.12);color:#fff;font-size:13px;font-weight:600;font-family:monospace;padding:14px 10px;border-radius:10px;cursor:pointer;transition:all .2s;text-align:center;word-break:break-all;}
-  .option-btn:hover{background:rgba(244,114,182,0.12);border-color:var(--pink);color:var(--pink);transform:translateY(-2px);}
-  .option-btn.correct{background:rgba(34,211,238,0.2)!important;border-color:var(--cyan)!important;color:var(--cyan)!important;animation:pulse-correct .4s ease;}
-  .option-btn.wrong{background:rgba(239,68,68,0.2)!important;border-color:#ef4444!important;color:#ef4444!important;animation:shake .3s ease;}
-  @keyframes pulse-correct{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
-  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
-
-  #timer-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:16px;overflow:hidden;}
-  #timer-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));border-radius:2px;transition:width .1s linear;}
-  #combo-text{text-align:center;color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;min-height:18px;margin-bottom:8px;}
-  #progress-dots{display:flex;gap:6px;justify-content:center;margin-top:12px;}
-  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all .3s;}
-  .dot.done{background:var(--pink);}
-  .dot.current{background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
-
-  /* SCORE FLOAT */
-  .score-float{position:fixed;font-size:22px;font-weight:900;color:var(--cyan);pointer-events:none;z-index:999;animation:floatUp .8s ease forwards;}
-  @keyframes floatUp{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px);}}
-
-  /* PAINT BURST */
-  .paint-burst{position:fixed;pointer-events:none;z-index:50;width:120px;height:120px;border-radius:50%;animation:burstOut .5s ease forwards;}
-  @keyframes burstOut{0%{opacity:.8;transform:scale(0);}100%{opacity:0;transform:scale(3);}}
-
-  /* GAME OVER */
-  #gameOverScreen{position:fixed;inset:0;background:rgba(5,5,10,0.97);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
-  #gameOverScreen.hidden{display:none;}
-  #gameOverEyebrow{color:var(--pink);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
-  #gameOverTitle{color:#fff;font-size:52px;font-weight:900;letter-spacing:-1px;}
-  #gameOverSub{color:rgba(255,255,255,0.5);font-size:15px;max-width:420px;text-align:center;line-height:1.6;}
-  #gameOverScore{color:var(--cyan);font-size:36px;font-weight:900;font-family:monospace;}
-  #gameOverZen{width:200px;height:200px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(244,114,182,0.7));}
-  .over-btn{background:linear-gradient(135deg,var(--pink),var(--cyan));color:#000;font-size:14px;font-weight:800;padding:14px 36px;border-radius:30px;border:none;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-top:8px;transition:transform .2s;}
-  .over-btn:hover{transform:scale(1.05);}
-
-  /* INTRO */
-  #introScreen{position:fixed;inset:0;background:rgba(5,5,10,0.98);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
-  #introScreen.hidden{display:none;}
-  #intro-zen{width:280px;height:auto;filter:drop-shadow(0 0 50px rgba(244,114,182,0.7));animation:float 3s ease-in-out infinite;}
-  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
-  #intro-title{color:#fff;font-size:42px;font-weight:900;letter-spacing:-1px;text-align:center;}
-  #intro-sub{color:rgba(255,255,255,0.5);font-size:14px;max-width:360px;text-align:center;line-height:1.7;}
-  #intro-start{background:linear-gradient(135deg,var(--pink),var(--cyan));color:#000;font-size:15px;font-weight:800;padding:16px 48px;border-radius:30px;border:none;cursor:pointer;letter-spacing:2px;text-transform:uppercase;margin-top:12px;transition:transform .2s;}
-  #intro-start:hover{transform:scale(1.06);}
-  .intro-eyebrow{color:var(--pink);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
-</style>
+:root { --pink: #ff6baa; --pink-dim: #e0568f; --purple: #c66bff; --purple-dim: #a34fe0; --bg: #0a0512; --bg-mid: #120a1e; --bg-card: #150c22; --bg-panel: #0d0718; --text: #f5e8f5; --text-dim: #b083c4; --text-muted: #5a3a6e; --border: rgba(255,107,170,0.15); --border-bright: rgba(255,107,170,0.4); --border-purple: rgba(198,107,255,0.3); --glow: 0 0 18px rgba(255,107,170,0.3); --glow-strong: 0 0 36px rgba(255,107,170,0.55); --cyan: #7fe8ff; --border-cyan: rgba(0,229,255,0.45); --font-display: 'Orbitron', monospace; --font-body: 'Space Grotesk', sans-serif; --font-mono: 'Space Mono', monospace; } * { box-sizing: border-box; margin: 0; padding: 0; } body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; } nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(10,5,18,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); } .nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--pink); text-decoration: none; letter-spacing: 0.1em; }
+.nav-links { display: flex; align-items: center; gap: 1.3rem; list-style: none; }
+.nav-links a { font-family: var(--font-body); font-size: 0.8rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
+.nav-links a:hover { color: var(--pink); }
+.nav-right { display: flex; align-items: center; gap: 0.9rem; }
+.nav-username { font-family: var(--font-mono); font-size: 0.75rem; color: var(--pink); letter-spacing: 0.05em; }
+#nav-user-menu { display: flex; align-items: center; gap: 0.7rem; }
+#nav-user-menu a { font-family: var(--font-body); font-size: 0.8rem; color: var(--text-dim); text-decoration: none; padding: 6px 14px; border-radius: 100px; border: 1px solid var(--border); transition: all 0.2s; }
+#nav-user-menu a:hover { color: #fff; border-color: var(--border-bright); background: rgba(255,107,170,0.1); }
+#nav-logout-btn { font-family: var(--font-body); font-size: 0.8rem; color: var(--text-muted); background: none; border: 1px solid var(--border); padding: 6px 14px; border-radius: 100px; cursor: pointer; transition: all 0.2s; }
+#nav-logout-btn:hover { color: var(--pink); border-color: var(--pink); }
+#nav-auth-btns { display: flex; align-items: center; gap: 0.7rem; }
+#nav-login { font-family: var(--font-body); font-size: 0.8rem; color: var(--text-dim); background: none; border: 1px solid var(--border); padding: 7px 16px; border-radius: 100px; cursor: pointer; transition: all 0.2s; }
+#nav-login:hover { color: #fff; border-color: var(--border-bright); }
+#nav-join { font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; color: var(--bg); background: var(--pink); border: none; padding: 8px 18px; border-radius: 100px; cursor: pointer; letter-spacing: 0.04em; transition: opacity 0.2s; }
+#nav-join:hover { opacity: 0.85; }
+.nav-drop { position: relative; }
+.nav-drop-trigger { display: flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--text-dim); background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 7px 14px; border-radius: 100px; cursor: pointer; transition: all 0.2s; }
+.nav-drop-trigger:hover, .nav-drop.open .nav-drop-trigger { color: #fff; background: rgba(255,107,170,0.12); border-color: var(--border-bright); }
+.nav-drop-arrow { font-size: 0.7rem; font-weight: 900; transition: transform 0.2s; display: inline-block; }
+.nav-drop.open .nav-drop-arrow { transform: rotate(180deg); }
+.nav-drop-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); min-width: 180px; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 8px; opacity: 0; pointer-events: none; transition: opacity 0.2s; box-shadow: 0 20px 50px rgba(0,0,0,0.5); z-index: 150; }
+.nav-drop.open .nav-drop-menu { opacity: 1; pointer-events: auto; }
+.nav-drop-item { display: block; padding: 10px 14px; font-family: var(--font-body); font-size: 0.8rem; color: var(--text-dim); border-radius: 7px; transition: all 0.15s; }
+.nav-drop-item:hover { background: rgba(255,107,170,0.1); color: var(--pink); }
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; z-index: 210; }
+.nav-hamburger span { width: 22px; height: 2px; background: var(--text); transition: all 0.25s; }
+.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+.mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(10,5,18,0.98); backdrop-filter: blur(16px); z-index: 199; padding: 2rem; flex-direction: column; gap: 0.4rem; overflow-y: auto; }
+.mobile-menu.open { display: flex; }
+.mobile-menu a, .mobile-menu-label { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.08em; color: var(--text-dim); padding: 14px 8px; border-bottom: 1px solid var(--border); text-transform: uppercase; }
+.mobile-menu-label { color: var(--pink); font-size: 0.65rem; letter-spacing: 0.2em; border-bottom: none; padding-bottom: 4px; margin-top: 10px; }
+@media (max-width: 900px) { .nav-links { display: none; } .nav-right { display: none; } .nav-hamburger { display: flex; } }
+.hero { margin-top: 60px; min-height: 640px; position: relative; overflow: hidden; display: flex; align-items: flex-end; } .hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); } .hero-gradient { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(10,5,18,0.96) 0%, rgba(10,5,18,0.5) 30%, rgba(10,5,18,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(10,5,18,0.55) 0%, rgba(10,5,18,0.1) 40%, transparent 70%); pointer-events: none; } .hero-pulse { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(ellipse 55% 45% at 50% 65%, rgba(198,107,255,0.14) 0%, transparent 65%); animation: pulseGlow 5s ease-in-out infinite; } @keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } } .particle-field { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; } .particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--pink); box-shadow: 0 0 8px 2px rgba(255,107,170,0.6); opacity: 0; animation: floatUp linear infinite; } .particle:nth-child(odd) { background: var(--purple); box-shadow: 0 0 8px 2px rgba(198,107,255,0.6); } @keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } } .hero-zen-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(255,107,170,0.4)); pointer-events: none; } @media (max-width: 768px) { .hero-zen-gif { display: none; } } .hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; } .hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--pink); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(255,107,170,0.6); } .hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; } .hero-catchphrase { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--purple); background: rgba(198,107,255,0.12); border: 1px solid var(--border-purple); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; backdrop-filter: blur(4px); } .hero-role { font-family: var(--font-display); font-size: clamp(0.75rem, 1.5vw, 0.95rem); font-weight: 600; color: var(--pink); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; } .hero-quote { font-size: 1.05rem; color: var(--text-dim); line-height: 1.6; max-width: 460px; margin-bottom: 1rem; font-style: italic; text-shadow: 0 2px 12px rgba(0,0,0,0.8); } .hero-quote span { color: var(--pink); font-style: normal; font-weight: 600; } .hero-hint { font-family: var(--font-mono); font-size: 0.68rem; color: var(--text-dim); letter-spacing: 0.04em; margin-bottom: 1rem; opacity: 0.85; text-shadow: 0 2px 10px rgba(0,0,0,0.9); } .fact-ticker { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); max-width: 460px; min-height: 32px; margin-bottom: 1.2rem; line-height: 1.5; opacity: 0; transition: opacity 0.5s; text-shadow: 0 2px 10px rgba(0,0,0,0.9); } .fact-ticker.show { opacity: 1; } .fact-ticker::before { content: '✦ DID YOU KNOW — '; color: var(--purple); } .hero-tiles { display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: stretch; } .hero-tile { background: rgba(255,107,170,0.08); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; backdrop-filter: blur(4px); } .hero-tile:hover { background: rgba(255,107,170,0.18); border-color: var(--pink); color: var(--pink); box-shadow: var(--glow); transform: translateY(-2px); } .hero-lesson-grid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 0.6rem; } .hero-game-tile { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.35rem; min-width: 128px; max-width: 150px; border-radius: 12px; border: 2px solid var(--pink); background: linear-gradient(160deg, rgba(255,107,170,0.22), rgba(198,107,255,0.14)); color: #fff; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-align: center; padding: 0.75rem 0.6rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 22px rgba(255,107,170,0.3), inset 0 0 16px rgba(255,107,170,0.08); animation: heroGameFloat 3.4s ease-in-out infinite; } .hero-game-tile:hover { background: linear-gradient(160deg, rgba(255,107,170,0.34), rgba(198,107,255,0.22)); box-shadow: 0 0 32px rgba(255,107,170,0.5), inset 0 0 20px rgba(255,107,170,0.14); transform: translateY(-3px) scale(1.03); } @keyframes heroGameFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } } .hero-game-icon { font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(255,107,170,0.7)); } .hero-game-label { font-family: var(--font-display); font-size: 0.74rem; letter-spacing: 0.06em; } .hero-game-cta { font-size: 0.6rem; opacity: 0.9; color: var(--pink); } @media (max-width: 768px) { .hero-zen-gif { display: none; } .hero-tiles { flex-wrap: wrap; } } .icebreaker { background: var(--bg-mid); border-bottom: 1px solid var(--border); padding: 3rem 2rem 3.5rem; } .ib-header { max-width: 640px; margin: 0 auto 2.2rem; text-align: center; } .ib-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; color: var(--purple); letter-spacing: 0.18em; margin-bottom: 0.6rem; } .ib-title { font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem); color: #fff; font-weight: 900; margin-bottom: 0.6rem; text-shadow: var(--glow); } .ib-sub { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; } .ib-phase { max-width: 760px; margin: 0 auto; } .ib-terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin-bottom: 2rem; } .ib-term-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 10px; padding: 1rem; cursor: pointer; transition: all 0.2s; text-align: center; } .ib-term-card:hover { transform: translateY(-2px); } .ib-term-code { font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; margin-bottom: 0.5rem; } .ib-term-def { font-size: 0.76rem; color: var(--text-dim); line-height: 1.5; display: none; } .ib-term-card.open .ib-term-def { display: block; } .ib-start-btn { display: block; margin: 0 auto; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #000; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 0.9rem 2.4rem; border-radius: 100px; border: none; cursor: pointer; letter-spacing: 0.08em; box-shadow: var(--glow-strong); transition: transform 0.2s; } .ib-start-btn:hover { transform: scale(1.03); } .ib-build-stage { background: var(--bg-card); border-radius: 14px; padding: 2rem; text-align: center; } .ib-build-eyebrow { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); letter-spacing: 0.14em; margin-bottom: 0.6rem; } .ib-build-def { font-size: 0.92rem; color: var(--text-dim); line-height: 1.6; max-width: 480px; margin: 0 auto 1.6rem; } .ib-slots { display: flex; flex-direction: column; align-items: center; gap: 1.4rem; margin-bottom: 1.6rem; } .ib-slot { width: 84px; height: 52px; border: 2px dashed var(--border-bright); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.9rem; color: var(--text-muted); background: rgba(255,255,255,0.02); transition: all 0.2s; } .ib-slot.filled { border-style: solid; color: #fff; font-weight: 700; } .ib-pieces-tray { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; margin-bottom: 1.4rem; } .ib-piece { padding: 0.7rem 1.1rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700; cursor: grab; user-select: none; border: 2px solid; transition: all 0.2s; background: rgba(255,255,255,0.04); } .ib-piece:active { cursor: grabbing; } .ib-piece.placed { opacity: 0.25; pointer-events: none; } .ib-build-feedback { font-family: var(--font-mono); font-size: 0.78rem; color: var(--pink); min-height: 22px; margin-bottom: 0.6rem; } .ib-check-btn { background: var(--pink); color: var(--bg); border: none; padding: 0.6rem 1.6rem; border-radius: 100px; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; cursor: pointer; } .ib-sequence-stage { background: var(--bg-card); border-radius: 14px; padding: 2rem; text-align: center; } .ib-seq-status { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em; margin-bottom: 1.4rem; min-height: 20px; } .ib-seq-board { display: flex; justify-content: center; gap: 0.6rem; flex-wrap: wrap; max-width: 680px; margin: 0 auto; } .ib-seq-card { min-width: 84px; min-height: 84px; padding: 0.5rem 0.9rem; border-radius: 12px; border: 2px solid; display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.82rem; font-weight: 700; cursor: pointer; transition: all 0.15s; background: rgba(255,255,255,0.03); text-align: center; line-height: 1.3; word-break: break-word; } .ib-seq-card.lit { transform: scale(1.15); box-shadow: 0 0 28px var(--c, currentColor); background: var(--c, currentColor); color: #0a0512 !important; } .ib-seq-card.wrong { animation: shake 0.3s ease; } .ib-complete-card { background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 14px; padding: 2.5rem 2rem; text-align: center; } .ib-complete-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--pink); margin-bottom: 0.8rem; text-shadow: var(--glow); } .ib-complete-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.4rem; } .ib-replay-btn { background: none; border: 1px solid var(--border-bright); color: var(--pink); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.4rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; } .ib-skip-btn { display: block; margin: 1.6rem auto 0; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.2s; } .ib-skip-btn:hover { color: var(--text-dim); border-color: var(--border-bright); } @media (max-width: 600px) { .ib-slot { width: 64px; height: 46px; font-size: 0.78rem; } .ib-seq-card { min-width: 64px; height: 64px; font-size: 0.8rem; } } .icebreaker-wrapper { display: none; } .icebreaker-wrapper.open { display: block; } .icebreaker-wrapper.open .icebreaker { animation: ibPowerOn 0.6s ease; } @keyframes ibPowerOn { 0% { opacity: 0; transform: scale(0.92); filter: brightness(3.5) saturate(1.6); } 15% { opacity: 1; filter: brightness(2.4) saturate(1.4); } 45% { transform: scale(1.015); filter: brightness(1.3); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } } .ib-slot-group { margin-bottom: 0; padding-bottom: 1.2rem; border-bottom: 1px dashed var(--border); width: 100%; } .ib-slot-group:last-child { border-bottom: none; padding-bottom: 0; } .ib-slot-group-label { font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.12em; color: var(--text-muted); margin-bottom: 0.5rem; } .ib-doc-panel { background: #0c0614; border: 1px solid var(--border); border-radius: 10px; padding: 1.4rem 1.6rem; margin: 0 auto 1.6rem; max-width: 420px; text-align: left; font-family: var(--font-mono); font-size: 0.82rem; line-height: 2; } .ib-doc-line { color: var(--text-muted); opacity: 0.35; transition: all 0.4s ease; white-space: pre; } .ib-doc-line.revealed { opacity: 1; font-weight: 700; } .ib-doc-line.clickable { cursor: pointer; border-radius: 4px; } .ib-doc-line.clickable:hover { background: rgba(255,255,255,0.06); } .ib-doc-line.lit-line { background: rgba(255,255,255,0.15); box-shadow: 0 0 14px currentColor; } .ib-doc-line.wrong-line { animation: shake 0.3s ease; } .lesson-strip { position: sticky; top: 60px; z-index: 90; background: rgba(10,5,18,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; overflow-x: auto; scrollbar-width: none; } .lesson-strip::-webkit-scrollbar { display: none; } .lesson-tab { flex-shrink: 0; padding: 0.9rem 1.6rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; background: none; border-top: none; border-left: none; border-right: none; } .lesson-tab:hover { color: var(--pink); text-shadow: 0 0 8px rgba(255,107,170,0.5); transform: translateY(-1px); } .lesson-tab.active { color: var(--pink); border-bottom-color: var(--pink); text-shadow: 0 0 8px rgba(255,107,170,0.5); } .lesson-panel { display: none; } .lesson-panel.open { display: grid; grid-template-columns: 220px 1fr; min-height: 80vh; } .lesson-sidebar { background: var(--bg-panel); border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: sticky; top: calc(60px + 42px); height: calc(100vh - 102px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; } .sidebar-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); } .sidebar-nav-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.65rem 0.8rem; margin-bottom: 0.2rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; } .sidebar-nav-btn:hover { background: rgba(255,107,170,0.07); color: var(--pink); transform: translateX(3px); } .sidebar-nav-btn.active { background: rgba(255,107,170,0.11); color: var(--pink); font-weight: 600; }
+.mini-badge { display: inline-flex; align-items: center; justify-content: center; width: 20px; height: 20px; border-radius: 6px; font-family: var(--font-display); font-size: 0.5rem; font-weight: 900; flex-shrink: 0; background: rgba(255,107,170,0.15); color: var(--pink); border: 1px solid var(--border-bright); }
+.locked-badge { display: inline-block; font-family: var(--font-display); font-size: 0.5rem; letter-spacing: 0.14em; font-weight: 700; padding: 5px 12px; border-radius: 100px; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #1a0510; }
+.lesson-content { padding: 2.5rem 3rem; max-width: 900px; } .content-block { display: none; } .content-block.active { display: block; } .section-header { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; } .section-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; font-family: var(--font-mono); letter-spacing: 0.05em; } .read-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem 2rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; } .read-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--pink), var(--purple)); } .read-card-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--pink); letter-spacing: 0.2em; margin-bottom: 0.6rem; opacity: 0.7; } .read-card h3 { font-family: var(--font-display); font-size: 0.95rem; color: #fff; margin-bottom: 0.8rem; font-weight: 700; } .read-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; } .read-card p strong { color: var(--pink); font-weight: 600; } .read-card code { font-family: var(--font-mono); font-size: 0.85rem; background: rgba(255,107,170,0.1); color: var(--pink); padding: 0.15em 0.4em; border-radius: 4px; } .code-block, .demo-console { background: #0c0614; border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.85; color: #e8c8f0; overflow-x: auto; } .code-tag { color: #ff6baa; font-weight: 700; } .code-str { color: #ffe066; } .code-comment { color: #5a3a6e; font-style: italic; } .code-attr { color: #c66bff; } .code-val { color: #80deea; } .demo-console .line { display: flex; gap: 12px; opacity: 0; transform: translateX(-8px); transition: opacity 0.4s, transform 0.4s; } .demo-console .line.visible { opacity: 1; transform: none; } .terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; } .term-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; } .term-card:hover { border-color: var(--pink); box-shadow: 0 0 14px rgba(255,107,170,0.2); transform: translateY(-2px); } .term-card.open { border-color: var(--pink); } .term-name { font-family: var(--font-mono); font-size: 0.8rem; color: var(--pink); font-weight: 700; display: flex; justify-content: space-between; align-items: center; } .term-arrow { transition: transform 0.2s; color: var(--text-muted); } .term-card.open .term-arrow { transform: rotate(90deg); } .term-def { display: none; font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); } .term-card.open .term-def { display: block; } .term-example { display: block; margin-top: 0.5rem; font-size: 0.78rem; color: var(--text-muted); font-style: italic; } .demo-card { background: var(--bg-card); border: 1px solid var(--border-purple); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.2rem; position: relative; } .demo-card::before { content: '✦ TRY IT'; position: absolute; top: -1px; right: 12px; background: var(--purple); color: #000; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 0 0 4px 4px; letter-spacing: 0.1em; } .demo-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--purple); margin-bottom: 0.8rem; font-weight: 700; } .demo-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 0.8rem; } .run-btn { background: var(--pink); color: var(--bg); border: none; padding: 0.55rem 1.4rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; cursor: pointer; letter-spacing: 0.1em; transition: opacity 0.2s; } .run-btn:hover { opacity: 0.85; } .demo-output { background: #0c0614; border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.9rem; color: var(--text); display: none; line-height: 1.8; } .demo-output.show { display: block; } .drag-blocks { display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1rem; } .drag-item { padding: 0.8rem 1rem; background: rgba(255,107,170,0.06); border: 1px solid var(--border); border-radius: 8px; cursor: grab; display: flex; align-items: center; gap: 0.8rem; transition: all 0.2s; font-size: 0.85rem; color: var(--text-dim); } .drag-item:hover { background: rgba(255,107,170,0.1); border-color: var(--border-bright); } .drag-item.dragging { opacity: 0.4; cursor: grabbing; } .drag-handle { color: var(--text-muted); font-size: 0.7rem; flex-shrink: 0; } .drag-num { width: 22px; height: 22px; border-radius: 50%; background: rgba(255,107,170,0.15); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; font-family: var(--font-mono); font-size: 0.65rem; color: var(--pink); flex-shrink: 0; } .check-btn { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 0.6rem 1.4rem; background: linear-gradient(135deg, var(--pink), var(--purple)); color: #000; font-weight: 700; border: none; border-radius: 100px; cursor: pointer; transition: opacity 0.2s; } .check-btn:hover { opacity: 0.88; } .build-slots { display: flex; flex-direction: column; gap: 0.7rem; margin: 1rem 0; } .build-slot { display: flex; align-items: center; gap: 0.6rem; font-size: 0.85rem; color: var(--text-dim); flex-wrap: wrap; } .build-slot label { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text-muted); min-width: 110px; } .build-slot select, .build-slot input[type="text"] { background: var(--bg-panel); border: 1px solid var(--border); color: var(--text); padding: 0.5rem 0.7rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; outline: none; transition: border-color 0.2s; } .build-slot select:focus, .build-slot input:focus { border-color: var(--pink); } .build-slot input[type="color"] { width: 44px; height: 34px; border-radius: 6px; border: 1px solid var(--border); cursor: pointer; background: none; padding: 2px; } .build-slot input[type="range"] { accent-color: var(--pink); width: 130px; } .quiz-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; } .quiz-q { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; } .quiz-options { display: flex; flex-direction: column; gap: 0.5rem; } .quiz-opt { background: rgba(255,107,170,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; font-size: 0.88rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-align: left; font-family: var(--font-body); } .quiz-opt:hover { border-color: var(--pink); color: var(--pink); } .quiz-opt.correct { border-color: #ff6baa; background: rgba(255,107,170,0.1); color: #ff6baa; } .quiz-opt.wrong { border-color: #c66bff; background: rgba(198,107,255,0.08); color: #d9a3ff; animation: shake 0.3s ease; } @keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } } .quiz-feedback { font-size: 0.82rem; margin-top: 0.6rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; } .quiz-feedback.show { display: block; } .quiz-feedback.correct { background: rgba(255,107,170,0.08); color: #ff9ac4; border: 1px solid rgba(255,107,170,0.2); } .quiz-feedback.wrong { background: rgba(198,107,255,0.07); color: #d9a3ff; border: 1px solid rgba(198,107,255,0.2); } .reflect-prompt { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; } .reflect-q { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.8rem; line-height: 1.5; } .reflect-input { width: 100%; background: rgba(255,107,170,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--text); resize: vertical; min-height: 80px; outline: none; transition: border-color 0.2s; } .reflect-input:focus { border-color: var(--pink); } .reflect-save-btn { margin-top: 0.5rem; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.35rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; } .reflect-save-btn:hover { border-color: var(--pink); color: var(--pink); } .reflect-saved { font-family: var(--font-mono); font-size: 0.68rem; color: var(--pink); margin-top: 0.4rem; display: none; } .reflect-response { margin-top: 0.8rem; padding: 0.9rem 1rem; background: rgba(198,107,255,0.06); border: 1px solid var(--border-purple); border-radius: 8px; font-size: 0.85rem; color: var(--purple); display: none; line-height: 1.7; } .reflect-response.show { display: block; } .cheat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.8rem; margin-bottom: 1rem; } .cheat-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--pink); margin-bottom: 1rem; font-weight: 700; } .cheat-items { display: flex; flex-direction: column; gap: 0.7rem; } .cheat-item { display: flex; gap: 1rem; align-items: flex-start; padding-bottom: 0.7rem; border-bottom: 1px solid rgba(255,107,170,0.06); } .cheat-item:last-child { border-bottom: none; padding-bottom: 0; } .cheat-term { font-family: var(--font-mono); font-size: 0.78rem; color: var(--pink); min-width: 140px; font-weight: 700; } .cheat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; } .cheat-btn-row { display: flex; gap: 0.7rem; margin-top: 1.2rem; flex-wrap: wrap; } .cheat-download-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(255,107,170,0.07); border: 1px solid var(--border-bright); color: var(--pink); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.08em; } .cheat-download-btn:hover { background: rgba(255,107,170,0.16); box-shadow: var(--glow); } .cheat-download-btn.secondary { background: none; border-color: var(--border); color: var(--text-muted); font-size: 0.65rem; } .cheat-download-btn.secondary:hover { color: var(--text-dim); border-color: var(--border-bright); } .locked-panel { padding: 4rem 3rem; text-align: center; } .locked-icon { margin-bottom: 1.2rem; } .locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; } .locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; } .gate-btn { display: inline-block; background: var(--pink); color: var(--bg); font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; padding: 0.8rem 2rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; letter-spacing: 0.08em; transition: opacity 0.2s; } .gate-btn:hover { opacity: 0.85; } .lesson-complete { background: linear-gradient(135deg, rgba(255,107,170,0.07), rgba(198,107,255,0.05)); border: 1px solid var(--border-bright); border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; display: none; } .lesson-complete.show { display: block; } .lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--pink); margin-bottom: 0.5rem; } .lesson-complete p { font-size: 0.88rem; color: var(--text-dim); } .lesson-joke { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--purple); font-style: italic; } .discovery-overlay { position: fixed; inset: 0; z-index: 200; background: rgba(10,5,18,0.97); display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; } .discovery-overlay.hidden { display: none; } .zen-mark { font-family: var(--font-mono); font-size: 2rem; color: var(--pink); margin-bottom: 1rem; letter-spacing: 0.3em; text-shadow: var(--glow-strong); animation: pulse 2s ease-in-out infinite; } @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } } .discovery-title { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; color: var(--pink); text-shadow: var(--glow-strong); margin-bottom: 0.8rem; } .discovery-sub { font-size: 1rem; color: var(--text-dim); max-width: 460px; line-height: 1.6; margin-bottom: 2rem; } .discovery-enter-btn { background: var(--pink); color: var(--bg); font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 1rem 2.5rem; border-radius: 8px; border: none; cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s; box-shadow: var(--glow-strong); } .discovery-enter-btn:hover { transform: scale(1.03); } .discovery-overlay.fading { opacity: 0; transition: opacity 0.7s ease; pointer-events: none; } .hologram-stage { display: none; position: relative; width: min(420px, 86vw); margin: 0 auto; } .hologram-frame { position: relative; border: 1px solid var(--border-cyan); border-radius: 12px; overflow: hidden; box-shadow: 0 0 40px rgba(0,229,255,0.35), 0 0 80px rgba(198,107,255,0.2); animation: hologramMaterialize 1.1s ease-out, hologramFlicker 2.4s steps(1) infinite 1.1s; } .hologram-frame::before, .hologram-frame::after { content: ''; position: absolute; width: 22px; height: 22px; border: 2px solid var(--cyan); z-index: 5; } .hologram-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; } .hologram-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; } .hologram-video { width: 100%; display: block; filter: saturate(1.2) brightness(1.05); } .hologram-scanlines { position: absolute; inset: 0; z-index: 4; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0,229,255,0.08) 0px, transparent 2px, transparent 4px); mix-blend-mode: overlay; } .hologram-scan-sweep { position: absolute; left: 0; right: 0; height: 40%; z-index: 6; pointer-events: none; background: linear-gradient(to bottom, transparent, rgba(0,229,255,0.25), transparent); animation: hologramSweep 1.6s ease-in-out infinite; } .hologram-caption { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--cyan); text-shadow: 0 0 10px rgba(0,229,255,0.6); animation: pulse 1.2s ease-in-out infinite; } @keyframes hologramMaterialize { 0% { opacity: 0; transform: scale(0.85) translateY(10px); clip-path: inset(0 0 100% 0); } 40% { opacity: 1; clip-path: inset(0 0 0 0); } 100% { opacity: 1; transform: scale(1) translateY(0); clip-path: inset(0 0 0 0); } } @keyframes hologramFlicker { 0%, 100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.6; } 94% { opacity: 1; } 96% { opacity: 0.75; } 97% { opacity: 1; } } @keyframes hologramSweep { 0% { top: -40%; } 100% { top: 100%; } } @keyframes companionFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } } .sound-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: rgba(21,12,34,0.9); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; opacity: 0; pointer-events: none; } .sound-toggle.visible { opacity: 1; pointer-events: auto; } .sound-toggle:hover { box-shadow: var(--glow); border-color: var(--pink); } .sound-toggle.muted { opacity: 0.5; } .egg-popup { position: fixed; bottom: 100px; right: 24px; z-index: 250; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 1.2rem 1.4rem; max-width: 260px; box-shadow: var(--glow-strong); display: none; } .egg-popup.show { display: block; animation: eggPop 0.4s ease; } @keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } } .egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--pink); margin-bottom: 0.5rem; } .egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; } @media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .fact-ticker { display: none; } .sound-toggle { bottom: 24px; } } </style>
 </head>
 <body>
-
-<div id="world-bg"></div>
-<div id="world-overlay"></div>
-<div id="world-glow"></div>
-<div id="scanlines"></div>
-
-<!-- INTRO SCREEN -->
-<div id="introScreen">
-  <div class="intro-eyebrow">Zone 1 · CSS Style Studio</div>
-  <img id="intro-zen" src="zen-idle-pose.png" alt="Zen" onerror="this.style.display='none'">
-  <div id="intro-title">Zen's Style Studio</div>
-  <div id="intro-sub">Zen's world has lost all its color. Pick the right CSS values to bring it back — one challenge at a time.</div>
-  <button id="intro-start" onclick="startGame()">ENTER THE STUDIO</button>
+<div class="discovery-overlay" id="discoveryOverlay">
+<div class="zen-mark">✦ ✦ ✦</div>
+<div class="discovery-title">Zen's Coding Realm</div>
+<div class="discovery-sub">Every idea starts as nothing.<br>One line of code turns it into something real.</div>
+<button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterRealm()">Enter the Realm</button>
+<div class="hologram-stage" id="hologramStage">
+<div class="hologram-frame">
+<img class="hologram-video" id="entranceVideo" src="zen-entrance.gif" alt="Zen materializing">
+<div class="hologram-scanlines"></div>
+<div class="hologram-scan-sweep"></div>
 </div>
-
-<!-- GAME OVER -->
-<div id="gameOverScreen" class="hidden">
-  <div id="gameOverEyebrow">Studio Complete</div>
-  <div id="gameOverTitle">MASTERPIECE!</div>
-  <img id="gameOverZen" src="zen-victory.png" alt="Zen" onerror="this.src='zen-idle-pose.png'">
-  <div id="gameOverSub">You restored Zen's studio. That's real design skill.</div>
-  <div id="gameOverScore">0 pts</div>
-  <button class="over-btn" onclick="location.reload()">PLAY AGAIN</button>
-  <button class="over-btn" style="background:rgba(255,255,255,0.08);color:#fff;" onclick="location.href='games.html'">← GAME UNIVERSE</button>
+<div class="hologram-caption">✦ MATERIALIZING...</div>
 </div>
-
+</div>
 <nav>
-  <a class="nav-back" href="games.html">← Games</a>
-  <div class="nav-title">CSS STYLE STUDIO</div>
-  <div id="nav-score">0 pts</div>
+<a href="index.html" class="nav-logo">MiM</a>
+<ul class="nav-links">
+<li><a href="games.html">Games</a></li>
+<li class="nav-drop" id="exploreDrop">
+<button class="nav-drop-trigger" onclick="toggleNavDrop('exploreDrop')">Explore <span class="nav-drop-arrow">▾</span></button>
+<div class="nav-drop-menu">
+<a href="pdfs.html" class="nav-drop-item">PDFs</a>
+<a href="library.html" class="nav-drop-item">Library</a>
+<a href="characters.html" class="nav-drop-item">Characters</a>
+<a href="about.html" class="nav-drop-item">About</a>
+</div>
+</li>
+<li class="nav-drop" id="undergroundDrop">
+<button class="nav-drop-trigger" onclick="toggleNavDrop('undergroundDrop')">The Underground <span class="nav-drop-arrow">▾</span></button>
+<div class="nav-drop-menu">
+<a href="tag-wall.html" class="nav-drop-item">Tag Wall</a>
+<a href="broken-syntax.html" class="nav-drop-item">Broken Syntax</a>
+<a href="mim-tv.html" class="nav-drop-item">MiM TV</a>
+<a href="comic.html" class="nav-drop-item">Comics</a>
+</div>
+</li>
+</ul>
+<div class="nav-right">
+<span class="nav-username" id="nav-username"></span>
+<div id="nav-user-menu" style="display:none;">
+<a href="dashboard.html">Dashboard</a>
+<button id="nav-logout-btn">Log Out</button>
+</div>
+<div id="nav-auth-btns">
+<button id="nav-login">Log In</button>
+<button id="nav-join">Join Free</button>
+</div>
+</div>
+<button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()"><span></span><span></span><span></span></button>
 </nav>
-
-<div id="game-shell">
-
-  <!-- ZEN PANEL -->
-  <div id="zen-panel">
-    <img id="zen-face" src="zen-happy.png" alt="" onerror="this.style.display='none'">
-    <img id="zen-img" src="zen-idle-pose.png" alt="Zen" onerror="this.style.opacity='0'">
-    <div id="zen-name">ZEN</div>
-    <div id="zen-quote">"Every great design starts with one good choice."</div>
-  </div>
-
-  <!-- PREVIEW PANEL -->
-  <div id="preview-panel">
-    <div id="preview-label">ZEN'S WORLD — LIVE PREVIEW</div>
-    <div id="preview-frame">
-      <iframe id="preview-iframe" title="Preview"></iframe>
-    </div>
-    <div id="style-meter-wrap">
-      <div id="style-meter-label"><span>STYLE METER</span><span id="meter-val">100%</span></div>
-      <div id="style-meter-bar"><div id="style-meter-fill"></div></div>
-    </div>
-  </div>
-
-  <!-- CHALLENGE PANEL -->
-  <div id="challenge-panel">
-    <div id="zone-badge">ZONE 1 · COLOR</div>
-    <div id="timer-bar"><div id="timer-fill"></div></div>
-    <div id="combo-text"></div>
-    <div id="challenge-card">
-      <div id="challenge-property">CSS PROPERTY</div>
-      <div id="challenge-question">Loading...</div>
-      <div id="challenge-hint">/* pick the right value */</div>
-      <div id="options-grid"></div>
-    </div>
-    <div id="progress-dots"></div>
-  </div>
-
+<div class="mobile-menu" id="mobileMenu">
+<a href="index.html#crew">Crew</a>
+<a href="index.html#membership">Membership</a>
+<a href="games.html">Games</a>
+<div class="mobile-menu-label">Explore</div>
+<a href="pdfs.html">PDFs</a>
+<a href="library.html">Library</a>
+<a href="characters.html">Characters</a>
+<a href="about.html">About</a>
+<div class="mobile-menu-label">The Underground</div>
+<a href="tag-wall.html">Tag Wall</a>
+<a href="broken-syntax.html">Broken Syntax</a>
+<a href="mim-tv.html">MiM TV</a>
+<a href="comic.html">Comics</a>
+<div class="mobile-menu-label">&nbsp;</div>
+<a href="dashboard.html">Dashboard</a>
+</div>
+<section class="hero" id="zenHero">
+<video class="hero-video" autoplay muted loop playsinline poster="zen-hero.png">
+<source src="zen-hero.mp4" type="video/mp4">
+</video>
+<div class="hero-gradient"></div>
+<div class="hero-pulse"></div>
+<div class="particle-field" id="particleField"></div>
+<img class="hero-zen-gif" src="corrected-zen-idle.gif" alt="Zen" onerror="this.style.display='none'" onclick="companionClick()" style="pointer-events:auto;cursor:pointer;">
+<div class="hero-content">
+<div class="hero-eyebrow">✦ &nbsp;Creative Coder&nbsp; · &nbsp;HTML &amp; CSS</div>
+<div class="hero-name">Zen</div>
+<div class="hero-catchphrase">If you can imagine it, you can code it!</div>
+<div class="hero-role">The Creative Coder</div>
+<div class="hero-quote">"<span>Every idea starts as nothing.</span> Then you write one line of code, and it becomes something real."</div>
+<div class="fact-ticker" id="factTicker"></div>
+<div class="hero-tiles">
+<div class="hero-lesson-grid">
+<a class="hero-tile" onclick="jumpToLesson(1)">01 What Is Code?</a>
+<a class="hero-tile" onclick="jumpToLesson(2)">02 Your First Tag</a>
+<a class="hero-tile" onclick="jumpToLesson(3)">03 Colors &amp; Style</a>
+<a class="hero-tile" onclick="jumpToLesson(4)">04 Build Your Page</a>
+</div>
+<button class="hero-game-tile" onclick="ibToggleWrapper()" aria-label="Open the Memory Matrix icebreaker game">
+<span class="hero-game-icon">✦</span>
+<span class="hero-game-label">MEMORY<br>MATRIX</span>
+<span class="hero-game-cta">Boot Game →</span>
+</button>
+</div>
+</div>
+</section>
+<div class="icebreaker-wrapper" id="icebreakerWrapper">
+<section class="icebreaker" id="icebreaker">
+<div class="ib-header">
+<div class="ib-eyebrow">✦ &nbsp;ICEBREAKER&nbsp; · &nbsp;HTML TAG RECOGNITION</div>
+<h2 class="ib-title">Learn the Building Blocks</h2>
+<p class="ib-sub">Every tag on a real page has an opening half and a closing half wrapped around content. Learn each one, build both halves, then lock the whole sequence into memory.</p>
+</div>
+<div class="ib-phase" id="ib-intro">
+<div class="ib-terms-grid" id="ibTermsGrid"></div>
+<button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">Start the Game ✦</button>
+</div>
+<div class="ib-phase" id="ib-game" style="display:none;">
+<div class="ib-doc-panel" id="ibDocPanel"></div>
+<div class="ib-build-stage" id="ibBuildStage"></div>
+<div class="ib-sequence-stage" id="ibSequenceStage" style="display:none;"></div>
+</div>
+<div class="ib-phase" id="ib-complete" style="display:none;">
+<div class="ib-complete-card">
+<h3>✦ Muscle Memory Unlocked</h3>
+<p>DOCTYPE. html. head. title. body. h1. p. That's the skeleton of every website on the internet — and it's in your memory now.</p>
+<button class="ib-replay-btn" onclick="ibReset()">Play Again</button>
+<button class="ib-replay-btn" onclick="ibToggleWrapper()" style="margin-left:0.6rem;">Close</button>
+</div>
+</div>
+</section>
+</div>
+<div class="lesson-strip">
+<button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — What Is Code?</button>
+<button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Your First Tag</button>
+<button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Colors &amp; Style</button>
+<button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Build Your Page</button>
+<button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">✦ Cheat Sheet</button>
+</div>
+<div class="lesson-panel" id="lesson-1">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 01</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="mini-badge">RD</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="mini-badge">TM</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="mini-badge">BD</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="mini-badge">RF</span> Reflect</button>
+</aside>
+<div class="lesson-content">
+<div class="content-block active" id="block-1-read">
+<div class="section-header">What Is Code?</div>
+<div class="section-sub">LESSON 01</div>
+<div class="read-card"><div class="read-card-num">01 / 08</div><h3>Instructions, Not Magic</h3><p>“Hey, I’m Zen. I build things with code — websites, animations, digital art. Before I learned how, I had one question: what even IS this stuff?” Code is a set of instructions written in a language a computer can work with. Computers are incredibly fast, but they are not mind readers — they only do what their instructions tell them to do. Think of code like giving directions to someone who follows every step exactly: if you say “turn left,” they turn left; if you forget to say “stop,” they just keep going. Coding is how we turn an idea in our head into clear steps a computer can follow.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 08</div><h3>What Does a Computer Actually Understand?</h3><p>Deep down, computers work with tiny on-or-off signals — the kind of thing people often describe as 1s and 0s. Humans do not want to build every website by writing endless rows of those signals, so we use languages that are much easier for us to read. HTML gives us words like <strong>h1</strong>, <strong>p</strong>, and <strong>body</strong> that describe parts of a webpage. The browser handles the complicated translation underneath. Basically: we get to speak human-friendly instructions, and the computer handles the robot-level work.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 08</div><h3>Before Code, There Is Just... Nothing</h3><p>Imagine opening a brand-new blank document. No title. No paragraph. No color. No buttons. That blank space is like an empty skate park before anyone builds the ramps. HTML gives the page structure — one instruction can turn plain words into a heading, another can turn a sentence into a paragraph. Without code, your idea stays an idea; with code, the browser has actual instructions for what to build.</p><div class="code-block"><span class="code-comment">Plain text:</span> Hello, world!<br><br><span class="code-comment">HTML:</span> <span class="code-tag">&lt;h1&gt;</span>Hello, world!<span class="code-tag">&lt;/h1&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">04 / 08</div><h3>HTML Gives the Page Structure</h3><p>The language we use to describe the structure of a webpage is called <strong>HTML</strong>, which stands for HyperText Markup Language. HTML does not tell the browser every tiny thing about how a page should look — its first job is to explain what each piece of content <em>is</em>. A heading is a heading. A paragraph is a paragraph. A link is a link. Think of HTML like labeling boxes before moving day: “books,” “toys,” “kitchen.” The labels help everyone know what each thing is and where it belongs.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 08</div><h3>The Browser Is the Builder</h3><p>A browser — like Chrome, Safari, or Firefox — reads the HTML you write and turns it into something visual. You write <code>&lt;h1&gt;My Page&lt;/h1&gt;</code>, and the browser understands, “This is the main heading.” You are writing the blueprint; the browser is doing the construction. Without a browser interpreting the instructions, HTML would just look like a bunch of angle brackets and words. So when your page appears on screen, remember: you gave the directions. The browser followed them. That makes <strong>you</strong> the coder.</p></div>
+<div class="read-card"><div class="read-card-num">06 / 08</div><h3>Computers Do Not Guess</h3><p>Here is something important: computers are very literal. If you make a typo, the browser usually will not stop and say, “Zen probably meant something else.” It tries to use exactly what you wrote. Sometimes the mistake is harmless, sometimes something looks strange, and sometimes a piece of code does not work the way you expected. Think of a recipe that says “add 10 cups of salt” instead of “1 cup” — the cook followed the instructions perfectly, but the instructions were wrong. Bugs and typos are normal. Coding is partly writing instructions and partly checking that you wrote the instructions you actually meant.</p><div class="code-block"><span class="code-comment">Oops:</span> <span class="code-tag">&lt;h11&gt;</span>Hello<span class="code-tag">&lt;/h11&gt;</span><br><span class="code-comment">Correct:</span> <span class="code-tag">&lt;h1&gt;</span>Hello<span class="code-tag">&lt;/h1&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">07 / 08</div><h3>Every Website Started With Small Pieces</h3><p>Huge websites can look complicated, but they are still built from smaller instructions stacked together. A giant game site, a shopping page, or a music app may have thousands of lines of code, but somewhere underneath are familiar ideas like headings, paragraphs, links, images, and sections. It is like building with LEGO: a massive castle is still made one piece at a time. You do not need to memorize the whole internet today. You only need to learn the next piece, then the next one.</p></div>
+<div class="read-card"><div class="read-card-num">08 / 08</div><h3>Every Tag Has Parts</h3><p>Before we start throwing tags everywhere like coding confetti, look at this: <code>&lt;p&gt;Hello!&lt;/p&gt;</code>. Many beginner HTML elements follow three easy parts: an <strong>opening tag</strong>, the <strong>content</strong>, and a <strong>closing tag</strong>. The opening tag says, “Start this kind of content here.” The closing tag — the one with the tiny slash — says, “Okay, this part is finished.” Forget the closing tag in places where one is needed, and the browser may keep treating later content as part of the same element. Tiny slash. Huge job.</p><div class="code-block"><span class="code-tag">&lt;p&gt;</span><span class="code-str">This is the content.</span><span class="code-tag">&lt;/p&gt;</span><br><span class="code-tag">&lt;h1&gt;</span><span class="code-str">This is another element.</span><span class="code-tag">&lt;/h1&gt;</span></div></div>
+</div>
+<div class="locked-panel" id="anon-lock-1">
+<div class="locked-icon"><span class="locked-badge">SIGN UP FREE</span></div>
+<h2>Free to Explore, Free to Sign Up</h2>
+<p>Create a free account to unlock quizzes, the build tools, and reflections for every one of Zen's lessons.</p>
+<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
+</div>
+<div id="anon-gated-1">
+<div class="content-block" id="block-1-terms">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Code <span class="term-arrow">›</span></div><div class="term-def">A set of step-by-step instructions written in a language a computer can understand. <span class="term-example">Example: Telling a browser "make this text a heading" is code.</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">HTML <span class="term-arrow">›</span></div><div class="term-def">HyperText Markup Language. The language used to build every webpage. <span class="term-example">Example: Every website you've visited was built with HTML.</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Tag <span class="term-arrow">›</span></div><div class="term-def">A label in angle brackets that tells the browser what content is. <span class="term-example">Example: &lt;h1&gt;This is a heading&lt;/h1&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Browser <span class="term-arrow">›</span></div><div class="term-def">The program that reads HTML and turns it into a visual webpage. <span class="term-example">Example: Chrome, Safari, Firefox.</span></div></div>
+</div>
+</div>
+<div class="content-block" id="block-1-build">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 01 · SEE IT LIVE</div>
+<div class="demo-card">
+<h3>Your First Lines of HTML</h3>
+<p>Watch how HTML tags turn plain text into a real webpage.</p>
+<div class="demo-console" id="codeDemo1">
+<div class="line" id="c1l1"><span class="code-comment">/* HTML tells the browser what things are */</span></div>
+<div class="line" id="c1l2"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Hello, I'm Zen.</span><span class="code-tag">&lt;/h1&gt;</span></div>
+<div class="line" id="c1l3"><span class="code-tag">&lt;p&gt;</span><span class="code-str">I build things with code.</span><span class="code-tag">&lt;/p&gt;</span></div>
+<div class="line" id="c1l4"><span class="code-tag">&lt;p&gt;</span><span class="code-str">What will YOU build?</span><span class="code-tag">&lt;/p&gt;</span></div>
+</div>
+<button class="run-btn" onclick="runCode1()">▶ Run the Code</button>
+<div class="demo-output" id="output1">
+<strong style="font-size:1.2rem;display:block;margin-bottom:6px;color:#fff">Hello, I'm Zen.</strong>
+<span style="color:var(--text-dim)">I build things with code.</span><br>
+<span style="color:var(--text-dim)">What will YOU build?</span>
+</div>
+</div>
+<div class="demo-card">
+<h3>Put the Steps in Order</h3>
+<p>Zen is building their first webpage. Drag these steps into the right order.</p>
+<div class="drag-blocks" id="dragList1">
+<div class="drag-item" draggable="true" data-order="3"><span class="drag-handle">⠿</span><span class="drag-num">?</span> Add HTML tags to label each piece of content</div>
+<div class="drag-item" draggable="true" data-order="1"><span class="drag-handle">⠿</span><span class="drag-num">?</span> Have an idea for what to build</div>
+<div class="drag-item" draggable="true" data-order="4"><span class="drag-handle">⠿</span><span class="drag-num">?</span> Open your browser and see it appear</div>
+<div class="drag-item" draggable="true" data-order="2"><span class="drag-handle">⠿</span><span class="drag-num">?</span> Write your content — words, titles, sentences</div>
+</div>
+<button class="check-btn" onclick="checkDrag1()">Check My Answer →</button>
+<div class="demo-output" id="drag1Result"></div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">What does HTML stand for?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'HTML stands for HyperText Markup Language.')">HyperText Making Language</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. HTML stands for HyperText Markup Language.')">HyperText Markup Language</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'HTML stands for HyperText Markup Language.')">High Tech Markup Logic</button>
+</div>
+<div class="quiz-feedback" id="qfb-1-0"></div>
+</div>
+</div>
+<div class="content-block" id="block-1-reflect">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
+<div class="reflect-prompt">
+<div class="reflect-q">If you could build one thing on the internet — anything at all — what would it be?</div>
+<textarea class="reflect-input" id="ref-1-1" placeholder="I would build..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
+<span class="reflect-saved" id="saved-1-1">✓ Saved</span>
+</div>
+<div class="reflect-response" id="resp-1-1"></div>
+</div>
+<div class="lesson-complete" id="complete-1">
+<h3>✦ &nbsp;Lesson 1 Complete</h3>
+<p>What code is. What HTML stands for. How tags work.</p>
+<div class="lesson-joke" id="joke-1"></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="lesson-panel" id="lesson-2">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 02</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="mini-badge">RD</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="mini-badge">TM</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="mini-badge">BD</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="mini-badge">RF</span> Reflect</button>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-2">
+<div class="locked-icon"><span class="locked-badge">EXPLORER</span></div>
+<h2>Become an Explorer to Unlock All of Zen</h2>
+<p>Zen's whole world — all 4 lessons — is free once you sign up. No card needed.</p>
+<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
+</div>
+<div class="content-block" id="block-2-read" style="display:none">
+<div class="section-header">Your First HTML Tag</div><div class="section-sub">LESSON 02</div>
+<div class="read-card"><div class="read-card-num">01 / 10</div><h3>Tags Tell the Browser What Something Is</h3><p>An HTML tag is a label that tells the browser what kind of content it is looking at. If you wrap words in <code>&lt;h1&gt;</code> and <code>&lt;/h1&gt;</code>, you are telling the browser, “This is my main heading.” If you use <code>&lt;p&gt;</code> and <code>&lt;/p&gt;</code>, you are saying, “This is a paragraph.” Without those labels, the browser mostly sees ordinary text with no clear structure. Think of tags like signs on classroom doors — “Library,” “Gym,” “Art Room.” The sign helps you know what belongs there before you even walk inside.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 10</div><h3>Open, Content, Close</h3><p>Many HTML elements use the same pattern: opening tag, content, closing tag. The opening tag starts the instruction, the content is the thing you want on the page, and the closing tag ends the instruction. The slash in the closing tag matters because it tells the browser that this element is finished. If you forget it where it is required, your structure can become confusing — like opening a bunch of boxes and never putting the lids back on. You will see this pattern again and again, so let it become muscle memory.</p><div class="code-block"><span class="code-tag">&lt;p&gt;</span>Skateboards are awesome.<span class="code-tag">&lt;/p&gt;</span><br><span class="code-tag">&lt;h2&gt;</span>My Favorite Tricks<span class="code-tag">&lt;/h2&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">03 / 10</div><h3>Angle Brackets Are the Uniform</h3><p>Every tag name is wrapped in angle brackets: <strong>&lt;</strong> and <strong>&gt;</strong>. Those symbols help the browser recognize, “This is HTML syntax, not regular words I should print on the page.” If you type <code>h1 Hello</code> without the angle brackets, the browser has no reason to treat <strong>h1</strong> as a tag — it may just show it as text. Think of the angle brackets like a uniform: when the browser sees them around a tag name, it knows that word has a special job. No uniform, no special assignment.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 10</div><h3>An Element Is the Whole Package</h3><p>A tag is one piece of the instruction, but an <strong>element</strong> is usually the whole package: opening tag + content + closing tag. For example, <code>&lt;p&gt;</code> is just the opening tag, while <code>&lt;p&gt;Hello!&lt;/p&gt;</code> is the paragraph element. Why care about the difference? Because as your pages grow, you will talk about whole elements — “move this paragraph element,” “style this heading element,” or “put this link element inside that section.” It is like the difference between saying “a shoelace” and “a whole sneaker.” Both matter, but they are not the same thing.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 10</div><h3>Headings Have Levels, Not Just Sizes</h3><p>HTML gives you six heading levels: <strong>&lt;h1&gt;</strong> through <strong>&lt;h6&gt;</strong>. The important part is not that they may look different sizes — the important part is the <em>hierarchy</em>. <strong>h1</strong> is the main topic of the page, <strong>h2</strong> marks major sections under that topic, and <strong>h3</strong> can mark smaller sections inside an h2 section. Think of a school notebook: the notebook title is the big idea, chapter tabs divide major topics, and smaller labels organize details inside each chapter. The levels tell people and technology how the information is organized.</p><div class="code-block"><span class="code-tag">&lt;h1&gt;</span>My Animal Website<span class="code-tag">&lt;/h1&gt;</span><br><span class="code-tag">&lt;h2&gt;</span>Dogs<span class="code-tag">&lt;/h2&gt;</span><br><span class="code-tag">&lt;h3&gt;</span>What Dogs Eat<span class="code-tag">&lt;/h3&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">06 / 10</div><h3>Why Not Just Make Everything an h1?</h3><p>You technically <em>could</em> make text look smaller later with CSS, but that would not fix the meaning of the structure. Heading levels help screen readers and other accessibility tools understand how a page is organized, and they help anyone scanning the page know which ideas belong under which sections. Imagine a book where every chapter title, section title, and tiny note all had the exact same importance — it would be harder to navigate even if you changed the font sizes. HTML hierarchy is about meaning first; appearance comes later. So use the heading level that matches the job, not just the one that looks cute.</p></div>
+<div class="read-card"><div class="read-card-num">07 / 10</div><h3>Paragraphs Explain the Idea</h3><p>A heading names or introduces an idea. A paragraph explains it. If a heading is a sign that says “SKATE PARK,” the paragraph is the information underneath telling you the hours, rules, and where the ramps are. The <code>&lt;p&gt;</code> element is made for normal blocks of text, so the browser and accessibility tools understand that those sentences belong together. Without paragraphs, your page can turn into one giant wall of words. A heading says, “LOOK OVER HERE!” A paragraph says, “Cool — now let me explain.”</p><div class="code-block"><span class="code-tag">&lt;h2&gt;</span>My Favorite Food<span class="code-tag">&lt;/h2&gt;</span><br><span class="code-tag">&lt;p&gt;</span>Pizza wins because you can change the toppings every time.<span class="code-tag">&lt;/p&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">08 / 10</div><h3>Attributes Add Extra Information</h3><p>Sometimes a tag needs more information than its name can provide. That extra information is called an <strong>attribute</strong>, and it usually lives inside the opening tag. A link tag <code>&lt;a&gt;</code> tells the browser “this is a link,” but the browser still needs to know <em>where</em> the link should go. The <strong>href</strong> attribute supplies that destination. Think of a tag as a package and the attribute as the shipping label — without the address, the package knows it is supposed to travel, but it does not know where.</p><div class="code-block"><span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-str">"https://example.com"</span><span class="code-tag">&gt;</span>Visit the site<span class="code-tag">&lt;/a&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">09 / 10</div><h3>Nesting Means Putting One Element Inside Another</h3><p>HTML elements can live inside other HTML elements. That is called <strong>nesting</strong>. Later you will put headings, paragraphs, images, and more inside larger page sections. Think of nesting like a backpack: the backpack can hold a pencil case, and the pencil case can hold pencils. The order matters — if you open something inside another element, close the inside thing before closing the outside thing. Messy nesting is like trying to zip the backpack shut while the pencil case is still hanging halfway outside.</p><div class="code-block"><span class="code-tag">&lt;div&gt;</span><br>&nbsp;&nbsp;<span class="code-tag">&lt;h2&gt;</span>My Section<span class="code-tag">&lt;/h2&gt;</span><br>&nbsp;&nbsp;<span class="code-tag">&lt;p&gt;</span>This paragraph lives inside the div.<span class="code-tag">&lt;/p&gt;</span><br><span class="code-tag">&lt;/div&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">10 / 10</div><h3>Good HTML Tells a Story About the Page</h3><p>When your tags are chosen well, someone can look at the HTML and understand the page even before seeing the finished design. They can spot the main heading, the sections, the paragraphs, and the links. That is why HTML is more than making text “big” or “small” — it gives content meaning and structure. If you pick tags only by how they look, the code may still appear okay visually but become confusing underneath. Clean structure now makes styling, accessibility, and future changes much easier later.</p></div>
+</div>
+<div class="content-block" id="block-2-terms" style="display:none">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Opening Tag <span class="term-arrow">›</span></div><div class="term-def">The start of an element. <span class="term-example">Example: &lt;p&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Closing Tag <span class="term-arrow">›</span></div><div class="term-def">The end of an element, with a slash. <span class="term-example">Example: &lt;/p&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Element <span class="term-arrow">›</span></div><div class="term-def">Opening tag + content + closing tag together. <span class="term-example">Example: &lt;h1&gt;My Title&lt;/h1&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Attribute <span class="term-arrow">›</span></div><div class="term-def">Extra info inside an opening tag. <span class="term-example">Example: href sets a link's destination.</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Anchor Tag (&lt;a&gt;) <span class="term-arrow">›</span></div><div class="term-def">Creates a clickable link. <span class="term-example">Example: &lt;a href="..."&gt;Click here&lt;/a&gt;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Angle Brackets &lt; &gt; <span class="term-arrow">›</span></div><div class="term-def">The two symbols that wrap every tag name so the browser recognizes it as an instruction. <span class="term-example">Example: the &lt; and &gt; around h1 in &lt;h1&gt;.</span></div></div>
+</div>
+</div>
+<div class="content-block" id="block-2-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 02 · SEE IT LIVE</div>
+<div class="demo-card">
+<h3>Different Tags, Different Jobs</h3>
+<div class="demo-console" id="codeDemo2">
+<div class="line" id="c2l1"><span class="code-tag">&lt;h1&gt;</span><span class="code-str">Zen's Coding Realm</span><span class="code-tag">&lt;/h1&gt;</span></div>
+<div class="line" id="c2l2"><span class="code-tag">&lt;p&gt;</span><span class="code-str">This is a paragraph.</span><span class="code-tag">&lt;/p&gt;</span></div>
+<div class="line" id="c2l3"><span class="code-tag">&lt;a </span><span class="code-attr">href=</span><span class="code-str">"#"</span><span class="code-tag">&gt;</span><span class="code-str">This is a link</span><span class="code-tag">&lt;/a&gt;</span></div>
+</div>
+<button class="run-btn" onclick="runCode2()">▶ Run the Code</button>
+<div class="demo-output" id="output2">
+<strong style="font-size:1.3rem;display:block;margin-bottom:4px;color:#fff">Zen's Coding Realm</strong>
+<p style="color:var(--text-dim);margin-bottom:8px">This is a paragraph.</p>
+<a href="#" style="color:var(--purple);text-decoration:underline">This is a link</a>
+</div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">Which of these is a correctly written HTML element?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wrong syntax.')">&lt;p Hello World /p&gt;</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct.')">&lt;p&gt;Hello World&lt;/p&gt;</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Missing the slash.')">&lt;p&gt;Hello World&lt;p&gt;</button>
+</div>
+<div class="quiz-feedback" id="qfb-2-0"></div>
 </div>
 
-<script>
-// ─── DATA ────────────────────────────────────────────────────────────────────
-const CHALLENGES = [
-  // Zone 1 - Color
-  { zone:'ZONE 1 · COLOR', prop:'color', q:'Give Zen\'s headline a vibrant pink glow', hint:'color: ___', correct:'#f472b6', opts:['#f472b6','#000000','inherit','transparent'],
-    css:(v)=>`h1{color:${v};text-shadow:0 0 20px ${v};}` },
-  { zone:'ZONE 1 · COLOR', prop:'background', q:'Set the page background to deep midnight', hint:'background: ___', correct:'#0a0a1a', opts:['#0a0a1a','#ffffff','#ff0000','#cccccc'],
-    css:(v)=>`body{background:${v};}` },
-  { zone:'ZONE 1 · COLOR', prop:'color', q:'Make the paragraph text soft white', hint:'color: ___', correct:'rgba(255,255,255,0.75)', opts:['rgba(255,255,255,0.75)','black','#ff6600','blue'],
-    css:(v)=>`p{color:${v};}` },
-
-  // Zone 2 - Typography
-  { zone:'ZONE 2 · TYPE', prop:'font-size', q:'Make the headline BIG — studio-worthy', hint:'font-size: ___', correct:'64px', opts:['64px','12px','2px','100%'],
-    css:(v)=>`h1{font-size:${v};}` },
-  { zone:'ZONE 2 · TYPE', prop:'font-weight', q:'Make the headline ultra bold', hint:'font-weight: ___', correct:'900', opts:['900','100','normal','lighter'],
-    css:(v)=>`h1{font-weight:${v};}` },
-  { zone:'ZONE 2 · TYPE', prop:'letter-spacing', q:'Spread the letters out wide', hint:'letter-spacing: ___', correct:'4px', opts:['4px','0px','-2px','400px'],
-    css:(v)=>`h1{letter-spacing:${v};}` },
-  { zone:'ZONE 2 · TYPE', prop:'text-transform', q:'Force the headline to ALL CAPS', hint:'text-transform: ___', correct:'uppercase', opts:['uppercase','lowercase','none','blink'],
-    css:(v)=>`h1{text-transform:${v};}` },
-
-  // Zone 3 - Layout
-  { zone:'ZONE 3 · LAYOUT', prop:'display', q:'Center everything with flexbox', hint:'display: ___', correct:'flex', opts:['flex','block','grid','none'],
-    css:(v)=>`body{display:${v};flex-direction:column;align-items:center;justify-content:center;}` },
-  { zone:'ZONE 3 · LAYOUT', prop:'padding', q:'Give the card breathing room inside', hint:'padding: ___', correct:'40px', opts:['40px','0','1px','-10px'],
-    css:(v)=>`.card{padding:${v};}` },
-  { zone:'ZONE 3 · LAYOUT', prop:'border-radius', q:'Round the card corners smoothly', hint:'border-radius: ___', correct:'16px', opts:['16px','0px','500px','sharp'],
-    css:(v)=>`.card{border-radius:${v};}` },
-
-  // Zone 4 - Effects
-  { zone:'ZONE 4 · EFFECTS', prop:'box-shadow', q:'Add a glowing pink box shadow', hint:'box-shadow: ___', correct:'0 0 30px #f472b6', opts:['0 0 30px #f472b6','none','2px solid black','blur(10px)'],
-    css:(v)=>`.card{box-shadow:${v};}` },
-  { zone:'ZONE 4 · EFFECTS', prop:'opacity', q:'Make the card slightly see-through', hint:'opacity: ___', correct:'0.85', opts:['0.85','0','2','-0.5'],
-    css:(v)=>`.card{opacity:${v};}` },
-
-  // Zone 5 - Boss
-  { zone:'ZONE 5 · BOSS', prop:'background', q:'Final touch — a gradient worthy of Zen', hint:'background: ___', correct:'linear-gradient(135deg,#f472b6,#22d3ee)', opts:['linear-gradient(135deg,#f472b6,#22d3ee)','red','#000','none'],
-    css:(v)=>`body{background:${v};}` },
-];
-
-// Shuffle array in place
-function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
-
-// Applied CSS per challenge
-const appliedCSS = {};
-
-// State
-let idx = 0;
-let score = 0;
-let combo = 0;
-let meter = 100;
-let timerInterval = null;
-let timeLeft = 0;
-let answered = false;
-
-// Zen face images
-const ZEN_FACES = {
-  happy: 'zen-happy.png',
-  victory: 'zen-victory.png',
-  scared: 'zen-scared.png',
-  sad: 'zen-sad.png'
-};
-
-function setZenFace(mood){
-  const f = document.getElementById('zen-face');
-  f.src = ZEN_FACES[mood];
-  f.style.display = 'block';
-}
-
-// Build preview HTML
-function buildPreviewHTML(){
-  const styles = Object.values(appliedCSS).join('\n');
-  return `<!DOCTYPE html><html><head><style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{min-height:100vh;background:#0a0a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;padding:30px;}
-    h1{color:#888;font-size:28px;font-weight:400;margin-bottom:16px;transition:all .4s;}
-    p{color:#555;font-size:14px;line-height:1.7;margin-bottom:20px;transition:all .4s;}
-    .card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:20px;border-radius:4px;max-width:360px;width:100%;transition:all .4s;}
-    ${styles}
-  </style></head><body>
-    <div class="card">
-      <h1>Zen's World</h1>
-      <p>CSS is the art of the web. Every pixel tells a story.</p>
-      <p style="opacity:.6;font-size:12px;">Style it right and the whole world lights up.</p>
-    </div>
-  </body></html>`;
-}
-
-function updatePreview(){
-  const iframe = document.getElementById('preview-iframe');
-  const doc = iframe.contentDocument || iframe.contentWindow.document;
-  doc.open(); doc.write(buildPreviewHTML()); doc.close();
-}
-
-function buildDots(){
-  const d = document.getElementById('progress-dots');
-  d.innerHTML = '';
-  CHALLENGES.forEach((_,i)=>{
-    const dot = document.createElement('div');
-    dot.className = 'dot' + (i < idx ? ' done' : i === idx ? ' current' : '');
-    d.appendChild(dot);
-  });
-}
-
-function loadChallenge(){
-  if(idx >= CHALLENGES.length){ endGame(true); return; }
-  answered = false;
-  const c = CHALLENGES[idx];
-
-  document.getElementById('zone-badge').textContent = c.zone;
-  document.getElementById('challenge-property').textContent = c.prop.toUpperCase();
-  document.getElementById('challenge-question').textContent = c.q;
-  document.getElementById('challenge-hint').textContent = c.hint;
-  document.getElementById('combo-text').textContent = combo >= 2 ? `🔥 x${combo} COMBO` : '';
-
-  // SHUFFLE options so correct isn't always slot 0
-  const shuffled = shuffle([...c.opts]);
-
-  const grid = document.getElementById('options-grid');
-  grid.innerHTML = '';
-  shuffled.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.textContent = opt;
-    btn.onclick = () => pickAnswer(btn, opt, c);
-    grid.appendChild(btn);
-  });
-
-  buildDots();
-  setZenFace('happy');
-  startTimer(c.zone);
-}
-
-function startTimer(zone){
-  clearInterval(timerInterval);
-  // Shorter time in later zones
-  const zoneNum = parseInt(zone[5]);
-  timeLeft = zoneNum >= 5 ? 8 : zoneNum >= 4 ? 12 : zoneNum >= 3 ? 16 : 20;
-  const total = timeLeft;
-  const fill = document.getElementById('timer-fill');
-  fill.style.width = '100%';
-  timerInterval = setInterval(()=>{
-    timeLeft -= 0.1;
-    fill.style.width = Math.max(0, (timeLeft/total)*100) + '%';
-    if(timeLeft <= 0){
-      clearInterval(timerInterval);
-      if(!answered){ onTimeout(); }
-    }
-  }, 100);
-}
-
-function pickAnswer(btn, val, c){
-  if(answered) return;
-  answered = true;
-  clearInterval(timerInterval);
-  const isCorrect = val === c.correct;
-
-  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-
-  if(isCorrect){
-    btn.classList.add('correct');
-    combo++;
-    const pts = 100 * Math.max(1, combo);
-    score += pts;
-    appliedCSS[idx] = c.css(val);
-    updatePreview();
-    setZenFace('victory');
-    showScoreFloat('+' + pts);
-    paintBurst(btn);
-    document.getElementById('nav-score').textContent = score + ' pts';
-    setTimeout(()=>{ idx++; loadChallenge(); }, 900);
-  } else {
-    btn.classList.add('wrong');
-    combo = 0;
-    meter -= 25;
-    setZenFace('scared');
-    updateMeter();
-    if(meter <= 0){ setTimeout(()=>endGame(false), 600); return; }
-    // show correct
-    document.querySelectorAll('.option-btn').forEach(b=>{
-      if(b.textContent === c.correct) b.classList.add('correct');
-    });
-    setTimeout(()=>{ idx++; loadChallenge(); }, 1200);
-  }
-}
-
-function onTimeout(){
-  answered = true;
-  combo = 0;
-  meter -= 20;
-  setZenFace('sad');
-  updateMeter();
-  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-  const c = CHALLENGES[idx];
-  document.querySelectorAll('.option-btn').forEach(b=>{
-    if(b.textContent === c.correct) b.classList.add('correct');
-  });
-  if(meter <= 0){ setTimeout(()=>endGame(false), 800); return; }
-  setTimeout(()=>{ idx++; loadChallenge(); }, 1200);
-}
-
-function updateMeter(){
-  meter = Math.max(0, meter);
-  document.getElementById('style-meter-fill').style.width = meter + '%';
-  document.getElementById('meter-val').textContent = Math.round(meter) + '%';
-}
-
-function showScoreFloat(txt){
-  const el = document.createElement('div');
-  el.className = 'score-float';
-  el.textContent = txt;
-  el.style.left = (window.innerWidth * 0.6) + 'px';
-  el.style.top = (window.innerHeight * 0.4) + 'px';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 900);
-}
-
-function paintBurst(btn){
-  const r = btn.getBoundingClientRect();
-  const el = document.createElement('div');
-  el.className = 'paint-burst';
-  el.style.left = (r.left + r.width/2 - 60) + 'px';
-  el.style.top = (r.top + r.height/2 - 60) + 'px';
-  el.style.background = 'radial-gradient(circle,rgba(244,114,182,0.6),transparent)';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 600);
-}
-
-function endGame(won){
-  clearInterval(timerInterval);
-  document.getElementById('gameOverEyebrow').textContent = won ? 'Studio Complete' : 'Style Meter Drained';
-  document.getElementById('gameOverTitle').textContent = won ? 'MASTERPIECE!' : 'STYLE LOST';
-  document.getElementById('gameOverSub').textContent = won
-    ? `You restored Zen's studio across all 5 zones. That's real design skill.`
-    : "The style meter drained. But Zen says: every great design starts with a rough draft.";
-  document.getElementById('gameOverScore').textContent = score + ' pts';
-  document.getElementById('gameOverZen').src = won ? 'zen-victory.png' : 'zen-sad.png';
-  document.getElementById('gameOverScreen').classList.remove('hidden');
-}
-
-function startGame(){
-  document.getElementById('introScreen').classList.add('hidden');
-  updatePreview();
-  loadChallenge();
-}
-</script>
+<div class="quiz-card">
+<div class="quiz-q">Which heading is the biggest, most important one on a page?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. h1 is the main heading.')">&lt;h1&gt;</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'h4 is a smaller sub-section heading.')">&lt;h4&gt;</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'That is a paragraph tag, not a heading.')">&lt;p&gt;</button>
+</div>
+<div class="quiz-feedback" id="qfb-2-1"></div>
+</div>
+</div>
+<div class="content-block" id="block-2-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
+<div class="reflect-prompt">
+<div class="reflect-q">Think about a website you use every day. What tags might be on that page?</div>
+<textarea class="reflect-input" id="ref-2-1" placeholder="I think..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
+<span class="reflect-saved" id="saved-2-1">✓ Saved</span>
+</div>
+</div>
+<div class="lesson-complete show" id="complete-2">
+<h3>✦ &nbsp;Lesson 2 Complete</h3>
+<p>You just wrote real HTML.</p>
+<div class="lesson-joke" id="joke-2"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="lesson-panel" id="lesson-3">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 03</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="mini-badge">RD</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="mini-badge">TM</span> Terms</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="mini-badge">BD</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="mini-badge">RF</span> Reflect</button>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-3">
+<div class="locked-icon"><span class="locked-badge">EXPLORER</span></div>
+<h2>Become an Explorer to Unlock All of Zen</h2>
+<p>Zen's whole world — all 4 lessons — is free once you sign up. No card needed.</p>
+<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
+</div>
+<div class="content-block" id="block-3-read" style="display:none">
+<div class="section-header">Colors &amp; Style with CSS</div><div class="section-sub">LESSON 03</div>
+<div class="read-card"><div class="read-card-num">01 / 08</div><h3>HTML Builds It. CSS Styles It.</h3><p>HTML and CSS work together, but they have different jobs. HTML describes what the content <em>is</em>: a heading, paragraph, link, image, or section. CSS controls how that content <em>looks</em>: color, size, spacing, backgrounds, and more. Think of HTML as building a plain house with rooms and walls, and CSS as choosing the paint, furniture, lights, and decorations. If you mix those jobs together everywhere, your code becomes harder to understand and harder to change. Keeping structure and appearance separate lets you redesign the look without rebuilding the whole page.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 08</div><h3>CSS Rules Have Three Main Pieces</h3><p>A basic CSS rule answers three questions: <strong>who</strong> are we styling, <strong>what</strong> are we changing, and <strong>what are we changing it to</strong>? The <strong>selector</strong> chooses the HTML element, the <strong>property</strong> names the feature you want to change, and the <strong>value</strong> gives the new setting. In <code>h1 { color: pink; }</code>, h1 is the selector, color is the property, and pink is the value. It is like saying, “Zen’s skateboard — change the wheel color — make it purple.” Same pattern, just in code.</p><div class="code-block"><span class="code-tag">h1</span> <span class="code-comment">{</span><br>&nbsp;&nbsp;<span class="code-attr">color</span><span class="code-comment">:</span> <span class="code-val">#ff6baa</span><span class="code-comment">;</span><br><span class="code-comment">}</span></div></div>
+<div class="read-card"><div class="read-card-num">03 / 08</div><h3>Why Keep CSS Separate From HTML?</h3><p>Imagine you have twenty headings and decide tomorrow that every heading should be purple instead of pink. If appearance instructions were repeated separately inside every piece of HTML, you might have to hunt down twenty places and edit them one by one. CSS lets you create rules that can style many matching elements at once. That separation is powerful: HTML keeps the meaning of the page organized, while CSS manages the presentation. It is like changing a school uniform rule instead of visiting every student and sewing a new shirt by hand.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 08</div><h3>Color and Background-Color Are Different Jobs</h3><p>The CSS property <strong>color</strong> changes the color of text. The property <strong>background-color</strong> changes the color behind an element. They sound similar, so beginners mix them up all the time. Think of writing on a sticky note: <strong>color</strong> changes the ink, while <strong>background-color</strong> changes the sticky note paper. If you use the wrong property, nothing is “broken” — you just styled a different part than you meant to.</p><div class="code-block"><span class="code-tag">p</span> <span class="code-comment">{</span><br>&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">white</span>;<br>&nbsp;&nbsp;<span class="code-attr">background-color</span>: <span class="code-val">purple</span>;<br><span class="code-comment">}</span></div></div>
+<div class="read-card"><div class="read-card-num">05 / 08</div><h3>Hex Colors Are Color Codes</h3><p>Computers can use color names like <code>pink</code>, but designers often use more exact color codes called <strong>hex values</strong>. A hex color starts with <strong>#</strong> followed by six characters, like <code>#ff6baa</code>. That code points to one very specific color instead of a general name. Think of “pink” as saying “meet me somewhere in Maryland,” while a hex code is closer to giving an exact address. Forget the # and the browser may not recognize the value as the hex color you intended.</p></div>
+<div class="read-card"><div class="read-card-num">06 / 08</div><h3>Every Symbol Has a Job</h3><p>CSS punctuation is not decoration — each symbol helps the browser understand the rule. <strong>{ }</strong> curly braces wrap the declarations that belong to a selector. The <strong>:</strong> colon separates a property from its value, and the <strong>;</strong> semicolon marks the end of a declaration. Think of it like punctuation in a sentence: remove every comma, period, and space, and people may still guess what you meant, but the message gets messy fast. Browsers can sometimes recover from mistakes, but clean punctuation keeps your CSS predictable.</p><div class="code-block"><span class="code-tag">h1</span> <span class="code-comment">{</span><br>&nbsp;&nbsp;<span class="code-attr">color</span><span class="code-comment">:</span> <span class="code-val">#ff6baa</span><span class="code-comment">;</span><br><span class="code-comment">}</span></div></div>
+<div class="read-card"><div class="read-card-num">07 / 08</div><h3>Why Is It Called “Cascading”?</h3><p>The “C” in CSS stands for <strong>Cascading</strong>. That means more than one style rule can affect the same element, and the browser uses rules to decide which style wins. For a simple first example, if two equally specific rules both change the same property on the same element, the later rule can override the earlier one. Imagine Zen tries on a pink hoodie, then five minutes later changes into a purple hoodie — the most recent outfit is the one you see. The cascade can get more advanced later, but the big idea is simple: styles can compete, and CSS has a system for choosing the result.</p><div class="code-block"><span class="code-tag">h1</span> { <span class="code-attr">color</span>: <span class="code-val">pink</span>; }<br><span class="code-tag">h1</span> { <span class="code-attr">color</span>: <span class="code-val">purple</span>; } <span class="code-comment">/* later rule wins in this simple example */</span></div></div>
+<div class="read-card"><div class="read-card-num">08 / 08</div><h3>CSS Is a Layer You Can Keep Improving</h3><p>Your HTML can work before it looks fancy. That is a good thing. You can build the structure first, then add color, spacing, fonts, and polish little by little with CSS. If you remove the CSS, the content and structure should still make sense — the page just becomes plain. Think of decorating a cake: the cake needs to exist before you frost it. HTML is the cake. CSS is where you get to make it look like <em>your</em> cake.</p></div>
+</div>
+<div class="content-block" id="block-3-terms" style="display:none">
+<div class="section-header">Key Terms</div>
+<div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">CSS <span class="term-arrow">›</span></div><div class="term-def">Cascading Style Sheets. <span class="term-example">Example: color: pink;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Selector <span class="term-arrow">›</span></div><div class="term-def">Targets which element to style. <span class="term-example">Example: h1 {}</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Property <span class="term-arrow">›</span></div><div class="term-def">What you want to change. <span class="term-example">Example: color, font-size.</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Value <span class="term-arrow">›</span></div><div class="term-def">What you set the property to. <span class="term-example">Example: red is the value in color: red;</span></div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Hex Color <span class="term-arrow">›</span></div><div class="term-def">A six-character code representing an exact color. <span class="term-example">Example: #ff6baa is Zen's pink.</span></div></div>
+</div>
+</div>
+<div class="content-block" id="block-3-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 03 · SEE IT LIVE</div>
+<div class="demo-card">
+<h3>Style Your Own Heading</h3>
+<div class="build-slots">
+<div class="build-slot"><label>Color</label><input type="color" id="colorPicker" value="#ff6baa" oninput="updatePreview3()"><span id="colorHex" style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted)">#ff6baa</span></div>
+<div class="build-slot"><label>Font Size</label><input type="range" id="sizeSlider" min="16" max="64" value="32" oninput="updatePreview3()"><span id="sizeVal" style="font-family:var(--font-mono);font-size:0.78rem;color:var(--text-muted)">32px</span></div>
+<div class="build-slot"><label>Your Text</label><input type="text" id="styleText" placeholder="Type something..." oninput="updatePreview3()"></div>
+</div>
+<div class="demo-output show" id="stylePreview"><div id="styleOutput" style="font-size:32px;color:#ff6baa;font-weight:700;font-family:var(--font-display)">Your styled heading</div></div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">In CSS, what does a selector do?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wrong.')">Writes the HTML</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct.')">Targets which element to style</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wrong.')">Sets background color</button>
+</div>
+<div class="quiz-feedback" id="qfb-3-0"></div>
+</div>
+</div>
+<div class="content-block" id="block-3-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
+<div class="reflect-prompt">
+<div class="reflect-q">What colors would you use if designing your own site?</div>
+<textarea class="reflect-input" id="ref-3-1" placeholder="My site would feel..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
+<span class="reflect-saved" id="saved-3-1">✓ Saved</span>
+</div>
+</div>
+<div class="lesson-complete show" id="complete-3">
+<h3>✦ &nbsp;Lesson 3 Complete</h3>
+<p>Color, fonts, style — you've got it.</p>
+<div class="lesson-joke" id="joke-3"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="lesson-panel" id="lesson-4">
+<aside class="lesson-sidebar">
+<div class="sidebar-label">Lesson 04</div>
+<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="mini-badge">RD</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="mini-badge">BD</span> Build</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="mini-badge">RF</span> Reflect</button>
+</aside>
+<div class="lesson-content">
+<div class="locked-panel" id="lock-4">
+<div class="locked-icon"><span class="locked-badge">EXPLORER</span></div>
+<h2>Become an Explorer to Unlock All of Zen</h2>
+<p>Zen's whole world — all 4 lessons — is free once you sign up. No card needed.</p>
+<button class="gate-btn" onclick="goUpgrade()">Sign Up Free</button>
+</div>
+<div class="content-block" id="block-4-read" style="display:none">
+<div class="section-header">Build Your Own Page</div><div class="section-sub">LESSON 04</div>
+<div class="read-card"><div class="read-card-num">01 / 10</div><h3>The First Line You'll Ever Write</h3><p>Every modern HTML page begins with <strong>&lt;!DOCTYPE html&gt;</strong>. This line is a declaration — a quick message that tells the browser what kind of document it is about to read. It exists so the browser knows to use modern HTML rules instead of guessing how to interpret the page. Think of it like labeling a box “HTML WEBSITE” before anyone opens it. If you forget it, the page may still appear, but the browser can fall into older compatibility behavior, which can create weird differences you did not ask for. One line, one time, always first.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 10</div><h3>&lt;html&gt; Is the Whole Person</h3><p>After DOCTYPE comes the <strong>&lt;html&gt;</strong> element, which wraps the entire HTML document. If your webpage were a person, <strong>html</strong> would be the whole person — head, body, everything included. It exists because the browser needs one clear outer container that says, “Everything in here belongs to this HTML page.” Without that wrapper, your document loses an important piece of structure. You open <code>&lt;html&gt;</code> near the top and close <code>&lt;/html&gt;</code> at the very end, like putting the whole webpage inside one giant folder.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 10</div><h3>The Head Holds Information About the Page</h3><p>The <strong>&lt;head&gt;</strong> is where we place important information and resources <em>about</em> the webpage rather than the main content visitors read inside the page. This is where things like the browser-tab title and a simple page’s style rules can live. The human-head analogy helps: a lot of important information is connected to who you are, but it is not printed across the front of your shirt. The head gives the browser setup information before it handles the visible page content. If everything were dumped together with no separation, the document would be much harder for humans to organize and understand.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 10</div><h3>Why Keep Head and Body Separate?</h3><p>Keeping <strong>head</strong> and <strong>body</strong> separate gives the page two clear zones with different jobs. The head is for information and resources about the document; the body is for the main content that belongs in the webpage itself. Think of a theater: backstage holds plans, cues, lighting controls, and setup information, while the stage is where the audience sees the performance. If everything were dumped onto the stage — cue sheets, cables, costume racks, control panels — the show would become a mess. Separation makes the code easier to read, maintain, and reason about.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 10</div><h3>&lt;title&gt; Names the Browser Tab</h3><p>The <strong>&lt;title&gt;</strong> element lives inside the head and gives the browser tab its name. This is different from an <strong>&lt;h1&gt;</strong>, which is the main visible heading inside the body. Why do we need both? Because the browser needs a name for the page even when you are looking at another tab, while the page itself needs a heading visitors can read as part of the content. Think of a book: the title printed on the spine helps identify the book on a shelf, while a big heading inside a chapter helps organize what you are currently reading. Mix them up and you may wonder why your “title” never appears as a giant heading on the page.</p><div class="code-block"><span class="code-tag">&lt;title&gt;</span>Zen's Skate Page<span class="code-tag">&lt;/title&gt;</span><br><span class="code-tag">&lt;h1&gt;</span>Welcome to My Skate Page<span class="code-tag">&lt;/h1&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">06 / 10</div><h3>&lt;style&gt; Gives CSS a Home</h3><p>In a simple single-file webpage, a <strong>&lt;style&gt;</strong> element can hold CSS rules, and it belongs inside the head. This gives your style instructions a clear home instead of scattering them through the visible content. Think of it like keeping all your art supplies in one drawer instead of leaving markers in the refrigerator, paint under the bed, and scissors on the stairs. The browser reads those styles and uses them when it draws the body content. Forget the style block and the HTML still has structure — it just loses those particular design instructions.</p></div>
+<div class="read-card"><div class="read-card-num">07 / 10</div><h3>The Body Is the Part Visitors Meet</h3><p>The <strong>&lt;body&gt;</strong> holds the main webpage content: headings, paragraphs, images, links, buttons, and more. If the head is the planning room, the body is the stage. This is where the things a visitor comes to read, see, and interact with are placed. Without a body, you would have document setup information but no main page content to experience. When you add <code>&lt;h1&gt;</code> and <code>&lt;p&gt;</code>, you put them inside the body because they are part of what the visitor actually encounters on the page.</p></div>
+<div class="read-card"><div class="read-card-num">08 / 10</div><h3>Nesting and Indentation Show What Lives Where</h3><p>Elements inside other elements are <strong>nested</strong>, and programmers usually indent nested code to make that relationship easy for humans to see. The browser does not require pretty indentation to understand basic HTML, but humans absolutely benefit from it. Think of indentation like an outline in school: the spaces show which details belong under which main idea. When <code>&lt;title&gt;</code> is indented inside <code>&lt;head&gt;</code>, and <code>&lt;h1&gt;</code> is indented inside <code>&lt;body&gt;</code>, your eyes can instantly understand the structure. Skip indentation and the page may still run, but debugging becomes like trying to untangle headphones from the bottom of a backpack.</p><div class="code-block"><span class="code-tag">&lt;head&gt;</span><br>&nbsp;&nbsp;<span class="code-tag">&lt;title&gt;</span>My Page<span class="code-tag">&lt;/title&gt;</span><br><span class="code-tag">&lt;/head&gt;</span><br><span class="code-tag">&lt;body&gt;</span><br>&nbsp;&nbsp;<span class="code-tag">&lt;h1&gt;</span>Hello!<span class="code-tag">&lt;/h1&gt;</span><br><span class="code-tag">&lt;/body&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">09 / 10</div><h3>The Browser Reads Top to Bottom — But Every Part Has a Different Job</h3><p>The browser processes the document in order from the top, but that does <em>not</em> mean every line becomes visible content. DOCTYPE tells the browser how to interpret the document, head content provides information and resources, and body content supplies the main page visitors experience. Think of reading a recipe: you may read the recipe title and preparation notes before the cooking steps, but those notes do not magically become ingredients in the pan. Reading order and purpose are two different ideas.</p></div>
+<div class="read-card"><div class="read-card-num">10 / 10</div><h3>Now Build the Skeleton in Order</h3><p>Put everything together and you get the basic skeleton of a real webpage. First declare HTML with <strong>DOCTYPE</strong>. Then open the whole <strong>html</strong> document. Inside it, build the <strong>head</strong> with the page <strong>title</strong> and optional styles, then build the <strong>body</strong> with visible content. Finally, close the body and close html. The order is not random — each piece has a job and a place. Once this skeleton feels familiar, you can keep adding more content without losing track of where anything belongs.</p><div class="code-block"><span class="code-tag">&lt;!DOCTYPE html&gt;</span><br><span class="code-tag">&lt;html&gt;</span><br>&nbsp;&nbsp;<span class="code-tag">&lt;head&gt;</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;title&gt;</span>My First Webpage<span class="code-tag">&lt;/title&gt;</span><br>&nbsp;&nbsp;<span class="code-tag">&lt;/head&gt;</span><br>&nbsp;&nbsp;<span class="code-tag">&lt;body&gt;</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;h1&gt;</span>Hello, World!<span class="code-tag">&lt;/h1&gt;</span><br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;p&gt;</span>I built this webpage from scratch.<span class="code-tag">&lt;/p&gt;</span><br>&nbsp;&nbsp;<span class="code-tag">&lt;/body&gt;</span><br><span class="code-tag">&lt;/html&gt;</span></div></div>
+</div>
+<div class="content-block" id="block-4-build" style="display:none">
+<div class="section-header">Build It</div>
+<div class="section-sub">LESSON 04 · CAPSTONE</div>
+<div class="demo-card">
+<h3>Watch the Skeleton Come Together</h3>
+<p>This is every real webpage's starting structure. Watch it build, piece by piece.</p>
+<div class="demo-console" id="codeDemo4">
+<div class="line" id="c4l1"><span class="code-tag">&lt;!DOCTYPE html&gt;</span></div>
+<div class="line" id="c4l2"><span class="code-tag">&lt;html&gt;</span></div>
+<div class="line" id="c4l3">&nbsp;&nbsp;<span class="code-tag">&lt;head&gt;</span></div>
+<div class="line" id="c4l4">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;title&gt;</span><span class="code-str">My First Webpage</span><span class="code-tag">&lt;/title&gt;</span></div>
+<div class="line" id="c4l5">&nbsp;&nbsp;<span class="code-tag">&lt;/head&gt;</span></div>
+<div class="line" id="c4l6">&nbsp;&nbsp;<span class="code-tag">&lt;body&gt;</span></div>
+<div class="line" id="c4l7">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;h1&gt;</span><span class="code-str">Hello, World!</span><span class="code-tag">&lt;/h1&gt;</span></div>
+<div class="line" id="c4l8">&nbsp;&nbsp;&nbsp;&nbsp;<span class="code-tag">&lt;p&gt;</span><span class="code-str">I built this webpage from scratch.</span><span class="code-tag">&lt;/p&gt;</span></div>
+<div class="line" id="c4l9">&nbsp;&nbsp;<span class="code-tag">&lt;/body&gt;</span></div>
+<div class="line" id="c4l10"><span class="code-tag">&lt;/html&gt;</span></div>
+</div>
+<button class="run-btn" onclick="runCode4()">▶ Build It Line by Line</button>
+<div class="demo-output" id="output4">
+<strong style="font-size:1.2rem;display:block;margin-bottom:6px;color:#fff">Hello, World!</strong>
+<span style="color:var(--text-dim)">I built this webpage from scratch.</span>
+</div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">What is the very first line of every real HTML page?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. It always goes first.')">&lt;!DOCTYPE html&gt;</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Close — but html wraps the page, it is not first.')">&lt;html&gt;</button>
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'title lives inside head, further down.')">&lt;title&gt;</button>
+</div>
+<div class="quiz-feedback" id="qfb-4-1"></div>
+</div>
+<div class="demo-card">
+<h3>Capstone: Build Your Own Page</h3>
+<div class="build-slots">
+<div class="build-slot"><label>Page Title</label><input type="text" id="cap-title" placeholder="My page is about..." oninput="updateCapstone()"></div>
+<div class="build-slot"><label>Heading</label><input type="text" id="cap-h1" placeholder="Welcome to..." oninput="updateCapstone()"></div>
+<div class="build-slot"><label>Paragraph</label><input type="text" id="cap-p" placeholder="This page is about..." oninput="updateCapstone()"></div>
+<div class="build-slot"><label>Color</label><input type="color" id="cap-color" value="#ff6baa" oninput="updateCapstone()"></div>
+</div>
+<div class="demo-output show" id="capPreview"><div id="capOutput"></div></div>
+</div>
+<div class="quiz-card">
+<div class="quiz-q">Which section holds content visitors actually see?</div>
+<div class="quiz-options">
+<button class="quiz-opt" onclick="checkQuiz(this, false, 'Wrong.')">The &lt;head&gt; section</button>
+<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct.')">The &lt;body&gt; section</button>
+</div>
+<div class="quiz-feedback" id="qfb-4-0"></div>
+</div>
+</div>
+<div class="content-block" id="block-4-reflect" style="display:none">
+<div class="section-header">Reflect</div>
+<div class="section-sub">LESSON 04</div>
+<div class="reflect-prompt">
+<div class="reflect-q">How does it feel to understand what's underneath every site on the internet?</div>
+<textarea class="reflect-input" id="ref-4-1" placeholder="It feels..."></textarea>
+<div style="display:flex;align-items:center;gap:1rem;">
+<button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
+<span class="reflect-saved" id="saved-4-1">✓ Saved</span>
+</div>
+</div>
+<div class="lesson-complete show" id="complete-4">
+<h3>✦ &nbsp;Zen's Realm Complete</h3>
+<p>You finished all four lessons.</p>
+<div class="lesson-joke" id="joke-4"></div>
+</div>
+</div>
+</div>
+</div>
+<div class="lesson-panel" id="lesson-cheat">
+<div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
+<div class="locked-panel" id="lock-cheat">
+<div class="locked-icon"><span class="locked-badge">CODERS</span></div>
+<h2>Upgrade to Coders to Unlock Zen's Cheat Sheet</h2>
+<p>Coders members get the complete combined lesson reference and downloadable cheat sheet.</p>
+<button class="gate-btn" onclick="goUpgrade()">Upgrade to Coders</button>
+</div>
+<div id="cheat-content" style="display:none;">
+<div class="section-header">Zen's Cheat Sheet</div>
+<div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
+<div class="cheat-card">
+<h3>✦ Lesson 1 — What Is Code?</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Code</div><div class="cheat-desc">Step-by-step instructions a computer can read and follow.</div></div>
+<div class="cheat-item"><div class="cheat-term">HTML</div><div class="cheat-desc">HyperText Markup Language — the language of web pages.</div></div>
+<div class="cheat-item"><div class="cheat-term">Tag</div><div class="cheat-desc">Labels in angle brackets that tell the browser what content is.</div></div>
+<div class="cheat-item"><div class="cheat-term">Browser</div><div class="cheat-desc">The program that reads HTML and displays it as a webpage.</div></div>
+</div>
+<div class="code-block"><span class="code-tag">&lt;h1&gt;</span>Hello, I'm Zen.<span class="code-tag">&lt;/h1&gt;</span><br><span class="code-tag">&lt;p&gt;</span>I build things with code.<span class="code-tag">&lt;/p&gt;</span></div>
+</div>
+<div class="cheat-card">
+<h3>✦ Lesson 2 — Your First HTML Tag</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Opening Tag</div><div class="cheat-desc">Starts an element. Written as &lt;tagname&gt;</div></div>
+<div class="cheat-item"><div class="cheat-term">Closing Tag</div><div class="cheat-desc">Ends an element. Written as &lt;/tagname&gt;</div></div>
+<div class="cheat-item"><div class="cheat-term">Element</div><div class="cheat-desc">Opening tag + content + closing tag together.</div></div>
+<div class="cheat-item"><div class="cheat-term">Attribute</div><div class="cheat-desc">Extra info inside an opening tag, like href.</div></div>
+</div>
+<div class="code-block"><span class="code-tag">&lt;a </span><span class="code-attr">href</span>=<span class="code-str">"https://..."</span><span class="code-tag">&gt;</span>Click here<span class="code-tag">&lt;/a&gt;</span></div>
+</div>
+<div class="cheat-card">
+<h3>✦ Lesson 3 — Colors &amp; Style with CSS</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">CSS</div><div class="cheat-desc">The language that styles HTML — colors, fonts, spacing.</div></div>
+<div class="cheat-item"><div class="cheat-term">Selector</div><div class="cheat-desc">Targets which element to style. Example: h1 {}</div></div>
+<div class="cheat-item"><div class="cheat-term">Property</div><div class="cheat-desc">What to change: color, font-size, background.</div></div>
+<div class="cheat-item"><div class="cheat-term">Value</div><div class="cheat-desc">What to set it to: pink, 2rem, #ff6baa.</div></div>
+</div>
+<div class="code-block"><span class="code-tag">h1</span> {<br>&nbsp;&nbsp;<span class="code-attr">color</span>: <span class="code-val">#ff6baa</span>;<br>&nbsp;&nbsp;<span class="code-attr">font-size</span>: <span class="code-val">2rem</span>;<br>}</div>
+</div>
+<div class="cheat-card">
+<h3>✦ Lesson 4 — Build Your Own Page</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">&lt;!DOCTYPE html&gt;</div><div class="cheat-desc">Tells the browser this is an HTML5 document. Always goes first.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;head&gt;</div><div class="cheat-desc">Settings section. Not visible. Holds title, styles, fonts.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;title&gt;</div><div class="cheat-desc">Names the browser tab. Lives inside head — NOT the big heading visitors see.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;body&gt;</div><div class="cheat-desc">Everything the visitor sees goes here.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;style&gt;</div><div class="cheat-desc">Write CSS inside this tag, inside the head.</div></div>
+</div>
+<div class="code-block">&lt;!DOCTYPE html&gt;<br>&lt;html&gt;<br>&nbsp;&lt;head&gt;&lt;title&gt;My Page&lt;/title&gt;&lt;/head&gt;<br>&nbsp;&lt;body&gt;&lt;h1&gt;Hello!&lt;/h1&gt;&lt;p&gt;A paragraph.&lt;/p&gt;&lt;/body&gt;<br>&lt;/html&gt;</div>
+</div>
+<div class="cheat-card">
+<h3>✦ Symbols Reference</h3>
+<div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">&lt;</div><div class="cheat-desc">Opening bracket. Starts every tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">&gt;</div><div class="cheat-desc">Closing bracket. Ends every tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;/</div><div class="cheat-desc">Opening bracket + slash. Starts a closing tag — this is how a tag says "I'm done."</div></div>
+<div class="cheat-item"><div class="cheat-term">!</div><div class="cheat-desc">Exclamation point. Only used once, in &lt;!DOCTYPE html&gt;, to mark it as a special declaration rather than a normal tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">{}</div><div class="cheat-desc">Curly braces. Wrap the style rules in CSS, right after a selector.</div></div>
+<div class="cheat-item"><div class="cheat-term">:</div><div class="cheat-desc">Colon. Separates a CSS property from its value, like color: pink;</div></div>
+<div class="cheat-item"><div class="cheat-term">;</div><div class="cheat-desc">Semicolon. Ends a CSS line, like a period ends a sentence.</div></div>
+<div class="cheat-item"><div class="cheat-term">#</div><div class="cheat-desc">Pound sign. Starts a hex color code, like #ff6baa.</div></div>
+</div>
+<div class="cheat-btn-row">
+<a href="zen-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
+<button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
+<div class="egg-popup" id="eggPopup">
+<h4>✦ Secret Found!</h4>
+<p id="eggText"></p>
+</div>
+<script type="module" src="auth-init.js"></script>
+<script> let currentLesson = null; let currentTier = null; const TIER_ORDER = ['explorer', 'sparks', 'coders']; function tierLevel(t) { return TIER_ORDER.indexOf((t || '').toLowerCase()); } window.handleTierUnlock = function(tier) { currentTier = tier; const loggedIn = !!tier && tier !== 'logged-out'; const hasLessons = loggedIn && window.mimHasAccess('zen', tier, 'lessons'); const hasCheat = loggedIn && window.mimHasAccess('zen', tier, 'cheat'); const anonLock = document.getElementById('anon-lock-1'); const anonGated = document.getElementById('anon-gated-1'); if (hasLessons) { if (anonLock) anonLock.style.display = 'none'; if (anonGated) anonGated.style.display = 'block'; ['2','3','4'].forEach(n => { const l = document.getElementById('lock-' + n); if (l) l.style.display = 'none'; const blocks = n === '4' ? ['read','build','reflect'] : ['read','terms','build','reflect']; blocks.forEach(b => { const el = document.getElementById('block-' + n + '-' + b); if (el) el.style.removeProperty('display'); }); }); } else { if (anonLock) anonLock.style.display = 'block'; if (anonGated) anonGated.style.display = 'none'; } const cheatLock = document.getElementById('lock-cheat'); const cheatContent = document.getElementById('cheat-content'); if (hasCheat) { if (cheatLock) cheatLock.style.display = 'none'; if (cheatContent) cheatContent.style.display = 'block'; } else { if (cheatLock) cheatLock.style.display = 'block'; if (cheatContent) cheatContent.style.display = 'none'; } loadReflects(); }; function enterRealm() { document.getElementById('discoveryEnterBtn').style.display = 'none'; document.querySelector('.zen-mark').style.display = 'none'; document.querySelector('.discovery-title').style.display = 'none'; document.querySelector('.discovery-sub').style.display = 'none'; const stage = document.getElementById('hologramStage'); stage.style.display = 'block'; const finishEntrance = () => { const overlay = document.getElementById('discoveryOverlay'); overlay.classList.add('fading'); setTimeout(() => { overlay.classList.add('hidden'); document.getElementById('soundToggle').classList.add('visible'); startAmbient(); }, 700); }; setTimeout(finishEntrance, 3000); } function openLesson(n) { document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open')); document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active')); const panel = document.getElementById('lesson-' + n); const tab = document.getElementById('tab-' + n); if (panel) panel.classList.add('open'); if (tab) tab.classList.add('active'); currentLesson = n; panel?.scrollIntoView({ behavior: 'smooth', block: 'start' }); if (n !== 'cheat') showBlock(n, 'read'); playUISound(330); const wrapper = document.getElementById('icebreakerWrapper'); if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open'); } function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); } function showBlock(lesson, block) { const panel = document.getElementById('lesson-' + lesson); if (!panel) return; panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active')); panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active')); const target = document.getElementById('block-' + lesson + '-' + block); if (target) target.classList.add('active'); const btn = document.getElementById('sb-' + lesson + '-' + block); if (btn) btn.classList.add('active'); playUISound(392); } function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); } let ibUIAudioCtx = null; function playUISound(freq) { try { if (!ibUIAudioCtx) ibUIAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); const osc = ibUIAudioCtx.createOscillator(); const gain = ibUIAudioCtx.createGain(); osc.type = 'sine'; osc.frequency.value = freq; gain.gain.setValueAtTime(0.05, ibUIAudioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ibUIAudioCtx.currentTime + 0.18); osc.connect(gain); gain.connect(ibUIAudioCtx.destination); osc.start(); osc.stop(ibUIAudioCtx.currentTime + 0.18); } catch (e) { } } function checkQuiz(btn, correct, feedback) { const opts = btn.closest('.quiz-options'); if (opts.querySelector('.correct')) return; const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback'); if (correct) { btn.classList.add('correct'); if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; } } else { btn.classList.add('wrong'); if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; } setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400); } } const REFLECT_RESPONSES = { 'ref-1-1': v => '✦ "' + v + '" — That\'s a real idea. Write it down and keep it.', 'ref-2-1': v => '✦ "' + v + '" — Good observation.', 'ref-3-1': v => '✦ "' + v + '" — That\'s your design direction.', 'ref-4-1': v => '✦ "' + v + '" — Hold onto that feeling.' }; function saveReflect(inputId, savedId) { const val = document.getElementById(inputId)?.value; if (val === undefined) return; localStorage.setItem('zen_' + inputId, val); const saved = document.getElementById(savedId); if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); } const respEl = document.getElementById('resp-' + inputId.replace('ref-', '')); if (val.trim() && REFLECT_RESPONSES[inputId] && respEl) { respEl.textContent = REFLECT_RESPONSES[inputId](val.trim()); respEl.classList.add('show'); } const lessonNum = inputId.split('-')[1]; const complete = document.getElementById('complete-' + lessonNum); if (complete) { complete.classList.add('show'); const jokeEl = document.getElementById('joke-' + lessonNum); if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)]; } localStorage.setItem('zen_lesson_complete_' + lessonNum, '1'); } function loadReflects() { document.querySelectorAll('.reflect-input').forEach(el => { const stored = localStorage.getItem('zen_' + el.id); if (stored) el.value = stored; }); } function revealLines(ids, then) { ids.forEach((id, i) => setTimeout(() => { const el = document.getElementById(id); if (el) el.classList.add('visible'); }, i * 220)); if (then) setTimeout(then, ids.length * 220 + 150); } function runCode1() { revealLines(['c1l1','c1l2','c1l3','c1l4'], () => document.getElementById('output1').classList.add('show')); } function runCode2() { revealLines(['c2l1','c2l2','c2l3'], () => document.getElementById('output2').classList.add('show')); } function runCode4() { revealLines(['c4l1','c4l2','c4l3','c4l4','c4l5','c4l6','c4l7','c4l8','c4l9','c4l10'], () => document.getElementById('output4').classList.add('show')); } function setupDrag(listId) { let dragSrc = null; const list = document.getElementById(listId); if (!list) return; list.querySelectorAll('.drag-item').forEach(item => { item.addEventListener('dragstart', () => { dragSrc = item; item.classList.add('dragging'); }); item.addEventListener('dragend', () => item.classList.remove('dragging')); item.addEventListener('dragover', e => e.preventDefault()); item.addEventListener('drop', e => { e.preventDefault(); if (dragSrc !== item) { const items = [...list.querySelectorAll('.drag-item')]; if (items.indexOf(dragSrc) < items.indexOf(item)) item.after(dragSrc); else item.before(dragSrc); } }); }); } setupDrag('dragList1'); function checkDrag1() { const items = [...document.getElementById('dragList1').querySelectorAll('.drag-item')]; const correct = items.map(i => parseInt(i.dataset.order)).every((v, i) => v === i + 1); items.forEach((item, i) => item.querySelector('.drag-num').textContent = i + 1); const res = document.getElementById('drag1Result'); res.className = 'demo-output show'; res.innerHTML = correct ? '✦ Perfect!' : 'Not quite — try again.'; } function updatePreview3() { const color = document.getElementById('colorPicker').value; const size = document.getElementById('sizeSlider').value; const text = document.getElementById('styleText').value || 'Your styled heading'; document.getElementById('styleOutput').style.color = color; document.getElementById('styleOutput').style.fontSize = size + 'px'; document.getElementById('styleOutput').textContent = text; document.getElementById('colorHex').textContent = color; document.getElementById('sizeVal').textContent = size + 'px'; } function updateCapstone() { const title = document.getElementById('cap-title').value || 'My Page'; const h1 = document.getElementById('cap-h1').value; const p = document.getElementById('cap-p').value; const color = document.getElementById('cap-color').value; const out = document.getElementById('capOutput'); out.innerHTML = '<div style="font-family:var(--font-mono);font-size:0.65rem;color:var(--text-muted);margin-bottom:12px">Page: "' + title + '"</div>' + (h1 ? '<div style="font-size:1.4rem;font-weight:700;color:' + color + ';margin-bottom:8px;">' + h1 + '</div>' : '') + (p ? '<div style="font-size:.9rem;color:var(--text-dim);">' + p + '</div>' : ''); } function downloadCheat() { const content = "ZEN'S CODING REALM — FULL CHEAT SHEET\n\nLESSON 1 — What Is Code?\nCODE: Step-by-step instructions.\nHTML: HyperText Markup Language.\nTAG: Labels in angle brackets: <tag> and </tag>\nBROWSER: Reads HTML, displays it as a webpage.\nLINES YOU'LL USE:\n<h1>Hello, I'm Zen.</h1>\n<p>I build things with code.</p>\n\nLESSON 2 — Your First HTML Tag\nOPENING TAG <tagname>\nCLOSING TAG </tagname>\nELEMENT: tag+content+closing tag\nATTRIBUTE: extra info in opening tag\nLINES YOU'LL USE:\n<a href=\"https://...\">Click here</a>\n\nLESSON 3 — Colors & Style with CSS\nCSS styles HTML.\nSELECTOR: h1 {}\nPROPERTY: color, font-size\nVALUE: pink, 2rem, #ff6baa\nLINES YOU'LL USE:\nh1 {\n color: #ff6baa;\n font-size: 2rem;\n}\n\nLESSON 4 — Build Your Own Page\n<!DOCTYPE html> — always first\n<html> — wraps the whole page\n<head> — settings, not visible\n<title> — names the browser tab, lives in head\n<body> — everything visible\n<style> — CSS goes here\nLINES YOU'LL USE:\n<!DOCTYPE html>\n<html>\n <head><title>My Page</title></head>\n <body><h1>Hello!</h1><p>A paragraph.</p></body>\n</html>\n\nSYMBOLS REFERENCE\n< opening bracket — starts every tag\n> closing bracket — ends every tag\n</ opening bracket + slash — starts a closing tag\n! used once, in <!DOCTYPE html>, marks it as a special declaration\n{} curly braces — wrap CSS style rules\n: colon — separates a CSS property from its value\n; semicolon — ends a CSS line\n# pound sign — starts a hex color code, like #ff6baa"; const blob = new Blob([content], { type: 'text/plain' }); const url = URL.createObjectURL(blob); const a = document.createElement('a'); a.href = url; a.download = 'zen-cheatsheet.txt'; document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url); } function goUpgrade() { if (currentTier) { window.location.href = 'membership.html'; } else { window.openAuthModal('signup'); } } function handleLogout() { if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); } } function spawnParticle() { const field = document.getElementById('particleField'); if (!field) return; const p = document.createElement('div'); p.className = 'particle'; const startX = Math.random() * 100; const duration = 8 + Math.random() * 10; const delay = Math.random() * 2; p.style.left = startX + '%'; p.style.bottom = '0'; p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's'; field.appendChild(p); setTimeout(() => p.remove(), (duration + delay) * 1000 + 500); } for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400); setInterval(spawnParticle, 900); const FACTS = [ "the first ever website is still online — info.cern.ch, made in 1991.", "CSS was proposed in 1994, three years after HTML existed.", "the '404 Not Found' error is named after a room number at CERN.", "JavaScript was built in just 10 days in 1995.", "the pink hex code #ff6baa is technically called 'French Rose.'", "the first computer 'bug' was an actual moth stuck in a machine in 1947.", "there are more possible chess games than atoms in the universe.", "the <marquee> tag used to make text scroll. It's basically retired now." ]; let factIndex = 0; function cycleFacts() { const el = document.getElementById('factTicker'); if (!el) return; el.classList.remove('show'); setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400); } cycleFacts(); setInterval(cycleFacts, 6500); const JOKES = [ "Why do coders prefer dark mode? Because light attracts bugs.", "There are 10 types of people: those who understand binary, and those who don't.", "A CSS developer walks into a bar... and leaves because there was no style.", "Why did the developer go broke? Because they used up all their cache.", "HTML and CSS walk into a bar. The bartender says 'we don't serve your type here.'", "Why do programmers hate nature? Too many bugs.", "I'd tell you a UDP joke, but you might not get it." ]; let companionClicks = 0; function companionClick() { companionClicks++; if (companionClicks === 5 && !localStorage.getItem('zen_egg_found')) { localStorage.setItem('zen_egg_found', '1'); showEgg("You found Zen's hidden stash! Secret catchphrase unlocked: \"Bugs are just ideas that aren't finished yet.\" ✦"); } else if (companionClicks % 5 === 0) { showEgg("Zen waves. They've already found this easter egg with you before."); } } function showEgg(text) { const popup = document.getElementById('eggPopup'); document.getElementById('eggText').textContent = text; popup.classList.add('show'); setTimeout(() => popup.classList.remove('show'), 5000); } let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true; function startAmbient() { try { audioCtx = new (window.AudioContext || window.webkitAudioContext)(); droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain(); droneOsc.type = 'sine'; droneOsc.frequency.value = 82; droneGain.gain.value = 0.015; droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start(); } catch (e) { console.warn('Ambient audio unavailable:', e); } } function toggleSound() { const btn = document.getElementById('soundToggle'); if (!audioCtx) return; soundOn = !soundOn; droneGain.gain.value = soundOn ? 0.015 : 0; btn.textContent = soundOn ? '🔊' : '🔇'; btn.classList.toggle('muted', !soundOn); } const IB_TAGS = [ { id: 'doctype', hasClose: false, pieces: ['<', '!DOCTYPE', 'html', '>'], code: '<!DOCTYPE html>', def: 'Tells the browser this is a modern HTML5 document. It always goes first, before anything else.', color: '#ff6baa', freq: 196, wave: 'sine' }, { id: 'html', hasClose: true, pieces: ['<', 'html', '>', '</', 'html', '>'], code: '<html>', def: 'Wraps the entire page. Everything else lives inside this tag — opening at the very top, closing at the very bottom.', color: '#c66bff', freq: 261, wave: 'triangle' }, { id: 'head', hasClose: true, pieces: ['<', 'head', '>', '</', 'head', '>'], code: '<head>', def: "Holds settings the browser needs. Nothing inside it shows up on the page itself.", color: '#00d9ff', freq: 329, wave: 'square' }, { id: 'title', hasClose: true, pieces: ['<', 'title', '>', '</', 'title', '>'], code: '<title>', def: 'Sets the name shown on the browser tab.', color: '#ffe066', freq: 392, wave: 'sine' }, { id: 'body', hasClose: true, pieces: ['<', 'body', '>', '</', 'body', '>'], code: '<body>', def: 'Holds everything a visitor actually sees on the page.', color: '#ff7a3d', freq: 466, wave: 'triangle' }, { id: 'h1', hasClose: true, pieces: ['<', 'h1', '>', '</', 'h1', '>'], code: '<h1>', def: 'A big heading — the most important title on the page.', color: '#39ff8f', freq: 554, wave: 'sawtooth' }, { id: 'p', hasClose: true, pieces: ['<', 'p', '>', '</', 'p', '>'], code: '<p>', def: 'A paragraph — regular text content.', color: '#ff4fc3', freq: 659, wave: 'square' } ]; const IB_DOC_LINES = [ { tag: 'doctype', text: '<!DOCTYPE html>' }, { tag: 'html', text: '<html>' }, { tag: 'head', text: ' <head>' }, { tag: 'title', text: ' <title></title>' }, { tag: 'head', text: ' </head>' }, { tag: 'body', text: ' <body>' }, { tag: 'h1', text: ' <h1></h1>' }, { tag: 'p', text: ' <p></p>' }, { tag: 'body', text: ' </body>' }, { tag: 'html', text: '</html>' } ]; let ibIndex = 0; let ibSlotsFilled = []; let ibPiecesState = []; let ibMasterPattern = []; let ibPiecePool = []; let ibLocalPattern = []; let ibLocalPool = []; let ibLocalRound = 0; const IB_LOCAL_MAX_ROUNDS = 10; let ibSeqPlayer = []; let ibSeqPlaying = false; let ibUnlockedCount = 0; let ibFinalePattern = []; let ibCurrentPhase = null; let ibAudioCtx = null; function ibPlayTone(freq, dur, wave) { try { if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)(); const osc = ibAudioCtx.createOscillator(); const gain = ibAudioCtx.createGain(); osc.type = wave || 'sine'; osc.frequency.value = freq; gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime); gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.35)); osc.connect(gain); gain.connect(ibAudioCtx.destination); osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.35)); } catch (e) { } } function ibToggleWrapper() { if (!currentTier || currentTier === 'logged-out') { window.openAuthModal('signup'); return; } const wrapper = document.getElementById('icebreakerWrapper'); const opening = !wrapper.classList.contains('open'); wrapper.classList.toggle('open'); if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' }); } function ibRenderIntro() { const grid = document.getElementById('ibTermsGrid'); if (!grid) return; grid.innerHTML = IB_TAGS.map(t => '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' + '<div class="ib-term-code" style="color:' + t.color + '">' + t.code.replace(/</g, '&lt;').replace(/>/g, '&gt;') + (t.hasClose ? ' ... ' + t.code.replace('<', '</').replace(/</g, '&lt;').replace(/>/g, '&gt;') : '') + '</div>' + '<div class="ib-term-def">' + t.def + '</div>' + '</div>' ).join(''); } function ibRenderDocPanel() { const panel = document.getElementById('ibDocPanel'); panel.innerHTML = IB_DOC_LINES.map((l, i) => '<div class="ib-doc-line" id="ibDocLine' + i + '" data-tag="' + l.tag + '">' + l.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' ).join(''); } function ibRevealDocTag(tagId, color) { document.querySelectorAll('.ib-doc-line[data-tag="' + tagId + '"]').forEach(el => { el.classList.add('revealed'); el.style.color = color; }); } function ibStartGame() { document.getElementById('ib-intro').style.display = 'none'; document.getElementById('ib-game').style.display = 'block'; ibIndex = 0; ibMasterPattern = []; ibUnlockedCount = 0; ibPiecePool = []; ibRenderDocPanel(); ibBeginBuild(0); } function ibShuffle(arr) { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; } function ibBeginBuild(i) { const tag = IB_TAGS[i]; document.getElementById('ibSequenceStage').style.display = 'none'; const stage = document.getElementById('ibBuildStage'); stage.style.display = 'block'; ibSlotsFilled = new Array(tag.pieces.length).fill(null); const order = ibShuffle(tag.pieces.map((p, idx) => idx)); ibPiecesState = order.map(idx => ({ text: tag.pieces[idx], correctIndex: idx, placed: false })); stage.innerHTML = '<div class="ib-build-eyebrow">TAG ' + (i + 1) + ' OF ' + IB_TAGS.length + ' &nbsp;·&nbsp; BUILD IT' + (tag.hasClose ? ' — OPEN &amp; CLOSE' : '') + '</div>' + '<div class="ib-build-def">' + tag.def + '</div>' + '<div class="ib-slots" id="ibSlots"></div>' + '<div class="ib-pieces-tray" id="ibPiecesTray"></div>' + '<div class="ib-build-feedback" id="ibBuildFeedback"></div>' + '<button class="ib-check-btn" onclick="ibCheckBuild(' + i + ')">Check My Order →</button>'; ibRenderSlots(tag); ibRenderPieces(tag); } function ibRenderSlots(tag) { const slots = document.getElementById('ibSlots'); const rowHtml = (indices) => '<div class="ib-slots-row" style="display:flex;gap:0.6rem;justify-content:center;flex-wrap:wrap;">' + indices.map(idx => '<div class="ib-slot" id="ibSlot' + idx + '" style="border-color:' + tag.color + '" ondragover="event.preventDefault()" ondrop="ibDropPiece(event,' + idx + ')"></div>').join('') + '</div>'; if (!tag.hasClose) { slots.innerHTML = '<div class="ib-slot-group"><div class="ib-slot-group-label">THE FULL DECLARATION</div>' + rowHtml([0, 1, 2, 3]) + '</div>'; } else { slots.innerHTML = '<div class="ib-slot-group"><div class="ib-slot-group-label">OPENING TAG</div>' + rowHtml([0, 1, 2]) + '</div>' + '<div class="ib-slot-group"><div class="ib-slot-group-label">CLOSING TAG</div>' + rowHtml([3, 4, 5]) + '</div>'; } } function ibRenderPieces(tag) { const tray = document.getElementById('ibPiecesTray'); tray.innerHTML = ibPiecesState.map((p, i) => '<div class="ib-piece" draggable="true" data-piece-i="' + i + '" style="border-color:' + tag.color + '" ondragstart="event.dataTransfer.setData(\'text\',' + i + ')">' + p.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' ).join(''); } function ibDropPiece(e, slotIdx) { e.preventDefault(); const pieceI = parseInt(e.dataTransfer.getData('text')); const piece = ibPiecesState[pieceI]; if (!piece || piece.placed) return; const slotEl = document.getElementById('ibSlot' + slotIdx); if (slotEl.classList.contains('filled')) return; piece.placed = true; ibSlotsFilled[slotIdx] = piece; slotEl.textContent = piece.text; slotEl.classList.add('filled'); const pieceEl = document.querySelector('[data-piece-i="' + pieceI + '"]'); if (pieceEl) pieceEl.classList.add('placed'); } function ibCheckBuild(i) { const tag = IB_TAGS[i]; const fb = document.getElementById('ibBuildFeedback'); const correct = ibSlotsFilled.every((p, idx) => p && p.text === tag.pieces[idx]); if (!correct) { fb.textContent = 'Not quite in order yet — check the pieces again.'; fb.style.color = 'var(--purple)'; return; } fb.textContent = '✦ Perfect! ' + tag.code + (tag.hasClose ? ' ... ' + tag.code.replace('<', '</') : '') + ' is locked in.'; fb.style.color = tag.color; ibPlayTone(tag.freq, 0.4, tag.wave); ibRevealDocTag(tag.id, tag.color); if (!tag.hasClose) { ibPiecePool.push({ text: tag.code, color: tag.color, freq: tag.freq, wave: tag.wave }); } else { ibPiecePool.push({ text: tag.code, color: tag.color, freq: tag.freq, wave: tag.wave }); ibPiecePool.push({ text: tag.code.replace('<', '</'), color: tag.color, freq: tag.freq + 20, wave: tag.wave }); } setTimeout(() => ibBeginLocalDrill(i), 900); } function ibBeginLocalDrill(i) { const tag = IB_TAGS[i]; ibCurrentPhase = 'local'; ibLocalPool = tag.pieces.map((text, idx) => ({ text: text, color: tag.color, freq: tag.freq + idx * 14, wave: tag.wave })); ibLocalPattern = []; ibLocalRound = 0; document.getElementById('ibBuildStage').style.display = 'none'; const stage = document.getElementById('ibSequenceStage'); stage.style.display = 'block'; stage.innerHTML = '<div class="ib-build-eyebrow">FOCUS DRILL &nbsp;·&nbsp; ' + tag.code + (tag.hasClose ? ' &amp; ' + tag.code.replace('<', '</') : '') + '</div>' + '<div class="ib-seq-status" id="ibSeqStatus">Watch the pattern...</div>' + '<div class="ib-seq-board" id="ibSeqBoard"></div>' + '<button class="ib-skip-btn" onclick="ibSkipSequence()">Skip this part →</button>'; const board = document.getElementById('ibSeqBoard'); board.innerHTML = ibLocalPool.map((p, idx) => '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + p.color + ';color:' + p.color + ';--c:' + p.color + '" onclick="ibLocalSeqClick(' + idx + ',' + i + ')">' + p.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' ).join(''); ibLocalNextRound(i); } function ibLocalNextRound(i) { ibLocalRound++; const nextStep = Math.floor(Math.random() * ibLocalPool.length); ibLocalPattern.push(nextStep); ibPlayLocalPattern(i); } function ibPlayLocalPattern(i) { ibSeqPlayer = []; ibSeqPlaying = true; const statusEl = document.getElementById('ibSeqStatus'); statusEl.textContent = 'Round ' + ibLocalRound + ' — watch...'; let step = 0; function playNext() { if (step >= ibLocalPattern.length) { ibSeqPlaying = false; statusEl.textContent = 'Your turn!'; return; } const idx = ibLocalPattern[step]; const card = document.getElementById('ibSeqCard' + idx); card.classList.add('lit'); ibPlayTone(ibLocalPool[idx].freq, 0.3, ibLocalPool[idx].wave); setTimeout(() => { card.classList.remove('lit'); step++; setTimeout(playNext, 200); }, 400); } setTimeout(playNext, 500); } function ibLocalSeqClick(idx, i) { if (ibSeqPlaying) return; const card = document.getElementById('ibSeqCard' + idx); card.classList.add('lit'); ibPlayTone(ibLocalPool[idx].freq, 0.25, ibLocalPool[idx].wave); setTimeout(() => card.classList.remove('lit'), 300); ibSeqPlayer.push(idx); const step = ibSeqPlayer.length - 1; if (ibSeqPlayer[step] !== ibLocalPattern[step]) { card.classList.add('wrong'); document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.'; setTimeout(() => { card.classList.remove('wrong'); ibPlayLocalPattern(i); }, 700); return; } if (ibSeqPlayer.length === ibLocalPattern.length) { const seenAll = new Set(ibLocalPattern).size === ibLocalPool.length; const hitSafetyCap = ibLocalPattern.length >= IB_LOCAL_MAX_ROUNDS; if (seenAll || hitSafetyCap) { document.getElementById('ibSeqStatus').textContent = "✦ Locked in! Now let's mix it with everything else..."; setTimeout(() => ibBeginSequence(i + 1), 1200); } else { document.getElementById('ibSeqStatus').textContent = '✦ Nice!'; setTimeout(() => ibLocalNextRound(i), 700); } } } function ibBeginSequence(tagProgress) { ibUnlockedCount = tagProgress; ibCurrentPhase = 'global'; const poolSize = ibPiecePool.length; const nextStep = Math.floor(Math.random() * poolSize); ibMasterPattern.push(nextStep); document.getElementById('ibBuildStage').style.display = 'none'; const stage = document.getElementById('ibSequenceStage'); stage.style.display = 'block'; stage.innerHTML = '<div class="ib-build-eyebrow">SEQUENCE RECALL &nbsp;·&nbsp; PATTERN LENGTH ' + ibMasterPattern.length + '</div>' + '<div class="ib-seq-status" id="ibSeqStatus">Watch the pattern...</div>' + '<div class="ib-seq-board" id="ibSeqBoard"></div>' + '<button class="ib-skip-btn" onclick="ibSkipSequence()">Skip this part →</button>'; const board = document.getElementById('ibSeqBoard'); board.innerHTML = ibPiecePool.map((p, idx) => '<div class="ib-seq-card" id="ibSeqCard' + idx + '" style="border-color:' + p.color + ';color:' + p.color + ';--c:' + p.color + '" onclick="ibSeqClick(' + idx + ')">' + p.text.replace(/</g, '&lt;').replace(/>/g, '&gt;') + '</div>' ).join(''); ibPlayPattern(); } function ibPlayPattern() { ibSeqPlayer = []; ibSeqPlaying = true; document.getElementById('ibSeqStatus').textContent = 'Watch the pattern...'; let step = 0; function playNext() { if (step >= ibMasterPattern.length) { ibSeqPlaying = false; document.getElementById('ibSeqStatus').textContent = 'Your turn — repeat the pattern.'; return; } const idx = ibMasterPattern[step]; const card = document.getElementById('ibSeqCard' + idx); card.classList.add('lit'); ibPlayTone(ibPiecePool[idx].freq, 0.3, ibPiecePool[idx].wave); setTimeout(() => { card.classList.remove('lit'); step++; setTimeout(playNext, 200); }, 400); } setTimeout(playNext, 500); } function ibSeqClick(idx) { if (ibSeqPlaying) return; const card = document.getElementById('ibSeqCard' + idx); card.classList.add('lit'); ibPlayTone(ibPiecePool[idx].freq, 0.25, ibPiecePool[idx].wave); setTimeout(() => card.classList.remove('lit'), 300); ibSeqPlayer.push(idx); const step = ibSeqPlayer.length - 1; if (ibSeqPlayer[step] !== ibMasterPattern[step]) { card.classList.add('wrong'); document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.'; setTimeout(() => { card.classList.remove('wrong'); ibPlayPattern(); }, 700); return; } if (ibSeqPlayer.length === ibMasterPattern.length) { document.getElementById('ibSeqStatus').textContent = '✦ Perfect sequence!'; setTimeout(() => ibAdvanceAfterSequence(), 800); } } function ibSkipSequence() { ibSeqPlaying = false; if (ibCurrentPhase === 'local') { ibBeginSequence(ibIndex + 1); } else if (ibCurrentPhase === 'global') { ibAdvanceAfterSequence(); } else if (ibCurrentPhase === 'finale') { ibComplete(); } } function ibAdvanceAfterSequence() { if (ibUnlockedCount < IB_TAGS.length) { ibIndex = ibUnlockedCount; ibBeginBuild(ibIndex); } else { ibBeginFinale(); } } function ibBeginFinale() { ibCurrentPhase = 'finale'; document.getElementById('ibBuildStage').style.display = 'none'; const stage = document.getElementById('ibSequenceStage'); stage.style.display = 'block'; stage.innerHTML = '<div class="ib-build-eyebrow">FINAL PRACTICE &nbsp;·&nbsp; THE REAL PAGE</div>' + '<div class="ib-seq-status" id="ibSeqStatus">Watch the whole page come together...</div>' + '<button class="ib-skip-btn" onclick="ibSkipSequence()">Skip this part →</button>'; IB_DOC_LINES.forEach((l, idx) => { const el = document.getElementById('ibDocLine' + idx); if (el) { el.classList.add('clickable'); el.onclick = () => ibFinaleClick(idx); } }); ibFinalePattern = IB_DOC_LINES.map((_, idx) => idx); ibPlayFinalePattern(); } function ibPlayFinalePattern() { ibSeqPlayer = []; ibSeqPlaying = true; const statusEl = document.getElementById('ibSeqStatus'); statusEl.textContent = 'Watch the whole page come together...'; let step = 0; function playNext() { if (step >= ibFinalePattern.length) { ibSeqPlaying = false; statusEl.textContent = 'Your turn — click through the whole page in order!'; return; } const idx = ibFinalePattern[step]; const el = document.getElementById('ibDocLine' + idx); const tagDef = IB_TAGS.find(t => t.id === IB_DOC_LINES[idx].tag); el.classList.add('lit-line'); ibPlayTone(tagDef.freq, 0.28, tagDef.wave); setTimeout(() => { el.classList.remove('lit-line'); step++; setTimeout(playNext, 150); }, 350); } setTimeout(playNext, 500); } function ibFinaleClick(idx) { if (ibSeqPlaying) return; const el = document.getElementById('ibDocLine' + idx); const tagDef = IB_TAGS.find(t => t.id === IB_DOC_LINES[idx].tag); el.classList.add('lit-line'); ibPlayTone(tagDef.freq, 0.22, tagDef.wave); setTimeout(() => el.classList.remove('lit-line'), 300); ibSeqPlayer.push(idx); const step = ibSeqPlayer.length - 1; if (ibSeqPlayer[step] !== ibFinalePattern[step]) { el.classList.add('wrong-line'); document.getElementById('ibSeqStatus').textContent = 'Not quite — watch again.'; setTimeout(() => { el.classList.remove('wrong-line'); ibPlayFinalePattern(); }, 700); return; } if (ibSeqPlayer.length === ibFinalePattern.length) { document.getElementById('ibSeqStatus').textContent = '✦ You built the whole page!'; setTimeout(() => ibComplete(), 1000); } } function ibComplete() { document.getElementById('ib-game').style.display = 'none'; document.getElementById('ib-complete').style.display = 'block'; } function ibReset() { document.getElementById('ib-complete').style.display = 'none'; document.getElementById('ib-intro').style.display = 'block'; ibIndex = 0; ibMasterPattern = []; ibUnlockedCount = 0; ibPiecePool = []; }
+function toggleNavDrop(id){ const drop=document.getElementById(id); const isOpen=drop.classList.contains('open'); document.querySelectorAll('.nav-drop').forEach(d=>d.classList.remove('open')); if(!isOpen) drop.classList.add('open'); }
+document.addEventListener('click',function(e){ if(!e.target.closest('.nav-drop')){ document.querySelectorAll('.nav-drop').forEach(d=>d.classList.remove('open')); } });
+function toggleMobileMenu(){ document.getElementById('navHamburger').classList.toggle('open'); document.getElementById('mobileMenu').classList.toggle('open'); }
+document.addEventListener('DOMContentLoaded', () => { loadReflects(); ibRenderIntro(); handleTierUnlock(null); }); </script>
 </body>
 </html>
