@@ -117,7 +117,7 @@ nav{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:cen
   <div class="idle-sub">Bug broke the code — on purpose. Find every buggy line before the system crashes.</div>
   <div class="idle-instructions">
     <div class="idle-rule"><span class="idle-rule-icon">🐛</span><span>Click any line you think has a bug in it</span></div>
-    <div class="idle-rule"><span class="idle-rule-icon">✓</span><span>Right click = +150 pts and that bug is squashed</span></div>
+    <div class="idle-rule"><span class="idle-rule-icon">✓</span><span>Click a buggy line = +150 pts and that bug is squashed</span></div>
     <div class="idle-rule"><span class="idle-rule-icon">⚠</span><span>Wrong click = -15% system stability. Hit zero and it's game over</span></div>
     <div class="idle-rule"><span class="idle-rule-icon">⏱</span><span>Each zone has a timer — find all bugs before time runs out</span></div>
   </div>
@@ -175,30 +175,20 @@ nav{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:cen
   </div>
 </div>
 
-<script type="module">
-import{initializeApp}from'https://www.gstatic.com/firebasejs/10.7.0/firebase-app.js';
-import{getAuth,onAuthStateChanged}from'https://www.gstatic.com/firebasejs/10.7.0/firebase-auth.js';
-import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore.js';
-const firebaseConfig={apiKey:"AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",authDomain:"method-in-motion.firebaseapp.com",projectId:"method-in-motion",storageBucket:"method-in-motion.appspot.com",messagingSenderId:"1067937974009",appId:"1:1067937974009:web:5b21e6abe84e0b28234428"};
-const app=initializeApp(firebaseConfig);
-const auth=getAuth(app);
-const db=getFirestore(app);
-onAuthStateChanged(auth,async(user)=>{
-  if(user){
-    try{
-      const snap=await getDoc(doc(db,'users',user.uid));
-      const tier=(snap.exists()&&snap.data().tier)?snap.data().tier.toLowerCase():'explorer';
-      if(tier!=='coders'){window.location.href='membership.html';}
-    }catch(e){window.location.href='membership.html';}
-  } else {
-    window.location.href='membership.html';
+<script type="module" src="auth-init.js"></script>
+<script>
+window.handleTierUnlock = function(tier) {
+  const hasAccess = typeof window.mimHasAccess === 'function' && window.mimHasAccess('bug', tier, 'game');
+  if (!hasAccess) {
+    if (tier) { window.location.href = 'membership.html'; }
+    else { window.openAuthModal('signup'); }
   }
-});
+};
 </script>
 
 <script>
 const LEVELS=[
-  {zone:'ZONE 1 · SYNTAX',mission:'Bug scrambled the variable names. Find every broken line.',hint:'<strong>Look for:</strong> wrong variable names, missing quotes, typos in keywords.',time:45,lines:[
+  {zone:'ZONE 1 · TYPOS & TYPING ERRORS',mission:'Bug scrambled the variable names. A single typo here becomes a ReferenceError later.',hint:'<strong>Look for:</strong> misspelled variable names — the exact kind of typo that causes a ReferenceError once the real name gets used somewhere else.',time:45,lines:[
     {code:'let playerName = "Zen";',buggy:false},
     {code:'let scroe = 0;',buggy:true,fix:'let score = 0;'},
     {code:'let isAlive = true;',buggy:false},
@@ -210,7 +200,7 @@ const LEVELS=[
     {code:'let speedd = 1.5;',buggy:true,fix:'let speed = 1.5;'},
     {code:'let paused = false;',buggy:false}
   ]},
-  {zone:'ZONE 2 · LOGIC',mission:'The if-statements are completely broken. Hunt them down.',hint:'<strong>Look for:</strong> = instead of ===, missing brackets, flipped conditions.',time:40,lines:[
+  {zone:'ZONE 2 · LOGIC & SYNTAX',mission:'Some of these lines run and lie to you. One of them cannot run at all. Find both kinds.',hint:'<strong>Look for:</strong> = used instead of === (a logic error — it assigns instead of comparing), and one missing closing parenthesis (a syntax error — the code cannot run until it is fixed).',time:40,lines:[
     {code:'function checkWin(score) {',buggy:false},
     {code:' if (score = 100) {',buggy:true,fix:'if (score === 100) {'},
     {code:' return true;',buggy:false},
@@ -223,7 +213,7 @@ const LEVELS=[
     {code:' }',buggy:false},
     {code:'}',buggy:false}
   ]},
-  {zone:'ZONE 3 · FUNCTIONS',mission:'Bug corrupted the function calls. Fix them before crash.',hint:'<strong>Look for:</strong> wrong function names, missing parentheses, bad arguments.',time:35,lines:[
+  {zone:'ZONE 3 · FUNCTIONS',mission:'Bug corrupted the function calls. Fix them before crash.',hint:'<strong>Look for:</strong> misspelled function and variable names — each one throws a ReferenceError or TypeError the moment it is called.',time:35,lines:[
     {code:'function startGame() {',buggy:false},
     {code:' setUpBoard();',buggy:false},
     {code:' loadPlayr("Zen");',buggy:true,fix:'loadPlayer("Zen");'},
@@ -236,7 +226,7 @@ const LEVELS=[
     {code:' showScreen("end");',buggy:false},
     {code:'}',buggy:false}
   ]},
-  {zone:'ZONE 4 · ARRAYS',mission:'Bug tangled the arrays. Find every broken access.',hint:'<strong>Look for:</strong> off-by-one index, wrong method names, missing brackets.',time:30,lines:[
+  {zone:'ZONE 4 · ARRAYS',mission:'Bug tangled the arrays. Find every broken access.',hint:'<strong>Look for:</strong> off-by-one errors at the boundaries — the first and last index are where these bugs hide (crew[6] on a 6-item array, or crew[crew.length] instead of crew[crew.length - 1]).',time:30,lines:[
     {code:'const crew = ["Zen","Byte","Loop","Nova","Bug","Echo"];',buggy:false},
     {code:'console.log(crew[6]);',buggy:true,fix:'console.log(crew[5]);'},
     {code:'let first = crew[0];',buggy:false},
@@ -247,7 +237,7 @@ const LEVELS=[
     {code:'let idx = crew.indxOf("Bug");',buggy:true,fix:'let idx = crew.indexOf("Bug");'},
     {code:'crew.reverse();',buggy:false}
   ]},
-  {zone:'ZONE 5 · BOSS ROUND',mission:'Full system meltdown. Every type of bug is hiding. GO.',hint:'<strong>All bug types:</strong> syntax, logic, typos, bad calls. Eyes open.',time:25,lines:[
+  {zone:'ZONE 5 · BOSS ROUND',mission:'Full system meltdown. Every type of bug is hiding — just like the Gauntlet in Lesson 4. GO.',hint:'<strong>All bug types:</strong> syntax, logic, typos, bad calls. Eyes open.',time:25,lines:[
     {code:'class Game {',buggy:false},
     {code:' constructor(playr) {',buggy:true,fix:'constructor(player) {'},
     {code:' this.score = 0;',buggy:false},
