@@ -246,6 +246,19 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--purple); margin-bottom: 0.5rem; }
 .egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
 @media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .fact-ticker { display: none; } }
+
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,5,8,.88);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.active{display:flex;}
+.modal-box{background:var(--bg-card);border:1px solid var(--border-bright);border-radius:20px;padding:40px;width:100%;max-width:400px;position:relative;}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;line-height:1;transition:color .2s;}
+.modal-close:hover{color:#fff}.modal-title{font-family:var(--font-display);font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
+.modal-sub{font-size:.82rem;color:var(--text-dim);margin-bottom:24px;}.modal-tabs{display:flex;gap:4px;margin-bottom:24px;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;}
+.modal-tab{flex:1;font-family:var(--font-display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:8px;border-radius:7px;border:none;background:none;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;}
+.modal-tab.active{background:rgba(198,107,255,.2);color:var(--purple);}.modal-field{margin-bottom:14px;}.modal-field label{display:block;font-family:var(--font-display);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px;}
+.modal-field input{width:100%;padding:11px 14px;background:rgba(0,0,0,.3);border:1px solid var(--border-bright);border-radius:8px;color:#fff;font-family:var(--font-body);font-size:.88rem;outline:none;transition:border-color .2s;}
+.modal-field input:focus{border-color:var(--purple);}.modal-submit{width:100%;font-family:var(--font-display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:13px;background:linear-gradient(135deg,var(--pink),var(--purple));color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;margin-top:6px;transition:transform .2s;}
+.modal-submit:hover{transform:translateY(-1px)}.modal-submit:disabled{opacity:.65;cursor:wait;transform:none;}.modal-error{font-size:.78rem;color:var(--pink);margin-top:8px;display:none;line-height:1.5;}.modal-error.visible{display:block;}
+.modal-status{display:none;margin-top:10px;font-size:.76rem;color:var(--cyan);text-align:center;line-height:1.5;}.modal-status.visible{display:block;}
 </style>
 </head>
 <body>
@@ -266,25 +279,23 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <nav>
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
-<li><a href="games.html">Games</a></li>
 <li class="nav-drop" id="exploreDrop">
-<button class="nav-drop-trigger" onclick="toggleNavDrop('exploreDrop')">Explore <span class="nav-drop-arrow">▾</span></button>
+<button class="nav-drop-trigger" onclick="toggleNavDrop('exploreDrop')">MiM U <span class="nav-drop-arrow">▾</span></button>
 <div class="nav-drop-menu">
 <a href="pdfs.html" class="nav-drop-item">PDFs</a>
 <a href="library.html" class="nav-drop-item">Library</a>
 <a href="characters.html" class="nav-drop-item">Characters</a>
 <a href="about.html" class="nav-drop-item">About</a>
-</div>
-</li>
+</div></li>
 <li class="nav-drop" id="undergroundDrop">
 <button class="nav-drop-trigger" onclick="toggleNavDrop('undergroundDrop')">The Underground <span class="nav-drop-arrow">▾</span></button>
 <div class="nav-drop-menu">
+<a href="games.html" class="nav-drop-item">Games</a>
 <a href="tag-wall.html" class="nav-drop-item">Tag Wall</a>
 <a href="broken-syntax.html" class="nav-drop-item">Broken Syntax</a>
 <a href="mim-tv.html" class="nav-drop-item">MiM TV</a>
 <a href="comic.html" class="nav-drop-item">Comics</a>
-</div>
-</li>
+</div></li>
 </ul>
 <div class="nav-right">
 <span class="nav-username" id="nav-username"></span>
@@ -302,20 +313,37 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="mobile-menu" id="mobileMenu">
 <a href="index.html#crew">Crew</a>
 <a href="index.html#membership">Membership</a>
-<a href="games.html">Games</a>
-<div class="mobile-menu-label">Explore</div>
+<div class="mobile-menu-label">MiM U</div>
 <a href="pdfs.html">PDFs</a>
 <a href="library.html">Library</a>
 <a href="characters.html">Characters</a>
 <a href="about.html">About</a>
 <div class="mobile-menu-label">The Underground</div>
+<a href="games.html">Games</a>
 <a href="tag-wall.html">Tag Wall</a>
 <a href="broken-syntax.html">Broken Syntax</a>
 <a href="mim-tv.html">MiM TV</a>
 <a href="comic.html">Comics</a>
 <div class="mobile-menu-label">&nbsp;</div>
-<a href="dashboard.html">Dashboard</a>
+<a href="dashboard.html" id="mobile-dashboard-link" style="display:none;">Dashboard</a>
 </div>
+<div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true">
+<div class="modal-box">
+<button class="modal-close" id="auth-close-btn">&#10005;</button>
+<div class="modal-title">Method in Motion</div><div class="modal-sub">Your adventure starts here.</div>
+<div class="modal-tabs"><button class="modal-tab active auth-tab" data-tab="login">Log In</button><button class="modal-tab auth-tab" data-tab="signup">Sign Up</button></div>
+<div id="login-form" class="auth-form" style="display:block">
+<div class="modal-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"></div>
+<div class="modal-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
+<p class="modal-error" id="login-error"></p><button class="modal-submit" id="login-submit-btn">Log In</button><p class="modal-status" id="login-status" aria-live="polite"></p>
+<p style="margin-top:12px;font-size:.75rem;color:var(--text-dim);text-align:center">New here? <button class="auth-link" data-tab="signup" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--font-body)">Create an account</button></p></div>
+<div id="signup-form" class="auth-form" style="display:none">
+<div class="modal-field"><label>Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"></div>
+<div class="modal-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"></div>
+<div class="modal-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"></div>
+<p class="modal-error" id="signup-error"></p><button class="modal-submit" id="signup-submit-btn">Create Your Account</button><p class="modal-status" id="signup-status" aria-live="polite"></p>
+<p style="margin-top:12px;font-size:.75rem;color:var(--text-dim);text-align:center">Already in the crew? <button class="auth-link" data-tab="login" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--font-body)">Log in</button></p></div>
+</div></div>
 <section class="hero" id="byteHero">
 <video class="hero-video" autoplay muted loop playsinline poster="byte-entrance.png">
 <source src="byte-hero.mp4" type="video/mp4">
@@ -429,6 +457,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <p>Knowing a value's type tells you what you can do with it. You can add two numbers together, but you can't add two words the same way. Byte always checks the type first.</p>
 </div>
 </div>
+<div class="read-card"><div class="read-card-num">05 / EXPANSION</div><h3>See It: Classify Before You Code</h3><p>Byte finds the type before touching the code. <code>"Nova"</code> is a <strong>string</strong>, <code>27</code> is a <strong>number</strong>, and <code>false</code> is a <strong>boolean</strong>. Quotes signal text, digits without quotes signal a number, and true/false signal a boolean.</p></div>
+<div class="read-card"><div class="read-card-num">06 / EXPANSION</div><h3>Break It Apart: Label → Container → Value</h3><p>Read <code>let score = 100;</code> in three parts: <strong>score</strong> is the label, the <strong>variable</strong> is the container created with <code>let</code>, and <strong>100</strong> is the value. Byte's method: <strong>identify the type → find the pattern → organize it clearly.</strong></p></div>
 <div class="content-block" id="block-1-terms" style="display:none">
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
@@ -476,6 +506,14 @@ console.log(isReady);
 <div class="quiz-feedback" id="qfb-1-1"></div>
 </div>
 </div>
+<div class="demo-card"><h3>Predict → Change → Run</h3><p>Predict the output first. Then change all three values, name each new type, and run again.</p><textarea class="debug-editor" id="debug-d1b">let coder = "Byte";
+let level = 4;
+let missionReady = false;
+console.log(coder);
+console.log(level);
+console.log(missionReady);
+// Predict first. Change all three values. Predict again.</textarea><button class="run-btn" onclick="runDebug('d1b')">▶ Run</button><div class="demo-output" id="debug-out-d1b"></div></div>
+<div class="quiz-card"><div class="quiz-q">Quick recall — which value is a string?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,false,'27 has no quotes, so it is a number.')">27</button><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct. Quotes tell you this is a string.')">"27"</button><button class="quiz-opt" onclick="checkQuiz(this,false,'false is a boolean.')">false</button></div><div class="quiz-feedback" id="qfb-1-2"></div></div>
 <div class="content-block" id="block-1-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
@@ -538,6 +576,8 @@ console.log(isReady);
 <div class="code-block">songs[<span class="code-val">0</span>]; <span class="code-comment">// "Track A" — the first item</span></div>
 </div>
 </div>
+<div class="read-card"><div class="read-card-num">05 / EXPANSION</div><h3>Predict the Position</h3><p>For <code>["pink", "cyan", "gold"]</code>: pink = <strong>0</strong>, cyan = <strong>1</strong>, gold = <strong>2</strong>. Arrays count from zero. Repeat it: <strong>first item, index 0.</strong></p></div>
+<div class="read-card"><div class="read-card-num">06 / EXPANSION</div><h3>Pattern → Array Connection</h3><p>If the sequence is <code>2, 4, 6, 8</code>, the rule is “add 2.” Arrays preserve order, so Byte checks the order, finds the rule, then uses an index to retrieve the clue.</p></div>
 <div class="content-block" id="block-2-terms" style="display:none">
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
@@ -572,6 +612,11 @@ console.log(songs[2]);
 <div class="quiz-feedback" id="qfb-2-0"></div>
 </div>
 </div>
+<div class="demo-card"><h3>Retrieve, Add, Predict</h3><p>Predict index 0 and index 2. Then add a fourth signal and log it using its new index.</p><textarea class="debug-editor" id="debug-d2b">let signals = ["pink", "cyan", "gold"];
+console.log(signals[0]);
+console.log(signals[2]);
+// Add "purple". What index will it have? Log it.</textarea><button class="run-btn" onclick="runDebug('d2b')">▶ Run</button><div class="demo-output" id="debug-out-d2b"></div></div>
+<div class="quiz-card"><div class="quiz-q">In ["A", "B", "C"], which index retrieves "B"?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,false,'Index 0 retrieves A.')">0</button><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct. The second item has index 1.')">1</button><button class="quiz-opt" onclick="checkQuiz(this,false,'Index 2 retrieves C.')">2</button></div><div class="quiz-feedback" id="qfb-2-2"></div></div>
 <div class="content-block" id="block-2-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
@@ -583,7 +628,7 @@ console.log(songs[2]);
 <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-2">
+<div class="lesson-complete" id="complete-2">
 <h3>◈ &nbsp; Lesson 2 Complete</h3>
 <p>Arrays. Indexes. Patterns. You can read any list now.</p>
 <div class="lesson-joke" id="joke-2"></div>
@@ -634,6 +679,8 @@ console.log(songs[2]);
 <p>Organizing data often means <strong>grouping</strong> similar items together or <strong>sorting</strong> them into an order — smallest to largest, A to Z. Byte always organizes before drawing conclusions.</p>
 </div>
 </div>
+<div class="read-card"><div class="read-card-num">05 / EXPANSION</div><h3>Match the Key to the Value</h3><p>In <code>{ name: "Byte", level: 4 }</code>, <strong>name</strong> matches <strong>"Byte"</strong> and <strong>level</strong> matches <strong>4</strong>. The key is the label; the value is the information attached to it.</p></div>
+<div class="read-card"><div class="read-card-num">06 / EXPANSION</div><h3>Loose Data vs. Organized Data</h3><p><code>"Byte", "Data Tracker", 4</code> has values but no labels. <code>{ name: "Byte", role: "Data Tracker", level: 4 }</code> organizes the same clues so each one is easy to retrieve.</p></div>
 <div class="content-block" id="block-3-terms" style="display:none">
 <div class="section-header">Key Terms</div>
 <div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
@@ -673,6 +720,15 @@ console.log(character.level);
 <div class="quiz-feedback" id="qfb-3-0"></div>
 </div>
 </div>
+<div class="demo-card"><h3>Build the Object Piece by Piece</h3><p>Start with one property. Add role and level, predict the dot expression for each value, then change one property and run again.</p><textarea class="debug-editor" id="debug-d3b">let profile = {
+  name: "Byte"
+};
+// Add role: "Data Tracker"
+// Add level: 4
+console.log(profile.name);
+// Log profile.role and profile.level.
+// Change one value and predict before Run.</textarea><button class="run-btn" onclick="runDebug('d3b')">▶ Run</button><div class="demo-output" id="debug-out-d3b"></div></div>
+<div class="quiz-card"><div class="quiz-q">If profile = { name: "Byte", level: 4 }, which expression retrieves 4?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,false,'profile.name retrieves Byte.')">profile.name</button><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct. Dot notation reaches the level property.')">profile.level</button><button class="quiz-opt" onclick="checkQuiz(this,false,'That names the object but not a property.')">profile</button></div><div class="quiz-feedback" id="qfb-3-1"></div></div>
 <div class="content-block" id="block-3-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
@@ -684,7 +740,7 @@ console.log(character.level);
 <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-3">
+<div class="lesson-complete" id="complete-3">
 <h3>◈ &nbsp; Lesson 3 Complete</h3>
 <p>Objects. Keys. Values. Sorting and grouping. Information has structure now.</p>
 <div class="lesson-joke" id="joke-3"></div>
@@ -728,6 +784,7 @@ console.log(character.level);
 <p>Identify the type. Find the pattern. Organize it clearly. That's how Byte turns raw data into something that makes sense — and nothing gets by.</p>
 </div>
 </div>
+<div class="read-card"><div class="read-card-num">04 / EXPANSION</div><h3>The Messy Data File</h3><p>Byte receives <code>"Zen", 3, true, "Byte", 4, false</code>. First <strong>identify each type</strong>. Next <strong>find the repeating pattern</strong>: name, level, ready status. Then <strong>organize it clearly</strong> into profiles.</p></div>
 <div class="content-block" id="block-4-build" style="display:none">
 <div class="section-header">Byte's Data Challenge</div>
 <div class="section-sub">LESSON 04 · BUILD THE ROSTER</div>
@@ -756,6 +813,15 @@ console.log(crew[2].name + " - " + crew[2].role);
 <div class="quiz-feedback" id="qfb-4-0"></div>
 </div>
 </div>
+<div class="demo-card"><h3>Final Case File: Organize the Evidence</h3><p>Identify the types, spot the repeating name/level/ready pattern, organize it into objects, then retrieve clues with an index and dot notation.</p><textarea class="debug-editor" id="debug-d4b">// RAW FILE: "Zen", 3, true, "Byte", 4, false
+let crew = [
+  { name: "Zen", level: 3, ready: true },
+  { name: "Byte", level: 4, ready: false }
+];
+console.log(crew[1].name);
+console.log(crew[0].ready);
+// Add a third profile using a string, number, and boolean.</textarea><button class="run-btn" onclick="runDebug('d4b')">▶ Run</button><div class="demo-output" id="debug-out-d4b"></div></div>
+<div class="quiz-card"><div class="quiz-q">What is Byte's investigation order?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct. Identify the type, find the pattern, then organize it clearly.')">Identify the type → Find the pattern → Organize it clearly</button><button class="quiz-opt" onclick="checkQuiz(this,false,'Organizing first can hide clues.')">Organize → Guess → Delete</button><button class="quiz-opt" onclick="checkQuiz(this,false,'Byte investigates before changing evidence.')">Change everything → Check the type</button></div><div class="quiz-feedback" id="qfb-4-1"></div></div>
 <div class="content-block" id="block-4-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 04 · BYTE'S FINAL DEBRIEF</div>
@@ -767,7 +833,7 @@ console.log(crew[2].name + " - " + crew[2].role);
 <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-4">
+<div class="lesson-complete" id="complete-4">
 <h3>◈ &nbsp; Byte's Code City Complete</h3>
 <p>All four lessons done. Data types, patterns, organization, and a real roster you built yourself. Nothing gets by you now.</p>
 <div class="lesson-joke" id="joke-4"></div>
@@ -792,7 +858,7 @@ console.log(crew[2].name + " - " + crew[2].role);
 <div class="cheat-item"><div class="cheat-term">String</div><div class="cheat-desc">Text in quotes, like "Byte".</div></div>
 <div class="cheat-item"><div class="cheat-term">Number</div><div class="cheat-desc">A numeric value, no quotes needed.</div></div>
 <div class="cheat-item"><div class="cheat-term">Boolean</div><div class="cheat-desc">Only ever true or false.</div></div>
-<div class="cheat-item"><div class="cheat-term">Variable</div><div class="cheat-desc">A labeled container that holds data.</div></div>
+<div class="cheat-item"><div class="cheat-term">Variable</div><div class="cheat-desc">A labeled container that holds data. Read it as label → container → value.</div></div><div class="cheat-item"><div class="cheat-term">Data / Data type</div><div class="cheat-desc">Data is information a computer stores or uses. A data type is its category: string, number, or boolean.</div></div>
 </div>
 </div>
 <div class="cheat-card">
@@ -800,14 +866,14 @@ console.log(crew[2].name + " - " + crew[2].role);
 <div class="cheat-items">
 <div class="cheat-item"><div class="cheat-term">Array</div><div class="cheat-desc">An ordered list of values.</div></div>
 <div class="cheat-item"><div class="cheat-term">Index</div><div class="cheat-desc">Position in an array, starting at 0.</div></div>
-<div class="cheat-item"><div class="cheat-term">Pattern</div><div class="cheat-desc">A sequence that repeats or follows a rule.</div></div>
+<div class="cheat-item"><div class="cheat-term">Pattern</div><div class="cheat-desc">A sequence that repeats or follows a rule.</div></div><div class="cheat-item"><div class="cheat-term">Sequence / Zero indexing</div><div class="cheat-desc">A sequence is ordered data. Arrays start at index 0: first item = 0, second = 1.</div></div>
 </div>
 </div>
 <div class="cheat-card">
 <h3>◈ Lesson 3 — Organizing Information</h3>
 <div class="cheat-items">
 <div class="cheat-item"><div class="cheat-term">Object</div><div class="cheat-desc">Key-value pairs, like { name: "Byte" }.</div></div>
-<div class="cheat-item"><div class="cheat-term">Key / Value</div><div class="cheat-desc">The label and the data it points to.</div></div>
+<div class="cheat-item"><div class="cheat-term">Key / Value</div><div class="cheat-desc">The key is the label; the value is the information connected to it.</div></div><div class="cheat-item"><div class="cheat-term">Property / Dot notation</div><div class="cheat-desc">A property is one key-value entry. Dot notation retrieves it, like profile.level.</div></div>
 <div class="cheat-item"><div class="cheat-term">Sort / Group</div><div class="cheat-desc">Arrange into order, or collect similar items together.</div></div>
 </div>
 </div>
@@ -829,7 +895,6 @@ console.log(crew[2].name + " - " + crew[2].role);
 </div>
 <div class="cheat-btn-row">
 <a href="byte-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
-<button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
 </div>
 </div>
 </div>
@@ -1021,29 +1086,13 @@ function runDebug(id) {
     outputEl.classList.add('show');
   }
 }
-function downloadCheat() {
-  const content = "BYTE'S CODE CITY — FULL CHEAT SHEET\n\n" +
-    "LESSON 1 — Data Basics\nSTRING: text in quotes, like \"Byte\"\nNUMBER: a numeric value, no quotes\nBOOLEAN: only ever true or false\nVARIABLE: a labeled container that holds data\n\n" +
-    "LESSON 2 — Patterns & Sequences\nARRAY: an ordered list of values\nINDEX: position in an array, starting at 0\nPATTERN: a sequence that repeats or follows a rule\n\n" +
-    "LESSON 3 — Organizing Information\nOBJECT: key-value pairs, like { name: \"Byte\" }\nKEY / VALUE: the label and the data it points to\nSORT / GROUP: arrange into order, or collect similar items\n\n" +
-    "LESSON 4 — Byte's Data Challenge\nARRAY OF OBJECTS: a list where every item is its own organized profile\nBYTE'S METHOD: Identify the type -> Find the pattern -> Organize it clearly\n\n" +
-    "SYMBOLS REFERENCE\n[ ] square brackets -- hold an array, or grab an item by index\n{ } curly braces -- hold an object's key-value pairs\n: colon -- connects a key to its value\n. dot -- reaches into an object to grab one property\n' ' quotes -- wrap text values";
-  const blob = new Blob([content], { type: 'text/plain' });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url; a.download = 'byte-cheatsheet.txt';
-  document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-}
+
 function goUpgrade() {
   if (currentTier) {
     window.location.href = 'membership.html';
   } else {
     window.openAuthModal('signup');
   }
-}
-function handleLogout() {
-  if (window.firebaseAuth) { window.firebaseAuth.signOut().then(() => location.reload()); }
 }
 function spawnParticle() {
   const field = document.getElementById('particleField');
@@ -1135,6 +1184,8 @@ document.addEventListener('click', function(e) {
 function toggleMobileMenu() {
   document.getElementById('navHamburger').classList.toggle('open');
   document.getElementById('mobileMenu').classList.toggle('open');
+  const dashLink = document.getElementById('mobile-dashboard-link');
+  if (dashLink) dashLink.style.display = currentTier ? 'block' : 'none';
 }
 /* ══════════════════ ICEBREAKER — PATTERN MATCH GAME ══════════════════ */
 const IB_DATA_TYPES = [
