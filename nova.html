@@ -284,9 +284,32 @@ textarea.code-ed:focus { border-color: var(--y); }
 .builder-preview iframe { width: 100%; height: 380px; border: none; }
 .builder-note { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.4rem; padding: 0.5rem 0.75rem; background: rgba(0,0,0,0.2); border-radius: 6px; border-left: 2px solid rgba(255,224,102,0.3); }
 @media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .hero-tiles { flex-wrap: wrap; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .editor-wrap { grid-template-columns: 1fr; } .page-builder { grid-template-columns: 1fr; } .fact-ticker { display: none; } }
+
+.auth-modal { position: fixed; inset: 0; z-index: 1000; display:none; align-items:center; justify-content:center; background:rgba(7,5,15,.86); backdrop-filter:blur(8px); padding:1rem; }
+.auth-modal.open { display:flex; }
+.auth-card { width:min(430px,94vw); background:var(--bg-card); border:1px solid var(--border-bright); border-radius:14px; padding:1.6rem; box-shadow:var(--glow-strong); }
+.auth-card h2 { font-family:var(--font-display); color:var(--y); margin-bottom:.5rem; }
+.auth-card p { color:var(--text-dim); font-size:.86rem; margin-bottom:1rem; }
+.auth-card input { width:100%; margin:.35rem 0; padding:.75rem; border-radius:7px; border:1px solid var(--border); background:var(--bg-panel); color:var(--text); }
+.auth-submit { width:100%; margin-top:.7rem; padding:.75rem; border:0; border-radius:7px; background:linear-gradient(135deg,var(--y),var(--pk)); color:var(--bg); font-weight:700; cursor:pointer; }
+.auth-close { float:right; background:none; border:0; color:var(--text-dim); font-size:1.25rem; cursor:pointer; }
+.auth-switch { margin-top:.8rem; text-align:center; font-size:.78rem; color:var(--text-dim); }
+.auth-switch button { background:none; border:0; color:var(--y); cursor:pointer; }
 </style>
 </head>
 <body>
+<div class="auth-modal" id="auth-modal" aria-hidden="true">
+<div class="auth-card">
+<button class="auth-close" type="button" onclick="closeAuthModal()" aria-label="Close">×</button>
+<h2 id="auth-modal-title">Welcome Back</h2>
+<p id="auth-modal-sub">Log in to continue your Method in Motion journey.</p>
+<form id="auth-form">
+<input id="auth-email" type="email" placeholder="Email" required>
+<input id="auth-password" type="password" placeholder="Password" required>
+<button class="auth-submit" id="auth-submit" type="submit">Log In</button>
+</form>
+<div class="auth-switch"><span id="auth-switch-copy">New here?</span> <button type="button" id="auth-switch-btn" onclick="switchAuthMode()">Join Free</button></div>
+</div></div>
 <div class="discovery-overlay" id="discoveryOverlay">
 <div class="nova-mark">▲ ▲ ▲</div>
 <div class="discovery-title" id="discoveryTitle">Nova's Discovery Dome</div>
@@ -306,9 +329,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <nav>
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
-<li><a href="games.html">Games</a></li>
 <li class="nav-drop" id="exploreDrop">
-<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')" aria-haspopup="true">Explore <span class="nav-drop-arrow">⌄</span></button>
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')" aria-haspopup="true">MiM U <span class="nav-drop-arrow">⌄</span></button>
 <div class="nav-drop-menu">
 <a class="nav-drop-item" href="pdfs.html">PDFs</a>
 <a class="nav-drop-item" href="library.html">Library</a>
@@ -319,6 +341,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <li class="nav-drop" id="undergroundDrop">
 <button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')" aria-haspopup="true">Underground <span class="nav-drop-arrow">⌄</span></button>
 <div class="nav-drop-menu">
+<a class="nav-drop-item" href="games.html">Games</a>
 <a class="nav-drop-item" href="tag-wall.html">Tag Wall</a>
 <a class="nav-drop-item" href="broken-syntax.html">Broken Syntax</a>
 <a class="nav-drop-item" href="mim-tv.html">MiM TV</a>
@@ -333,8 +356,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button id="nav-logout-btn" type="button">Log Out</button>
 </div>
 <div id="nav-auth-btns">
-<button id="nav-login" type="button">Log In</button>
-<button id="nav-join" type="button">Join Free</button>
+<button id="nav-login" type="button" onclick="window.openAuthModal && window.openAuthModal('login')">Log In</button>
+<button id="nav-join" type="button" onclick="window.openAuthModal && window.openAuthModal('signup')">Join Free</button>
 </div>
 </div>
 <button class="nav-hamburger" id="navHamburger" type="button" onclick="toggleMobileMenu()" aria-label="Open menu" aria-controls="mobileMenu">
@@ -342,19 +365,19 @@ textarea.code-ed:focus { border-color: var(--y); }
 </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-<a href="games.html">Games</a>
-<div class="mobile-menu-label">Explore</div>
+<div class="mobile-menu-label">MiM U</div>
 <a href="pdfs.html">PDFs</a>
 <a href="library.html">Library</a>
 <a href="characters.html">Characters</a>
 <a href="about.html">About</a>
 <div class="mobile-menu-label">The Underground</div>
+<a href="games.html">Games</a>
 <a href="tag-wall.html">Tag Wall</a>
 <a href="broken-syntax.html">Broken Syntax</a>
 <a href="mim-tv.html">MiM TV</a>
 <a href="comic.html">Comics</a>
 <div class="mobile-menu-label"></div>
-<a href="dashboard.html">Dashboard</a>
+<a href="dashboard.html" id="mobile-dashboard-link" style="display:none;">Dashboard</a>
 </div>
 <section class="hero" id="novaHero">
 <video class="hero-video" autoplay muted loop playsinline poster="nova-entrance.png">
@@ -453,34 +476,29 @@ textarea.code-ed:focus { border-color: var(--y); }
 </div>
 <div class="content-block active" id="block-1-read" style="display:none">
 <div class="section-header">Blueprint Thinking</div>
-<div class="section-sub">LESSON 01 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 04</div>
-<h3>HTML is the Structure</h3>
-<p>Every website you've ever used was built on the same foundation: <strong>HTML</strong>. HTML tells the browser <em>what</em> is on a page and <em>where</em> it belongs.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 04</div>
-<h3>CSS is the Style</h3>
-<p>Colors, fonts, spacing, layout — that's all CSS. Nova teaches HTML first because nothing in CSS works without structure underneath it.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 04</div>
-<h3>JavaScript is the Behavior</h3>
-<p>Clicks, animations, live data — JavaScript makes pages respond. But it needs HTML elements to interact with. Structure always comes first.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 04</div>
-<h3>The Browser Reads Top to Bottom</h3>
-<p>When you open a site, the browser downloads your HTML file and reads every line in order.</p>
-<div class="code-block">
-<span class="ct">&lt;!DOCTYPE html&gt;</span>
-<span class="ct">&lt;html&gt;</span>
-<span class="ct">&lt;head&gt;&lt;title&gt;</span>My First Page<span class="ct">&lt;/title&gt;&lt;/head&gt;</span>
-<span class="ct">&lt;body&gt;&lt;h1&gt;</span>Hello, World!<span class="ct">&lt;/h1&gt;&lt;/body&gt;</span>
-<span class="ct">&lt;/html&gt;</span>
-</div>
-</div>
+<div class="section-sub">LESSON 01 · CODERS · SEE THE SKELETON</div>
+<div class="read-card"><div class="read-card-num">01 / 09</div><h3>Every Page Starts With a Skeleton</h3><p>Think of a website like a house. <strong>HTML is the frame and skeleton</strong>: walls, rooms, doors, and where everything belongs. <strong>CSS is the paint, furniture, and clothes</strong>: how the structure looks. <strong>JavaScript is the switches, doors, and moving parts</strong>: what happens when someone clicks, types, or interacts. Nova starts with HTML because a strong build begins with structure.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 09</div><h3>HTML = Structure</h3><p>HTML stands for <strong>HyperText Markup Language</strong>. It labels the pieces of a page so the browser knows, “This is a heading. This is a paragraph. This is a link.” HTML answers: <strong>What is here, and how is it organized?</strong></p></div>
+<div class="read-card"><div class="read-card-num">03 / 09</div><h3>Tag Anatomy — OPEN → CONTENT → CLOSE</h3><p>Before we inspect a whole document, learn to read one element:</p><div class="code-block"><span class="ct">&lt;h1&gt;</span>Hello<span class="ct">&lt;/h1&gt;</span></div><p><code>&lt;</code> begins a tag. <code>h1</code> is the tag name. <code>&gt;</code> ends the opening tag. <strong>Hello</strong> is the content. <code>&lt;/h1&gt;</code> closes the element, and the <code>/</code> marks a closing tag. Memory rule: <strong>OPEN → CONTENT → CLOSE.</strong></p></div>
+<div class="read-card"><div class="read-card-num">04 / 09</div><h3>Tag vs Element</h3><p>A <strong>tag</strong> is one markup marker, such as <code>&lt;p&gt;</code> or <code>&lt;/p&gt;</code>. An <strong>element</strong> is the complete piece: opening tag + content + closing tag, such as <code>&lt;p&gt;Hello&lt;/p&gt;</code>. Tags are the labels; the full labeled block is the element.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 09</div><h3>Layer 1 — Tell the Browser What Kind of Document This Is</h3><div class="code-block"><span class="ct">&lt;!DOCTYPE html&gt;</span></div><p><code>&lt;!DOCTYPE html&gt;</code> goes first. It tells the browser to use modern HTML rules. It is a <strong>declaration</strong>, not a normal paired element, so it does not need a closing tag.</p></div>
+<div class="read-card"><div class="read-card-num">06 / 09</div><h3>Layer 2 — The HTML Wrapper</h3><div class="code-block"><span class="ct">&lt;html&gt;</span>
+  ...
+<span class="ct">&lt;/html&gt;</span></div><p>The <code>&lt;html&gt;</code> element wraps the HTML document. Everything else in the page skeleton belongs inside it.</p></div>
+<div class="read-card"><div class="read-card-num">07 / 09</div><h3>Layer 3 — Head and Body</h3><div class="code-block"><span class="ct">&lt;html&gt;</span>
+  <span class="ct">&lt;head&gt;</span>
+    <span class="ct">&lt;title&gt;</span>My First Page<span class="ct">&lt;/title&gt;</span>
+  <span class="ct">&lt;/head&gt;</span>
+  <span class="ct">&lt;body&gt;</span>
+    <span class="ct">&lt;h1&gt;</span>Hello, World!<span class="ct">&lt;/h1&gt;</span>
+  <span class="ct">&lt;/body&gt;</span>
+<span class="ct">&lt;/html&gt;</span></div><p><code>&lt;head&gt;</code> holds setup information. <code>&lt;title&gt;</code> appears in the browser tab, not as visible page text. <code>&lt;body&gt;</code> holds what visitors actually see.</p><div class="code-block">html
+├── head
+│   └── title
+└── body
+    └── h1</div></div>
+<div class="read-card"><div class="read-card-num">08 / 09</div><h3>The Browser Reads Top to Bottom — and Inside to Outside</h3><p>The browser reads the file in order, but it also notices <strong>which elements are inside other elements</strong>. That relationship is called nesting. You will investigate it deeply in Lesson 3.</p></div>
+<div class="read-card"><div class="read-card-num">09 / 09</div><h3>Indentation Is Your X-Ray Vision</h3><p>Indentation usually does not change how HTML behaves, but it makes structure easier for humans to see. When an element lives inside another element, move it inward. Each indent is a clue showing the page's parent/child structure.</p><p><strong>Nova memory map:</strong> SKELETON → SECTIONS → BLOCKS → NEST → BUILD.</p></div>
 </div>
 <div class="content-block" id="block-1-terms" style="display:none">
 <div class="section-header">Key Terms</div>
@@ -522,6 +540,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 01 · TRY IT LIVE</div>
 <p style="margin-bottom:0.8rem;color:var(--text-dim);font-size:0.9rem;">Edit the HTML on the left. Press Run to see your page on the right.</p>
+<div class="builder-intro"><h4>▲ Nova’s Experiment Loop</h4><p><strong>Discovery routine:</strong> Run it unchanged → predict what you will see → change ONE thing → run again → explain what changed. Point to an OPENING TAG, CONTENT, and CLOSING TAG. Try changing the h1 to h2, then intentionally remove one closing tag and inspect what changes.</p></div>
 <div class="editor-wrap">
 <div class="editor-pane">
 <label>HTML Editor</label>
@@ -543,6 +562,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 </div>
 </div>
 </div>
+<div class="quiz-card"><div class="quiz-q">Which closing tag correctly matches &lt;h1&gt;?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,false,'That opens another heading.')">&lt;h1&gt;</button><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct — the slash marks the closing tag.')">&lt;/h1&gt;</button></div><div class="quiz-feedback"></div></div>
 <div class="content-block" id="block-1-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
@@ -587,33 +607,23 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-2-read" style="display:none">
-<div class="section-header">Building Blocks</div>
-<div class="section-sub">LESSON 02 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 05</div>
-<h3>Headings — &lt;h1&gt; to &lt;h6&gt;</h3>
-<p>h1 is your main page title. h2 through h6 create sub-levels. One h1 per page.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 05</div>
-<h3>Paragraphs — &lt;p&gt;</h3>
-<p>Every block of body text lives in a &lt;p&gt; tag.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 05</div>
-<h3>Images — &lt;img&gt;</h3>
-<p>Self-closing. Needs <code>src=</code> to find the file and <code>alt=</code> to describe it.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 05</div>
-<h3>Links — &lt;a&gt;</h3>
-<p>The anchor tag. <code>href=</code> sets where clicking takes you.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">05 / 05</div>
-<h3>Lists — &lt;ul&gt; and &lt;ol&gt;</h3>
-<p>&lt;ul&gt; gives bullets, &lt;ol&gt; gives numbers. Each item uses &lt;li&gt;.</p>
-</div>
+<div class="section-header">Building Blocks</div><div class="section-sub">LESSON 02 · CODERS · IDENTIFY THE BLOCKS</div>
+<div class="read-card"><div class="read-card-num">01 / 10</div><h3>Headings Build a Hierarchy</h3><div class="code-block"><span class="ct">&lt;h1&gt;</span>My Animal Site<span class="ct">&lt;/h1&gt;</span>
+<span class="ct">&lt;h2&gt;</span>Dogs<span class="ct">&lt;/h2&gt;</span>
+<span class="ct">&lt;h3&gt;</span>Golden Retrievers<span class="ct">&lt;/h3&gt;</span></div><p>Heading numbers show <strong>importance and hierarchy</strong>, not just size. <code>h1</code> is the main page topic, <code>h2</code> is a major section, and <code>h3</code> is a subsection. Keep levels logical instead of jumping randomly from h1 to h4. Each heading still follows <strong>OPEN → CONTENT → CLOSE</strong>.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 10</div><h3>Paragraphs Hold Supporting Text</h3><div class="code-block"><span class="ct">&lt;p&gt;</span>I love learning how websites are built.<span class="ct">&lt;/p&gt;</span></div><p>A heading labels a topic. A paragraph explains or supports it. <code>&lt;p&gt;</code> opens the paragraph, the sentence is content, and <code>&lt;/p&gt;</code> closes it.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 10</div><h3>Attributes Add Extra Information</h3><p>An <strong>attribute</strong> is extra information written inside an opening tag. The pattern is <code>name="value"</code>. The <code>=</code> connects the attribute name to its value, and quotes wrap the value.</p><div class="code-block"><span class="ct">&lt;tag</span> <span class="ca">name=</span><span class="cv">"value"</span><span class="ct">&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">04 / 10</div><h3>Images — A Void Element</h3><div class="code-block"><span class="ct">&lt;img</span> <span class="ca">src=</span><span class="cv">"nova.png"</span> <span class="ca">alt=</span><span class="cv">"Nova exploring a holographic map"</span><span class="ct">&gt;</span></div><p><code>img</code> creates an image. <code>src</code> tells the browser where the file lives. <code>alt</code> describes the image for accessibility or when the image cannot load. <code>&lt;img&gt;</code> is a <strong>void element</strong>: it does not wrap content and does not need <code>&lt;/img&gt;</code>. A filename like <code>"photo.jpg"</code> can point to a file in the same folder; a full URL can point elsewhere.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 10</div><h3>Links — Destination + Clickable Content</h3><div class="code-block"><span class="ct">&lt;a</span> <span class="ca">href=</span><span class="cv">"about.html"</span><span class="ct">&gt;</span>About Me<span class="ct">&lt;/a&gt;</span>
+<span class="ct">&lt;a</span> <span class="ca">href=</span><span class="cv">"https://example.com"</span><span class="ct">&gt;</span>Visit Example<span class="ct">&lt;/a&gt;</span></div><p><code>a</code> means anchor. <code>href</code> is the destination. The words between the tags are what the visitor clicks. A destination such as <code>#about</code> can jump to a section inside the same page — you will connect that in Lesson 4.</p></div>
+<div class="read-card"><div class="read-card-num">06 / 10</div><h3>Lists Are Containers With Items Inside</h3><div class="code-block"><span class="ct">&lt;ul&gt;</span>
+  <span class="ct">&lt;li&gt;</span>Coding<span class="ct">&lt;/li&gt;</span>
+  <span class="ct">&lt;li&gt;</span>Skating<span class="ct">&lt;/li&gt;</span>
+<span class="ct">&lt;/ul&gt;</span></div><p><code>ul</code> makes an unordered/bulleted list. <code>ol</code> makes an ordered/numbered list. Each <code>li</code> is one list item and belongs <strong>inside</strong> its list container. You are already seeing parent/child nesting.</p></div>
+<div class="read-card"><div class="read-card-num">07 / 10</div><h3>Paired vs Void Elements</h3><p><strong>Paired elements</strong> wrap content: <code>&lt;p&gt;...&lt;/p&gt;</code>, <code>&lt;h1&gt;...&lt;/h1&gt;</code>, <code>&lt;a&gt;...&lt;/a&gt;</code>. A <strong>void element</strong> such as <code>&lt;img&gt;</code> does not wrap content and has no closing tag. If you see <code>&lt;/img&gt;</code>, that is a clue something is wrong.</p></div>
+<div class="read-card"><div class="read-card-num">08 / 10</div><h3>Attribute Detective: src, href, alt</h3><p>Use <code>src</code> to tell an image where its file is. Use <code>href</code> to tell a link where to go. Use <code>alt</code> to describe an image. Different elements expect different attributes.</p></div>
+<div class="read-card"><div class="read-card-num">09 / 10</div><h3>Discovery Errors — Spot the Glitch</h3><p>Common beginner clues: a paired tag never closes; quotes are missing around an attribute value; a link uses <code>src</code> instead of <code>href</code>; an image has no useful <code>alt</code>; an <code>li</code> sits outside its <code>ul</code>/<code>ol</code>; or heading levels jump randomly.</p></div>
+<div class="read-card"><div class="read-card-num">10 / 10</div><h3>Block Check</h3><p>When you read a line of HTML, ask: <strong>What element is this? Does it open and close? Does it have attributes? What content or child elements belong inside?</strong> That is how Nova reads a page X-ray.</p></div>
 </div>
 <div class="content-block" id="block-2-terms" style="display:none">
 <div class="section-header">Key Terms</div>
@@ -644,6 +654,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="content-block" id="block-2-build" style="display:none">
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 02 · BUILD A PROFILE</div>
+<div class="builder-intro"><h4>▲ Nova’s Experiment Loop</h4><p><strong>Discovery routine:</strong> Run it unchanged → predict → change ONE thing → run again → explain. Identify an ATTRIBUTE and ATTRIBUTE VALUE. Change link text without changing href, then change href without changing the text. Add one list item or edit an image alt description.</p></div>
 <div class="editor-wrap">
 <div class="editor-pane">
 <label>HTML Editor</label>
@@ -665,6 +676,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 </div>
 </div>
 </div>
+<div class="quiz-card"><div class="quiz-q">Which attribute tells an image where its file lives?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct — src means source.')">src</button><button class="quiz-opt" onclick="checkQuiz(this,false,'href is used for link destinations.')">href</button></div><div class="quiz-feedback"></div></div>
 <div class="content-block" id="block-2-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
@@ -677,7 +689,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-2">
+<div class="lesson-complete" id="complete-2">
 <h3>▲ &nbsp; Lesson 2 Complete</h3>
 <p>Headings, paragraphs, images, links, lists — you know every core building block now.</p>
 <div class="lesson-joke" id="joke-2">
@@ -709,36 +721,40 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-3-read" style="display:none">
-<div class="section-header">Layout &amp; Nesting</div>
-<div class="section-sub">LESSON 03 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 04</div>
-<h3>The &lt;div&gt; — Your Container</h3>
-<p>A generic box with no visual style on its own. Groups elements so CSS can move and style them together.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 04</div>
-<h3>Nesting</h3>
-<p>When you place an element inside another, the outer is the parent and the inner is the child.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 04</div>
-<h3>Semantic Tags</h3>
-<p>&lt;header&gt;, &lt;nav&gt;, &lt;main&gt;, &lt;section&gt;, &lt;footer&gt; describe their purpose — use them instead of &lt;div&gt; when the role is clear.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 04</div>
-<h3>The Box Model</h3>
-<p>Every element is a box: content, padding, border, and margin.</p>
-<div class="code-block">
-<span class="ct">&lt;header&gt;</span> &nbsp;&lt;nav&gt;<span class="ct">&lt;a </span>
-<span class="ca">href</span>=<span class="cv">"/"</span>
-<span class="ct">&gt;</span>Home<span class="ct">&lt;/a&gt;&lt;/nav&gt;</span>
-<span class="ct">&lt;/header&gt;</span>
-<span class="ct">&lt;main&gt;&lt;section&gt;&lt;h1&gt;</span>Welcome<span class="ct">&lt;/h1&gt;&lt;/section&gt;&lt;/main&gt;</span>
-<span class="ct">&lt;footer&gt;</span>Built with MiM<span class="ct">&lt;/footer&gt;</span>
-</div>
-</div>
+<div class="section-header">Layout &amp; Nesting</div><div class="section-sub">LESSON 03 · CODERS · NEST THE BLOCKS</div>
+<div class="read-card"><div class="read-card-num">01 / 09</div><h3>&lt;div&gt; — A Generic Container</h3><p>A <code>&lt;div&gt;</code> groups related content when no more meaningful HTML element fits.</p><div class="code-block"><span class="ct">&lt;div&gt;</span>
+  <span class="ct">&lt;h2&gt;</span>About Me<span class="ct">&lt;/h2&gt;</span>
+  <span class="ct">&lt;p&gt;</span>I build things.<span class="ct">&lt;/p&gt;</span>
+<span class="ct">&lt;/div&gt;</span></div><p>Grouping creates structure first. CSS can style that group later.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 09</div><h3>Nesting = Boxes Inside Boxes</h3><p>Imagine rooms inside a house or boxes inside bigger boxes. When one HTML element sits inside another, it is <strong>nested</strong>.</p><div class="code-block"><span class="ct">&lt;section&gt;</span>
+  <span class="ct">&lt;h2&gt;</span>About<span class="ct">&lt;/h2&gt;</span>
+  <span class="ct">&lt;p&gt;</span>Hello!<span class="ct">&lt;/p&gt;</span>
+<span class="ct">&lt;/section&gt;</span></div><p><code>section</code> is the <strong>parent</strong>. <code>h2</code> and <code>p</code> are its <strong>children</strong>. Because those two children share the same parent, they are <strong>siblings</strong>.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 09</div><h3>Closing Order — Last Opened, First Closed</h3><p>Nested elements close in reverse order. Memory rule: <strong>Last opened, first closed.</strong></p><div class="code-block"><span class="cc">✓ CORRECT</span>
+<span class="ct">&lt;section&gt;</span>
+  <span class="ct">&lt;p&gt;</span>Hello<span class="ct">&lt;/p&gt;</span>
+<span class="ct">&lt;/section&gt;</span>
+
+<span class="cc">✗ BROKEN</span>
+<span class="ct">&lt;section&gt;</span>
+  <span class="ct">&lt;p&gt;</span>Hello
+<span class="ct">&lt;/section&gt;</span>
+<span class="ct">&lt;/p&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">04 / 09</div><h3>Indentation Shows Relationships</h3><p>Move child elements inward. Indentation is a visual map for humans: elements lined up at the same level are often siblings; elements shifted inward are nested children.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 09</div><h3>Semantic Tags Tell You Their Job</h3><p><strong>Semantic</strong> means the tag name describes what the content is for. <code>&lt;header&gt;</code> = introductory/top content. <code>&lt;nav&gt;</code> = navigation links. <code>&lt;main&gt;</code> = primary unique page content. <code>&lt;section&gt;</code> = a grouped topic. <code>&lt;footer&gt;</code> = ending/site information. A page normally has one primary <code>&lt;main&gt;</code>.</p></div>
+<div class="read-card"><div class="read-card-num">06 / 09</div><h3>Div or Semantic Tag?</h3><p>If a meaningful semantic tag fits the job, use it. If you only need a generic group with no specific meaning, use <code>&lt;div&gt;</code>.</p><div class="code-block"><span class="cc">Meaningful page section</span>
+<span class="ct">&lt;section&gt;</span>...<span class="ct">&lt;/section&gt;</span>
+
+<span class="cc">Generic grouping box</span>
+<span class="ct">&lt;div&gt;</span>...<span class="ct">&lt;/div&gt;</span></div></div>
+<div class="read-card"><div class="read-card-num">07 / 09</div><h3>Semantic Skeleton X-Ray</h3><div class="code-block">body
+├── header
+│   └── nav
+├── main
+│   └── section
+└── footer</div><p>This is the same idea as Skeleton Stack: identify the large page regions first, then inspect which blocks live inside each region.</p></div>
+<div class="read-card"><div class="read-card-num">08 / 09</div><h3>CSS Preview — The Box Model</h3><p>Every element can be imagined as a box: <strong>content</strong> is what is inside, <strong>padding</strong> is space inside the border, <strong>border</strong> is the edge, and <strong>margin</strong> is space outside. This is only a preview — Nova's priority is getting the HTML structure right before styling it.</p></div>
+<div class="read-card"><div class="read-card-num">09 / 09</div><h3>Nesting Check</h3><p>Ask: Who is the parent? Who are the children? Which elements are siblings? Did the last element opened close first? Can indentation make the structure easier to see?</p></div>
 </div>
 <div class="content-block" id="block-3-terms" style="display:none">
 <div class="section-header">Key Terms</div>
@@ -769,6 +785,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="content-block" id="block-3-build" style="display:none">
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 03 · FULL PAGE LAYOUT</div>
+<div class="builder-intro"><h4>▲ Nova’s Experiment Loop</h4><p><strong>Discovery routine:</strong> Run it unchanged → predict → change ONE thing → run again → explain. Identify a PARENT and CHILD. Fix or create nesting, then try replacing a generic div with a meaningful section when the content has a clear role.</p></div>
 <div class="editor-wrap">
 <div class="editor-pane">
 <label>HTML Editor</label>
@@ -790,6 +807,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 </div>
 </div>
 </div>
+<div class="quiz-card"><div class="quiz-q">In &lt;section&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/section&gt;, which element is the parent?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct — section contains the paragraph.')">&lt;section&gt;</button><button class="quiz-opt" onclick="checkQuiz(this,false,'The paragraph is the child inside section.')">&lt;p&gt;</button></div><div class="quiz-feedback"></div></div>
 <div class="content-block" id="block-3-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
@@ -802,7 +820,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-3">
+<div class="lesson-complete" id="complete-3">
 <h3>▲ &nbsp; Lesson 3 Complete</h3>
 <p>Semantic tags, nesting rules, the box model — you can structure a full page now.</p>
 <div class="lesson-joke" id="joke-3">
@@ -816,6 +834,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="sidebar-label">Lesson 04</div>
 <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read">
 <span class="sidebar-icon">R</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'terms')" id="sb-4-terms"><span class="sidebar-icon">T</span> Terms</button>
 <button class="sidebar-nav-btn" onclick="showBlock(4,'builder')" id="sb-4-builder">
 <span class="sidebar-icon">BD</span> Build</button>
 <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect">
@@ -832,29 +851,54 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-4-read" style="display:none">
-<div class="section-header">Build Your Page</div>
-<div class="section-sub">LESSON 04 · CODERS</div>
-<div class="builder-intro">
-<h4>▲ Your Personal Site — A MiM Journey Project</h4>
-<p>What you build here is the foundation of a real personal website that every MiM character will help you grow. Nova gives you the HTML skeleton today.</p>
-<div class="builder-journey">
-<span class="journey-badge jb-active">Nova — HTML Structure (You are here)</span>
-<span class="journey-badge jb-coming">+ CSS Styling (coming soon)</span>
-<span class="journey-badge jb-coming">+ JavaScript (coming soon)</span>
-<span class="journey-badge jb-coming">+ Final Launch (coming soon)</span>
+<div class="section-header">Build Your Page</div><div class="section-sub">LESSON 04 · CODERS · ASSEMBLE YOUR SKELETON</div>
+<div class="builder-intro"><h4>▲ Your Personal Site — A MiM Journey Project</h4><p>What you build here is the foundation of a real personal website that every MiM character will help you grow. Nova gives you the HTML skeleton today.</p><div class="builder-journey"><span class="journey-badge jb-active">Nova — HTML Structure (You are here)</span><span class="journey-badge jb-coming">+ CSS Styling (coming soon)</span><span class="journey-badge jb-coming">+ JavaScript (coming soon)</span><span class="journey-badge jb-coming">+ Final Launch (coming soon)</span></div></div>
+<div class="read-card"><div class="read-card-num">01 / 08</div><h3>Recap — What You Already Know</h3><p>You can now read the document skeleton, use <strong>OPEN → CONTENT → CLOSE</strong>, recognize attributes, add headings/paragraphs/links/images/lists, and nest blocks into semantic sections. Now combine those discoveries into one page.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 08</div><h3>Stage 1 — Document Skeleton</h3><div class="code-block"><span class="ct">&lt;!DOCTYPE html&gt;</span>
+<span class="ct">&lt;html&gt;</span>
+  <span class="ct">&lt;head&gt;</span>
+    <span class="ct">&lt;title&gt;</span>My Site<span class="ct">&lt;/title&gt;</span>
+  <span class="ct">&lt;/head&gt;</span>
+  <span class="ct">&lt;body&gt;</span>
+  <span class="ct">&lt;/body&gt;</span>
+<span class="ct">&lt;/html&gt;</span></div><p>DOCTYPE declares modern HTML. HTML wraps the document. Head holds setup information. Title names the browser tab. Body holds visible page content.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 08</div><h3>Stage 2 — Header + Navigation</h3><div class="code-block"><span class="ct">&lt;header&gt;</span>
+  <span class="ct">&lt;h1&gt;</span>Your Name<span class="ct">&lt;/h1&gt;</span>
+  <span class="ct">&lt;nav&gt;</span>
+    <span class="ct">&lt;a</span> <span class="ca">href=</span><span class="cv">"#about"</span><span class="ct">&gt;</span>About<span class="ct">&lt;/a&gt;</span>
+  <span class="ct">&lt;/nav&gt;</span>
+<span class="ct">&lt;/header&gt;</span></div><p><code>href="#about"</code> means “jump to the element whose <code>id</code> is <code>about</code>.” The <code>#</code> points to an ID on this page.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 08</div><h3>Stage 3 — Main + Hero Section</h3><div class="code-block"><span class="ct">&lt;main&gt;</span>
+  <span class="ct">&lt;section&gt;</span>
+    <span class="ct">&lt;h2&gt;</span>Welcome<span class="ct">&lt;/h2&gt;</span>
+    <span class="ct">&lt;p&gt;</span>I am learning to build the web.<span class="ct">&lt;/p&gt;</span>
+  <span class="ct">&lt;/section&gt;</span>
+<span class="ct">&lt;/main&gt;</span></div><p><code>main</code> holds the page's primary unique content. The section is a child of main, and its heading and paragraph are children of the section.</p></div>
+<div class="read-card"><div class="read-card-num">05 / 08</div><h3>Stage 4 — Connect a Hash Link to an ID</h3><div class="code-block"><span class="ct">&lt;a</span> <span class="ca">href=</span><span class="cv">"#about"</span><span class="ct">&gt;</span>About<span class="ct">&lt;/a&gt;</span>
+
+<span class="ct">&lt;section</span> <span class="ca">id=</span><span class="cv">"about"</span><span class="ct">&gt;</span>
+  <span class="ct">&lt;h2&gt;</span>About Me<span class="ct">&lt;/h2&gt;</span>
+<span class="ct">&lt;/section&gt;</span></div><p><code>id</code> is an attribute that gives one element a unique name. The link's <code>#about</code> target matches <code>id="about"</code>. Change one without changing the other and the jump link breaks.</p></div>
+<div class="read-card"><div class="read-card-num">06 / 08</div><h3>Stage 5 — Footer</h3><div class="code-block"><span class="ct">&lt;/main&gt;</span>
+<span class="ct">&lt;footer&gt;</span>
+  <span class="ct">&lt;p&gt;</span>Built by me.<span class="ct">&lt;/p&gt;</span>
+<span class="ct">&lt;/footer&gt;</span>
+<span class="ct">&lt;/body&gt;</span></div><p>The footer sits outside <code>main</code> because it is ending/site information, but it remains inside <code>body</code> because it is visible page content.</p></div>
+<div class="read-card"><div class="read-card-num">07 / 08</div><h3>Stage 6 — Validate Before Launch</h3><p>Run Nova's X-ray checklist: Are all paired tags closed? Does nesting close in reverse order? Is visible content inside body? Is title inside head? Do images have useful alt text? Do nav links point to real IDs or pages? Fix structure before styling.</p></div>
+<div class="read-card"><div class="read-card-num">08 / 08</div><h3>What the Builder Is Actually Generating</h3><p>The fields below are not magic boxes. Your site name becomes an <code>h1</code>. Navigation becomes <code>a</code> elements. Your sections become semantic HTML inside <code>main</code>. When you download the file, you are saving the same skeleton you learned to read — now filled with your own content.</p><p><strong>SKELETON → SECTIONS → BLOCKS → NEST → BUILD.</strong></p></div>
 </div>
-</div>
-<div class="read-card">
-<div class="read-card-num">01 / 02</div>
-<h3>What You'll Build Today</h3>
-<p>A &lt;header&gt; with your name and nav, a hero &lt;section&gt; welcoming visitors, an about &lt;section&gt; with facts about you, and a &lt;footer&gt; with your name.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 02</div>
-<h3>Save This File</h3>
-<p>When you move to the next MiM character you will add to it. By the time all six characters are complete, you'll have a fully styled personal website built entirely by you.</p>
-</div>
-</div>
+<div class="content-block" id="block-4-terms" style="display:none">
+<div class="section-header">Key Terms</div><div class="section-sub">LESSON 04 · TAP TO EXPAND</div>
+<div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Document Skeleton <span class="term-arrow">›</span></div><div class="term-def">The basic HTML structure: doctype, html, head, title, and body.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">id <span class="term-arrow">›</span></div><div class="term-def">An attribute that gives one element a unique identifier, such as id="about".</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Fragment / Hash Link <span class="term-arrow">›</span></div><div class="term-def">A link like href="#about" that jumps to the element with id="about".</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Navigation <span class="term-arrow">›</span></div><div class="term-def">Links that help visitors move between pages or sections.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Semantic Structure <span class="term-arrow">›</span></div><div class="term-def">Using meaningful elements such as header, nav, main, section, and footer to describe page roles.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Validate / Debug <span class="term-arrow">›</span></div><div class="term-def">Check structure for mistakes, find what is broken, and correct it.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Source File <span class="term-arrow">›</span></div><div class="term-def">The editable code file used to create the page.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">.html File <span class="term-arrow">›</span></div><div class="term-def">A file containing HTML markup that a browser can open as a webpage.</div></div>
+</div></div>
 <div class="content-block" id="block-4-builder" style="display:none">
 <div class="section-header">Nova's Page Builder</div>
 <div class="section-sub">LESSON 04 · STEP 1 OF 6</div>
@@ -890,6 +934,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 </div>
 </div>
 </div>
+<div class="quiz-card"><div class="quiz-q">What does href="#about" connect to?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct — it targets the element whose id is about.')">An element with id="about"</button><button class="quiz-opt" onclick="checkQuiz(this,false,'A hash link targets an ID on the page.')">The browser tab title</button></div><div class="quiz-feedback"></div></div>
 <div class="content-block" id="block-4-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 04 · FINAL REFLECTION</div>
@@ -902,7 +947,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-4">
+<div class="lesson-complete" id="complete-4">
 <h3>▲ &nbsp; Nova's Dome Complete</h3>
 <p>Blueprint thinking. Building blocks. Layout and nesting. Your first real HTML page. That's the whole foundation.</p>
 <div class="lesson-joke" id="joke-4">
@@ -920,88 +965,76 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div id="cheat-content" style="display:none;">
+<div class="section-header">Nova's Cheat Sheet</div><div class="section-sub">ALL FOUR LESSONS · HTML X-RAY REFERENCE</div>
+<div class="cheat-card"><h3>▲ Core Memory Map</h3><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">PAGE FLOW</div><div class="cheat-desc">SKELETON → SECTIONS → BLOCKS → NEST → BUILD</div></div>
+<div class="cheat-item"><div class="cheat-term">TAG FLOW</div><div class="cheat-desc">OPEN → CONTENT → CLOSE</div></div></div></div>
+<div class="cheat-card"><h3>▲ Tag Anatomy + Element vs Tag</h3><div class="code-block">&lt;p&gt;Hello&lt;/p&gt;</div><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">&lt;p&gt;</div><div class="cheat-desc">Opening tag. &lt; begins it, p is the tag name, &gt; ends the tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">Hello</div><div class="cheat-desc">Content.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt;/p&gt;</div><div class="cheat-desc">Closing tag. / marks the closing version.</div></div>
+<div class="cheat-item"><div class="cheat-term">Element</div><div class="cheat-desc">The full piece: opening tag + content + closing tag. A tag is only one markup marker.</div></div></div></div>
+<div class="cheat-card"><h3>▲ Full HTML Skeleton</h3><div class="code-block">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+  &lt;head&gt;
+    &lt;title&gt;My Page&lt;/title&gt;
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;h1&gt;Hello&lt;/h1&gt;
+  &lt;/body&gt;
+&lt;/html&gt;</div><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">DOCTYPE</div><div class="cheat-desc">First line; tells the browser to use modern HTML rules. Declaration, no closing tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">head</div><div class="cheat-desc">Setup/metadata. title appears in the browser tab.</div></div>
+<div class="cheat-item"><div class="cheat-term">body</div><div class="cheat-desc">Visible page content.</div></div></div></div>
+<div class="cheat-card"><h3>▲ Common Content Tags</h3><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">h1–h6</div><div class="cheat-desc">Heading hierarchy from main topic to deeper subtopics.</div></div>
+<div class="cheat-item"><div class="cheat-term">p</div><div class="cheat-desc">Paragraph/supporting text.</div></div>
+<div class="cheat-item"><div class="cheat-term">a</div><div class="cheat-desc">Anchor/link. href gives the destination.</div></div>
+<div class="cheat-item"><div class="cheat-term">img</div><div class="cheat-desc">Image void element. Uses src and alt; no closing &lt;/img&gt;.</div></div>
+<div class="cheat-item"><div class="cheat-term">ul / ol / li</div><div class="cheat-desc">Bulleted list / numbered list / one list item.</div></div></div></div>
+<div class="cheat-card"><h3>▲ Attributes — name="value"</h3><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">href</div><div class="cheat-desc">Link destination.</div></div>
+<div class="cheat-item"><div class="cheat-term">src</div><div class="cheat-desc">Source/file location.</div></div>
+<div class="cheat-item"><div class="cheat-term">alt</div><div class="cheat-desc">Accessible image description.</div></div>
+<div class="cheat-item"><div class="cheat-term">id</div><div class="cheat-desc">Unique identifier for one element.</div></div>
+<div class="cheat-item"><div class="cheat-term">= and quotes</div><div class="cheat-desc">= connects attribute name to value; quotes wrap the value.</div></div></div></div>
+<div class="cheat-card"><h3>▲ Links + Hash Navigation</h3><div class="code-block">&lt;a href="about.html"&gt;About&lt;/a&gt;
+&lt;a href="#about"&gt;Jump to About&lt;/a&gt;
+&lt;section id="about"&gt;...&lt;/section&gt;</div><p class="cheat-desc">Clickable content lives between a tags. #about targets the element with id="about".</p></div>
+<div class="cheat-card"><h3>▲ Images + Lists</h3><div class="code-block">&lt;img src="photo.jpg" alt="Description"&gt;
 
-<div class="section-header">Nova's Cheat Sheet</div>
-<div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
-<div class="cheat-card">
-<h3>▲ Lesson 1 — Blueprint Thinking</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">HTML</div>
-<div class="cheat-desc">HyperText Markup Language — the structure of every webpage.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">&lt;head&gt; / &lt;body&gt;</div>
-<div class="cheat-desc">head = invisible setup. body = everything visible.</div>
-</div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>▲ Lesson 2 — Building Blocks</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">&lt;h1&gt;-&lt;h6&gt;</div>
-<div class="cheat-desc">Headings — h1 is most important, never skip levels.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">&lt;img src alt&gt;</div>
-<div class="cheat-desc">src finds the file, alt describes it.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">&lt;a href&gt;</div>
-<div class="cheat-desc">Creates a link — href sets the destination.</div>
-</div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>▲ Lesson 3 — Layout &amp; Nesting</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">&lt;div&gt;</div>
-<div class="cheat-desc">Generic container, no style of its own.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">Semantic tags</div>
-<div class="cheat-desc">header, nav, main, section, footer.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">Box model</div>
-<div class="cheat-desc">content + padding + border + margin.</div>
-</div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>▲ Lesson 4 — Page Skeleton</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">&lt;!DOCTYPE html&gt;</div>
-<div class="cheat-desc">Always goes first — declares an HTML5 document.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">Full skeleton</div>
-<div class="cheat-desc">html &gt; head + body — the shape every page shares.</div>
-</div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>▲ Symbols Reference</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">&lt; &gt;</div>
-<div class="cheat-desc">Angle brackets — wrap every tag name.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">&lt;/ &gt;</div>
-<div class="cheat-desc">Closing tag — says "this element is done."</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">=</div>
-<div class="cheat-desc">Assigns an attribute value, like src="photo.jpg".</div>
-</div>
-</div>
-<div class="cheat-btn-row">
-<a href="nova-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
-<button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
+&lt;ul&gt;
+  &lt;li&gt;Coding&lt;/li&gt;
+  &lt;li&gt;Skating&lt;/li&gt;
+&lt;/ul&gt;</div><p class="cheat-desc">img is a void element. ul is a bulleted-list parent; ol is numbered; li elements belong inside the list.</p></div>
+<div class="cheat-card"><h3>▲ Nesting Rules</h3><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Parent</div><div class="cheat-desc">Element containing another element.</div></div>
+<div class="cheat-item"><div class="cheat-term">Child</div><div class="cheat-desc">Element nested inside a parent.</div></div>
+<div class="cheat-item"><div class="cheat-term">Sibling</div><div class="cheat-desc">Elements sharing the same parent.</div></div>
+<div class="cheat-item"><div class="cheat-term">Close order</div><div class="cheat-desc">LAST OPENED → FIRST CLOSED. Indent children inward to reveal structure.</div></div></div></div>
+<div class="cheat-card"><h3>▲ Semantic Page Map</h3><div class="code-block">body
+├── header
+│   └── nav
+├── main
+│   └── section
+└── footer</div><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Semantic</div><div class="cheat-desc">The tag name describes the content's role.</div></div>
+<div class="cheat-item"><div class="cheat-term">div vs semantic</div><div class="cheat-desc">Meaningful role available? Use semantic tag. Generic grouping? Use div.</div></div></div></div>
+<div class="cheat-card"><h3>▲ Paired vs Void + Symbols</h3><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Paired</div><div class="cheat-desc">p, h1, a, section: opening + closing tags.</div></div>
+<div class="cheat-item"><div class="cheat-term">Void</div><div class="cheat-desc">img: no closing tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">&lt; &gt;</div><div class="cheat-desc">Tag boundaries.</div></div>
+<div class="cheat-item"><div class="cheat-term">/</div><div class="cheat-desc">Closing-tag marker.</div></div>
+<div class="cheat-item"><div class="cheat-term">#</div><div class="cheat-desc">Targets an element ID in a fragment/hash link.</div></div></div></div>
+<div class="cheat-card"><h3>▲ Common HTML Bugs — X-Ray Debug Box</h3><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">Missing close</div><div class="cheat-desc">Check every paired element has its matching closing tag.</div></div>
+<div class="cheat-item"><div class="cheat-term">Wrong nesting</div><div class="cheat-desc">Close in reverse order: last opened, first closed.</div></div>
+<div class="cheat-item"><div class="cheat-term">Attributes</div><div class="cheat-desc">Check quotes, href vs src, useful alt text, and unique IDs.</div></div>
+<div class="cheat-item"><div class="cheat-term">Lists</div><div class="cheat-desc">li belongs inside ul or ol.</div></div>
+<div class="cheat-item"><div class="cheat-term">Head/body</div><div class="cheat-desc">Visible content belongs in body; title/setup belongs in head.</div></div>
+<div class="cheat-item"><div class="cheat-term">Hash links</div><div class="cheat-desc">href="#name" needs a matching id="name".</div></div></div></div>
+<div class="cheat-card"><h3>▲ Vocabulary X-Ray</h3><p class="cheat-desc">HTML · element · tag · opening tag · closing tag · attribute · attribute value · browser · document · head · body · title · void element · parent · child · sibling · nesting · indentation · semantic · div · header · nav · main · section · footer · id · fragment/hash link</p>
+<div class="cheat-btn-row"><a href="nova-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a></div></div>
 </div>
 </div>
 </div>
@@ -1016,6 +1049,32 @@ textarea.code-ed:focus { border-color: var(--y); }
 <script type="module" src="auth-init.js">
 </script>
 <script>
+let novaAuthMode = 'login';
+window.openAuthModal = window.openAuthModal || function(mode='login') {
+  novaAuthMode = mode;
+  const modal=document.getElementById('auth-modal'); if(!modal) return;
+  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
+  updateNovaAuthCopy();
+};
+window.closeAuthModal = window.closeAuthModal || function() {
+  const modal=document.getElementById('auth-modal'); if(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
+};
+window.switchAuthMode = window.switchAuthMode || function(){ novaAuthMode = novaAuthMode==='login'?'signup':'login'; updateNovaAuthCopy(); };
+function updateNovaAuthCopy(){
+  const signup=novaAuthMode==='signup';
+  const t=document.getElementById('auth-modal-title'), s=document.getElementById('auth-modal-sub'), b=document.getElementById('auth-submit'), c=document.getElementById('auth-switch-copy'), sw=document.getElementById('auth-switch-btn');
+  if(t)t.textContent=signup?'Join the Crew':'Welcome Back';
+  if(s)s.textContent=signup?'Create your free account to start exploring.':'Log in to continue your Method in Motion journey.';
+  if(b)b.textContent=signup?'Join Free':'Log In';
+  if(c)c.textContent=signup?'Already have an account?':'New here?';
+  if(sw)sw.textContent=signup?'Log In':'Join Free';
+}
+document.addEventListener('click',function(e){ if(e.target && e.target.id==='auth-modal') closeAuthModal(); });
+function syncNovaMobileDashboard(signedIn){
+  const link=document.getElementById('mobile-dashboard-link'); if(link) link.style.display=signedIn?'block':'none';
+}
+window.addEventListener('mim-auth-state',e=>syncNovaMobileDashboard(!!(e.detail&&e.detail.user)));
+
 let currentLesson = null;
 let currentTier = null;
 window.handleTierUnlock = function(tier) {
@@ -1028,7 +1087,7 @@ window.mimHasAccess('nova', tier, 'lessons');
 [1, 2, 3, 4].forEach(lesson => {
 const lock = document.getElementById('lock-' + lesson);
 const blocks = lesson === 4
-? ['read', 'builder', 'reflect']
+? ['read', 'terms', 'builder', 'reflect']
 : ['read', 'terms', 'build', 'reflect'];
 
 if (lock) lock.style.display = hasLessons ? 'none' : 'block';
@@ -1207,20 +1266,6 @@ const doc = iframe.contentDocument || iframe.contentWindow.document;
 doc.open();
 doc.write(code);
 doc.close();
-}
-function downloadCheat() {
-const content = "NOVA'S DISCOVERY DOME — FULL CHEAT SHEET\n\n" + "LESSON 1 — Blueprint Thinking\nHTML: structure of every webpage\nhead: invisible setup / body: everything visible\n\n" + "LESSON 2 — Building Blocks\nh1-h6: headings, never skip levels\nimg src= alt=: image + description\na href=: link destination\n\n" + "LESSON 3 — Layout & Nesting\ndiv: generic container\nSemantic tags: header, nav, main, section, footer\nBox model: content + padding + border + margin\n\n" + "LESSON 4 — Page Skeleton\n<!DOCTYPE html> always first\nhtml > head + body\n\n" + "SYMBOLS REFERENCE\n< > wraps every tag name\n</ > closing tag\n= assigns an attribute value";
-const blob = new Blob([content], {
-type: 'text/plain' }
-);
-const url = URL.createObjectURL(blob);
-const a = document.createElement('a');
-a.href = url;
-a.download = 'nova-cheatsheet.txt';
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-URL.revokeObjectURL(url);
 }
 function goUpgrade() {
 if (currentTier) {
