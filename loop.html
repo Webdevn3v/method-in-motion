@@ -265,6 +265,20 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--cyan); margin-bottom: 0.5rem; }
 .egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
 @media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .hero-tiles { flex-wrap: wrap; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .fact-ticker { display: none; } }
+
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(2,8,12,.9);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.active{display:flex;}
+.modal-box{background:var(--bg-card);border:1px solid var(--border-bright);border-radius:20px;padding:40px;width:100%;max-width:400px;position:relative;box-shadow:0 0 40px rgba(0,245,212,.12);}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;line-height:1;transition:color .2s;}
+.modal-close:hover{color:#fff}.modal-title{font-family:var(--font-display);font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;color:var(--cyan);}
+.modal-sub{font-size:.82rem;color:var(--text-dim);margin-bottom:24px;}
+.modal-tabs{display:flex;gap:4px;margin-bottom:24px;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;}
+.modal-tab{flex:1;font-family:var(--font-display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:8px;border-radius:7px;border:none;background:none;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;}
+.modal-tab.active{background:rgba(0,245,212,.18);color:var(--cyan);}
+.modal-field{margin-bottom:14px}.modal-field label{display:block;font-family:var(--font-display);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px;}
+.modal-field input{width:100%;padding:11px 14px;background:rgba(0,0,0,.3);border:1px solid var(--border-bright);border-radius:8px;color:#fff;font-family:var(--font-body);font-size:.88rem;outline:none;transition:border-color .2s;}
+.modal-field input:focus{border-color:var(--cyan)}.modal-submit{width:100%;font-family:var(--font-display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:13px;background:linear-gradient(135deg,var(--cyan),var(--blue));color:#04141a;font-weight:700;border-radius:100px;border:none;cursor:pointer;margin-top:6px;transition:transform .2s;}
+.modal-submit:hover{transform:translateY(-1px)}.modal-submit:disabled{opacity:.65;cursor:wait;transform:none}.modal-error{font-size:.78rem;color:#ff6b6b;margin-top:8px;display:none;line-height:1.5}.modal-error.visible{display:block}.modal-status{display:none;margin-top:10px;font-size:.76rem;color:var(--cyan);text-align:center;line-height:1.5}.modal-status.visible{display:block;}
 </style>
 </head>
 <body>
@@ -287,9 +301,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <nav>
 <a href="index.html" class="nav-logo">MiM</a>
 <ul class="nav-links">
-<li><a href="games.html">Games</a></li>
 <li class="nav-drop" id="exploreDrop">
-<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')" aria-haspopup="true">Explore <span class="nav-drop-arrow">⌄</span></button>
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')" aria-haspopup="true">MiM U <span class="nav-drop-arrow">⌄</span></button>
 <div class="nav-drop-menu">
 <a class="nav-drop-item" href="pdfs.html">PDFs</a>
 <a class="nav-drop-item" href="library.html">Library</a>
@@ -298,8 +311,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </div>
 </li>
 <li class="nav-drop" id="undergroundDrop">
-<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')" aria-haspopup="true">Underground <span class="nav-drop-arrow">⌄</span></button>
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')" aria-haspopup="true">The Underground <span class="nav-drop-arrow">⌄</span></button>
 <div class="nav-drop-menu">
+<a class="nav-drop-item" href="games.html">Games</a>
 <a class="nav-drop-item" href="tag-wall.html">Tag Wall</a>
 <a class="nav-drop-item" href="broken-syntax.html">Broken Syntax</a>
 <a class="nav-drop-item" href="mim-tv.html">MiM TV</a>
@@ -323,19 +337,44 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
-<a href="games.html">Games</a>
-<div class="mobile-menu-label">Explore</div>
+<div class="mobile-menu-label">MiM U</div>
 <a href="pdfs.html">PDFs</a>
 <a href="library.html">Library</a>
 <a href="characters.html">Characters</a>
 <a href="about.html">About</a>
-<div class="mobile-menu-label">Underground</div>
+<div class="mobile-menu-label">The Underground</div>
+<a href="games.html">Games</a>
 <a href="tag-wall.html">Tag Wall</a>
 <a href="broken-syntax.html">Broken Syntax</a>
 <a href="mim-tv.html">MiM TV</a>
 <a href="comic.html">Comics</a>
-<a href="dashboard.html">Dashboard</a>
+<a href="dashboard.html" id="mobile-dashboard-link" style="display:none;">Dashboard</a>
 </div>
+<div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true">
+<div class="modal-box">
+<button class="modal-close" id="auth-close-btn">&#10005;</button>
+<div class="modal-title">Method in Motion</div>
+<div class="modal-sub">Your adventure starts here.</div>
+<div class="modal-tabs">
+<button class="modal-tab active auth-tab" data-tab="login">Log In</button>
+<button class="modal-tab auth-tab" data-tab="signup">Sign Up</button>
+</div>
+<div id="login-form" class="auth-form" style="display:block">
+<div class="modal-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"></div>
+<div class="modal-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
+<p class="modal-error" id="login-error"></p><button class="modal-submit" id="login-submit-btn">Log In</button><p class="modal-status" id="login-status" aria-live="polite"></p>
+<p style="margin-top:12px;font-size:.75rem;color:var(--text-dim);text-align:center">New here? <button class="auth-link" data-tab="signup" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--font-body)">Create an account</button></p>
+</div>
+<div id="signup-form" class="auth-form" style="display:none">
+<div class="modal-field"><label>Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"></div>
+<div class="modal-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"></div>
+<div class="modal-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"></div>
+<p class="modal-error" id="signup-error"></p><button class="modal-submit" id="signup-submit-btn">Create Your Account</button><p class="modal-status" id="signup-status" aria-live="polite"></p>
+<p style="margin-top:12px;font-size:.75rem;color:var(--text-dim);text-align:center">Already in the crew? <button class="auth-link" data-tab="login" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--font-body)">Log in</button></p>
+</div>
+</div>
+</div>
+
 <section class="hero" id="loopHero">
 <video class="hero-video" autoplay muted loop playsinline poster="loop-entrance.png">
 <source src="loop-hero.mp4" type="video/mp4">
@@ -432,38 +471,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block active" id="block-1-read" style="display:none">
-<div class="section-header">Thinking in Patterns</div>
-<div class="section-sub">LESSON 01 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 05</div>
-<h3>What Is a Pattern?</h3>
-<p>A pattern is something that <strong>repeats in a predictable way</strong>. Stripes on a shirt. Steps in a dance. Computers are pattern machines. When you recognize a pattern, you know what to automate.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 05</div>
-<h3>Why Computers Love Repetition</h3>
-<p>A <strong>loop</strong> is the tool that lets you tell a computer: "Do this action, over and over, until I say stop." It's one of the most powerful ideas in all of programming.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 05</div>
-<h3>Sequences Come First</h3>
-<p>Before loops, there are <strong>sequences</strong> — a list of steps in order. Code runs top to bottom, one line at a time.</p>
-<div class="code-block">
-<span class="cm">// A sequence — each step in order</span>
-<span class="kw">let</span> egg = <span class="str">"cracked"</span>; <span class="kw">let</span> batter = <span class="str">"mixed"</span>; <span class="kw">let</span> result = <span class="str">"cooked"</span>;</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 05</div>
-<h3>Loops Are Patterns in Code</h3>
-<p>Instead of writing the same line 10 times, you write it <strong>once inside a loop</strong>.</p>
-<div class="code-block">
-<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) { &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Step "</span> + i); }</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">05 / 05</div>
-<h3>Flow Is the Big Idea</h3>
-<p>Programming isn't just about commands — it's about <strong>controlling the flow</strong> of those commands. You're designing the path the computer follows.</p>
-</div>
+<div class="section-header">Thinking in Patterns</div><div class="section-sub">LESSON 01 · CODERS</div>
+<div class="read-card"><div class="read-card-num">01 / 09</div><h3>What Is a Pattern?</h3><p>A pattern is something that <strong>repeats in a predictable way</strong>: stripes on a shirt, steps in a dance, days on a calendar. Computers are pattern machines. When you recognize a repeated action, you can ask: <strong>Could code do this for me?</strong></p></div>
+<div class="read-card"><div class="read-card-num">02 / 09</div><h3>Sequence vs. Loop</h3><p><strong>Sequence = Do A, then B, then C.</strong> A sequence follows steps in order. <strong>Loop = Repeat A until the rule says stop.</strong> Both control flow, but one moves forward through different steps while the other repeats a pattern.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 09</div><h3>First, See the Repetition</h3><p>Imagine telling the computer to jump three times. You could write the same instruction three separate times:</p><div class="code-block"><span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Jump"</span>);<br><span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Jump"</span>);<br><span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Jump"</span>);</div><div class="read-card"><h3>Breaking Down These Lines</h3><p><strong>console.log</strong> tells JavaScript to print a message.<br><strong>( )</strong> holds the message we are giving to <code>console.log</code>.<br><strong>"Jump"</strong> is text, so it is wrapped in quotes.<br><strong>;</strong> marks the end of each instruction.<br>The computer sees <strong>three separate instructions</strong>. We see <strong>one repeating pattern</strong>.</p></div></div>
+<div class="read-card"><div class="read-card-num">04 / 09</div><h3>Loops Turn Repetition Into a Rule</h3><p>Instead of repeating the same line manually, a loop lets us write the action once and give the computer a rule for how many times to repeat it.</p><div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">3</span>; i++) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Jump"</span>);<br>}</div><div class="read-card"><h3>Breaking Down This Loop</h3><p><strong>for</strong> — tells JavaScript we are about to repeat.<br><strong>( )</strong> — holds the loop instructions.<br><strong>let i = 1</strong> — START at 1. <code>let</code> creates a variable; <code>i</code> is the counter.<br><strong>i &lt;= 3</strong> — CHECK: keep going while the counter is 3 or less.<br><strong>i++</strong> — STEP: add 1 after each pass.<br><strong>{ }</strong> — wraps the code that repeats.<br><strong>console.log("Jump")</strong> — the DO/action.</p></div></div>
+<div class="read-card"><div class="read-card-num">05 / 09</div><h3>Loop's Core Memory Rule</h3><p><strong>START → CHECK → DO → STEP → REPEAT.</strong></p><p>Start somewhere. Check whether you should keep going. Do the action. Move one step. Then check again. This is the path underneath every basic loop you will read in this course.</p></div>
+<div class="read-card"><div class="read-card-num">06 / 09</div><h3>What Is an Iteration?</h3><p>Each single trip through the loop is called an <strong>iteration</strong>. In the Jump loop above: i = 1 is iteration 1, i = 2 is iteration 2, and i = 3 is iteration 3. Three iterations means the repeated action runs three times.</p></div>
+<div class="read-card"><div class="read-card-num">07 / 09</div><h3>Sequences Still Matter</h3><p>Loops do not replace sequences. Programs often use both: a sequence tells the computer <strong>what order</strong> to follow, while loops tell it <strong>what to repeat</strong>.</p><div class="code-block"><span class="kw">let</span> egg = <span class="str">"cracked"</span>;<br><span class="kw">let</span> batter = <span class="str">"mixed"</span>;<br><span class="kw">let</span> result = <span class="str">"cooked"</span>;</div><div class="read-card"><h3>Breaking Down These Lines</h3><p><strong>let</strong> creates a variable.<br><strong>egg / batter / result</strong> are variable names — labels for stored information.<br><strong>=</strong> stores a value inside a variable.<br>The lines run top to bottom: crack → mix → cook. That is a sequence.</p></div></div>
+<div class="read-card"><div class="read-card-num">08 / 09</div><h3>Patterns Help You Predict</h3><p>Before running code, ask: <strong>What repeats? Where does it start? What makes it stop? What changes each time?</strong> Prediction is a coding skill. The more accurately you can predict a loop, the easier it becomes to debug one.</p></div>
+<div class="read-card"><div class="read-card-num">09 / 09</div><h3>Flow Is the Big Idea</h3><p>Programming is not just a pile of commands. It is a path. <strong>Sequences control order. Loops control repetition.</strong> Later, conditions will control decisions. Together, they create program flow.</p></div>
 </div>
 <div class="content-block" id="block-1-terms" style="display:none">
 <div class="section-header">Key Terms</div>
@@ -504,6 +521,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="content-block" id="block-1-build" style="display:none">
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 01 · SPOT THE PATTERN</div>
+<div class="read-card"><h3>Run → Predict → Change One Thing → Run Again</h3><p>1. Run the starter code unchanged. 2. Predict what will happen before each run. 3. Change <strong>one thing</strong>. 4. Run it again. 5. Explain what changed and why.</p><p><strong>Identify:</strong> START · CHECK/STOP · STEP · ACTION.</p></div>
 <div class="editor-wrap">
 <div class="editor-toolbar">
 <span>JAVASCRIPT · FLOW LAB</span>
@@ -524,6 +542,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="quiz-feedback" id="qfb-0">
 </div>
 </div>
+<div class="quiz-card"><div class="quiz-q">A loop runs three times. What is one trip through the loop called?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. One pass through a loop is one iteration.')">An iteration</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'A sequence is ordered steps, not one pass through a loop.')">A sequence</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'Flow is the overall path code follows.')">A flow</button></div><div class="quiz-feedback"></div></div>
 </div>
 <div class="content-block" id="block-1-reflect" style="display:none">
 <div class="section-header">Reflect</div>
@@ -569,37 +588,18 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-2-read" style="display:none">
-<div class="section-header">For Loops</div>
-<div class="section-sub">LESSON 02 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 05</div>
-<h3>Anatomy of a For Loop</h3>
-<p>A <strong>for loop</strong> has three parts: where to <strong>start</strong>, when to <strong>stop</strong>, and how to <strong>step</strong> forward.</p>
-<div class="code-block">
-<span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) { &nbsp;&nbsp;<span class="cm">// runs 5 times: i = 0, 1, 2, 3, 4</span> &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(i); }</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 05</div>
-<h3>The Counter Variable</h3>
-<p>The variable <code>i</code> is a <strong>counter</strong>. It changes with every iteration.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 05</div>
-<h3>Using i Inside the Loop</h3>
-<p>Because <code>i</code> changes each time, you can use it inside the loop body to create <strong>dynamic output</strong>.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 05</div>
-<h3>Looping Over an Array</h3>
-<p>Use <code>i</code> as the index to access each item one at a time in a list (array).</p>
-<div class="code-block">
-<span class="kw">let</span> crew = [<span class="str">"Loop"</span>, <span class="str">"Zen"</span>, <span class="str">"Nova"</span>, <span class="str">"Byte"</span>]; <span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; crew.length; i++) { &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(crew[i]); }</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">05 / 05</div>
-<h3>Counting Down</h3>
-<p>You can count <strong>backwards</strong> using <code>i--</code>.</p>
-</div>
+<div class="section-header">For Loops</div><div class="section-sub">LESSON 02 · CODERS</div>
+<div class="read-card"><div class="read-card-num">01 / 11</div><h3>The Three Zones: START · CHECK · STEP</h3><p>A <strong>for loop</strong> is built around three instructions inside its parentheses. Loop's memory rule expands them into the full cycle: <strong>START → CHECK → DO → STEP → REPEAT.</strong></p><div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; <span class="num">5</span>; i++) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(i);<br>}</div><div class="read-card"><h3>Breaking Down the Shape</h3><p><strong>for</strong> = repeat using a controlled pattern.<br><strong>( )</strong> = holds START, CHECK, and STEP.<br><strong>;</strong> = separates those three zones.<br><strong>{ }</strong> = holds the DO/action that repeats.</p></div></div>
+<div class="read-card"><div class="read-card-num">02 / 11</div><h3>ZONE 1 — START</h3><div class="code-block"><span class="kw">let</span> i = <span class="num">0</span></div><p><strong>let</strong> creates a variable. <strong>i</strong> is the counter. <strong>= 0</strong> gives it a starting value. Programmers often start at 0 because arrays number their first position as 0.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 11</div><h3>ZONE 2 — CHECK / STOP RULE</h3><div class="code-block">i &lt; <span class="num">5</span></div><p>This is a question that becomes <strong>true or false</strong>. While it is true, the loop continues. When it becomes false, the loop stops.</p><p><strong>Important:</strong> <code>i &lt; 5</code> allows 0, 1, 2, 3, 4 — <strong>not 5</strong>. Five is where the check becomes false.</p></div>
+<div class="read-card"><div class="read-card-num">04 / 11</div><h3>ZONE 3 — STEP / UPDATE</h3><div class="code-block">i++</div><p>This runs after each iteration. <code>i++</code> means <strong>add 1 to i</strong>. It is shorthand for <code>i = i + 1</code>.</p><div class="read-card"><h3>Breaking Down the Symbols</h3><p><strong>i</strong> = the current counter value.<br><strong>++</strong> = increase by one.<br>This STEP is what moves the loop toward its stopping point.</p></div></div>
+<div class="read-card"><div class="read-card-num">05 / 11</div><h3>Trace the Loop One Pass at a Time</h3><div class="code-block">i = 0 → 0 &lt; 5? yes → run<br>i = 1 → 1 &lt; 5? yes → run<br>i = 2 → 2 &lt; 5? yes → run<br>i = 3 → 3 &lt; 5? yes → run<br>i = 4 → 4 &lt; 5? yes → run<br>i = 5 → 5 &lt; 5? no → STOP</div><p>The loop body runs <strong>five times</strong>, even though the final checked value reaches 5. The final check stops the loop before the body runs again.</p></div>
+<div class="read-card"><div class="read-card-num">06 / 11</div><h3>i Is Not Magic</h3><p><code>i</code> is only a variable name. You could call it <code>step</code>, <code>index</code>, or another useful name.</p><div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> step = <span class="num">1</span>; step &lt;= <span class="num">3</span>; step++) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(step);<br>}</div><div class="read-card"><h3>Breaking Down This Variation</h3><p><strong>step = 1</strong> starts at 1.<br><strong>step &lt;= 3</strong> allows 1, 2, and 3.<br><strong>step++</strong> adds one after each pass.<br>The name changed, but the START/CHECK/STEP pattern stayed the same.</p></div></div>
+<div class="read-card"><div class="read-card-num">07 / 11</div><h3>Dynamic Output Changes With the Counter</h3><div class="code-block"><span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Lap "</span> + i);</div><p>The text <code>"Lap "</code> stays the same. The value of <code>i</code> changes each iteration, so the output becomes Lap 0, Lap 1, Lap 2, and so on.</p><div class="read-card"><h3>Breaking Down This Line</h3><p><strong>"Lap "</strong> is fixed text.<br><strong>+</strong> joins values together here.<br><strong>i</strong> contributes the current counter value.</p></div></div>
+<div class="read-card"><div class="read-card-num">08 / 11</div><h3>Arrays: Ordered Lists With Numbered Positions</h3><p>An <strong>array</strong> is an ordered list. Square brackets <code>[ ]</code> hold the items. Each item has an <strong>index</strong>, and JavaScript starts counting those positions at 0.</p><div class="code-block"><span class="kw">let</span> crew = [<span class="str">"Loop"</span>, <span class="str">"Zen"</span>, <span class="str">"Nova"</span>];<br>crew[<span class="num">0</span>] <span class="cm">// "Loop"</span><br>crew[<span class="num">1</span>] <span class="cm">// "Zen"</span><br>crew.length <span class="cm">// 3 items</span></div><div class="read-card"><h3>Breaking Down the Array</h3><p><strong>[ ]</strong> holds the list items.<br><strong>crew[0]</strong> asks for the item at position 0 — the first item.<br><strong>.length</strong> tells us how many items are in the list.</p></div></div>
+<div class="read-card"><div class="read-card-num">09 / 11</div><h3>Why i &lt; crew.length Works</h3><div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; crew.length; i++) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(crew[i]);<br>}</div><p>For a 3-item array, valid indexes are 0, 1, and 2. <code>crew.length</code> is 3, so <code>i &lt; crew.length</code> stops before i becomes an invalid index. This is why <code>&lt;</code> is so common when looping through arrays.</p></div>
+<div class="read-card"><div class="read-card-num">10 / 11</div><h3>Counting Down</h3><div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">5</span>; i &gt;= <span class="num">1</span>; i--) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(i);<br>}</div><p><strong>START:</strong> 5. <strong>CHECK:</strong> stay at or above 1. <strong>STEP:</strong> <code>i--</code> subtracts 1. Compare: <code>i++</code> moves up; <code>i--</code> moves down.</p></div>
+<div class="read-card"><div class="read-card-num">11 / 11</div><h3>Course Hazards</h3><p><strong>Forgot the update?</strong> A loop may never stop.<br><strong>Used &lt;= crew.length?</strong> You may go one index too far and get <code>undefined</code>.<br><strong>Mixed up &lt; and &lt;=? </strong> You may run one time too many or too few.<br><strong>Wrong direction?</strong> Check whether you need <code>++</code> or <code>--</code>.</p></div>
 </div>
 <div class="content-block" id="block-2-terms" style="display:none">
 <div class="section-header">Key Terms</div>
@@ -640,6 +640,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="content-block" id="block-2-build" style="display:none">
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 02 · LOOP THE CREW</div>
+<div class="read-card"><h3>Run → Predict → Change One Thing → Run Again</h3><p>1. Run the starter code unchanged. 2. Predict what will happen before each run. 3. Change <strong>one thing</strong>. 4. Run it again. 5. Explain what changed and why.</p><p><strong>Identify:</strong> START · CHECK/STOP · STEP · ACTION.</p></div>
 <div class="editor-wrap">
 <div class="editor-toolbar">
 <span>JAVASCRIPT · FOR LOOPS</span>
@@ -660,6 +661,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="quiz-feedback" id="qfb-2">
 </div>
 </div>
+<div class="quiz-card"><div class="quiz-q">How many times does <code>for (let i = 0; i &lt; 4; i++)</code> run, and which values does i use?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. i uses 0, 1, 2, 3. When i becomes 4, the check is false.')">4 times: 0, 1, 2, 3</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'The condition is i &lt; 4, so 4 itself does not run.')">5 times: 0 through 4</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'The loop starts at 0, not 1.')">4 times: 1 through 4</button></div><div class="quiz-feedback"></div></div>
 </div>
 <div class="content-block" id="block-2-reflect" style="display:none">
 <div class="section-header">Reflect</div>
@@ -673,7 +675,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <span class="reflect-saved" id="saved-2-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-2">
+<div class="lesson-complete" id="complete-2">
 <h3>∞ &nbsp; Lesson 2 Complete</h3>
 <p>For loops mastered. Arrays looped.</p>
 <div class="lesson-joke" id="joke-2">
@@ -705,36 +707,17 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-3-read" style="display:none">
-<div class="section-header">Conditionals &amp; Flow Control</div>
-<div class="section-sub">LESSON 03 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 05</div>
-<h3>Making Decisions in Code</h3>
-<p>An <code>if</code> statement checks whether something is true, and only runs a block of code if it is.</p>
-<div class="code-block">
-<span class="kw">if</span> (temperature >
-<span class="num">80</span>) { &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Wear sunscreen!"</span>); }</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 05</div>
-<h3>if / else</h3>
-<p>Add an <code>else</code> block to handle the case when the condition is <strong>false</strong>.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 05</div>
-<h3>else if — More Than Two Paths</h3>
-<p>Code checks each condition <strong>in order</strong> and runs the first block where the condition is true.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 05</div>
-<h3>Conditionals Inside Loops</h3>
-<p>You can put an <code>if</code> statement <strong>inside a loop</strong> to check a condition on every item.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">05 / 05</div>
-<h3>Comparison Operators</h3>
-<p>Conditions use operators like <code>===</code>, <code>!==</code>, <code>&gt;</code>, <code>&lt;</code>, <code>&gt;=</code>, <code>&lt;=</code>.</p>
-</div>
+<div class="section-header">Conditionals &amp; Flow Control</div><div class="section-sub">LESSON 03 · CODERS</div>
+<div class="read-card"><div class="read-card-num">01 / 10</div><h3>Decisions Have Rules</h3><p>Real life is full of conditions: <strong>If it is raining, take an umbrella. Else, leave it home.</strong> Code can follow the same kind of decision rule.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 10</div><h3>Meet the if Statement</h3><div class="code-block"><span class="kw">if</span> (temperature &gt; <span class="num">80</span>) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Wear sunscreen!"</span>);<br>}</div><div class="read-card"><h3>Breaking Down This if Statement</h3><p><strong>if</strong> = ask a question.<br><strong>(temperature &gt; 80)</strong> = the condition.<br><strong>&gt;</strong> = comparison operator meaning greater than.<br>The condition becomes <strong>true</strong> or <strong>false</strong>.<br><strong>{ }</strong> = the code that runs only when the condition is true.</p></div></div>
+<div class="read-card"><div class="read-card-num">03 / 10</div><h3>Boolean = True or False</h3><p>A <strong>Boolean</strong> has only two possible values: <code>true</code> or <code>false</code>. Conditions produce Boolean answers.</p><div class="code-block"><span class="num">10</span> &gt; <span class="num">5</span> <span class="cm">// true</span><br><span class="num">3</span> &gt; <span class="num">8</span> <span class="cm">// false</span></div><div class="read-card"><h3>Breaking Down These Checks</h3><p>JavaScript compares the value on the left with the value on the right. It does not print a sentence answer — it evaluates the comparison as true or false.</p></div></div>
+<div class="read-card"><div class="read-card-num">04 / 10</div><h3>if / else = Two Paths</h3><p>Think of a fork in the course. <strong>if = Path A.</strong> <strong>else = Path B.</strong> Exactly one path runs.</p><div class="code-block"><span class="kw">if</span> (score &gt;= <span class="num">10</span>) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Level unlocked"</span>);<br>} <span class="kw">else</span> {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Keep going"</span>);<br>}</div><div class="read-card"><h3>Breaking Down the Two Paths</h3><p>If <code>score &gt;= 10</code> is true, the first block runs and the <code>else</code> block is skipped. If it is false, JavaScript skips the first block and runs <code>else</code>.</p></div></div>
+<div class="read-card"><div class="read-card-num">05 / 10</div><h3>else if = More Than Two Paths</h3><div class="code-block"><span class="kw">if</span> (score &gt;= <span class="num">90</span>) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Gold"</span>);<br>} <span class="kw">else if</span> (score &gt;= <span class="num">70</span>) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Silver"</span>);<br>} <span class="kw">else</span> {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Keep training"</span>);<br>}</div><p>Conditions are checked <strong>top to bottom</strong>. The first true branch wins. Later branches are skipped.</p><div class="read-card"><h3>Trace score = 82</h3><p><code>82 &gt;= 90</code>? false → keep checking.<br><code>82 &gt;= 70</code>? true → print “Silver.”<br>Stop checking the remaining branches.</p></div></div>
+<div class="read-card"><div class="read-card-num">06 / 10</div><h3>Conditionals Inside Loops</h3><div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">5</span>; i++) {<br>&nbsp;&nbsp;<span class="kw">if</span> (i === <span class="num">3</span>) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Checkpoint!"</span>);<br>&nbsp;&nbsp;}<br>}</div><p>The loop visits 1, 2, 3, 4, 5. The condition is checked on every iteration. Only when <code>i</code> equals 3 does it become true, so “Checkpoint!” prints once.</p></div>
+<div class="read-card"><div class="read-card-num">07 / 10</div><h3>Comparison Operators</h3><p><code>===</code> exactly equal · <code>!==</code> not equal · <code>&gt;</code> greater than · <code>&lt;</code> less than · <code>&gt;=</code> greater than or equal · <code>&lt;=</code> less than or equal.</p></div>
+<div class="read-card"><div class="read-card-num">08 / 10</div><h3>One = Stores. Three === Asks.</h3><div class="code-block"><span class="kw">let</span> score = <span class="num">10</span>; <span class="cm">// store 10</span><br>score === <span class="num">10</span> <span class="cm">// ask: exactly equal? true</span></div><p><strong>=</strong> assigns or stores a value. <strong>===</strong> compares and asks a true/false question. You may see <code>==</code> in older code, but prefer <code>===</code> because it compares both value and type.</p></div>
+<div class="read-card"><div class="read-card-num">09 / 10</div><h3>Combine Conditions Carefully</h3><p>You may eventually see <code>&amp;&amp;</code> (AND), <code>||</code> (OR), and <code>!</code> (NOT). They combine or flip Boolean conditions.</p><div class="code-block">age &gt;= <span class="num">8</span> &amp;&amp; hasPass === <span class="kw">true</span> <span class="cm">// both must be true</span></div><p>Keep the memory simple: AND needs both, OR needs either, NOT flips true/false.</p></div>
+<div class="read-card"><div class="read-card-num">10 / 10</div><h3>Loop's Decision Rule</h3><p><strong>CONDITION → TRUE PATH or FALSE PATH.</strong> Read the condition like a question before reading the code blocks. Predict which path runs, then test your prediction.</p></div>
 </div>
 <div class="content-block" id="block-3-terms" style="display:none">
 <div class="section-header">Key Terms</div>
@@ -766,15 +749,16 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="term-def">A value that is either true or false.</div>
 </div>
 <div class="term-card" onclick="toggleTerm(this)">
-<div class="term-name">=== vs == <span class="term-arrow">›</span>
+<div class="term-name">= vs === <span class="term-arrow">›</span>
 </div>
-<div class="term-def">=== checks value AND type. Always prefer ===.</div>
+<div class="term-def">= stores/assigns a value. === compares and asks whether two values match exactly.</div>
 </div>
 </div>
 </div>
 <div class="content-block" id="block-3-build" style="display:none">
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 03 · GRADE THE CREW</div>
+<div class="read-card"><h3>Run → Predict → Change One Thing → Run Again</h3><p>1. Run the starter code unchanged. 2. Predict what will happen before each run. 3. Change <strong>one thing</strong>. 4. Run it again. 5. Explain what changed and why.</p><p><strong>Identify:</strong> CONDITION · TRUE PATH · FALSE PATH.</p></div>
 <div class="editor-wrap">
 <div class="editor-toolbar">
 <span>JAVASCRIPT · CONDITIONALS</span>
@@ -795,6 +779,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="quiz-feedback" id="qfb-4">
 </div>
 </div>
+<div class="quiz-card"><div class="quiz-q">If <code>score = 7</code>, is <code>score &gt;= 10</code> true or false, and which path runs in an if/else?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. 7 is not at least 10, so the condition is false and else runs.')">False; the else path runs</button><button class="quiz-opt" onclick="checkQuiz(this, false, '7 is less than 10, so the condition is not true.')">True; the if path runs</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'An if/else chooses one of the two paths.')">Both paths run</button></div><div class="quiz-feedback"></div></div>
 </div>
 <div class="content-block" id="block-3-reflect" style="display:none">
 <div class="section-header">Reflect</div>
@@ -808,7 +793,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <span class="reflect-saved" id="saved-3-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-3">
+<div class="lesson-complete" id="complete-3">
 <h3>∞ &nbsp; Lesson 3 Complete</h3>
 <p>Conditionals unlocked. Code now makes decisions.</p>
 <div class="lesson-joke" id="joke-3">
@@ -822,6 +807,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="sidebar-label">Lesson 04</div>
 <button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read">
 <span class="sidebar-icon">R</span> Read</button>
+<button class="sidebar-nav-btn" onclick="showBlock(4,'terms')" id="sb-4-terms">
+<span class="sidebar-icon">T</span> Terms</button>
 <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build">
 <span class="sidebar-icon">B</span> Build</button>
 <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect">
@@ -838,36 +825,32 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div class="content-block" id="block-4-read" style="display:none">
-<div class="section-header">Flow Challenge</div>
-<div class="section-sub">LESSON 04 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 04</div>
-<h3>Putting It All Together</h3>
-<p>Real programs layer loops inside loops, conditions inside loops, and conditions that decide whether a loop even runs.</p>
+<div class="section-header">Flow Challenge</div><div class="section-sub">LESSON 04 · CODERS</div>
+<div class="read-card"><div class="read-card-num">01 / 09</div><h3>Put the Whole Path Together</h3><p><strong>Sequences control order. Loops control repetition. Conditions control decisions.</strong> Real programs combine all three to create flow: the path the computer follows from one instruction to the next.</p></div>
+<div class="read-card"><div class="read-card-num">02 / 09</div><h3>For vs. While</h3><p>Use a <strong>for loop</strong> when the START / CHECK / STEP pattern is clear or the repeat count is predictable. Use a <strong>while loop</strong> when repetition mainly depends on a condition and you may not know exactly how many passes you need.</p></div>
+<div class="read-card"><div class="read-card-num">03 / 09</div><h3>While Loops</h3><div class="code-block"><span class="kw">let</span> energy = <span class="num">10</span>;<br><span class="kw">while</span> (energy &gt; <span class="num">0</span>) {<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Energy: "</span> + energy);<br>&nbsp;&nbsp;energy -= <span class="num">3</span>;<br>}</div><div class="read-card"><h3>Breaking Down This While Loop</h3><p><strong>let energy = 10</strong> — creates the changing value before the loop.<br><strong>while (energy &gt; 0)</strong> — CHECK before each pass.<br><strong>{ }</strong> — body runs only while the condition is true.<br><strong>energy -= 3</strong> — changes energy by subtracting 3, moving the loop toward false.<br>When energy is no longer greater than 0, the loop stops.</p></div></div>
+<div class="read-card"><div class="read-card-num">04 / 09</div><h3>While Safety: Something Must Change</h3><p>If the value used by a while condition never changes, the condition may stay true forever. That creates an <strong>infinite loop</strong>. Always ask: <strong>What changes each pass so this can eventually stop?</strong></p></div>
+<div class="read-card"><div class="read-card-num">05 / 09</div><h3>Nested Loops Build Grids</h3><p>A loop inside another loop is a <strong>nested loop</strong>. Think of a grid: the <strong>outer loop = rows</strong>, the <strong>inner loop = columns</strong>.</p><div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> row = <span class="num">1</span>; row &lt;= <span class="num">3</span>; row++) {<br>&nbsp;&nbsp;<span class="kw">for</span> (<span class="kw">let</span> col = <span class="num">1</span>; col &lt;= <span class="num">3</span>; col++) {<br>&nbsp;&nbsp;&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(row, col);<br>&nbsp;&nbsp;}<br>}</div><div class="read-card"><h3>Breaking Down the Grid</h3><p>The outer loop chooses a row. For <strong>every one outer-loop step</strong>, the inner loop completes <strong>all</strong> of its column steps. Row 1 gets columns 1,2,3; then row 2 gets 1,2,3; then row 3 gets 1,2,3.</p></div></div>
+<div class="read-card"><div class="read-card-num">06 / 09</div><h3>break = Exit the Loop Completely</h3><div class="code-block"><span class="kw">let</span> items = [<span class="str">"key"</span>, <span class="str">"map"</span>, <span class="str">"gem"</span>, <span class="str">"rope"</span>];<br><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">0</span>; i &lt; items.length; i++) {<br>&nbsp;&nbsp;<span class="kw">if</span> (items[i] === <span class="str">"gem"</span>) { <span class="kw">break</span>; }<br>}</div><p><code>break</code> means: <strong>stop the entire loop now.</strong> Once the gem is found, there is no reason to keep searching.</p></div>
+<div class="read-card"><div class="read-card-num">07 / 09</div><h3>continue = Skip This Pass, Keep Looping</h3><div class="code-block"><span class="kw">for</span> (<span class="kw">let</span> i = <span class="num">1</span>; i &lt;= <span class="num">5</span>; i++) {<br>&nbsp;&nbsp;<span class="kw">if</span> (i === <span class="num">3</span>) { <span class="kw">continue</span>; }<br>&nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(i);<br>}</div><p><code>continue</code> skips the rest of the current iteration, then moves to the next pass. This prints 1, 2, 4, 5 — only 3 is skipped.</p></div>
+<div class="read-card"><div class="read-card-num">08 / 09</div><h3>Predict Before You Run</h3><p>Before pressing Run, ask: <strong>What prints? How many iterations happen? Where does it stop? Which branch runs?</strong> Predicting flow forces you to mentally execute the code — one of the fastest ways to become a stronger programmer.</p></div>
+<div class="read-card"><div class="read-card-num">09 / 09</div><h3>Flow Control Is Choosing the Path</h3><p><code>for</code>, <code>while</code>, <code>if</code>, <code>break</code>, and <code>continue</code> all change the path code follows. The goal is not to memorize symbols alone. It is to see the path before the computer runs it.</p></div>
 </div>
-<div class="read-card">
-<div class="read-card-num">02 / 04</div>
-<h3>While Loops</h3>
-<p>A <strong>while loop</strong> keeps running as long as a condition stays true. Use it when you don't know exactly how many times the loop needs to run.</p>
-<div class="code-block">
-<span class="kw">let</span> energy = <span class="num">10</span>; <span class="kw">while</span> (energy >
-<span class="num">0</span>) { &nbsp;&nbsp;<span class="fn">console</span>.<span class="fn">log</span>(<span class="str">"Energy: "</span> + energy); &nbsp;&nbsp;energy -= <span class="num">3</span>; }</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 04</div>
-<h3>Nested Loops</h3>
-<p>A loop inside another loop is called a <strong>nested loop</strong>. This is how you work with grids and tables.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 04</div>
-<h3>break and continue</h3>
-<p>
-<strong>break</strong> exits a loop immediately. <strong>continue</strong> skips the rest of the current iteration.</p>
-</div>
-</div>
+<div class="content-block" id="block-4-terms" style="display:none">
+<div class="section-header">Key Terms</div><div class="section-sub">LESSON 04 · TAP TO EXPAND</div><div class="terms-grid">
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">while loop <span class="term-arrow">›</span></div><div class="term-def">Repeats while a condition remains true; useful when the exact number of passes is not known ahead of time.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Nested loop <span class="term-arrow">›</span></div><div class="term-def">A loop inside another loop.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Outer loop <span class="term-arrow">›</span></div><div class="term-def">The outside loop in a nested structure; often controls rows or larger groups.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Inner loop <span class="term-arrow">›</span></div><div class="term-def">The loop inside another loop; completes all its passes for each outer-loop iteration.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">break <span class="term-arrow">›</span></div><div class="term-def">Exits the current loop completely.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">continue <span class="term-arrow">›</span></div><div class="term-def">Skips the rest of the current iteration and moves to the next pass.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Infinite loop <span class="term-arrow">›</span></div><div class="term-def">A loop that never reaches a stopping condition.</div></div>
+<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Flow control <span class="term-arrow">›</span></div><div class="term-def">Tools that control which path code follows, what repeats, and when execution stops or skips.</div></div>
+</div></div>
 <div class="content-block" id="block-4-build" style="display:none">
 <div class="section-header">Build It</div>
 <div class="section-sub">LESSON 04 · BUILD THE FLOW</div>
+<div class="read-card"><h3>Run → Predict → Change One Thing → Run Again</h3><p>1. Run the starter code unchanged. 2. Predict what will happen before each run. 3. Change <strong>one thing</strong>. 4. Run it again. 5. Explain what changed and why.</p><p><strong>Identify:</strong> START · CHECK/STOP · STEP · ACTION.</p></div>
 <div class="editor-wrap">
 <div class="editor-toolbar">
 <span>JAVASCRIPT · NESTED LOOPS</span>
@@ -888,6 +871,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="quiz-feedback" id="qfb-6">
 </div>
 </div>
+<div class="quiz-card"><div class="quiz-q">When is a <code>while</code> loop usually a better fit than a <code>for</code> loop?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. while is useful when repetition depends on a condition and the exact count is not known.')">When you keep going while a condition is true and may not know the exact repeat count</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'A known start/stop/step count is often a natural fit for for.')">Only when you know the exact number of repeats</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'Both loop types can contain conditions.')">Only when there are no conditions</button></div><div class="quiz-feedback"></div></div>
 </div>
 <div class="content-block" id="block-4-reflect" style="display:none">
 <div class="section-header">Reflect</div>
@@ -901,7 +885,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <span class="reflect-saved" id="saved-4-1">✓ Saved</span>
 </div>
 </div>
-<div class="lesson-complete show" id="complete-4">
+<div class="lesson-complete" id="complete-4">
 <h3>∞ &nbsp; Flow Challenge Complete</h3>
 <p>Sequences. Loops. Conditionals. Nested logic. You think in flow now.</p>
 <div class="lesson-joke" id="joke-4">
@@ -919,102 +903,22 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div id="cheat-content" style="display:none;">
-<div class="section-header">Loop's Cheat Sheet</div>
-<div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
-<div class="cheat-card">
-<h3>∞ Lesson 1 — Patterns &amp; Sequences</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">Pattern</div>
-<div class="cheat-desc">Something that repeats predictably — the signal to use a loop.</div>
+<div class="section-header">Loop's Cheat Sheet</div><div class="section-sub">ALL FOUR LESSONS · HOW TO READ + DEBUG FLOW</div>
+<div class="cheat-card"><h3>∞ Core Memory Rule</h3><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">START → CHECK → DO → STEP → REPEAT</div><div class="cheat-desc">Map it onto <code>for (let i = 0; i &lt; 5; i++) { /* action */ }</code>. Start at 0, check i &lt; 5, do the body, add 1, repeat.</div></div>
+<div class="cheat-item"><div class="cheat-term">Iteration</div><div class="cheat-desc">One complete pass through a loop.</div></div><div class="cheat-item"><div class="cheat-term">Flow</div><div class="cheat-desc">The path a program follows. Sequences control order, loops repetition, conditionals decisions.</div></div></div></div>
+<div class="cheat-card"><h3>∞ Full For-Loop Anatomy</h3><div class="cheat-items">
+<div class="cheat-item"><div class="cheat-term">for</div><div class="cheat-desc">Begin a controlled repetition pattern.</div></div><div class="cheat-item"><div class="cheat-term">let i = 0</div><div class="cheat-desc">START. Create the counter and give it its first value.</div></div><div class="cheat-item"><div class="cheat-term">i &lt; 5</div><div class="cheat-desc">CHECK/STOP rule. True = run; false = stop. Values are 0-4, not 5.</div></div><div class="cheat-item"><div class="cheat-term">i++</div><div class="cheat-desc">STEP. Add 1 after each pass. Same idea as <code>i = i + 1</code>. Use <code>i--</code> to subtract 1.</div></div><div class="cheat-item"><div class="cheat-term">{ }</div><div class="cheat-desc">The repeated body — the DO/action.</div></div></div></div>
+<div class="cheat-card"><h3>∞ Comparisons + Booleans</h3><div class="cheat-items"><div class="cheat-item"><div class="cheat-term">true / false</div><div class="cheat-desc">Boolean values: the two possible answers produced by a condition.</div></div><div class="cheat-item"><div class="cheat-term">=== / !==</div><div class="cheat-desc">Exactly equal / not equal.</div></div><div class="cheat-item"><div class="cheat-term">&gt; &lt; &gt;= &lt;=</div><div class="cheat-desc">Greater than, less than, greater/less than or equal.</div></div><div class="cheat-item"><div class="cheat-term">= vs ===</div><div class="cheat-desc"><strong>One = stores. Three === asks.</strong> = assigns a value; === compares.</div></div><div class="cheat-item"><div class="cheat-term">&& || !</div><div class="cheat-desc">AND / OR / NOT — combine or flip Boolean conditions.</div></div></div></div>
+<div class="cheat-card"><h3>∞ Arrays + Index</h3><div class="cheat-items"><div class="cheat-item"><div class="cheat-term">Array</div><div class="cheat-desc"><code>let crew = ["Loop","Zen","Nova"]</code> — an ordered list inside square brackets.</div></div><div class="cheat-item"><div class="cheat-term">Index</div><div class="cheat-desc"><code>crew[0]</code> is "Loop". Array positions start at 0.</div></div><div class="cheat-item"><div class="cheat-term">.length</div><div class="cheat-desc"><code>crew.length</code> is 3. <code>i &lt; crew.length</code> visits valid indexes 0,1,2 without overshooting.</div></div></div></div>
+<div class="cheat-card"><h3>∞ Conditionals</h3><div class="cheat-items"><div class="cheat-item"><div class="cheat-term">if</div><div class="cheat-desc"><code>if (condition) { }</code> — runs when the condition is true.</div></div><div class="cheat-item"><div class="cheat-term">else if</div><div class="cheat-desc">Adds another condition. Checked top to bottom; the first true branch wins.</div></div><div class="cheat-item"><div class="cheat-term">else</div><div class="cheat-desc">Fallback path when earlier conditions are false.</div></div><div class="cheat-item"><div class="cheat-term">Decision rule</div><div class="cheat-desc">CONDITION → TRUE PATH or FALSE PATH.</div></div></div></div>
+<div class="cheat-card"><h3>∞ For vs While + Safety</h3><div class="cheat-items"><div class="cheat-item"><div class="cheat-term">for</div><div class="cheat-desc">Best when START/CHECK/STEP is known or predictable.</div></div><div class="cheat-item"><div class="cheat-term">while</div><div class="cheat-desc">Best when repetition mainly depends on a condition and the exact count may be unknown.</div></div><div class="cheat-item"><div class="cheat-term">Infinite loop</div><div class="cheat-desc">If the value controlling a while condition never changes, the loop may never stop.</div></div></div></div>
+<div class="cheat-card"><h3>∞ Nested Loops + Flow Control</h3><div class="cheat-items"><div class="cheat-item"><div class="cheat-term">Outer / Inner</div><div class="cheat-desc">Grid memory: outer = rows, inner = columns. For each outer pass, the inner loop completes all its passes.</div></div><div class="cheat-item"><div class="cheat-term">break</div><div class="cheat-desc">EXIT the loop completely.</div></div><div class="cheat-item"><div class="cheat-term">continue</div><div class="cheat-desc">SKIP this pass and keep looping.</div></div></div></div>
+<div class="cheat-card"><h3>∞ Common Loop Bugs / Debug Box</h3><div class="cheat-items"><div class="cheat-item"><div class="cheat-term">One too many?</div><div class="cheat-desc">Check <code>&lt;</code> vs <code>&lt;=</code>.</div></div><div class="cheat-item"><div class="cheat-term">undefined?</div><div class="cheat-desc">Check the array index and <code>.length</code>.</div></div><div class="cheat-item"><div class="cheat-term">Never stops?</div><div class="cheat-desc">Check the STEP/update. Is the condition moving toward false?</div></div><div class="cheat-item"><div class="cheat-term">Wrong direction?</div><div class="cheat-desc">Check <code>++</code> vs <code>--</code>.</div></div><div class="cheat-item"><div class="cheat-term">Branch never runs?</div><div class="cheat-desc">Test the condition with values you know should be true and false.</div></div></div></div>
+<div class="cheat-card"><h3>∞ Vocabulary Quick Scan</h3><div class="cheat-items"><div class="cheat-item"><div class="cheat-term">Pattern / Automate</div><div class="cheat-desc">Recognize repetition; let code repeat the task for you.</div></div><div class="cheat-item"><div class="cheat-term">Counter variable</div><div class="cheat-desc">A changing variable such as i, index, or step that tracks loop progress.</div></div><div class="cheat-item"><div class="cheat-term">Comparison operator</div><div class="cheat-desc">A symbol that compares values and produces true/false.</div></div><div class="cheat-item"><div class="cheat-term">Flow control</div><div class="cheat-desc">Tools that decide what repeats, which branch runs, and when execution exits or skips.</div></div></div></div>
+<div class="cheat-btn-row"><a href="loop-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a></div>
 </div>
-<div class="cheat-item">
-<div class="cheat-term">Sequence</div>
-<div class="cheat-desc">Code executes top to bottom, one line at a time.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">Iteration</div>
-<div class="cheat-desc">One single pass through a loop.</div>
-</div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>∞ Lesson 2 — For Loops</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">for loop</div>
-<div class="cheat-desc">for (let i = 0; i &lt; n; i++) { }</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">Count up / down</div>
-<div class="cheat-desc">i++ adds 1, i-- subtracts 1 each pass.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">Array index</div>
-<div class="cheat-desc">Starts at 0. A 5-item array has indices 0 through 4.</div>
-</div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>∞ Lesson 3 — Conditionals</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">if</div>
-<div class="cheat-desc">if (condition) { } — runs only when true.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">else / else if</div>
-<div class="cheat-desc">Adds more branches, checked top to bottom.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">===</div>
-<div class="cheat-desc">Checks value AND type — always prefer over ==.</div>
-</div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>∞ Lesson 4 — Flow Control</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">while loop</div>
-<div class="cheat-desc">while (condition) { } — runs until condition is false.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">Nested loop</div>
-<div class="cheat-desc">A loop inside another loop.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">break / continue</div>
-<div class="cheat-desc">break exits the loop; continue skips to the next pass.</div>
-</div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>∞ Symbols Reference</h3>
-<div class="cheat-items">
-<div class="cheat-item">
-<div class="cheat-term">( )</div>
-<div class="cheat-desc">Holds the loop's start, stop, and step.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">;</div>
-<div class="cheat-desc">Separates the 3 parts of a for loop.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">&lt; / &lt;=</div>
-<div class="cheat-desc">Less than / less than or equal — controls the stop condition.</div>
-</div>
-<div class="cheat-item">
-<div class="cheat-term">++ / --</div>
-<div class="cheat-desc">Increment / decrement — the step.</div>
-</div>
-</div>
-<div class="cheat-btn-row">
-<a href="loop-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
-<button class="cheat-download-btn secondary" onclick="downloadCheat()">Quick Text Reference</button>
-</div>
-</div>
-</div>
+
 </div>
 </div>
 <button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
@@ -1037,9 +941,7 @@ window.mimHasAccess('loop', tier, 'lessons');
 
 [1, 2, 3, 4].forEach(lesson => {
 const lock = document.getElementById('lock-' + lesson);
-const blocks = lesson === 4
-? ['read', 'build', 'reflect']
-: ['read', 'terms', 'build', 'reflect'];
+const blocks = ['read', 'terms', 'build', 'reflect'];
 
 if (lock) lock.style.display = hasLessons ? 'none' : 'block';
 blocks.forEach(block => {
@@ -1228,20 +1130,6 @@ catch(e) {
 outputEl.textContent = 'Error: ' + e.message;
 outputEl.style.color = '#ff6b6b';
 }
-}
-function downloadCheat() {
-const content = "LOOP'S CHALLENGE COURSE — FULL CHEAT SHEET\n\n" + "LESSON 1 — Patterns & Sequences\nPattern: repeats predictably\nSequence: top to bottom, one line at a time\nIteration: one pass through a loop\n\n" + "LESSON 2 — For Loops\nfor (let i = 0; i < n; i++) { }\ni++ / i-- adjusts the counter\nArray index starts at 0\n\n" + "LESSON 3 — Conditionals\nif (condition) { }\nelse / else if adds branches\n=== checks value AND type\n\n" + "LESSON 4 — Flow Control\nwhile (condition) { }\nNested loop: a loop inside another loop\nbreak exits, continue skips to next pass\n\n" + "SYMBOLS REFERENCE\n( ) holds start, stop, step\n; separates the 3 for-loop parts\n< <= controls the stop condition\n++ -- the step";
-const blob = new Blob([content], {
-type: 'text/plain' }
-);
-const url = URL.createObjectURL(blob);
-const a = document.createElement('a');
-a.href = url;
-a.download = 'loop-cheatsheet.txt';
-document.body.appendChild(a);
-a.click();
-document.body.removeChild(a);
-URL.revokeObjectURL(url);
 }
 function goUpgrade() {
 if (currentTier) {
@@ -1576,6 +1464,18 @@ ibRenderIntro();
 handleTierUnlock(null);
 }
 );
+
+// Keep the mobile Dashboard link aligned with desktop auth visibility.
+function syncMobileDashboardLink() {
+  const mobileDash = document.getElementById('mobile-dashboard-link');
+  const desktopUserMenu = document.getElementById('nav-user-menu');
+  if (!mobileDash || !desktopUserMenu) return;
+  mobileDash.style.display = desktopUserMenu.style.display === 'none' ? 'none' : 'block';
+}
+window.addEventListener('load', () => { syncMobileDashboardLink(); setTimeout(syncMobileDashboardLink, 300); });
+window.addEventListener('authStateChanged', syncMobileDashboardLink);
+const navUserObserverTarget = document.getElementById('nav-user-menu');
+if (navUserObserverTarget) new MutationObserver(syncMobileDashboardLink).observe(navUserObserverTarget, { attributes: true, attributeFilter: ['style'] });
 </script>
 </body>
 </html>
