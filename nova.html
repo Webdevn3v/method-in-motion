@@ -10,7 +10,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(7,5,15,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
-.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--y); text-decoration: none; letter-spacing: 0.1em; }
+.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--y); text-decoration: none; letter-spacing: 0.1em; margin-right: 2rem; }
 .nav-links { display: flex; align-items: center; gap: 1rem; list-style: none; }
 .nav-links > li > a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
 .nav-links > li > a:hover { color: var(--y); }
@@ -285,31 +285,58 @@ textarea.code-ed:focus { border-color: var(--y); }
 .builder-note { font-family: var(--font-mono); font-size: 0.65rem; color: var(--text-muted); line-height: 1.5; margin-top: 0.4rem; padding: 0.5rem 0.75rem; background: rgba(0,0,0,0.2); border-radius: 6px; border-left: 2px solid rgba(255,224,102,0.3); }
 @media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .hero-tiles { flex-wrap: wrap; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .editor-wrap { grid-template-columns: 1fr; } .page-builder { grid-template-columns: 1fr; } .fact-ticker { display: none; } }
 
-.auth-modal { position: fixed; inset: 0; z-index: 1000; display:none; align-items:center; justify-content:center; background:rgba(7,5,15,.86); backdrop-filter:blur(8px); padding:1rem; }
-.auth-modal.open { display:flex; }
-.auth-card { width:min(430px,94vw); background:var(--bg-card); border:1px solid var(--border-bright); border-radius:14px; padding:1.6rem; box-shadow:var(--glow-strong); }
-.auth-card h2 { font-family:var(--font-display); color:var(--y); margin-bottom:.5rem; }
-.auth-card p { color:var(--text-dim); font-size:.86rem; margin-bottom:1rem; }
-.auth-card input { width:100%; margin:.35rem 0; padding:.75rem; border-radius:7px; border:1px solid var(--border); background:var(--bg-panel); color:var(--text); }
-.auth-submit { width:100%; margin-top:.7rem; padding:.75rem; border:0; border-radius:7px; background:linear-gradient(135deg,var(--y),var(--pk)); color:var(--bg); font-weight:700; cursor:pointer; }
-.auth-close { float:right; background:none; border:0; color:var(--text-dim); font-size:1.25rem; cursor:pointer; }
-.auth-switch { margin-top:.8rem; text-align:center; font-size:.78rem; color:var(--text-dim); }
-.auth-switch button { background:none; border:0; color:var(--y); cursor:pointer; }
+.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(7,5,15,.88);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:20px;}
+.modal-overlay.active{display:flex;}
+.modal-box{background:var(--bg-card);border:1px solid var(--border-bright);border-radius:20px;padding:40px;width:100%;max-width:400px;position:relative;box-shadow:var(--glow-strong);}
+.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;line-height:1;transition:color .2s;}
+.modal-close:hover{color:#fff;}
+.modal-title{font-family:var(--font-display);font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;color:var(--y);}
+.modal-sub{font-size:.82rem;color:var(--text-dim);margin-bottom:24px;}
+.modal-tabs{display:flex;gap:4px;margin-bottom:24px;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;}
+.modal-tab{flex:1;font-family:var(--font-display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:8px;border-radius:7px;border:none;background:none;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;}
+.modal-tab.active{background:rgba(255,224,102,.18);color:var(--y);}
+.modal-field{margin-bottom:14px;}
+.modal-field label{display:block;font-family:var(--font-display);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px;}
+.modal-field input{width:100%;padding:11px 14px;background:rgba(0,0,0,.3);border:1px solid var(--border-bright);border-radius:8px;color:#fff;font-family:var(--font-body);font-size:.88rem;outline:none;transition:border-color .2s;}
+.modal-field input:focus{border-color:var(--y);}
+.modal-submit{width:100%;font-family:var(--font-display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:13px;background:linear-gradient(135deg,var(--y),var(--pk));color:var(--bg);font-weight:700;border-radius:100px;border:none;cursor:pointer;margin-top:6px;transition:transform .2s;}
+.modal-submit:hover{transform:translateY(-1px);}
+.modal-submit:disabled{opacity:.65;cursor:wait;transform:none;}
+.modal-error{font-size:.78rem;color:#ff6b6b;margin-top:8px;display:none;line-height:1.5;}
+.modal-error.visible{display:block;}
+.modal-status{display:none;margin-top:10px;font-size:.76rem;color:var(--y);text-align:center;line-height:1.5;}
+.modal-status.visible{display:block;}
 </style>
 </head>
 <body>
-<div class="auth-modal" id="auth-modal" aria-hidden="true">
-<div class="auth-card">
-<button class="auth-close" type="button" onclick="closeAuthModal()" aria-label="Close">×</button>
-<h2 id="auth-modal-title">Welcome Back</h2>
-<p id="auth-modal-sub">Log in to continue your Method in Motion journey.</p>
-<form id="auth-form">
-<input id="auth-email" type="email" placeholder="Email" required>
-<input id="auth-password" type="password" placeholder="Password" required>
-<button class="auth-submit" id="auth-submit" type="submit">Log In</button>
-</form>
-<div class="auth-switch"><span id="auth-switch-copy">New here?</span> <button type="button" id="auth-switch-btn" onclick="switchAuthMode()">Join Free</button></div>
-</div></div>
+<div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true">
+<div class="modal-box">
+<button class="modal-close" id="auth-close-btn" type="button" aria-label="Close">&#10005;</button>
+<div class="modal-title">Method in Motion</div>
+<div class="modal-sub">Your adventure starts here.</div>
+<div class="modal-tabs">
+<button class="modal-tab active auth-tab" data-tab="login" type="button">Log In</button>
+<button class="modal-tab auth-tab" data-tab="signup" type="button">Sign Up</button>
+</div>
+<div id="login-form" class="auth-form" style="display:block">
+<div class="modal-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"></div>
+<div class="modal-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
+<p class="modal-error" id="login-error"></p>
+<button class="modal-submit" id="login-submit-btn" type="button">Log In</button>
+<p class="modal-status" id="login-status" aria-live="polite"></p>
+<p style="margin-top:12px;font-size:.75rem;color:var(--text-dim);text-align:center">New here? <button class="auth-link" data-tab="signup" type="button" style="background:none;border:none;color:var(--y);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--font-body)">Create an account</button></p>
+</div>
+<div id="signup-form" class="auth-form" style="display:none">
+<div class="modal-field"><label>Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"></div>
+<div class="modal-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"></div>
+<div class="modal-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"></div>
+<p class="modal-error" id="signup-error"></p>
+<button class="modal-submit" id="signup-submit-btn" type="button">Create Your Account</button>
+<p class="modal-status" id="signup-status" aria-live="polite"></p>
+<p style="margin-top:12px;font-size:.75rem;color:var(--text-dim);text-align:center">Already in the crew? <button class="auth-link" data-tab="login" type="button" style="background:none;border:none;color:var(--y);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--font-body)">Log in</button></p>
+</div>
+</div>
+</div>
 <div class="discovery-overlay" id="discoveryOverlay">
 <div class="nova-mark">▲ ▲ ▲</div>
 <div class="discovery-title" id="discoveryTitle">Nova's Discovery Dome</div>
@@ -339,7 +366,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 </div>
 </li>
 <li class="nav-drop" id="undergroundDrop">
-<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')" aria-haspopup="true">Underground <span class="nav-drop-arrow">⌄</span></button>
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')" aria-haspopup="true">The Underground <span class="nav-drop-arrow">⌄</span></button>
 <div class="nav-drop-menu">
 <a class="nav-drop-item" href="games.html">Games</a>
 <a class="nav-drop-item" href="tag-wall.html">Tag Wall</a>
@@ -356,8 +383,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <button id="nav-logout-btn" type="button">Log Out</button>
 </div>
 <div id="nav-auth-btns">
-<button id="nav-login" type="button" onclick="window.openAuthModal && window.openAuthModal('login')">Log In</button>
-<button id="nav-join" type="button" onclick="window.openAuthModal && window.openAuthModal('signup')">Join Free</button>
+<button id="nav-login" type="button">Log In</button>
+<button id="nav-join" type="button">Join Free</button>
 </div>
 </div>
 <button class="nav-hamburger" id="navHamburger" type="button" onclick="toggleMobileMenu()" aria-label="Open menu" aria-controls="mobileMenu">
@@ -365,6 +392,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 </button>
 </nav>
 <div class="mobile-menu" id="mobileMenu">
+<a href="index.html#crew">Crew</a>
+<a href="index.html#membership">Membership</a>
 <div class="mobile-menu-label">MiM U</div>
 <a href="pdfs.html">PDFs</a>
 <a href="library.html">Library</a>
@@ -465,7 +494,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <span class="sidebar-icon">RF</span> Reflect</button>
 <div class="sidebar-divider">
 </div>
-<a href="nova-game.html" data-game-href="nova-game.html" class="sidebar-game-link">▲ Nova's Game World</a>
+<a data-game-href="nova-game.html" class="sidebar-game-link locked" aria-disabled="true">▲ Nova's Game World · Coders Required</a>
 </aside>
 <div class="lesson-content">
 <div class="locked-panel" id="lock-1">
@@ -561,8 +590,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="quiz-feedback" id="qfb-1a">
 </div>
 </div>
-</div>
 <div class="quiz-card"><div class="quiz-q">Which closing tag correctly matches &lt;h1&gt;?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,false,'That opens another heading.')">&lt;h1&gt;</button><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct — the slash marks the closing tag.')">&lt;/h1&gt;</button></div><div class="quiz-feedback"></div></div>
+</div>
 <div class="content-block" id="block-1-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
@@ -597,7 +626,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <span class="sidebar-icon">RF</span> Reflect</button>
 <div class="sidebar-divider">
 </div>
-<a href="nova-game.html" data-game-href="nova-game.html" class="sidebar-game-link">▲ Nova's Game World</a>
+<a data-game-href="nova-game.html" class="sidebar-game-link locked" aria-disabled="true">▲ Nova's Game World · Coders Required</a>
 </aside>
 <div class="lesson-content">
 <div class="locked-panel" id="lock-2">
@@ -675,8 +704,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="quiz-feedback" id="qfb-2a">
 </div>
 </div>
-</div>
 <div class="quiz-card"><div class="quiz-q">Which attribute tells an image where its file lives?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct — src means source.')">src</button><button class="quiz-opt" onclick="checkQuiz(this,false,'href is used for link destinations.')">href</button></div><div class="quiz-feedback"></div></div>
+</div>
 <div class="content-block" id="block-2-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
@@ -711,7 +740,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <span class="sidebar-icon">RF</span> Reflect</button>
 <div class="sidebar-divider">
 </div>
-<a href="nova-game.html" data-game-href="nova-game.html" class="sidebar-game-link">▲ Nova's Game World</a>
+<a data-game-href="nova-game.html" class="sidebar-game-link locked" aria-disabled="true">▲ Nova's Game World · Coders Required</a>
 </aside>
 <div class="lesson-content">
 <div class="locked-panel" id="lock-3">
@@ -806,8 +835,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="quiz-feedback" id="qfb-3a">
 </div>
 </div>
-</div>
 <div class="quiz-card"><div class="quiz-q">In &lt;section&gt;&lt;p&gt;Hello&lt;/p&gt;&lt;/section&gt;, which element is the parent?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct — section contains the paragraph.')">&lt;section&gt;</button><button class="quiz-opt" onclick="checkQuiz(this,false,'The paragraph is the child inside section.')">&lt;p&gt;</button></div><div class="quiz-feedback"></div></div>
+</div>
 <div class="content-block" id="block-3-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
@@ -841,7 +870,7 @@ textarea.code-ed:focus { border-color: var(--y); }
 <span class="sidebar-icon">RF</span> Reflect</button>
 <div class="sidebar-divider">
 </div>
-<a href="nova-game.html" data-game-href="nova-game.html" class="sidebar-game-link">▲ Nova's Game World</a>
+<a data-game-href="nova-game.html" class="sidebar-game-link locked" aria-disabled="true">▲ Nova's Game World · Coders Required</a>
 </aside>
 <div class="lesson-content">
 <div class="locked-panel" id="lock-4">
@@ -933,8 +962,8 @@ textarea.code-ed:focus { border-color: var(--y); }
 <div class="builder-note">Your page will look plain right now — that's intentional. CSS comes in a future MiM lesson.</div>
 </div>
 </div>
-</div>
 <div class="quiz-card"><div class="quiz-q">What does href="#about" connect to?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct — it targets the element whose id is about.')">An element with id="about"</button><button class="quiz-opt" onclick="checkQuiz(this,false,'A hash link targets an ID on the page.')">The browser tab title</button></div><div class="quiz-feedback"></div></div>
+</div>
 <div class="content-block" id="block-4-reflect" style="display:none">
 <div class="section-header">Reflect</div>
 <div class="section-sub">LESSON 04 · FINAL REFLECTION</div>
@@ -1049,27 +1078,6 @@ textarea.code-ed:focus { border-color: var(--y); }
 <script type="module" src="auth-init.js">
 </script>
 <script>
-let novaAuthMode = 'login';
-window.openAuthModal = window.openAuthModal || function(mode='login') {
-  novaAuthMode = mode;
-  const modal=document.getElementById('auth-modal'); if(!modal) return;
-  modal.classList.add('open'); modal.setAttribute('aria-hidden','false');
-  updateNovaAuthCopy();
-};
-window.closeAuthModal = window.closeAuthModal || function() {
-  const modal=document.getElementById('auth-modal'); if(modal){modal.classList.remove('open');modal.setAttribute('aria-hidden','true');}
-};
-window.switchAuthMode = window.switchAuthMode || function(){ novaAuthMode = novaAuthMode==='login'?'signup':'login'; updateNovaAuthCopy(); };
-function updateNovaAuthCopy(){
-  const signup=novaAuthMode==='signup';
-  const t=document.getElementById('auth-modal-title'), s=document.getElementById('auth-modal-sub'), b=document.getElementById('auth-submit'), c=document.getElementById('auth-switch-copy'), sw=document.getElementById('auth-switch-btn');
-  if(t)t.textContent=signup?'Join the Crew':'Welcome Back';
-  if(s)s.textContent=signup?'Create your free account to start exploring.':'Log in to continue your Method in Motion journey.';
-  if(b)b.textContent=signup?'Join Free':'Log In';
-  if(c)c.textContent=signup?'Already have an account?':'New here?';
-  if(sw)sw.textContent=signup?'Log In':'Join Free';
-}
-document.addEventListener('click',function(e){ if(e.target && e.target.id==='auth-modal') closeAuthModal(); });
 function syncNovaMobileDashboard(signedIn){
   const link=document.getElementById('mobile-dashboard-link'); if(link) link.style.display=signedIn?'block':'none';
 }
@@ -1291,6 +1299,14 @@ const menu = document.getElementById('mobileMenu');
 if (button) button.classList.toggle('open');
 if (menu) menu.classList.toggle('open');
 }
+window.addEventListener('resize', () => {
+if (window.innerWidth > 980) {
+const button = document.getElementById('navHamburger');
+const menu = document.getElementById('mobileMenu');
+if (button) button.classList.remove('open');
+if (menu) menu.classList.remove('open');
+}
+});
 function spawnParticle() {
 const field = document.getElementById('particleField');
 if (!field) return;
@@ -1606,7 +1622,6 @@ ibCollectedPieces = [];
 document.addEventListener('DOMContentLoaded', () => {
 loadReflects();
 ibRenderIntro();
-handleTierUnlock(null);
 }
 );
 </script>
