@@ -10,7 +10,7 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
 nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(4, 6, 15, 0.95); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
-.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--cyan); text-decoration: none; letter-spacing: 0.1em; }
+.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--cyan); text-decoration: none; letter-spacing: 0.1em; margin-right: 2rem; }
 .nav-links { display: flex; align-items: center; gap: 1rem; list-style: none; }
 .nav-links > li > a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
 .nav-links > li > a:hover { color: var(--cyan); }
@@ -235,8 +235,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 .sound-toggle.visible { opacity: 1; pointer-events: auto; }
 .sound-toggle:hover { box-shadow: var(--glow); border-color: var(--cyan); }
 .sound-toggle.muted { opacity: 0.5; }
-.portal-peek-btn { position: fixed; top: 74px; right: 20px; z-index: 150; width: 36px; height: 36px; border-radius: 50%; background: rgba(124,77,255,0.12); border: 1px solid rgba(124,77,255,0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; animation: portalPulse 2.5s ease-in-out infinite; }
+.portal-peek-btn { position: fixed; top: 74px; right: 20px; z-index: 90; width: 36px; height: 36px; border-radius: 50%; background: rgba(124,77,255,0.12); border: 1px solid rgba(124,77,255,0.3); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 0.9rem; animation: portalPulse 2.5s ease-in-out infinite; }
 @keyframes portalPulse { 0%,100% { box-shadow: 0 0 6px rgba(124,77,255,0.3); } 50% { box-shadow: 0 0 18px rgba(124,77,255,0.7); } }
+.portal-peek-btn.menu-hidden { display: none; }
 .portal-modal { position: fixed; inset: 0; z-index: 300; background: rgba(2,3,8,0.95); display: none; align-items: center; justify-content: center; padding: 2rem; flex-direction: column; text-align: center; }
 .portal-modal.open { display: flex; }
 .portal-modal img { max-width: min(90vw, 520px); border-radius: 12px; border: 1px solid rgba(124,77,255,0.3); box-shadow: 0 0 60px rgba(124,77,255,0.4); margin-bottom: 1.2rem; }
@@ -471,7 +472,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-icon"> ⚙️ </span> Build </button>
 <button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-icon"> 💭 </span> Reflect </button>
 <div class="sidebar-divider"></div>
-<a href="echo-game.html" class="sidebar-game-link"> ◈ Echo's Game World </a>
+<span class="sidebar-game-link" aria-disabled="true"> ◈ Echo's Game World </span>
 </aside>
 <div class="lesson-content">
 <div class="locked-panel" id="lock-1">
@@ -516,8 +517,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 </div>
 <br>
 <div class="quiz-card"><div class="quiz-q"> What does <code> addEventListener("click", myFn) </code> do? </div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, 'It doesn\'t run immediately -- it registers for later.')"> Runs myFn immediately </button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. It registers myFn to be called when a click occurs.')"> Registers myFn to run when the element is clicked </button><button class="quiz-opt" onclick="checkQuiz(this, false, 'It attaches to a specific element, not the whole page.')"> Listens for clicks anywhere on the page </button></div><div class="quiz-feedback" id="qfb-0"></div></div>
-</div>
+
 <div class="quiz-card"><div class="quiz-q">Which part is the callback in <code>btn.addEventListener("click", myFn)</code>?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, 'That is the event type.')">"click"</button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. myFn is the instruction saved to run later.')">myFn</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'btn is the element being listened to.')">btn</button></div><div class="quiz-feedback" id="qfb-1b"></div></div>
+</div>
 <div class="content-block" id="block-1-reflect" style="display:none">
 <div class="section-header"> Reflect </div>
 <div class="section-sub"> LESSON 01 · SPARKS </div>
@@ -535,7 +537,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-icon"> ⚙️ </span> Build </button>
 <button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-icon"> 💭 </span> Reflect </button>
 <div class="sidebar-divider"></div>
-<a href="echo-game.html" class="sidebar-game-link"> ◈ Echo's Game World </a>
+<span class="sidebar-game-link" aria-disabled="true"> ◈ Echo's Game World </span>
 </aside>
 <div class="lesson-content">
 <div class="locked-panel" id="lock-2"><div class="locked-icon"> 🔒 </div><h2> Sparks Membership Required </h2><p> Echo's full studio — all 4 lessons — unlocks with Sparks. </p><button class="gate-btn" onclick="goUpgrade()"> Upgrade Now </button></div>
@@ -563,8 +565,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="term-card" onclick="toggleTerm(this)"><div class="term-name"> BPM <span class="term-arrow"> › </span></div><div class="term-def"> Beats Per Minute. Use 60000 / BPM to find milliseconds per beat.</div></div>
 <div class="term-card" onclick="toggleTerm(this)"><div class="term-name"> Callback <span class="term-arrow"> › </span></div><div class="term-def"> The instructions a timer runs later or repeatedly.</div></div>
 </div></div>
-<div class="content-block" id="block-2-build" style="display:none"><div class="section-header"> Build It </div><div class="section-sub"> LESSON 02 · SPARKS </div><div class="build-section"><h3> BPM to Milliseconds </h3><div class="editor-wrap"><div class="editor-toolbar"><span> JAVASCRIPT · TIMERS </span><button class="editor-run-btn" onclick="runEditor('l2')"> ▶ RUN </button></div><textarea class="code-editor" id="editor-l2"> function bpmToMs(bpm) { return 0; // replace this } let tempos = [80, 120, 160]; for (let i = 0; i < tempos.length; i++) { console.log(tempos[i] + " BPM = " + bpmToMs(tempos[i]) + "ms"); } </textarea></div><div class="preview-label"> CONSOLE OUTPUT </div><div class="console-output" id="output-l2"> Output will appear here... </div></div><br><div class="quiz-card"><div class="quiz-q"> At 120 BPM, how many milliseconds is one beat? </div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, '60000 / 120 = 500, not 600.')"> 600ms </button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. 60000 ÷ 120 = 500ms.')"> 500ms </button><button class="quiz-opt" onclick="checkQuiz(this, false, 'That would be nearly 500 BPM.')"> 120ms </button></div><div class="quiz-feedback" id="qfb-2"></div></div></div>
+<div class="content-block" id="block-2-build" style="display:none"><div class="section-header"> Build It </div><div class="section-sub"> LESSON 02 · SPARKS </div><div class="build-section"><h3> BPM to Milliseconds </h3><div class="editor-wrap"><div class="editor-toolbar"><span> JAVASCRIPT · TIMERS </span><button class="editor-run-btn" onclick="runEditor('l2')"> ▶ RUN </button></div><textarea class="code-editor" id="editor-l2"> function bpmToMs(bpm) { return 0; // replace this } let tempos = [80, 120, 160]; for (let i = 0; i < tempos.length; i++) { console.log(tempos[i] + " BPM = " + bpmToMs(tempos[i]) + "ms"); } </textarea></div><div class="preview-label"> CONSOLE OUTPUT </div><div class="console-output" id="output-l2"> Output will appear here... </div></div><br><div class="quiz-card"><div class="quiz-q"> At 120 BPM, how many milliseconds is one beat? </div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, '60000 / 120 = 500, not 600.')"> 600ms </button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. 60000 ÷ 120 = 500ms.')"> 500ms </button><button class="quiz-opt" onclick="checkQuiz(this, false, 'That would be nearly 500 BPM.')"> 120ms </button></div><div class="quiz-feedback" id="qfb-2"></div></div>
 <div class="quiz-card"><div class="quiz-q">Which tool should you use for an action that repeats until you stop it?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, 'setTimeout runs once.')">setTimeout</button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. setInterval repeats until it is cleared.')">setInterval</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'clearInterval stops a repeating timer.')">clearInterval</button></div><div class="quiz-feedback" id="qfb-2b"></div></div>
+</div>
 <div class="content-block" id="block-2-reflect" style="display:none"><div class="section-header"> Reflect </div><div class="section-sub"> LESSON 02 · SPARKS </div><div class="reflect-prompt"><div class="reflect-q"> Where else on the web do timers show up in action? </div><textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea><div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')"> Save </button><span class="reflect-saved" id="saved-2-1"> ✓ Saved </span></div></div><div class="lesson-complete" id="complete-2"><h3> ◈ &nbsp; Lesson 2 Complete </h3><p> setTimeout. setInterval. clearInterval. Time is under control now. </p><div class="lesson-joke" id="joke-2"></div></div></div>
 </div>
 </div>
@@ -577,7 +580,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-icon"> ⚙️ </span> Build </button>
 <button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-icon"> 💭 </span> Reflect </button>
 <div class="sidebar-divider"></div>
-<a href="echo-game.html" class="sidebar-game-link"> ◈ Echo's Game World </a>
+<span class="sidebar-game-link" aria-disabled="true"> ◈ Echo's Game World </span>
 </aside>
 <div class="lesson-content">
 <div class="locked-panel" id="lock-3"><div class="locked-icon"> 🔒 </div><h2> Sparks Membership Required </h2><p> Echo's full studio — all 4 lessons — unlocks with Sparks. </p><button class="gate-btn" onclick="goUpgrade()"> Upgrade Now </button></div>
@@ -606,8 +609,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="term-card" onclick="toggleTerm(this)"><div class="term-name"> Signal chain <span class="term-arrow"> › </span></div><div class="term-def"> The path audio follows through connected nodes: source → processing → destination.</div></div>
 <div class="term-card" onclick="toggleTerm(this)"><div class="term-name"> Destination <span class="term-arrow"> › </span></div><div class="term-def"> The final audio output, usually the device speakers or headphones.</div></div>
 </div></div>
-<div class="content-block" id="block-3-build" style="display:none"><div class="section-header"> Build It </div><div class="section-sub"> LESSON 03 · SPARKS </div><div class="build-section"><h3> Tone Generator </h3><p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;"> Click to play a tone using the real Web Audio API. </p><div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.5rem;"><button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;" onclick="playNote(261.6,'sine',0.4)"> C4 · Sine </button><button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--blue);" onclick="playNote(329.6,'square',0.3)"> E4 · Square </button><button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--purple);" onclick="playNote(392,'sawtooth',0.25)"> G4 · Sawtooth </button></div></div><div class="quiz-card"><div class="quiz-q"> What does a GainNode control? </div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, 'Pitch is controlled by the OscillatorNode.')"> The pitch of the sound </button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. GainNode controls amplitude -- how loud it is.')"> The volume (amplitude) of the signal </button><button class="quiz-opt" onclick="checkQuiz(this, false, 'Wave type is set on the OscillatorNode.')"> The wave shape </button></div><div class="quiz-feedback" id="qfb-4"></div></div></div>
+<div class="content-block" id="block-3-build" style="display:none"><div class="section-header"> Build It </div><div class="section-sub"> LESSON 03 · SPARKS </div><div class="build-section"><h3> Tone Generator </h3><p style="color:var(--text-dim);font-size:0.9rem;margin-bottom:1rem;"> Click to play a tone using the real Web Audio API. </p><div style="display:flex;gap:0.8rem;flex-wrap:wrap;margin-bottom:1.5rem;"><button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;" onclick="playNote(261.6,'sine',0.4)"> C4 · Sine </button><button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--blue);" onclick="playNote(329.6,'square',0.3)"> E4 · Square </button><button class="gate-btn" style="font-size:0.75rem;padding:0.7rem 1.4rem;background:var(--purple);" onclick="playNote(392,'sawtooth',0.25)"> G4 · Sawtooth </button></div></div><div class="quiz-card"><div class="quiz-q"> What does a GainNode control? </div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, 'Pitch is controlled by the OscillatorNode.')"> The pitch of the sound </button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. GainNode controls amplitude -- how loud it is.')"> The volume (amplitude) of the signal </button><button class="quiz-opt" onclick="checkQuiz(this, false, 'Wave type is set on the OscillatorNode.')"> The wave shape </button></div><div class="quiz-feedback" id="qfb-4"></div></div>
 <div class="quiz-card"><div class="quiz-q">In the studio analogy, what is the OscillatorNode?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. It is the source making a tone.')">The instrument making one tone</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'That is the GainNode analogy.')">The volume knob</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'AudioContext represents the whole studio.')">The whole studio</button></div><div class="quiz-feedback" id="qfb-3b"></div></div>
+</div>
 <div class="content-block" id="block-3-reflect" style="display:none"><div class="section-header"> Reflect </div><div class="section-sub"> LESSON 03 · SPARKS </div><div class="reflect-prompt"><div class="reflect-q"> What kind of web project could use the Web Audio API? </div><textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea><div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')"> Save </button><span class="reflect-saved" id="saved-3-1"> ✓ Saved </span></div></div><div class="lesson-complete" id="complete-3"><h3> ◈ &nbsp; Lesson 3 Complete </h3><p> AudioContext. Oscillators. Gain. Signal chains. The studio is open. </p><div class="lesson-joke" id="joke-3"></div></div></div>
 </div>
 </div>
@@ -620,7 +624,7 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-icon"> ⚙️ </span> Build </button>
 <button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-icon"> 💭 </span> Reflect </button>
 <div class="sidebar-divider"></div>
-<a href="echo-game.html" class="sidebar-game-link"> ◈ Echo's Game World </a>
+<span class="sidebar-game-link" aria-disabled="true"> ◈ Echo's Game World </span>
 </aside>
 <div class="lesson-content">
 <div class="locked-panel" id="lock-4"><div class="locked-icon"> 🔒 </div><h2> Sparks Membership Required </h2><p> Echo's full studio — all 4 lessons — unlocks with Sparks. </p><button class="gate-btn" onclick="goUpgrade()"> Upgrade Now </button></div>
@@ -646,8 +650,9 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="term-card" onclick="toggleTerm(this)"><div class="term-name"> BPM <span class="term-arrow"> › </span></div><div class="term-def"> Beats Per Minute; controls sequencer speed. Cross-reference: Lesson 2.</div></div>
 <div class="term-card" onclick="toggleTerm(this)"><div class="term-name"> setInterval <span class="term-arrow"> › </span></div><div class="term-def"> The repeating timer that advances the sequencer step by step.</div></div>
 </div></div>
-<div class="content-block" id="block-4-build" style="display:none"><div class="section-header"> Beat Machine </div><div class="section-sub"> LESSON 04 · SPARKS </div><div class="beat-machine"><h3> ◈ Echo's Step Sequencer </h3><div class="beat-grid" id="beatGrid"></div><div class="beat-controls"><button class="beat-play-btn" id="beatPlayBtn" onclick="toggleBeat()"> ▶ PLAY </button><div class="beat-tempo"><span> BPM </span><input type="range" id="tempoSlider" min="60" max="180" value="120" oninput="updateTempo(this.value)" /><span id="tempoVal"> 120 </span></div><button class="beat-play-btn" style="background:rgba(0,229,255,0.15);color:var(--cyan);border:1px solid var(--cyan);" onclick="clearBeat()"> ✕ CLEAR </button><div class="beat-step-indicator" id="stepIndicator"> STEP: -- </div></div></div><div class="quiz-card"><div class="quiz-q"> In the beat machine, what does toggling a grid button actually change? </div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, 'The CSS class just reflects the underlying data.')"> The button's CSS class only </button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The boolean in the grid array is flipped.')"> A boolean in the grid data array </button><button class="quiz-opt" onclick="checkQuiz(this, false, 'The sound plays on the next sequencer tick.')"> A sound plays immediately </button></div><div class="quiz-feedback" id="qfb-6"></div></div></div>
+<div class="content-block" id="block-4-build" style="display:none"><div class="section-header"> Beat Machine </div><div class="section-sub"> LESSON 04 · SPARKS </div><div class="beat-machine"><h3> ◈ Echo's Step Sequencer </h3><div class="beat-grid" id="beatGrid"></div><div class="beat-controls"><button class="beat-play-btn" id="beatPlayBtn" onclick="toggleBeat()"> ▶ PLAY </button><div class="beat-tempo"><span> BPM </span><input type="range" id="tempoSlider" min="60" max="180" value="120" oninput="updateTempo(this.value)" /><span id="tempoVal"> 120 </span></div><button class="beat-play-btn" style="background:rgba(0,229,255,0.15);color:var(--cyan);border:1px solid var(--cyan);" onclick="clearBeat()"> ✕ CLEAR </button><div class="beat-step-indicator" id="stepIndicator"> STEP: -- </div></div></div><div class="quiz-card"><div class="quiz-q"> In the beat machine, what does toggling a grid button actually change? </div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, 'The CSS class just reflects the underlying data.')"> The button's CSS class only </button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The boolean in the grid array is flipped.')"> A boolean in the grid data array </button><button class="quiz-opt" onclick="checkQuiz(this, false, 'The sound plays on the next sequencer tick.')"> A sound plays immediately </button></div><div class="quiz-feedback" id="qfb-6"></div></div>
 <div class="quiz-card"><div class="quiz-q">Why does <code>(step + 1) % 16</code> use <code>% 16</code>?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this, false, 'It does not make the sound louder.')">To control volume</button><button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. It wraps the counter back to 0 after step 15.')">To keep the step cycling from 0 through 15</button><button class="quiz-opt" onclick="checkQuiz(this, false, 'BPM controls speed.')">To calculate BPM</button></div><div class="quiz-feedback" id="qfb-4b"></div></div>
+</div>
 <div class="content-block" id="block-4-reflect" style="display:none"><div class="section-header"> Reflect </div><div class="section-sub"> LESSON 04 · SPARKS </div><div class="reflect-prompt"><div class="reflect-q"> The beat machine uses events, timers, and audio all at once. Describe how they work together. </div><textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea><div style="display:flex;align-items:center;gap:1rem;"><button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')"> Save </button><span class="reflect-saved" id="saved-4-1"> ✓ Saved </span></div></div><div class="lesson-complete" id="complete-4"><h3> ◈ &nbsp; Echo's Studio Complete </h3><p> Events. Timers. Audio. Beat machines. The signal has been heard. Now it's time to send one. </p><div class="lesson-joke" id="joke-4"></div></div></div>
 </div>
 </div>
@@ -655,8 +660,8 @@ nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; a
 <div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
 <div class="locked-panel" id="lock-cheat">
 <div class="locked-icon">🔒</div>
-<h2>Coders Membership Required</h2>
-<p>Echo's cheat sheet unlocks with Coders.</p>
+<h2>Sparks Membership Required</h2>
+<p>Echo's cheat sheet unlocks with Sparks.</p>
 <button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
 </div>
 <div id="cheat-content" style="display:none;">
@@ -1040,12 +1045,27 @@ document.addEventListener('click', event => {
 function toggleMobileMenu() {
   const button = document.getElementById('navHamburger');
   const menu = document.getElementById('mobileMenu');
+  const portalButton = document.querySelector('.portal-peek-btn');
 
   if (button) button.classList.toggle('open');
   if (menu) menu.classList.toggle('open');
+  if (portalButton) portalButton.classList.toggle('menu-hidden', !!menu?.classList.contains('open'));
+
   const dashLink = document.getElementById('mobile-dashboard-link');
   if (dashLink) dashLink.style.display = currentTier ? 'block' : 'none';
 }
+
+window.addEventListener('resize', () => {
+  if (window.innerWidth > 980) {
+    const button = document.getElementById('navHamburger');
+    const menu = document.getElementById('mobileMenu');
+    const portalButton = document.querySelector('.portal-peek-btn');
+
+    if (button) button.classList.remove('open');
+    if (menu) menu.classList.remove('open');
+    if (portalButton) portalButton.classList.remove('menu-hidden');
+  }
+});
 
 document.addEventListener('DOMContentLoaded', () => {
   buildBeatGrid();
@@ -1053,7 +1073,6 @@ document.addEventListener('DOMContentLoaded', () => {
   bbBuildFreeGrid();
   bbRenderPads();
   bbLoadBest();
-  handleTierUnlock(null);
 });
 </script>
 </body>
