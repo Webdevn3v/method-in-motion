@@ -32,12 +32,11 @@ const db = getFirestore(app);
 // Every character page should call window.mimHasAccess(charId, tier, kind)
 // instead of writing its own tier-comparison logic.
 //
-// kind is 'lessons' or 'game'. Byte is the one character where these differ
-// (game is free at Explorer, lessons are Coders-only) — everyone else has
-// the same requirement for both.
+// kind is 'lessons', 'game', or 'cheat'.
+// Each character's lessons, game, and cheat sheet follow the same tier.
 const CHARACTER_ACCESS = {
   zen:  { lessons: "explorer", game: "explorer", cheat: "explorer" },
-  byte: { lessons: "coders",   game: "explorer", cheat: "coders" },
+  byte: { lessons: "coders",   game: "coders",   cheat: "coders" },
   bug:  { lessons: "sparks",   game: "sparks",   cheat: "sparks" },
   echo: { lessons: "sparks",   game: "sparks",   cheat: "sparks" },
   loop: { lessons: "coders",   game: "coders",   cheat: "coders" },
