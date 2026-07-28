@@ -1,1224 +1,158 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Library — Method in Motion</title>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W">
-</script>
-<script>
-window.dataLayer=window.dataLayer||[];
-function gtag(){
-dataLayer.push(arguments)}
-gtag('js',new Date());
-gtag('config','G-DJ3Q488K7W');
-</script>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Syne:wght@400;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
-<style>
-:root{ --void:#050508;--deep:#080b14;--card:#0f1525; --border:rgba(255,255,255,.06);--border-md:rgba(255,255,255,.12); --white:#fff;--off:#c8cce0;--muted:#5a6080; --pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;--yellow:#fbbf24;--lime:#84cc16;--orange:#fb923c;--blue:#38bdf8; --grad:linear-gradient(135deg,#ff6baa,#c66bff,#00e8ff); --display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif; }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{background:var(--void);color:var(--white);font-family:var(--body);font-weight:300;overflow-x:hidden;line-height:1.7;}
-a{color:inherit;text-decoration:none}
-img{display:block;max-width:100%}
-/* NAV */ nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:12px 48px;background:rgba(5,5,8,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
-.nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.78rem;letter-spacing:.12em;}
-.nav-logo-mark{width:30px;height:30px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.72rem;font-weight:700;color:#000;}
-.nav-links{display:flex;gap:24px;list-style:none}
-.nav-links a{font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);transition:color .3s;}
-.nav-links a:hover,.nav-links a.active{color:#fff}
-.nav-dropdown{position:relative;display:flex;align-items:center;}
-.nav-drop-trigger{font-family:var(--body);font-size:.63rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45);background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:5px;transition:color .3s;padding:0;}
-.nav-drop-trigger:hover,.nav-drop-trigger.open{color:#fff;}
-.nav-drop-trigger span{font-size:.58rem;transition:transform .2s;}
-.nav-drop-trigger.open span{transform:rotate(180deg);}
-.nav-drop-menu{display:none;position:absolute;top:calc(100% + 18px);left:50%;transform:translateX(-50%);min-width:180px;background:rgba(8,11,20,.98);border:1px solid var(--border-md);border-radius:12px;padding:8px;box-shadow:0 18px 50px rgba(0,0,0,.45);backdrop-filter:blur(18px);}
-.nav-drop-menu.open{display:block;}
-.nav-drop-menu a{display:block;padding:10px 12px;border-radius:8px;white-space:nowrap;}
-.nav-drop-menu a:hover,.nav-drop-menu a.active{background:rgba(255,255,255,.05);color:#fff;}
-#nav-username{font-family:var(--display);font-size:.58rem;letter-spacing:.08em;color:var(--cyan);white-space:nowrap;}
-.nav-right{display:flex;align-items:center;gap:10px}
-.nav-cta{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;border:1px solid rgba(198,107,255,.4);color:var(--purple);border-radius:100px;transition:all .3s;background:none;cursor:pointer;}
-.nav-join{font-family:var(--display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:9px 20px;background:var(--grad);color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;}
-#nav-user-menu{display:none;align-items:center;gap:10px}
-#nav-dashboard-link{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(0,232,255,.3);color:var(--cyan);border-radius:100px;}
-#nav-logout-btn{font-family:var(--display);font-size:.58rem;letter-spacing:.1em;text-transform:uppercase;padding:7px 14px;border:1px solid rgba(255,255,255,.15);background:none;color:rgba(255,255,255,.4);border-radius:100px;cursor:pointer}
-@media(max-width:768px){.nav-links{display:none}nav{padding:14px 20px}}
-/* HERO */ .page-hero{position:relative;padding:140px 48px 80px;text-align:center;overflow:hidden;background:var(--deep);}
-.page-hero::before{content:'';position:absolute;inset:0;background-image:url('MiM_Library.png');background-size:cover;background-position:center;opacity:.55;z-index:0;}
-.page-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,11,20,0.2) 0%,rgba(8,11,20,0.4) 50%,var(--deep) 100%);z-index:1;}
-.page-hero-content{position:relative;z-index:2;}
-.page-eyebrow{font-family:var(--display);font-size:.56rem;letter-spacing:.3em;text-transform:uppercase;color:var(--cyan);margin-bottom:14px;display:block;}
-.page-title{font-family:var(--display);font-size:clamp(2rem,6vw,4.5rem);font-weight:900;line-height:1;letter-spacing:.06em;background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;margin-bottom:14px;}
-.page-desc{font-size:1rem;color:var(--off);max-width:520px;margin:0 auto;line-height:1.9;}
-/* SECTION NAV */ .section-nav{position:sticky;top:56px;z-index:90;background:rgba(5,5,8,.96);backdrop-filter:blur(16px);border-bottom:1px solid var(--border);padding:0 48px;display:flex;gap:0;overflow-x:auto;scrollbar-width:none;}
-.section-nav::-webkit-scrollbar{display:none}
-.snav-item{font-family:var(--display);font-size:.52rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.35);padding:14px 18px;white-space:nowrap;cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;text-decoration:none;display:block;}
-.snav-item:hover{color:#fff}
-.snav-item.active{color:var(--cyan);border-bottom-color:var(--cyan);}
-/* SHARED SECTION LAYOUT */ .lib-section{padding:72px 0;}
-.lib-section:nth-child(even){background:rgba(8,11,20,0.5);}
-.lib__inner{max-width:1100px;margin:0 auto;padding:0 48px;}
-.lib-block{margin-bottom:64px;}
-.lib-block:last-child{margin-bottom:0}
-.lib-label{font-family:var(--display);font-size:.52rem;letter-spacing:.28em;text-transform:uppercase;color:var(--pink);margin-bottom:10px;display:block;}
-.lib-block-title{font-family:var(--heading);font-size:clamp(1.3rem,2.5vw,1.9rem);font-weight:800;margin-bottom:8px;}
-.lib-block-desc{font-size:.9rem;color:var(--muted);margin-bottom:28px;line-height:1.8;max-width:600px;}
-.section-divider{border:none;border-top:1px solid var(--border);margin:64px 0;}
-/* FACT GRID */ .fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-@media(max-width:800px){.fact-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.fact-grid{grid-template-columns:1fr}}
-.fact-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;transition:all .3s;}
-.fact-card:hover{transform:translateY(-3px);border-color:var(--purple);box-shadow:0 10px 36px rgba(0,0,0,.3);}
-.fact-icon{font-size:1.8rem;margin-bottom:12px;}
-.fact-title{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:6px;}
-.fact-body{font-size:.8rem;color:var(--muted);line-height:1.7;}
-.fact-card.accent-cyan{border-color:rgba(0,232,255,.15);}
-.fact-card.accent-pink{border-color:rgba(255,107,170,.15);}
-.fact-card.accent-purple{border-color:rgba(198,107,255,.15);}
-.fact-card.accent-yellow{border-color:rgba(251,191,36,.15);}
-.fact-card.accent-lime{border-color:rgba(132,204,22,.15);}
-.fact-card.accent-orange{border-color:rgba(251,146,60,.15);}
-/* TIMELINE */ .timeline{display:flex;flex-direction:column;gap:0;position:relative;}
-.timeline::before{content:'';position:absolute;left:76px;top:0;bottom:0;width:1px;background:var(--border);}
-.timeline-item{display:flex;gap:28px;align-items:flex-start;padding:22px 0;position:relative;}
-.timeline-item:last-child{padding-bottom:0}
-.timeline-year{font-family:var(--display);font-size:.85rem;font-weight:900;min-width:64px;padding-top:3px;text-align:right;flex-shrink:0;}
-.timeline-dot{width:10px;height:10px;border-radius:50%;border:2px solid;flex-shrink:0;margin-top:5px;background:var(--void);}
-.timeline-info{}
-.timeline-event{font-family:var(--heading);font-size:1rem;font-weight:700;margin-bottom:4px;}
-.timeline-desc{font-size:.82rem;color:var(--muted);line-height:1.7;}
-.timeline-tag{display:inline-block;font-family:var(--display);font-size:.42rem;letter-spacing:.12em;text-transform:uppercase;padding:3px 9px;border-radius:100px;border:1px solid;margin-bottom:6px;}
-/* PIONEER CARDS */ .pioneer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
-@media(max-width:800px){.pioneer-grid{grid-template-columns:repeat(2,1fr)}}
-@media(max-width:480px){.pioneer-grid{grid-template-columns:1fr}}
-.pioneer-card{background:var(--card);border-radius:14px;border:1px solid var(--border);padding:24px;transition:all .3s;position:relative;overflow:hidden;}
-.pioneer-card::before{content:'';position:absolute;inset:0;background:var(--pc-bg,radial-gradient(circle at 80% 0%,rgba(198,107,255,.07),transparent 55%));pointer-events:none;}
-.pioneer-card:hover{transform:translateY(-3px);border-color:var(--pc-color,var(--purple));}
-.pioneer-era{font-family:var(--display);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;color:var(--pc-color,var(--purple));margin-bottom:10px;display:block;}
-.pioneer-name{font-family:var(--heading);font-size:1.1rem;font-weight:800;margin-bottom:4px;}
-.pioneer-role{font-size:.78rem;color:var(--muted);margin-bottom:12px;line-height:1.5;}
-.pioneer-fact{font-size:.8rem;color:var(--off);line-height:1.7;border-left:2px solid;border-color:var(--pc-color,var(--purple));padding-left:10px;}
-.pioneer-source{display:inline-block;margin-top:10px;font-family:var(--display);font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;color:var(--pc-color,var(--purple));opacity:.7;text-decoration:underline;text-underline-offset:2px;position:relative;z-index:2;}
-.pioneer-source:hover{opacity:1;}
-/* LANGUAGES GRID */ .lang-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;}
-@media(max-width:800px){.lang-grid{grid-template-columns:repeat(2,1fr)}}
-.lang-card{background:var(--card);border-radius:10px;border:1px solid var(--border);padding:16px;transition:all .3s;}
-.lang-card:hover{border-color:var(--lc,var(--cyan));transform:translateY(-2px);}
-.lang-name{font-family:var(--display);font-size:.72rem;font-weight:700;color:var(--lc,var(--cyan));margin-bottom:4px;}
-.lang-year{font-size:.7rem;color:var(--muted);margin-bottom:8px;}
-.lang-use{font-size:.78rem;color:var(--off);line-height:1.6;}
-/* COMPUTER HISTORY */ .computer-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
-@media(max-width:600px){.computer-grid{grid-template-columns:1fr}}
-.computer-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;transition:all .3s;display:flex;gap:16px;align-items:flex-start;}
-.computer-card:hover{transform:translateY(-2px);border-color:var(--cyan);}
-.computer-icon{font-size:2rem;flex-shrink:0;}
-.computer-info{}
-.computer-name{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:4px;}
-.computer-year{font-family:var(--display);font-size:.5rem;letter-spacing:.14em;text-transform:uppercase;color:var(--cyan);margin-bottom:6px;display:block;}
-.computer-desc{font-size:.8rem;color:var(--muted);line-height:1.7;}
-/* INTERNET TIMELINE */ .internet-steps{display:flex;flex-direction:column;gap:12px;}
-.internet-step{display:flex;gap:16px;align-items:flex-start;background:var(--card);border:1px solid var(--border);border-radius:10px;padding:16px 20px;transition:all .3s;}
-.internet-step:hover{border-color:rgba(0,232,255,.3);}
-.step-year{font-family:var(--display);font-size:.8rem;font-weight:900;color:var(--cyan);min-width:52px;flex-shrink:0;padding-top:2px;}
-.step-info{}
-.step-event{font-family:var(--heading);font-size:.92rem;font-weight:700;margin-bottom:3px;}
-.step-desc{font-size:.78rem;color:var(--muted);line-height:1.6;}
-/* HOW IT WORKS */ .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-@media(max-width:700px){.how-grid{grid-template-columns:1fr}}
-.how-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;text-align:center;transition:all .3s;}
-.how-card:hover{transform:translateY(-3px);border-color:var(--hc,var(--pink));}
-.how-num{font-family:var(--display);font-size:2rem;font-weight:900;color:var(--hc,var(--pink));margin-bottom:10px;opacity:.4;}
-.how-title{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:8px;}
-.how-desc{font-size:.8rem;color:var(--muted);line-height:1.7;}
-/* MINI GAMES */ .mini-games-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-@media(max-width:700px){.mini-games-grid{grid-template-columns:1fr}}
-.mini-game-card{background:var(--card);border-radius:12px;border:1px solid var(--border);padding:22px;text-align:center;transition:all .3s;position:relative;overflow:hidden;}
-.mini-game-card::before{content:'';position:absolute;inset:0;background:var(--mg-bg,radial-gradient(circle at 50% 0%,rgba(198,107,255,.08),transparent 60%));pointer-events:none;}
-.mini-game-card:hover{transform:translateY(-3px);border-color:var(--mg-color,var(--purple));}
-.mini-game-icon{font-size:2rem;margin-bottom:10px;}
-.mini-game-title{font-family:var(--heading);font-size:.95rem;font-weight:700;margin-bottom:6px;}
-.mini-game-desc{font-size:.76rem;color:var(--muted);line-height:1.7;margin-bottom:14px;}
-.mini-game-tag{font-family:var(--display);font-size:.44rem;letter-spacing:.1em;text-transform:uppercase;padding:4px 10px;border-radius:100px;border:1px solid;display:inline-block;}
-/* CLIPS */ .clips-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;}
-@media(max-width:700px){.clips-grid{grid-template-columns:1fr}}
-.clip-card{background:var(--card);border-radius:12px;border:1px solid var(--border);overflow:hidden;transition:all .3s;}
-.clip-card:hover{transform:translateY(-3px);border-color:var(--cc,var(--pink));}
-.clip-thumb{aspect-ratio:9/16;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center;position:relative;}
-.clip-thumb-bg{position:absolute;inset:0;opacity:.5;}
-.clip-play{position:relative;z-index:1;width:44px;height:44px;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.2);display:flex;align-items:center;justify-content:center;font-size:1rem;}
-.clip-info{padding:14px;}
-.clip-char{font-family:var(--display);font-size:.46rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:3px;}
-.clip-title{font-family:var(--heading);font-size:.88rem;font-weight:700;}
-/* COMING SOON */ .coming-badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--display);font-size:.5rem;letter-spacing:.2em;text-transform:uppercase;padding:7px 18px;border-radius:100px;border:1px solid rgba(0,232,255,.2);color:var(--cyan);margin-bottom:16px;}
-.coming-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--cyan);animation:blink 1.4s ease-in-out infinite;}
-@keyframes blink{0%,100%{opacity:1}50%{opacity:.2}}
-.coming-card{background:var(--deep);border-radius:14px;border:1px solid var(--border);padding:36px;text-align:center;}
-.coming-title{font-family:var(--heading);font-size:1.1rem;font-weight:800;margin-bottom:8px;color:rgba(255,255,255,.45);}
-.coming-desc{font-size:.84rem;color:var(--muted);max-width:360px;margin:0 auto;}
-/* GLOSSARY */ .glossary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;}
-@media(max-width:600px){.glossary-grid{grid-template-columns:1fr}}
-.glossary-item{background:var(--card);border:1px solid var(--border);border-radius:8px;padding:14px 16px;transition:all .2s;}
-.glossary-item:hover{border-color:rgba(0,232,255,.2);}
-.glossary-term{font-family:var(--display);font-size:.6rem;font-weight:700;color:var(--cyan);letter-spacing:.1em;margin-bottom:4px;}
-.glossary-def{font-size:.8rem;color:var(--muted);line-height:1.6;}
-/* AUTH MODAL */ .auth-modal-overlay{display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,16,.85);backdrop-filter:blur(6px);align-items:center;justify-content:center;padding:1rem}
-.auth-modal-overlay.active{display:flex}
-.auth-modal-box{background:#0a0a1a;border:1px solid rgba(0,240,255,.2);border-radius:16px;padding:2.4rem 2rem;width:100%;max-width:420px;position:relative;}
-.auth-close{position:absolute;top:1rem;right:1.2rem;background:none;border:none;color:rgba(255,255,255,.4);font-size:1.4rem;cursor:pointer;}
-.auth-modal-header{text-align:center;margin-bottom:1.6rem}
-.auth-logo-mark{font-family:'Orbitron',sans-serif;font-size:1.4rem;font-weight:900;letter-spacing:.15em;background:linear-gradient(135deg,#00f0ff,#ff6ec7);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
-.auth-tagline{font-family:'Syne',sans-serif;font-size:.68rem;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.3)}
-.auth-tabs{display:flex;border-bottom:1px solid rgba(255,255,255,.08);margin-bottom:1.6rem}
-.auth-tab{flex:1;background:none;border:none;color:rgba(255,255,255,.4);font-family:'Syne',sans-serif;font-size:.78rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;padding:.7rem 0;cursor:pointer;border-bottom:2px solid transparent;margin-bottom:-1px;transition:color .2s,border-color .2s}
-.auth-tab.active{color:#00f0ff;border-bottom-color:#00f0ff}
-.auth-form{display:none}
-.auth-form.active{display:block}
-.auth-field{margin-bottom:1rem}
-.auth-field label{display:block;font-family:'Syne',sans-serif;font-size:.68rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.5);margin-bottom:.35rem}
-.auth-field input{width:100%;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:8px;padding:.68rem .88rem;color:#fff;font-family:'Syne',sans-serif;font-size:.88rem;outline:none;transition:border-color .2s;box-sizing:border-box}
-.auth-field input:focus{border-color:rgba(0,240,255,.5)}
-.auth-field input::placeholder{color:rgba(255,255,255,.2)}
-.auth-error{font-family:'Syne',sans-serif;font-size:.76rem;color:#ff6ec7;min-height:1.2em;margin:.2rem 0 .7rem}
-.auth-submit{width:100%;background:linear-gradient(135deg,#00f0ff,#7b61ff);border:none;border-radius:8px;padding:.82rem;color:#000;font-family:'Orbitron',sans-serif;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;cursor:pointer;margin-bottom:.9rem}
-.auth-switch{text-align:center;font-family:'Syne',sans-serif;font-size:.76rem;color:rgba(255,255,255,.35)}
-.auth-link{background:none;border:none;color:#00f0ff;font-family:'Syne',sans-serif;font-size:.76rem;cursor:pointer;padding:0;text-decoration:underline;text-underline-offset:2px}
-/* MOBILE NAV */
-.nav-hamburger{display:none;flex-direction:column;justify-content:center;gap:5px;width:34px;height:34px;background:none;border:none;cursor:pointer;padding:0;}
-.nav-hamburger span{display:block;width:22px;height:2px;background:#fff;border-radius:2px;transition:transform .3s,opacity .3s;}
-.nav-hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg);}
-.nav-hamburger.open span:nth-child(2){opacity:0;}
-.nav-hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
-@media(max-width:768px){.nav-hamburger{display:flex;}}
-.mobile-drawer-overlay{display:none;position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.6);backdrop-filter:blur(2px);}
-.mobile-drawer-overlay.open{display:block;}
-.mobile-drawer{position:fixed;top:0;right:-280px;width:260px;height:100%;z-index:151;background:#0a0a14;border-left:1px solid var(--border-md);padding:80px 24px 24px;transition:right .3s ease;display:flex;flex-direction:column;gap:4px;}
-.mobile-drawer.open{right:0;}
-.mobile-drawer a{font-family:var(--display);font-size:.68rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.6);padding:14px 6px;border-bottom:1px solid rgba(255,255,255,.06);}
-.mobile-drawer a.active{color:var(--cyan);}
-.mobile-menu-label{font-family:var(--display);font-size:.48rem;letter-spacing:.2em;text-transform:uppercase;color:var(--purple);padding:18px 6px 6px;margin-top:4px;}
-/* COLLAPSIBLE SECTIONS */
-.lib-toggle{display:flex;align-items:center;justify-content:space-between;gap:16px;cursor:pointer;user-select:none;}
-.lib-toggle-chevron{font-family:var(--display);font-size:.9rem;color:var(--muted);flex-shrink:0;transition:transform .25s ease;padding-top:2px;}
-.lib-block.collapsed .lib-toggle-chevron{transform:rotate(-90deg);}
-.lib-toggle-titles{flex:1;min-width:0;}
-.lib-block-body{overflow:hidden;max-height:6000px;opacity:1;transition:max-height .4s ease,opacity .3s ease,margin-top .3s ease;}
-.lib-block.collapsed .lib-block-body{max-height:0;opacity:0;}
-.lib-hint{font-family:var(--display);font-size:.42rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);opacity:.6;margin-top:2px;}
-/* SURPRISE ME BUTTON */
-.surprise-btn{font-family:var(--display);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:10px 22px;border-radius:100px;border:1px solid rgba(0,232,255,.3);color:var(--cyan);background:none;cursor:pointer;margin-top:4px;transition:all .2s;}
-.surprise-btn:hover{background:rgba(0,232,255,.08);}
-.fact-card.highlighted{border-color:var(--cyan)!important;box-shadow:0 0 0 2px rgba(0,232,255,.25),0 10px 36px rgba(0,0,0,.4);}
-/* GLOSSARY SEARCH */
-.glossary-search{width:100%;max-width:420px;background:rgba(255,255,255,.05);border:1px solid var(--border-md);border-radius:100px;padding:.7rem 1.1rem;color:#fff;font-family:var(--body);font-size:.85rem;outline:none;margin-bottom:22px;transition:border-color .2s;}
-.glossary-search:focus{border-color:rgba(0,232,255,.4);}
-.glossary-search::placeholder{color:rgba(255,255,255,.3);}
-.glossary-empty{display:none;font-size:.82rem;color:var(--muted);padding:8px 2px;}
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#050508" />
+  <meta name="description" content="Explore coding history, computer evolution, tech pioneers, programming languages, web fundamentals, and a searchable coding glossary inside the Method in Motion Library." />
+  <title>The Library — Method in Motion</title>
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){ dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-DJ3Q488K7W');
+  </script>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;800;900&family=Syne:wght@500;600;700;800&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    :root{--void:#050508;--deep:#080b14;--panel:#0e1424;--line:rgba(255,255,255,.09);--text:#fff;--soft:#c9cee1;--muted:#8b93b3;--pink:#ff6baa;--purple:#c66bff;--cyan:#00e8ff;--yellow:#fbbf24;--lime:#84cc16;--orange:#fb923c;--blue:#38bdf8;--grad:linear-gradient(135deg,var(--pink),var(--purple),var(--cyan));--display:'Orbitron',monospace;--heading:'Syne',sans-serif;--body:'DM Sans',sans-serif}
+    *{box-sizing:border-box;margin:0;padding:0}html{scroll-behavior:smooth}body{min-height:100vh;overflow-x:hidden;background:radial-gradient(circle at 15% 0%,rgba(198,107,255,.08),transparent 28%),radial-gradient(circle at 90% 18%,rgba(0,232,255,.07),transparent 30%),var(--void);color:var(--text);font-family:var(--body);line-height:1.65}a{color:inherit;text-decoration:none}button,input{font:inherit}button{color:inherit}img{display:block;max-width:100%}
+    .site-nav{position:fixed;inset:0 0 auto 0;z-index:500;min-height:70px;padding:14px 42px;display:flex;align-items:center;gap:22px;background:rgba(5,5,8,.84);-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);border-bottom:1px solid rgba(255,255,255,.06)}
+    .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.72rem;letter-spacing:.12em;white-space:nowrap}.nav-logo-mark{width:30px;height:30px;border-radius:8px;display:grid;place-items:center;color:#050508;font-weight:900;background:var(--grad);box-shadow:0 0 22px rgba(198,107,255,.35)}
+    .nav-links{margin-left:auto;display:flex;align-items:center;gap:14px}.nav-link,.nav-back{font-family:var(--display);font-size:.56rem;letter-spacing:.15em;text-transform:uppercase;color:rgba(255,255,255,.55);transition:.2s}.nav-link:hover,.nav-back:hover{color:#fff}.nav-drop{position:relative}.nav-drop-trigger{border:1px solid rgba(255,255,255,.10);background:rgba(255,255,255,.05);border-radius:999px;padding:8px 14px;cursor:pointer;font-family:var(--display);font-size:.55rem;letter-spacing:.14em;text-transform:uppercase;color:rgba(255,255,255,.62)}.nav-drop-trigger:hover,.nav-drop.open .nav-drop-trigger{color:#fff;border-color:rgba(0,232,255,.35);background:rgba(0,232,255,.09)}
+    .nav-drop-menu{position:absolute;top:calc(100% + 12px);left:50%;transform:translateX(-50%) translateY(-4px);width:190px;padding:8px;opacity:0;pointer-events:none;background:#0d1424;border:1px solid var(--line);border-radius:14px;box-shadow:0 24px 60px rgba(0,0,0,.55);transition:.2s}.nav-drop.open .nav-drop-menu{opacity:1;pointer-events:auto;transform:translateX(-50%) translateY(0)}.nav-drop-item{display:block;padding:11px 12px;border-radius:9px;font-family:var(--display);font-size:.53rem;letter-spacing:.10em;text-transform:uppercase;color:rgba(255,255,255,.64)}.nav-drop-item:hover,.nav-drop-item.active{color:var(--cyan);background:rgba(0,232,255,.09)}
+    .nav-auth{display:flex;align-items:center;gap:10px;margin-left:8px}.nav-cta,.nav-join-btn,#nav-dashboard-link,#nav-logout-btn{border-radius:999px;padding:9px 18px;font-family:var(--display);font-size:.57rem;letter-spacing:.13em;text-transform:uppercase;cursor:pointer;transition:.2s;white-space:nowrap}.nav-cta{border:1px solid rgba(198,107,255,.45);background:transparent;color:var(--purple)}.nav-join-btn{border:none;background:linear-gradient(135deg,var(--pink),var(--purple));color:#070709;font-weight:800}#nav-user-menu{display:none;align-items:center;gap:10px;margin-left:8px}#nav-username{max-width:130px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--display);font-size:.54rem;letter-spacing:.09em;color:var(--cyan)}#nav-dashboard-link{border:1px solid rgba(0,232,255,.32);color:var(--cyan)}#nav-logout-btn{border:1px solid rgba(255,255,255,.14);background:transparent;color:rgba(255,255,255,.55)}.mobile-toggle{display:none;margin-left:auto;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;background:rgba(255,255,255,.05);cursor:pointer;font-size:1.15rem}
+    .hero{position:relative;min-height:94svh;padding:130px 24px 90px;display:grid;place-items:center;overflow:hidden;isolation:isolate;background:#07101a}.hero-bg{position:absolute;inset:0;z-index:-7;background-image:url('MiM_Library.png');background-size:cover;background-position:center;transform:scale(1.03);animation:heroDrift 16s ease-in-out infinite}@keyframes heroDrift{0%,100%{transform:scale(1.03)}50%{transform:scale(1.08) translateY(-8px)}}.hero::before{content:"";position:absolute;inset:0;z-index:-6;background:radial-gradient(circle at 20% 25%,rgba(255,107,170,.18),transparent 28%),radial-gradient(circle at 80% 35%,rgba(0,232,255,.18),transparent 32%),linear-gradient(to bottom,rgba(5,5,8,.22),rgba(5,5,8,.44) 56%,var(--void))}.hero::after{content:"";position:absolute;inset:0;z-index:-5;opacity:.2;background-image:linear-gradient(rgba(0,232,255,.12) 1px,transparent 1px),linear-gradient(90deg,rgba(0,232,255,.12) 1px,transparent 1px);background-size:70px 70px;-webkit-mask-image:linear-gradient(to bottom,transparent 3%,#000 44%,transparent 95%);mask-image:linear-gradient(to bottom,transparent 3%,#000 44%,transparent 95%);animation:gridMove 18s linear infinite}@keyframes gridMove{to{transform:translateY(70px)}}.scanline{position:absolute;inset:0;z-index:-4;background:linear-gradient(to bottom,transparent 0%,rgba(0,232,255,.12) 49%,transparent 51%);background-size:100% 230px;animation:scan 7s linear infinite;opacity:.35}@keyframes scan{to{background-position:0 230px}}.hero-particles{position:absolute;inset:0;z-index:-3;pointer-events:none}.hero-particle{position:absolute;width:3px;height:3px;border-radius:50%;opacity:0;box-shadow:0 0 12px currentColor;animation:floatUp linear infinite}@keyframes floatUp{0%{transform:translateY(100vh) scale(.5);opacity:0}10%{opacity:.85}90%{opacity:.45}100%{transform:translateY(-70px) scale(1.2);opacity:0}}
+    .hero-content{width:min(920px,94vw);text-align:center}.hero-kicker{color:var(--cyan);font-family:var(--display);font-size:.58rem;letter-spacing:.31em;text-transform:uppercase;margin-bottom:16px;text-shadow:0 0 20px rgba(0,232,255,.65)}.hero-title{font-family:var(--display);font-size:clamp(2.65rem,7vw,6rem);line-height:.95;font-weight:900;letter-spacing:.05em;text-shadow:0 4px 30px rgba(0,0,0,.65)}.hero-title span{display:block;margin-top:10px;background:var(--grad);-webkit-background-clip:text;background-clip:text;color:transparent;filter:drop-shadow(0 0 25px rgba(0,232,255,.4))}.hero-copy{max-width:720px;margin:22px auto 0;color:rgba(255,255,255,.78);font-size:clamp(.92rem,2vw,1.08rem);line-height:1.8}.hero-actions{margin-top:30px;display:flex;justify-content:center;flex-wrap:wrap;gap:12px}.hero-btn{min-width:190px;border-radius:999px;padding:13px 22px;font-family:var(--display);font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;transition:.22s}.hero-btn.primary{background:var(--grad);color:#050508;font-weight:800;box-shadow:0 12px 34px rgba(198,107,255,.24)}.hero-btn.secondary{border:1px solid rgba(0,232,255,.35);background:rgba(0,232,255,.08);color:var(--cyan);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}.hero-btn:hover{transform:translateY(-2px)}.hero-status{display:inline-flex;align-items:center;gap:9px;margin-top:22px;font-family:var(--display);font-size:.49rem;letter-spacing:.13em;text-transform:uppercase;color:rgba(255,255,255,.66)}.hero-status::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 15px var(--cyan);animation:pulse 1.5s ease-in-out infinite}@keyframes pulse{50%{transform:scale(1.35);opacity:.65}}
+    .archive-hub{max-width:1420px;margin:0 auto;padding:80px 36px 50px}.section-top{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:30px}.eyebrow{margin-bottom:9px;color:var(--pink);font-family:var(--display);font-size:.54rem;letter-spacing:.21em;text-transform:uppercase}.section-title{font-family:var(--display);font-size:clamp(1.75rem,4vw,3.25rem);line-height:1.08}.section-copy{max-width:570px;color:var(--muted);font-size:.92rem;line-height:1.75}.archive-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.archive-card{--accent:var(--cyan);--accent-rgb:0,232,255;position:relative;min-height:245px;overflow:hidden;border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:22px;background:radial-gradient(circle at 90% 0%,rgba(var(--accent-rgb),.12),transparent 42%),var(--panel);transition:.28s;isolation:isolate}.archive-card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.11) 50%,transparent 65%);transform:translateX(-100%)}.archive-card:hover{transform:translateY(-6px);border-color:rgba(var(--accent-rgb),.45);box-shadow:0 18px 50px rgba(0,0,0,.38),0 0 28px rgba(var(--accent-rgb),.12)}.archive-card:hover::before{opacity:1;animation:sweep 1.05s ease forwards}@keyframes sweep{to{transform:translateX(100%)}}.archive-icon{font-size:2rem;margin-bottom:30px}.archive-code{color:var(--accent);font-family:var(--display);font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}.archive-title{font-family:var(--heading);font-size:1.08rem;font-weight:800;margin-bottom:7px}.archive-desc{color:var(--muted);font-size:.79rem;line-height:1.6}.archive-arrow{position:absolute;right:18px;bottom:16px;color:var(--accent);font-family:var(--display);font-size:.56rem;letter-spacing:.10em;text-transform:uppercase}
+    .section-nav{position:sticky;top:70px;z-index:120;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 34px;background:rgba(5,5,8,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.08)}.section-nav::-webkit-scrollbar{display:none}.snav-item{flex:0 0 auto;padding:14px 18px;border-bottom:2px solid transparent;color:rgba(255,255,255,.54);font-family:var(--display);font-size:.50rem;letter-spacing:.14em;text-transform:uppercase;transition:.2s}.snav-item:hover{color:#fff}.snav-item.active{color:var(--cyan);border-bottom-color:var(--cyan)}
+    .library-section{padding:84px 0;border-bottom:1px solid rgba(255,255,255,.055)}.library-section:nth-of-type(even){background:rgba(8,11,20,.42)}.inner{max-width:1160px;margin:0 auto;padding:0 42px}.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,520px);align-items:end;gap:30px;margin-bottom:30px}.section-label{color:var(--pink);font-family:var(--display);font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:9px}.content-title{font-family:var(--heading);font-size:clamp(1.55rem,3vw,2.4rem);line-height:1.12;font-weight:800}.content-desc{color:var(--muted);font-size:.90rem;line-height:1.75}
+    .fact-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}.surprise-btn,.sound-toggle{border:1px solid rgba(0,232,255,.32);border-radius:999px;background:rgba(0,232,255,.07);color:var(--cyan);padding:10px 17px;cursor:pointer;font-family:var(--display);font-size:.51rem;letter-spacing:.11em;text-transform:uppercase}.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.fact-card{--accent:var(--cyan);padding:22px;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:var(--panel);transition:.25s}.fact-card:hover,.fact-card.highlighted{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 14px 40px rgba(0,0,0,.32)}.fact-icon{font-size:1.75rem;margin-bottom:12px}.fact-title{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:7px}.fact-body{color:var(--muted);font-size:.80rem;line-height:1.68}
+    .timeline{position:relative}.timeline::before{content:"";position:absolute;left:83px;top:5px;bottom:5px;width:1px;background:linear-gradient(var(--pink),var(--purple),var(--cyan));opacity:.45}.timeline-item{display:grid;grid-template-columns:65px 18px 1fr;gap:18px;align-items:start;padding:18px 0}.timeline-year{padding-top:4px;text-align:right;font-family:var(--display);font-size:.78rem;font-weight:900}.timeline-dot{width:11px;height:11px;margin-top:6px;border:2px solid currentColor;border-radius:50%;background:var(--void);box-shadow:0 0 12px currentColor}.timeline-info{padding:16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:var(--panel);transition:.22s}.timeline-info:hover{border-color:rgba(0,232,255,.25);transform:translateX(3px)}.timeline-tag{display:inline-block;margin-bottom:7px;padding:3px 9px;border:1px solid currentColor;border-radius:999px;font-family:var(--display);font-size:.41rem;letter-spacing:.11em;text-transform:uppercase}.timeline-event{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:5px}.timeline-desc{color:var(--muted);font-size:.81rem;line-height:1.7}
+    .card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.info-card{--accent:var(--cyan);display:flex;align-items:flex-start;gap:15px;padding:21px;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:var(--panel);transition:.24s}.info-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 36px rgba(0,0,0,.28)}.info-icon{font-size:1.85rem}.info-year{display:block;margin-bottom:5px;color:var(--accent);font-family:var(--display);font-size:.47rem;letter-spacing:.13em;text-transform:uppercase}.info-title{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:5px}.info-desc{color:var(--muted);font-size:.79rem;line-height:1.68}
+    .step-list{display:grid;gap:12px}.step-card{--accent:var(--cyan);display:grid;grid-template-columns:74px 1fr;gap:17px;padding:18px 20px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:var(--panel);transition:.22s}.step-card:hover{border-color:var(--accent);transform:translateX(4px)}.step-year{font-family:var(--display);font-size:.78rem;font-weight:900;color:var(--accent)}.step-title{font-family:var(--heading);font-size:.97rem;font-weight:800;margin-bottom:4px}.step-desc{color:var(--muted);font-size:.79rem;line-height:1.65}
+    .pioneer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:15px}.pioneer-card{--accent:var(--purple);padding:23px;border:1px solid rgba(255,255,255,.09);border-radius:16px;background:var(--panel);transition:.25s}.pioneer-card:hover{transform:translateY(-4px);border-color:var(--accent)}.pioneer-era{display:block;margin-bottom:9px;color:var(--accent);font-family:var(--display);font-size:.44rem;letter-spacing:.13em;text-transform:uppercase}.pioneer-name{font-family:var(--heading);font-size:1.08rem;font-weight:800}.pioneer-role{color:var(--muted);font-size:.76rem;margin:2px 0 12px}.pioneer-fact{padding-left:10px;border-left:2px solid var(--accent);color:var(--soft);font-size:.79rem;line-height:1.68}
+    .language-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.language-card{--accent:var(--cyan);padding:18px;border:1px solid rgba(255,255,255,.09);border-radius:13px;background:var(--panel);transition:.22s}.language-card:hover{transform:translateY(-3px);border-color:var(--accent)}.language-name{color:var(--accent);font-family:var(--display);font-size:.70rem;font-weight:800;margin-bottom:5px}.language-year{color:var(--muted);font-size:.68rem;margin-bottom:8px}.language-use{color:var(--soft);font-size:.77rem;line-height:1.62}
+    .how-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.how-card{--accent:var(--pink);padding:22px;text-align:center;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:var(--panel);transition:.24s}.how-card:hover{transform:translateY(-4px);border-color:var(--accent)}.how-num{color:var(--accent);opacity:.62;font-family:var(--display);font-size:1.7rem;font-weight:900;margin-bottom:9px}.how-title{font-family:var(--heading);font-size:.98rem;font-weight:800;margin-bottom:7px}.how-desc{color:var(--muted);font-size:.79rem;line-height:1.68}.subsection{margin-top:58px;padding-top:52px;border-top:1px solid rgba(255,255,255,.08)}.subsection h3{font-family:var(--heading);font-size:1.45rem;margin-bottom:7px}.subsection>p{color:var(--muted);font-size:.88rem;margin-bottom:24px}
+    .glossary-search{width:100%;max-width:520px;border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:12px 17px;background:rgba(255,255,255,.05);color:#fff;outline:none;margin-bottom:20px}.glossary-search:focus{border-color:rgba(0,232,255,.48)}.glossary-search::placeholder{color:rgba(255,255,255,.38)}.glossary-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.glossary-item{padding:15px 17px;border:1px solid rgba(255,255,255,.085);border-radius:11px;background:var(--panel);transition:.2s}.glossary-item:hover{border-color:rgba(0,232,255,.25)}.glossary-term{color:var(--cyan);font-family:var(--display);font-size:.58rem;font-weight:800;letter-spacing:.09em;margin-bottom:5px}.glossary-def{color:var(--muted);font-size:.79rem;line-height:1.62}.glossary-empty{display:none;color:var(--muted);padding:8px 2px;font-size:.82rem}
+    .mini-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.mini-card{--accent:var(--purple);padding:25px 21px;text-align:center;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:var(--panel);transition:.24s}.mini-card:hover{border-color:rgba(255,255,255,.09)}.mini-icon{font-size:2rem;margin-bottom:10px}.mini-title{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:6px}.mini-desc{color:var(--muted);font-size:.77rem;line-height:1.65;margin-bottom:14px}.mini-tag{display:inline-block;padding:4px 10px;border:1px solid var(--accent);border-radius:999px;color:var(--accent);font-family:var(--display);font-size:.43rem;letter-spacing:.10em;text-transform:uppercase}
+    footer{padding:36px 24px;text-align:center;color:rgba(255,255,255,.38);font-size:.74rem;border-top:1px solid rgba(255,255,255,.06)}footer a{color:var(--cyan)}
+    .modal-overlay{display:none;position:fixed;inset:0;z-index:1000;padding:20px;align-items:center;justify-content:center;background:rgba(5,5,8,.88);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px)}.modal-overlay.active{display:flex}.modal-box{position:relative;width:100%;max-width:400px;padding:40px;border:1px solid rgba(255,255,255,.12);border-radius:20px;background:#0f1525}.modal-close{position:absolute;right:16px;top:16px;border:0;background:none;color:rgba(255,255,255,.48);cursor:pointer;font-size:1.15rem}.modal-title{font-family:var(--display);font-size:.88rem;letter-spacing:.12em;text-transform:uppercase}.modal-sub{margin-top:6px;color:var(--muted);font-size:.82rem}.modal-tabs{display:flex;gap:4px;margin:24px 0;padding:4px;border-radius:10px;background:rgba(0,0,0,.3)}.modal-tab{flex:1;border:0;border-radius:7px;padding:8px;background:none;color:rgba(255,255,255,.48);cursor:pointer;font-family:var(--display);font-size:.54rem;letter-spacing:.11em;text-transform:uppercase}.modal-tab.active{background:rgba(198,107,255,.20);color:var(--purple)}.modal-field{margin-bottom:14px}.modal-field label{display:block;margin-bottom:5px;color:var(--muted);font-family:var(--display);font-size:.47rem;letter-spacing:.13em;text-transform:uppercase}.modal-field input{width:100%;padding:11px 14px;border:1px solid rgba(255,255,255,.12);border-radius:8px;outline:none;background:rgba(0,0,0,.30);color:#fff;transition:border-color .2s,box-shadow .2s}.modal-field input:focus{border-color:var(--purple);box-shadow:0 0 0 3px rgba(198,107,255,.16)}.modal-submit{width:100%;margin-top:6px;padding:13px;border:0;border-radius:999px;cursor:pointer;background:linear-gradient(135deg,var(--pink),var(--purple));color:#050508;font-family:var(--display);font-size:.60rem;font-weight:800;letter-spacing:.13em;text-transform:uppercase}.modal-error,.modal-status{display:none;margin-top:9px;font-size:.76rem;line-height:1.45}.modal-error.visible{display:block;color:var(--pink)}.modal-status.visible{display:block;color:var(--cyan);text-align:center}
+    @media(max-width:1120px){.site-nav{padding:14px 22px}.nav-back{display:none}.archive-grid{grid-template-columns:repeat(2,1fr)}.language-grid{grid-template-columns:repeat(2,1fr)}.pioneer-grid{grid-template-columns:repeat(2,1fr)}}
+    @media(max-width:860px){.nav-links,.nav-auth,#nav-user-menu{display:none!important}.mobile-toggle{display:grid;place-items:center}.site-nav.mobile-open{align-items:flex-start;flex-wrap:wrap;background:rgba(5,5,8,.98)}.site-nav.mobile-open .nav-links{order:4;width:100%;display:flex!important;flex-direction:column;align-items:stretch;padding:12px 0 4px}.site-nav.mobile-open .nav-auth,.site-nav.mobile-open #nav-user-menu{order:5;width:100%;margin:0;padding:10px 0 5px;display:flex!important;flex-wrap:wrap}.nav-drop-menu{position:static;width:100%;transform:none!important;margin-top:8px}.section-head{grid-template-columns:1fr}.fact-grid,.how-grid,.mini-grid{grid-template-columns:repeat(2,1fr)}.pioneer-grid{grid-template-columns:1fr}.inner{padding:0 24px}.archive-hub{padding-inline:24px}}
+    @media(max-width:650px){.hero{min-height:90svh}.hero-title{font-size:2.55rem}.hero-actions{display:grid}.hero-btn{width:100%;min-width:0}.archive-grid,.fact-grid,.card-grid,.language-grid,.how-grid,.glossary-grid,.mini-grid{grid-template-columns:1fr}.archive-card{min-height:220px}.section-nav{top:64px;padding:0 12px}.timeline::before{left:67px}.timeline-item{grid-template-columns:50px 16px 1fr;gap:10px}.timeline-year{font-size:.65rem}.timeline-info{padding:14px}.step-card{grid-template-columns:1fr;gap:7px}.fact-toolbar{align-items:flex-start;flex-direction:column}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
+  </style>
 </head>
 <body>
-<nav>
-<a href="index.html" class="nav-logo">
-<div class="nav-logo-mark">&gt;</div>method in motion</a>
-<ul class="nav-links">
-<li><a href="games.html">Games</a></li>
-<li class="nav-dropdown">
-<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop', event)">Explore <span>▾</span></button>
-<div class="nav-drop-menu" id="exploreDrop">
-<a href="pdfs.html">PDFs</a>
-<a href="library.html" class="active">Library</a>
-<a href="characters.html">Characters</a>
-<a href="about.html">About</a>
-</div>
-</li>
-<li class="nav-dropdown">
-<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop', event)">Underground <span>▾</span></button>
-<div class="nav-drop-menu" id="undergroundDrop">
-<a href="tag-wall.html">Tag Wall</a>
-<a href="broken-syntax.html">Broken Syntax</a>
-<a href="mim-tv.html">MiM TV</a>
-<a href="comic.html">Comics</a>
-</div>
-</li>
-</ul>
-<div class="nav-right">
-<span id="nav-username"></span>
-<div id="nav-user-menu" style="display:none;align-items:center;gap:10px;">
-<a href="dashboard.html" id="nav-dashboard-link">Dashboard</a>
-<button id="nav-logout-btn">Sign Out</button>
-</div>
-<button class="nav-cta" onclick="openAuthModal('login')">Log In</button>
-<button class="nav-join" onclick="openAuthModal('signup')">Join Free →</button>
-<button class="nav-hamburger" id="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
-</div>
-</nav>
-<div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
-<div class="mobile-drawer" id="mobile-drawer">
-<a href="games.html">Games</a>
-<div class="mobile-menu-label">Explore</div>
-<a href="pdfs.html">PDFs</a>
-<a href="library.html" class="active">Library</a>
-<a href="characters.html">Characters</a>
-<a href="about.html">About</a>
-<div class="mobile-menu-label">The Underground</div>
-<a href="tag-wall.html">Tag Wall</a>
-<a href="broken-syntax.html">Broken Syntax</a>
-<a href="mim-tv.html">MiM TV</a>
-<a href="comic.html">Comics</a>
-</div>
-<section class="page-hero">
-<div class="page-hero-content">
-<span class="page-eyebrow">Method in Motion · Knowledge Base</span>
-<h1 class="page-title">The Library</h1>
-<p class="page-desc">Coding history, tech pioneers, computer evolution, fun facts, and free mini-games. No account needed — just curiosity.</p>
-</div>
-</section>
-<!-- STICKY SECTION NAV -->
-<nav class="section-nav">
-<a class="snav-item active" href="#did-you-know">Did You Know</a>
-<a class="snav-item" href="#history">History of Coding</a>
-<a class="snav-item" href="#computers">Computers</a>
-<a class="snav-item" href="#internet">The Internet</a>
-<a class="snav-item" href="#pioneers">Pioneers</a>
-<a class="snav-item" href="#languages">Languages</a>
-<a class="snav-item" href="#how-it-works">How It Works</a>
-<a class="snav-item" href="#glossary">Glossary</a>
-<a class="snav-item" href="#mini-games">Mini Games</a>
-<a class="snav-item" href="#clips">Character Clips</a>
-</nav>
-<section class="lib-section" id="did-you-know">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">Did You Know?</span>
-<h2 class="lib-block-title">Facts that'll blow your mind.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">Real facts about coding, computers, and the internet — the kind that make you go "wait, seriously?"</p>
-<button class="surprise-btn" id="surprise-btn" type="button">🎲 Surprise Me</button>
-<div class="fact-grid" id="fact-grid" style="margin-top:20px;">
-<div class="fact-card accent-orange">
-<div class="fact-icon">🪲</div>
-<div class="fact-title">The First Bug Was Real</div>
-<div class="fact-body">In 1947, a moth was found stuck inside a computer at Harvard. Grace Hopper's team taped it into their logbook and wrote "First actual case of bug being found." The word stuck forever.</div>
-</div>
-<div class="fact-card accent-cyan">
-<div class="fact-icon">🌐</div>
-<div class="fact-title">The Web Is Only 35 Years Old</div>
-<div class="fact-body">Tim Berners-Lee invented the World Wide Web in 1989. The entire internet as we know it is younger than most of your teachers.</div>
-</div>
-<div class="fact-card accent-purple">
-<div class="fact-icon">🚀</div>
-<div class="fact-title">Apollo Had Less Power Than Your Phone</div>
-<div class="fact-body">The computer that landed humans on the moon had 4KB of RAM. Your phone has around 8 million times more memory. You are literally holding moon-landing power in your pocket.</div>
-</div>
-<div class="fact-card accent-pink">
-<div class="fact-icon">🎮</div>
-<div class="fact-title">The First Video Game Was in 1958</div>
-<div class="fact-body">Tennis for Two was created on an oscilloscope by physicist William Higinbotham — decades before consoles existed. It was deleted after the exhibit ended. Nobody thought it mattered.</div>
-</div>
-<div class="fact-icon">👩‍💻</div>
-<div class="fact-title">The First Programmer Was a Woman</div>
-<div class="fact-body">Ada Lovelace wrote the first computer algorithm in 1843 — for a machine that hadn't even been built yet. She also predicted computers could compose music and create graphics. In 1843.</div>
-</div>
-<div class="fact-card accent-lime">
-<div class="fact-icon">📱</div>
-<div class="fact-title">There Are Over 1.5 Billion Websites</div>
-<div class="fact-body">Every single one started as a blank HTML file. The average website takes less than 24 hours to build. Yours could exist by tomorrow.</div>
-</div>
-<div class="fact-card accent-cyan">
-<div class="fact-icon">⚡</div>
-<div class="fact-title">JavaScript Was Built in 10 Days</div>
-<div class="fact-body">Brendan Eich wrote the first version of JavaScript in just 10 days in 1995. It now runs on 98% of all websites and is one of the most used languages on Earth.</div>
-</div>
-<div class="fact-card accent-purple">
-<div class="fact-icon">🔢</div>
-<div class="fact-title">Computers Only Speak in 1s and 0s</div>
-<div class="fact-body">Every image, song, video, game, and message you've ever seen on a screen is just billions of 1s and 0s arranged in a very specific order. That's it. Binary is everything.</div>
-</div>
-<div class="fact-card accent-pink">
-<div class="fact-icon">🌍</div>
-<div class="fact-title">More People Have Phones Than Toilets</div>
-<div class="fact-body">Around 7 billion people on Earth have mobile phones. Only 6 billion have access to toilets. Technology spreads faster than plumbing. That's a fact.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="history">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">History of Coding</span>
-<h2 class="lib-block-title">How we got here.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">From looms and punch cards to AI and quantum computing — the full story of how coding became the most important skill on the planet.</p>
-<div class="timeline">
-<div class="timeline-item">
-<div class="timeline-year" style="color:#f472b6;">1843</div>
-<div class="timeline-dot" style="border-color:#f472b6;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">Mathematics</div>
-<div class="timeline-event">Ada Lovelace Writes the First Algorithm</div>
-<div class="timeline-desc">For Charles Babbage's Analytical Engine — a computer that existed only on paper. Ada saw what machines could do before any machine could actually do it. She is the world's first programmer.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#a855f7;">1890</div>
-<div class="timeline-dot" style="border-color:#a855f7;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#a855f7;color:#a855f7;">Hardware</div>
-<div class="timeline-event">Herman Hollerith Invents Punch Cards</div>
-<div class="timeline-desc">To speed up the US Census, Hollerith created machines that read data from punched holes in cards. This became the dominant way to input computer data for over 70 years. His company eventually became IBM.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#00f5d4;">1936</div>
-<div class="timeline-dot" style="border-color:#00f5d4;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#00f5d4;color:#00f5d4;">Theory</div>
-<div class="timeline-event">Alan Turing Invents the Concept of Computing</div>
-<div class="timeline-desc">Alan Turing's paper "On Computable Numbers" described a theoretical machine that could solve any problem expressible in a mathematical form. This "Turing Machine" is the foundation of every computer ever built.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#fbbf24;">1940s</div>
-<div class="timeline-dot" style="border-color:#fbbf24;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#fbbf24;color:#fbbf24;">Hardware</div>
-<div class="timeline-event">The First Electronic Computers</div>
-<div class="timeline-desc">ENIAC (1945) filled an entire room with 18,000 vacuum tubes and could do 5,000 additions per second. It weighed 30 tons and required its own cooling system. Your phone does billions of calculations per second.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#84cc16;">1957</div>
-<div class="timeline-dot" style="border-color:#84cc16;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#84cc16;color:#84cc16;">Languages</div>
-<div class="timeline-event">FORTRAN — The First High-Level Language</div>
-<div class="timeline-desc">Before FORTRAN, programmers wrote machine code by hand. FORTRAN let scientists write equations that looked almost like math. It was revolutionary — and is still used in scientific computing today.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#38bdf8;">1969</div>
-<div class="timeline-dot" style="border-color:#38bdf8;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#38bdf8;color:#38bdf8;">Internet</div>
-<div class="timeline-event">ARPANET Sends Its First Message</div>
-<div class="timeline-desc">The US Defense Department connected four university computers. The first message was supposed to be "login." The system crashed after "lo." The internet started with a typo.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#f472b6;">1972</div>
-<div class="timeline-dot" style="border-color:#f472b6;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">Languages</div>
-<div class="timeline-event">C Language Is Born</div>
-<div class="timeline-desc">Dennis Ritchie created C at Bell Labs to build the Unix operating system. C became the foundation for C++, Java, Python, JavaScript, and almost every modern language. It's still in use everywhere.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#a855f7;">1984</div>
-<div class="timeline-dot" style="border-color:#a855f7;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#a855f7;color:#a855f7;">Consumer Tech</div>
-<div class="timeline-event">The Macintosh Changes Personal Computing</div>
-<div class="timeline-desc">Apple's Macintosh introduced the graphical user interface and the mouse to everyday people. Before this, computers had no pictures — just a blinking cursor and a command line. This was the beginning of computers for everyone.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#fbbf24;">1989</div>
-<div class="timeline-dot" style="border-color:#fbbf24;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#fbbf24;color:#fbbf24;">Web</div>
-<div class="timeline-event">Tim Berners-Lee Invents the World Wide Web</div>
-<div class="timeline-desc">Originally called "Information Management: A Proposal," it was a system to help scientists share research. His boss wrote "Vague but exciting" on the cover. It accidentally became the entire internet.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#84cc16;">1995</div>
-<div class="timeline-dot" style="border-color:#84cc16;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#84cc16;color:#84cc16;">Languages</div>
-<div class="timeline-event">JavaScript Created in 10 Days</div>
-<div class="timeline-desc">Netscape hired Brendan Eich with one instruction: make the web interactive, fast. He did it in 10 days. Despite a rocky start, JavaScript became the language of the web. It now runs everywhere — browsers, servers, apps, and robots.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#38bdf8;">2007</div>
-<div class="timeline-dot" style="border-color:#38bdf8;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#38bdf8;color:#38bdf8;">Mobile</div>
-<div class="timeline-event">The First iPhone Ships</div>
-<div class="timeline-desc">Steve Jobs called it "an iPod, a phone, and an internet communicator" in one device. The audience laughed when he said it. Within five years, smartphones changed how 4 billion people lived every single day.</div>
-</div>
-</div>
-<div class="timeline-item">
-<div class="timeline-year" style="color:#f472b6;">2022</div>
-<div class="timeline-dot" style="border-color:#f472b6;">
-</div>
-<div class="timeline-info">
-<div class="timeline-tag" style="border-color:#f472b6;color:#f472b6;">AI</div>
-<div class="timeline-event">ChatGPT Reaches 1 Million Users in 5 Days</div>
-<div class="timeline-desc">It took Netflix 3.5 years and Facebook 10 months to reach 1 million users. ChatGPT did it in 5 days. AI moved from science fiction to everyday tool almost overnight. The coders who understand the fundamentals are the ones who'll shape what comes next.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="computers">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">History of Computers</span>
-<h2 class="lib-block-title">From room-sized to pocket-sized.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">The evolution of the machines themselves — from mechanical gears to quantum chips.</p>
-<div class="computer-grid">
-<div class="computer-card">
-<div class="computer-icon">⚙️</div>
-<div class="computer-info">
-<span class="computer-year">1822</span>
-<div class="computer-name">Babbage's Difference Engine</div>
-<div class="computer-desc">A hand-cranked mechanical calculator designed to compute mathematical tables. It was never completed in Babbage's lifetime, but a working model was built in 1991 — and it worked perfectly.</div>
-</div>
-</div>
-<div class="computer-card">
-<div class="computer-icon">💡</div>
-<div class="computer-info">
-<span class="computer-year">1945</span>
-<div class="computer-name">ENIAC</div>
-<div class="computer-desc">The first general-purpose electronic computer. It filled an 1,800 square foot room, consumed 150 kilowatts of power, and had to be rewired by hand to change its program.</div>
-</div>
-</div>
-<div class="computer-card">
-<div class="computer-icon">🔬</div>
-<div class="computer-info">
-<span class="computer-year">1958</span>
-<div class="computer-name">The Transistor Revolution</div>
-<div class="computer-desc">Vacuum tubes gave way to transistors — tiny switches that could be etched onto silicon chips. This made computers smaller, cheaper, and faster by orders of magnitude. Everything since then is built on this moment.</div>
-</div>
-</div>
-<div class="computer-card">
-<div class="computer-icon">🖥️</div>
-<div class="computer-info">
-<span class="computer-year">1977</span>
-<div class="computer-name">Apple II — The First Home Computer</div>
-<div class="computer-desc">The Apple II brought computing to homes and schools for the first time. It came with a keyboard, color display, and the ability to run programs. It sold over 5 million units and changed who computers were for.</div>
-</div>
-</div>
-<div class="computer-card">
-<div class="computer-icon">💾</div>
-<div class="computer-info">
-<span class="computer-year">1981</span>
-<div class="computer-name">IBM PC & the Rise of Windows</div>
-<div class="computer-desc">IBM's personal computer and Microsoft's DOS operating system standardized the industry. IBM's "open architecture" meant anyone could build compatible machines — creating the entire PC industry as we know it.</div>
-</div>
-</div>
-<div class="computer-card">
-<div class="computer-icon">📱</div>
-<div class="computer-info">
-<span class="computer-year">2007</span>
-<div class="computer-name">The Smartphone Era</div>
-<div class="computer-desc">Modern smartphones contain more computing power than all of NASA had during the Apollo missions combined. The computer in your pocket would have been science fiction 40 years ago.</div>
-</div>
-</div>
-<div class="computer-card">
-<div class="computer-icon">🧠</div>
-<div class="computer-info">
-<span class="computer-year">2019</span>
-<div class="computer-name">Google's Quantum Supremacy</div>
-<div class="computer-desc">Google's quantum computer solved a calculation in 200 seconds that would take the world's fastest supercomputer 10,000 years. Quantum computing works by harnessing quantum physics — a completely different kind of logic.</div>
-</div>
-</div>
-<div class="computer-card">
-<div class="computer-icon">⚡</div>
-<div class="computer-info">
-<span class="computer-year">Today</span>
-<div class="computer-name">The Cloud Era</div>
-<div class="computer-desc">Today's computers don't just sit on desks — they exist as vast networks of servers distributed around the world. When you use Google, Netflix, or any app, you're using computing power spread across thousands of machines.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="internet">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">History of the Internet</span>
-<h2 class="lib-block-title">The network that connected everything.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">The internet didn't appear overnight — it was built in layers, each decade adding something new.</p>
-<div class="internet-steps">
-<div class="internet-step">
-<div class="step-year" style="color:#f472b6;">1969</div>
-<div class="step-info">
-<div class="step-event">ARPANET — Four Computers, One Network</div>
-<div class="step-desc">The US military connects computers at UCLA, Stanford, UC Santa Barbara, and University of Utah. The internet begins as a defense project with four nodes. Today there are over 5 billion connected devices.</div>
-</div>
-</div>
-<div class="internet-step">
-<div class="step-year" style="color:#a855f7;">1972</div>
-<div class="step-info">
-<div class="step-event">Email Is Invented</div>
-<div class="step-desc">Ray Tomlinson sends the first email between two computers. He also chose the @ symbol to separate user names from machine names — a decision that shapes every email address still used today.</div>
-</div>
-</div>
-<div class="internet-step">
-<div class="step-year" style="color:#00f5d4;">1983</div>
-<div class="step-info">
-<div class="step-event">TCP/IP — The Language of the Internet</div>
-<div class="step-desc">The internet switches to TCP/IP — the set of rules that still governs how data travels across networks. January 1st, 1983 is considered the official birthday of the modern internet.</div>
-</div>
-</div>
-<div class="internet-step">
-<div class="step-year" style="color:#fbbf24;">1989</div>
-<div class="step-info">
-<div class="step-event">The World Wide Web Is Born</div>
-<div class="step-desc">Tim Berners-Lee proposes a system of linked documents accessible over the internet. He calls it the World Wide Web. His boss writes "Vague but exciting" on the cover page. It becomes the layer we call "the internet" today.</div>
-</div>
-</div>
-<div class="internet-step">
-<div class="step-year" style="color:#84cc16;">1993</div>
-<div class="step-info">
-<div class="step-event">Mosaic — The First Web Browser</div>
-<div class="step-desc">The first browser with images. Before Mosaic, the web was text only. Adding images made it feel like a real experience — and the number of web users exploded from thousands to millions within a year.</div>
-</div>
-</div>
-<div class="internet-step">
-<div class="step-year" style="color:#38bdf8;">1998</div>
-<div class="step-info">
-<div class="step-event">Google Launches in a Garage</div>
-<div class="step-desc">Larry Page and Sergey Brin start Google as a Stanford PhD project. Their insight: rank pages by how many other pages link to them, not just keywords. This was so obvious in hindsight that it's wild nobody thought of it first.</div>
-</div>
-</div>
-<div class="internet-step">
-<div class="step-year" style="color:#f472b6;">2004</div>
-<div class="step-info">
-<div class="step-event">Social Media Changes Everything</div>
-<div class="step-desc">Facebook, YouTube, and later Twitter transform the internet from a place you browse into a place where you participate. Users start creating as much content as they consume. This is where "don't be a consumer, be a creator" starts to mean something real.</div>
-</div>
-</div>
-<div class="internet-step">
-<div class="step-year" style="color:#a855f7;">2023</div>
-<div class="step-info">
-<div class="step-event">The AI Internet</div>
-<div class="step-desc">AI tools become widely available. Writing, images, code, music, and video can all be generated in seconds. The internet is now a place where AI and humans create together — and understanding how it all works is more important than ever.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="pioneers">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">Tech Pioneers</span>
-<h2 class="lib-block-title">The people who built everything.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">Every device, language, and platform you use was created by someone. Here are some of the people who changed everything.</p>
-<div class="pioneer-grid">
-<div class="pioneer-card" style="--pc-color:#f472b6;--pc-bg:radial-gradient(circle at 80% 0%,rgba(244,114,182,.08),transparent 55%);">
-<span class="pioneer-era">1843 · Mathematics</span>
-<div class="pioneer-name">Ada Lovelace</div>
-<div class="pioneer-role">World's First Programmer</div>
-<div class="pioneer-fact">Wrote the first algorithm for a machine that didn't exist yet. She also predicted computers would eventually create graphics and music — 100 years before they could.</div>
-</div>
-<div class="pioneer-card" style="--pc-color:#00f5d4;--pc-bg:radial-gradient(circle at 80% 0%,rgba(0,245,212,.07),transparent 55%);">
-<span class="pioneer-era">1936 · Computer Science</span>
-<div class="pioneer-name">Alan Turing</div>
-<div class="pioneer-role">Father of Computer Science</div>
-<div class="pioneer-fact">Invented the theoretical model for all modern computers. During WWII, he cracked the Nazis' Enigma code, shortening the war by an estimated 2 years. His reward was criminal prosecution by the British government. History owes him more than it gave.</div>
-</div>
-<div class="pioneer-card" style="--pc-color:#a855f7;--pc-bg:radial-gradient(circle at 80% 0%,rgba(168,85,247,.07),transparent 55%);">
-<span class="pioneer-era">1940s · Programming</span>
-<div class="pioneer-name">Grace Hopper</div>
-<div class="pioneer-role">Inventor of the Compiler</div>
-<div class="pioneer-fact">A US Navy admiral who invented the first compiler — a program that translates human-readable code into machine code. She also found the first actual computer bug (the moth). She popularized the term "debugging."</div>
-</div>
-<div class="pioneer-card" style="--pc-color:#fbbf24;--pc-bg:radial-gradient(circle at 80% 0%,rgba(251,191,36,.07),transparent 55%);">
-<span class="pioneer-era">1970s · Software</span>
-<div class="pioneer-name">Bill Gates</div>
-<div class="pioneer-role">Co-Founder of Microsoft</div>
-<div class="pioneer-fact">Dropped out of Harvard at 19 to start Microsoft. His bet that every home would eventually have a personal computer was considered absurd in 1975. He was right. DOS and Windows became the operating systems of an entire generation.</div>
-</div>
-<div class="pioneer-card" style="--pc-color:#84cc16;--pc-bg:radial-gradient(circle at 80% 0%,rgba(132,204,22,.07),transparent 55%);">
-<span class="pioneer-era">1976 · Hardware</span>
-<div class="pioneer-name">Steve Wozniak</div>
-<div class="pioneer-role">The Engineer Behind Apple</div>
-<div class="pioneer-fact">The quiet genius who actually built the Apple I and Apple II. Wozniak designed a computer so elegant that engineers still study it. He gave the schematics away for free because he wanted everyone to learn. Without Woz, there's no Apple.</div>
-</div>
-<div class="pioneer-card" style="--pc-color:#38bdf8;--pc-bg:radial-gradient(circle at 80% 0%,rgba(56,189,248,.07),transparent 55%);">
-<span class="pioneer-era">1989 · Web</span>
-<div class="pioneer-name">Tim Berners-Lee</div>
-<div class="pioneer-role">Inventor of the World Wide Web</div>
-<div class="pioneer-fact">Invented the web and then gave it away — no patents, no fees, no royalties. He could have been a billionaire. Instead he said the web should belong to everyone. He still advocates for an open internet today.</div>
-</div>
-<div class="pioneer-card" style="--pc-color:#f472b6;--pc-bg:radial-gradient(circle at 80% 0%,rgba(244,114,182,.08),transparent 55%);">
-<span class="pioneer-era">1998 · Search</span>
-<div class="pioneer-name">Larry Page & Sergey Brin</div>
-<div class="pioneer-role">Founders of Google</div>
-<div class="pioneer-fact">Started Google as a PhD project at Stanford. They tried to sell it for $1 million in 1998 and nobody bought it. Google is now worth over $1 trillion. The person who passed on that deal probably thinks about it every day.</div>
-</div>
-<div class="pioneer-card" style="--pc-color:#a855f7;--pc-bg:radial-gradient(circle at 80% 0%,rgba(168,85,247,.07),transparent 55%);">
-<span class="pioneer-era">1984 · Diversity</span>
-<div class="pioneer-name">Katherine Johnson</div>
-<div class="pioneer-role">NASA Mathematician & Hidden Figure</div>
-<div class="pioneer-fact">Her orbital calculations were so accurate that astronaut John Glenn refused to launch until she personally verified the computer's numbers. She calculated the trajectory for Apollo 11's moon landing. Her work was classified for decades.</div>
-</div>
-<div class="pioneer-card" style="--pc-color:#fbbf24;--pc-bg:radial-gradient(circle at 80% 0%,rgba(251,191,36,.07),transparent 55%);">
-<span class="pioneer-era">2003 · AI</span>
-<div class="pioneer-name">Geoffrey Hinton</div>
-<div class="pioneer-role">The Godfather of Deep Learning</div>
-<div class="pioneer-fact">Spent decades being ignored for his belief that neural networks could learn like brains. When he was finally proven right, AI went from a fringe idea to the biggest technological shift since the internet. He's since spoken publicly about the risks of what he helped create.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="languages">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">Programming Languages</span>
-<h2 class="lib-block-title">The languages computers speak.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">There are over 700 programming languages. Here are the ones that matter most — and why.</p>
-<div class="lang-grid">
-<div class="lang-card" style="--lc:#fbbf24;">
-<div class="lang-name">Python</div>
-<div class="lang-year">Created 1991 · Guido van Rossum</div>
-<div class="lang-use">AI, data science, automation, and beginners. Designed to be readable like English. The most popular language in the world right now.</div>
-</div>
-<div class="lang-card" style="--lc:#f7df1e;">
-<div class="lang-name">JavaScript</div>
-<div class="lang-year">Created 1995 · Brendan Eich</div>
-<div class="lang-use">Powers every interactive website. The only language that runs natively in browsers. Also runs on servers, mobile apps, and even robots.</div>
-</div>
-<div class="lang-card" style="--lc:#e34f26;">
-<div class="lang-name">HTML</div>
-<div class="lang-year">Created 1991 · Tim Berners-Lee</div>
-<div class="lang-use">The structure of every webpage ever made. Not technically a "programming" language but the foundation of the entire web. Nova's specialty.</div>
-</div>
-<div class="lang-card" style="--lc:#264de4;">
-<div class="lang-name">CSS</div>
-<div class="lang-year">Created 1996 · Håkon Wium Lie</div>
-<div class="lang-use">Controls how everything looks on the web — colors, fonts, layouts, animations. Without CSS, every website is just plain black text on a white background. Zen's domain.</div>
-</div>
-<div class="lang-card" style="--lc:#b07219;">
-<div class="lang-name">Java</div>
-<div class="lang-year">Created 1995 · James Gosling</div>
-<div class="lang-use">"Write once, run anywhere." Used in Android apps, enterprise software, and Minecraft. One of the most taught languages in schools.</div>
-</div>
-<div class="lang-card" style="--lc:#00ADD8;">
-<div class="lang-name">Go</div>
-<div class="lang-year">Created 2009 · Google</div>
-<div class="lang-use">Built for speed and simplicity by Google engineers who were tired of C++. Powers YouTube, Dropbox, and many major cloud systems.</div>
-</div>
-<div class="lang-card" style="--lc:#dea584;">
-<div class="lang-name">Rust</div>
-<div class="lang-year">Created 2010 · Mozilla</div>
-<div class="lang-use">Designed to be blazing fast AND safe — almost impossible to write memory bugs in. Used in browsers, operating systems, and is growing fast in AI infrastructure.</div>
-</div>
-<div class="lang-card" style="--lc:#a97bff;">
-<div class="lang-name">Swift</div>
-<div class="lang-year">Created 2014 · Apple</div>
-<div class="lang-use">Apple's language for building iPhone, iPad, and Mac apps. Replaced Objective-C. Designed to be fast to write and difficult to break. If you use an iPhone, you use Swift every day.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="how-it-works">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">How It Works</span>
-<h2 class="lib-block-title">What actually happens when you visit a website.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">Every time you type a URL, hundreds of things happen in less than a second. Here's the story.</p>
-<div class="how-grid">
-<div class="how-card" style="--hc:#f472b6;">
-<div class="how-num">01</div>
-<div class="how-title">You Type a URL</div>
-<div class="how-desc">Your browser takes the address (like google.com) and asks a DNS server to translate it into a real IP address — a number like 142.250.80.46. DNS is the internet's phone book.</div>
-</div>
-<div class="how-card" style="--hc:#a855f7;">
-<div class="how-num">02</div>
-<div class="how-title">Your Browser Finds the Server</div>
-<div class="how-desc">Using that IP address, your browser sends a request to a web server somewhere in the world — possibly thousands of miles away. This round trip often happens in under 50 milliseconds.</div>
-</div>
-<div class="how-card" style="--hc:#00f5d4;">
-<div class="how-num">03</div>
-<div class="how-title">The Server Sends Back Files</div>
-<div class="how-desc">The server responds with HTML, CSS, and JavaScript files. These are just text documents — the same kind you write in a code editor. The magic is in how the browser reads them.</div>
-</div>
-<div class="how-card" style="--hc:#fbbf24;">
-<div class="how-num">04</div>
-<div class="how-title">The Browser Reads HTML</div>
-<div class="how-desc">Your browser reads the HTML top to bottom, building a tree of elements called the DOM (Document Object Model). Every heading, paragraph, and div becomes a node in this tree.</div>
-</div>
-<div class="how-card" style="--hc:#84cc16;">
-<div class="how-num">05</div>
-<div class="how-title">CSS Paints the Picture</div>
-<div class="how-desc">CSS rules are applied to the DOM — colors, fonts, sizes, positions. The browser calculates exactly how every pixel should look. This process is called "rendering" and it happens dozens of times per second for animations.</div>
-</div>
-<div class="how-card" style="--hc:#38bdf8;">
-<div class="how-num">06</div>
-<div class="how-title">JavaScript Brings It to Life</div>
-<div class="how-desc">JavaScript runs and starts listening for events — clicks, scrolls, keyboard input. When something happens, JS updates the DOM and CSS in real time. That's how websites respond to you without reloading the whole page.</div>
-</div>
-</div>
-</div>
-</div>
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">Binary & Data</span>
-<h2 class="lib-block-title">How computers actually store information.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">Every piece of data — text, images, music, video — is stored as numbers. And every number is made of 1s and 0s.</p>
-<div class="how-grid">
-<div class="how-card" style="--hc:#f472b6;">
-<div class="how-num">BIT</div>
-<div class="how-title">The Smallest Unit</div>
-<div class="how-desc">A bit is a single 1 or 0. That's it. The word comes from "binary digit." Everything a computer stores is made of bits — billions and billions of them.</div>
-</div>
-<div class="how-card" style="--hc:#a855f7;">
-<div class="how-num">BYTE</div>
-<div class="how-title">8 Bits = 1 Letter</div>
-<div class="how-desc">8 bits make a byte. A byte can represent 256 different values (2 to the power of 8). One byte is enough to store one character of text — like the letter "A."</div>
-</div>
-<div class="how-card" style="--hc:#00f5d4;">
-<div class="how-num">KB → TB</div>
-<div class="how-title">Scaling Up</div>
-<div class="how-desc">1,000 bytes = 1 kilobyte. 1,000 KB = 1 megabyte. 1,000 MB = 1 gigabyte. A typical photo is about 3–5 MB. A movie is about 4 GB. The internet moves about 400 exabytes (400 billion gigabytes) per day.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="glossary">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">Glossary</span>
-<h2 class="lib-block-title">Words every coder should know.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">Tech has a language of its own. Here's a decoder ring for the most common terms.</p>
-<input type="text" class="glossary-search" id="glossary-search" placeholder="🔍 Search terms (try 'loop' or 'server')..." autocomplete="off">
-<div class="glossary-grid" id="glossary-grid">
-<div class="glossary-item">
-<div class="glossary-term">Algorithm</div>
-<div class="glossary-def">A step-by-step set of instructions for solving a problem. Every recipe, playlist, and search result is powered by an algorithm.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">API</div>
-<div class="glossary-def">Application Programming Interface. A set of rules that lets two programs talk to each other. When an app uses Google Maps, it's using an API.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Backend</div>
-<div class="glossary-def">The part of a website or app that users never see — the server, database, and logic that power everything behind the scenes.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Binary</div>
-<div class="glossary-def">A number system with only two digits: 0 and 1. All computer data is stored and processed in binary at the hardware level.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Cache</div>
-<div class="glossary-def">Temporary storage that saves copies of data so you can access it faster next time. Your browser caches images so websites load quicker on repeat visits.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Cloud</div>
-<div class="glossary-def">Servers accessed over the internet rather than on your local machine. When you store a photo in iCloud or Google Drive, it's sitting on a server somewhere in a building.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Compiler</div>
-<div class="glossary-def">A program that translates human-readable code into machine code (0s and 1s) that a computer can actually execute. Grace Hopper invented the first one.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Database</div>
-<div class="glossary-def">An organized collection of data that can be searched, sorted, and updated. Every app that remembers your preferences or history uses one.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Debugging</div>
-<div class="glossary-def">The process of finding and fixing errors in code. Bug's entire world. Every programmer spends more time debugging than writing new code.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">DOM</div>
-<div class="glossary-def">Document Object Model. The browser's internal representation of an HTML page as a tree of objects. JavaScript manipulates the DOM to update what you see without reloading the page.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Framework</div>
-<div class="glossary-def">A pre-built collection of code that gives developers a structure to build apps faster. React, Vue, and Angular are JavaScript frameworks. Think of it as a building's skeleton.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Frontend</div>
-<div class="glossary-def">Everything the user sees and interacts with directly — the HTML, CSS, and JavaScript in a browser. Zen's territory.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Function</div>
-<div class="glossary-def">A reusable block of code that performs a specific task. You define it once and can call it as many times as you want. Functions are how code stays organized.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Git</div>
-<div class="glossary-def">A version control system that tracks changes to code over time. Lets developers collaborate without overwriting each other's work, and roll back mistakes to any previous version.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">HTTP / HTTPS</div>
-<div class="glossary-def">The protocol that browsers and servers use to communicate. The S in HTTPS stands for Secure — it means the connection is encrypted. Always look for the padlock.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">IDE</div>
-<div class="glossary-def">Integrated Development Environment. A fancy text editor for writing code — with built-in tools for running, debugging, and managing projects. VS Code is the most popular one today.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Loop</div>
-<div class="glossary-def">A block of code that repeats until a condition is met. Loop's entire world. The foundation of automation — making computers do repetitive tasks so humans don't have to.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Open Source</div>
-<div class="glossary-def">Code that anyone can view, use, and contribute to. Linux, Python, and React are all open source. The internet runs largely on software that was built by volunteers.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Repository (Repo)</div>
-<div class="glossary-def">A folder where a project's code and its full history of changes are stored. GitHub hosts millions of repos. MiM's site lives in one.</div>
-</div>
-<div class="glossary-item">
-<div class="glossary-term">Variable</div>
-<div class="glossary-def">A named container that holds a value. Like a labeled box. You can put anything in it and change the contents whenever you want. The most fundamental building block in all of coding.</div>
-</div>
-</div>
-<p class="glossary-empty" id="glossary-empty">No terms match that search. Try a different word.</p>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="mini-games">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">Free Mini Games</span>
-<h2 class="lib-block-title">Play for free. No account needed.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">Quick challenges — a taste of each character's world. Full games unlock with Coders membership.</p>
-<div class="mini-games-grid">
-<div class="mini-game-card" style="--mg-color:#f472b6;--mg-bg:radial-gradient(circle at 50% 0%,rgba(244,114,182,.1),transparent 60%);">
-<div class="mini-game-icon">🎨</div>
-<div class="mini-game-title">CSS Color Match</div>
-<div class="mini-game-desc">Match hex codes to colors before time runs out. Zen's warm-up for new coders.</div>
-<div class="mini-game-tag" style="border-color:#f472b6;color:#f472b6;">Coming Soon</div>
-</div>
-<div class="mini-game-card" style="--mg-color:#a855f7;--mg-bg:radial-gradient(circle at 50% 0%,rgba(168,85,247,.1),transparent 60%);">
-<div class="mini-game-icon">🔍</div>
-<div class="mini-game-title">Byte's Bug Finder</div>
-<div class="mini-game-desc">Find the typo in the code before Byte does. A mini debug challenge for all levels.</div>
-<div class="mini-game-tag" style="border-color:#a855f7;color:#a855f7;">Coming Soon</div>
-</div>
-<div class="mini-game-card" style="--mg-color:#00f5d4;--mg-bg:radial-gradient(circle at 50% 0%,rgba(0,245,212,.08),transparent 60%);">
-<div class="mini-game-icon">♾️</div>
-<div class="mini-game-title">Loop's Sequence Puzzle</div>
-<div class="mini-game-desc">Put the steps in the right order. Loop teaches pattern thinking through puzzles.</div>
-<div class="mini-game-tag" style="border-color:#00f5d4;color:#00f5d4;">Coming Soon</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<section class="lib-section" id="clips">
-<div class="lib__inner">
-<div class="lib-block">
-<div class="lib-toggle">
-<div class="lib-toggle-titles">
-<span class="lib-label">Character Clips</span>
-<h2 class="lib-block-title">Meet the crew in motion.</h2>
-</div>
-<span class="lib-toggle-chevron">▾</span>
-</div>
-<div class="lib-block-body">
-<p class="lib-block-desc">Short clips of each character doing their signature thing. Watch, share, get inspired.</p>
-<div class="clips-grid">
-<div class="clip-card" style="--cc:#f472b6;">
-<div class="clip-thumb">
-<div class="clip-thumb-bg" style="background:linear-gradient(135deg,#1a0020,#0d0f1e);">
-</div>
-<div class="clip-play">▶</div>
-</div>
-<div class="clip-info">
-<div class="clip-char" style="color:#f472b6;">Zen · Coding Realm</div>
-<div class="clip-title">Skateboard Trick at the Coding Realm</div>
-</div>
-</div>
-<div class="clip-card" style="--cc:#a855f7;">
-<div class="clip-thumb">
-<div class="clip-thumb-bg" style="background:linear-gradient(135deg,#0d0020,#0d0f1e);">
-</div>
-<div class="clip-play">▶</div>
-</div>
-<div class="clip-info">
-<div class="clip-char" style="color:#a855f7;">Byte · Code City</div>
-<div class="clip-title">Playing Video Games in Code City</div>
-</div>
-</div>
-<div class="clip-card" style="--cc:#38bdf8;">
-<div class="clip-thumb">
-<div class="clip-thumb-bg" style="background:linear-gradient(135deg,#001a2a,#0d0f1e);">
-</div>
-<div class="clip-play">▶</div>
-</div>
-<div class="clip-info">
-<div class="clip-char" style="color:#38bdf8;">Echo · Sound Studio</div>
-<div class="clip-title">Dancing in the Sound Studio</div>
-</div>
-</div>
-</div>
-<div style="margin-top:16px;">
-<div class="coming-card">
-<div class="coming-badge">Coming Soon</div>
-<div class="coming-title">Nova, Bug, and Loop's Clips</div>
-<div class="coming-desc">More character clips from the Discovery Dome, Debug Garage, and Challenge Course are in production.</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</section>
-<!-- AUTH MODAL -->
-<div id="auth-modal" class="auth-modal-overlay" role="dialog" aria-modal="true">
-<div class="auth-modal-box">
-<button class="auth-close" id="auth-close-btn">&times;</button>
-<div class="auth-modal-header">
-<div class="auth-logo-mark">MiM</div>
-<p class="auth-tagline">Create. Don't Consume.</p>
-</div>
-<div class="auth-tabs">
-<button class="auth-tab active" data-tab="login">Log In</button>
-<button class="auth-tab" data-tab="signup">Join the Crew</button>
-</div>
-<div id="login-form" class="auth-form active">
-<div class="auth-field">
-<label>Email</label>
-<input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"/>
-</div>
-<div class="auth-field">
-<label>Password</label>
-<input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"/>
-</div>
-<p class="auth-error" id="login-error">
-</p>
-<button class="auth-submit" id="login-submit-btn">Log In</button>
-<p class="auth-switch">New here? <button class="auth-link" data-tab="signup">Join the Crew</button>
-</p>
-</div>
-<div id="signup-form" class="auth-form">
-<div class="auth-field">
-<label>Display Name</label>
-<input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"/>
-</div>
-<div class="auth-field">
-<label>Email</label>
-<input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"/>
-</div>
-<div class="auth-field">
-<label>Password</label>
-<input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"/>
-</div>
-<p class="auth-error" id="signup-error">
-</p>
-<button class="auth-submit" id="signup-submit-btn">Create Free Account</button>
-<p class="auth-switch">Already in the crew? <button class="auth-link" data-tab="login">Log In</button>
-</p>
-</div>
-</div>
-</div>
-<script>
-function openAuthModal(tab){
-document.getElementById('auth-modal').classList.add('active');
-switchTab(tab);
-}
-function switchTab(tab){
-document.querySelectorAll('.auth-tab').forEach(x=>x.classList.remove('active'));
-document.querySelectorAll('.auth-form').forEach(x=>x.classList.remove('active'));
-document.querySelector('.auth-tab[data-tab="'+tab+'"]').classList.add('active');
-document.getElementById(tab+'-form').classList.add('active');
-}
-document.querySelectorAll('.auth-tab').forEach(t=>t.addEventListener('click',()=>switchTab(t.dataset.tab)));
-document.querySelectorAll('.auth-link').forEach(l=>l.addEventListener('click',()=>switchTab(l.dataset.tab)));
-document.getElementById('auth-close-btn').addEventListener('click',()=>document.getElementById('auth-modal').classList.remove('active'));
-document.getElementById('auth-modal').addEventListener('click',e=>{
-if(e.target===document.getElementById('auth-modal'))document.getElementById('auth-modal').classList.remove('active');
-}
-);
-// Section nav active state on scroll
-const sections=document.querySelectorAll('section[id]');
-const navItems=document.querySelectorAll('.snav-item');
-window.addEventListener('scroll',()=>{
-let current='';
-sections.forEach(s=>{if(window.scrollY>=s.offsetTop-120)current=s.id;});
-navItems.forEach(n=>{n.classList.toggle('active',n.getAttribute('href')==='#'+current);});
-},{passive:true});
-
-// DESKTOP NAV DROPDOWNS
-function toggleNavDrop(id,event){
-if(event)event.stopPropagation();
-const target=document.getElementById(id);
-if(!target)return;
-document.querySelectorAll('.nav-drop-menu').forEach(menu=>{
-if(menu!==target)menu.classList.remove('open');
-});
-document.querySelectorAll('.nav-drop-trigger').forEach(trigger=>{
-const controls=trigger.getAttribute('onclick')||'';
-if(!controls.includes(id))trigger.classList.remove('open');
-});
-target.classList.toggle('open');
-if(event&&event.currentTarget)event.currentTarget.classList.toggle('open',target.classList.contains('open'));
-}
-document.addEventListener('click',event=>{
-if(!event.target.closest('.nav-dropdown')){
-document.querySelectorAll('.nav-drop-menu').forEach(menu=>menu.classList.remove('open'));
-document.querySelectorAll('.nav-drop-trigger').forEach(trigger=>trigger.classList.remove('open'));
-}
-});
-
-// MOBILE HAMBURGER DRAWER
-const hamburgerBtn=document.getElementById('nav-hamburger');
-const mobileDrawer=document.getElementById('mobile-drawer');
-const mobileDrawerOverlay=document.getElementById('mobile-drawer-overlay');
-function toggleMobileDrawer(){
-hamburgerBtn.classList.toggle('open');
-mobileDrawer.classList.toggle('open');
-mobileDrawerOverlay.classList.toggle('open');
-}
-hamburgerBtn.addEventListener('click',toggleMobileDrawer);
-mobileDrawerOverlay.addEventListener('click',toggleMobileDrawer);
-document.querySelectorAll('.mobile-drawer a').forEach(a=>{
-a.addEventListener('click',()=>{
-if(mobileDrawer.classList.contains('open'))toggleMobileDrawer();
-});
-});
-
-// COLLAPSIBLE SECTIONS
-const libBlocks=document.querySelectorAll('.lib-block');
-libBlocks.forEach((block,i)=>{
-const toggle=block.querySelector('.lib-toggle');
-if(!toggle)return;
-if(i>0)block.classList.add('collapsed');
-toggle.addEventListener('click',()=>{
-block.classList.toggle('collapsed');
-});
-});
-function expandBlockForSection(sectionId){
-const section=document.getElementById(sectionId);
-if(!section)return;
-section.querySelectorAll('.lib-block').forEach(b=>b.classList.remove('collapsed'));
-}
-document.querySelectorAll('.snav-item').forEach(item=>{
-item.addEventListener('click',()=>{
-const id=item.getAttribute('href').replace('#','');
-expandBlockForSection(id);
-});
-});
-document.querySelectorAll('.mobile-drawer a[href^="#"]').forEach(item=>{
-item.addEventListener('click',()=>{
-const id=item.getAttribute('href').replace('#','');
-expandBlockForSection(id);
-});
-});
-
-// SURPRISE ME — random fact highlighter
-const surpriseBtn=document.getElementById('surprise-btn');
-if(surpriseBtn){
-surpriseBtn.addEventListener('click',()=>{
-const cards=document.querySelectorAll('#fact-grid .fact-card');
-document.querySelectorAll('.fact-card.highlighted').forEach(c=>c.classList.remove('highlighted'));
-const pick=cards[Math.floor(Math.random()*cards.length)];
-pick.classList.add('highlighted');
-pick.scrollIntoView({behavior:'smooth',block:'center'});
-setTimeout(()=>pick.classList.remove('highlighted'),2600);
-});
-}
-
-// GLOSSARY LIVE SEARCH
-const glossarySearch=document.getElementById('glossary-search');
-if(glossarySearch){
-const glossaryItems=document.querySelectorAll('#glossary-grid .glossary-item');
-const glossaryEmpty=document.getElementById('glossary-empty');
-glossarySearch.addEventListener('input',()=>{
-const q=glossarySearch.value.trim().toLowerCase();
-let visibleCount=0;
-glossaryItems.forEach(item=>{
-const term=item.querySelector('.glossary-term').textContent.toLowerCase();
-const def=item.querySelector('.glossary-def').textContent.toLowerCase();
-const match=term.includes(q)||def.includes(q);
-item.style.display=match?'':'none';
-if(match)visibleCount++;
-});
-glossaryEmpty.style.display=visibleCount===0?'block':'none';
-});
-}
-</script>
-<script type="module" src="auth-init.js">
-</script>
+  <noscript><div style="position:fixed;inset:0 0 auto 0;z-index:10000;padding:12px 18px;background:#111827;color:#fff;text-align:center;font-family:Arial,sans-serif">JavaScript is required for Library search, navigation, and account controls.</div></noscript>
+  <nav class="site-nav" id="mainNav">
+    <a href="index.html" class="nav-logo"><span class="nav-logo-mark">&gt;</span><span>method in motion</span></a>
+    <div class="nav-links">
+      <a href="index.html#crew" class="nav-link">Crew</a><a href="index.html#membership" class="nav-link">Membership</a>
+      <div class="nav-drop" id="exploreDrop"><button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')">MiM U ▾</button><div class="nav-drop-menu"><a href="pdfs.html" class="nav-drop-item">PDFs</a><a href="library.html" class="nav-drop-item active">Library</a><a href="characters.html" class="nav-drop-item">Characters</a><a href="about.html" class="nav-drop-item">About</a></div></div>
+      <div class="nav-drop" id="undergroundDrop"><button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')">The Underground ▾</button><div class="nav-drop-menu"><a href="games.html" class="nav-drop-item">Games</a><a href="tag-wall.html" class="nav-drop-item">Tag Wall</a><a href="broken-syntax.html" class="nav-drop-item">Broken Syntax</a><a href="mim-tv.html" class="nav-drop-item">MiM TV</a><a href="comic.html" class="nav-drop-item">Comics</a></div></div>
+    </div>
+    <div id="nav-auth-btns" class="nav-auth"><button class="nav-cta" id="nav-login" type="button">Log In</button><button class="nav-join-btn" id="nav-join" type="button">Join Free</button></div>
+    <div id="nav-user-menu"><span id="nav-username"></span><a href="dashboard.html" id="nav-dashboard-link">Dashboard</a><button id="nav-logout-btn" type="button">Log Out</button></div>
+    <a href="index.html" class="nav-back">← Home</a><button class="mobile-toggle" id="mobileToggle" type="button" aria-label="Open navigation">☰</button>
+  </nav>
+  <div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" aria-describedby="auth-modal-description"><div class="modal-box"><button class="modal-close" id="auth-close-btn" type="button" aria-label="Close authentication dialog">✕</button><div class="modal-title" id="auth-modal-title">Method in Motion</div><div class="modal-sub" id="auth-modal-description">Your adventure starts here.</div><div class="modal-tabs"><button class="modal-tab active auth-tab" data-tab="login" type="button">Log In</button><button class="modal-tab auth-tab" data-tab="signup" type="button">Sign Up</button></div><div id="login-form" class="auth-form" style="display:block"><div class="modal-field"><label for="login-email">Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email" /></div><div class="modal-field"><label for="login-password">Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password" /></div><p class="modal-error" id="login-error"></p><button class="modal-submit" id="login-submit-btn" type="button">Log In</button><p class="modal-status" id="login-status" aria-live="polite"></p></div><div id="signup-form" class="auth-form" style="display:none"><div class="modal-field"><label for="signup-name">Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname" /></div><div class="modal-field"><label for="signup-email">Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email" /></div><div class="modal-field"><label for="signup-password">Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password" /></div><p class="modal-error" id="signup-error"></p><button class="modal-submit" id="signup-submit-btn" type="button">Create Your Account</button><p class="modal-status" id="signup-status" aria-live="polite"></p></div></div></div>
+  <header class="hero"><div class="hero-bg" aria-hidden="true"></div><div class="scanline" aria-hidden="true"></div><div class="hero-particles" id="heroParticles" aria-hidden="true"></div><div class="hero-content"><div class="hero-kicker">Method in Motion · Knowledge Archive</div><h1 class="hero-title">THE DIGITAL <span>LIBRARY</span></h1><p class="hero-copy">Open the archive. Explore the people, machines, languages, and ideas that built the digital world—without digging through ten layers to find them.</p><div class="hero-actions"><a href="#archive" class="hero-btn primary">Open the Archive</a><a href="#glossary" class="hero-btn secondary">Search the Glossary</a></div><div class="hero-status">Public access · No account required</div></div></header>
+  <main>
+    <section class="archive-hub" id="archive"><div class="section-top"><div><div class="eyebrow">Archive command center</div><h2 class="section-title">Pick a file. Start anywhere.</h2></div><p class="section-copy">Every major collection is visible right here. No collapsed maze. No guessing where the good stuff is.</p></div><div class="archive-grid">
+      <a class="archive-card" href="#did-you-know" style="--accent:#fb923c;--accent-rgb:251,146,60"><div class="archive-icon">🧠</div><div class="archive-code">FILE 01</div><div class="archive-title">Mind-Blowing Facts</div><div class="archive-desc">Fast, surprising facts about code, computers, the web, and tech history.</div><div class="archive-arrow">Open →</div></a>
+      <a class="archive-card" href="#history" style="--accent:#f472b6;--accent-rgb:244,114,182"><div class="archive-icon">🕰️</div><div class="archive-code">FILE 02</div><div class="archive-title">History of Coding</div><div class="archive-desc">From Ada Lovelace to modern AI, follow the full timeline of computing ideas.</div><div class="archive-arrow">Open →</div></a>
+      <a class="archive-card" href="#computers" style="--accent:#00e8ff;--accent-rgb:0,232,255"><div class="archive-icon">🖥️</div><div class="archive-code">FILE 03</div><div class="archive-title">Computer Evolution</div><div class="archive-desc">See how room-sized machines became the devices in our pockets.</div><div class="archive-arrow">Open →</div></a>
+      <a class="archive-card" href="#internet" style="--accent:#38bdf8;--accent-rgb:56,189,248"><div class="archive-icon">🌐</div><div class="archive-code">FILE 04</div><div class="archive-title">The Internet</div><div class="archive-desc">How four connected computers grew into a network used around the world.</div><div class="archive-arrow">Open →</div></a>
+      <a class="archive-card" href="#pioneers" style="--accent:#c66bff;--accent-rgb:198,107,255"><div class="archive-icon">👩‍💻</div><div class="archive-code">FILE 05</div><div class="archive-title">Tech Pioneers</div><div class="archive-desc">Meet the people whose ideas shaped programming, hardware, the web, and AI.</div><div class="archive-arrow">Open →</div></a>
+      <a class="archive-card" href="#languages" style="--accent:#fbbf24;--accent-rgb:251,191,36"><div class="archive-icon">⌨️</div><div class="archive-code">FILE 06</div><div class="archive-title">Programming Languages</div><div class="archive-desc">What the major languages do, when they appeared, and why people use them.</div><div class="archive-arrow">Open →</div></a>
+      <a class="archive-card" href="#how-it-works" style="--accent:#84cc16;--accent-rgb:132,204,22"><div class="archive-icon">⚙️</div><div class="archive-code">FILE 07</div><div class="archive-title">How It Works</div><div class="archive-desc">Follow a website request, then decode bits, bytes, files, and digital data.</div><div class="archive-arrow">Open →</div></a>
+      <a class="archive-card" href="#glossary" style="--accent:#00f5d4;--accent-rgb:0,245,212"><div class="archive-icon">📖</div><div class="archive-code">FILE 08</div><div class="archive-title">Coder Glossary</div><div class="archive-desc">Search the words every new coder keeps hearing but nobody stops to explain.</div><div class="archive-arrow">Open →</div></a>
+    </div></section>
+    <nav class="section-nav" aria-label="Library sections"><a class="snav-item active" href="#did-you-know">Facts</a><a class="snav-item" href="#history">Coding History</a><a class="snav-item" href="#computers">Computers</a><a class="snav-item" href="#internet">Internet</a><a class="snav-item" href="#pioneers">Pioneers</a><a class="snav-item" href="#languages">Languages</a><a class="snav-item" href="#how-it-works">How It Works</a><a class="snav-item" href="#glossary">Glossary</a><a class="snav-item" href="#mini-games">Mini Games</a></nav>
+    <section class="library-section" id="did-you-know"><div class="inner"><div class="section-head"><div><div class="section-label">Did You Know?</div><h2 class="content-title">Facts that make you stop scrolling.</h2></div><p class="content-desc">Real facts about coding, computers, and the internet—the kind that make you say, “Wait. Seriously?”</p></div><div class="fact-toolbar"><button class="surprise-btn" id="surpriseBtn" type="button">🎲 Surprise Me</button><button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">🔇 Archive Sound Off</button></div><div class="fact-grid" id="factGrid">
+      <article class="fact-card" style="--accent:#fb923c"><div class="fact-icon">🪲</div><h3 class="fact-title">The First Bug Was Real</h3><p class="fact-body">In 1947, a moth was found stuck inside a computer at Harvard. Grace Hopper’s team taped it into their logbook and wrote “First actual case of bug being found.”</p></article>
+      <article class="fact-card" style="--accent:#00e8ff"><div class="fact-icon">🌐</div><h3 class="fact-title">The Web Is Younger Than Most Parents</h3><p class="fact-body">Tim Berners-Lee proposed the World Wide Web in 1989. The system people now use every day began as a way for scientists to share information.</p></article>
+      <article class="fact-card" style="--accent:#c66bff"><div class="fact-icon">🚀</div><h3 class="fact-title">Apollo Used Tiny Memory</h3><p class="fact-body">The Apollo Guidance Computer had only a few kilobytes of memory, yet it helped guide astronauts to the Moon.</p></article>
+      <article class="fact-card" style="--accent:#ff6baa"><div class="fact-icon">🎮</div><h3 class="fact-title">A Video Game Ran on an Oscilloscope</h3><p class="fact-body">Tennis for Two was created in 1958 by William Higinbotham and displayed on an oscilloscope years before home consoles existed.</p></article>
+      <article class="fact-card" style="--accent:#f472b6"><div class="fact-icon">👩‍💻</div><h3 class="fact-title">The First Published Algorithm Was Written by a Woman</h3><p class="fact-body">Ada Lovelace described an algorithm for Charles Babbage’s Analytical Engine in the 1840s and imagined machines creating music and graphics.</p></article>
+      <article class="fact-card" style="--accent:#84cc16"><div class="fact-icon">📱</div><h3 class="fact-title">Every Website Starts as Files</h3><p class="fact-body">Behind every polished site are plain files—HTML for structure, CSS for style, and often JavaScript for behavior.</p></article>
+      <article class="fact-card" style="--accent:#00e8ff"><div class="fact-icon">⚡</div><h3 class="fact-title">JavaScript’s First Version Came Together Fast</h3><p class="fact-body">Brendan Eich created the first version of JavaScript in roughly ten days in 1995. It later became central to interactive websites.</p></article>
+      <article class="fact-card" style="--accent:#c66bff"><div class="fact-icon">🔢</div><h3 class="fact-title">Screens Are Built From Data</h3><p class="fact-body">Images, songs, videos, games, and messages are ultimately represented as binary data that computers process using 1s and 0s.</p></article>
+      <article class="fact-card" style="--accent:#38bdf8"><div class="fact-icon">⌨️</div><h3 class="fact-title">The Internet’s First Message Crashed Mid-Word</h3><p class="fact-body">ARPANET’s first attempted message was “login.” The system failed after sending only “lo.”</p></article>
+    </div></div></section>
+    <section class="library-section" id="history"><div class="inner"><div class="section-head"><div><div class="section-label">History of Coding</div><h2 class="content-title">How we got from gears to generative AI.</h2></div><p class="content-desc">A fast timeline through the ideas, languages, machines, and breakthroughs that made modern computing possible.</p></div><div class="timeline">
+      <article class="timeline-item" style="color:#f472b6"><div class="timeline-year">1843</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Mathematics</span><h3 class="timeline-event">Ada Lovelace Writes an Algorithm</h3><p class="timeline-desc">Lovelace described a method for Charles Babbage’s Analytical Engine and recognized that machines might one day manipulate more than numbers.</p></div></article>
+      <article class="timeline-item" style="color:#a855f7"><div class="timeline-year">1890</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Data</span><h3 class="timeline-event">Punch Cards Speed Up the Census</h3><p class="timeline-desc">Herman Hollerith created machines that recorded and processed information using holes punched into cards.</p></div></article>
+      <article class="timeline-item" style="color:#00f5d4"><div class="timeline-year">1936</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Theory</span><h3 class="timeline-event">Alan Turing Defines a Computing Model</h3><p class="timeline-desc">Turing described a theoretical machine that helped establish the mathematical foundation of computer science.</p></div></article>
+      <article class="timeline-item" style="color:#fbbf24"><div class="timeline-year">1940s</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Hardware</span><h3 class="timeline-event">Electronic Computers Arrive</h3><p class="timeline-desc">Machines such as ENIAC used thousands of vacuum tubes and filled large rooms while performing calculations at unprecedented speed.</p></div></article>
+      <article class="timeline-item" style="color:#84cc16"><div class="timeline-year">1957</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Languages</span><h3 class="timeline-event">FORTRAN Brings Code Closer to Mathematics</h3><p class="timeline-desc">FORTRAN made it easier for scientists and engineers to write programs without manually entering machine instructions.</p></div></article>
+      <article class="timeline-item" style="color:#38bdf8"><div class="timeline-year">1969</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Internet</span><h3 class="timeline-event">ARPANET Sends Its First Message</h3><p class="timeline-desc">A small network connected university computers and became an important ancestor of the modern internet.</p></div></article>
+      <article class="timeline-item" style="color:#f472b6"><div class="timeline-year">1972</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Languages</span><h3 class="timeline-event">C Is Created at Bell Labs</h3><p class="timeline-desc">Dennis Ritchie developed C while working on Unix. Its influence can still be seen across modern programming languages and operating systems.</p></div></article>
+      <article class="timeline-item" style="color:#a855f7"><div class="timeline-year">1984</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Personal Computing</span><h3 class="timeline-event">Graphical Interfaces Reach More Homes</h3><p class="timeline-desc">The Macintosh helped popularize windows, icons, menus, and mouse-based interaction for everyday computer users.</p></div></article>
+      <article class="timeline-item" style="color:#fbbf24"><div class="timeline-year">1989</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Web</span><h3 class="timeline-event">Tim Berners-Lee Proposes the World Wide Web</h3><p class="timeline-desc">The web connected documents using links and made information easier to share across the internet.</p></div></article>
+      <article class="timeline-item" style="color:#84cc16"><div class="timeline-year">1995</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Languages</span><h3 class="timeline-event">JavaScript Makes the Web Interactive</h3><p class="timeline-desc">JavaScript began as a browser scripting language and later expanded to servers, mobile applications, tools, and devices.</p></div></article>
+      <article class="timeline-item" style="color:#38bdf8"><div class="timeline-year">2007</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">Mobile</span><h3 class="timeline-event">The Smartphone Era Accelerates</h3><p class="timeline-desc">Touchscreen smartphones combined communication, computing, cameras, and the web into one pocket-sized device.</p></div></article>
+      <article class="timeline-item" style="color:#f472b6"><div class="timeline-year">2020s</div><div class="timeline-dot"></div><div class="timeline-info"><span class="timeline-tag">AI</span><h3 class="timeline-event">Generative AI Reaches Everyday Users</h3><p class="timeline-desc">Tools that generate text, code, images, audio, and video become widely available, making strong computing fundamentals even more valuable.</p></div></article>
+    </div></div></section>
+    <section class="library-section" id="computers"><div class="inner"><div class="section-head"><div><div class="section-label">History of Computers</div><h2 class="content-title">From room-sized to pocket-sized.</h2></div><p class="content-desc">The machines changed shape, speed, cost, and scale—but every generation built on the one before it.</p></div><div class="card-grid">
+      <article class="info-card" style="--accent:#f472b6"><div class="info-icon">⚙️</div><div><span class="info-year">1822</span><h3 class="info-title">Babbage’s Difference Engine</h3><p class="info-desc">A mechanical calculator designed to compute mathematical tables.</p></div></article><article class="info-card" style="--accent:#fbbf24"><div class="info-icon">💡</div><div><span class="info-year">1940s</span><h3 class="info-title">ENIAC</h3><p class="info-desc">One of the earliest general-purpose electronic computers, using thousands of vacuum tubes.</p></div></article><article class="info-card" style="--accent:#00f5d4"><div class="info-icon">🔬</div><div><span class="info-year">1950s</span><h3 class="info-title">The Transistor Revolution</h3><p class="info-desc">Transistors made computers smaller, more reliable, and more efficient.</p></div></article><article class="info-card" style="--accent:#84cc16"><div class="info-icon">🖥️</div><div><span class="info-year">1977</span><h3 class="info-title">Apple II</h3><p class="info-desc">A major early personal computer that helped bring computing into homes and schools.</p></div></article><article class="info-card" style="--accent:#a855f7"><div class="info-icon">💾</div><div><span class="info-year">1981</span><h3 class="info-title">IBM PC</h3><p class="info-desc">The IBM PC helped establish standards that shaped the personal computer industry.</p></div></article><article class="info-card" style="--accent:#38bdf8"><div class="info-icon">📱</div><div><span class="info-year">2000s</span><h3 class="info-title">The Smartphone Era</h3><p class="info-desc">Phones became powerful computers with cameras, sensors, apps, and network access.</p></div></article><article class="info-card" style="--accent:#ff6baa"><div class="info-icon">🧠</div><div><span class="info-year">Today</span><h3 class="info-title">Specialized AI Hardware</h3><p class="info-desc">Modern systems use specialized processors for machine-learning workloads.</p></div></article><article class="info-card" style="--accent:#00e8ff"><div class="info-icon">☁️</div><div><span class="info-year">Today</span><h3 class="info-title">Cloud Computing</h3><p class="info-desc">Applications can run across networks of servers instead of only on your device.</p></div></article>
+    </div></div></section>
+    <section class="library-section" id="internet"><div class="inner"><div class="section-head"><div><div class="section-label">History of the Internet</div><h2 class="content-title">The network that connected everything.</h2></div><p class="content-desc">The internet is the network. The web is one way of sharing linked information across it.</p></div><div class="step-list">
+      <article class="step-card" style="--accent:#f472b6"><div class="step-year">1969</div><div><h3 class="step-title">ARPANET Connects Four Sites</h3><p class="step-desc">Researchers connect computers at several universities.</p></div></article><article class="step-card" style="--accent:#a855f7"><div class="step-year">1971</div><div><h3 class="step-title">Network Email Appears</h3><p class="step-desc">Ray Tomlinson sends messages between computers and uses the @ symbol.</p></div></article><article class="step-card" style="--accent:#00f5d4"><div class="step-year">1983</div><div><h3 class="step-title">TCP/IP Becomes the Standard</h3><p class="step-desc">Networks adopt shared communication rules central to the internet.</p></div></article><article class="step-card" style="--accent:#fbbf24"><div class="step-year">1989</div><div><h3 class="step-title">The World Wide Web Is Proposed</h3><p class="step-desc">Tim Berners-Lee proposes linked documents accessed over the internet.</p></div></article><article class="step-card" style="--accent:#84cc16"><div class="step-year">1993</div><div><h3 class="step-title">Graphical Browsers Spread</h3><p class="step-desc">Browsers such as Mosaic make websites easier to navigate.</p></div></article><article class="step-card" style="--accent:#38bdf8"><div class="step-year">1998</div><div><h3 class="step-title">Google Launches</h3><p class="step-desc">A search engine uses links between pages as a ranking signal.</p></div></article><article class="step-card" style="--accent:#f472b6"><div class="step-year">2000s</div><div><h3 class="step-title">Social Platforms Grow</h3><p class="step-desc">People increasingly create, share, comment, stream, and collaborate.</p></div></article><article class="step-card" style="--accent:#a855f7"><div class="step-year">Today</div><div><h3 class="step-title">The AI-Connected Web</h3><p class="step-desc">Creation and software increasingly combine human input with machine-generated output.</p></div></article>
+    </div></div></section>
+    <section class="library-section" id="pioneers"><div class="inner"><div class="section-head"><div><div class="section-label">Tech Pioneers</div><h2 class="content-title">The people behind the breakthroughs.</h2></div><p class="content-desc">Every system began with people asking questions, testing ideas, and building what did not exist yet.</p></div><div class="pioneer-grid">
+      <article class="pioneer-card" style="--accent:#f472b6"><span class="pioneer-era">1840s · Mathematics</span><h3 class="pioneer-name">Ada Lovelace</h3><div class="pioneer-role">Early computing visionary</div><p class="pioneer-fact">Described an algorithm for the Analytical Engine and imagined broader uses for computing machines.</p></article><article class="pioneer-card" style="--accent:#00f5d4"><span class="pioneer-era">1930s · Computer Science</span><h3 class="pioneer-name">Alan Turing</h3><div class="pioneer-role">Foundational computer scientist</div><p class="pioneer-fact">Developed influential ideas about computation and played a major role in wartime codebreaking.</p></article><article class="pioneer-card" style="--accent:#a855f7"><span class="pioneer-era">1940s · Programming</span><h3 class="pioneer-name">Grace Hopper</h3><div class="pioneer-role">Compiler pioneer</div><p class="pioneer-fact">Helped create early compilers and promoted languages that were easier for humans to read.</p></article><article class="pioneer-card" style="--accent:#fbbf24"><span class="pioneer-era">Spaceflight · Mathematics</span><h3 class="pioneer-name">Katherine Johnson</h3><div class="pioneer-role">NASA mathematician</div><p class="pioneer-fact">Calculated flight paths and orbital trajectories for major space missions.</p></article><article class="pioneer-card" style="--accent:#84cc16"><span class="pioneer-era">1970s · Personal Computing</span><h3 class="pioneer-name">Steve Wozniak</h3><div class="pioneer-role">Computer engineer</div><p class="pioneer-fact">Designed the Apple I and Apple II, helping make personal computers practical.</p></article><article class="pioneer-card" style="--accent:#38bdf8"><span class="pioneer-era">1989 · Web</span><h3 class="pioneer-name">Tim Berners-Lee</h3><div class="pioneer-role">Inventor of the World Wide Web</div><p class="pioneer-fact">Created the core ideas behind URLs, HTTP, HTML, and linked web pages.</p></article><article class="pioneer-card" style="--accent:#ff6baa"><span class="pioneer-era">1990s · Search</span><h3 class="pioneer-name">Larry Page & Sergey Brin</h3><div class="pioneer-role">Google co-founders</div><p class="pioneer-fact">Built a search system that used links between pages as a major ranking signal.</p></article><article class="pioneer-card" style="--accent:#c66bff"><span class="pioneer-era">Modern AI · Research</span><h3 class="pioneer-name">Geoffrey Hinton</h3><div class="pioneer-role">Neural-network researcher</div><p class="pioneer-fact">Helped advance deep-learning methods used in modern artificial intelligence.</p></article><article class="pioneer-card" style="--accent:#00e8ff"><span class="pioneer-era">Every Era · Collaboration</span><h3 class="pioneer-name">Millions of Builders</h3><div class="pioneer-role">Engineers, designers, researchers, and users</div><p class="pioneer-fact">The digital world grew through collaboration across countries, disciplines, companies, and open-source communities.</p></article>
+    </div></div></section>
+    <section class="library-section" id="languages"><div class="inner"><div class="section-head"><div><div class="section-label">Programming Languages</div><h2 class="content-title">Different tools for different jobs.</h2></div><p class="content-desc">The “best” language depends on what you are trying to build.</p></div><div class="language-grid">
+      <article class="language-card" style="--accent:#fbbf24"><h3 class="language-name">Python</h3><div class="language-year">Created 1991</div><p class="language-use">Automation, data science, web development, education, and AI.</p></article><article class="language-card" style="--accent:#f7df1e"><h3 class="language-name">JavaScript</h3><div class="language-year">Created 1995</div><p class="language-use">Interactive web pages, servers, tools, and applications.</p></article><article class="language-card" style="--accent:#e34f26"><h3 class="language-name">HTML</h3><div class="language-year">Introduced 1991</div><p class="language-use">Defines the structure and meaning of content on the web.</p></article><article class="language-card" style="--accent:#264de4"><h3 class="language-name">CSS</h3><div class="language-year">Introduced 1996</div><p class="language-use">Controls presentation, layout, responsive behavior, and animation.</p></article><article class="language-card" style="--accent:#b07219"><h3 class="language-name">Java</h3><div class="language-year">Created 1995</div><p class="language-use">Enterprise software, Android systems, and large applications.</p></article><article class="language-card" style="--accent:#00ADD8"><h3 class="language-name">Go</h3><div class="language-year">Created 2009</div><p class="language-use">Simple, efficient systems and network services.</p></article><article class="language-card" style="--accent:#dea584"><h3 class="language-name">Rust</h3><div class="language-year">Created 2010</div><p class="language-use">High-performance systems with strong memory-safety guarantees.</p></article><article class="language-card" style="--accent:#a97bff"><h3 class="language-name">Swift</h3><div class="language-year">Created 2014</div><p class="language-use">Applications across Apple platforms.</p></article>
+    </div></div></section>
+    <section class="library-section" id="how-it-works"><div class="inner"><div class="section-head"><div><div class="section-label">How It Works</div><h2 class="content-title">What happens when you visit a website.</h2></div><p class="content-desc">Your browser finds servers, downloads files, builds structures, and paints pixels.</p></div><div class="how-grid">
+      <article class="how-card" style="--accent:#f472b6"><div class="how-num">01</div><h3 class="how-title">You Enter an Address</h3><p class="how-desc">The browser uses the domain name to find the server’s network address.</p></article><article class="how-card" style="--accent:#a855f7"><div class="how-num">02</div><h3 class="how-title">The Browser Sends a Request</h3><p class="how-desc">It connects to a server and asks for files or data.</p></article><article class="how-card" style="--accent:#00f5d4"><div class="how-num">03</div><h3 class="how-title">The Server Responds</h3><p class="how-desc">The server returns HTML, CSS, JavaScript, images, and resources.</p></article><article class="how-card" style="--accent:#fbbf24"><div class="how-num">04</div><h3 class="how-title">HTML Builds the Structure</h3><p class="how-desc">The browser reads HTML and creates the DOM.</p></article><article class="how-card" style="--accent:#84cc16"><div class="how-num">05</div><h3 class="how-title">CSS Styles the Page</h3><p class="how-desc">CSS controls layout, spacing, colors, fonts, and animation.</p></article><article class="how-card" style="--accent:#38bdf8"><div class="how-num">06</div><h3 class="how-title">JavaScript Adds Behavior</h3><p class="how-desc">JavaScript listens for events, changes content, and loads data.</p></article>
+    </div><div class="subsection"><h3>How computers store information</h3><p>Text, pictures, sound, and video all become digital data.</p><div class="how-grid"><article class="how-card" style="--accent:#f472b6"><div class="how-num">BIT</div><h3 class="how-title">The Smallest Unit</h3><p class="how-desc">A bit is one binary digit: either 0 or 1.</p></article><article class="how-card" style="--accent:#a855f7"><div class="how-num">BYTE</div><h3 class="how-title">Eight Bits</h3><p class="how-desc">A byte contains eight bits and can represent 256 values.</p></article><article class="how-card" style="--accent:#00f5d4"><div class="how-num">KB → TB</div><h3 class="how-title">Scaling Up</h3><p class="how-desc">Kilobytes, megabytes, gigabytes, and terabytes describe larger amounts of data.</p></article></div></div></div></section>
+    <section class="library-section" id="glossary"><div class="inner"><div class="section-head"><div><div class="section-label">Coder Glossary</div><h2 class="content-title">The words nobody should have to pretend they understand.</h2></div><p class="content-desc">Search a term or browse the full decoder ring.</p></div><input type="search" class="glossary-search" id="glossarySearch" placeholder="Search terms: loop, server, API, variable..." autocomplete="off" aria-label="Search the coding glossary" /><div class="glossary-grid" id="glossaryGrid">
+      <article class="glossary-item"><h3 class="glossary-term">Algorithm</h3><p class="glossary-def">A step-by-step set of instructions for solving a problem.</p></article><article class="glossary-item"><h3 class="glossary-term">API</h3><p class="glossary-def">A defined way for software systems to exchange data or request actions.</p></article><article class="glossary-item"><h3 class="glossary-term">Backend</h3><p class="glossary-def">Server-side code, databases, and services behind an interface.</p></article><article class="glossary-item"><h3 class="glossary-term">Binary</h3><p class="glossary-def">A number system using only 0 and 1.</p></article><article class="glossary-item"><h3 class="glossary-term">Cache</h3><p class="glossary-def">Temporary storage that keeps frequently used data nearby.</p></article><article class="glossary-item"><h3 class="glossary-term">Cloud</h3><p class="glossary-def">Computing resources accessed across a network.</p></article><article class="glossary-item"><h3 class="glossary-term">Compiler</h3><p class="glossary-def">Software that translates source code into another executable form.</p></article><article class="glossary-item"><h3 class="glossary-term">Database</h3><p class="glossary-def">An organized system for storing and retrieving information.</p></article><article class="glossary-item"><h3 class="glossary-term">Debugging</h3><p class="glossary-def">Finding, understanding, and fixing problems in code.</p></article><article class="glossary-item"><h3 class="glossary-term">DOM</h3><p class="glossary-def">The browser’s object-based representation of an HTML document.</p></article><article class="glossary-item"><h3 class="glossary-term">Framework</h3><p class="glossary-def">A reusable structure and set of tools for building software.</p></article><article class="glossary-item"><h3 class="glossary-term">Frontend</h3><p class="glossary-def">The part of an app users see and interact with.</p></article><article class="glossary-item"><h3 class="glossary-term">Function</h3><p class="glossary-def">A reusable block of code designed to perform a task.</p></article><article class="glossary-item"><h3 class="glossary-term">Git</h3><p class="glossary-def">A version-control system that tracks file changes.</p></article><article class="glossary-item"><h3 class="glossary-term">HTTP / HTTPS</h3><p class="glossary-def">Protocols used to exchange web resources. HTTPS encrypts the connection.</p></article><article class="glossary-item"><h3 class="glossary-term">IDE</h3><p class="glossary-def">An app combining code editing with running and debugging tools.</p></article><article class="glossary-item"><h3 class="glossary-term">Loop</h3><p class="glossary-def">A structure that repeats instructions.</p></article><article class="glossary-item"><h3 class="glossary-term">Open Source</h3><p class="glossary-def">Software whose source code can be inspected and modified under its license.</p></article><article class="glossary-item"><h3 class="glossary-term">Repository</h3><p class="glossary-def">A project location that stores files and version history.</p></article><article class="glossary-item"><h3 class="glossary-term">Server</h3><p class="glossary-def">A computer or program that provides data or services.</p></article><article class="glossary-item"><h3 class="glossary-term">Variable</h3><p class="glossary-def">A named place used to store a value.</p></article><article class="glossary-item"><h3 class="glossary-term">Version Control</h3><p class="glossary-def">A system for recording changes so earlier versions can be restored.</p></article>
+    </div><p class="glossary-empty" id="glossaryEmpty">No glossary terms match that search.</p></div></section>
+    <section class="library-section" id="mini-games"><div class="inner"><div class="section-head"><div><div class="section-label">Free Mini Games</div><h2 class="content-title">Small challenges are entering the archive.</h2></div><p class="content-desc">These quick activities are still in production. The full character games are available through the Game Universe.</p></div><div class="mini-grid"><article class="mini-card" style="--accent:#f472b6"><div class="mini-icon">🎨</div><h3 class="mini-title">CSS Color Match</h3><p class="mini-desc">Match color values and visual targets.</p><span class="mini-tag">Coming Soon</span></article><article class="mini-card" style="--accent:#a855f7"><div class="mini-icon">🔍</div><h3 class="mini-title">Byte’s Bug Finder</h3><p class="mini-desc">Spot the typo before the glitch spreads.</p><span class="mini-tag">Coming Soon</span></article><article class="mini-card" style="--accent:#00f5d4"><div class="mini-icon">♾️</div><h3 class="mini-title">Loop’s Sequence Puzzle</h3><p class="mini-desc">Place instructions in the correct order.</p><span class="mini-tag">Coming Soon</span></article></div><div class="hero-actions"><a href="games.html" class="hero-btn primary">Enter the Game Universe</a></div></div></section>
+  </main>
+  <footer>Method in Motion &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="games.html">Games</a> &nbsp;·&nbsp; “Create, Don’t Consume.”</footer>
+  <script>
+    let soundEnabled=false,audioContext=null;
+    function playTone(type='open'){if(!soundEnabled)return;try{audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();const o=audioContext.createOscillator(),g=audioContext.createGain();o.connect(g);g.connect(audioContext.destination);const now=audioContext.currentTime,f=type==='fact'?640:420;o.type='sine';o.frequency.setValueAtTime(f,now);o.frequency.exponentialRampToValueAtTime(f*1.35,now+.08);g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime(.035,now+.01);g.gain.exponentialRampToValueAtTime(.0001,now+.10);o.start(now);o.stop(now+.12)}catch(e){console.warn('Archive audio unavailable:',e)}}
+    function toggleNavDrop(id){const t=document.getElementById(id),open=!t.classList.contains('open');document.querySelectorAll('.nav-drop').forEach(d=>d.classList.remove('open'));if(open)t.classList.add('open')}window.toggleNavDrop=toggleNavDrop;document.addEventListener('click',e=>{
+      if(!e.target.closest('.nav-drop')){
+        document.querySelectorAll('.nav-drop').forEach(d=>d.classList.remove('open'));
+      }
+      if(
+        nav.classList.contains('mobile-open') &&
+        !e.target.closest('#mainNav')
+      ){
+        nav.classList.remove('mobile-open');
+        document.getElementById('mobileToggle').textContent='☰';
+      }
+    });
+    const nav=document.getElementById('mainNav'),toggle=document.getElementById('mobileToggle');toggle.addEventListener('click',()=>{nav.classList.toggle('mobile-open');toggle.textContent=nav.classList.contains('mobile-open')?'✕':'☰'});document.querySelectorAll('.site-nav a').forEach(a=>a.addEventListener('click',()=>{nav.classList.remove('mobile-open');toggle.textContent='☰'}));
+    const sections=[...document.querySelectorAll('.library-section[id]')],navItems=[...document.querySelectorAll('.snav-item')];let frame=null;function updateActive(){let current=sections[0]?.id||'',marker=window.scrollY+160;sections.forEach(s=>{if(marker>=s.offsetTop)current=s.id});navItems.forEach(i=>i.classList.toggle('active',i.getAttribute('href')==='#'+current));frame=null}window.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(updateActive)},{passive:true});
+    document.querySelectorAll('.archive-card,.snav-item').forEach(a=>a.addEventListener('click',()=>playTone('open')));
+    let surpriseTimeout=null;
+    document.getElementById('surpriseBtn').addEventListener('click',()=>{
+      const cards=[...document.querySelectorAll('#factGrid .fact-card')];
+      if(surpriseTimeout) clearTimeout(surpriseTimeout);
+      cards.forEach(c=>c.classList.remove('highlighted'));
+      const pick=cards[Math.floor(Math.random()*cards.length)];
+      pick.classList.add('highlighted');
+      pick.scrollIntoView({behavior:'smooth',block:'center'});
+      playTone('fact');
+      surpriseTimeout=setTimeout(()=>{
+        pick.classList.remove('highlighted');
+        surpriseTimeout=null;
+      },2600);
+    });
+    document.getElementById('soundToggle').addEventListener('click',async function(){soundEnabled=!soundEnabled;this.setAttribute('aria-pressed',String(soundEnabled));this.textContent=soundEnabled?'🔊 Archive Sound On':'🔇 Archive Sound Off';if(soundEnabled){try{audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')await audioContext.resume();playTone()}catch(e){soundEnabled=false;this.setAttribute('aria-pressed','false');this.textContent='🔇 Archive Sound Off'}}});
+    const search=document.getElementById('glossarySearch'),items=[...document.querySelectorAll('#glossaryGrid .glossary-item')],empty=document.getElementById('glossaryEmpty');search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();let visible=0;items.forEach(i=>{const match=i.textContent.toLowerCase().includes(q);i.hidden=!match;if(match)visible++});empty.style.display=visible?'none':'block'});
+    const p=document.getElementById('heroParticles'),colors=['#ff6baa','#c66bff','#00e8ff','#fbbf24','#84cc16','#38bdf8'];for(let i=0;i<30;i++){const s=document.createElement('span');s.className='hero-particle';s.style.left=Math.random()*100+'%';s.style.background=colors[Math.floor(Math.random()*colors.length)];s.style.color=s.style.background;s.style.animationDuration=Math.random()*12+9+'s';s.style.animationDelay=Math.random()*9+'s';p.appendChild(s)}updateActive();
+  </script>
+  <script type="module" src="auth-init.js"></script>
 </body>
 </html>
