@@ -27,7 +27,7 @@
     .archive-hub{max-width:1420px;margin:0 auto;padding:80px 36px 50px}.section-top{display:flex;align-items:end;justify-content:space-between;gap:28px;margin-bottom:30px}.eyebrow{margin-bottom:9px;color:var(--pink);font-family:var(--display);font-size:.54rem;letter-spacing:.21em;text-transform:uppercase}.section-title{font-family:var(--display);font-size:clamp(1.75rem,4vw,3.25rem);line-height:1.08}.section-copy{max-width:570px;color:var(--muted);font-size:.92rem;line-height:1.75}.archive-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.archive-card{--accent:var(--cyan);--accent-rgb:0,232,255;position:relative;min-height:245px;overflow:hidden;border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:22px;background:radial-gradient(circle at 90% 0%,rgba(var(--accent-rgb),.12),transparent 42%),var(--panel);transition:.28s;isolation:isolate}.archive-card::before{content:"";position:absolute;inset:0;z-index:-1;opacity:0;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.11) 50%,transparent 65%);transform:translateX(-100%)}.archive-card:hover{transform:translateY(-6px);border-color:rgba(var(--accent-rgb),.45);box-shadow:0 18px 50px rgba(0,0,0,.38),0 0 28px rgba(var(--accent-rgb),.12)}.archive-card:hover::before{opacity:1;animation:sweep 1.05s ease forwards}@keyframes sweep{to{transform:translateX(100%)}}.archive-icon{font-size:2rem;margin-bottom:30px}.archive-code{color:var(--accent);font-family:var(--display);font-size:.48rem;letter-spacing:.16em;text-transform:uppercase;margin-bottom:6px}.archive-title{font-family:var(--heading);font-size:1.08rem;font-weight:800;margin-bottom:7px}.archive-desc{color:var(--muted);font-size:.79rem;line-height:1.6}.archive-arrow{position:absolute;right:18px;bottom:16px;color:var(--accent);font-family:var(--display);font-size:.56rem;letter-spacing:.10em;text-transform:uppercase}
     .section-nav{position:sticky;top:70px;z-index:120;display:flex;overflow-x:auto;scrollbar-width:none;padding:0 34px;background:rgba(5,5,8,.94);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);border-top:1px solid rgba(255,255,255,.06);border-bottom:1px solid rgba(255,255,255,.08)}.section-nav::-webkit-scrollbar{display:none}.snav-item{flex:0 0 auto;padding:14px 18px;border-bottom:2px solid transparent;color:rgba(255,255,255,.54);font-family:var(--display);font-size:.50rem;letter-spacing:.14em;text-transform:uppercase;transition:.2s}.snav-item:hover{color:#fff}.snav-item.active{color:var(--cyan);border-bottom-color:var(--cyan)}
     .library-section{padding:84px 0;border-bottom:1px solid rgba(255,255,255,.055)}.library-section:nth-of-type(even){background:rgba(8,11,20,.42)}.inner{max-width:1160px;margin:0 auto;padding:0 42px}.section-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(280px,520px);align-items:end;gap:30px;margin-bottom:30px}.section-label{color:var(--pink);font-family:var(--display);font-size:.52rem;letter-spacing:.25em;text-transform:uppercase;margin-bottom:9px}.content-title{font-family:var(--heading);font-size:clamp(1.55rem,3vw,2.4rem);line-height:1.12;font-weight:800}.content-desc{color:var(--muted);font-size:.90rem;line-height:1.75}
-    .fact-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:20px}.surprise-btn,.sound-toggle{border:1px solid rgba(0,232,255,.32);border-radius:999px;background:rgba(0,232,255,.07);color:var(--cyan);padding:10px 17px;cursor:pointer;font-family:var(--display);font-size:.51rem;letter-spacing:.11em;text-transform:uppercase}.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.fact-card{--accent:var(--cyan);padding:22px;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:var(--panel);transition:.25s}.fact-card:hover,.fact-card.highlighted{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 14px 40px rgba(0,0,0,.32)}.fact-icon{font-size:1.75rem;margin-bottom:12px}.fact-title{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:7px}.fact-body{color:var(--muted);font-size:.80rem;line-height:1.68}
+    .fact-toolbar{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-bottom:16px}.surprise-btn,.sound-toggle{border:1px solid rgba(0,232,255,.32);border-radius:999px;background:rgba(0,232,255,.07);color:var(--cyan);padding:10px 17px;cursor:pointer;font-family:var(--display);font-size:.51rem;letter-spacing:.11em;text-transform:uppercase}.fact-slot{position:relative;display:grid;place-items:center;min-height:82px;margin:0 0 22px;padding:16px 54px;overflow:hidden;border:1px solid rgba(0,232,255,.22);border-radius:15px;background:linear-gradient(180deg,rgba(0,232,255,.08),rgba(198,107,255,.05));box-shadow:inset 0 0 28px rgba(0,232,255,.05);opacity:.72;transition:opacity .2s,border-color .2s,box-shadow .2s}.fact-slot.active{opacity:1;border-color:rgba(0,232,255,.58);box-shadow:0 0 28px rgba(0,232,255,.14),inset 0 0 28px rgba(0,232,255,.08)}.fact-slot::before,.fact-slot::after{content:'';position:absolute;left:0;right:0;height:20px;z-index:2;pointer-events:none}.fact-slot::before{top:0;background:linear-gradient(to bottom,#0b1220,transparent)}.fact-slot::after{bottom:0;background:linear-gradient(to top,#0b1220,transparent)}.fact-slot-marker{position:absolute;left:18px;color:var(--cyan);font-family:var(--display);font-size:.65rem;text-shadow:0 0 12px var(--cyan)}.fact-slot-marker.right{left:auto;right:18px}.fact-slot-window{width:100%;text-align:center;white-space:nowrap;overflow:hidden}.fact-slot-text{display:block;font-family:var(--display);font-size:clamp(.72rem,2vw,1rem);font-weight:800;letter-spacing:.07em;text-transform:uppercase;color:#fff;text-shadow:0 0 18px rgba(0,232,255,.3);transition:transform .09s ease,opacity .09s ease}.fact-slot.spinning .fact-slot-text{animation:slotFlicker .12s linear infinite}@keyframes slotFlicker{0%{transform:translateY(-8px);opacity:.2}50%{transform:translateY(0);opacity:1}100%{transform:translateY(8px);opacity:.2}}.fact-slot-status{position:absolute;bottom:5px;font-family:var(--display);font-size:.39rem;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.42)}.fact-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.fact-card{--accent:var(--cyan);padding:22px;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:var(--panel);transition:.25s}.fact-card:hover,.fact-card.highlighted{transform:translateY(-4px);border-color:var(--accent);box-shadow:0 14px 40px rgba(0,0,0,.32)}.fact-icon{font-size:1.75rem;margin-bottom:12px}.fact-title{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:7px}.fact-body{color:var(--muted);font-size:.80rem;line-height:1.68}
     .timeline{position:relative}.timeline::before{content:"";position:absolute;left:83px;top:5px;bottom:5px;width:1px;background:linear-gradient(var(--pink),var(--purple),var(--cyan));opacity:.45}.timeline-item{display:grid;grid-template-columns:65px 18px 1fr;gap:18px;align-items:start;padding:18px 0}.timeline-year{padding-top:4px;text-align:right;font-family:var(--display);font-size:.78rem;font-weight:900}.timeline-dot{width:11px;height:11px;margin-top:6px;border:2px solid currentColor;border-radius:50%;background:var(--void);box-shadow:0 0 12px currentColor}.timeline-info{padding:16px 18px;border:1px solid rgba(255,255,255,.08);border-radius:13px;background:var(--panel);transition:.22s}.timeline-info:hover{border-color:rgba(0,232,255,.25);transform:translateX(3px)}.timeline-tag{display:inline-block;margin-bottom:7px;padding:3px 9px;border:1px solid currentColor;border-radius:999px;font-family:var(--display);font-size:.41rem;letter-spacing:.11em;text-transform:uppercase}.timeline-event{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:5px}.timeline-desc{color:var(--muted);font-size:.81rem;line-height:1.7}
     .card-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:15px}.info-card{--accent:var(--cyan);display:flex;align-items:flex-start;gap:15px;padding:21px;border:1px solid rgba(255,255,255,.09);border-radius:15px;background:var(--panel);transition:.24s}.info-card:hover{transform:translateY(-3px);border-color:var(--accent);box-shadow:0 12px 36px rgba(0,0,0,.28)}.info-icon{font-size:1.85rem}.info-year{display:block;margin-bottom:5px;color:var(--accent);font-family:var(--display);font-size:.47rem;letter-spacing:.13em;text-transform:uppercase}.info-title{font-family:var(--heading);font-size:1rem;font-weight:800;margin-bottom:5px}.info-desc{color:var(--muted);font-size:.79rem;line-height:1.68}
     .step-list{display:grid;gap:12px}.step-card{--accent:var(--cyan);display:grid;grid-template-columns:74px 1fr;gap:17px;padding:18px 20px;border:1px solid rgba(255,255,255,.09);border-radius:14px;background:var(--panel);transition:.22s}.step-card:hover{border-color:var(--accent);transform:translateX(4px)}.step-year{font-family:var(--display);font-size:.78rem;font-weight:900;color:var(--accent)}.step-title{font-family:var(--heading);font-size:.97rem;font-weight:800;margin-bottom:4px}.step-desc{color:var(--muted);font-size:.79rem;line-height:1.65}
@@ -71,7 +71,7 @@
       <a class="archive-card" href="#glossary" style="--accent:#00f5d4;--accent-rgb:0,245,212"><div class="archive-icon">📖</div><div class="archive-code">FILE 08</div><div class="archive-title">Coder Glossary</div><div class="archive-desc">Search the words every new coder keeps hearing but nobody stops to explain.</div><div class="archive-arrow">Open →</div></a>
     </div></section>
     <nav class="section-nav" aria-label="Library sections"><a class="snav-item active" href="#did-you-know">Facts</a><a class="snav-item" href="#history">Coding History</a><a class="snav-item" href="#computers">Computers</a><a class="snav-item" href="#internet">Internet</a><a class="snav-item" href="#pioneers">Pioneers</a><a class="snav-item" href="#languages">Languages</a><a class="snav-item" href="#how-it-works">How It Works</a><a class="snav-item" href="#glossary">Glossary</a><a class="snav-item" href="#mini-games">Mini Games</a></nav>
-    <section class="library-section" id="did-you-know"><div class="inner"><div class="section-head"><div><div class="section-label">Did You Know?</div><h2 class="content-title">Facts that make you stop scrolling.</h2></div><p class="content-desc">Real facts about coding, computers, and the internet—the kind that make you say, “Wait. Seriously?”</p></div><div class="fact-toolbar"><button class="surprise-btn" id="surpriseBtn" type="button">🎲 Surprise Me</button><button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">🔇 Archive Sound Off</button></div><div class="fact-grid" id="factGrid">
+    <section class="library-section" id="did-you-know"><div class="inner"><div class="section-head"><div><div class="section-label">Did You Know?</div><h2 class="content-title">Facts that make you stop scrolling.</h2></div><p class="content-desc">Real facts about coding, computers, and the internet—the kind that make you say, “Wait. Seriously?”</p></div><div class="fact-toolbar"><button class="surprise-btn" id="surpriseBtn" type="button">🎰 Spin a Fact</button><button class="sound-toggle" id="soundToggle" type="button" aria-pressed="false">🔇 Archive Sound Off</button></div><div class="fact-slot" id="factSlot" aria-live="polite"><span class="fact-slot-marker">▶</span><div class="fact-slot-window"><span class="fact-slot-text" id="factSlotText">PRESS SPIN TO OPEN A RANDOM FILE</span></div><span class="fact-slot-marker right">◀</span><span class="fact-slot-status" id="factSlotStatus">Archive selector ready</span></div><div class="fact-grid" id="factGrid">
       <article class="fact-card" style="--accent:#fb923c"><div class="fact-icon">🪲</div><h3 class="fact-title">The First Bug Was Real</h3><p class="fact-body">In 1947, a moth was found stuck inside a computer at Harvard. Grace Hopper’s team taped it into their logbook and wrote “First actual case of bug being found.”</p></article>
       <article class="fact-card" style="--accent:#00e8ff"><div class="fact-icon">🌐</div><h3 class="fact-title">The Web Is Younger Than Most Parents</h3><p class="fact-body">Tim Berners-Lee proposed the World Wide Web in 1989. The system people now use every day began as a way for scientists to share information.</p></article>
       <article class="fact-card" style="--accent:#c66bff"><div class="fact-icon">🚀</div><h3 class="fact-title">Apollo Used Tiny Memory</h3><p class="fact-body">The Apollo Guidance Computer had only a few kilobytes of memory, yet it helped guide astronauts to the Moon.</p></article>
@@ -136,19 +136,78 @@
     const sections=[...document.querySelectorAll('.library-section[id]')],navItems=[...document.querySelectorAll('.snav-item')];let frame=null;function updateActive(){let current=sections[0]?.id||'',marker=window.scrollY+160;sections.forEach(s=>{if(marker>=s.offsetTop)current=s.id});navItems.forEach(i=>i.classList.toggle('active',i.getAttribute('href')==='#'+current));frame=null}window.addEventListener('scroll',()=>{if(!frame)frame=requestAnimationFrame(updateActive)},{passive:true});
     document.querySelectorAll('.archive-card,.snav-item').forEach(a=>a.addEventListener('click',()=>playTone('open')));
     let surpriseTimeout=null;
+    let slotTimers=[];
+    let slotRunning=false;
+
+    function clearSlotTimers(){
+      slotTimers.forEach(timer=>clearTimeout(timer));
+      slotTimers=[];
+    }
+
     document.getElementById('surpriseBtn').addEventListener('click',()=>{
+      if(slotRunning) return;
+
       const cards=[...document.querySelectorAll('#factGrid .fact-card')];
+      const titles=cards.map(card=>card.querySelector('.fact-title').textContent.trim());
+      const slot=document.getElementById('factSlot');
+      const slotText=document.getElementById('factSlotText');
+      const slotStatus=document.getElementById('factSlotStatus');
+      const button=document.getElementById('surpriseBtn');
+
+      clearSlotTimers();
       if(surpriseTimeout) clearTimeout(surpriseTimeout);
-      cards.forEach(c=>c.classList.remove('highlighted'));
-      const pick=cards[Math.floor(Math.random()*cards.length)];
-      pick.classList.add('highlighted');
-      pick.scrollIntoView({behavior:'smooth',block:'center'});
+      cards.forEach(card=>card.classList.remove('highlighted'));
+
+      slotRunning=true;
+      button.disabled=true;
+      button.textContent='🎰 Spinning...';
+      slot.classList.add('active','spinning');
+      slotStatus.textContent='Scanning archive files';
       playTone('fact');
-      surpriseTimeout=setTimeout(()=>{
-        pick.classList.remove('highlighted');
-        surpriseTimeout=null;
-      },2600);
+
+      const winnerIndex=Math.floor(Math.random()*cards.length);
+      const winner=cards[winnerIndex];
+
+      let step=0;
+      const totalSteps=25;
+      let currentIndex=Math.floor(Math.random()*titles.length);
+
+      function spinStep(){
+        currentIndex=(currentIndex+1+Math.floor(Math.random()*3))%titles.length;
+        slotText.textContent=titles[currentIndex];
+        step++;
+
+        if(soundEnabled && step%3===0) playTone('open');
+
+        if(step<totalSteps){
+          const progress=step/totalSteps;
+          const delay=55+Math.pow(progress,2.6)*330;
+          slotTimers.push(setTimeout(spinStep,delay));
+          return;
+        }
+
+        slot.classList.remove('spinning');
+        slotText.textContent=titles[winnerIndex];
+        slotStatus.textContent='File selected';
+        winner.classList.add('highlighted');
+        button.textContent='🎰 Spin Again';
+        button.disabled=false;
+        slotRunning=false;
+        playTone('fact');
+
+        slotTimers.push(setTimeout(()=>{
+          winner.scrollIntoView({behavior:'smooth',block:'center'});
+        },420));
+
+        surpriseTimeout=setTimeout(()=>{
+          winner.classList.remove('highlighted');
+          surpriseTimeout=null;
+        },4200);
+      }
+
+      spinStep();
     });
+
     document.getElementById('soundToggle').addEventListener('click',async function(){soundEnabled=!soundEnabled;this.setAttribute('aria-pressed',String(soundEnabled));this.textContent=soundEnabled?'🔊 Archive Sound On':'🔇 Archive Sound Off';if(soundEnabled){try{audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')await audioContext.resume();playTone()}catch(e){soundEnabled=false;this.setAttribute('aria-pressed','false');this.textContent='🔇 Archive Sound Off'}}});
     const search=document.getElementById('glossarySearch'),items=[...document.querySelectorAll('#glossaryGrid .glossary-item')],empty=document.getElementById('glossaryEmpty');search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();let visible=0;items.forEach(i=>{const match=i.textContent.toLowerCase().includes(q);i.hidden=!match;if(match)visible++});empty.style.display=visible?'none':'block'});
     const p=document.getElementById('heroParticles'),colors=['#ff6baa','#c66bff','#00e8ff','#fbbf24','#84cc16','#38bdf8'];for(let i=0;i<30;i++){const s=document.createElement('span');s.className='hero-particle';s.style.left=Math.random()*100+'%';s.style.background=colors[Math.floor(Math.random()*colors.length)];s.style.color=s.style.background;s.style.animationDuration=Math.random()*12+9+'s';s.style.animationDelay=Math.random()*9+'s';p.appendChild(s)}updateActive();
