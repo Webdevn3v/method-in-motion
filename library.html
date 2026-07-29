@@ -159,6 +159,67 @@
       .timeline-info{min-height:225px}
     }
 
+
+    /* FINAL: full-width horizontal tracks */
+    .timeline{
+      --timeline-track-width:100%;
+      align-items:stretch;
+    }
+    .timeline::before{
+      width:var(--timeline-track-width);
+      right:auto;
+      min-width:100%;
+    }
+
+    /* Internet history: horizontal, not a long vertical list */
+    .step-list{
+      display:flex;
+      gap:16px;
+      overflow-x:auto;
+      padding:26px 4px 20px;
+      scroll-snap-type:x mandatory;
+      scrollbar-width:thin;
+      scrollbar-color:rgba(0,232,255,.45) rgba(255,255,255,.05);
+    }
+    .step-card{
+      position:relative;
+      flex:0 0 min(360px,82vw);
+      min-height:190px;
+      display:block;
+      padding:22px;
+      scroll-snap-align:center;
+      cursor:pointer;
+      outline:none;
+      transform:none;
+      transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease;
+    }
+    .step-card:hover,
+    .step-card:focus-visible,
+    .step-card.active{
+      transform:translateY(-5px);
+      border-color:var(--accent);
+      box-shadow:0 18px 45px rgba(0,0,0,.34);
+    }
+    .step-year{
+      display:block;
+      margin-bottom:12px;
+      font-size:.72rem;
+    }
+    .step-title{font-size:1.02rem}
+    .step-desc{margin-top:8px}
+    .step-list-hint{
+      margin-top:10px;
+      color:var(--muted);
+      font-family:var(--display);
+      font-size:.46rem;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+    }
+
+    @media(max-width:650px){
+      .step-card{flex-basis:86vw}
+    }
+
     @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important;scroll-behavior:auto!important}}
   </style>
 </head>
@@ -239,7 +300,7 @@
     </div></div></section>
     <section class="library-section" id="internet"><div class="inner"><div class="section-head"><div><div class="section-label">History of the Internet</div><h2 class="content-title">The network that connected everything.</h2></div><p class="content-desc">The internet is the network. The web is one way of sharing linked information across it.</p></div><div class="step-list">
       <article class="step-card" style="--accent:#f472b6"><div class="step-year">1969</div><div><h3 class="step-title">ARPANET Connects Four Sites</h3><p class="step-desc">Researchers connect computers at several universities.</p></div></article><article class="step-card" style="--accent:#a855f7"><div class="step-year">1971</div><div><h3 class="step-title">Network Email Appears</h3><p class="step-desc">Ray Tomlinson sends messages between computers and uses the @ symbol.</p></div></article><article class="step-card" style="--accent:#00f5d4"><div class="step-year">1983</div><div><h3 class="step-title">TCP/IP Becomes the Standard</h3><p class="step-desc">Networks adopt shared communication rules central to the internet.</p></div></article><article class="step-card" style="--accent:#fbbf24"><div class="step-year">1989</div><div><h3 class="step-title">The World Wide Web Is Proposed</h3><p class="step-desc">Tim Berners-Lee proposes linked documents accessed over the internet.</p></div></article><article class="step-card" style="--accent:#84cc16"><div class="step-year">1993</div><div><h3 class="step-title">Graphical Browsers Spread</h3><p class="step-desc">Browsers such as Mosaic make websites easier to navigate.</p></div></article><article class="step-card" style="--accent:#38bdf8"><div class="step-year">1998</div><div><h3 class="step-title">Google Launches</h3><p class="step-desc">A search engine uses links between pages as a ranking signal.</p></div></article><article class="step-card" style="--accent:#f472b6"><div class="step-year">2000s</div><div><h3 class="step-title">Social Platforms Grow</h3><p class="step-desc">People increasingly create, share, comment, stream, and collaborate.</p></div></article><article class="step-card" style="--accent:#a855f7"><div class="step-year">Today</div><div><h3 class="step-title">The AI-Connected Web</h3><p class="step-desc">Creation and software increasingly combine human input with machine-generated output.</p></div></article>
-    </div></div></section>
+    </div><p class="step-list-hint">Scroll sideways · click a moment to focus it</p></div></section>
     <section class="library-section" id="pioneers"><div class="inner"><div class="section-head"><div><div class="section-label">Tech Pioneers</div><h2 class="content-title">The people behind the breakthroughs.</h2></div><p class="content-desc">Every system began with people asking questions, testing ideas, and building what did not exist yet.</p></div><div class="pioneer-grid">
       <article class="pioneer-card" style="--accent:#f472b6"><span class="pioneer-era">1840s · Mathematics</span><h3 class="pioneer-name">Ada Lovelace</h3><div class="pioneer-role">Early computing visionary</div><p class="pioneer-fact">Described an algorithm for the Analytical Engine and imagined broader uses for computing machines.</p></article><article class="pioneer-card" style="--accent:#00f5d4"><span class="pioneer-era">1930s · Computer Science</span><h3 class="pioneer-name">Alan Turing</h3><div class="pioneer-role">Foundational computer scientist</div><p class="pioneer-fact">Developed influential ideas about computation and played a major role in wartime codebreaking.</p></article><article class="pioneer-card" style="--accent:#a855f7"><span class="pioneer-era">1940s · Programming</span><h3 class="pioneer-name">Grace Hopper</h3><div class="pioneer-role">Compiler pioneer</div><p class="pioneer-fact">Helped create early compilers and promoted languages that were easier for humans to read.</p></article><article class="pioneer-card" style="--accent:#fbbf24"><span class="pioneer-era">Spaceflight · Mathematics</span><h3 class="pioneer-name">Katherine Johnson</h3><div class="pioneer-role">NASA mathematician</div><p class="pioneer-fact">Calculated flight paths and orbital trajectories for major space missions.</p></article><article class="pioneer-card" style="--accent:#84cc16"><span class="pioneer-era">1970s · Personal Computing</span><h3 class="pioneer-name">Steve Wozniak</h3><div class="pioneer-role">Computer engineer</div><p class="pioneer-fact">Designed the Apple I and Apple II, helping make personal computers practical.</p></article><article class="pioneer-card" style="--accent:#38bdf8"><span class="pioneer-era">1989 · Web</span><h3 class="pioneer-name">Tim Berners-Lee</h3><div class="pioneer-role">Inventor of the World Wide Web</div><p class="pioneer-fact">Created the core ideas behind URLs, HTTP, HTML, and linked web pages.</p></article><article class="pioneer-card" style="--accent:#ff6baa"><span class="pioneer-era">1990s · Search</span><h3 class="pioneer-name">Larry Page & Sergey Brin</h3><div class="pioneer-role">Google co-founders</div><p class="pioneer-fact">Built a search system that used links between pages as a major ranking signal.</p></article><article class="pioneer-card" style="--accent:#c66bff"><span class="pioneer-era">Modern AI · Research</span><h3 class="pioneer-name">Geoffrey Hinton</h3><div class="pioneer-role">Neural-network researcher</div><p class="pioneer-fact">Helped advance deep-learning methods used in modern artificial intelligence.</p></article><article class="pioneer-card" style="--accent:#00e8ff"><span class="pioneer-era">Every Era · Collaboration</span><h3 class="pioneer-name">Millions of Builders</h3><div class="pioneer-role">Engineers, designers, researchers, and users</div><p class="pioneer-fact">The digital world grew through collaboration across countries, disciplines, companies, and open-source communities.</p></article>
     </div></div></section>
@@ -451,11 +512,19 @@
 
     document.getElementById('soundToggle').addEventListener('click',async function(){soundEnabled=!soundEnabled;this.setAttribute('aria-pressed',String(soundEnabled));this.textContent=soundEnabled?'🔊 Archive Sound On':'🔇 Archive Sound Off';if(soundEnabled){try{audioContext=audioContext||new(window.AudioContext||window.webkitAudioContext)();if(audioContext.state==='suspended')await audioContext.resume();playTone()}catch(e){soundEnabled=false;this.setAttribute('aria-pressed','false');this.textContent='🔇 Archive Sound Off'}}});
     const search=document.getElementById('glossarySearch'),items=[...document.querySelectorAll('#glossaryGrid .glossary-item')],empty=document.getElementById('glossaryEmpty');search.addEventListener('input',()=>{const q=search.value.trim().toLowerCase();let visible=0;items.forEach(i=>{const match=i.textContent.toLowerCase().includes(q);i.hidden=!match;if(match)visible++});empty.style.display=visible?'none':'block'});
+    const timeline=document.querySelector('.timeline');
     const timelineItems=[...document.querySelectorAll('.timeline-item')];
+
+    function syncTimelineTrack(){
+      if(!timeline)return;
+      timeline.style.setProperty('--timeline-track-width',timeline.scrollWidth+'px');
+    }
+
     timelineItems.forEach((item,index)=>{
       item.setAttribute('tabindex','0');
       item.setAttribute('role','button');
-      item.setAttribute('aria-pressed','false');
+      item.setAttribute('aria-pressed',String(index===0));
+      item.classList.toggle('active',index===0);
 
       function activateTimelineItem(){
         timelineItems.forEach(other=>{
@@ -464,6 +533,7 @@
           other.setAttribute('aria-pressed',String(active));
         });
         item.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+        requestAnimationFrame(syncTimelineTrack);
       }
 
       item.addEventListener('click',activateTimelineItem);
@@ -473,10 +543,35 @@
           activateTimelineItem();
         }
       });
-
-      if(index===0)item.classList.add('active');
-      if(index===0)item.setAttribute('aria-pressed','true');
     });
+
+    const internetSteps=[...document.querySelectorAll('.step-card')];
+    internetSteps.forEach((item,index)=>{
+      item.setAttribute('tabindex','0');
+      item.setAttribute('role','button');
+      item.setAttribute('aria-pressed',String(index===0));
+      item.classList.toggle('active',index===0);
+
+      function activateInternetStep(){
+        internetSteps.forEach(other=>{
+          const active=other===item;
+          other.classList.toggle('active',active);
+          other.setAttribute('aria-pressed',String(active));
+        });
+        item.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+      }
+
+      item.addEventListener('click',activateInternetStep);
+      item.addEventListener('keydown',event=>{
+        if(event.key==='Enter'||event.key===' '){
+          event.preventDefault();
+          activateInternetStep();
+        }
+      });
+    });
+
+    window.addEventListener('resize',syncTimelineTrack);
+    requestAnimationFrame(syncTimelineTrack);
 
     const p=document.getElementById('heroParticles'),colors=['#ff6baa','#c66bff','#00e8ff','#fbbf24','#84cc16','#38bdf8'];for(let i=0;i<30;i++){const s=document.createElement('span');s.className='hero-particle';s.style.left=Math.random()*100+'%';s.style.background=colors[Math.floor(Math.random()*colors.length)];s.style.color=s.style.background;s.style.animationDuration=Math.random()*12+9+'s';s.style.animationDelay=Math.random()*9+'s';p.appendChild(s)}updateActive();
   </script>
