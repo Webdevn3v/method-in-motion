@@ -176,7 +176,7 @@ async function readUserProfile(uid) {
   }
 }
 
-function redirectToDashboard(delay = 1100) {
+function redirectToDashboard(delay = 1100 {
   window.setTimeout(() => {
     window.location.assign("dashboard.html");
   }, delay);
