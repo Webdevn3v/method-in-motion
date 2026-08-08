@@ -84,6 +84,7 @@ const SITE_FEATURES = {
   brokenSyntax: "explorer",
   tagWall: "explorer",
   backgroundCreator: "explorer"
+  library: "explorer",
 };
 
 const TIER_RANK = {
