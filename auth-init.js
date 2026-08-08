@@ -27,29 +27,8 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// ─── SHARED CHARACTER ACCESS SYSTEM ─────────────────────────────────────────
-// One source of truth for which tier unlocks which character's lessons/game/
-// cheat sheet. Every character page should call window.mimHasAccess(charId,
-// tier, kind, lessonNum) instead of writing its own tier-comparison logic.
-//
-// kind is 'lessons', 'game', 'cheat', or 'icebreaker'.
-// `lessons` is normally a flat tier string (same tier unlocks every lesson),
-// but can instead be an object keyed by lesson number when a character has
-// per-lesson gating (currently only Zen: Lesson 1 free, Lessons 2-4 Sparks).
-// Pass lessonNum when checking a specific lesson on a per-lesson character.
-//
-// Cheat sheet tier = the tier of the DEEPEST lesson content it summarizes,
-// not a blanket rule — e.g. Zen's cheat sheet covers Lessons 1-4, and since
-// Lessons 2-4 are Sparks, the cheat sheet is Sparks even though Lesson 1
-// itself is free.
-//
-// Icebreaker tier normally matches the character's own base tier (their
-// `lessons` tier), with one confirmed exception: Zen's icebreaker (Memory
-// Matrix) is Explorer, mirroring the same carve-out already used for
-// Byte's game. Byte's icebreaker (Pattern Match) is NOT carved out the
-// same way — it stays locked to Byte's own Coders tier.
 const CHARACTER_ACCESS = {
-  zen:  {
+  zen: {
     lessons: { 1: "explorer", 2: "sparks", 3: "sparks", 4: "sparks" },
     game: "sparks",
     cheat: "sparks",
@@ -87,10 +66,6 @@ const CHARACTER_ACCESS = {
   }
 };
 
-// Free/paid gating for content that isn't scoped to a single character —
-// Comics, Broken Syntax, Tag Wall, the background creator, etc. Keeps this
-// logic out of dashboard.html/games.html/index.html so every page reads
-// from the same source instead of hardcoding its own tier checks.
 const SITE_FEATURES = {
   comics: "explorer",
   brokenSyntax: "explorer",
@@ -115,8 +90,6 @@ function mimHasAccess(charId, tier, kind, lessonNum) {
     if (lessonNum != null) {
       required = required[lessonNum];
     } else {
-      // No specific lesson requested — default to the most restrictive
-      // tier among this character's lessons so nothing leaks unlocked.
       required = Object.values(required).reduce(
         (highest, t) => (
           TIER_RANK[t] > TIER_RANK[highest] ? t : highest
@@ -155,8 +128,6 @@ window.mimCharacterAccess = CHARACTER_ACCESS;
 window.mimSiteFeatures = SITE_FEATURES;
 window.mimHasAccess = mimHasAccess;
 window.mimHasFeatureAccess = mimHasFeatureAccess;
-
-// ─────────────────────────────────────────────────────────────────────────────
 
 const authModal = document.getElementById("auth-modal");
 let authActionInProgress = false;
@@ -753,6 +724,5 @@ document
     }
   );
 
-// Keep the page's existing inline openModal calls working.
 window.openAuthModal = openAuthModal;
 window.closeAuthModal = closeAuthModal;
