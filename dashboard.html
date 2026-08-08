@@ -34,7 +34,6 @@ a{text-decoration:none;color:inherit}
 .amb3{width:400px;height:400px;bottom:10%;left:20%;background:radial-gradient(circle,rgba(0,245,212,.05),transparent);--dx:25px;--dy:-35px;animation-duration:16s;animation-delay:6s}
 .star{position:absolute;border-radius:50%;background:#fff;animation:twinkle ease-in-out infinite}
 @keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.9}}
-
 nav{position:sticky;top:0;z-index:100;padding:16px 48px;display:flex;align-items:center;justify-content:space-between;background:rgba(5,5,8,.9);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);gap:16px}
 .nav-logo{display:flex;align-items:center;gap:10px;font-family:var(--display);font-size:.75rem;letter-spacing:.12em;flex-shrink:0}
 .nav-logo-mark{width:28px;height:28px;background:var(--grad);border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:700;color:#000}
@@ -64,7 +63,6 @@ nav{position:sticky;top:0;z-index:100;padding:16px 48px;display:flex;align-items
 .mobile-drawer.open{right:0}
 .mobile-drawer a{font-family:var(--display);font-size:.62rem;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.62);padding:12px 6px;border-bottom:1px solid rgba(255,255,255,.06)}
 .mobile-drawer-label{font-family:var(--display);font-size:.48rem;letter-spacing:.18em;text-transform:uppercase;color:var(--pink);padding:18px 6px 6px}
-
 #loading{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:80vh;gap:16px;color:var(--muted);font-family:var(--display);font-size:.6rem;letter-spacing:.2em;text-transform:uppercase;position:relative;z-index:10}
 .spinner{width:32px;height:32px;border:2px solid rgba(255,255,255,.06);border-top-color:var(--cyan);border-radius:50%;animation:spin .8s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
@@ -142,7 +140,7 @@ nav{position:sticky;top:0;z-index:100;padding:16px 48px;display:flex;align-items
 .wb-tag{font-family:var(--display);font-size:.48rem;letter-spacing:.12em;text-transform:uppercase;padding:4px 10px;border-radius:4px;border:1px solid;white-space:nowrap;flex-shrink:0}
 .wb-tag.available{border-color:var(--cyan);color:var(--cyan);background:rgba(0,245,212,.06)}
 .wb-tag.soon{border-color:var(--border-md);color:var(--muted)}
-.stats-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:40px;max-width:1300px;margin-left:auto;margin-right:auto;padding:0 48px}
+.stats-strip{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:40px;max-width:1300px;margin-left:auto;margin-right:auto;padding:0 48px}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:20px 24px}
 .stat-val{font-family:var(--display);font-size:1.6rem;font-weight:900;line-height:1;margin-bottom:4px}
 .stat-label{font-size:.72rem;color:var(--muted);letter-spacing:.06em}
@@ -156,13 +154,12 @@ footer a{color:var(--cyan)}
 <body>
 <div class="dash-bg-overlay"></div>
 <div class="ambient" id="ambient"><div class="ambient-orb amb1"></div><div class="ambient-orb amb2"></div><div class="ambient-orb amb3"></div></div>
-
 <nav>
 <a href="index.html" class="nav-logo"><div class="nav-logo-mark">&gt;</div>method in motion</a>
 <ul class="nav-links">
 <li class="nav-drop" id="exploreDrop">
-<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')">Explore <span class="nav-drop-arrow">▾</span></button>
-<div class="nav-drop-menu">
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('exploreDrop')" aria-expanded="false" aria-controls="exploreDropMenu">MiM U <span class="nav-drop-arrow">▾</span></button>
+<div class="nav-drop-menu" id="exploreDropMenu">
 <a href="pdfs.html" class="nav-drop-item">PDFs</a>
 <a href="library.html" class="nav-drop-item">Library</a>
 <a href="characters.html" class="nav-drop-item">Characters</a>
@@ -170,8 +167,8 @@ footer a{color:var(--cyan)}
 </div>
 </li>
 <li class="nav-drop" id="undergroundDrop">
-<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')">The Underground <span class="nav-drop-arrow">▾</span></button>
-<div class="nav-drop-menu">
+<button class="nav-drop-trigger" type="button" onclick="toggleNavDrop('undergroundDrop')" aria-expanded="false" aria-controls="undergroundDropMenu">The Underground <span class="nav-drop-arrow">▾</span></button>
+<div class="nav-drop-menu" id="undergroundDropMenu">
 <a href="games.html" class="nav-drop-item">Games</a>
 <a href="tag-wall.html" class="nav-drop-item">Tag Wall</a>
 <a href="broken-syntax.html" class="nav-drop-item">Broken Syntax</a>
@@ -186,25 +183,21 @@ footer a{color:var(--cyan)}
 <button class="nav-hamburger" id="nav-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
 </div>
 </nav>
-
 <div class="mobile-drawer-overlay" id="mobile-drawer-overlay"></div>
 <div class="mobile-drawer" id="mobile-drawer">
-<div class="mobile-drawer-label">Explore</div>
+<div class="mobile-drawer-label">MiM U</div>
 <a href="pdfs.html">PDFs</a><a href="library.html">Library</a><a href="characters.html">Characters</a><a href="about.html">About</a>
 <div class="mobile-drawer-label">The Underground</div>
 <a href="games.html">Games</a><a href="tag-wall.html">Tag Wall</a><a href="broken-syntax.html">Broken Syntax</a><a href="mim-tv.html">MiM TV</a><a href="comic.html">Comics</a>
 <a href="dashboard.html">Dashboard</a>
 </div>
-
 <div id="loading"><div class="spinner"></div><span>Loading your universe...</span></div>
-
 <div id="guest-state" style="display:none;flex-direction:column;align-items:center;justify-content:center;min-height:70vh;text-align:center;padding:2rem;position:relative;z-index:10">
 <div style="font-family:'Orbitron',monospace;font-size:.56rem;letter-spacing:.28em;text-transform:uppercase;color:#00f5d4;margin-bottom:16px">Method in Motion</div>
 <h2 style="font-family:'Syne',sans-serif;font-size:clamp(1.6rem,4vw,2.4rem);font-weight:800;margin-bottom:14px">Create a free account to unlock your dashboard.</h2>
 <p style="font-size:.92rem;color:#5a6080;max-width:420px;line-height:1.8;margin-bottom:28px">Your worlds, lessons, and progress live here once you're signed in. No card needed to get started.</p>
 <a href="index.html" style="font-family:'Orbitron',monospace;font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:14px 32px;background:linear-gradient(135deg,#ff6baa,#c66bff);color:#000;font-weight:700;border-radius:100px;display:inline-block">Create Free Account →</a>
 </div>
-
 <div id="dashboard">
 <div class="dash-hero"><div>
 <div class="dash-greeting">Welcome back</div>
@@ -213,24 +206,19 @@ footer a{color:var(--cyan)}
 <div class="tier-pill free" id="tier-pill"><span class="tier-pill-dot"></span><span id="tier-label">Explorer</span></div>
 <div class="universe-status"><span class="dot"></span>Universe Online</div>
 </div></div>
-
 <div class="upgrade-strip" id="upgrade-strip">
 <p><strong>Unlock more worlds.</strong> Upgrade your plan to access more character lessons and games.</p>
 <a href="membership.html">Upgrade Plan →</a>
 </div>
-
 <div class="stats-strip">
 <div class="stat-card"><div class="stat-val" id="stat-worlds" style="background:var(--grad);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text">0</div><div class="stat-label">Worlds Unlocked</div></div>
 <div class="stat-card"><div class="stat-val" id="stat-lessons" style="color:var(--cyan)">0</div><div class="stat-label">Lessons Available</div></div>
 <div class="stat-card"><div class="stat-val" id="stat-games" style="color:var(--purple)">0</div><div class="stat-label">Games Unlocked</div></div>
 </div>
-
 <div class="dash-section"><div class="section-header"><div class="section-title">Character Worlds</div><a href="games.html" class="section-link">Game Universe →</a></div><div class="world-grid" id="world-grid"></div></div>
-<div class="dash-section"><div class="section-header"><div class="section-title">Think Like a Programmer — Cheat Sheets</div><a href="pdfs.html" class="section-link">All PDFs →</a></div><div class="pdf-vol-grid" id="pdf-vol-grid"></div></div>
+<div class="dash-section" id="pdf-section"><div class="section-header"><div class="section-title">Think Like a Programmer — Cheat Sheets</div><a href="pdfs.html" class="section-link">All PDFs →</a></div><div class="pdf-vol-grid" id="pdf-vol-grid"></div></div>
 </div>
-
 <footer>Method in Motion &nbsp;·&nbsp; <a href="index.html">Home</a> &nbsp;·&nbsp; <a href="membership.html">Membership</a> &nbsp;·&nbsp; "Create, Don't Consume."</footer>
-
 <script>
 (function(){
 const ambient=document.getElementById('ambient');
@@ -245,17 +233,31 @@ ambient.appendChild(s);
 }
 })();
 function toggleNavDrop(id){
-document.querySelectorAll('.nav-drop').forEach(d=>{if(d.id!==id)d.classList.remove('open')});
-document.getElementById(id)?.classList.toggle('open');
+document.querySelectorAll('.nav-drop').forEach(d=>{
+if(d.id!==id){
+d.classList.remove('open');
+d.querySelector('.nav-drop-trigger')?.setAttribute('aria-expanded','false');
 }
-document.addEventListener('click',e=>{if(!e.target.closest('.nav-drop'))document.querySelectorAll('.nav-drop').forEach(d=>d.classList.remove('open'))});
+});
+const drop=document.getElementById(id);
+if(!drop)return;
+drop.classList.toggle('open');
+drop.querySelector('.nav-drop-trigger')?.setAttribute('aria-expanded',drop.classList.contains('open')?'true':'false');
+}
+document.addEventListener('click',e=>{
+if(!e.target.closest('.nav-drop')){
+document.querySelectorAll('.nav-drop').forEach(d=>{
+d.classList.remove('open');
+d.querySelector('.nav-drop-trigger')?.setAttribute('aria-expanded','false');
+});
+}
+});
 </script>
-
+<script type="module" src="auth-init.js"></script>
 <script type="module">
 import{initializeApp}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import{getAuth,onAuthStateChanged,signOut}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js';
 import{getFirestore,doc,getDoc}from'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
-
 const firebaseConfig={
 apiKey:"AIzaSyCq3ag8O8i2Z7CZdcFCwsPnZu73e4ZdTPQ",
 authDomain:"method-in-motion.firebaseapp.com",
@@ -267,7 +269,6 @@ appId:"1:1067937974009:web:5b21e6abe84e0b28234428"
 const app=initializeApp(firebaseConfig);
 const auth=getAuth(app);
 const db=getFirestore(app);
-
 const CHARS=[
 {id:'zen',name:'Zen',role:'Creative Coder',accent:'#f472b6',deep:'#0e0510',glowColor:'rgba(244,114,182,.35)',image:'zen-entrance.png',world:'zen.html',game:'zen-game.html',gameName:'Coding Studio'},
 {id:'byte',name:'Byte',role:'Data Tracker',accent:'#a855f7',deep:'#080514',glowColor:'rgba(168,85,247,.35)',image:'byte-entrance.png',world:'byte.html',game:'byte-game.html',gameName:'Glitch Hunt'},
@@ -276,35 +277,55 @@ const CHARS=[
 {id:'bug',name:'Bug',role:'Glitch Hunter',accent:'#84cc16',deep:'#060a00',glowColor:'rgba(132,204,22,.3)',image:'bug-entrance.png',world:'bug.html',game:'bug-game.html',gameName:'Chaos Code'},
 {id:'echo',name:'Echo',role:'Signal Sender',accent:'#38bdf8',deep:'#030d12',glowColor:'rgba(56,189,248,.3)',image:'echo-entrance.png',world:'echo.html',game:'echo-game.html',gameName:'Signal Lab'}
 ];
-
-
 const PDF_VOLS=[
 {tag:'Vol. 1 · Foundations',title:'Think Like a Programmer',sub:'Problem-solving, pattern recognition, sequencing, and the coder mindset.',cover:'vol.1-think-cover.png',file:'Vol.1_Think_Like_a_Programmer.pdf'},
 {tag:'Vol. 2 · Systems & Logic',title:'How Computers Think',sub:'Systems, input & output, conditions, and loops — how computers process the world.',cover:'vol.2-think-cover.png',file:'Vol.2_Think_Like_a_Programmer.pdf'},
 {tag:'Vol. 3 · The Big Picture',title:'Building Digital Worlds',sub:'Websites, apps, games, digital design, and emerging tech for young creators.',cover:'vol.3-think-cover.png',file:'Vol.3_Think_Like_a_Programmer.pdf'}
 ];
-
-const TIER_CFG={
-free:{label:'Explorer',cls:'free',charactersUnlocked:['zen'],gamesUnlocked:['zen','byte']},
-explorer:{label:'Explorer',cls:'free',charactersUnlocked:['zen'],gamesUnlocked:['zen','byte']},
-sparks:{label:'Sparks',cls:'sparks',charactersUnlocked:['zen','bug','echo'],gamesUnlocked:['zen','byte','bug','echo']},
-coders:{label:'Coders',cls:'coders',charactersUnlocked:'all',gamesUnlocked:'all'}
+const TIER_DISPLAY={
+free:{label:'Explorer',cls:'free'},
+explorer:{label:'Explorer',cls:'free'},
+sparks:{label:'Sparks',cls:'sparks'},
+coders:{label:'Coders',cls:'coders'}
 };
-
-function getCfg(tier){return TIER_CFG[tier]||TIER_CFG.free}
-function canAccessCharacter(id,tier){const c=getCfg(tier);return c.charactersUnlocked==='all'||c.charactersUnlocked.includes(id)}
-function canPlayGame(id,tier){const c=getCfg(tier);return c.gamesUnlocked==='all'||c.gamesUnlocked.includes(id)}
-function getStatus(c,tier){if(canAccessCharacter(c.id,tier))return'unlocked';if(canPlayGame(c.id,tier))return'partial';return'locked'}
+function getTierDisplay(tier){return TIER_DISPLAY[tier]||TIER_DISPLAY.free}
+function hasAccess(id,tier,kind,lessonNum){
+if(typeof window.mimHasAccess!=='function'){
+console.error('Shared access system unavailable: window.mimHasAccess is not defined.');
+return false;
+}
+return Boolean(window.mimHasAccess(id,tier,kind,lessonNum));
+}
+function getLessonCount(id,tier){
+if(id==='zen'){
+let count=0;
+for(let lesson=1;lesson<=4;lesson++)if(hasAccess(id,tier,'lessons',lesson))count++;
+return count;
+}
+return hasAccess(id,tier,'lessons')?4:0;
+}
+function canAccessCharacter(id,tier){return getLessonCount(id,tier)>0}
+function canPlayGame(id,tier){return hasAccess(id,tier,'game')}
+function getStatus(c,tier){
+const lessonCount=getLessonCount(c.id,tier);
+const gameAccess=canPlayGame(c.id,tier);
+if(lessonCount===4)return'unlocked';
+if(lessonCount>0||gameAccess)return'partial';
+return'locked';
+}
 function getStatusLabel(c,tier){
-if(canAccessCharacter(c.id,tier))return'All 4 lessons unlocked';
-if(canPlayGame(c.id,tier))return c.id==='byte'?'Free game · lessons need Coders':'Game unlocked';
+const lessonCount=getLessonCount(c.id,tier);
+const gameAccess=canPlayGame(c.id,tier);
+if(c.id==='zen'&&lessonCount>0)return`${lessonCount} of 4 lessons unlocked`;
+if(lessonCount===4)return'All 4 lessons unlocked';
+if(gameAccess)return c.id==='byte'?'Free game · lessons need Coders':'Game unlocked';
 return'Upgrade to unlock';
 }
-
 function buildWorldGrid(tier){
 const grid=document.getElementById('world-grid');
 grid.innerHTML=CHARS.map(c=>{
-const characterAccess=canAccessCharacter(c.id,tier);
+const lessonCount=getLessonCount(c.id,tier);
+const characterAccess=lessonCount>0;
 const gameAccess=canPlayGame(c.id,tier);
 const status=getStatus(c,tier);
 const freeGame=c.id==='byte';
@@ -314,25 +335,26 @@ const lessonButton=characterAccess
 const gameButton=gameAccess
 ?`<a href="${c.game}" class="wc-btn wc-btn-game">${freeGame?'Play Free →':'Play Game →'}</a>`
 :`<a href="membership.html" class="wc-btn wc-btn-lesson" style="color:var(--muted);border-color:rgba(255,255,255,.06)">Unlock Game</a>`;
-return`<div class="world-card ${characterAccess?'':'locked'}" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor}">
+const cardLocked=!characterAccess&&!gameAccess;
+return`<div class="world-card ${cardLocked?'locked':''}" style="--wc-accent:${c.accent};--wc-deep:${c.deep};--wc-glow-color:${c.glowColor}">
 <div class="wc-image" style="background-image:url('${c.image}')"><div class="wc-glow"></div>${freeGame?'<div class="wc-free-badge">Free Game</div>':''}</div>
 <div class="wc-body"><div class="wc-char-label">${c.role}</div><div class="wc-name">${c.name}</div><div class="wc-role">${c.gameName}</div>
 <div class="wc-status status-${status}"><div class="wc-status-dot"></div><div class="wc-status-text">${getStatusLabel(c,tier)}</div></div>
 <div class="wc-actions">${lessonButton}${gameButton}</div></div></div>`;
 }).join('');
 }
-
 function buildPdfVolGrid(tier){
-const isCoders=tier==='coders';
-const isSparks=tier==='sparks';
-document.getElementById('pdf-vol-grid').innerHTML=PDF_VOLS.map((v,index)=>{
-const unlocked=isCoders||(isSparks&&index===0);
-const cardClass=unlocked?'pdf-vol-card unlocked':'pdf-vol-card';
-const action=unlocked
-?`<a href="${v.file}" class="pdf-vol-download" download>Download →</a>`
-:`<a href="membership.html" class="pdf-vol-download">Buy / Upgrade →</a>`;
-return`<div class="${cardClass}"><div class="pdf-vol-cover"><img src="${v.cover}" alt="${v.title}"></div><div class="pdf-vol-body"><span class="pdf-vol-tag">${v.tag}</span><div class="pdf-vol-title">${v.title}</div><div class="pdf-vol-sub">${v.sub}</div>${action}</div></div>`;
-}).join('');
+const section=document.getElementById('pdf-section');
+const grid=document.getElementById('pdf-vol-grid');
+const isExplorer=tier==='free'||tier==='explorer';
+if(isExplorer){
+section.style.display='none';
+grid.innerHTML='';
+return;
+}
+section.style.display='block';
+const visibleVolumes=tier==='sparks'?PDF_VOLS.slice(0,1):tier==='coders'?PDF_VOLS:[];
+grid.innerHTML=visibleVolumes.map(v=>`<div class="pdf-vol-card unlocked"><div class="pdf-vol-cover"><img src="${v.cover}" alt="${v.title}"></div><div class="pdf-vol-body"><span class="pdf-vol-tag">${v.tag}</span><div class="pdf-vol-title">${v.title}</div><div class="pdf-vol-sub">${v.sub}</div><a href="${v.file}" class="pdf-vol-download" download>Download →</a></div></div>`).join('');
 }
 function animateCount(el,target){
 const start=performance.now(),duration=800;
@@ -340,21 +362,26 @@ function tick(now){const p=Math.min((now-start)/duration,1);el.textContent=Math.
 requestAnimationFrame(tick);
 }
 function buildStats(tier){
-const cfg=getCfg(tier);
-const worlds=cfg.charactersUnlocked==='all'?CHARS.length:cfg.charactersUnlocked.length;
-const lessons=worlds*4;
-const games=cfg.gamesUnlocked==='all'?CHARS.length:cfg.gamesUnlocked.length;
+let worlds=0;
+let lessons=0;
+let games=0;
+CHARS.forEach(c=>{
+const lessonCount=getLessonCount(c.id,tier);
+if(lessonCount>0)worlds++;
+lessons+=lessonCount;
+if(canPlayGame(c.id,tier))games++;
+});
 animateCount(document.getElementById('stat-worlds'),worlds);
 animateCount(document.getElementById('stat-lessons'),lessons);
 animateCount(document.getElementById('stat-games'),games);
 }
 function renderDashboard(user,tier){
-const cfg=getCfg(tier);
+const display=getTierDisplay(tier);
 const name=(user&&(user.displayName||(user.email||'').split('@')[0]))||'Coder';
 document.getElementById('nav-username').textContent=name;
 document.getElementById('user-name').textContent=name;
-document.getElementById('tier-pill').className='tier-pill '+cfg.cls;
-document.getElementById('tier-label').textContent=cfg.label;
+document.getElementById('tier-pill').className='tier-pill '+display.cls;
+document.getElementById('tier-label').textContent=display.label;
 document.getElementById('upgrade-strip').style.display=tier==='coders'?'none':'flex';
 buildStats(tier);buildWorldGrid(tier);buildPdfVolGrid(tier);
 document.getElementById('loading').style.display='none';
@@ -366,13 +393,11 @@ document.getElementById('loading').style.display='none';
 document.getElementById('dashboard').style.display='none';
 document.getElementById('guest-state').style.display='flex';
 }
-
 onAuthStateChanged(auth,async user=>{
 if(!user){showGuestState();return}
-let completed=false;
+let realTierResolved=false;
 const safetyTimer=setTimeout(()=>{
-if(completed)return;
-completed=true;
+if(realTierResolved)return;
 renderDashboard(user,'free');
 },6000);
 let tier='free';
@@ -380,19 +405,20 @@ try{
 const snap=await getDoc(doc(db,'users',user.uid));
 if(snap.exists()&&snap.data().tier)tier=String(snap.data().tier).toLowerCase();
 }catch(e){console.error('Dashboard tier lookup failed:',e)}
-if(completed)return;
-completed=true;
+realTierResolved=true;
 clearTimeout(safetyTimer);
 renderDashboard(user,tier);
 });
-
 document.getElementById('logout-btn').addEventListener('click',()=>signOut(auth).then(()=>location.href='index.html'));
-
 const hamburger=document.getElementById('nav-hamburger');
 const drawer=document.getElementById('mobile-drawer');
 const overlay=document.getElementById('mobile-drawer-overlay');
 function toggleMobileDrawer(){
-hamburger.classList.toggle('open');drawer.classList.toggle('open');overlay.classList.toggle('open');
+const opening=!drawer.classList.contains('open');
+hamburger.classList.toggle('open',opening);
+drawer.classList.toggle('open',opening);
+overlay.classList.toggle('open',opening);
+document.body.style.overflow=opening?'hidden':'';
 }
 hamburger.addEventListener('click',toggleMobileDrawer);
 overlay.addEventListener('click',toggleMobileDrawer);
