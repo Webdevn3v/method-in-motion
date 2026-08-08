@@ -32,7 +32,7 @@ const db = getFirestore(app);
 // cheat sheet. Every character page should call window.mimHasAccess(charId,
 // tier, kind, lessonNum) instead of writing its own tier-comparison logic.
 //
-// kind is 'lessons', 'game', or 'cheat'.
+// kind is 'lessons', 'game', 'cheat', or 'icebreaker'.
 // `lessons` is normally a flat tier string (same tier unlocks every lesson),
 // but can instead be an object keyed by lesson number when a character has
 // per-lesson gating (currently only Zen: Lesson 1 free, Lessons 2-4 Sparks).
@@ -42,36 +42,48 @@ const db = getFirestore(app);
 // not a blanket rule — e.g. Zen's cheat sheet covers Lessons 1-4, and since
 // Lessons 2-4 are Sparks, the cheat sheet is Sparks even though Lesson 1
 // itself is free.
+//
+// Icebreaker tier normally matches the character's own base tier (their
+// `lessons` tier), with one confirmed exception: Zen's icebreaker (Memory
+// Matrix) is Explorer, mirroring the same carve-out already used for
+// Byte's game. Byte's icebreaker (Pattern Match) is NOT carved out the
+// same way — it stays locked to Byte's own Coders tier.
 const CHARACTER_ACCESS = {
   zen:  {
     lessons: { 1: "explorer", 2: "sparks", 3: "sparks", 4: "sparks" },
     game: "sparks",
-    cheat: "sparks"
+    cheat: "sparks",
+    icebreaker: "explorer"
   },
   byte: {
     lessons: "coders",
     game: "explorer",
-    cheat: "coders"
+    cheat: "coders",
+    icebreaker: "coders"
   },
   bug: {
     lessons: "sparks",
     game: "sparks",
-    cheat: "sparks"
+    cheat: "sparks",
+    icebreaker: "sparks"
   },
   echo: {
     lessons: "sparks",
     game: "sparks",
-    cheat: "sparks"
+    cheat: "sparks",
+    icebreaker: "sparks"
   },
   loop: {
     lessons: "coders",
     game: "coders",
-    cheat: "coders"
+    cheat: "coders",
+    icebreaker: "coders"
   },
   nova: {
     lessons: "coders",
     game: "coders",
-    cheat: "coders"
+    cheat: "coders",
+    icebreaker: "coders"
   }
 };
 
@@ -83,8 +95,8 @@ const SITE_FEATURES = {
   comics: "explorer",
   brokenSyntax: "explorer",
   tagWall: "explorer",
-  backgroundCreator: "explorer"
-  library: "explorer",
+  backgroundCreator: "explorer",
+  library: "explorer"
 };
 
 const TIER_RANK = {
