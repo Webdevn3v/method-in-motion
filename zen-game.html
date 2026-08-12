@@ -407,7 +407,10 @@ function updateObjects(delta){
     s.x=objectTargetX(o,p);
     s.y=y;
     s.setAlpha(clamp(p*3.4,.2,1));
-    s.setScale(perspective);
+
+    // Size from our intended in-game dimensions, NOT the PNG's native pixel size.
+    // Using setScale() here made large Canva source images explode to huge sizes.
+    s.setDisplaySize(o.baseW * perspective, o.baseH * perspective);
 
     if(!o.hit && p>.77 && p<.94 && o.lane===STATE.lane){
       let success=false;
