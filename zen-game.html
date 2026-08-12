@@ -113,8 +113,8 @@ h1{font-size:clamp(30px,8vw,52px);line-height:.95;margin:0 0 13px}
 <body>
 <main id="shell">
   <video id="cityBg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
-    <source media="(max-width: 600px)" src="assets/games/zen/mobile.zen.pizza.mission.mp4" type="video/mp4">
-    <source src="assets/games/zen/zen.pizza.mission.mp4" type="video/mp4">
+    <source media="(max-width: 600px)" src="assets/games/zen/mobile.zen.pizza.mission.mp4?v=20260812-1545" type="video/mp4">
+    <source src="assets/games/zen/zen.pizza.mission.mp4?v=20260812-1545" type="video/mp4">
   </video>
 
   <div id="gameCanvas"></div>
@@ -186,6 +186,7 @@ h1{font-size:clamp(30px,8vw,52px);line-height:.95;margin:0 0 13px}
 const REQUIRED = ['<', 'h1', '>', '</h1>'];
 const JUNK = ['{', 'CSS', ';', '<p>', 'true', '</div>', ':', '#fff'];
 const ASSET = 'assets/games/zen/';
+const BUILD = '?v=20260812-1545';
 const STATE = {
   running:false, paused:false, lane:0, action:'ride', score:0, lives:3,
   collected:[], speed:.78, elapsed:0, lastSpawn:0, lastObstacle:0, invincibleUntil:0,
@@ -584,11 +585,11 @@ function endGame(){
 class RunScene extends Phaser.Scene{
   constructor(){super('Run')}
   preload(){
-    this.load.image('playerRide',ASSET+'zen-ride.png');
-    this.load.image('playerDuck',ASSET+'zen-duck.png');
-    this.load.image('playerOllie',ASSET+'zen-ollie.png');
-    this.load.image('barricade',ASSET+'zen-jump-barricade.png');
-    this.load.image('beam',ASSET+'zen-duck-beam.png');
+    this.load.image('playerRide',ASSET+'zen-ride.png'+BUILD);
+    this.load.image('playerDuck',ASSET+'zen-duck.png'+BUILD);
+    this.load.image('playerOllie',ASSET+'zen-ollie.png'+BUILD);
+    this.load.image('barricade',ASSET+'zen-jump-barricade.png'+BUILD);
+    this.load.image('beam',ASSET+'zen-duck-beam.png'+BUILD);
   }
   create(){
     sceneRef=this;
