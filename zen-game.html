@@ -30,10 +30,10 @@ button{font:inherit}
 }
 .hud{
   padding:8px 10px;border:1px solid var(--line);border-radius:13px;
-  background:rgba(4,5,14,.72);backdrop-filter:blur(9px);min-width:0;
+  background:rgba(4,5,14,.90);backdrop-filter:blur(10px);min-width:0;
 }
 .label{font-size:8px;letter-spacing:.15em;color:rgba(255,255,255,.5)}
-.value{margin-top:2px;font-weight:900;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.value{margin-top:2px;font-weight:900;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 1px 2px #000,0 0 8px rgba(0,0,0,.85)}
 #score{color:var(--cyan)} #code{color:#c084fc} #lives{color:var(--pink)} #speed{color:#fbbf24}
 
 #controls{
@@ -148,7 +148,7 @@ h1{font-size:clamp(30px,8vw,52px);line-height:.95;margin:0 0 13px}
     <div class="panel">
       <div class="eyebrow">MIM UNDERGROUND // PIZZA MISSION</div>
       <h1>CODE RUSH</h1>
-      <p>Skate Neon City. Switch lanes, jump barricades, duck under beams, and collect the four pieces of an HTML heading tag.</p>
+      <p>Skate Neon City. Switch lanes, jump barricades, duck under beams, and collect the four pieces of an HTML heading tag in order: the opening bracket, the tag name, the closing bracket, and the closing tag. Build <strong>&lt;h1&gt;...&lt;/h1&gt;</strong> to finish the mission.</p>
       <button class="primary" id="startBtn">START PIZZA RUN</button>
     </div>
   </section>
@@ -157,7 +157,7 @@ h1{font-size:clamp(30px,8vw,52px);line-height:.95;margin:0 0 13px}
     <div class="panel">
       <div class="eyebrow">CODE CHECKPOINT</div>
       <h1>BUILD THE TAG</h1>
-      <p>Put the pieces in the correct order. Tap a piece again to move it back.</p>
+      <p>Build the heading tag in order: opening bracket → tag name → closing bracket → closing tag. Tap a piece again to move it back.</p>
       <div id="pieceBank"></div>
       <div id="answer"></div>
       <div id="feedback"></div>
@@ -194,8 +194,16 @@ const REQUIRED = ['<', 'h1', '>', '</h1>'];
 const JUNK = ['{', 'CSS', ';', '<p>', 'true', '</div>', ':', '#fff'];
 const ASSET = 'assets/games/zen/';
 const BUILD = '?v=20260812-1545';
-const HORIZON_Y = 0.42;
-const HORIZON_SCALE = 0.16;
+// Calibrated directly against the supplied 1364x768 desktop and 768x1364 mobile MP4s.
+// The bright vanishing-point light is ~70.2% down desktop and ~64.9% down mobile.
+const HORIZON_Y_DESKTOP = 0.702;
+const HORIZON_Y_MOBILE = 0.649;
+const HORIZON_SCALE = 0.10;
+const LANE_LEFT_X = 0.39;
+const LANE_RIGHT_X = 0.61;
+// Slowed from 3450ms after comparing object approach with the supplied road motion.
+const OBJECT_TRAVEL_MS = 5200;
+const horizonY = () => sceneRef && sceneRef.scale.width < 600 ? HORIZON_Y_MOBILE : HORIZON_Y_DESKTOP;
 const STATE = {
   running:false, paused:false, lane:0, action:'ride', score:0, lives:3,
   collected:[], speed:.78, elapsed:0, lastSpawn:0, lastObstacle:0, invincibleUntil:0,
@@ -215,6 +223,12 @@ let bgCrossfading = false;
 
 const $ = id => document.getElementById(id);
 const clamp = (v,a,b) => Math.max(a, Math.min(b,v));
+const PIECE_LABEL = {
+  '<':'OPEN BRACKET',
+  'h1':'TAG NAME',
+  '>':'CLOSING BRACKET',
+  '</h1>':'CLOSING TAG'
+};
 
 let lastScoreShown = 0, lastCodeShown = 0;
 function updateHud(){
@@ -276,7 +290,7 @@ function fitPlayer(){
 function recalcLayout(){
   if(!sceneRef) return;
   const w=sceneRef.scale.width, h=sceneRef.scale.height;
-  laneXs = [w * 0.39, w * 0.61];
+  laneXs = [w * LANE_LEFT_X, w * LANE_RIGHT_X];
   playerBaseY = h * (w < 600 ? 0.76 : 0.79);
   if(player){
     player.x=laneXs[STATE.lane];
@@ -373,12 +387,12 @@ function makeCodeTexture(scene, value, good){
 }
 
 function spawnCode(scene){
-  const remaining=REQUIRED.filter(v=>!STATE.collected.includes(v));
-  const good=remaining.length>0 && Math.random()>.24;
-  const value=good ? Phaser.Utils.Array.GetRandom(remaining) : Phaser.Utils.Array.GetRandom(JUNK);
+  const nextRequired = REQUIRED[STATE.collected.length];
+  const good = Boolean(nextRequired) && Math.random()>.24;
+  const value = good ? nextRequired : Phaser.Utils.Array.GetRandom(JUNK);
   const lane=Phaser.Math.Between(0,1);
   const key=makeCodeTexture(scene,value,good);
-  spawnTrackObject(scene,{kind:'code',lane,key,value,good,baseW:150,baseH:82,groundOffset:-28});
+  spawnTrackObject(scene,{kind:'code',lane,key,value,good,baseW:220,baseH:120,groundOffset:-34});
 }
 
 function spawnObstacle(scene){
@@ -396,7 +410,7 @@ function spawnObstacle(scene){
 
 function spawnTrackObject(scene,spec){
   const startX=scene.scale.width*.5;
-  const startY=scene.scale.height*HORIZON_Y;
+  const startY=scene.scale.height*horizonY();
   const sprite=scene.add.image(startX,startY,spec.key).setDepth(4).setAlpha(.18);
   sprite.setOrigin(.5,1);
   sprite.setDisplaySize(spec.baseW*HORIZON_SCALE,spec.baseH*HORIZON_SCALE);
@@ -413,13 +427,13 @@ function updateObjects(delta){
   for(let i=objects.length-1;i>=0;i--){
     const o=objects[i], s=o.sprite;
     if(!s?.active){objects.splice(i,1);continue}
-    o.p += (delta/3450) * STATE.speed;
+    o.p += (delta/OBJECT_TRAVEL_MS) * STATE.speed;
     const p=o.p;
 
     // Timing stays linear, but perspective movement is eased so objects
     // visually cling to the road instead of "dropping" out of the sky.
     const ep = Phaser.Math.Easing.Quadratic.In(clamp(p,0,1));
-    const y=Phaser.Math.Linear(sceneRef.scale.height*HORIZON_Y,playerBaseY,ep);
+    const y=Phaser.Math.Linear(sceneRef.scale.height*horizonY(),playerBaseY,ep);
     const perspective=HORIZON_SCALE + ep*.92;
 
     s.x=objectTargetX(o,ep);
@@ -447,7 +461,7 @@ function updateObjects(delta){
             STATE.score+=bonus;
             showCombo(STATE.combo);
           }else{
-            toast(`+150  ${o.value}`);
+            toast(`+150  ${o.value} · ${PIECE_LABEL[o.value] || 'CODE PIECE'}`);
           }
           burst(s.x,s.y,0x22d3ee);
         } else {
@@ -589,8 +603,27 @@ function startGame(){
   primeBackgroundLoop();
 }
 
+function pauseBackground(){
+  $('cityBg').pause();
+  $('cityBgB').pause();
+}
+
+function resumeBackground(){
+  if(!STATE.running || STATE.paused) return;
+  const active = activeBg==='A' ? $('cityBg') : $('cityBgB');
+  active.playbackRate=STATE.speed;
+  active.play().catch(()=>{});
+}
+
 function pauseGame(){
   STATE.paused=true;
+  pauseBackground();
+}
+
+function resumeGame(){
+  if(!STATE.running) return;
+  STATE.paused=false;
+  resumeBackground();
 }
 
 function openCheckpoint(){
@@ -621,14 +654,14 @@ function checkCode(){
 }
 
 function winGame(){
-  STATE.running=false; STATE.paused=true; clearObjects();
+  STATE.running=false; STATE.paused=true; pauseBackground(); clearObjects();
   $('checkpointScreen').classList.add('hidden');
-  $('winText').textContent=`Pizza mission complete. Final score: ${STATE.score} pts.`;
+  $('winText').innerHTML=`Pizza mission complete. Final score: ${STATE.score} pts.<br><br>You built <strong>&lt;h1&gt;Heading&lt;/h1&gt;</strong> — the HTML tag used for a page's biggest main heading.`;
   $('winScreen').classList.remove('hidden');
 }
 
 function endGame(){
-  STATE.running=false; STATE.paused=true; clearObjects();
+  STATE.running=false; STATE.paused=true; pauseBackground(); clearObjects();
   $('gameOverText').textContent=`Score: ${STATE.score}. Code collected: ${STATE.collected.length}/4.`;
   $('gameOverScreen').classList.remove('hidden');
 }
@@ -720,14 +753,14 @@ $('retryBtn').addEventListener('click',startGame);
 $('replayBtn').addEventListener('click',startGame);
 $('checkBtn').addEventListener('click',checkCode);
 
-window.addEventListener('blur',()=>{ if(STATE.running) STATE.paused=true; });
+window.addEventListener('blur',()=>{ if(STATE.running) pauseGame(); });
 window.addEventListener('focus',()=>{
   const overlayOpen=['checkpointScreen','winScreen','gameOverScreen'].some(id=>!$(id).classList.contains('hidden'));
-  if(STATE.running && !overlayOpen) STATE.paused=false;
+  if(STATE.running && !overlayOpen) resumeGame();
 });
 document.addEventListener('visibilitychange',()=>{
-  if(document.hidden && STATE.running) STATE.paused=true;
-  else if(!document.hidden && STATE.running && !['checkpointScreen','winScreen','gameOverScreen'].some(id=>!$(id).classList.contains('hidden'))) STATE.paused=false;
+  if(document.hidden && STATE.running) pauseGame();
+  else if(!document.hidden && STATE.running && !['checkpointScreen','winScreen','gameOverScreen'].some(id=>!$(id).classList.contains('hidden'))) resumeGame();
 });
 
 updateHud();
