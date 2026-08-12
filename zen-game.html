@@ -188,7 +188,7 @@ const JUNK = ['{', 'CSS', ';', '<p>', 'true', '</div>', ':', '#fff'];
 const ASSET = 'assets/games/zen/';
 const STATE = {
   running:false, paused:false, lane:0, action:'ride', score:0, lives:3,
-  collected:[], speed:1, elapsed:0, lastSpawn:0, lastObstacle:0, invincibleUntil:0,
+  collected:[], speed:.78, elapsed:0, lastSpawn:0, lastObstacle:0, invincibleUntil:0,
   combo:0, lastDust:0
 };
 
@@ -257,7 +257,7 @@ function setPlayerTexture(key){
 function fitPlayer(){
   if(!player || !sceneRef) return;
   const h = sceneRef.scale.height;
-  const targetH = clamp(h * 0.31, 150, 300);
+  const targetH = clamp(h * 0.38, 190, 360);
   player.setDisplaySize(player.width * (targetH / player.height), targetH);
 }
 
@@ -265,7 +265,7 @@ function recalcLayout(){
   if(!sceneRef) return;
   const w=sceneRef.scale.width, h=sceneRef.scale.height;
   laneXs = [w * 0.39, w * 0.61];
-  playerBaseY = h * (w < 600 ? 0.73 : 0.76);
+  playerBaseY = h * (w < 600 ? 0.76 : 0.79);
   if(player){
     player.x=laneXs[STATE.lane];
     if(STATE.action!=='jump') player.y=playerBaseY;
@@ -278,8 +278,7 @@ function moveLane(dir){
   const next=clamp(STATE.lane+dir,0,1);
   if(next===STATE.lane) return;
   STATE.lane=next;
-  sceneRef.tweens.killTweensOf(player);
-  sceneRef.tweens.add({targets:player,x:laneXs[next],duration:125,ease:'Sine.Out'});
+  sceneRef.tweens.add({targets:player,x:laneXs[next],duration:180,ease:'Sine.Out'});
 
   const leanAngle = dir>0 ? 12 : -12;
   sceneRef.tweens.add({
@@ -296,7 +295,7 @@ function jump(){
   sceneRef.tweens.killTweensOf(player);
 
   const rideScaleX = player.scaleX, rideScaleY = player.scaleY;
-  const jumpHeight = clamp(sceneRef.scale.height*0.18,110,185);
+  const jumpHeight = clamp(sceneRef.scale.height*0.16,105,170);
 
   sceneRef.tweens.add({
     targets:player,
@@ -342,19 +341,19 @@ function duck(){
     if(!STATE.running) return;
     STATE.action='ride';
     setPlayerTexture('playerRide');
-  },620);
+  },760);
 }
 
 function makeCodeTexture(scene, value, good){
   const key=`code:${value}:${good?'good':'junk'}`;
   if(scene.textures.exists(key)) return key;
-  const rt=scene.add.renderTexture(0,0,150,80).setVisible(false);
+  const rt=scene.add.renderTexture(0,0,210,110).setVisible(false);
   const g=scene.add.graphics();
   g.fillStyle(0x050a14,.94);
-  g.lineStyle(3,good?0x22d3ee:0xfb7185,1);
-  g.fillRoundedRect(2,2,146,76,14);
-  g.strokeRoundedRect(2,2,146,76,14);
-  const txt=scene.add.text(75,40,value,{fontFamily:'monospace',fontSize:'26px',fontStyle:'bold',color:'#ffffff'}).setOrigin(.5);
+  g.lineStyle(4,good?0x22d3ee:0xfb7185,1);
+  g.fillRoundedRect(3,3,204,104,18);
+  g.strokeRoundedRect(3,3,204,104,18);
+  const txt=scene.add.text(105,55,value,{fontFamily:'monospace',fontSize:'38px',fontStyle:'bold',color:'#ffffff'}).setOrigin(.5);
   rt.draw([g,txt]);
   rt.saveTexture(key);
   g.destroy(); txt.destroy(); rt.destroy();
@@ -363,11 +362,11 @@ function makeCodeTexture(scene, value, good){
 
 function spawnCode(scene){
   const remaining=REQUIRED.filter(v=>!STATE.collected.includes(v));
-  const good=remaining.length>0 && Math.random()>.32;
+  const good=remaining.length>0 && Math.random()>.24;
   const value=good ? Phaser.Utils.Array.GetRandom(remaining) : Phaser.Utils.Array.GetRandom(JUNK);
   const lane=Phaser.Math.Between(0,1);
   const key=makeCodeTexture(scene,value,good);
-  spawnTrackObject(scene,{kind:'code',lane,key,value,good,baseW:88,baseH:48});
+  spawnTrackObject(scene,{kind:'code',lane,key,value,good,baseW:150,baseH:82,groundOffset:-28});
 }
 
 function spawnObstacle(scene){
@@ -377,16 +376,18 @@ function spawnObstacle(scene){
     kind:isJump?'jumpObstacle':'duckObstacle',
     lane,
     key:isJump?'barricade':'beam',
-    baseW:isJump?120:150,
-    baseH:isJump?88:105
+    baseW:isJump?145:175,
+    baseH:isJump?102:130,
+    groundOffset:isJump?8:-5
   });
 }
 
 function spawnTrackObject(scene,spec){
   const startX=scene.scale.width*.5;
-  const startY=scene.scale.height*.37;
-  const sprite=scene.add.image(startX,startY,spec.key).setDepth(4).setAlpha(.25);
-  sprite.setDisplaySize(spec.baseW*.20,spec.baseH*.20);
+  const startY=scene.scale.height*.40;
+  const sprite=scene.add.image(startX,startY,spec.key).setDepth(4).setAlpha(.18);
+  sprite.setOrigin(.5,1);
+  sprite.setDisplaySize(spec.baseW*.18,spec.baseH*.18);
   objects.push({...spec,sprite,p:0,hit:false});
 }
 
@@ -400,13 +401,13 @@ function updateObjects(delta){
   for(let i=objects.length-1;i>=0;i--){
     const o=objects[i], s=o.sprite;
     if(!s?.active){objects.splice(i,1);continue}
-    o.p += (delta/2550) * STATE.speed;
+    o.p += (delta/3450) * STATE.speed;
     const p=o.p;
-    const y=Phaser.Math.Linear(sceneRef.scale.height*.37,sceneRef.scale.height*.90,p);
-    const perspective=.18 + p*1.05;
+    const y=Phaser.Math.Linear(sceneRef.scale.height*.42,sceneRef.scale.height*.91,p);
+    const perspective=.16 + p*.92;
     s.x=objectTargetX(o,p);
-    s.y=y;
-    s.setAlpha(clamp(p*3.4,.2,1));
+    s.y=y + (o.groundOffset||0) * perspective;
+    s.setAlpha(clamp(p*3.1,.16,1));
 
     // Size from our intended in-game dimensions, NOT the PNG's native pixel size.
     // Using setScale() here made large Canva source images explode to huge sizes.
@@ -517,7 +518,7 @@ function clearObjects(){
 
 function resetState(){
   STATE.running=true; STATE.paused=false; STATE.lane=0; STATE.action='ride';
-  STATE.score=0; STATE.lives=3; STATE.collected=[]; STATE.speed=1;
+  STATE.score=0; STATE.lives=3; STATE.collected=[]; STATE.speed=.78;
   STATE.elapsed=0; STATE.lastSpawn=0; STATE.lastObstacle=0; STATE.invincibleUntil=0;
   STATE.combo=0; STATE.lastDust=0;
   lastScoreShown=0; lastCodeShown=0;
@@ -619,17 +620,17 @@ class RunScene extends Phaser.Scene{
   update(time,delta){
     if(!STATE.running || STATE.paused) return;
     STATE.elapsed += delta;
-    STATE.speed = clamp(1 + STATE.elapsed/42000,1,1.75);
+    STATE.speed = clamp(.78 + STATE.elapsed/90000,.78,1.30);
 
-    if(time-STATE.lastSpawn > 1050/STATE.speed){
+    if(time-STATE.lastSpawn > 1650/STATE.speed){
       STATE.lastSpawn=time;
       spawnCode(this);
     }
-    if(time-STATE.lastObstacle > 2400/STATE.speed){
+    if(time-STATE.lastObstacle > 3600/STATE.speed){
       STATE.lastObstacle=time;
       spawnObstacle(this);
     }
-    if(STATE.action==='ride' && time-STATE.lastDust > 140/STATE.speed){
+    if(STATE.action==='ride' && time-STATE.lastDust > 180/STATE.speed){
       STATE.lastDust=time;
       spawnDust();
     }
@@ -662,6 +663,10 @@ $('replayBtn').addEventListener('click',startGame);
 $('checkBtn').addEventListener('click',checkCode);
 
 window.addEventListener('blur',()=>{ if(STATE.running) STATE.paused=true; });
+window.addEventListener('focus',()=>{
+  const overlayOpen=['checkpointScreen','winScreen','gameOverScreen'].some(id=>!$(id).classList.contains('hidden'));
+  if(STATE.running && !overlayOpen) STATE.paused=false;
+});
 document.addEventListener('visibilitychange',()=>{
   if(document.hidden && STATE.running) STATE.paused=true;
   else if(!document.hidden && STATE.running && !['checkpointScreen','winScreen','gameOverScreen'].some(id=>!$(id).classList.contains('hidden'))) STATE.paused=false;
