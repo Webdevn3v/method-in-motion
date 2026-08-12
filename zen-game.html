@@ -2,457 +2,670 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Zen's Coding Studio · Method in Motion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#050508">
+<title>Zen: Code Rush · Method in Motion</title>
+<script src="https://cdn.jsdelivr.net/npm/phaser@3.86.0/dist/phaser.min.js"></script>
 <style>
-  :root {
-    --pink: #f472b6;
-    --cyan: #22d3ee;
-    --bg: #05050a;
-    --panel: rgba(10,8,20,0.85);
-  }
-  *{margin:0;padding:0;box-sizing:border-box;}
-  html,body{width:100%;height:100%;overflow:hidden;font-family:'Segoe UI',sans-serif;background:var(--bg);}
+:root{
+  --pink:#f472b6; --cyan:#22d3ee; --purple:#a855f7; --danger:#fb7185;
+  --panel:rgba(6,7,18,.86); --line:rgba(255,255,255,.14);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#050508;color:#fff;font-family:Arial,Helvetica,sans-serif;touch-action:none}
+button{font:inherit}
+#shell{position:fixed;inset:0;overflow:hidden;background:#050508}
+#cityBg{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center;
+  z-index:0;pointer-events:none;
+}
+#gameCanvas{position:absolute;inset:0;z-index:2}
+#gameCanvas canvas{display:block!important;width:100%!important;height:100%!important}
+#hud{
+  position:absolute;z-index:10;top:max(10px,env(safe-area-inset-top));left:10px;right:10px;
+  display:grid;grid-template-columns:repeat(4,minmax(70px,1fr));gap:7px;pointer-events:none;
+}
+.hud{
+  padding:8px 10px;border:1px solid var(--line);border-radius:13px;
+  background:rgba(4,5,14,.72);backdrop-filter:blur(9px);min-width:0;
+}
+.label{font-size:8px;letter-spacing:.15em;color:rgba(255,255,255,.5)}
+.value{margin-top:2px;font-weight:900;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#score{color:var(--cyan)} #code{color:#c084fc} #lives{color:var(--pink)} #speed{color:#fbbf24}
 
-  /* WORLD BACKGROUND */
-  #world-bg{position:fixed;inset:0;background-image:url('zen-entrance.png');background-size:cover;background-position:center top;z-index:0;}
-  #world-overlay{position:fixed;inset:0;background:linear-gradient(to bottom,rgba(5,5,10,0.6) 0%,rgba(5,5,10,0.78) 50%,rgba(5,5,10,0.97) 100%);z-index:1;}
-  #world-glow{position:fixed;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(244,114,182,0.18) 0%,transparent 60%);z-index:1;pointer-events:none;}
+#controls{
+  position:absolute;z-index:12;left:10px;right:10px;bottom:max(12px,env(safe-area-inset-bottom));
+  display:grid;grid-template-columns:72px 1fr 1fr 72px;gap:9px;align-items:end;
+}
+.ctrl{
+  height:58px;border-radius:17px;border:1px solid rgba(255,255,255,.18);
+  background:rgba(5,6,18,.76);backdrop-filter:blur(8px);color:#fff;font-weight:900;
+  box-shadow:0 8px 30px rgba(0,0,0,.28);user-select:none;-webkit-user-select:none;
+}
+.ctrl.action{font-size:12px;letter-spacing:.08em}
+.ctrl.side{font-size:24px}
+.ctrl:active{transform:scale(.96);border-color:var(--cyan)}
 
-  /* SCANLINES */
-  #scanlines{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 3px,rgba(0,0,0,0.08) 3px,rgba(0,0,0,0.08) 4px);z-index:2;pointer-events:none;}
+.overlay{
+  position:absolute;z-index:30;inset:0;display:flex;align-items:center;justify-content:center;
+  padding:22px;background:rgba(2,3,10,.72);backdrop-filter:blur(8px);
+}
+.overlay.hidden{display:none}
+.panel{
+  width:min(520px,100%);padding:25px;border:1px solid rgba(244,114,182,.35);
+  border-radius:22px;background:rgba(8,7,21,.95);text-align:center;
+  box-shadow:0 0 55px rgba(244,114,182,.14)
+}
+.eyebrow{font-size:10px;letter-spacing:.22em;color:var(--cyan);margin-bottom:10px}
+h1{font-size:clamp(30px,8vw,52px);line-height:.95;margin:0 0 13px}
+.panel p{color:rgba(255,255,255,.68);line-height:1.55;margin:0 0 18px}
+.primary,.secondary{
+  border-radius:999px;padding:13px 20px;font-weight:900;cursor:pointer
+}
+.primary{border:0;background:linear-gradient(135deg,var(--pink),var(--cyan));color:#070711}
+.secondary{border:1px solid rgba(255,255,255,.18);background:transparent;color:#fff;margin-top:10px}
 
-  /* NAV */
-  nav{position:fixed;top:0;left:0;right:0;height:52px;display:flex;align-items:center;padding:0 20px;background:rgba(5,5,10,0.9);border-bottom:1px solid rgba(244,114,182,0.2);z-index:100;gap:16px;}
-  .nav-back{color:var(--pink);text-decoration:none;font-size:13px;font-weight:700;letter-spacing:1px;text-transform:uppercase;opacity:.8;transition:opacity .2s;}
-  .nav-back:hover{opacity:1;}
-  .nav-title{color:#fff;font-size:14px;font-weight:700;letter-spacing:2px;text-transform:uppercase;flex:1;text-align:center;}
-  #nav-score{color:var(--cyan);font-size:14px;font-weight:700;font-family:monospace;}
+#pieceBank,#answer{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+#pieceBank{margin:14px 0}
+#answer{min-height:58px;border:1px dashed rgba(244,114,182,.55);border-radius:12px;padding:10px;margin-bottom:12px}
+.piece{
+  padding:10px 12px;border-radius:10px;border:1px solid rgba(34,211,238,.45);
+  background:rgba(34,211,238,.09);color:#fff;font:800 15px monospace
+}
+#feedback{min-height:22px;margin-bottom:10px;color:var(--cyan);font-size:13px;font-weight:800}
+#toast{
+  position:absolute;z-index:20;left:50%;top:22%;transform:translateX(-50%);
+  font-weight:900;font-size:18px;text-shadow:0 0 14px currentColor;pointer-events:none;
+  opacity:0
+}
+#toast.show{animation:toast .7s ease}
+@keyframes toast{0%{opacity:0;transform:translate(-50%,10px) scale(.9)}20%{opacity:1}100%{opacity:0;transform:translate(-50%,-25px) scale(1.08)}}
 
-  /* GAME SHELL */
-  #game-shell{position:fixed;inset:52px 0 0 0;display:flex;z-index:10;}
+#vignette{
+  position:absolute;inset:0;z-index:6;pointer-events:none;
+  box-shadow:inset 0 0 0 rgba(34,211,238,0);
+  transition:box-shadow .3s ease;
+}
 
-  /* ZEN PANEL - left, huge */
-  #zen-panel{width:320px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;padding:0 0 24px 24px;position:relative;}
-  #zen-img{width:300px;height:auto;filter:drop-shadow(0 0 40px rgba(244,114,182,0.6));transition:all .3s;position:relative;z-index:2;}
-  #zen-face{position:absolute;top:20px;left:50%;transform:translateX(-50%);width:140px;height:140px;object-fit:contain;filter:drop-shadow(0 0 20px rgba(244,114,182,0.8));transition:all .4s;z-index:3;border-radius:50%;background:rgba(5,5,10,0.6);padding:8px;}
-  #zen-name{color:var(--pink);font-size:11px;font-weight:700;letter-spacing:3px;text-transform:uppercase;margin-top:12px;text-align:center;}
-  #zen-quote{color:rgba(255,255,255,0.55);font-size:12px;text-align:center;max-width:240px;margin-top:6px;font-style:italic;line-height:1.5;}
+.hud.pulse{animation:hudPulse .32s ease}
+@keyframes hudPulse{0%{transform:scale(1)}35%{transform:scale(1.12)}100%{transform:scale(1)}}
 
-  /* PREVIEW PANEL - middle */
-  #preview-panel{flex:1;display:flex;flex-direction:column;padding:16px 12px;min-width:0;}
-  #preview-label{color:rgba(255,255,255,0.4);font-size:10px;letter-spacing:2px;text-transform:uppercase;margin-bottom:8px;}
-  #preview-frame{flex:1;background:#fff;border-radius:12px;overflow:hidden;border:2px solid rgba(244,114,182,0.3);box-shadow:0 0 40px rgba(244,114,182,0.1);position:relative;}
-  #preview-frame iframe{width:100%;height:100%;border:none;}
-  #style-meter-wrap{margin-top:10px;}
-  #style-meter-label{display:flex;justify-content:space-between;color:rgba(255,255,255,0.5);font-size:11px;margin-bottom:5px;}
-  #style-meter-bar{height:8px;background:rgba(255,255,255,0.08);border-radius:4px;overflow:hidden;}
-  #style-meter-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));border-radius:4px;transition:width .4s;}
+#combo{
+  position:absolute;z-index:20;left:50%;top:16%;transform:translateX(-50%);
+  font-weight:900;font-size:20px;color:#fbbf24;text-shadow:0 0 16px rgba(251,191,36,.9);
+  opacity:0;pointer-events:none;
+}
+#combo.show{animation:comboPop .6s ease}
+@keyframes comboPop{0%{opacity:0;transform:translate(-50%,8px) scale(.85)}25%{opacity:1;transform:translate(-50%,0) scale(1.15)}100%{opacity:0;transform:translate(-50%,-18px) scale(1)}}
 
-  /* CHALLENGE PANEL - right */
-  #challenge-panel{width:360px;flex-shrink:0;display:flex;flex-direction:column;padding:16px 24px 16px 12px;}
-  #zone-badge{display:inline-block;background:rgba(244,114,182,0.15);border:1px solid rgba(244,114,182,0.4);color:var(--pink);font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;padding:4px 12px;border-radius:20px;margin-bottom:12px;}
-  #challenge-card{background:var(--panel);border:1px solid rgba(244,114,182,0.2);border-radius:16px;padding:20px;flex:1;display:flex;flex-direction:column;backdrop-filter:blur(16px);}
-  #challenge-property{color:rgba(255,255,255,0.45);font-size:11px;letter-spacing:2px;text-transform:uppercase;margin-bottom:6px;}
-  #challenge-question{color:#fff;font-size:18px;font-weight:700;line-height:1.4;margin-bottom:6px;}
-  #challenge-hint{color:var(--cyan);font-size:12px;font-family:monospace;margin-bottom:20px;opacity:.7;}
-  #options-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:auto;}
-  .option-btn{background:rgba(255,255,255,0.04);border:1.5px solid rgba(255,255,255,0.12);color:#fff;font-size:13px;font-weight:600;font-family:monospace;padding:14px 10px;border-radius:10px;cursor:pointer;transition:all .2s;text-align:center;word-break:break-all;}
-  .option-btn:hover{background:rgba(244,114,182,0.12);border-color:var(--pink);color:var(--pink);transform:translateY(-2px);}
-  .option-btn.correct{background:rgba(34,211,238,0.2)!important;border-color:var(--cyan)!important;color:var(--cyan)!important;animation:pulse-correct .4s ease;}
-  .option-btn.wrong{background:rgba(239,68,68,0.2)!important;border-color:#ef4444!important;color:#ef4444!important;animation:shake .3s ease;}
-  @keyframes pulse-correct{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
-  @keyframes shake{0%,100%{transform:translateX(0);}25%{transform:translateX(-6px);}75%{transform:translateX(6px);}}
-
-  #timer-bar{height:4px;background:rgba(255,255,255,0.06);border-radius:2px;margin-bottom:16px;overflow:hidden;}
-  #timer-fill{height:100%;width:100%;background:linear-gradient(90deg,var(--pink),var(--cyan));border-radius:2px;transition:width .1s linear;}
-  #combo-text{text-align:center;color:var(--cyan);font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;min-height:18px;margin-bottom:8px;}
-  #progress-dots{display:flex;gap:6px;justify-content:center;margin-top:12px;}
-  .dot{width:8px;height:8px;border-radius:50%;background:rgba(255,255,255,0.1);transition:all .3s;}
-  .dot.done{background:var(--pink);}
-  .dot.current{background:var(--cyan);box-shadow:0 0 8px var(--cyan);}
-
-  /* SCORE FLOAT */
-  .score-float{position:fixed;font-size:22px;font-weight:900;color:var(--cyan);pointer-events:none;z-index:999;animation:floatUp .8s ease forwards;}
-  @keyframes floatUp{0%{opacity:1;transform:translateY(0);}100%{opacity:0;transform:translateY(-80px);}}
-
-  /* PAINT BURST */
-  .paint-burst{position:fixed;pointer-events:none;z-index:50;width:120px;height:120px;border-radius:50%;animation:burstOut .5s ease forwards;}
-  @keyframes burstOut{0%{opacity:.8;transform:scale(0);}100%{opacity:0;transform:scale(3);}}
-
-  /* GAME OVER */
-  #gameOverScreen{position:fixed;inset:0;background:rgba(5,5,10,0.97);z-index:200;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;}
-  #gameOverScreen.hidden{display:none;}
-  #gameOverEyebrow{color:var(--pink);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
-  #gameOverTitle{color:#fff;font-size:52px;font-weight:900;letter-spacing:-1px;}
-  #gameOverSub{color:rgba(255,255,255,0.5);font-size:15px;max-width:420px;text-align:center;line-height:1.6;}
-  #gameOverScore{color:var(--cyan);font-size:36px;font-weight:900;font-family:monospace;}
-  #gameOverZen{width:200px;height:200px;object-fit:contain;filter:drop-shadow(0 0 30px rgba(244,114,182,0.7));}
-  .over-btn{background:linear-gradient(135deg,var(--pink),var(--cyan));color:#000;font-size:14px;font-weight:800;padding:14px 36px;border-radius:30px;border:none;cursor:pointer;letter-spacing:1px;text-transform:uppercase;margin-top:8px;transition:transform .2s;}
-  .over-btn:hover{transform:scale(1.05);}
-
-  /* INTRO */
-  #introScreen{position:fixed;inset:0;background:rgba(5,5,10,0.98);z-index:150;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;}
-  #introScreen.hidden{display:none;}
-  #intro-zen{width:280px;height:auto;filter:drop-shadow(0 0 50px rgba(244,114,182,0.7));animation:float 3s ease-in-out infinite;}
-  @keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-14px);}}
-  #intro-title{color:#fff;font-size:42px;font-weight:900;letter-spacing:-1px;text-align:center;}
-  #intro-sub{color:rgba(255,255,255,0.5);font-size:14px;max-width:360px;text-align:center;line-height:1.7;}
-  #intro-start{background:linear-gradient(135deg,var(--pink),var(--cyan));color:#000;font-size:15px;font-weight:800;padding:16px 48px;border-radius:30px;border:none;cursor:pointer;letter-spacing:2px;text-transform:uppercase;margin-top:12px;transition:transform .2s;}
-  #intro-start:hover{transform:scale(1.06);}
-  .intro-eyebrow{color:var(--pink);font-size:11px;letter-spacing:4px;text-transform:uppercase;}
-
-  @keyframes zenBreathe{0%,100%{transform:scale(1);filter:drop-shadow(0 0 30px rgba(244,114,182,.45))}50%{transform:scale(1.03);filter:drop-shadow(0 0 48px rgba(244,114,182,.85))}}
-  @keyframes zonePulse{0%,100%{box-shadow:0 0 12px rgba(244,114,182,.22)}50%{box-shadow:0 0 30px rgba(244,114,182,.5),0 0 45px rgba(34,211,238,.18)}}
-  @keyframes challengeIn{from{opacity:0;transform:scale(.96) translateY(10px)}to{opacity:1;transform:scale(1) translateY(0)}}
-  @keyframes floatPiece{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
-  @keyframes lockFlash{0%{transform:scale(.94)}45%{transform:scale(1.08);filter:brightness(1.7)}100%{transform:scale(1)}}
-  #zen-img{animation:zenBreathe 4.2s ease-in-out infinite;transform-origin:center bottom}
-  #zone-badge{padding:10px 18px!important;font-size:12px!important;border-radius:999px!important;animation:zonePulse 2.8s ease-in-out infinite}
-  #challenge-card.challenge-enter{animation:challengeIn .38s ease both}
-  .option-btn{padding:22px 16px!important;font-size:16px!important;min-height:72px;border-radius:14px!important}
-  .option-btn:hover{transform:translateY(-4px) scale(1.03)!important;box-shadow:0 0 24px rgba(244,114,182,.5),0 0 34px rgba(34,211,238,.12)}
-  #skeletonStage{position:fixed;inset:52px 0 0;z-index:120;background:radial-gradient(circle at 50% 15%,rgba(34,211,238,.12),transparent 34%),radial-gradient(circle at 50% 85%,rgba(244,114,182,.13),transparent 38%),rgba(5,5,10,.975);display:grid;grid-template-columns:minmax(300px,1.05fr) minmax(300px,.95fr);gap:22px;padding:22px;overflow:auto}
-  #skeletonStage.hidden{display:none}.skeleton-left,.skeleton-right{border:1px solid rgba(244,114,182,.24);border-radius:24px;background:rgba(10,8,20,.75);padding:22px;box-shadow:0 0 45px rgba(244,114,182,.08)}
-  .skeleton-eyebrow{color:var(--cyan);font-size:11px;font-weight:800;letter-spacing:3px}.skeleton-title{color:#fff;font-size:clamp(30px,4vw,50px);font-weight:900;margin:7px 0 10px;text-shadow:0 0 28px rgba(244,114,182,.38)}.skeleton-sub{color:rgba(255,255,255,.6);line-height:1.7;margin-bottom:14px}.skeleton-help{color:rgba(255,255,255,.45);font-size:12px;line-height:1.6;margin-top:12px}
-  #skeletonFeedback{min-height:24px;color:var(--cyan);font-weight:700;margin:10px 0 14px}
-  #skeletonSlots{display:flex;flex-direction:column;gap:9px;padding:16px;border-radius:18px;border:1px solid rgba(34,211,238,.18);background:rgba(0,0,0,.2)}
-  .skeleton-slot{min-height:56px;border:1.5px dashed rgba(255,255,255,.17);border-radius:12px;display:flex;align-items:center;padding:8px 12px;color:rgba(255,255,255,.28);font:16px monospace;transition:.22s;position:relative}.skeleton-slot.depth-1{margin-left:22px}.skeleton-slot.depth-2{margin-left:44px}.skeleton-slot.selected-target{border-color:var(--cyan);box-shadow:0 0 20px rgba(34,211,238,.28)}.skeleton-slot.filled{border-style:solid;border-color:rgba(34,211,238,.58);color:#fff;background:linear-gradient(90deg,rgba(34,211,238,.08),rgba(244,114,182,.08));box-shadow:0 0 24px rgba(34,211,238,.18);animation:lockFlash .5s ease}.slot-label{position:absolute;right:10px;top:7px;font-size:9px;letter-spacing:1.5px;color:rgba(255,255,255,.25)}
-  #skeletonPieces{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:18px}.skeleton-piece{border:1px solid rgba(244,114,182,.55);background:linear-gradient(135deg,rgba(244,114,182,.16),rgba(34,211,238,.09));color:#fff;padding:18px 14px;border-radius:16px;font:700 17px monospace;cursor:grab;text-align:center;box-shadow:0 0 26px rgba(244,114,182,.18);animation:floatPiece 3.4s ease-in-out infinite;transition:.18s}.skeleton-piece:nth-child(2n){animation-delay:-1s}.skeleton-piece:nth-child(3n){animation-delay:-2s}.skeleton-piece:hover,.skeleton-piece.selected{transform:translateY(-5px) scale(1.04);border-color:var(--cyan);box-shadow:0 0 36px rgba(34,211,238,.4),0 0 46px rgba(244,114,182,.24)}.skeleton-piece.placed{opacity:.2;pointer-events:none;animation:none}
-  .skeleton-preview-wrap{height:100%;min-height:520px;display:flex;flex-direction:column}.skeleton-preview-label{color:rgba(255,255,255,.45);font-size:10px;letter-spacing:2px;margin-bottom:8px}.skeleton-preview{flex:1;position:relative;border-radius:18px;overflow:hidden;background:#fff;border:2px solid rgba(34,211,238,.3);box-shadow:0 0 42px rgba(34,211,238,.13)}#skeleton-iframe{width:100%;height:100%;border:0}#skeletonCompleteOverlay{position:absolute;inset:0;display:none;align-items:center;justify-content:center;flex-direction:column;background:rgba(5,5,10,.83);backdrop-filter:blur(8px);text-align:center;padding:24px}#skeletonCompleteOverlay.show{display:flex}#skeletonCompleteOverlay img{width:min(250px,50%);max-height:42%;object-fit:contain;filter:drop-shadow(0 0 36px rgba(244,114,182,.75))}#skeletonCompleteOverlay h2{color:#fff;font-size:clamp(28px,4vw,44px);margin-top:8px;text-shadow:0 0 28px rgba(34,211,238,.48)}#skeletonCompleteOverlay p{color:rgba(255,255,255,.68);max-width:460px;line-height:1.6}#skeletonFinishBtn{margin-top:18px;border:0;border-radius:999px;padding:15px 32px;font-weight:900;background:linear-gradient(135deg,var(--pink),var(--cyan));color:#020207;cursor:pointer;box-shadow:0 0 28px rgba(244,114,182,.35)}
-  @media(max-width:900px){#skeletonStage{grid-template-columns:1fr}.skeleton-preview-wrap{min-height:420px}}@media(max-width:700px){#skeletonStage{padding:12px}.skeleton-left,.skeleton-right{padding:16px}.skeleton-piece{font-size:15px}#skeletonPieces{grid-template-columns:1fr}.skeleton-slot.depth-1{margin-left:12px}.skeleton-slot.depth-2{margin-left:24px}}
-
+@media (min-width:760px){
+  #controls{width:470px;left:50%;right:auto;transform:translateX(-50%)}
+}
+@media (max-width:520px){
+  #hud{grid-template-columns:repeat(2,1fr);right:8px;left:8px}
+  .hud{padding:6px 8px}
+  .value{font-size:11px}
+  #controls{grid-template-columns:58px 1fr 1fr 58px;gap:7px}
+  .ctrl{height:54px}
+}
 </style>
 </head>
 <body>
+<main id="shell">
+  <video id="cityBg" autoplay muted loop playsinline preload="auto" aria-hidden="true">
+    <source media="(max-width: 600px)" src="assets/games/zen/mobile.zen.pizza.mission.mp4" type="video/mp4">
+    <source src="assets/games/zen/zen.pizza.mission.mp4" type="video/mp4">
+  </video>
 
-<div id="world-bg"></div>
-<div id="world-overlay"></div>
-<div id="world-glow"></div>
-<div id="scanlines"></div>
+  <div id="gameCanvas"></div>
+  <div id="vignette"></div>
+  <div id="combo"></div>
 
-<!-- INTRO SCREEN -->
-<div id="introScreen">
-  <div class="intro-eyebrow">HTML + CSS · CODING STUDIO</div>
-  <img id="intro-zen" src="zen-idle-pose.png" alt="Zen" onerror="this.style.display='none'">
-  <div id="intro-title">Zen's Coding Studio</div>
-  <div id="intro-sub">Build the code behind Zen's world — tags, structure, CSS, color, and one glowing webpage skeleton at a time.</div>
-  <button id="intro-start" onclick="startGame()">ENTER THE STUDIO</button>
-</div>
+  <header id="hud">
+    <div class="hud"><div class="label">SCORE</div><div class="value" id="score">0000</div></div>
+    <div class="hud"><div class="label">CODE</div><div class="value" id="code">0 / 4</div></div>
+    <div class="hud"><div class="label">LIVES</div><div class="value" id="lives">♥ ♥ ♥</div></div>
+    <div class="hud"><div class="label">SPEED</div><div class="value" id="speed">1.0×</div></div>
+  </header>
 
-<!-- GAME OVER -->
-<div id="gameOverScreen" class="hidden">
-  <div id="gameOverEyebrow">Studio Complete</div>
-  <div id="gameOverTitle">MASTERPIECE!</div>
-  <img id="gameOverZen" src="zen-victory.png" alt="Zen" onerror="this.src='zen-idle-pose.png'">
-  <div id="gameOverSub">You restored Zen's studio. That's real design skill.</div>
-  <div id="gameOverScore">0 pts</div>
-  <button class="over-btn" onclick="location.reload()">PLAY AGAIN</button>
-  <button class="over-btn" style="background:rgba(255,255,255,0.08);color:#fff;" onclick="location.href='games.html'">← GAME UNIVERSE</button>
-</div>
+  <div id="toast"></div>
 
-
-<div id="skeletonStage" class="hidden" aria-live="polite">
-<section class="skeleton-left"><div class="skeleton-eyebrow">ZONE 6 · FINAL BUILD</div><div class="skeleton-title">BUILD THE SKELETON</div><div class="skeleton-sub">Assemble the page from the first declaration to the final closing tag. Drag a glowing code piece into place — or tap a piece, then tap a slot.</div><div id="skeletonFeedback">DOCTYPE first. Then build the whole webpage around the head and body.</div><div id="skeletonSlots"></div><div id="skeletonPieces"></div><div class="skeleton-help">Tip: <strong>&lt;head&gt;</strong> holds information about the page. <strong>&lt;body&gt;</strong> holds the main content visitors see. Correct pieces lock in and glow. Wrong spots just shake — no penalty.</div></section>
-<section class="skeleton-right"><div class="skeleton-preview-wrap"><div class="skeleton-preview-label">ZEN'S WORLD — FINAL SEMANTIC PAGE</div><div class="skeleton-preview"><iframe id="skeleton-iframe" title="Completed webpage preview"></iframe><div id="skeletonCompleteOverlay"><img src="zen-victory.png" alt="Zen celebrating"><h2>PAGE ONLINE!</h2><p>You built the real HTML skeleton from DOCTYPE to closing html. Head locked. Body online. Structure complete.</p><button id="skeletonFinishBtn" type="button">SEE FINAL SCORE</button></div></div></div></section>
-</div>
-<nav>
-  <a class="nav-back" href="games.html">← Games</a>
-  <div class="nav-title">ZEN'S CODING STUDIO</div>
-  <div id="nav-score">0 pts</div>
-</nav>
-
-<div id="game-shell">
-
-  <!-- ZEN PANEL -->
-  <div id="zen-panel">
-    <img id="zen-face" src="zen-happy.png" alt="" onerror="this.style.display='none'">
-    <img id="zen-img" src="zen-idle-pose.png" alt="Zen" onerror="this.style.opacity='0'">
-    <div id="zen-name">ZEN</div>
-    <div id="zen-quote">"Every great design starts with one good choice."</div>
+  <div id="controls">
+    <button class="ctrl side" id="leftBtn" aria-label="Move left">◀</button>
+    <button class="ctrl action" id="jumpBtn">JUMP</button>
+    <button class="ctrl action" id="duckBtn">DUCK</button>
+    <button class="ctrl side" id="rightBtn" aria-label="Move right">▶</button>
   </div>
 
-  <!-- PREVIEW PANEL -->
-  <div id="preview-panel">
-    <div id="preview-label">ZEN'S WORLD — LIVE PREVIEW</div>
-    <div id="preview-frame">
-      <iframe id="preview-iframe" title="Preview"></iframe>
+  <section class="overlay" id="startScreen">
+    <div class="panel">
+      <div class="eyebrow">MIM UNDERGROUND // PIZZA MISSION</div>
+      <h1>CODE RUSH</h1>
+      <p>Skate Neon City. Switch lanes, jump barricades, duck under beams, and collect the four pieces of an HTML heading tag.</p>
+      <button class="primary" id="startBtn">START PIZZA RUN</button>
     </div>
-    <div id="style-meter-wrap">
-      <div id="style-meter-label"><span>STYLE METER</span><span id="meter-val">100%</span></div>
-      <div id="style-meter-bar"><div id="style-meter-fill"></div></div>
-    </div>
-  </div>
+  </section>
 
-  <!-- CHALLENGE PANEL -->
-  <div id="challenge-panel">
-    <div id="zone-badge">ZONE 1 · TAGS</div>
-    <div id="timer-bar"><div id="timer-fill"></div></div>
-    <div id="combo-text"></div>
-    <div id="challenge-card">
-      <div id="challenge-property">CODING CONCEPT</div>
-      <div id="challenge-question">Loading...</div>
-      <div id="challenge-hint">/* pick the right value */</div>
-      <div id="options-grid"></div>
+  <section class="overlay hidden" id="checkpointScreen">
+    <div class="panel">
+      <div class="eyebrow">CODE CHECKPOINT</div>
+      <h1>BUILD THE TAG</h1>
+      <p>Put the pieces in the correct order. Tap a piece again to move it back.</p>
+      <div id="pieceBank"></div>
+      <div id="answer"></div>
+      <div id="feedback"></div>
+      <button class="primary" id="checkBtn">CHECK CODE</button>
     </div>
-    <div id="progress-dots"></div>
-  </div>
+  </section>
 
-</div>
+  <section class="overlay hidden" id="gameOverScreen">
+    <div class="panel">
+      <div class="eyebrow">RUN ENDED</div>
+      <h1>TRY AGAIN</h1>
+      <p id="gameOverText">The city got you this time.</p>
+      <button class="primary" id="retryBtn">RESTART RUN</button>
+      <button class="secondary" onclick="location.href='games.html'">← GAME UNIVERSE</button>
+    </div>
+  </section>
+
+  <section class="overlay hidden" id="winScreen">
+    <div class="panel">
+      <div class="eyebrow">MISSION COMPLETE</div>
+      <h1>🍕 PIZZA REACHED</h1>
+      <p id="winText"></p>
+      <button class="primary" id="replayBtn">RUN IT AGAIN</button>
+      <button class="secondary" onclick="location.href='games.html'">← GAME UNIVERSE</button>
+    </div>
+  </section>
+</main>
 
 <script>
-// ─── DATA ────────────────────────────────────────────────────────────────────
-const CHALLENGES = [
-{zone:'ZONE 1 · TAGS',prop:'tag',q:'What is an HTML tag?',hint:'It tells the browser what a piece of content ___',correct:'a label that describes content',opts:['a label that describes content','a color code','a browser tab','a CSS value'],css:v=>`/* ${v} */`},
-{zone:'ZONE 1 · TAGS',prop:'closing tag',q:'Which one correctly closes a paragraph?',hint:'</___>',correct:'</p>',opts:['</p>','<p>','<//p>','<p/>'],css:v=>`/* ${v} */`},
-{zone:'ZONE 1 · TAGS',prop:'slash',q:'What does the slash help show in </p>?',hint:'Tiny slash. Huge job.',correct:'the element is closing',opts:['the element is closing','the text is bold','the page is loading','the color is changing'],css:v=>`/* ${v} */`},
-{zone:'ZONE 1 · TAGS',prop:'angle brackets',q:'Why do HTML tags use < and >?',hint:'They help the browser recognize ___ syntax.',correct:'HTML',opts:['HTML','CSS color','browser tabs','file names'],css:v=>`/* ${v} */`},
-{zone:'ZONE 2 · STRUCTURE',prop:'heading hierarchy',q:'Which heading is the MAIN, most important one on a page?',hint:'Hierarchy means importance and organization — not just size.',correct:'<h1>',opts:['<h1>','<h6>','<p>','<title>'],css:v=>`/* ${v} */`},
-{zone:'ZONE 2 · STRUCTURE',prop:'attribute',q:'What is an HTML attribute?',hint:'Extra information placed inside an opening tag.',correct:'extra information for an element',opts:['extra information for an element','a closing tag','a CSS selector','a paragraph'],css:v=>`/* ${v} */`},
-{zone:'ZONE 2 · STRUCTURE',prop:'href',q:'What does href tell a link?',hint:'<a href="___">',correct:'where the link should go',opts:['where the link should go','what color it should be','how big it is','when to close'],css:v=>`/* ${v} */`},
-{zone:'ZONE 2 · STRUCTURE',prop:'element',q:'Which one is a complete paragraph element?',hint:'open + content + close',correct:'<p>Hello!</p>',opts:['<p>Hello!</p>','<p>','</p>','Hello!'],css:v=>`/* ${v} */`},
-{zone:'ZONE 3 · CSS BASICS',prop:'concept',q:'Which one changes how something LOOKS, not what it IS?',hint:'HTML describes what it is. ___ describes how it looks.',correct:'CSS',opts:['CSS','HTML','the browser','a tag'],css:v=>`/* ${v} */`},
-{zone:'ZONE 3 · CSS BASICS',prop:'selector',q:'In h1 { color: pink; } — what is "h1"?',hint:'It chooses which element to style.',correct:'the selector',opts:['the selector','the property','the value','the element'],css:v=>`/* ${v} */`},
-{zone:'ZONE 3 · CSS BASICS',prop:'property',q:'In h1 { color: pink; } — what is "color"?',hint:'It names what you want to change.',correct:'the property',opts:['the property','the selector','the value','an attribute'],css:v=>`/* ${v} */`},
-{zone:'ZONE 3 · CSS BASICS',prop:'value',q:'In h1 { color: pink; } — what is "pink"?',hint:'It is the setting you are choosing.',correct:'the value',opts:['the value','the property','the selector','a tag'],css:v=>`/* ${v} */`},
-{zone:'ZONE 4 · COLOR',prop:'color',q:'Give Zen\'s headline a vibrant pink glow',hint:'color: ___',correct:'#f472b6',opts:['#f472b6','#000000','inherit','transparent'],css:v=>`h1{color:${v};text-shadow:0 0 20px ${v};}`},
-{zone:'ZONE 4 · COLOR',prop:'background-color',q:'Which property changes the color BEHIND an element, not the text?',hint:'background-___',correct:'background-color',opts:['background-color','color','border-color','text-color'],css:v=>`body{background-color:#111329;}`},
-{zone:'ZONE 4 · COLOR',prop:'hex',q:'What symbol must a hex color code start with?',hint:'___ff6baa',correct:'#',opts:['#','!','/','@'],css:v=>`/* ${v} */`},
-{zone:'ZONE 5 · RULES',prop:'{ }',q:'What wraps the CSS declarations inside a selector?',hint:'selector ___ property: value; ___',correct:'{ }',opts:['{ }','[ ]','( )','< >'],css:v=>`/* ${v} */`},
-{zone:'ZONE 5 · RULES',prop:':',q:'What separates a CSS property from its value?',hint:'color___pink',correct:':',opts:[':',';','.','#'],css:v=>`/* ${v} */`},
-{zone:'ZONE 5 · RULES',prop:';',q:'What ends a CSS declaration?',hint:'color: pink___',correct:';',opts:[';',':','.','!'],css:v=>`/* ${v} */`},
-{zone:'ZONE 5 · RULES',prop:'cascade',q:'A page has "h1 { color: pink; }" then later "h1 { color: purple; }". Which color wins?',hint:'In this simple example, the later equally specific rule wins.',correct:'purple (the later rule)',opts:['purple (the later rule)','pink (the first rule)','both at once','neither'],css:v=>`h1{color:${v.includes('purple')?'#c66bff':'#f472b6'};text-shadow:0 0 24px currentColor;}`}
-];
+(() => {
+'use strict';
 
-// Shuffle array in place
-function shuffle(arr){for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]];}return arr;}
-
-// Applied CSS per challenge
-const appliedCSS = {};
-
-// State
-let idx = 0;
-let score = 0;
-let combo = 0;
-let meter = 100;
-let timerInterval = null;
-let timeLeft = 0;
-let answered = false;
-
-// Zen face images
-const ZEN_FACES = {
-  happy: 'zen-happy.png',
-  victory: 'zen-victory.png',
-  scared: 'zen-scared.png',
-  sad: 'zen-sad.png'
+const REQUIRED = ['<', 'h1', '>', '</h1>'];
+const JUNK = ['{', 'CSS', ';', '<p>', 'true', '</div>', ':', '#fff'];
+const ASSET = 'assets/games/zen/';
+const STATE = {
+  running:false, paused:false, lane:0, action:'ride', score:0, lives:3,
+  collected:[], speed:1, elapsed:0, lastSpawn:0, lastObstacle:0, invincibleUntil:0,
+  combo:0, lastDust:0
 };
 
-function setZenFace(mood){
-  const f = document.getElementById('zen-face');
-  f.src = ZEN_FACES[mood];
-  f.style.display = 'block';
+let sceneRef = null;
+let player = null;
+let objects = [];
+let laneXs = [0,0];
+let playerBaseY = 0;
+let jumpTween = null;
+let actionTimer = null;
+let swipeStart = null;
+
+const $ = id => document.getElementById(id);
+const clamp = (v,a,b) => Math.max(a, Math.min(b,v));
+
+let lastScoreShown = 0, lastCodeShown = 0;
+function updateHud(){
+  $('score').textContent = String(STATE.score).padStart(4,'0');
+  $('code').textContent = `${STATE.collected.length} / ${REQUIRED.length}`;
+  $('lives').textContent = '♥ '.repeat(STATE.lives).trim() || '—';
+  $('speed').textContent = `${STATE.speed.toFixed(1)}×`;
+
+  if(STATE.score !== lastScoreShown){ pulse('score'); lastScoreShown = STATE.score; }
+  if(STATE.collected.length !== lastCodeShown){ pulse('code'); lastCodeShown = STATE.collected.length; }
+
+  const v = $('vignette');
+  const glow = clamp((STATE.speed - 1) / 0.75, 0, 1);
+  v.style.boxShadow = `inset 0 0 ${60 + glow*90}px rgba(34,211,238,${(glow*0.5).toFixed(2)})`;
 }
 
-// Build preview HTML
-function buildPreviewHTML(){
-  const styles = Object.values(appliedCSS).join('\n');
-  return `<!DOCTYPE html><html><head><style>
-    *{margin:0;padding:0;box-sizing:border-box;}
-    body{min-height:100vh;background:#0a0a1a;display:flex;flex-direction:column;align-items:center;justify-content:center;font-family:'Segoe UI',sans-serif;padding:30px;}
-    h1{color:#888;font-size:28px;font-weight:400;margin-bottom:16px;transition:all .4s;}
-    p{color:#555;font-size:14px;line-height:1.7;margin-bottom:20px;transition:all .4s;}
-    .card{background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);padding:20px;border-radius:4px;max-width:360px;width:100%;transition:all .4s;}
-    ${styles}
-  </style></head><body>
-    <div class="card">
-      <h1>Zen's World</h1>
-      <p>CSS is the art of the web. Every pixel tells a story.</p>
-      <p style="opacity:.6;font-size:12px;">Style it right and the whole world lights up.</p>
-    </div>
-  </body></html>`;
+function pulse(id){
+  const el = $(id).closest('.hud');
+  if(!el) return;
+  el.classList.remove('pulse');
+  void el.offsetWidth;
+  el.classList.add('pulse');
 }
 
-function updatePreview(){
-  const iframe = document.getElementById('preview-iframe');
-  const doc = iframe.contentDocument || iframe.contentWindow.document;
-  doc.open(); doc.write(buildPreviewHTML()); doc.close();
+function showCombo(n){
+  const c = $('combo');
+  c.textContent = `COMBO ×${n}!`;
+  c.classList.remove('show');
+  void c.offsetWidth;
+  c.classList.add('show');
 }
 
-function buildDots(){
-  const d = document.getElementById('progress-dots');
-  d.innerHTML = '';
-  CHALLENGES.forEach((_,i)=>{
-    const dot = document.createElement('div');
-    dot.className = 'dot' + (i < idx ? ' done' : i === idx ? ' current' : '');
-    d.appendChild(dot);
-  });
+function toast(text, bad=false){
+  const t=$('toast');
+  t.textContent=text;
+  t.style.color=bad?'#fb7185':'#22d3ee';
+  t.classList.remove('show');
+  void t.offsetWidth;
+  t.classList.add('show');
 }
 
-function loadChallenge(){
-  if(idx >= CHALLENGES.length){ startSkeletonFinale(); return; }
-  answered = false;
-  const c = CHALLENGES[idx];
-
-  document.getElementById('zone-badge').textContent = c.zone;
-  document.getElementById('challenge-property').textContent = c.prop.toUpperCase();
-  document.getElementById('challenge-question').textContent = c.q;
-  document.getElementById('challenge-hint').textContent = c.hint;
-  document.getElementById('combo-text').textContent = combo >= 2 ? `🔥 x${combo} COMBO` : '';
-  const card=document.getElementById('challenge-card');card.classList.remove('challenge-enter');void card.offsetWidth;card.classList.add('challenge-enter');
-
-  // SHUFFLE options so correct isn't always slot 0
-  const shuffled = shuffle([...c.opts]);
-
-  const grid = document.getElementById('options-grid');
-  grid.innerHTML = '';
-  shuffled.forEach(opt => {
-    const btn = document.createElement('button');
-    btn.className = 'option-btn';
-    btn.textContent = opt;
-    btn.onclick = () => pickAnswer(btn, opt, c);
-    grid.appendChild(btn);
-  });
-
-  buildDots();
-  setZenFace('happy');
-  startTimer(c.zone);
+function hideAllOverlays(){
+  ['startScreen','checkpointScreen','gameOverScreen','winScreen'].forEach(id=>$(id).classList.add('hidden'));
 }
 
-function startTimer(zone){
-  clearInterval(timerInterval);
-  // Shorter time in later zones
-  const match=zone.match(/ZONE\s+(\d+)/);
-  const zoneNum=match?Number(match[1]):1;
-  timeLeft=zoneNum>=5?14:zoneNum>=4?16:zoneNum>=3?18:22;
-  const total = timeLeft;
-  const fill = document.getElementById('timer-fill');
-  fill.style.width = '100%';
-  timerInterval = setInterval(()=>{
-    timeLeft -= 0.1;
-    fill.style.width = Math.max(0, (timeLeft/total)*100) + '%';
-    if(timeLeft <= 0){
-      clearInterval(timerInterval);
-      if(!answered){ onTimeout(); }
-    }
-  }, 100);
+function setPlayerTexture(key){
+  if(!player || !sceneRef?.textures.exists(key)) return;
+  player.setTexture(key);
+  fitPlayer();
 }
 
-function pickAnswer(btn, val, c){
-  if(answered) return;
-  answered = true;
-  clearInterval(timerInterval);
-  const isCorrect = val === c.correct;
+function fitPlayer(){
+  if(!player || !sceneRef) return;
+  const h = sceneRef.scale.height;
+  const targetH = clamp(h * 0.31, 150, 300);
+  player.setDisplaySize(player.width * (targetH / player.height), targetH);
+}
 
-  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-
-  if(isCorrect){
-    btn.classList.add('correct');
-    combo++;
-    const pts = 100 * Math.max(1, combo);
-    score += pts;
-    appliedCSS[idx] = c.css(val);
-    updatePreview();
-    setZenFace('victory');
-    showScoreFloat('+' + pts);
-    paintBurst(btn);
-    document.getElementById('nav-score').textContent = score + ' pts';
-    setTimeout(()=>{ idx++; loadChallenge(); }, 900);
-  } else {
-    btn.classList.add('wrong');
-    combo = 0;
-    meter -= 25;
-    setZenFace('scared');
-    updateMeter();
-    if(meter <= 0){ setTimeout(()=>endGame(false), 600); return; }
-    // show correct
-    document.querySelectorAll('.option-btn').forEach(b=>{
-      if(b.textContent === c.correct) b.classList.add('correct');
-    });
-    setTimeout(()=>{ idx++; loadChallenge(); }, 1200);
+function recalcLayout(){
+  if(!sceneRef) return;
+  const w=sceneRef.scale.width, h=sceneRef.scale.height;
+  laneXs = [w * 0.39, w * 0.61];
+  playerBaseY = h * (w < 600 ? 0.73 : 0.76);
+  if(player){
+    player.x=laneXs[STATE.lane];
+    if(STATE.action!=='jump') player.y=playerBaseY;
+    fitPlayer();
   }
 }
 
-function onTimeout(){
-  answered = true;
-  combo = 0;
-  meter -= 20;
-  setZenFace('sad');
-  updateMeter();
-  document.querySelectorAll('.option-btn').forEach(b => b.disabled = true);
-  const c = CHALLENGES[idx];
-  document.querySelectorAll('.option-btn').forEach(b=>{
-    if(b.textContent === c.correct) b.classList.add('correct');
+function moveLane(dir){
+  if(!STATE.running || STATE.paused || !player) return;
+  const next=clamp(STATE.lane+dir,0,1);
+  if(next===STATE.lane) return;
+  STATE.lane=next;
+  sceneRef.tweens.killTweensOf(player);
+  sceneRef.tweens.add({targets:player,x:laneXs[next],duration:125,ease:'Sine.Out'});
+
+  const leanAngle = dir>0 ? 12 : -12;
+  sceneRef.tweens.add({
+    targets:player, angle:leanAngle, duration:100, ease:'Sine.Out',
+    onComplete:()=>{
+      sceneRef.tweens.add({targets:player, angle:0, duration:160, ease:'Sine.InOut'});
+    }
   });
-  if(meter <= 0){ setTimeout(()=>endGame(false), 800); return; }
-  setTimeout(()=>{ idx++; loadChallenge(); }, 1200);
 }
 
-function updateMeter(){
-  meter = Math.max(0, meter);
-  document.getElementById('style-meter-fill').style.width = meter + '%';
-  document.getElementById('meter-val').textContent = Math.round(meter) + '%';
+function jump(){
+  if(!STATE.running || STATE.paused || STATE.action!=='ride' || !player) return;
+  STATE.action='jump';
+  sceneRef.tweens.killTweensOf(player);
+
+  const rideScaleX = player.scaleX, rideScaleY = player.scaleY;
+  const jumpHeight = clamp(sceneRef.scale.height*0.18,110,185);
+
+  sceneRef.tweens.add({
+    targets:player,
+    scaleX:rideScaleX*1.12, scaleY:rideScaleY*0.82,
+    duration:70, yoyo:true, ease:'Sine.InOut',
+    onComplete:()=>{
+      setPlayerTexture('playerOllie');
+      const baseScaleX = player.scaleX, baseScaleY = player.scaleY;
+      player.setScale(baseScaleX*0.94, baseScaleY*1.1);
+
+      jumpTween=sceneRef.tweens.add({
+        targets:player,
+        y:playerBaseY - jumpHeight,
+        duration:270,
+        yoyo:true,
+        ease:'Sine.Out',
+        onComplete:()=>{
+          player.y=playerBaseY;
+          sceneRef.tweens.add({
+            targets:player,
+            scaleX:baseScaleX*1.1, scaleY:baseScaleY*0.8,
+            duration:60, yoyo:true, ease:'Sine.InOut',
+            onComplete:()=>{
+              player.setScale(baseScaleX, baseScaleY);
+              STATE.action='ride';
+              setPlayerTexture('playerRide');
+            }
+          });
+        }
+      });
+    }
+  });
 }
 
-function showScoreFloat(txt){
-  const el = document.createElement('div');
-  el.className = 'score-float';
-  el.textContent = txt;
-  el.style.left = (window.innerWidth * 0.6) + 'px';
-  el.style.top = (window.innerHeight * 0.4) + 'px';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 900);
+function duck(){
+  if(!STATE.running || STATE.paused || STATE.action!=='ride' || !player) return;
+  STATE.action='duck';
+  setPlayerTexture('playerDuck');
+  player.setScale(player.scaleX*1.08, player.scaleY*0.86);
+  sceneRef.tweens.add({targets:player, scaleX:player.scaleX/1.08, scaleY:player.scaleY/0.86, duration:180, ease:'Sine.Out'});
+  clearTimeout(actionTimer);
+  actionTimer=setTimeout(()=>{
+    if(!STATE.running) return;
+    STATE.action='ride';
+    setPlayerTexture('playerRide');
+  },620);
 }
 
-function paintBurst(btn){
-  const r = btn.getBoundingClientRect();
-  const el = document.createElement('div');
-  el.className = 'paint-burst';
-  el.style.left = (r.left + r.width/2 - 60) + 'px';
-  el.style.top = (r.top + r.height/2 - 60) + 'px';
-  el.style.background = 'radial-gradient(circle,rgba(244,114,182,0.6),transparent)';
-  document.body.appendChild(el);
-  setTimeout(()=>el.remove(), 600);
+function makeCodeTexture(scene, value, good){
+  const key=`code:${value}:${good?'good':'junk'}`;
+  if(scene.textures.exists(key)) return key;
+  const rt=scene.add.renderTexture(0,0,150,80).setVisible(false);
+  const g=scene.add.graphics();
+  g.fillStyle(0x050a14,.94);
+  g.lineStyle(3,good?0x22d3ee:0xfb7185,1);
+  g.fillRoundedRect(2,2,146,76,14);
+  g.strokeRoundedRect(2,2,146,76,14);
+  const txt=scene.add.text(75,40,value,{fontFamily:'monospace',fontSize:'26px',fontStyle:'bold',color:'#ffffff'}).setOrigin(.5);
+  rt.draw([g,txt]);
+  rt.saveTexture(key);
+  g.destroy(); txt.destroy(); rt.destroy();
+  return key;
 }
 
-function endGame(won){
-  clearInterval(timerInterval);
-  document.getElementById('gameOverEyebrow').textContent = won ? 'Studio Complete' : 'Style Meter Drained';
-  document.getElementById('gameOverTitle').textContent = won ? 'MASTERPIECE!' : 'STYLE LOST';
-  document.getElementById('gameOverSub').textContent = won
-    ? `You cleared all 6 zones — tags, structure, CSS, and the full webpage skeleton. That's real coding skill.`
-    : "The style meter drained. But Zen says: every great design starts with a rough draft.";
-  document.getElementById('gameOverScore').textContent = score + ' pts';
-  document.getElementById('gameOverZen').src = won ? 'zen-victory.png' : 'zen-sad.png';
-  document.getElementById('gameOverScreen').classList.remove('hidden');
+function spawnCode(scene){
+  const remaining=REQUIRED.filter(v=>!STATE.collected.includes(v));
+  const good=remaining.length>0 && Math.random()>.32;
+  const value=good ? Phaser.Utils.Array.GetRandom(remaining) : Phaser.Utils.Array.GetRandom(JUNK);
+  const lane=Phaser.Math.Between(0,1);
+  const key=makeCodeTexture(scene,value,good);
+  spawnTrackObject(scene,{kind:'code',lane,key,value,good,baseW:88,baseH:48});
 }
 
+function spawnObstacle(scene){
+  const lane=Phaser.Math.Between(0,1);
+  const isJump=Math.random()>.5;
+  spawnTrackObject(scene,{
+    kind:isJump?'jumpObstacle':'duckObstacle',
+    lane,
+    key:isJump?'barricade':'beam',
+    baseW:isJump?120:150,
+    baseH:isJump?88:105
+  });
+}
 
-const SKELETON_LINES=[
-{id:'doctype',text:'<!DOCTYPE html>',depth:0,cue:'DOCTYPE LOCKED — the browser knows this is modern HTML.'},
-{id:'html-open',text:'<html>',depth:0,cue:'HTML OPEN — the whole webpage starts here.'},
-{id:'head-open',text:'<head>',depth:1,cue:'HEAD ONLINE — information about the page lives here.'},
-{id:'title',text:"<title>Zen's First Page</title>",depth:2,cue:'TITLE LOCKED — the browser tab has a name.'},
-{id:'head-close',text:'</head>',depth:1,cue:'HEAD COMPLETE — setup section closed.'},
-{id:'body-open',text:'<body>',depth:1,cue:'BODY ONLINE — visible page content starts here.'},
-{id:'h1',text:'<h1>Hello, World!</h1>',depth:2,cue:'H1 LOCKED — the main heading is live.'},
-{id:'p',text:'<p>I built this page from scratch.</p>',depth:2,cue:'PARAGRAPH LOCKED — visible content added.'},
-{id:'body-close',text:'</body>',depth:1,cue:'BODY COMPLETE — visible content section closed.'},
-{id:'html-close',text:'</html>',depth:0,cue:'HTML COMPLETE — the whole webpage is sealed.'}
-];
-let skeletonSelectedPiece=null,skeletonPlaced=0;
-function startSkeletonFinale(){clearInterval(timerInterval);document.getElementById('game-shell').style.display='none';document.getElementById('skeletonStage').classList.remove('hidden');buildSkeletonStage();renderSkeletonPreview(false)}
-function buildSkeletonStage(){skeletonSelectedPiece=null;skeletonPlaced=0;const slots=document.getElementById('skeletonSlots'),pieces=document.getElementById('skeletonPieces'),feedback=document.getElementById('skeletonFeedback');slots.innerHTML='';pieces.innerHTML='';feedback.textContent='DOCTYPE first. Then build the whole webpage around the head and body.';SKELETON_LINES.forEach((line,i)=>{const slot=document.createElement('div');slot.className=`skeleton-slot depth-${line.depth}`;slot.dataset.expected=line.id;slot.innerHTML=`<span class="slot-label">${i+1}</span><span class="slot-content">DROP / TAP HERE</span>`;slot.addEventListener('dragover',e=>e.preventDefault());slot.addEventListener('drop',e=>{e.preventDefault();trySkeletonPlacement(e.dataTransfer.getData('text/plain'),slot)});slot.addEventListener('click',()=>{if(skeletonSelectedPiece)trySkeletonPlacement(skeletonSelectedPiece,slot)});slots.appendChild(slot)});shuffle([...SKELETON_LINES]).forEach(line=>{const piece=document.createElement('button');piece.type='button';piece.className='skeleton-piece';piece.draggable=true;piece.dataset.id=line.id;piece.textContent=line.text;piece.addEventListener('dragstart',e=>e.dataTransfer.setData('text/plain',line.id));piece.addEventListener('click',()=>{if(piece.classList.contains('placed'))return;document.querySelectorAll('.skeleton-piece').forEach(p=>p.classList.remove('selected'));piece.classList.add('selected');skeletonSelectedPiece=line.id;feedback.textContent=`Selected ${line.text}. Now tap the matching slot.`;document.querySelectorAll('.skeleton-slot:not(.filled)').forEach(s=>s.classList.add('selected-target'))});pieces.appendChild(piece)})}
-function trySkeletonPlacement(pieceId,slot){if(!pieceId||slot.classList.contains('filled'))return;const piece=[...document.querySelectorAll('.skeleton-piece')].find(p=>p.dataset.id===pieceId),feedback=document.getElementById('skeletonFeedback');if(slot.dataset.expected!==pieceId){slot.style.animation='shake .34s ease';setTimeout(()=>slot.style.animation='',360);feedback.textContent='Not that slot — no penalty. Follow the page from top to bottom and try again.';return}const line=SKELETON_LINES.find(x=>x.id===pieceId);slot.classList.add('filled');slot.classList.remove('selected-target');slot.querySelector('.slot-content').textContent=line.text;if(piece){piece.classList.add('placed');piece.classList.remove('selected')}skeletonSelectedPiece=null;document.querySelectorAll('.skeleton-slot').forEach(s=>s.classList.remove('selected-target'));feedback.textContent=line.cue;skeletonPlaced++;score+=150;document.getElementById('nav-score').textContent=score+' pts';showScoreFloat('+150');if(skeletonPlaced===SKELETON_LINES.length)completeSkeleton()}
-function renderSkeletonPreview(done){const iframe=document.getElementById('skeleton-iframe'),doc=iframe.contentDocument||iframe.contentWindow.document;const html=done?`<!DOCTYPE html><html><head><title>Zen's First Page</title><style>*{box-sizing:border-box}body{margin:0;min-height:100vh;display:grid;place-items:center;background:linear-gradient(145deg,#0a0a1a,#1b1028);font-family:Segoe UI,sans-serif;color:#fff;padding:32px}.page{max-width:620px;padding:42px;border:1px solid rgba(244,114,182,.45);border-radius:28px;background:rgba(255,255,255,.05);box-shadow:0 0 55px rgba(244,114,182,.25),0 0 80px rgba(34,211,238,.12)}h1{margin:0 0 18px;color:#f472b6;font-size:64px;text-shadow:0 0 26px rgba(244,114,182,.55)}p{color:rgba(255,255,255,.75);font-size:20px;line-height:1.7}.tag{margin-top:24px;color:#22d3ee;font:700 13px monospace}</style></head><body><div class="page"><h1>Hello, World!</h1><p>I built this page from scratch.</p><div class="tag">&lt;head&gt; locked · &lt;body&gt; online · HTML complete</div></div></body></html>`:`<!DOCTYPE html><html><head><style>body{margin:0;min-height:100vh;display:grid;place-items:center;background:#0a0a1a;font-family:Segoe UI,sans-serif;color:#777;padding:30px}.ghost{border:1px dashed rgba(244,114,182,.35);padding:34px;border-radius:22px;text-align:center;max-width:440px}h2{color:#999}</style></head><body><div class="ghost"><h2>Page Skeleton Waiting...</h2><p>Build the HTML structure on the left. When the final closing tag locks in, this preview transforms into your complete semantic page.</p></div></body></html>`;doc.open();doc.write(html);doc.close()}
-function completeSkeleton(){renderSkeletonPreview(true);document.getElementById('skeletonFeedback').textContent='SKELETON COMPLETE — head locked, body online, webpage live!';setTimeout(()=>document.getElementById('skeletonCompleteOverlay').classList.add('show'),500)}
-document.getElementById('skeletonFinishBtn').addEventListener('click',()=>{document.getElementById('skeletonCompleteOverlay').classList.remove('show');document.getElementById('skeletonStage').classList.add('hidden');endGame(true)});
+function spawnTrackObject(scene,spec){
+  const startX=scene.scale.width*.5;
+  const startY=scene.scale.height*.37;
+  const sprite=scene.add.image(startX,startY,spec.key).setDepth(4).setAlpha(.25);
+  sprite.setDisplaySize(spec.baseW*.20,spec.baseH*.20);
+  objects.push({...spec,sprite,p:0,hit:false});
+}
+
+function objectTargetX(o,p){
+  const center=sceneRef.scale.width*.5;
+  const lane=laneXs[o.lane];
+  return Phaser.Math.Linear(center,lane,p);
+}
+
+function updateObjects(delta){
+  for(let i=objects.length-1;i>=0;i--){
+    const o=objects[i], s=o.sprite;
+    if(!s?.active){objects.splice(i,1);continue}
+    o.p += (delta/2550) * STATE.speed;
+    const p=o.p;
+    const y=Phaser.Math.Linear(sceneRef.scale.height*.37,sceneRef.scale.height*.90,p);
+    const perspective=.18 + p*1.05;
+    s.x=objectTargetX(o,p);
+    s.y=y;
+    s.setAlpha(clamp(p*3.4,.2,1));
+    s.setScale(perspective);
+
+    if(!o.hit && p>.77 && p<.94 && o.lane===STATE.lane){
+      let success=false;
+      if(o.kind==='code') success=true;
+      if(o.kind==='jumpObstacle') success=STATE.action==='jump' && player.y < playerBaseY-45;
+      if(o.kind==='duckObstacle') success=STATE.action==='duck';
+
+      if(o.kind==='code'){
+        o.hit=true;
+        if(o.good && !STATE.collected.includes(o.value)){
+          STATE.collected.push(o.value);
+          STATE.combo++;
+          STATE.score+=150;
+          if(STATE.combo>=3 && STATE.combo%3===0){
+            const bonus = 25*Math.floor(STATE.combo/3);
+            STATE.score+=bonus;
+            showCombo(STATE.combo);
+          }else{
+            toast(`+150  ${o.value}`);
+          }
+          burst(s.x,s.y,0x22d3ee);
+        } else {
+          STATE.combo=0;
+          STATE.score=Math.max(0,STATE.score-40);
+          toast('JUNK -40',true);
+          burst(s.x,s.y,0xfb7185);
+        }
+        updateHud();
+        s.destroy();
+        objects.splice(i,1);
+        if(STATE.collected.length===REQUIRED.length){
+          sceneRef.time.delayedCall(450,openCheckpoint);
+        }
+        continue;
+      }
+
+      if(success){
+        o.hit=true;
+        STATE.score+=75;
+        toast('+75 CLEAN MOVE');
+        burst(s.x,s.y,0x22d3ee);
+        updateHud();
+      }else if(performance.now()>STATE.invincibleUntil){
+        o.hit=true;
+        hitPlayer();
+      }
+    }
+
+    if(p>=1.06){
+      s.destroy(); objects.splice(i,1);
+    }
+  }
+}
+
+function spawnDust(){
+  if(!sceneRef || !player) return;
+  const dust = sceneRef.add.circle(
+    player.x + Phaser.Math.Between(-14,14),
+    player.y + player.displayHeight*0.34,
+    Phaser.Math.Between(3,6),
+    0xffffff, .5
+  ).setDepth(6);
+  sceneRef.tweens.add({
+    targets:dust,
+    x:dust.x + Phaser.Math.Between(-18,-6),
+    y:dust.y + Phaser.Math.Between(4,12),
+    alpha:0, scale:0.2,
+    duration:Phaser.Math.Between(320,480),
+    ease:'Sine.Out',
+    onComplete:()=>dust.destroy()
+  });
+}
+
+function burst(x,y,color){
+  if(!sceneRef) return;
+  for(let i=0;i<10;i++){
+    const dot=sceneRef.add.circle(x,y,Phaser.Math.Between(2,5),color,1).setDepth(8);
+    sceneRef.tweens.add({
+      targets:dot,
+      x:x+Phaser.Math.Between(-55,55), y:y+Phaser.Math.Between(-70,35),
+      alpha:0, scale:0, duration:Phaser.Math.Between(260,520),
+      onComplete:()=>dot.destroy()
+    });
+  }
+}
+
+function hitPlayer(){
+  STATE.combo=0;
+  STATE.lives--;
+  STATE.score=Math.max(0,STATE.score-100);
+  STATE.invincibleUntil=performance.now()+900;
+  toast('-100 HIT',true);
+  updateHud();
+  sceneRef.cameras.main.shake(180,.008);
+  player.setTint(0xfb7185);
+  sceneRef.time.delayedCall(160,()=>player?.clearTint());
+  if(STATE.lives<=0) endGame();
+}
+
+function clearObjects(){
+  objects.forEach(o=>o.sprite?.destroy());
+  objects=[];
+}
+
+function resetState(){
+  STATE.running=true; STATE.paused=false; STATE.lane=0; STATE.action='ride';
+  STATE.score=0; STATE.lives=3; STATE.collected=[]; STATE.speed=1;
+  STATE.elapsed=0; STATE.lastSpawn=0; STATE.lastObstacle=0; STATE.invincibleUntil=0;
+  STATE.combo=0; STATE.lastDust=0;
+  lastScoreShown=0; lastCodeShown=0;
+  $('vignette').style.boxShadow='inset 0 0 0 rgba(34,211,238,0)';
+  if(player){ player.setScale(1); player.angle=0; }
+  clearObjects(); clearTimeout(actionTimer);
+  if(jumpTween) jumpTween.stop();
+  setPlayerTexture('playerRide');
+  recalcLayout();
+  updateHud();
+}
 
 function startGame(){
-  document.getElementById('introScreen').classList.add('hidden');
-  document.getElementById('game-shell').style.display='flex';
-  updatePreview();
-  loadChallenge();
+  hideAllOverlays();
+  resetState();
+  $('cityBg').play().catch(()=>{});
 }
+
+function pauseGame(){
+  STATE.paused=true;
+}
+
+function openCheckpoint(){
+  if(!STATE.running) return;
+  pauseGame();
+  clearObjects();
+  const bank=$('pieceBank'), answer=$('answer');
+  bank.innerHTML=''; answer.innerHTML=''; $('feedback').textContent='';
+  [...STATE.collected].sort(()=>Math.random()-.5).forEach(value=>{
+    const b=document.createElement('button');
+    b.className='piece'; b.textContent=value;
+    b.addEventListener('click',()=>{(b.parentElement===bank?answer:bank).appendChild(b)});
+    bank.appendChild(b);
+  });
+  $('checkpointScreen').classList.remove('hidden');
+}
+
+function checkCode(){
+  const answer=[...document.querySelectorAll('#answer .piece')].map(el=>el.textContent);
+  if(answer.length!==REQUIRED.length){$('feedback').textContent='Use all four pieces first.';return}
+  if(answer.join('|')!==REQUIRED.join('|')){
+    $('feedback').textContent='Not quite — OPEN → tag name → CLOSE → closing tag.';
+    return;
+  }
+  STATE.score+=500; updateHud();
+  $('feedback').textContent='CODE LOCKED ✓';
+  setTimeout(winGame,550);
+}
+
+function winGame(){
+  STATE.running=false; STATE.paused=true; clearObjects();
+  $('checkpointScreen').classList.add('hidden');
+  $('winText').textContent=`Pizza mission complete. Final score: ${STATE.score} pts.`;
+  $('winScreen').classList.remove('hidden');
+}
+
+function endGame(){
+  STATE.running=false; STATE.paused=true; clearObjects();
+  $('gameOverText').textContent=`Score: ${STATE.score}. Code collected: ${STATE.collected.length}/4.`;
+  $('gameOverScreen').classList.remove('hidden');
+}
+
+class RunScene extends Phaser.Scene{
+  constructor(){super('Run')}
+  preload(){
+    this.load.image('playerRide',ASSET+'zen-ride.png');
+    this.load.image('playerDuck',ASSET+'zen-duck.png');
+    this.load.image('playerOllie',ASSET+'zen-ollie.png');
+    this.load.image('barricade',ASSET+'zen-jump-barricade.png');
+    this.load.image('beam',ASSET+'zen-duck-beam.png');
+  }
+  create(){
+    sceneRef=this;
+    this.cameras.main.setBackgroundColor('rgba(0,0,0,0)');
+    player=this.add.image(0,0,'playerRide').setDepth(7).setOrigin(.5,.72);
+    recalcLayout();
+    this.scale.on('resize',recalcLayout);
+
+    this.input.keyboard.on('keydown-LEFT',()=>moveLane(-1));
+    this.input.keyboard.on('keydown-A',()=>moveLane(-1));
+    this.input.keyboard.on('keydown-RIGHT',()=>moveLane(1));
+    this.input.keyboard.on('keydown-D',()=>moveLane(1));
+    this.input.keyboard.on('keydown-UP',jump);
+    this.input.keyboard.on('keydown-W',jump);
+    this.input.keyboard.on('keydown-SPACE',jump);
+    this.input.keyboard.on('keydown-DOWN',duck);
+    this.input.keyboard.on('keydown-S',duck);
+
+    this.input.on('pointerdown',p=>{swipeStart={x:p.x,y:p.y,t:performance.now()}});
+    this.input.on('pointerup',p=>{
+      if(!swipeStart || !STATE.running || STATE.paused) return;
+      const dx=p.x-swipeStart.x, dy=p.y-swipeStart.y;
+      if(Math.max(Math.abs(dx),Math.abs(dy))<35) return;
+      if(Math.abs(dx)>Math.abs(dy)) moveLane(dx>0?1:-1);
+      else if(dy<0) jump(); else duck();
+      swipeStart=null;
+    });
+  }
+  update(time,delta){
+    if(!STATE.running || STATE.paused) return;
+    STATE.elapsed += delta;
+    STATE.speed = clamp(1 + STATE.elapsed/42000,1,1.75);
+
+    if(time-STATE.lastSpawn > 1050/STATE.speed){
+      STATE.lastSpawn=time;
+      spawnCode(this);
+    }
+    if(time-STATE.lastObstacle > 2400/STATE.speed){
+      STATE.lastObstacle=time;
+      spawnObstacle(this);
+    }
+    if(STATE.action==='ride' && time-STATE.lastDust > 140/STATE.speed){
+      STATE.lastDust=time;
+      spawnDust();
+    }
+    updateObjects(delta);
+    updateHud();
+  }
+}
+
+const config={
+  type:Phaser.AUTO,
+  parent:'gameCanvas',
+  transparent:true,
+  backgroundColor:'rgba(0,0,0,0)',
+  width:window.innerWidth,
+  height:window.innerHeight,
+  scale:{mode:Phaser.Scale.RESIZE,width:'100%',height:'100%'},
+  render:{antialias:true,pixelArt:false,roundPixels:false},
+  scene:[RunScene]
+};
+
+new Phaser.Game(config);
+
+$('leftBtn').addEventListener('pointerdown',()=>moveLane(-1));
+$('rightBtn').addEventListener('pointerdown',()=>moveLane(1));
+$('jumpBtn').addEventListener('pointerdown',jump);
+$('duckBtn').addEventListener('pointerdown',duck);
+$('startBtn').addEventListener('click',startGame);
+$('retryBtn').addEventListener('click',startGame);
+$('replayBtn').addEventListener('click',startGame);
+$('checkBtn').addEventListener('click',checkCode);
+
+window.addEventListener('blur',()=>{ if(STATE.running) STATE.paused=true; });
+document.addEventListener('visibilitychange',()=>{
+  if(document.hidden && STATE.running) STATE.paused=true;
+  else if(!document.hidden && STATE.running && !['checkpointScreen','winScreen','gameOverScreen'].some(id=>!$(id).classList.contains('hidden'))) STATE.paused=false;
+});
+
+updateHud();
+})();
 </script>
 </body>
 </html>
