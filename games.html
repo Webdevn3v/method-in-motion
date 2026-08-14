@@ -258,9 +258,9 @@
       inset:0;
       z-index:-5;
       background:
-        radial-gradient(circle at 20% 35%,rgba(255,107,170,.19),transparent 34%),
-        radial-gradient(circle at 80% 50%,rgba(0,232,255,.14),transparent 36%),
-        linear-gradient(to bottom,rgba(5,5,8,.18),rgba(5,5,8,.28) 50%,rgba(5,5,8,.98));
+        radial-gradient(circle at 20% 35%,rgba(255,107,170,.10),transparent 34%),
+        radial-gradient(circle at 80% 50%,rgba(0,232,255,.08),transparent 36%),
+        linear-gradient(to bottom,rgba(5,5,8,.04) 0%,rgba(5,5,8,.04) 48%,rgba(5,5,8,.50) 80%,rgba(5,5,8,.90) 100%);
     }
     .hero::after{
       content:"";
@@ -312,6 +312,7 @@
     .hero-content{
       width:min(900px,92vw);
       padding:130px 24px 110px;
+      margin-top:180px;
       text-align:center;
     }
     .hero-kicker{
@@ -759,6 +760,24 @@
       line-height:1.4;
     }
     .world-note strong{color:var(--accent)}
+
+    .world-icebreaker{
+      margin-top:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      border:1px dashed rgba(var(--accent-rgb),.4);
+      border-radius:999px;
+      padding:9px 12px;
+      font-family:var(--display);
+      font-size:.48rem;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+      color:var(--accent);
+      transition:.2s ease;
+    }
+    .world-icebreaker:hover{background:rgba(var(--accent-rgb),.1);transform:translateY(-1px)}
 
     .zen-card{--accent:#f472b6;--accent-rgb:244,114,182}
     .byte-card{--accent:#a855f7;--accent-rgb:168,85,247}
@@ -1231,8 +1250,6 @@
     <div class="particles" id="particles" aria-hidden="true"></div>
 
     <div class="hero-content">
-      <div class="hero-kicker">MiM Underground</div>
-      <h1 class="hero-title">THE GAME <span>UNIVERSE</span></h1>
       <p class="hero-sub">
         Rebuilding, one cabinet at a time.
       </p>
@@ -1241,6 +1258,11 @@
         <a href="#worlds" class="hero-btn primary">Choose a World</a>
         <button class="hero-btn secondary" type="button" onclick="openSignup('coders')">Get Free Access</button>
       </div>
+
+      <a href="#worlds" class="hero-status" style="text-decoration:none">
+        <span class="hero-status-dot"></span>
+        🎮 Play an icebreaker while you wait
+      </a>
     </div>
 
     <div class="scroll-hint">
@@ -1266,7 +1288,7 @@
           <div class="section-eyebrow">Choose your destination</div>
           <h2 class="section-title">Explore the world. See what's coming.</h2>
           <p class="section-copy">
-            Every world's open. Games are rebuilding — check back or sign up below.
+            Every world's open. Games are rebuilding — check back or sign up below. Every character also has an icebreaker game waiting on their lesson page in MiM U.
           </p>
         </div>
 
@@ -1292,6 +1314,7 @@
               <a class="world-action explore" href="zen.html">Explore World →</a>
               <button class="world-action play" type="button" data-game-link="zen-coming-soon.html">🛠️ Coming Soon</button>
             </div>
+            <a class="world-icebreaker" href="zen.html">🎮 Icebreaker: Memory Matrix →</a>
           </div>
         </article>
 
@@ -1310,6 +1333,7 @@
               <a class="world-action explore" href="byte.html">Explore World →</a>
               <button class="world-action play" type="button" data-game-link="byte-coming-soon.html">🛠️ Coming Soon</button>
             </div>
+            <a class="world-icebreaker" href="byte.html">🎮 Icebreaker: Pattern Match →</a>
           </div>
         </article>
 
@@ -1328,6 +1352,7 @@
               <a class="world-action explore" href="bug.html">Explore World →</a>
               <button class="world-action play" type="button" data-game-link="bug-coming-soon.html">🛠️ Coming Soon</button>
             </div>
+            <a class="world-icebreaker" href="bug.html">🎮 Icebreaker: Spot the Difference →</a>
           </div>
         </article>
 
@@ -1346,6 +1371,7 @@
               <a class="world-action explore" href="echo.html">Explore World →</a>
               <button class="world-action play" type="button" data-game-link="echo-coming-soon.html">🛠️ Coming Soon</button>
             </div>
+            <a class="world-icebreaker" href="echo.html">🎮 Icebreaker: Beatbox →</a>
           </div>
         </article>
 
@@ -1364,6 +1390,7 @@
               <a class="world-action explore" href="loop.html">Explore World →</a>
               <button class="world-action play" type="button" data-game-link="loop-coming-soon.html">🛠️ Coming Soon</button>
             </div>
+            <a class="world-icebreaker" href="loop.html">🎮 Icebreaker: Step Counter →</a>
           </div>
         </article>
 
@@ -1382,6 +1409,7 @@
               <a class="world-action explore" href="nova.html">Explore World →</a>
               <button class="world-action play" type="button" data-game-link="nova-coming-soon.html">🛠️ Coming Soon</button>
             </div>
+            <a class="world-icebreaker" href="nova.html">🎮 Icebreaker: Skeleton Stack →</a>
           </div>
         </article>
 
