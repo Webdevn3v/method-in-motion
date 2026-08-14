@@ -227,7 +227,7 @@
     /* HERO */
     .hero{
       position:relative;
-      min-height:100svh;
+      min-height:62vh;
       display:grid;
       place-items:center;
       overflow:hidden;
@@ -238,10 +238,10 @@
       inset:0;
       z-index:-6;
       background-image:url('mim-underground-arcade.png');
-      background-size:cover;
+      background-size:contain;
       background-position:center;
-      transform:scale(1.025);
-      animation:heroBreath 15s ease-in-out infinite, neonFlicker 6s ease-in-out infinite;
+      background-repeat:no-repeat;
+      background-color:#0a0812;
       will-change:transform;
     }
     @keyframes neonFlicker{
@@ -430,6 +430,55 @@
       0%{transform:translate(-50%,0);opacity:0}
       30%{opacity:1}
       100%{transform:translate(-50%,14px);opacity:0}
+    }
+
+    /* BUTTON BAR */
+    .button-bar{
+      position:relative;
+      z-index:2;
+      background:#08060f;
+      border-bottom:1px solid rgba(255,255,255,.08);
+      padding:26px 20px;
+    }
+    .button-bar-inner{
+      max-width:1400px;
+      margin:0 auto;
+      display:flex;
+      justify-content:center;
+      flex-wrap:wrap;
+      gap:14px;
+    }
+
+    /* TICKER */
+    .ticker{
+      position:relative;
+      z-index:2;
+      overflow:hidden;
+      background:linear-gradient(90deg,rgba(251,191,36,.06),rgba(198,107,255,.08),rgba(0,232,255,.06));
+      border-bottom:1px solid rgba(251,191,36,.20);
+      padding:12px 0;
+    }
+    .ticker-track{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      width:max-content;
+      white-space:nowrap;
+      animation:tickerScroll 28s linear infinite;
+      font-family:var(--display);
+      font-size:.60rem;
+      letter-spacing:.05em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.80);
+    }
+    .ticker-item strong{color:var(--yellow)}
+    .ticker-sep{color:rgba(255,255,255,.30)}
+    @keyframes tickerScroll{
+      from{transform:translateX(0);}
+      to{transform:translateX(-50%);}
+    }
+    @media(prefers-reduced-motion:reduce){
+      .ticker-track{animation:none;overflow-x:auto}
     }
 
     /* ACCESS STRIP */
@@ -1249,29 +1298,37 @@
     <div class="hero-grid" aria-hidden="true"></div>
     <div class="particles" id="particles" aria-hidden="true"></div>
 
-    <div class="hero-content">
-      <p class="hero-sub">
-        Rebuilding, one cabinet at a time.
-      </p>
-
-      <div class="hero-actions">
-        <a href="#worlds" class="hero-btn primary">Choose a World</a>
-        <button class="hero-btn secondary" type="button" onclick="openSignup('coders')">Get Free Access</button>
-      </div>
-
-      <a href="#worlds" class="hero-status" style="text-decoration:none">
-        <span class="hero-status-dot"></span>
-        🎮 Play an icebreaker while you wait
-      </a>
-    </div>
-
     <div class="scroll-hint">
       <span>Enter the universe</span>
       <div class="scroll-mouse"></div>
     </div>
   </header>
 
-  <section class="construction-banner" aria-label="Games under construction notice">
+  <section class="button-bar" aria-label="Main actions">
+    <div class="button-bar-inner">
+      <a href="#worlds" class="hero-btn primary">Choose a World</a>
+      <button class="hero-btn secondary" type="button" onclick="openSignup('coders')">Get Free Access</button>
+    </div>
+  </section>
+
+  <section class="ticker" aria-label="Site announcements">
+    <div class="ticker-track">
+      <span class="ticker-item">🛠️ We're a small crew rebuilding all 6 games at once.</span>
+      <span class="ticker-sep">•</span>
+      <span class="ticker-item">Sign up free and get <strong>full Coders access</strong> to everything else on the site till they're back.</span>
+      <span class="ticker-sep">•</span>
+      <span class="ticker-item">🎮 Every character now has an icebreaker game waiting on their lesson page in MiM U.</span>
+      <span class="ticker-sep">•</span>
+      <span class="ticker-item">🛠️ We're a small crew rebuilding all 6 games at once.</span>
+      <span class="ticker-sep">•</span>
+      <span class="ticker-item">Sign up free and get <strong>full Coders access</strong> to everything else on the site till they're back.</span>
+      <span class="ticker-sep">•</span>
+      <span class="ticker-item">🎮 Every character now has an icebreaker game waiting on their lesson page in MiM U.</span>
+      <span class="ticker-sep">•</span>
+    </div>
+  </section>
+
+  <section class="construction-banner" aria-label="Games under construction notice" style="display:none">
     <div class="construction-inner">
       <div class="construction-text">
         <span class="construction-icon">🛠️</span>
