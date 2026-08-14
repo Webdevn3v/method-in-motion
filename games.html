@@ -237,12 +237,20 @@
       position:absolute;
       inset:0;
       z-index:-6;
-      background-image:url('universe-night-veiw.png');
+      background-image:url('mim-underground-arcade.png');
       background-size:cover;
       background-position:center;
       transform:scale(1.025);
-      animation:heroBreath 15s ease-in-out infinite;
+      animation:heroBreath 15s ease-in-out infinite, neonFlicker 6s ease-in-out infinite;
       will-change:transform;
+    }
+    @keyframes neonFlicker{
+      0%,100%{filter:brightness(1)}
+      92%{filter:brightness(1)}
+      93%{filter:brightness(.82)}
+      94%{filter:brightness(1.05)}
+      95%{filter:brightness(.9)}
+      96%{filter:brightness(1)}
     }
     .hero::before{
       content:"";
@@ -966,6 +974,58 @@
       100%{opacity:1}
     }
 
+    /* CONSTRUCTION BANNER */
+    .construction-banner{
+      position:relative;
+      border-top:1px solid rgba(251,191,36,.22);
+      border-bottom:1px solid rgba(251,191,36,.22);
+      background:linear-gradient(90deg,rgba(251,191,36,.07),rgba(198,107,255,.08),rgba(0,232,255,.06));
+      overflow:hidden;
+    }
+    .construction-inner{
+      max-width:1400px;
+      margin:0 auto;
+      padding:22px 34px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:22px;
+      flex-wrap:wrap;
+      text-align:center;
+    }
+    .construction-text{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      flex-wrap:wrap;
+      justify-content:center;
+      font-family:var(--display);
+      font-size:.62rem;
+      letter-spacing:.06em;
+      text-transform:uppercase;
+      color:rgba(255,255,255,.82);
+    }
+    .construction-icon{font-size:.95rem}
+    .construction-text strong{color:var(--yellow)}
+    .construction-cta{
+      flex:0 0 auto;
+      border:none;
+      border-radius:999px;
+      padding:11px 22px;
+      cursor:pointer;
+      font-family:var(--display);
+      font-size:.56rem;
+      font-weight:800;
+      letter-spacing:.12em;
+      text-transform:uppercase;
+      background:linear-gradient(135deg,var(--yellow),var(--pink));
+      color:#050508;
+      box-shadow:0 8px 24px rgba(251,191,36,.22);
+      transition:.2s ease;
+      white-space:nowrap;
+    }
+    .construction-cta:hover{transform:translateY(-2px)}
+
     /* RESPONSIVE */
     @media(max-width:1120px){
       nav{padding:14px 22px}
@@ -1033,6 +1093,7 @@
       .map-content{min-height:760px;align-items:flex-end}
       .map-copy{padding:25px}
       .upgrade-card{padding:40px 22px}
+      .construction-inner{flex-direction:column;padding:20px 22px}
     }
     @media(prefers-reduced-motion:reduce){
       *,*::before,*::after{
@@ -1170,20 +1231,15 @@
     <div class="particles" id="particles" aria-hidden="true"></div>
 
     <div class="hero-content">
-      <div class="hero-kicker">Method in Motion</div>
+      <div class="hero-kicker">MiM Underground</div>
       <h1 class="hero-title">THE GAME <span>UNIVERSE</span></h1>
       <p class="hero-sub">
-        Six living worlds. Six coding adventures. Explore every character realm, then jump into the game your membership unlocks.
+        Rebuilding, one cabinet at a time.
       </p>
 
       <div class="hero-actions">
         <a href="#worlds" class="hero-btn primary">Choose a World</a>
-        <a href="byte-game.html" class="hero-btn secondary" data-direct-byte>Play Byte Free</a>
-      </div>
-
-      <div class="hero-status">
-        <span class="hero-status-dot"></span>
-        Byte’s Glitch Hunt is open to every signed-in Explorer
+        <button class="hero-btn secondary" type="button" onclick="openSignup('coders')">Get Free Access</button>
       </div>
     </div>
 
@@ -1193,11 +1249,13 @@
     </div>
   </header>
 
-  <section class="access-strip" aria-label="Membership access summary">
-    <div class="access-inner">
-      <div class="access-pill explorer"><strong>Explorer</strong> Zen + Byte’s game</div>
-      <div class="access-pill sparks"><strong>Sparks</strong> Bug + Echo games</div>
-      <div class="access-pill coders"><strong>Coders</strong> Loop + Nova games</div>
+  <section class="construction-banner" aria-label="Games under construction notice">
+    <div class="construction-inner">
+      <div class="construction-text">
+        <span class="construction-icon">🛠️</span>
+        We're a small crew rebuilding all 6 games at once. Sign up free and get <strong>full Coders access</strong> to everything else on the site till they're back.
+      </div>
+      <button class="construction-cta" type="button" onclick="openSignup('coders')">Sign Up Free →</button>
     </div>
   </section>
 
@@ -1206,9 +1264,9 @@
       <div class="section-top">
         <div>
           <div class="section-eyebrow">Choose your destination</div>
-          <h2 class="section-title">Explore the world. Then play the mission.</h2>
+          <h2 class="section-title">Explore the world. See what's coming.</h2>
           <p class="section-copy">
-            Every character world is open to explore. Game access follows your membership tier, so visitors can still meet the crew and see where each adventure begins.
+            Every world's open. Games are rebuilding — check back or sign up below.
           </p>
         </div>
 
@@ -1219,30 +1277,29 @@
 
       <div class="world-grid">
 
-        <article class="world-card zen-card" id="card-zen" data-character="zen" data-tier="explorer">
+        <article class="world-card zen-card" id="card-zen" data-character="zen">
           <div class="world-bg" style="background-image:url('zen-entrance.png')"></div>
           <div class="world-shade"></div><div class="world-glow"></div><div class="world-pulse"></div>
           <span class="world-spark s1"></span><span class="world-spark s2"></span><span class="world-spark s3"></span><span class="world-spark s4"></span>
-          <div class="world-topbar"><span class="world-tier">Explorer</span><span class="world-open">Explorer Game</span></div>
+          <div class="world-topbar"><span class="world-tier">World Open</span><span class="world-open">🛠️ Game Rebuilding</span></div>
           <div class="world-content">
             <div class="world-character">Zen · The Creative Coder</div>
             <h3 class="world-name">ZEN</h3>
             <div class="world-location">Zen’s Coding Realm</div>
-            <div class="world-game">Coding Studio</div>
-            <p class="world-description">Match live design targets by writing real CSS across three creative build challenges.</p>
+            <div class="world-game">Pizza Mission</div>
+            <p class="world-description">An all-new HTML skateboard run through Neon City — collect the code, build the page, beat the 404.</p>
             <div class="world-actions">
               <a class="world-action explore" href="zen.html">Explore World →</a>
-              <button class="world-action play locked" type="button" data-game-link="zen-game.html">🔒 Sign In to Play</button>
+              <button class="world-action play" type="button" data-game-link="zen-coming-soon.html">🛠️ Coming Soon</button>
             </div>
-            <p class="world-note" data-note>Included with <strong>Explorer</strong>.</p>
           </div>
         </article>
 
-        <article class="world-card byte-card" id="card-byte" data-character="byte" data-tier="explorer">
+        <article class="world-card byte-card" id="card-byte" data-character="byte">
           <div class="world-bg" style="background-image:url('byte-entrance.png')"></div>
           <div class="world-shade"></div><div class="world-glow"></div><div class="world-pulse"></div>
           <span class="world-spark s1"></span><span class="world-spark s2"></span><span class="world-spark s3"></span><span class="world-spark s4"></span>
-          <div class="world-topbar"><span class="world-tier">Explorer</span><span class="world-open">Explorer Game</span></div>
+          <div class="world-topbar"><span class="world-tier">World Open</span><span class="world-open">🛠️ Game Rebuilding</span></div>
           <div class="world-content">
             <div class="world-character">Byte · The Data Tracker</div>
             <h3 class="world-name">BYTE</h3>
@@ -1251,17 +1308,16 @@
             <p class="world-description">Find the bugs hiding in Byte’s world before they multiply through three zones of chaos.</p>
             <div class="world-actions">
               <a class="world-action explore" href="byte.html">Explore World →</a>
-              <button class="world-action play locked" type="button" data-game-link="byte-game.html">🔒 Sign In to Play</button>
+              <button class="world-action play" type="button" data-game-link="byte-coming-soon.html">🛠️ Coming Soon</button>
             </div>
-            <p class="world-note" data-note>Free for every signed-in <strong>Explorer</strong>.</p>
           </div>
         </article>
 
-        <article class="world-card bug-card" id="card-bug" data-character="bug" data-tier="sparks">
+        <article class="world-card bug-card" id="card-bug" data-character="bug">
           <div class="world-bg" style="background-image:url('bug-entrance.png')"></div>
           <div class="world-shade"></div><div class="world-glow"></div><div class="world-pulse"></div>
           <span class="world-spark s1"></span><span class="world-spark s2"></span><span class="world-spark s3"></span><span class="world-spark s4"></span>
-          <div class="world-topbar"><span class="world-tier">Sparks</span><span class="world-open">World Open</span></div>
+          <div class="world-topbar"><span class="world-tier">World Open</span><span class="world-open">🛠️ Game Rebuilding</span></div>
           <div class="world-content">
             <div class="world-character">Bug · The Glitch Hunter</div>
             <h3 class="world-name">BUG</h3>
@@ -1270,17 +1326,16 @@
             <p class="world-description">Code corrupts in real time. Spot the broken line and repair it before the system crashes.</p>
             <div class="world-actions">
               <a class="world-action explore" href="bug.html">Explore World →</a>
-              <button class="world-action play locked" type="button" data-game-link="bug-game.html">🔒 Sparks Required</button>
+              <button class="world-action play" type="button" data-game-link="bug-coming-soon.html">🛠️ Coming Soon</button>
             </div>
-            <p class="world-note" data-note>Unlocks with <strong>Sparks</strong>.</p>
           </div>
         </article>
 
-        <article class="world-card echo-card" id="card-echo" data-character="echo" data-tier="sparks">
+        <article class="world-card echo-card" id="card-echo" data-character="echo">
           <div class="world-bg" style="background-image:url('echo-entrance.png')"></div>
           <div class="world-shade"></div><div class="world-glow"></div><div class="world-pulse"></div>
           <span class="world-spark s1"></span><span class="world-spark s2"></span><span class="world-spark s3"></span><span class="world-spark s4"></span>
-          <div class="world-topbar"><span class="world-tier">Sparks</span><span class="world-open">World Open</span></div>
+          <div class="world-topbar"><span class="world-tier">World Open</span><span class="world-open">🛠️ Game Rebuilding</span></div>
           <div class="world-content">
             <div class="world-character">Echo · The Signal Sender</div>
             <h3 class="world-name">ECHO</h3>
@@ -1289,17 +1344,16 @@
             <p class="world-description">Wire JavaScript events in the correct order and fire the signal from DOM load to async fetch.</p>
             <div class="world-actions">
               <a class="world-action explore" href="echo.html">Explore World →</a>
-              <button class="world-action play locked" type="button" data-game-link="echo-game.html">🔒 Sparks Required</button>
+              <button class="world-action play" type="button" data-game-link="echo-coming-soon.html">🛠️ Coming Soon</button>
             </div>
-            <p class="world-note" data-note>Unlocks with <strong>Sparks</strong>.</p>
           </div>
         </article>
 
-        <article class="world-card loop-card" id="card-loop" data-character="loop" data-tier="coders">
+        <article class="world-card loop-card" id="card-loop" data-character="loop">
           <div class="world-bg" style="background-image:url('loop-entrance.png')"></div>
           <div class="world-shade"></div><div class="world-glow"></div><div class="world-pulse"></div>
           <span class="world-spark s1"></span><span class="world-spark s2"></span><span class="world-spark s3"></span><span class="world-spark s4"></span>
-          <div class="world-topbar"><span class="world-tier">Coders</span><span class="world-open">World Open</span></div>
+          <div class="world-topbar"><span class="world-tier">World Open</span><span class="world-open">🛠️ Game Rebuilding</span></div>
           <div class="world-content">
             <div class="world-character">Loop · The Flow Master</div>
             <h3 class="world-name">LOOP</h3>
@@ -1308,17 +1362,16 @@
             <p class="world-description">Arrange code blocks into the correct sequence and build loops that actually work.</p>
             <div class="world-actions">
               <a class="world-action explore" href="loop.html">Explore World →</a>
-              <button class="world-action play locked" type="button" data-game-link="loop-game.html">🔒 Coders Required</button>
+              <button class="world-action play" type="button" data-game-link="loop-coming-soon.html">🛠️ Coming Soon</button>
             </div>
-            <p class="world-note" data-note>Unlocks with <strong>Coders</strong>.</p>
           </div>
         </article>
 
-        <article class="world-card nova-card" id="card-nova" data-character="nova" data-tier="coders">
+        <article class="world-card nova-card" id="card-nova" data-character="nova">
           <div class="world-bg" style="background-image:url('nova-entrance.png')"></div>
           <div class="world-shade"></div><div class="world-glow"></div><div class="world-pulse"></div>
           <span class="world-spark s1"></span><span class="world-spark s2"></span><span class="world-spark s3"></span><span class="world-spark s4"></span>
-          <div class="world-topbar"><span class="world-tier">Coders</span><span class="world-open">World Open</span></div>
+          <div class="world-topbar"><span class="world-tier">World Open</span><span class="world-open">🛠️ Game Rebuilding</span></div>
           <div class="world-content">
             <div class="world-character">Nova · The Curious Coder</div>
             <h3 class="world-name">NOVA</h3>
@@ -1327,9 +1380,8 @@
             <p class="world-description">Snap HTML, CSS, and JavaScript parts into place to assemble three working mini-apps.</p>
             <div class="world-actions">
               <a class="world-action explore" href="nova.html">Explore World →</a>
-              <button class="world-action play locked" type="button" data-game-link="nova-game.html">🔒 Coders Required</button>
+              <button class="world-action play" type="button" data-game-link="nova-coming-soon.html">🛠️ Coming Soon</button>
             </div>
-            <p class="world-note" data-note>Unlocks with <strong>Coders</strong>.</p>
           </div>
         </article>
 
@@ -1343,7 +1395,7 @@
             <div class="section-eyebrow">The connected universe</div>
             <h2>Six worlds. One glowing path.</h2>
             <p>
-              Every character teaches a different way of thinking like a programmer. Explore their worlds now, then return as your membership opens new missions.
+              Every character teaches a different way of thinking like a programmer. Explore their worlds now, then come back when the new games launch.
             </p>
             <a href="characters.html" class="hero-btn secondary">Meet the Full Crew</a>
           </div>
@@ -1353,14 +1405,10 @@
 
     <section class="upgrade-section">
       <div class="upgrade-card">
-        <div class="section-eyebrow">Keep exploring</div>
-        <h2>Unlock more of the <span>Game Universe</span></h2>
-        <p>
-          Explorer opens Zen and Byte’s game. Sparks adds Bug and Echo. Coders unlocks Loop and Nova, plus the full lesson paths and capstones tied to their worlds.
-        </p>
+        <h2>Still building. <span>Still free to explore.</span></h2>
         <div class="hero-actions">
-          <a href="index.html#membership" class="hero-btn primary">See Memberships</a>
-          <a href="byte-game.html" class="hero-btn secondary" data-direct-byte>Play Byte Free</a>
+          <button class="hero-btn primary" type="button" onclick="openSignup('coders')">Sign Up Free</button>
+          <a href="#worlds" class="hero-btn secondary">Back to Worlds</a>
         </div>
       </div>
     </section>
@@ -1374,70 +1422,20 @@
   </footer>
 
   <script>
-    let currentTier = null;
     let soundEnabled = false;
     let audioContext = null;
 
-    const tierNames = {
-      explorer: 'Explorer',
-      sparks: 'Sparks',
-      coders: 'Coders'
-    };
+    // Kept as a no-op so auth-init.js can still safely call window.handleTierUnlock()
+    // without erroring — game-tier gating is disabled while all 6 games are under construction.
+    window.handleTierUnlock = function(){};
 
-    function normalizeTier(tier){
-      const value = String(tier || 'explorer').toLowerCase();
-      if(value === 'spark') return 'sparks';
-      if(value === 'coder') return 'coders';
-      return value;
-    }
-
-    function canAccessGame(character){
-      if(currentTier === null) return false;
-      if(typeof window.mimHasAccess === 'function'){
-        return window.mimHasAccess(character, currentTier, 'game');
-      }
-
-      // Safe fallback only if auth-init.js has not loaded yet.
-      if(character === 'zen' || character === 'byte') return true;
-      if(character === 'bug' || character === 'echo'){
-        return currentTier === 'sparks' || currentTier === 'coders';
-      }
-      return currentTier === 'coders';
-    }
-
-    window.handleTierUnlock = function(tier){
-      currentTier = normalizeTier(tier);
-
-      document.querySelectorAll('.world-card').forEach(card => {
-        const character = card.dataset.character;
-        const requiredTier = card.dataset.tier;
-        const playButton = card.querySelector('.world-action.play');
-        const note = card.querySelector('[data-note]');
-        const hasAccess = canAccessGame(character);
-
-        playButton.classList.toggle('locked', !hasAccess);
-        playButton.innerHTML = hasAccess
-          ? (character === 'byte' ? 'Play Free →' : 'Play Game →')
-          : `🔒 ${tierNames[requiredTier]} Required`;
-
-        if(note){
-          note.innerHTML = hasAccess
-            ? `Game unlocked with your <strong>${tierNames[currentTier] || 'membership'}</strong> access.`
-            : `Explore the world now. The game unlocks with <strong>${tierNames[requiredTier]}</strong>.`;
-        }
-      });
-    };
-
-    function openSignup(plan='explorer'){
-      sessionStorage.setItem('mimSelectedPlan',normalizeTier(plan));
+    function openSignup(plan='coders'){
+      sessionStorage.setItem('mimSelectedPlan',plan);
       if(typeof window.openAuthModal === 'function'){
         window.openAuthModal('signup');
       }
     }
-
-    function goToMembership(){
-      window.location.href = 'index.html#membership';
-    }
+    window.openSignup = openSignup;
 
     function playTone(type='hover'){
       if(!soundEnabled) return;
@@ -1454,11 +1452,10 @@
         const settings = {
           hover:[420,0.03,.022],
           click:[610,0.05,.045],
-          locked:[190,0.08,.060],
           warp:[340,0.22,.075]
         }[type] || [420,0.03,.022];
 
-        oscillator.type = type === 'locked' ? 'sawtooth' : 'sine';
+        oscillator.type = 'sine';
         oscillator.frequency.setValueAtTime(settings[0],now);
         if(type === 'warp'){
           oscillator.frequency.exponentialRampToValueAtTime(920,now + settings[1]);
@@ -1494,38 +1491,10 @@
         event.stopPropagation();
 
         const card = button.closest('.world-card');
-        const character = card.dataset.character;
         const url = button.dataset.gameLink;
-
-        if(currentTier === null){
-          playTone('locked');
-          openSignup(card.dataset.tier);
-          return;
-        }
-
-        if(!canAccessGame(character)){
-          playTone('locked');
-          goToMembership();
-          return;
-        }
 
         playTone('click');
         warpTo(card,url);
-      });
-    });
-
-    document.querySelectorAll('[data-direct-byte]').forEach(link => {
-      link.addEventListener('click',event => {
-        if(currentTier === null){
-          event.preventDefault();
-          openSignup('explorer');
-          return;
-        }
-
-        if(!canAccessGame('byte')){
-          event.preventDefault();
-          goToMembership();
-        }
       });
     });
 
