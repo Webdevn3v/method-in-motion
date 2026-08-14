@@ -1,744 +1,351 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Loop's Flow Chain | Method in Motion</title>
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Space+Grotesk:wght@400;500;700&family=Space+Mono&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --cyan: #00f5d4;
-      --blue: #4fc3f7;
-      --bg: #040d12;
-      --glow-c: 0 0 30px rgba(0,245,212,0.7);
-      --glow-b: 0 0 30px rgba(79,195,247,0.6);
-    }
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    body {
-      font-family: 'Space Grotesk', sans-serif;
-      background: var(--bg);
-      color: #fff;
-      height: 100vh;
-      overflow: hidden;
-      user-select: none;
-    }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Loop — Coming Soon | Method in Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
 
-    /* ── WORLD ── */
-    #worldBg {
-      position: fixed; inset: 0; z-index: 0;
-      background-image: url('loop-entrance.png');
-      background-size: cover; background-position: center top;
-      filter: brightness(0.4) saturate(1.2);
-    }
-    #worldOverlay {
-      position: fixed; inset: 0; z-index: 1;
-      background:
-        radial-gradient(ellipse at 50% 0%, rgba(0,245,212,0.15) 0%, transparent 60%),
-        linear-gradient(to bottom, rgba(4,13,18,0.2) 0%, rgba(4,13,18,0.65) 70%, rgba(4,13,18,0.96) 100%);
-    }
-    #scanlines {
-      position: fixed; inset: 0; z-index: 2; pointer-events: none;
-      background: repeating-linear-gradient(to bottom, transparent, transparent 2px, rgba(0,0,0,0.06) 2px, rgba(0,0,0,0.06) 4px);
-    }
+  :root {
+    --void: #0a0818;
+    --deep: #150f35;
+    --accent: #33d6ff;
+    --accent2: #8b5cf6;
+    --gold: #ffb238;
+    --text: #f3eeff;
+    --muted: #b6a9dd;
+  }
 
-    /* ── SPINNING RINGS (Loop's world signature) ── */
-    .ring {
-      position: fixed; border-radius: 50%;
-      border: 1px solid rgba(0,245,212,0.12);
-      pointer-events: none; z-index: 3;
-      top: 50%; left: 50%;
-    }
-    #ring1 { width: 600px; height: 600px; margin: -300px 0 0 -300px; animation: spinRing 18s linear infinite; }
-    #ring2 { width: 900px; height: 900px; margin: -450px 0 0 -450px; animation: spinRing 28s linear infinite reverse; border-color: rgba(79,195,247,0.08); }
-    #ring3 { width: 1200px; height: 1200px; margin: -600px 0 0 -600px; animation: spinRing 40s linear infinite; border-color: rgba(0,245,212,0.05); }
-    @keyframes spinRing { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
 
-    .hidden { display: none !important; }
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
 
-    /* ── INSTRUCTIONS ── */
-    #instructScreen {
-      position: fixed; inset: 0; z-index: 180;
-      display: flex; flex-direction: column;
-      align-items: center; justify-content: center;
-      text-align: center; padding: 1.5rem;
-      background: rgba(4,13,18,0.88);
-    }
-    #instructGif {
-      width: min(280px, 50vw); height: auto;
-      filter: drop-shadow(0 0 40px rgba(0,245,212,0.85));
-      animation: floatIdle 3s ease-in-out infinite;
-      margin-bottom: 1.1rem;
-    }
-    @keyframes floatIdle {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-14px); }
-    }
-    .instruct-name {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2rem, 5vw, 3.2rem);
-      font-weight: 900; color: #fff;
-      text-shadow: var(--glow-c); letter-spacing: 0.12em; margin-bottom: 0.2rem;
-    }
-    .instruct-sub {
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(0.65rem, 1.5vw, 0.85rem);
-      color: var(--cyan); letter-spacing: 0.2em; margin-bottom: 1.4rem;
-    }
-    .how-grid {
-      display: flex; gap: 0.8rem; flex-wrap: wrap;
-      justify-content: center; max-width: 680px; margin-bottom: 1.5rem;
-    }
-    .how-card {
-      background: rgba(0,245,212,0.08);
-      border: 1px solid rgba(0,245,212,0.28);
-      border-radius: 10px; padding: 0.9rem 1rem; width: 148px;
-    }
-    .how-icon { font-size: 1.6rem; margin-bottom: 0.35rem; }
-    .how-lbl {
-      font-family: 'Orbitron', monospace; font-size: 0.6rem;
-      color: var(--cyan); letter-spacing: 0.1em; margin-bottom: 0.25rem; font-weight: 700;
-    }
-    .how-desc { font-size: 0.78rem; color: rgba(255,255,255,0.6); line-height: 1.4; }
-    .start-btn {
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      color: var(--bg); border: none;
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(0.9rem, 2vw, 1.15rem);
-      font-weight: 900; padding: 0.95rem 3rem;
-      border-radius: 8px; cursor: pointer;
-      letter-spacing: 0.15em; box-shadow: var(--glow-c);
-      animation: pulsBtn 2s ease-in-out infinite; transition: transform 0.2s;
-    }
-    @keyframes pulsBtn {
-      0%,100% { transform: scale(1); }
-      50% { transform: scale(1.04); }
-    }
-    .start-btn:hover { transform: scale(1.07) !important; }
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  }
 
-    /* ── NAV ── */
-    #gameNav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 50;
-      display: flex; align-items: center; justify-content: space-between;
-      padding: 0 1.5rem; height: 52px;
-      background: rgba(4,13,18,0.85);
-      border-bottom: 1px solid rgba(0,245,212,0.18);
-      backdrop-filter: blur(8px);
-    }
-    .nav-back {
-      display: flex; align-items: center; gap: 0.5rem;
-      background: none; border: 1px solid rgba(0,245,212,0.28);
-      color: rgba(255,255,255,0.7);
-      font-family: 'Space Mono', monospace; font-size: 0.72rem;
-      padding: 0.4rem 1rem; border-radius: 4px;
-      cursor: pointer; transition: all 0.2s; text-decoration: none;
-    }
-    .nav-back:hover { border-color: var(--cyan); color: var(--cyan); }
-    .nav-game-title {
-      font-family: 'Orbitron', monospace; font-size: 0.85rem;
-      font-weight: 700; color: var(--cyan);
-      letter-spacing: 0.12em; text-shadow: var(--glow-c);
-    }
-    .nav-tier-badge {
-      background: rgba(0,245,212,0.12);
-      border: 1px solid rgba(0,245,212,0.35);
-      color: var(--cyan); font-family: 'Orbitron', monospace;
-      font-size: 0.6rem; font-weight: 700;
-      padding: 0.28rem 0.75rem; border-radius: 4px; letter-spacing: 0.1em;
-    }
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 20px 60px;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--void) 0%, var(--deep) 55%, var(--void) 100%);
+  }
 
-    /* ── HUD ── */
-    #hud {
-      position: fixed; top: 52px; left: 0; right: 0; z-index: 40;
-      display: flex; align-items: center;
-      padding: 0 1.5rem; height: 44px;
-      background: rgba(4,13,18,0.7);
-      border-bottom: 1px solid rgba(0,245,212,0.1);
-    }
-    .hud-score {
-      font-family: 'Orbitron', monospace; font-size: 1.3rem;
-      font-weight: 900; color: var(--cyan);
-      text-shadow: var(--glow-c); min-width: 80px;
-    }
-    .hud-sep { width:1px; height:24px; background:rgba(0,245,212,0.18); margin:0 1rem; }
-    .hud-stat { display:flex; flex-direction:column; align-items:center; }
-    .hud-stat-label { font-family:'Space Mono',monospace; font-size:0.52rem; color:rgba(255,255,255,0.35); letter-spacing:0.1em; }
-    .hud-stat-val { font-family:'Orbitron',monospace; font-size:0.9rem; font-weight:700; color:#fff; }
-    .hud-combo {
-      font-family:'Orbitron',monospace; font-size:1rem;
-      font-weight:900; color:var(--blue); text-shadow:var(--glow-b); min-width:40px;
-    }
-    .hud-spacer { flex:1; }
-    .hud-lives { display:flex; gap:0.4rem; }
-    .life { font-size:1.4rem; transition:all 0.3s; }
-    .life.lost { opacity:0.14; filter:grayscale(1); }
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.30;
+    z-index: 0;
+    animation: drift 16s ease-in-out infinite;
+  }
+  .glow-orb.a { width: 420px; height: 420px; background: var(--accent); top: -80px; left: -100px; }
+  .glow-orb.b { width: 360px; height: 360px; background: var(--accent2); bottom: -100px; right: -80px; animation-delay: -6s; }
+  .glow-orb.c { width: 260px; height: 260px; background: var(--accent); top: 40%; left: 60%; animation-delay: -11s; opacity: 0.18; }
 
-    /* ── CHAIN PROGRESS ── */
-    #chainBar {
-      position: fixed; top: 96px; left: 0; right: 0; z-index: 35;
-      display: flex; align-items: center; justify-content: center;
-      gap: 0.5rem; padding: 0.4rem 1rem;
-      background: rgba(4,13,18,0.6);
-      border-bottom: 1px solid rgba(0,245,212,0.08);
-    }
-    .chain-node {
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 2px solid rgba(0,245,212,0.25);
-      display: flex; align-items: center; justify-content: center;
-      font-family: 'Orbitron', monospace; font-size: 0.65rem;
-      font-weight: 700; color: rgba(255,255,255,0.35);
-      transition: all 0.3s;
-    }
-    .chain-node.done {
-      border-color: var(--cyan); color: var(--cyan);
-      background: rgba(0,245,212,0.12);
-      box-shadow: 0 0 12px rgba(0,245,212,0.5);
-    }
-    .chain-node.next {
-      border-color: var(--cyan); color: #fff;
-      background: rgba(0,245,212,0.06);
-      animation: chainPulse 0.8s ease-in-out infinite;
-    }
-    @keyframes chainPulse {
-      0%,100% { box-shadow: 0 0 8px rgba(0,245,212,0.4); }
-      50% { box-shadow: 0 0 20px rgba(0,245,212,0.8); }
-    }
-    .chain-connector {
-      width: 20px; height: 2px;
-      background: rgba(0,245,212,0.15); border-radius: 1px;
-      transition: background 0.3s;
-    }
-    .chain-connector.done { background: var(--cyan); box-shadow: 0 0 6px rgba(0,245,212,0.5); }
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -25px) scale(1.08); }
+  }
 
-    /* ── ARENA ── */
-    #arena {
-      position: fixed; top: 140px; left: 0; right: 0; bottom: 0; z-index: 10;
-    }
+  .scroll-track {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 46%;
+    min-height: 260px;
+    display: flex;
+    width: 200%;
+    animation: scrollLoop 34s linear infinite;
+    z-index: 0;
+    opacity: 0.85;
+  }
+  .scroll-track img {
+    width: 50%; height: 100%; object-fit: cover; display: block; flex-shrink: 0;
+  }
+  @keyframes scrollLoop {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .hero.has-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--void) 0%, rgba(10,8,24,0.25) 30%, rgba(10,8,24,0.15) 60%, var(--void) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
 
-    /* ── LOOP CHARACTER ── */
-    #loopCharWrap {
-      position: fixed; right: 0; bottom: 0; z-index: 20;
-      display: flex; flex-direction: column; align-items: center;
-      pointer-events: none;
-      width: clamp(200px, 26vw, 360px);
-    }
-    #loopChar {
-      width: 100%; height: auto;
-      filter: drop-shadow(0 0 40px rgba(0,245,212,0.6));
-    }
-    #loopPlatform {
-      width: 80%; height: 10px;
-      background: linear-gradient(to right, transparent, rgba(0,245,212,0.5), transparent);
-      border-radius: 50%; box-shadow: 0 0 26px rgba(0,245,212,0.4);
-      margin-top: -6px;
-    }
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 760px;
+  }
 
-    /* ── ORB ── */
-    .orb {
-      position: absolute; border-radius: 50%;
-      display: flex; align-items: center; justify-content: center;
-      cursor: pointer; z-index: 15;
-      transition: transform 0.1s;
-      font-family: 'Orbitron', monospace;
-      font-weight: 900;
-    }
-    .orb:hover { transform: scale(1.1); }
-    .orb.correct {
-      background: radial-gradient(circle at 35% 35%, rgba(0,245,212,0.9), rgba(0,180,160,0.7));
-      border: 2px solid var(--cyan);
-      box-shadow: 0 0 20px rgba(0,245,212,0.7), inset 0 0 10px rgba(255,255,255,0.2);
-      color: #fff; font-size: clamp(0.65rem, 1.5vw, 0.9rem);
-      animation: orbFloat 2s ease-in-out infinite;
-    }
-    .orb.decoy {
-      background: radial-gradient(circle at 35% 35%, rgba(255,60,60,0.7), rgba(180,20,20,0.5));
-      border: 2px solid rgba(255,80,80,0.5);
-      box-shadow: 0 0 12px rgba(255,60,60,0.4);
-      color: rgba(255,255,255,0.6); font-size: clamp(0.6rem, 1.3vw, 0.8rem);
-      animation: orbFloat 2.5s ease-in-out infinite reverse;
-    }
-    @keyframes orbFloat {
-      0%,100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-8px) scale(1.03); }
-    }
-    .orb-label { text-align: center; line-height: 1.1; }
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+  }
 
-    /* ── CENTER FACE POP ── */
-    #facePop {
-      position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%, -50%) scale(0);
-      z-index: 100;
-      width: clamp(130px, 20vw, 200px); height: auto;
-      filter: drop-shadow(0 0 28px rgba(0,245,212,0.9));
-      pointer-events: none;
-      transition: transform 0.15s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s;
-      opacity: 0;
-    }
-    #facePop.show { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+  .title-wrap {
+    position: relative;
+    display: inline-block;
+  }
 
-    /* ── BANNERS ── */
-    #comboBanner {
-      position: fixed; top: 32%; left: 50%;
-      transform: translateX(-50%) translateY(-50%);
-      z-index: 60; pointer-events: none; opacity: 0;
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(1.8rem,4.5vw,3.5rem);
-      font-weight: 900; color: var(--cyan); text-shadow: var(--glow-c);
-    }
-    #comboBanner.show { animation: comboPop 0.85s ease forwards; }
-    @keyframes comboPop {
-      0%   { opacity:1; transform:translateX(-50%) translateY(-50%) scale(0.5); }
-      60%  { opacity:1; transform:translateX(-50%) translateY(-50%) scale(1.2); }
-      100% { opacity:0; transform:translateX(-50%) translateY(-80%) scale(1); }
-    }
-    #levelBanner {
-      position: fixed; top: 50%; left: 50%;
-      transform: translate(-50%,-50%);
-      z-index: 65; pointer-events: none; opacity: 0;
-      font-family: 'Orbitron', monospace;
-      font-size: clamp(2rem,5vw,4.5rem);
-      font-weight: 900; color: #fff; text-shadow: var(--glow-c); text-align: center;
-    }
-    #levelBanner.show { animation: levelPop 1.5s ease forwards; }
-    @keyframes levelPop {
-      0%   { opacity:0; transform:translate(-50%,-50%) scale(0.6); }
-      20%  { opacity:1; transform:translate(-50%,-50%) scale(1.1); }
-      70%  { opacity:1; transform:translate(-50%,-50%) scale(1); }
-      100% { opacity:0; transform:translate(-50%,-50%) scale(0.9); }
-    }
+  .tagline {
+    margin-top: 26px;
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.6;
+    font-family: 'Space Mono', monospace;
+  }
 
-    /* ── WRONG FLASH ── */
-    #wrongFlash {
-      position: fixed; inset: 0; z-index: 70;
-      background: rgba(255,40,40,0.15);
-      pointer-events: none; opacity: 0;
-    }
-    #wrongFlash.show { animation: wrongPulse 0.4s ease forwards; }
-    @keyframes wrongPulse {
-      0%   { opacity:1; }
-      100% { opacity:0; }
-    }
+  .badge {
+    margin-top: 30px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px dashed rgba(255, 178, 56, 0.6);
+    padding: 8px 20px;
+    border-radius: 999px;
+  }
 
-    /* ── HIT EFFECTS ── */
-    .hit-effect {
-      position: absolute; pointer-events: none; z-index: 30;
-      font-family: 'Orbitron', monospace; font-size: 1.3rem;
-      font-weight: 900; color: var(--cyan);
-      animation: hitFloat 0.75s ease forwards;
-    }
-    .hit-effect.bad { color: #ff4444; }
-    @keyframes hitFloat {
-      0%   { opacity:1; transform:translateY(0) scale(1); }
-      100% { opacity:0; transform:translateY(-55px) scale(1.3); }
-    }
-    .particle {
-      position: absolute; width: 6px; height: 6px; border-radius: 50%;
-      pointer-events: none; z-index: 28;
-      animation: particleBurst 0.55s ease forwards;
-    }
-    @keyframes particleBurst {
-      0%   { opacity:1; transform:translate(0,0) scale(1); }
-      100% { opacity:0; transform:translate(var(--dx),var(--dy)) scale(0); }
-    }
+  .signup {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
 
-    /* ── GAME OVER ── */
-    #gameOverScreen {
-      position: fixed; inset: 0; z-index: 150;
-      display: flex; align-items: center; justify-content: center;
-      flex-direction: column; text-align: center; padding: 2rem;
-      background: rgba(4,13,18,0.93);
-    }
-    .go-char { width: min(260px,46vw); height: auto; filter: drop-shadow(0 0 30px rgba(0,245,212,0.6)); margin-bottom: 1.3rem; }
-    .go-title { font-family:'Orbitron',monospace; font-size:clamp(1.8rem,4.5vw,3.2rem); font-weight:900; margin-bottom:0.45rem; letter-spacing:0.1em; }
-    .go-title.win  { color:var(--cyan); text-shadow:var(--glow-c); }
-    .go-title.lose { color:#ff6b6b; text-shadow:0 0 20px rgba(255,60,60,0.6); }
-    .go-score-label { font-family:'Orbitron',monospace; font-size:0.72rem; color:rgba(255,255,255,0.4); letter-spacing:0.15em; margin-bottom:0.2rem; }
-    .go-final-score { font-family:'Orbitron',monospace; font-size:clamp(2rem,5vw,3.5rem); font-weight:900; color:#fff; text-shadow:var(--glow-c); margin-bottom:1.8rem; }
-    .go-btn {
-      background: linear-gradient(135deg, var(--cyan), var(--blue));
-      color: var(--bg); border: none;
-      font-family: 'Orbitron', monospace; font-size: 0.95rem; font-weight: 700;
-      padding: 0.85rem 2.3rem; border-radius: 8px; cursor: pointer;
-      letter-spacing: 0.1em; margin: 0.35rem;
-      transition: all 0.2s; box-shadow: var(--glow-c);
-    }
-    .go-btn:hover { transform: scale(1.04); }
-    .go-btn.outline {
-      background: transparent; border: 1px solid rgba(0,245,212,0.4);
-      color: rgba(255,255,255,0.65); box-shadow: none;
-    }
-  </style>
+  .signup input {
+    flex: 1 1 240px;
+    background: rgba(21, 15, 53, 0.7);
+    border: 1px solid rgba(182, 169, 221, 0.35);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    padding: 14px 18px;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .signup input:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .signup input::placeholder { color: var(--muted); }
+
+  .signup button {
+    flex: 0 0 auto;
+    background: var(--accent);
+    color: #08060f;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 45%, transparent);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .signup button:hover { transform: translateY(-2px); box-shadow: 0 4px 28px color-mix(in srgb, var(--accent) 60%, transparent); }
+  .signup button:focus-visible { outline: 2px solid var(--accent2); outline-offset: 3px; }
+
+  .signup-note {
+    margin-top: 16px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    max-width: 420px;
+    line-height: 1.5;
+  }
+  .signup-note strong { color: var(--gold); font-weight: 600; }
+
+  .form-status {
+    margin-top: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent2);
+    min-height: 1.2em;
+  }
+
+  .features {
+    position: relative;
+    z-index: 2;
+    padding: 90px 24px 100px;
+    display: grid;
+    gap: 28px;
+    max-width: 980px;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .feature {
+    background: rgba(21, 15, 53, 0.5);
+    border: 1px solid rgba(182, 169, 221, 0.18);
+    border-radius: 10px;
+    padding: 30px 26px;
+  }
+
+  .feature .tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .feature h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .feature p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 20px 50px;
+    border-top: 1px solid rgba(182, 169, 221, 0.12);
+  }
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+  }
+  footer a:hover { text-decoration: underline; }
+  footer p { color: var(--muted); font-size: 0.78rem; margin-top: 10px; }
+
+
+  .loop-title {
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2.6rem, 10vw, 6rem);
+    line-height: 1;
+    color: var(--accent);
+    text-shadow: 0 0 18px color-mix(in srgb, var(--accent) 50%, transparent);
+    letter-spacing: 0.06em;
+  }
+  .flow-underline {
+    height: 4px;
+    width: 100%;
+    margin-top: 14px;
+    border-radius: 4px;
+    background: linear-gradient(90deg, transparent, var(--accent), var(--accent2), var(--accent), transparent);
+    background-size: 200% 100%;
+    animation: flowmove 2.6s linear infinite;
+  }
+  @keyframes flowmove {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
+  }
+
+</style>
 </head>
 <body>
 
-<div id="worldBg"></div>
-<div id="worldOverlay"></div>
-<div id="scanlines"></div>
-<div class="ring" id="ring1"></div>
-<div class="ring" id="ring2"></div>
-<div class="ring" id="ring3"></div>
-
-<!-- ── INSTRUCTIONS ── -->
-<div id="instructScreen">
-  <img id="instructGif" src="loop-idle.gif" alt="Loop" onerror="this.src='loop-motion.gif'" />
-  <div class="instruct-name">FLOW CHAIN</div>
-  <div class="instruct-sub">LOOP'S FLOW LAB · SPARKS+</div>
-  <div class="how-grid">
-    <div class="how-card">
-      <div class="how-icon">∞</div>
-      <div class="how-lbl">Follow the Flow</div>
-      <div class="how-desc">Click orbs in order: START → 1 → 2 → 3 → END. Don't skip.</div>
+<section class="hero">
+  
+  <div class="hero-content">
+    <span class="eyebrow">Loop's Next Mission</span>
+    <div class="title-wrap">
+      <h1 class="loop-title">LOOP</h1><div class="flow-underline" aria-hidden="true"></div>
     </div>
-    <div class="how-card">
-      <div class="how-icon">🔴</div>
-      <div class="how-lbl">Avoid Decoys</div>
-      <div class="how-desc">Red orbs are traps. Clicking one breaks your chain and costs a life.</div>
-    </div>
-    <div class="how-card">
-      <div class="how-icon">⚡</div>
-      <div class="how-lbl">Build Speed</div>
-      <div class="how-desc">Complete chains faster for bonus points. Chains get longer each level.</div>
-    </div>
-    <div class="how-card">
-      <div class="how-icon">🔥</div>
-      <div class="how-lbl">Chain Combos</div>
-      <div class="how-desc">Complete multiple chains in a row without mistakes to multiply your score.</div>
-    </div>
+    <p class="tagline">&ldquo;The flow never stops.&rdquo;</p>
+    <span class="badge">Coming Soon</span>
+
+    <form class="signup" id="notifyForm">
+      <label for="email" class="sr-only" style="position:absolute; left:-9999px;">Email address</label>
+      <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      <button type="submit">Notify Me</button>
+    </form>
+    <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+    <p class="signup-note">Sign up now and get <strong>free early access for your first two weeks</strong> when the new Loop game launches.</p>
   </div>
-  <button class="start-btn" onclick="startGame()">▶ START FLOW</button>
-</div>
+</section>
 
-<!-- ── NAV ── -->
-<nav id="gameNav">
-  <a href="games.html" class="nav-back">← Game Universe</a>
-  <div class="nav-game-title">Loop's Flow Chain</div>
-  <div class="nav-tier-badge">SPARKS+</div>
-</nav>
-
-<!-- ── HUD ── -->
-<div id="hud">
-  <div class="hud-score" id="scoreVal">0</div>
-  <div class="hud-sep"></div>
-  <div class="hud-stat">
-    <div class="hud-stat-label">CHAINS</div>
-    <div class="hud-stat-val" id="chainsVal">0</div>
+<section class="features">
+  
+  <div class="feature">
+    <span class="tag">&lt;discover&gt;</span>
+    <h3>Discover the concept</h3>
+    <p>Loop introduces the idea in their own style — the kind of moment that makes a new coding concept click.</p>
   </div>
-  <div class="hud-sep"></div>
-  <div class="hud-stat">
-    <div class="hud-stat-label">LEVEL</div>
-    <div class="hud-stat-val" id="levelVal">1</div>
+  <div class="feature">
+    <span class="tag">&lt;build&gt;</span>
+    <h3>Build it yourself</h3>
+    <p>Hands-on challenges turn the concept into something real that Loop helped you make happen.</p>
   </div>
-  <div class="hud-sep"></div>
-  <div class="hud-combo" id="comboHud">x1</div>
-  <div class="hud-spacer"></div>
-  <div class="hud-lives">
-    <div class="life" id="life1">∞</div>
-    <div class="life" id="life2">∞</div>
-    <div class="life" id="life3">∞</div>
+  <div class="feature">
+    <span class="tag">&lt;play&gt;</span>
+    <h3>Play it. Practice it.</h3>
+    <p>Repetition that doesn't feel repetitive — the concept sticks because you actually got to play with it.</p>
   </div>
-</div>
+</section>
 
-<!-- ── CHAIN PROGRESS BAR ── -->
-<div id="chainBar"></div>
-
-<!-- ── ARENA ── -->
-<div id="arena"></div>
-
-<!-- ── LOOP CHARACTER ── -->
-<div id="loopCharWrap">
-  <img id="loopChar" src="loop-pose.png" alt="Loop" onerror="this.src='loop-motion.gif'" />
-  <div id="loopPlatform"></div>
-</div>
-
-<!-- ── FACE POP ── -->
-<img id="facePop" src="loop-happy.png" alt="" />
-
-<!-- ── BANNERS ── -->
-<div id="comboBanner"></div>
-<div id="levelBanner"></div>
-<div id="wrongFlash"></div>
-
-<!-- ── GAME OVER ── -->
-<div id="gameOverScreen" class="hidden">
-  <img class="go-char" id="goChar" src="loop-victory.png" alt="Loop" onerror="this.src='loop-motion.gif'" />
-  <div class="go-title" id="goTitle">FLOW COMPLETE!</div>
-  <div class="go-score-label">FINAL SCORE</div>
-  <div class="go-final-score" id="goScore">0</div>
-  <div>
-    <button class="go-btn" onclick="restartGame()">▶ PLAY AGAIN</button>
-    <button class="go-btn outline" onclick="location.href='games.html'">← Game Universe</button>
-  </div>
-</div>
+<footer>
+  <a href="https://methodinmotion.org">← Back to methodinmotion.org</a>
+  <p>© 2026 Method in Motion</p>
+</footer>
 
 <script>
-// ── STATE ──
-let score=0, chains=0, lives=3, level=1, combo=1;
-let chainLength=4, currentStep=0, orbCount=0;
-let gameRunning=false, spawnTimer=null, facepopTimer=null;
-let chainNodes=[];
-
-// ── CHAIN SEQUENCES ──
-// Each level adds one more step to the chain
-function getChainLabels() {
-  const base = ['START','1','2','3','4','5','6','7','8','END'];
-  const len = Math.min(3 + level, 8); // starts at 4 nodes, max 8
-  return base.slice(0, len).concat(['END']).slice(0, len + 1);
-}
-
-// ── START ──
-function startGame() {
-  document.getElementById('instructScreen').classList.add('hidden');
-  score=0; chains=0; lives=3; level=1; combo=1;
-  gameRunning=true;
-  updateHUD();
-  newChain();
-}
-
-// ── NEW CHAIN ──
-function newChain() {
-  if (!gameRunning) return;
-  currentStep = 0;
-  const labels = getChainLabels();
-  chainLength = labels.length;
-  buildChainBar(labels);
-  spawnOrbs(labels);
-}
-
-function buildChainBar(labels) {
-  const bar = document.getElementById('chainBar');
-  bar.innerHTML = '';
-  labels.forEach((lbl, i) => {
-    const node = document.createElement('div');
-    node.className = 'chain-node' + (i === 0 ? ' next' : '');
-    node.textContent = lbl;
-    node.id = 'cn-' + i;
-    bar.appendChild(node);
-    if (i < labels.length - 1) {
-      const conn = document.createElement('div');
-      conn.className = 'chain-connector';
-      conn.id = 'cc-' + i;
-      bar.appendChild(conn);
+  document.getElementById('notifyForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var status = document.getElementById('formStatus');
+    var emailInput = document.getElementById('email');
+    if (emailInput.value) {
+      status.textContent = "You're on the list. ✦";
+      emailInput.value = '';
     }
   });
-  chainNodes = labels;
-}
-
-function updateChainBar() {
-  chainNodes.forEach((lbl, i) => {
-    const node = document.getElementById('cn-' + i);
-    const conn = document.getElementById('cc-' + i);
-    if (!node) return;
-    node.className = 'chain-node';
-    if (i < currentStep) node.classList.add('done');
-    else if (i === currentStep) node.classList.add('next');
-    if (conn) {
-      conn.className = 'chain-connector';
-      if (i < currentStep) conn.classList.add('done');
-    }
-  });
-}
-
-// ── SPAWN ORBS ──
-function spawnOrbs(labels) {
-  const arena = document.getElementById('arena');
-  arena.innerHTML = '';
-  orbCount = 0;
-
-  const decoyCount = Math.min(2 + level, 6);
-  const decoyLabels = ['X','?','ERR','NULL','NaN','VOID','SKIP','BREAK'];
-
-  // Correct orbs
-  labels.forEach((lbl, i) => {
-    spawnOrb(arena, lbl, 'correct', i);
-  });
-
-  // Decoy orbs
-  for (let d = 0; d < decoyCount; d++) {
-    const dlbl = decoyLabels[d % decoyLabels.length];
-    spawnOrb(arena, dlbl, 'decoy', -1);
-  }
-}
-
-function spawnOrb(arena, label, type, step) {
-  const size = type === 'correct' ? clamp(60, 9, 90) : clamp(50, 8, 75);
-  const el = document.createElement('div');
-  el.className = 'orb ' + type;
-  el.style.width = size + 'px';
-  el.style.height = size + 'px';
-
-  // Random position avoiding edges
-  const maxX = arena.offsetWidth - size - 20;
-  const maxY = arena.offsetHeight - size - 20;
-  let x = 20 + Math.random() * maxX;
-  let y = 20 + Math.random() * maxY;
-  el.style.left = x + 'px';
-  el.style.top = y + 'px';
-
-  el.innerHTML = `<div class="orb-label">${label}</div>`;
-
-  // Gentle movement
-  let vx = (Math.random() - 0.5) * (1.5 + level * 0.2);
-  let vy = (Math.random() - 0.5) * (1.5 + level * 0.2);
-  const moveT = setInterval(() => {
-    if (!gameRunning) { clearInterval(moveT); return; }
-    x += vx; y += vy;
-    if (x < 10 || x > arena.offsetWidth - size - 10) vx *= -1;
-    if (y < 10 || y > arena.offsetHeight - size - 10) vy *= -1;
-    el.style.left = x + 'px';
-    el.style.top = y + 'px';
-  }, 16);
-
-  el.addEventListener('click', () => {
-    if (!gameRunning) return;
-    if (type === 'correct') {
-      if (chainNodes[currentStep] === label) {
-        // Correct step
-        spawnParticles(x + size/2, y + size/2);
-        spawnHitEffect(x + size/2, y, '+' + (10 * combo * level));
-        score += 10 * combo * level;
-        currentStep++;
-        updateChainBar();
-        updateHUD();
-        showFace('happy');
-
-        if (currentStep >= chainLength) {
-          // Chain complete
-          clearInterval(moveT);
-          combo = Math.min(combo + 1, 8);
-          chains++;
-          score += 50 * combo;
-          updateHUD();
-          if (combo >= 3) showComboBanner('x' + combo + ' CHAIN!');
-          if (combo >= 4) showFace('victory');
-          checkLevel();
-          setTimeout(() => newChain(), 600);
-        }
-      } else {
-        // Wrong order
-        wrongClick(el, x, y, size);
-      }
-    } else {
-      // Decoy
-      wrongClick(el, x, y, size);
-    }
-  });
-
-  arena.appendChild(el);
-  el._moveT = moveT;
-}
-
-function clamp(base, perLevel, max) {
-  return Math.min(base + level * perLevel * 0, max); // fixed size for clarity
-}
-
-function wrongClick(el, x, y, size) {
-  lives--;
-  combo = 1;
-  updateHUD();
-  showFace('scared');
-  flashWrong();
-  spawnHitEffect(x + size/2, y, '✕', true);
-  el.style.animation = 'none';
-  el.style.opacity = '0.3';
-  setTimeout(() => { if (el.parentNode) el.remove(); }, 400);
-  if (lives <= 0) endGame(false);
-}
-
-// ── LEVEL ──
-function checkLevel() {
-  const next = Math.floor(chains / 5) + 1;
-  if (next > level) {
-    level = next;
-    showLevelBanner('LEVEL ' + level);
-    updateHUD();
-  }
-}
-
-// ── HUD ──
-function updateHUD() {
-  document.getElementById('scoreVal').textContent = score;
-  document.getElementById('chainsVal').textContent = chains;
-  document.getElementById('levelVal').textContent = level;
-  document.getElementById('comboHud').textContent = 'x' + combo;
-  for (let i=1;i<=3;i++) document.getElementById('life'+i).classList.toggle('lost', i > lives);
-}
-
-// ── FACE POP ──
-function showFace(expr) {
-  const map = { happy:'loop-happy.png', victory:'loop-victory.png', scared:'loop-scared.png' };
-  const img = document.getElementById('facePop');
-  img.src = map[expr] || 'loop-happy.png';
-  img.classList.add('show');
-  clearTimeout(facepopTimer);
-  facepopTimer = setTimeout(() => img.classList.remove('show'), 900);
-}
-
-// ── EFFECTS ──
-function flashWrong() {
-  const f = document.getElementById('wrongFlash');
-  f.className = 'show';
-  setTimeout(() => f.className = '', 420);
-}
-function showComboBanner(text) {
-  const b = document.getElementById('comboBanner');
-  b.textContent = text; b.className = 'show';
-  setTimeout(() => b.className = '', 900);
-}
-function showLevelBanner(text) {
-  const b = document.getElementById('levelBanner');
-  b.textContent = text; b.className = 'show';
-  setTimeout(() => b.className = '', 1600);
-}
-function spawnParticles(x, y) {
-  const arena = document.getElementById('arena');
-  for (let i=0;i<8;i++) {
-    const p = document.createElement('div');
-    p.className = 'particle';
-    const a = (i/8)*Math.PI*2, d = 38+Math.random()*26;
-    p.style.left = x+'px'; p.style.top = y+'px';
-    p.style.background = Math.random()>0.5 ? '#00f5d4' : '#4fc3f7';
-    p.style.setProperty('--dx', Math.cos(a)*d+'px');
-    p.style.setProperty('--dy', Math.sin(a)*d+'px');
-    arena.appendChild(p);
-    setTimeout(() => p.remove(), 560);
-  }
-}
-function spawnHitEffect(x, y, text, bad=false) {
-  const arena = document.getElementById('arena');
-  const el = document.createElement('div');
-  el.className = 'hit-effect' + (bad ? ' bad' : '');
-  el.style.left = x+'px'; el.style.top = y+'px';
-  el.textContent = text;
-  arena.appendChild(el);
-  setTimeout(() => el.remove(), 760);
-}
-
-// ── END ──
-function endGame(won) {
-  gameRunning = false;
-  document.getElementById('arena').innerHTML = '';
-  document.getElementById('goScore').textContent = score;
-  const title = document.getElementById('goTitle');
-  const goChar = document.getElementById('goChar');
-  if (won) {
-    title.textContent = 'FLOW COMPLETE!';
-    title.className = 'go-title win';
-    goChar.src = 'loop-victory.png';
-  } else {
-    title.textContent = 'CHAIN BROKEN';
-    title.className = 'go-title lose';
-    goChar.src = 'loop-sad.png';
-  }
-  document.getElementById('gameOverScreen').classList.remove('hidden');
-}
-
-function restartGame() {
-  document.getElementById('gameOverScreen').classList.add('hidden');
-  document.getElementById('arena').innerHTML = '';
-  score=0; chains=0; lives=3; level=1; combo=1;
-  gameRunning=true;
-  updateHUD();
-  newChain();
-}
 </script>
+
 </body>
 </html>
