@@ -1,1329 +1,360 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-DJ3Q488K7W"></script>
-<script>
-window.dataLayer = window.dataLayer || [];
-function gtag(){ dataLayer.push(arguments); }
-gtag('js', new Date());
-gtag('config', 'G-DJ3Q488K7W');
-</script>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Byte's Code City | Method in Motion</title>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;600;700;900&family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Byte — Coming Soon | Method in Motion</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=VT323&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
 <style>
-:root { --purple: #c66bff; --purple-dim: #a34fe0; --pink: #ff6baa; --pink-dim: #e0568f; --bg: #07050f; --bg-mid: #0f0d1a; --bg-card: #131022; --bg-panel: #0a0714; --text: #f0eaff; --text-dim: #a89fc0; --text-muted: #4a3f6a; --border: rgba(198,107,255,0.15); --border-bright: rgba(198,107,255,0.4); --border-pink: rgba(255,107,170,0.3); --glow: 0 0 18px rgba(198,107,255,0.3); --glow-strong: 0 0 36px rgba(198,107,255,0.55); --cyan: #7fe8ff; --border-cyan: rgba(0,229,255,0.45); --font-display: 'Orbitron', monospace; --font-body: 'Space Grotesk', sans-serif; --font-mono: 'Space Mono', monospace; }
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { font-family: var(--font-body); background: var(--bg); color: var(--text); min-height: 100vh; overflow-x: hidden; }
-nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 0 2rem; height: 60px; background: rgba(7,5,15,0.96); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); }
-.nav-logo { font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; color: var(--purple); text-decoration: none; letter-spacing: 0.1em; }
-.nav-links { display: flex; align-items: center; gap: 1.5rem; list-style: none; }
-.nav-links a { font-family: var(--font-body); font-size: 0.82rem; font-weight: 500; color: var(--text-dim); text-decoration: none; letter-spacing: 0.05em; transition: color 0.2s; }
-.nav-links a:hover { color: var(--purple); }
-.nav-drop { position: relative; }
-.nav-drop-trigger { display: flex; align-items: center; gap: 6px; font-family: var(--font-body); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--text-dim); background: rgba(255,255,255,0.05); border: 1px solid var(--border); padding: 7px 14px; border-radius: 100px; cursor: pointer; transition: all 0.2s; }
-.nav-drop-trigger:hover, .nav-drop.open .nav-drop-trigger { color: #fff; background: rgba(198,107,255,0.12); border-color: var(--border-bright); }
-.nav-drop-arrow { font-size: 0.7rem; font-weight: 900; transition: transform 0.2s; display: inline-block; }
-.nav-drop.open .nav-drop-arrow { transform: rotate(180deg); }
-.nav-drop-menu { position: absolute; top: calc(100% + 14px); left: 50%; transform: translateX(-50%); min-width: 180px; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 8px; opacity: 0; pointer-events: none; transition: opacity 0.2s; box-shadow: 0 20px 50px rgba(0,0,0,0.5); z-index: 150; }
-.nav-drop.open .nav-drop-menu { opacity: 1; pointer-events: auto; }
-.nav-drop-item { display: block; padding: 10px 14px; font-family: var(--font-body); font-size: 0.8rem; color: var(--text-dim); border-radius: 7px; transition: all 0.15s; }
-.nav-drop-item:hover { background: rgba(255,107,170,0.1); color: var(--pink); }
-.nav-right { display: flex; align-items: center; gap: 0.7rem; }
-.nav-username { font-family: var(--font-mono); font-size: 0.72rem; color: var(--purple); }
-#nav-user-menu, #nav-auth-btns { align-items: center; gap: 0.55rem; }
-#nav-user-menu a, #nav-user-menu button, #nav-auth-btns button { font-family: var(--font-body); font-size: 0.78rem; border-radius: 6px; padding: 0.38rem 0.8rem; cursor: pointer; transition: all 0.2s; }
-#nav-user-menu a { color: var(--text-dim); text-decoration: none; border: 1px solid var(--border); }
-#nav-user-menu a:hover { color: var(--purple); border-color: var(--purple); }
-#nav-user-menu button, #nav-login { color: var(--text-dim); background: none; border: 1px solid var(--border); }
-#nav-user-menu button:hover, #nav-login:hover { color: var(--purple); border-color: var(--purple); }
-#nav-join { color: var(--bg); background: linear-gradient(135deg, var(--purple), var(--pink)); border: none; font-weight: 700; }
-.nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 6px; z-index: 210; }
-.nav-hamburger span { width: 22px; height: 2px; background: var(--text); transition: all 0.25s; }
-.nav-hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-.nav-hamburger.open span:nth-child(2) { opacity: 0; }
-.nav-hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-.mobile-menu { display: none; position: fixed; top: 60px; left: 0; right: 0; bottom: 0; background: rgba(7,5,15,0.98); backdrop-filter: blur(16px); z-index: 199; padding: 2rem; flex-direction: column; gap: 0.4rem; overflow-y: auto; }
-.mobile-menu.open { display: flex; }
-.mobile-menu a, .mobile-menu-label { font-family: var(--font-display); font-size: 0.85rem; letter-spacing: 0.08em; color: var(--text-dim); padding: 14px 8px; border-bottom: 1px solid var(--border); text-transform: uppercase; text-decoration: none; }
-.mobile-menu a:hover { color: var(--purple); }
-.mobile-menu-label { color: var(--pink); font-size: 0.65rem; letter-spacing: 0.2em; border-bottom: none; padding-bottom: 4px; margin-top: 10px; }
-@media (max-width: 900px) { .nav-links, .nav-right { display: none; } .nav-hamburger { display: flex; } }
-.hero { margin-top: 60px; min-height: 640px; position: relative; overflow: hidden; display: flex; align-items: flex-end; }
-.hero-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transform: scale(1.02); }
-.hero-gradient { position: absolute; inset: 0; z-index: 2; background: linear-gradient(to top, rgba(7,5,15,0.96) 0%, rgba(7,5,15,0.5) 30%, rgba(7,5,15,0.05) 58%, transparent 100%), linear-gradient(to right, rgba(7,5,15,0.55) 0%, rgba(7,5,15,0.1) 40%, transparent 70%); pointer-events: none; }
-.hero-pulse { position: absolute; inset: 0; z-index: 3; pointer-events: none; background: radial-gradient(ellipse 55% 45% at 50% 65%, rgba(255,107,170,0.14) 0%, transparent 65%); animation: pulseGlow 5s ease-in-out infinite; }
-@keyframes pulseGlow { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
-.particle-field { position: absolute; inset: 0; z-index: 4; pointer-events: none; overflow: hidden; }
-.particle { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: var(--purple); box-shadow: 0 0 8px 2px rgba(198,107,255,0.6); opacity: 0; animation: floatUp linear infinite; }
-.particle:nth-child(odd) { background: var(--pink); box-shadow: 0 0 8px 2px rgba(255,107,170,0.6); }
-@keyframes floatUp { 0% { transform: translateY(0) translateX(0); opacity: 0; } 10% { opacity: 0.8; } 90% { opacity: 0.4; } 100% { transform: translateY(-380px) translateX(20px); opacity: 0; } }
-.hero-byte-gif { position: absolute; z-index: 8; right: 4%; bottom: 0; height: 82%; max-height: 520px; width: auto; object-fit: contain; filter: drop-shadow(0 0 30px rgba(198,107,255,0.4)); pointer-events: auto; cursor: pointer; }
-@media (max-width: 768px) { .hero-byte-gif { display: none; } }
-.hero-content { position: relative; z-index: 10; padding: 3rem 3rem 3.5rem; max-width: 620px; }
-.hero-eyebrow { font-family: var(--font-mono); font-size: 0.7rem; color: var(--purple); letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 1rem; opacity: 0.9; text-shadow: 0 0 12px rgba(198,107,255,0.6); }
-.hero-name { font-family: var(--font-display); font-size: clamp(2.8rem, 6vw, 4.5rem); font-weight: 900; color: #fff; line-height: 0.95; text-shadow: var(--glow-strong); margin-bottom: 0.4rem; }
-.hero-catchphrase { display: inline-block; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--pink); background: rgba(255,107,170,0.1); border: 1px solid var(--border-pink); padding: 0.3rem 0.8rem; border-radius: 100px; margin-bottom: 1rem; backdrop-filter: blur(4px); }
-.hero-role { font-family: var(--font-display); font-size: clamp(0.75rem, 1.5vw, 0.95rem); font-weight: 600; color: var(--purple); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1.2rem; }
-.hero-quote { font-size: 1.05rem; color: var(--text-dim); line-height: 1.6; max-width: 460px; margin-bottom: 1rem; font-style: italic; text-shadow: 0 2px 12px rgba(0,0,0,0.8); }
-.hero-quote span { color: var(--purple); font-style: normal; font-weight: 600; }
-.fact-ticker { font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); max-width: 460px; min-height: 32px; margin-bottom: 1.2rem; line-height: 1.5; opacity: 0; transition: opacity 0.5s; text-shadow: 0 2px 10px rgba(0,0,0,0.9); }
-.fact-ticker.show { opacity: 1; }
-.fact-ticker::before { content: '◈ BYTE\'S FILE — '; color: var(--pink); }
-.hero-tiles { display: flex; gap: 0.8rem; align-items: stretch; flex-wrap: wrap; }
-.hero-lesson-grid { display: grid; grid-template-columns: repeat(2, minmax(140px, 1fr)); gap: 0.6rem; }
-.hero-tile { background: rgba(198,107,255,0.08); border: 1px solid var(--border); border-radius: 6px; padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-decoration: none; display: block; backdrop-filter: blur(4px); }
-.hero-tile:hover { background: rgba(198,107,255,0.18); border-color: var(--purple); color: var(--purple); box-shadow: var(--glow); transform: translateY(-2px); }
-.hero-game-tile { display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 0.35rem; min-width: 128px; max-width: 150px; border-radius: 12px; border: 2px solid var(--pink); background: linear-gradient(160deg, rgba(255,107,170,0.22), rgba(198,107,255,0.16)); color: #fff; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; text-align: center; padding: 0.75rem 0.6rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 0 22px rgba(255,107,170,0.3), inset 0 0 16px rgba(255,107,170,0.08); animation: heroGameFloat 3.4s ease-in-out infinite; }
-.hero-game-tile:hover { background: linear-gradient(160deg, rgba(255,107,170,0.34), rgba(198,107,255,0.26)); box-shadow: 0 0 32px rgba(255,107,170,0.5), inset 0 0 20px rgba(255,107,170,0.14); transform: translateY(-3px) scale(1.03); }
-@keyframes heroGameFloat { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-4px); } }
-.hero-game-icon { font-size: 1.5rem; filter: drop-shadow(0 0 8px rgba(255,107,170,0.7)); }
-.hero-game-label { font-family: var(--font-display); font-size: 0.74rem; letter-spacing: 0.06em; }
-.hero-game-cta { font-size: 0.6rem; opacity: 0.9; color: var(--pink); }
-@media (max-width: 768px) { .hero-tiles { flex-wrap: wrap; } }
-.icebreaker-wrapper { display: none; }
-.icebreaker-wrapper.open { display: block; }
-.icebreaker-wrapper.open .icebreaker { animation: ibPowerOn 0.6s ease; }
-@keyframes ibPowerOn { 0% { opacity: 0; transform: scale(0.92); filter: brightness(3.5) saturate(1.6); } 15% { opacity: 1; filter: brightness(2.4) saturate(1.4); } 45% { transform: scale(1.015); filter: brightness(1.3); } 100% { opacity: 1; transform: scale(1); filter: brightness(1); } }
-.icebreaker { background: var(--bg-mid); border-bottom: 1px solid var(--border); padding: 3rem 2rem 3.5rem; }
-.ib-header { max-width: 640px; margin: 0 auto 2.2rem; text-align: center; }
-.ib-eyebrow { font-family: var(--font-mono); font-size: 0.68rem; color: var(--pink); letter-spacing: 0.18em; margin-bottom: 0.6rem; }
-.ib-title { font-family: var(--font-display); font-size: clamp(1.4rem, 3.5vw, 2rem); color: #fff; font-weight: 900; margin-bottom: 0.6rem; text-shadow: var(--glow); }
-.ib-sub { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; }
-.ib-phase { max-width: 760px; margin: 0 auto; }
-.ib-terms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 0.9rem; margin-bottom: 2rem; }
-.ib-term-card { background: var(--bg-card); border: 2px solid var(--border); border-radius: 12px; padding: 1.1rem; cursor: pointer; transition: all 0.2s; text-align: center; }
-.ib-term-card:hover { transform: translateY(-2px); }
-.ib-term-bug-icon { font-size: 2rem; margin-bottom: 0.5rem; }
-.ib-term-code { font-family: var(--font-display); font-size: 0.85rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: 0.04em; }
-.ib-term-def { font-size: 0.78rem; color: var(--text-dim); line-height: 1.5; display: none; }
-.ib-term-card.open .ib-term-def { display: block; }
-.ib-start-btn { display: block; margin: 0 auto; background: linear-gradient(135deg, var(--purple), var(--pink)); color: #000; font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 0.9rem 2.4rem; border-radius: 100px; border: none; cursor: pointer; letter-spacing: 0.08em; box-shadow: var(--glow-strong); transition: transform 0.2s; }
-.ib-start-btn:hover { transform: scale(1.03); }
-.ib-catch-stage { background: var(--bg-card); border-radius: 14px; padding: 1.6rem; text-align: center; position: relative; overflow: hidden; }
-.ib-catch-hud { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; font-family: var(--font-mono); font-size: 0.72rem; color: var(--text-dim); letter-spacing: 0.06em; }
-.ib-catch-hud .lives { color: var(--pink); }
-.ib-catch-bins { display: flex; justify-content: center; gap: 0.7rem; margin-bottom: 1.2rem; flex-wrap: wrap; }
-.ib-catch-bin { flex: 1; min-width: 130px; max-width: 200px; padding: 1.4rem 0.6rem; border-radius: 10px; border: 2px solid; font-family: var(--font-mono); font-size: 0.8rem; font-weight: 700; letter-spacing: 0.06em; cursor: pointer; background: rgba(255,255,255,0.03); transition: all 0.15s; }
-.ib-catch-bin:hover { transform: translateY(-2px); }
-.ib-catch-bin.flash { transform: scale(1.08); box-shadow: 0 0 26px currentColor; }
-.ib-catch-status { font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-dim); min-height: 20px; }
-.ib-reaction-img { width: 64px; height: 64px; object-fit: contain; position: absolute; top: 10px; right: 10px; z-index: 5; filter: drop-shadow(0 0 12px rgba(198,107,255,0.5)); display: none; }
-.ib-reaction-img.show { display: block; animation: eggPop 0.3s ease; }
-.ib-complete-card { background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 14px; padding: 2.5rem 2rem; text-align: center; }
-.ib-complete-card img { width: 90px; height: 90px; object-fit: contain; margin: 0 auto 1rem; display: block; filter: drop-shadow(0 0 20px rgba(198,107,255,0.5)); }
-.ib-complete-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--purple); margin-bottom: 0.8rem; text-shadow: var(--glow); }
-.ib-complete-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 1.4rem; }
-.ib-replay-btn { background: none; border: 1px solid var(--border-bright); color: var(--purple); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.4rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; }
-.ib-skip-btn { display: block; margin: 1.2rem auto 0; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.5rem 1.2rem; border-radius: 100px; cursor: pointer; letter-spacing: 0.06em; transition: all 0.2s; }
-.ib-skip-btn:hover { color: var(--text-dim); border-color: var(--border-bright); }
-.discovery-overlay.fading { opacity: 0; transition: opacity 0.7s ease; pointer-events: none; }
-.hologram-stage { display: none; position: relative; width: min(420px, 86vw); margin: 0 auto; }
-.hologram-frame { position: relative; border: 1px solid var(--border-cyan); border-radius: 12px; overflow: hidden; box-shadow: 0 0 40px rgba(0,229,255,0.35), 0 0 80px rgba(198,107,255,0.2); animation: hologramMaterialize 1.1s ease-out, hologramFlicker 2.4s steps(1) infinite 1.1s; }
-.hologram-frame::before, .hologram-frame::after { content: ''; position: absolute; width: 22px; height: 22px; border: 2px solid var(--cyan); z-index: 5; }
-.hologram-frame::before { top: -1px; left: -1px; border-right: none; border-bottom: none; }
-.hologram-frame::after { bottom: -1px; right: -1px; border-left: none; border-top: none; }
-.hologram-video { width: 100%; display: block; filter: saturate(1.2) brightness(1.05); }
-.hologram-scanlines { position: absolute; inset: 0; z-index: 4; pointer-events: none; background: repeating-linear-gradient(to bottom, rgba(0,229,255,0.08) 0px, transparent 2px, transparent 4px); mix-blend-mode: overlay; }
-.hologram-scan-sweep { position: absolute; left: 0; right: 0; height: 40%; z-index: 6; pointer-events: none; background: linear-gradient(to bottom, transparent, rgba(0,229,255,0.25), transparent); animation: hologramSweep 1.6s ease-in-out infinite; }
-.hologram-caption { margin-top: 1rem; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; color: var(--cyan); text-shadow: 0 0 10px rgba(0,229,255,0.6); animation: pulse 1.2s ease-in-out infinite; }
-@keyframes hologramMaterialize { 0% { opacity: 0; transform: scale(0.85) translateY(10px); clip-path: inset(0 0 100% 0); } 40% { opacity: 1; clip-path: inset(0 0 0 0); } 100% { opacity: 1; transform: scale(1) translateY(0); clip-path: inset(0 0 0 0); } }
-@keyframes hologramFlicker { 0%, 100% { opacity: 1; } 92% { opacity: 1; } 93% { opacity: 0.6; } 94% { opacity: 1; } 96% { opacity: 0.75; } 97% { opacity: 1; } }
-@keyframes hologramSweep { 0% { top: -40%; } 100% { top: 100%; } }
-.lesson-strip { position: sticky; top: 60px; z-index: 90; background: rgba(7,5,15,0.97); border-bottom: 1px solid var(--border); backdrop-filter: blur(10px); display: flex; overflow-x: auto; scrollbar-width: none; }
-.lesson-strip::-webkit-scrollbar { display: none; }
-.lesson-tab { flex-shrink: 0; padding: 0.9rem 1.6rem; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.08em; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.2s; white-space: nowrap; user-select: none; background: none; border-top: none; border-left: none; border-right: none; }
-.lesson-tab:hover { color: var(--purple); text-shadow: 0 0 8px rgba(198,107,255,0.5); transform: translateY(-1px); }
-.lesson-tab.active { color: var(--purple); border-bottom-color: var(--purple); text-shadow: 0 0 8px rgba(198,107,255,0.5); }
-.lesson-panel { display: none; }
-.lesson-panel.open { display: grid; grid-template-columns: 220px 1fr; min-height: 80vh; }
-.lesson-sidebar { background: var(--bg-panel); border-right: 1px solid var(--border); padding: 2rem 1.2rem; position: sticky; top: calc(60px + 42px); height: calc(100vh - 102px); overflow-y: auto; scrollbar-width: thin; scrollbar-color: var(--border) transparent; }
-.sidebar-label { font-family: var(--font-mono); font-size: 0.62rem; color: var(--text-muted); letter-spacing: 0.18em; text-transform: uppercase; margin-bottom: 1rem; padding-bottom: 0.5rem; border-bottom: 1px solid var(--border); }
-.sidebar-nav-btn { width: 100%; background: none; border: none; text-align: left; padding: 0.65rem 0.8rem; margin-bottom: 0.2rem; border-radius: 6px; font-family: var(--font-body); font-size: 0.82rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 0.5rem; }
-.sidebar-nav-btn:hover { background: rgba(198,107,255,0.07); color: var(--purple); transform: translateX(3px); }
-.sidebar-nav-btn.active { background: rgba(198,107,255,0.11); color: var(--purple); font-weight: 600; }
-.sidebar-icon { font-size: 0.9rem; }
-.sidebar-badge { display: inline-flex; align-items: center; justify-content: center; min-width: 20px; height: 16px; padding: 0 4px; font-family: var(--font-display); font-size: 0.55rem; font-weight: 700; letter-spacing: 0.04em; color: var(--purple); border: 1px solid var(--border-bright); border-radius: 4px; background: rgba(198,107,255,0.08); }
-.sidebar-divider { height: 1px; background: var(--border); margin: 1rem 0; }
-.sidebar-game-link { display: block; margin-top: 1rem; padding: 0.65rem 0.8rem; background: rgba(198,107,255,0.05); border: 1px solid var(--border); border-radius: 6px; font-family: var(--font-mono); font-size: 0.68rem; color: var(--purple-dim); text-decoration: none; letter-spacing: 0.08em; transition: all 0.2s; text-align: center; }
-.sidebar-game-link:hover { background: rgba(198,107,255,0.13); border-color: var(--purple); color: var(--purple); }
-.lesson-content { padding: 2.5rem 3rem; max-width: 900px; }
-.content-block { display: none; }
-.content-block.active { display: block; }
-.section-header { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; color: #fff; margin-bottom: 0.4rem; }
-.section-sub { font-size: 0.88rem; color: var(--text-muted); margin-bottom: 2rem; font-family: var(--font-mono); letter-spacing: 0.05em; }
-.read-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.8rem 2rem; margin-bottom: 1.2rem; position: relative; overflow: hidden; }
-.read-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: linear-gradient(to bottom, var(--purple), var(--pink)); }
-.read-card-num { font-family: var(--font-mono); font-size: 0.65rem; color: var(--purple); letter-spacing: 0.2em; margin-bottom: 0.6rem; opacity: 0.7; }
-.read-card h3 { font-family: var(--font-display); font-size: 0.95rem; color: #fff; margin-bottom: 0.8rem; font-weight: 700; }
-.read-card p { font-size: 0.95rem; color: var(--text-dim); line-height: 1.7; }
-.read-card p strong { color: var(--purple); font-weight: 600; }
-.read-card code { font-family: var(--font-mono); font-size: 0.85rem; background: rgba(198,107,255,0.1); color: var(--purple); padding: 0.15em 0.4em; border-radius: 4px; }
-.code-block { background: #0a0714; border: 1px solid var(--border); border-radius: 8px; padding: 1.4rem; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.85; color: #e0d8f5; overflow-x: auto; }
-.code-tag { color: #c66bff; font-weight: 700; }
-.code-str { color: #ffe066; }
-.code-comment { color: #4a3f6a; font-style: italic; }
-.code-attr { color: #ff6baa; }
-.code-val { color: #00e5ff; }
-.code-fn { color: #a2ff32; }
-.terms-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; margin-top: 1rem; }
-.term-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; cursor: pointer; transition: all 0.2s; }
-.term-card:hover { border-color: var(--purple); box-shadow: 0 0 14px rgba(198,107,255,0.2); transform: translateY(-2px); }
-.term-card.open { border-color: var(--purple); }
-.term-name { font-family: var(--font-mono); font-size: 0.8rem; color: var(--purple); font-weight: 700; display: flex; justify-content: space-between; align-items: center; }
-.term-arrow { transition: transform 0.2s; color: var(--text-muted); }
-.term-card.open .term-arrow { transform: rotate(90deg); }
-.term-def { display: none; font-size: 0.85rem; color: var(--text-dim); line-height: 1.6; margin-top: 0.6rem; padding-top: 0.6rem; border-top: 1px solid var(--border); }
-.term-card.open .term-def { display: block; }
-.demo-card { background: var(--bg-card); border: 1px solid var(--border-pink); border-radius: 10px; padding: 1.5rem; margin-bottom: 1.2rem; position: relative; }
-.demo-card::before { content: '◈ BUILD IT'; position: absolute; top: -1px; right: 12px; background: var(--pink); color: #000; font-family: var(--font-mono); font-size: 0.6rem; font-weight: 700; padding: 0.2rem 0.6rem; border-radius: 0 0 4px 4px; letter-spacing: 0.1em; }
-.demo-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--pink); margin-bottom: 0.8rem; font-weight: 700; }
-.demo-card p { font-size: 0.9rem; color: var(--text-dim); line-height: 1.6; margin-bottom: 0.8rem; }
-.debug-editor { width: 100%; min-height: 160px; background: #0a0714; border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; font-family: var(--font-mono); font-size: 0.82rem; color: #e0d8f5; resize: vertical; outline: none; line-height: 1.7; margin-bottom: 0.8rem; }
-.run-btn { background: var(--purple); color: var(--bg); border: none; padding: 0.55rem 1.4rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.68rem; font-weight: 700; cursor: pointer; letter-spacing: 0.1em; transition: opacity 0.2s; }
-.run-btn:hover { opacity: 0.85; }
-.demo-output { background: #0a0714; border: 1px solid var(--border); border-radius: 8px; padding: 1rem 1.2rem; margin-top: 1rem; font-size: 0.9rem; color: var(--text); display: none; line-height: 1.8; }
-.demo-output.show { display: block; }
-.quiz-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
-.quiz-q { font-size: 0.95rem; color: var(--text); margin-bottom: 1rem; line-height: 1.5; font-weight: 500; }
-.quiz-options { display: flex; flex-direction: column; gap: 0.5rem; }
-.quiz-opt { background: rgba(198,107,255,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.7rem 1rem; font-size: 0.88rem; color: var(--text-dim); cursor: pointer; transition: all 0.2s; text-align: left; font-family: var(--font-body); }
-.quiz-opt:hover { border-color: var(--purple); color: var(--purple); }
-.quiz-opt.correct { border-color: #c66bff; background: rgba(198,107,255,0.1); color: #c66bff; }
-.quiz-opt.wrong { border-color: #ff6baa; background: rgba(255,107,170,0.08); color: #ff9ac4; animation: shake 0.3s ease; }
-@keyframes shake { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-6px); } 75% { transform: translateX(6px); } }
-.quiz-feedback { font-size: 0.82rem; margin-top: 0.6rem; padding: 0.5rem 0.8rem; border-radius: 5px; display: none; }
-.quiz-feedback.show { display: block; }
-.quiz-feedback.correct { background: rgba(198,107,255,0.08); color: #d9a3ff; border: 1px solid rgba(198,107,255,0.2); }
-.quiz-feedback.wrong { background: rgba(255,107,170,0.07); color: #ff9ac4; border: 1px solid rgba(255,107,170,0.2); }
-.reflect-prompt { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem; margin-bottom: 1rem; }
-.reflect-q { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 0.8rem; line-height: 1.5; }
-.reflect-input { width: 100%; background: rgba(198,107,255,0.03); border: 1px solid var(--border); border-radius: 6px; padding: 0.8rem 1rem; font-family: var(--font-body); font-size: 0.88rem; color: var(--text); resize: vertical; min-height: 80px; outline: none; transition: border-color 0.2s; }
-.reflect-input:focus { border-color: var(--purple); }
-.reflect-save-btn { margin-top: 0.5rem; background: none; border: 1px solid var(--border); color: var(--text-muted); font-family: var(--font-mono); font-size: 0.68rem; padding: 0.35rem 0.8rem; border-radius: 4px; cursor: pointer; transition: all 0.2s; letter-spacing: 0.08em; }
-.reflect-save-btn:hover { border-color: var(--purple); color: var(--purple); }
-.reflect-saved { font-family: var(--font-mono); font-size: 0.68rem; color: var(--purple); margin-top: 0.4rem; display: none; }
-.cheat-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: 10px; padding: 1.5rem 1.8rem; margin-bottom: 1rem; }
-.cheat-card h3 { font-family: var(--font-display); font-size: 0.88rem; color: var(--purple); margin-bottom: 1rem; font-weight: 700; }
-.cheat-items { display: flex; flex-direction: column; gap: 0.7rem; }
-.cheat-item { display: flex; gap: 1rem; align-items: flex-start; padding-bottom: 0.7rem; border-bottom: 1px solid rgba(198,107,255,0.06); }
-.cheat-item:last-child { border-bottom: none; padding-bottom: 0; }
-.cheat-term { font-family: var(--font-mono); font-size: 0.78rem; color: var(--purple); min-width: 140px; font-weight: 700; }
-.cheat-desc { font-size: 0.85rem; color: var(--text-dim); line-height: 1.5; }
-.cheat-btn-row { display: flex; gap: 0.7rem; margin-top: 1.2rem; flex-wrap: wrap; }
-.cheat-download-btn { display: inline-flex; align-items: center; gap: 0.5rem; background: rgba(198,107,255,0.07); border: 1px solid var(--border-bright); color: var(--purple); font-family: var(--font-mono); font-size: 0.72rem; padding: 0.6rem 1.2rem; border-radius: 6px; cursor: pointer; text-decoration: none; transition: all 0.2s; letter-spacing: 0.08em; }
-.cheat-download-btn:hover { background: rgba(198,107,255,0.16); box-shadow: var(--glow); }
-.cheat-download-btn.secondary { background: none; border-color: var(--border); color: var(--text-muted); font-size: 0.65rem; }
-.cheat-download-btn.secondary:hover { color: var(--text-dim); border-color: var(--border-bright); }
-.locked-panel { padding: 4rem 3rem; text-align: center; }
-.locked-icon { font-size: 2.5rem; margin-bottom: 1.2rem; opacity: 0.45; }
-.locked-panel h2 { font-family: var(--font-display); font-size: 1.2rem; color: var(--text-dim); margin-bottom: 0.6rem; }
-.locked-panel p { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1.5rem; }
-.gate-btn { display: inline-block; background: var(--purple); color: var(--bg); font-family: var(--font-display); font-size: 0.78rem; font-weight: 700; padding: 0.8rem 2rem; border-radius: 6px; border: none; cursor: pointer; text-decoration: none; letter-spacing: 0.08em; transition: opacity 0.2s; }
-.gate-btn:hover { opacity: 0.85; }
-.lesson-complete { background: linear-gradient(135deg, rgba(198,107,255,0.07), rgba(255,107,170,0.05)); border: 1px solid var(--border-bright); border-radius: 12px; padding: 2rem; text-align: center; margin-top: 2rem; display: none; }
-.lesson-complete.show { display: block; }
-.lesson-complete h3 { font-family: var(--font-display); font-size: 1rem; color: var(--purple); margin-bottom: 0.5rem; }
-.lesson-complete p { font-size: 0.88rem; color: var(--text-dim); }
-.lesson-joke { margin-top: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: var(--pink); font-style: italic; }
-.discovery-overlay { position: fixed; inset: 0; z-index: 200; background: #07050f; display: flex; align-items: center; justify-content: center; flex-direction: column; text-align: center; padding: 2rem; }
-.discovery-overlay.hidden { display: none; }
-.byte-mark { font-family: var(--font-mono); font-size: 2rem; color: var(--purple); margin-bottom: 1rem; letter-spacing: 0.3em; text-shadow: var(--glow-strong); animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
-.discovery-title { font-family: var(--font-display); font-size: clamp(1.5rem, 4vw, 2.5rem); font-weight: 900; color: var(--purple); text-shadow: var(--glow-strong); margin-bottom: 0.8rem; }
-.discovery-sub { font-size: 1rem; color: var(--text-dim); max-width: 460px; line-height: 1.6; margin-bottom: 2rem; }
-.discovery-enter-btn { background: var(--purple); color: var(--bg); font-family: var(--font-display); font-size: 0.85rem; font-weight: 700; padding: 1rem 2.5rem; border-radius: 8px; border: none; cursor: pointer; letter-spacing: 0.1em; transition: all 0.2s; box-shadow: var(--glow-strong); }
-.discovery-enter-btn:hover { transform: scale(1.03); }
-@keyframes companionFloat { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
-.sound-toggle { position: fixed; bottom: 24px; left: 24px; z-index: 150; width: 44px; height: 44px; border-radius: 50%; background: rgba(19,16,34,0.9); border: 1px solid var(--border-bright); display: flex; align-items: center; justify-content: center; cursor: pointer; font-size: 1.1rem; transition: all 0.2s; opacity: 0; pointer-events: none; }
-.sound-toggle.visible { opacity: 1; pointer-events: auto; }
-.sound-toggle:hover { box-shadow: var(--glow); border-color: var(--purple); }
-.sound-toggle.muted { opacity: 0.5; }
-.egg-popup { position: fixed; bottom: 100px; right: 24px; z-index: 250; background: var(--bg-card); border: 1px solid var(--border-bright); border-radius: 12px; padding: 1.2rem 1.4rem; max-width: 260px; box-shadow: var(--glow-strong); display: none; }
-.egg-popup.show { display: block; animation: eggPop 0.4s ease; }
-@keyframes eggPop { from { transform: scale(0.8) translateY(10px); opacity: 0; } to { transform: scale(1) translateY(0); opacity: 1; } }
-.egg-popup h4 { font-family: var(--font-display); font-size: 0.78rem; color: var(--purple); margin-bottom: 0.5rem; }
-.egg-popup p { font-size: 0.8rem; color: var(--text-dim); line-height: 1.5; }
-@media (max-width: 768px) { .hero { min-height: 480px; } .hero-content { padding: 2rem 1.5rem 2rem; } .lesson-panel.open { grid-template-columns: 1fr; } .lesson-sidebar { display: none; } .lesson-content { padding: 1.5rem; } .terms-grid { grid-template-columns: 1fr; } .fact-ticker { display: none; } }
 
-.modal-overlay{display:none;position:fixed;inset:0;z-index:1000;background:rgba(5,5,8,.88);backdrop-filter:blur(16px);align-items:center;justify-content:center;padding:20px;}
-.modal-overlay.active{display:flex;}
-.modal-box{background:var(--bg-card);border:1px solid var(--border-bright);border-radius:20px;padding:40px;width:100%;max-width:400px;position:relative;}
-.modal-close{position:absolute;top:16px;right:16px;background:none;border:none;color:rgba(255,255,255,.35);font-size:1.2rem;cursor:pointer;line-height:1;transition:color .2s;}
-.modal-close:hover{color:#fff}.modal-title{font-family:var(--font-display);font-size:.9rem;letter-spacing:.12em;text-transform:uppercase;margin-bottom:6px;}
-.modal-sub{font-size:.82rem;color:var(--text-dim);margin-bottom:24px;}.modal-tabs{display:flex;gap:4px;margin-bottom:24px;background:rgba(0,0,0,.3);border-radius:10px;padding:4px;}
-.modal-tab{flex:1;font-family:var(--font-display);font-size:.55rem;letter-spacing:.12em;text-transform:uppercase;padding:8px;border-radius:7px;border:none;background:none;color:rgba(255,255,255,.4);cursor:pointer;transition:all .2s;}
-.modal-tab.active{background:rgba(198,107,255,.2);color:var(--purple);}.modal-field{margin-bottom:14px;}.modal-field label{display:block;font-family:var(--font-display);font-size:.48rem;letter-spacing:.14em;text-transform:uppercase;color:var(--text-dim);margin-bottom:5px;}
-.modal-field input{width:100%;padding:11px 14px;background:rgba(0,0,0,.3);border:1px solid var(--border-bright);border-radius:8px;color:#fff;font-family:var(--font-body);font-size:.88rem;outline:none;transition:border-color .2s;}
-.modal-field input:focus{border-color:var(--purple);}.modal-submit{width:100%;font-family:var(--font-display);font-size:.62rem;letter-spacing:.14em;text-transform:uppercase;padding:13px;background:linear-gradient(135deg,var(--pink),var(--purple));color:#000;font-weight:700;border-radius:100px;border:none;cursor:pointer;margin-top:6px;transition:transform .2s;}
-.modal-submit:hover{transform:translateY(-1px)}.modal-submit:disabled{opacity:.65;cursor:wait;transform:none;}.modal-error{font-size:.78rem;color:var(--pink);margin-top:8px;display:none;line-height:1.5;}.modal-error.visible{display:block;}
-.modal-status{display:none;margin-top:10px;font-size:.76rem;color:var(--cyan);text-align:center;line-height:1.5;}.modal-status.visible{display:block;}
+  :root {
+    --void: #0a0818;
+    --deep: #150f35;
+    --accent: #ff2f9e;
+    --accent2: #33d6ff;
+    --gold: #ffb238;
+    --text: #f3eeff;
+    --muted: #b6a9dd;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--void);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; }
+  }
+
+  .hero {
+    position: relative;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 32px 20px 60px;
+    overflow: hidden;
+    background: linear-gradient(180deg, var(--void) 0%, var(--deep) 55%, var(--void) 100%);
+  }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.30;
+    z-index: 0;
+    animation: drift 16s ease-in-out infinite;
+  }
+  .glow-orb.a { width: 420px; height: 420px; background: var(--accent); top: -80px; left: -100px; }
+  .glow-orb.b { width: 360px; height: 360px; background: var(--accent2); bottom: -100px; right: -80px; animation-delay: -6s; }
+  .glow-orb.c { width: 260px; height: 260px; background: var(--accent); top: 40%; left: 60%; animation-delay: -11s; opacity: 0.18; }
+
+  @keyframes drift {
+    0%, 100% { transform: translate(0, 0) scale(1); }
+    50% { transform: translate(30px, -25px) scale(1.08); }
+  }
+
+  .scroll-track {
+    position: absolute;
+    left: 0; right: 0; bottom: 0;
+    height: 46%;
+    min-height: 260px;
+    display: flex;
+    width: 200%;
+    animation: scrollLoop 34s linear infinite;
+    z-index: 0;
+    opacity: 0.85;
+  }
+  .scroll-track img {
+    width: 50%; height: 100%; object-fit: cover; display: block; flex-shrink: 0;
+  }
+  @keyframes scrollLoop {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+  .hero.has-photo::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, var(--void) 0%, rgba(10,8,24,0.25) 30%, rgba(10,8,24,0.15) 60%, var(--void) 100%);
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    max-width: 760px;
+  }
+
+  .eyebrow {
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.28em;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 12%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 40%, transparent);
+    padding: 7px 16px;
+    border-radius: 999px;
+    margin-bottom: 28px;
+  }
+
+  .title-wrap {
+    position: relative;
+    display: inline-block;
+  }
+
+  .tagline {
+    margin-top: 26px;
+    font-size: clamp(1rem, 2.4vw, 1.25rem);
+    color: var(--muted);
+    max-width: 540px;
+    line-height: 1.6;
+    font-family: 'Space Mono', monospace;
+  }
+
+  .badge {
+    margin-top: 30px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    border: 1px dashed rgba(255, 178, 56, 0.6);
+    padding: 8px 20px;
+    border-radius: 999px;
+  }
+
+  .signup {
+    margin-top: 40px;
+    width: 100%;
+    max-width: 440px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+
+  .signup input {
+    flex: 1 1 240px;
+    background: rgba(21, 15, 53, 0.7);
+    border: 1px solid rgba(182, 169, 221, 0.35);
+    color: var(--text);
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.95rem;
+    padding: 14px 18px;
+    border-radius: 10px;
+    outline: none;
+    transition: border-color 0.2s ease;
+  }
+  .signup input:focus-visible {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 25%, transparent);
+  }
+  .signup input::placeholder { color: var(--muted); }
+
+  .signup button {
+    flex: 0 0 auto;
+    background: var(--accent);
+    color: #08060f;
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    border: none;
+    padding: 14px 26px;
+    border-radius: 10px;
+    cursor: pointer;
+    box-shadow: 0 0 22px color-mix(in srgb, var(--accent) 45%, transparent);
+    transition: transform 0.15s ease, box-shadow 0.15s ease;
+  }
+  .signup button:hover { transform: translateY(-2px); box-shadow: 0 4px 28px color-mix(in srgb, var(--accent) 60%, transparent); }
+  .signup button:focus-visible { outline: 2px solid var(--accent2); outline-offset: 3px; }
+
+  .signup-note {
+    margin-top: 16px;
+    font-size: 0.82rem;
+    color: var(--muted);
+    max-width: 420px;
+    line-height: 1.5;
+  }
+  .signup-note strong { color: var(--gold); font-weight: 600; }
+
+  .form-status {
+    margin-top: 14px;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    color: var(--accent2);
+    min-height: 1.2em;
+  }
+
+  .features {
+    position: relative;
+    z-index: 2;
+    padding: 90px 24px 100px;
+    display: grid;
+    gap: 28px;
+    max-width: 980px;
+    margin: 0 auto;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  }
+
+  .feature {
+    background: rgba(21, 15, 53, 0.5);
+    border: 1px solid rgba(182, 169, 221, 0.18);
+    border-radius: 10px;
+    padding: 30px 26px;
+  }
+
+  .feature .tag {
+    display: inline-block;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.78rem;
+    letter-spacing: 0.06em;
+    padding: 4px 10px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+    color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 10%, transparent);
+    border: 1px solid color-mix(in srgb, var(--accent) 30%, transparent);
+  }
+
+  .feature h3 {
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin-bottom: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+  }
+
+  .feature p {
+    font-size: 0.92rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  footer {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    padding: 40px 20px 50px;
+    border-top: 1px solid rgba(182, 169, 221, 0.12);
+  }
+  footer a {
+    color: var(--accent);
+    text-decoration: none;
+    font-family: 'Space Mono', monospace;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+  }
+  footer a:hover { text-decoration: underline; }
+  footer p { color: var(--muted); font-size: 0.78rem; margin-top: 10px; }
+
+
+  .byte-title {
+    font-family: 'VT323', monospace;
+    font-size: clamp(3rem, 13vw, 7.5rem);
+    line-height: 1;
+    color: var(--accent2);
+    text-shadow: 0 0 2px var(--accent2), 2px 0 0 rgba(255,47,158,0.5), -2px 0 0 rgba(51,214,255,0.35);
+    letter-spacing: 0.05em;
+  }
+  .byte-cursor { display:inline-block; width: 0.5em; background: var(--accent); margin-left: 4px; animation: blink 1s steps(1) infinite; }
+  @keyframes blink { 50% { opacity: 0; } }
+  .terminal-frame {
+    position: relative;
+    padding: 18px 28px;
+    border: 1px solid color-mix(in srgb, var(--accent2) 45%, transparent);
+    background: rgba(5,4,14,0.55);
+    overflow: hidden;
+  }
+  .terminal-frame::before {
+    content: "";
+    position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, rgba(255,255,255,0.04) 0px, rgba(255,255,255,0.04) 1px, transparent 1px, transparent 3px);
+    pointer-events: none;
+  }
+  .terminal-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    text-align: left;
+    letter-spacing: 0.1em;
+    margin-bottom: 6px;
+  }
+
 </style>
 </head>
 <body>
-<div class="discovery-overlay" id="discoveryOverlay">
-<div class="byte-mark">◈ ◈ ◈</div>
-<div class="discovery-title" id="discoveryTitle">Byte's Code City</div>
-<div class="discovery-sub" id="discoverySub">Every pattern holds a clue.<br>Every list tells a story — if you know how to read it.</div>
-<button class="discovery-enter-btn" id="discoveryEnterBtn" onclick="enterCity()">Enter Code City</button>
-<div class="hologram-stage" id="hologramStage">
-<div class="hologram-frame">
-<img class="hologram-video" id="entranceVideo" src="corrected-byte.gif" alt="Byte materializing">
-<div class="hologram-scanlines"></div>
-<div class="hologram-scan-sweep"></div>
-</div>
-<div class="hologram-caption">◈ SIGNAL LOCKING IN...</div>
-</div>
-</div>
-<nav>
-<a href="index.html" class="nav-logo">MiM</a>
-<ul class="nav-links">
-<li class="nav-drop" id="exploreDrop">
-<button class="nav-drop-trigger" onclick="toggleNavDrop('exploreDrop')">MiM U <span class="nav-drop-arrow">▾</span></button>
-<div class="nav-drop-menu">
-<a href="pdfs.html" class="nav-drop-item">PDFs</a>
-<a href="library.html" class="nav-drop-item">Library</a>
-<a href="characters.html" class="nav-drop-item">Characters</a>
-<a href="about.html" class="nav-drop-item">About</a>
-</div></li>
-<li class="nav-drop" id="undergroundDrop">
-<button class="nav-drop-trigger" onclick="toggleNavDrop('undergroundDrop')">The Underground <span class="nav-drop-arrow">▾</span></button>
-<div class="nav-drop-menu">
-<a href="games.html" class="nav-drop-item">Games</a>
-<a href="tag-wall.html" class="nav-drop-item">Tag Wall</a>
-<a href="broken-syntax.html" class="nav-drop-item">Broken Syntax</a>
-<a href="mim-tv.html" class="nav-drop-item">MiM TV</a>
-<a href="comic.html" class="nav-drop-item">Comics</a>
-</div></li>
-</ul>
-<div class="nav-right">
-<span class="nav-username" id="nav-username"></span>
-<div id="nav-user-menu" style="display:none;">
-<a href="dashboard.html">Dashboard</a>
-<button id="nav-logout-btn">Log Out</button>
-</div>
-<div id="nav-auth-btns">
-<button id="nav-login">Log In</button>
-<button id="nav-join">Join Free</button>
-</div>
-</div>
-<button class="nav-hamburger" id="navHamburger" onclick="toggleMobileMenu()" aria-label="Open menu"><span></span><span></span><span></span></button>
-</nav>
-<div class="mobile-menu" id="mobileMenu">
-<a href="index.html#crew">Crew</a>
-<a href="index.html#membership">Membership</a>
-<div class="mobile-menu-label">MiM U</div>
-<a href="pdfs.html">PDFs</a>
-<a href="library.html">Library</a>
-<a href="characters.html">Characters</a>
-<a href="about.html">About</a>
-<div class="mobile-menu-label">The Underground</div>
-<a href="games.html">Games</a>
-<a href="tag-wall.html">Tag Wall</a>
-<a href="broken-syntax.html">Broken Syntax</a>
-<a href="mim-tv.html">MiM TV</a>
-<a href="comic.html">Comics</a>
-<div class="mobile-menu-label">&nbsp;</div>
-<a href="dashboard.html" id="mobile-dashboard-link" style="display:none;">Dashboard</a>
-</div>
-<div class="modal-overlay" id="auth-modal" role="dialog" aria-modal="true">
-<div class="modal-box">
-<button class="modal-close" id="auth-close-btn">&#10005;</button>
-<div class="modal-title">Method in Motion</div><div class="modal-sub">Your adventure starts here.</div>
-<div class="modal-tabs"><button class="modal-tab active auth-tab" data-tab="login">Log In</button><button class="modal-tab auth-tab" data-tab="signup">Sign Up</button></div>
-<div id="login-form" class="auth-form" style="display:block">
-<div class="modal-field"><label>Email</label><input type="email" id="login-email" placeholder="your@email.com" autocomplete="email"></div>
-<div class="modal-field"><label>Password</label><input type="password" id="login-password" placeholder="••••••••" autocomplete="current-password"></div>
-<p class="modal-error" id="login-error"></p><button class="modal-submit" id="login-submit-btn">Log In</button><p class="modal-status" id="login-status" aria-live="polite"></p>
-<p style="margin-top:12px;font-size:.75rem;color:var(--text-dim);text-align:center">New here? <button class="auth-link" data-tab="signup" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--font-body)">Create an account</button></p></div>
-<div id="signup-form" class="auth-form" style="display:none">
-<div class="modal-field"><label>Name</label><input type="text" id="signup-name" placeholder="What should we call you?" autocomplete="nickname"></div>
-<div class="modal-field"><label>Email</label><input type="email" id="signup-email" placeholder="your@email.com" autocomplete="email"></div>
-<div class="modal-field"><label>Password</label><input type="password" id="signup-password" placeholder="6+ characters" autocomplete="new-password"></div>
-<p class="modal-error" id="signup-error"></p><button class="modal-submit" id="signup-submit-btn">Create Your Account</button><p class="modal-status" id="signup-status" aria-live="polite"></p>
-<p style="margin-top:12px;font-size:.75rem;color:var(--text-dim);text-align:center">Already in the crew? <button class="auth-link" data-tab="login" style="background:none;border:none;color:var(--cyan);cursor:pointer;font-size:.75rem;text-decoration:underline;font-family:var(--font-body)">Log in</button></p></div>
-</div></div>
-<section class="hero" id="byteHero">
-<video class="hero-video" autoplay muted loop playsinline poster="byte-entrance.png">
-<source src="byte-hero.mp4" type="video/mp4">
-</video>
-<div class="hero-gradient"></div>
-<div class="hero-pulse"></div>
-<div class="particle-field" id="particleField"></div>
-<img class="hero-byte-gif" src="byte-motion.gif" alt="Byte" onerror="this.style.display='none'" onclick="companionClick()" style="pointer-events:auto;cursor:pointer;">
-<div class="hero-content">
-<div class="hero-eyebrow">◈ &nbsp; Data Tracker &nbsp; · &nbsp; Data</div>
-<div class="hero-name">Byte</div>
-<div class="hero-catchphrase">Nothing gets by me!</div>
-<div class="hero-role">The Data Tracker</div>
-<div class="hero-quote">"<span>Every dataset tells a story.</span> I just have to listen closely enough to hear it."</div>
-<div class="fact-ticker" id="factTicker"></div>
-<div class="hero-tiles">
-<div class="hero-lesson-grid">
-<a class="hero-tile" onclick="jumpToLesson(1)">01 Data Basics</a>
-<a class="hero-tile" onclick="jumpToLesson(2)">02 Patterns &amp; Sequences</a>
-<a class="hero-tile" onclick="jumpToLesson(3)">03 Organizing Information</a>
-<a class="hero-tile" onclick="jumpToLesson(4)">04 Byte's Data Challenge</a>
-</div>
-<button class="hero-game-tile" onclick="ibToggleWrapper()" aria-label="Open the Pattern Match icebreaker game">
-<span class="hero-game-icon">◈</span>
-<span class="hero-game-label">PATTERN<br>MATCH</span>
-<span class="hero-game-cta">Boot Game →</span>
-</button>
-</div>
-</div>
+
+<section class="hero">
+  
+  <div class="hero-content">
+    <span class="eyebrow">Byte's Next Mission</span>
+    <div class="title-wrap">
+      <div class="terminal-frame"><div class="terminal-label">byte@mim:~$ status</div><h1 class="byte-title">BYTE<span class="byte-cursor">&nbsp;</span></h1></div>
+    </div>
+    <p class="tagline">&ldquo;Nothing gets by me!&rdquo;</p>
+    <span class="badge">Coming Soon</span>
+
+    <form class="signup" id="notifyForm">
+      <label for="email" class="sr-only" style="position:absolute; left:-9999px;">Email address</label>
+      <input type="email" id="email" name="email" placeholder="your@email.com" required>
+      <button type="submit">Notify Me</button>
+    </form>
+    <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+    <p class="signup-note">Sign up now and get <strong>free early access for your first two weeks</strong> when the new Byte game launches.</p>
+  </div>
 </section>
-<div class="icebreaker-wrapper" id="icebreakerWrapper">
-<section class="icebreaker" id="icebreaker">
-<div class="ib-header">
-<div class="ib-eyebrow">◈ &nbsp; ICEBREAKER &nbsp; · &nbsp; PATTERN MATCH</div>
-<h2 class="ib-title">Learn the Data Types</h2>
-<p class="ib-sub">Four kinds of data show up everywhere in code. Meet them, then lock them into memory by repeating Byte's growing pattern.</p>
-</div>
-<div class="ib-phase" id="ib-intro">
-<div class="ib-terms-grid" id="ibTermsGrid"></div>
-<button class="ib-start-btn" id="ibStartBtn" onclick="ibStartGame()">Start Matching ◈</button>
-</div>
-<div class="ib-phase" id="ib-game" style="display:none;">
-<div class="ib-catch-stage">
-<img class="ib-reaction-img" id="ibReactionImg" src="" alt="">
-<div class="ib-catch-hud">
-<span id="ibRoundLabel">ROUND 1</span>
-<span class="lives" id="ibLivesLabel">♥ ♥ ♥</span>
-</div>
-<div class="ib-catch-bins" id="ibBins"></div>
-<div class="ib-catch-status" id="ibCatchStatus">Watch the pattern, then repeat it back.</div>
-</div>
-<button class="ib-skip-btn" onclick="ibSkipGame()">Skip this part →</button>
-</div>
-<div class="ib-phase" id="ib-complete" style="display:none;">
-<div class="ib-complete-card">
-<img src="byte-victory.png" alt="Byte celebrating" onerror="this.style.display='none'">
-<h3>◈ Pattern Locked In</h3>
-<p>String. Number. Boolean. Array. That's the whole data family — and you can spot all four on sight now.</p>
-<button class="ib-replay-btn" onclick="ibReset()">Play Again</button>
-<button class="ib-replay-btn" onclick="ibToggleWrapper()" style="margin-left:0.6rem;">Close</button>
-</div>
-</div>
+
+<section class="features">
+  
+  <div class="feature">
+    <span class="tag">&lt;discover&gt;</span>
+    <h3>Discover the concept</h3>
+    <p>Byte introduces the idea in their own style — the kind of moment that makes a new coding concept click.</p>
+  </div>
+  <div class="feature">
+    <span class="tag">&lt;build&gt;</span>
+    <h3>Build it yourself</h3>
+    <p>Hands-on challenges turn the concept into something real that Byte helped you make happen.</p>
+  </div>
+  <div class="feature">
+    <span class="tag">&lt;play&gt;</span>
+    <h3>Play it. Practice it.</h3>
+    <p>Repetition that doesn't feel repetitive — the concept sticks because you actually got to play with it.</p>
+  </div>
 </section>
-</div>
-<div class="lesson-strip">
-<button class="lesson-tab" id="tab-1" onclick="openLesson(1)">01 — Data Basics</button>
-<button class="lesson-tab" id="tab-2" onclick="openLesson(2)">02 — Patterns &amp; Sequences</button>
-<button class="lesson-tab" id="tab-3" onclick="openLesson(3)">03 — Organizing Information</button>
-<button class="lesson-tab" id="tab-4" onclick="openLesson(4)">04 — Byte's Data Challenge</button>
-<button class="lesson-tab" id="tab-cheat" onclick="openLesson('cheat')">◈ Cheat Sheet</button>
-</div>
-<div class="lesson-panel" id="lesson-1">
-<aside class="lesson-sidebar">
-<div class="sidebar-label">Lesson 01</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(1,'read')" id="sb-1-read"><span class="sidebar-badge">R</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'terms')" id="sb-1-terms"><span class="sidebar-badge">T</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'build')" id="sb-1-build"><span class="sidebar-badge">B</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(1,'reflect')" id="sb-1-reflect"><span class="sidebar-badge">RF</span> Reflect</button>
-<div class="sidebar-divider"></div>
-<a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
-</aside>
-<div class="lesson-content">
-<div class="locked-panel" id="lock-1">
-<div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
-<h2>Coders Membership Required</h2>
-<p>Byte's full world — all 4 lessons — unlocks with Coders.</p>
-<button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-</div>
-<div class="content-block active" id="block-1-read" style="display:none">
-<div class="section-header">Data Basics</div>
-<div class="section-sub">LESSON 01 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 04</div>
-<h3>What Is Data?</h3>
-<p><strong>Data</strong> is any piece of information a computer stores or works with — a name, a score, an answer of yes or no, a whole list of favorite songs. Every app you've ever used is built on data moving around behind the scenes.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 04</div>
-<h3>The Basic Data Types</h3>
-<p>Code sorts data into <strong>types</strong>. A <code>string</code> is text in quotes, like "Byte". A <code>number</code> is a numeric value, like 7. A <code>boolean</code> is only ever true or false. Every piece of data you'll ever track fits into one of these.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 04</div>
-<h3>Storing Data in a Variable</h3>
-<p>A <strong>variable</strong> is a labeled container that holds a piece of data so code can use it later.</p>
-<div class="code-block"><span class="code-tag">let</span> name = <span class="code-str">"Byte"</span>; <span class="code-tag">let</span> score = <span class="code-val">100</span>; <span class="code-tag">let</span> isReady = <span class="code-val">true</span>;</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 04</div>
-<h3>Why Type Matters</h3>
-<p>Knowing a value's type tells you what you can do with it. You can add two numbers together, but you can't add two words the same way. Byte always checks the type first.</p>
-</div>
-</div>
-<div class="read-card"><div class="read-card-num">05 / EXPANSION</div><h3>See It: Classify Before You Code</h3><p>Byte finds the type before touching the code. <code>"Nova"</code> is a <strong>string</strong>, <code>27</code> is a <strong>number</strong>, and <code>false</code> is a <strong>boolean</strong>. Quotes signal text, digits without quotes signal a number, and true/false signal a boolean.</p></div>
-<div class="read-card"><div class="read-card-num">06 / EXPANSION</div><h3>Break It Apart: Label → Container → Value</h3><p>Read <code>let score = 100;</code> in three parts: <strong>score</strong> is the label, the <strong>variable</strong> is the container created with <code>let</code>, and <strong>100</strong> is the value. Byte's method: <strong>identify the type → find the pattern → organize it clearly.</strong></p></div>
-<div class="content-block" id="block-1-terms" style="display:none">
-<div class="section-header">Key Terms</div>
-<div class="section-sub">LESSON 01 · TAP TO EXPAND</div>
-<div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Data <span class="term-arrow">›</span></div><div class="term-def">Any piece of information a computer stores or works with.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">String <span class="term-arrow">›</span></div><div class="term-def">Text data, always wrapped in quotes. Example: "Byte".</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Number <span class="term-arrow">›</span></div><div class="term-def">A numeric value, no quotes needed. Example: 42.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Boolean <span class="term-arrow">›</span></div><div class="term-def">A value that is only ever true or false.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Variable <span class="term-arrow">›</span></div><div class="term-def">A labeled container that holds a piece of data.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Data type <span class="term-arrow">›</span></div><div class="term-def">The category a piece of data belongs to — string, number, or boolean.</div></div>
-</div>
-</div>
-<div class="content-block" id="block-1-build" style="display:none">
-<div class="section-header">Build It</div>
-<div class="section-sub">LESSON 01 · SORT THE DATA</div>
-<div class="demo-card">
-<h3>Log Every Data Type</h3>
-<p>This code stores one of each data type. Run it and see what prints.</p>
-<textarea class="debug-editor" id="debug-d1">let name = "Byte";
-let score = 100;
-let isReady = true;
-console.log(name);
-console.log(score);
-console.log(isReady);
-// Try changing the values, then run again</textarea>
-<button class="run-btn" onclick="runDebug('d1')">▶ Run</button>
-<div class="demo-output" id="debug-out-d1"></div>
-</div>
-<div class="quiz-card">
-<div class="quiz-q">Which of these is a boolean value?</div>
-<div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'That\'s a string — it\'s wrapped in quotes.')">"true"</button>
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. true with no quotes is a boolean.')">true</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'That\'s a number, not a boolean.')">1</button>
-</div>
-<div class="quiz-feedback" id="qfb-1-0"></div>
-</div>
-<div class="quiz-card">
-<div class="quiz-q">What's the label for a container that holds a piece of data?</div>
-<div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. A variable stores data so code can use it later.')">Variable</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'A string is a type of data, not a container.')">String</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'A boolean is a type of data, not a container.')">Boolean</button>
-</div>
-<div class="quiz-feedback" id="qfb-1-1"></div>
-</div>
-</div>
-<div class="demo-card"><h3>Predict → Change → Run</h3><p>Predict the output first. Then change all three values, name each new type, and run again.</p><textarea class="debug-editor" id="debug-d1b">let coder = "Byte";
-let level = 4;
-let missionReady = false;
-console.log(coder);
-console.log(level);
-console.log(missionReady);
-// Predict first. Change all three values. Predict again.</textarea><button class="run-btn" onclick="runDebug('d1b')">▶ Run</button><div class="demo-output" id="debug-out-d1b"></div></div>
-<div class="quiz-card"><div class="quiz-q">Quick recall — which value is a string?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,false,'27 has no quotes, so it is a number.')">27</button><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct. Quotes tell you this is a string.')">"27"</button><button class="quiz-opt" onclick="checkQuiz(this,false,'false is a boolean.')">false</button></div><div class="quiz-feedback" id="qfb-1-2"></div></div>
-<div class="content-block" id="block-1-reflect" style="display:none">
-<div class="section-header">Reflect</div>
-<div class="section-sub">LESSON 01 · YOUR THOUGHTS</div>
-<div class="reflect-prompt">
-<div class="reflect-q">Byte says "nothing gets by me." Think of an app you use — what pieces of data is it probably tracking about you?</div>
-<textarea class="reflect-input" id="ref-1-1" placeholder="Write your thoughts here..."></textarea>
-<div style="display:flex;align-items:center;gap:1rem;">
-<button class="reflect-save-btn" onclick="saveReflect('ref-1-1','saved-1-1')">Save</button>
-<span class="reflect-saved" id="saved-1-1">✓ Saved</span>
-</div>
-</div>
-<div class="lesson-complete" id="complete-1">
-<h3>◈ &nbsp; Lesson 1 Complete</h3>
-<p>Data types. Variables. You know how to spot every value now.</p>
-<div class="lesson-joke" id="joke-1"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="lesson-panel" id="lesson-2">
-<aside class="lesson-sidebar">
-<div class="sidebar-label">Lesson 02</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(2,'read')" id="sb-2-read"><span class="sidebar-badge">R</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'terms')" id="sb-2-terms"><span class="sidebar-badge">T</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'build')" id="sb-2-build"><span class="sidebar-badge">B</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(2,'reflect')" id="sb-2-reflect"><span class="sidebar-badge">RF</span> Reflect</button>
-<div class="sidebar-divider"></div>
-<a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
-</aside>
-<div class="lesson-content">
-<div class="locked-panel" id="lock-2">
-<div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
-<h2>Coders Membership Required</h2>
-<p>Byte's full world — all 4 lessons — unlocks with Coders.</p>
-<button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-</div>
-<div class="content-block" id="block-2-read" style="display:none">
-<div class="section-header">Patterns &amp; Sequences</div>
-<div class="section-sub">LESSON 02 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 04</div>
-<h3>Data Rarely Travels Alone</h3>
-<p>Most real data comes as a group — a playlist, a class roster, a list of high scores. In code, an ordered group of values is called an <strong>array</strong>.</p>
-<div class="code-block"><span class="code-tag">let</span> songs = [<span class="code-str">"Track A"</span>, <span class="code-str">"Track B"</span>, <span class="code-str">"Track C"</span>];</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 04</div>
-<h3>Every Item Has a Position</h3>
-<p>Each value in an array has an <strong>index</strong> — its position in line, starting at 0, not 1. The first item is index 0.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 04</div>
-<h3>Spotting a Pattern</h3>
-<p>A <strong>pattern</strong> is a sequence that repeats or follows a rule — every other item is a number, every third item is red. Byte's whole job is noticing patterns like this in data.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 04</div>
-<h3>Reading an Array by Index</h3>
-<p>Use square brackets and the index number to pull out one item.</p>
-<div class="code-block">songs[<span class="code-val">0</span>]; <span class="code-comment">// "Track A" — the first item</span></div>
-</div>
-</div>
-<div class="read-card"><div class="read-card-num">05 / EXPANSION</div><h3>Predict the Position</h3><p>For <code>["pink", "cyan", "gold"]</code>: pink = <strong>0</strong>, cyan = <strong>1</strong>, gold = <strong>2</strong>. Arrays count from zero. Repeat it: <strong>first item, index 0.</strong></p></div>
-<div class="read-card"><div class="read-card-num">06 / EXPANSION</div><h3>Pattern → Array Connection</h3><p>If the sequence is <code>2, 4, 6, 8</code>, the rule is “add 2.” Arrays preserve order, so Byte checks the order, finds the rule, then uses an index to retrieve the clue.</p></div>
-<div class="content-block" id="block-2-terms" style="display:none">
-<div class="section-header">Key Terms</div>
-<div class="section-sub">LESSON 02 · TAP TO EXPAND</div>
-<div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Array <span class="term-arrow">›</span></div><div class="term-def">An ordered list of values stored in one variable.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Index <span class="term-arrow">›</span></div><div class="term-def">The position of an item in an array, starting at 0.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Sequence <span class="term-arrow">›</span></div><div class="term-def">A set of values in a specific order.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Pattern <span class="term-arrow">›</span></div><div class="term-def">A sequence that repeats or follows a predictable rule.</div></div>
-</div>
-</div>
-<div class="content-block" id="block-2-build" style="display:none">
-<div class="section-header">Build It</div>
-<div class="section-sub">LESSON 02 · READ THE ARRAY</div>
-<div class="demo-card">
-<h3>Look Up Items by Index</h3>
-<p>This array holds a small playlist. Log different index positions and see what comes back.</p>
-<textarea class="debug-editor" id="debug-d2">let songs = ["Track A", "Track B", "Track C"];
-console.log(songs[0]);
-console.log(songs[1]);
-console.log(songs[2]);
-// Try adding songs[3] -- what happens?</textarea>
-<button class="run-btn" onclick="runDebug('d2')">▶ Run</button>
-<div class="demo-output" id="debug-out-d2"></div>
-</div>
-<div class="quiz-card">
-<div class="quiz-q">In an array, what index is the very first item?</div>
-<div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'Arrays start counting at 0, not 1.')">1</button>
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. The first item in any array is always index 0.')">0</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'That would be the third item.')">2</button>
-</div>
-<div class="quiz-feedback" id="qfb-2-0"></div>
-</div>
-</div>
-<div class="demo-card"><h3>Retrieve, Add, Predict</h3><p>Predict index 0 and index 2. Then add a fourth signal and log it using its new index.</p><textarea class="debug-editor" id="debug-d2b">let signals = ["pink", "cyan", "gold"];
-console.log(signals[0]);
-console.log(signals[2]);
-// Add "purple". What index will it have? Log it.</textarea><button class="run-btn" onclick="runDebug('d2b')">▶ Run</button><div class="demo-output" id="debug-out-d2b"></div></div>
-<div class="quiz-card"><div class="quiz-q">In ["A", "B", "C"], which index retrieves "B"?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,false,'Index 0 retrieves A.')">0</button><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct. The second item has index 1.')">1</button><button class="quiz-opt" onclick="checkQuiz(this,false,'Index 2 retrieves C.')">2</button></div><div class="quiz-feedback" id="qfb-2-2"></div></div>
-<div class="content-block" id="block-2-reflect" style="display:none">
-<div class="section-header">Reflect</div>
-<div class="section-sub">LESSON 02 · YOUR THOUGHTS</div>
-<div class="reflect-prompt">
-<div class="reflect-q">Think of a list you keep in real life — a routine, a playlist, a grocery list. What pattern shows up in the order?</div>
-<textarea class="reflect-input" id="ref-2-1" placeholder="Write your thoughts here..."></textarea>
-<div style="display:flex;align-items:center;gap:1rem;">
-<button class="reflect-save-btn" onclick="saveReflect('ref-2-1','saved-2-1')">Save</button>
-<span class="reflect-saved" id="saved-2-1">✓ Saved</span>
-</div>
-</div>
-<div class="lesson-complete" id="complete-2">
-<h3>◈ &nbsp; Lesson 2 Complete</h3>
-<p>Arrays. Indexes. Patterns. You can read any list now.</p>
-<div class="lesson-joke" id="joke-2"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="lesson-panel" id="lesson-3">
-<aside class="lesson-sidebar">
-<div class="sidebar-label">Lesson 03</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(3,'read')" id="sb-3-read"><span class="sidebar-badge">R</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'terms')" id="sb-3-terms"><span class="sidebar-badge">T</span> Terms</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'build')" id="sb-3-build"><span class="sidebar-badge">B</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(3,'reflect')" id="sb-3-reflect"><span class="sidebar-badge">RF</span> Reflect</button>
-<div class="sidebar-divider"></div>
-<a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
-</aside>
-<div class="lesson-content">
-<div class="locked-panel" id="lock-3">
-<div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
-<h2>Coders Membership Required</h2>
-<p>Byte's full world — all 4 lessons — unlocks with Coders.</p>
-<button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-</div>
-<div class="content-block" id="block-3-read" style="display:none">
-<div class="section-header">Organizing Information</div>
-<div class="section-sub">LESSON 03 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 04</div>
-<h3>When a List Isn't Enough</h3>
-<p>An array is great for a simple list, but real information is often more organized than that — it has labeled parts. That's what an <strong>object</strong> is for.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 04</div>
-<h3>Key-Value Pairs</h3>
-<p>An object stores data as <strong>key-value pairs</strong> — a label (key) connected to a piece of data (value).</p>
-<div class="code-block"><span class="code-tag">let</span> character = {<br>&nbsp;&nbsp;<span class="code-attr">name</span>: <span class="code-str">"Byte"</span>,<br>&nbsp;&nbsp;<span class="code-attr">role</span>: <span class="code-str">"Data Tracker"</span>,<br>&nbsp;&nbsp;<span class="code-attr">level</span>: <span class="code-val">4</span><br>};</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 04</div>
-<h3>Reading a Property</h3>
-<p>Use a dot to reach into an object and grab one piece of it.</p>
-<div class="code-block">character.<span class="code-attr">name</span>; <span class="code-comment">// "Byte"</span></div>
-</div>
-<div class="read-card">
-<div class="read-card-num">04 / 04</div>
-<h3>Grouping and Sorting</h3>
-<p>Organizing data often means <strong>grouping</strong> similar items together or <strong>sorting</strong> them into an order — smallest to largest, A to Z. Byte always organizes before drawing conclusions.</p>
-</div>
-</div>
-<div class="read-card"><div class="read-card-num">05 / EXPANSION</div><h3>Match the Key to the Value</h3><p>In <code>{ name: "Byte", level: 4 }</code>, <strong>name</strong> matches <strong>"Byte"</strong> and <strong>level</strong> matches <strong>4</strong>. The key is the label; the value is the information attached to it.</p></div>
-<div class="read-card"><div class="read-card-num">06 / EXPANSION</div><h3>Loose Data vs. Organized Data</h3><p><code>"Byte", "Data Tracker", 4</code> has values but no labels. <code>{ name: "Byte", role: "Data Tracker", level: 4 }</code> organizes the same clues so each one is easy to retrieve.</p></div>
-<div class="content-block" id="block-3-terms" style="display:none">
-<div class="section-header">Key Terms</div>
-<div class="section-sub">LESSON 03 · TAP TO EXPAND</div>
-<div class="terms-grid">
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Object <span class="term-arrow">›</span></div><div class="term-def">A collection of labeled data stored as key-value pairs.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Key <span class="term-arrow">›</span></div><div class="term-def">The label attached to a value inside an object.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Value <span class="term-arrow">›</span></div><div class="term-def">The actual piece of data connected to a key.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Sort <span class="term-arrow">›</span></div><div class="term-def">To arrange data into an order, like smallest to largest.</div></div>
-<div class="term-card" onclick="toggleTerm(this)"><div class="term-name">Group <span class="term-arrow">›</span></div><div class="term-def">To collect similar pieces of data together.</div></div>
-</div>
-</div>
-<div class="content-block" id="block-3-build" style="display:none">
-<div class="section-header">Build It</div>
-<div class="section-sub">LESSON 03 · BUILD AN OBJECT</div>
-<div class="demo-card">
-<h3>Read a Character Profile</h3>
-<p>This object organizes info about a character. Log different properties.</p>
-<textarea class="debug-editor" id="debug-d3">let character = {
-  name: "Byte",
-  role: "Data Tracker",
-  level: 4
-};
-console.log(character.name);
-console.log(character.role);
-console.log(character.level);
-// Add a new key, like "catchphrase", then log it</textarea>
-<button class="run-btn" onclick="runDebug('d3')">▶ Run</button>
-<div class="demo-output" id="debug-out-d3"></div>
-</div>
-<div class="quiz-card">
-<div class="quiz-q">What connects a key to its data inside an object?</div>
-<div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'A comma separates pairs, it doesn\'t connect a key to its value.')">A comma</button>
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. A colon connects each key to its value.')">A colon</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'Square brackets are used for arrays, not key-value pairs.')">Square brackets</button>
-</div>
-<div class="quiz-feedback" id="qfb-3-0"></div>
-</div>
-</div>
-<div class="demo-card"><h3>Build the Object Piece by Piece</h3><p>Start with one property. Add role and level, predict the dot expression for each value, then change one property and run again.</p><textarea class="debug-editor" id="debug-d3b">let profile = {
-  name: "Byte"
-};
-// Add role: "Data Tracker"
-// Add level: 4
-console.log(profile.name);
-// Log profile.role and profile.level.
-// Change one value and predict before Run.</textarea><button class="run-btn" onclick="runDebug('d3b')">▶ Run</button><div class="demo-output" id="debug-out-d3b"></div></div>
-<div class="quiz-card"><div class="quiz-q">If profile = { name: "Byte", level: 4 }, which expression retrieves 4?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,false,'profile.name retrieves Byte.')">profile.name</button><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct. Dot notation reaches the level property.')">profile.level</button><button class="quiz-opt" onclick="checkQuiz(this,false,'That names the object but not a property.')">profile</button></div><div class="quiz-feedback" id="qfb-3-1"></div></div>
-<div class="content-block" id="block-3-reflect" style="display:none">
-<div class="section-header">Reflect</div>
-<div class="section-sub">LESSON 03 · YOUR THOUGHTS</div>
-<div class="reflect-prompt">
-<div class="reflect-q">If you organized facts about yourself into a profile object, what three keys would you use?</div>
-<textarea class="reflect-input" id="ref-3-1" placeholder="Write your thoughts here..."></textarea>
-<div style="display:flex;align-items:center;gap:1rem;">
-<button class="reflect-save-btn" onclick="saveReflect('ref-3-1','saved-3-1')">Save</button>
-<span class="reflect-saved" id="saved-3-1">✓ Saved</span>
-</div>
-</div>
-<div class="lesson-complete" id="complete-3">
-<h3>◈ &nbsp; Lesson 3 Complete</h3>
-<p>Objects. Keys. Values. Sorting and grouping. Information has structure now.</p>
-<div class="lesson-joke" id="joke-3"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="lesson-panel" id="lesson-4">
-<aside class="lesson-sidebar">
-<div class="sidebar-label">Lesson 04</div>
-<button class="sidebar-nav-btn active" onclick="showBlock(4,'read')" id="sb-4-read"><span class="sidebar-badge">R</span> Read</button>
-<button class="sidebar-nav-btn" onclick="showBlock(4,'build')" id="sb-4-build"><span class="sidebar-badge">B</span> Build</button>
-<button class="sidebar-nav-btn" onclick="showBlock(4,'reflect')" id="sb-4-reflect"><span class="sidebar-badge">RF</span> Reflect</button>
-<div class="sidebar-divider"></div>
-<a href="byte-game.html" class="sidebar-game-link">◈ Byte's Game World</a>
-</aside>
-<div class="lesson-content">
-<div class="locked-panel" id="lock-4">
-<div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
-<h2>Coders Membership Required</h2>
-<p>Byte's full world — all 4 lessons — unlocks with Coders.</p>
-<button class="gate-btn" onclick="goUpgrade()">Upgrade Now</button>
-</div>
-<div class="content-block" id="block-4-read" style="display:none">
-<div class="section-header">Byte's Data Challenge</div>
-<div class="section-sub">LESSON 04 · CODERS</div>
-<div class="read-card">
-<div class="read-card-num">01 / 03</div>
-<h3>You Have the Tools</h3>
-<p>Data types. Arrays. Objects. Everything from Lessons 1-3 combines here into one final challenge: building a small roster of organized data.</p>
-</div>
-<div class="read-card">
-<div class="read-card-num">02 / 03</div>
-<h3>A List of Objects</h3>
-<p>The most powerful combination in data is an <strong>array of objects</strong> — a list where every item is its own organized profile.</p>
-<div class="code-block"><span class="code-tag">let</span> crew = [<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-str">"Zen"</span>, <span class="code-attr">role</span>: <span class="code-str">"Creative Coder"</span> },<br>&nbsp;&nbsp;{ <span class="code-attr">name</span>: <span class="code-str">"Byte"</span>, <span class="code-attr">role</span>: <span class="code-str">"Data Tracker"</span> }<br>];</div>
-</div>
-<div class="read-card">
-<div class="read-card-num">03 / 03</div>
-<h3>Byte's Method</h3>
-<p>Identify the type. Find the pattern. Organize it clearly. That's how Byte turns raw data into something that makes sense — and nothing gets by.</p>
-</div>
-</div>
-<div class="read-card"><div class="read-card-num">04 / EXPANSION</div><h3>The Messy Data File</h3><p>Byte receives <code>"Zen", 3, true, "Byte", 4, false</code>. First <strong>identify each type</strong>. Next <strong>find the repeating pattern</strong>: name, level, ready status. Then <strong>organize it clearly</strong> into profiles.</p></div>
-<div class="content-block" id="block-4-build" style="display:none">
-<div class="section-header">Byte's Data Challenge</div>
-<div class="section-sub">LESSON 04 · BUILD THE ROSTER</div>
-<div class="demo-card">
-<h3>Build a Crew Roster</h3>
-<p>This array of objects holds a small crew roster. Log each member's name and role.</p>
-<textarea class="debug-editor" id="debug-d4">let crew = [
-  { name: "Zen", role: "Creative Coder" },
-  { name: "Byte", role: "Data Tracker" },
-  { name: "Loop", role: "Flow Master" }
-];
-console.log(crew[0].name + " - " + crew[0].role);
-console.log(crew[1].name + " - " + crew[1].role);
-console.log(crew[2].name + " - " + crew[2].role);
-// Add a fourth crew member, then log it too</textarea>
-<button class="run-btn" onclick="runDebug('d4')">▶ Run</button>
-<div class="demo-output" id="debug-out-d4"></div>
-</div>
-<div class="quiz-card">
-<div class="quiz-q">An array of objects is best described as...</div>
-<div class="quiz-options">
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'A single object holds one profile, not a list of them.')">A single object with one key</button>
-<button class="quiz-opt" onclick="checkQuiz(this, true, 'Correct. Each item in the array is its own organized profile.')">A list where every item is its own organized profile</button>
-<button class="quiz-opt" onclick="checkQuiz(this, false, 'A boolean only holds true or false.')">A boolean value</button>
-</div>
-<div class="quiz-feedback" id="qfb-4-0"></div>
-</div>
-</div>
-<div class="demo-card"><h3>Final Case File: Organize the Evidence</h3><p>Identify the types, spot the repeating name/level/ready pattern, organize it into objects, then retrieve clues with an index and dot notation.</p><textarea class="debug-editor" id="debug-d4b">// RAW FILE: "Zen", 3, true, "Byte", 4, false
-let crew = [
-  { name: "Zen", level: 3, ready: true },
-  { name: "Byte", level: 4, ready: false }
-];
-console.log(crew[1].name);
-console.log(crew[0].ready);
-// Add a third profile using a string, number, and boolean.</textarea><button class="run-btn" onclick="runDebug('d4b')">▶ Run</button><div class="demo-output" id="debug-out-d4b"></div></div>
-<div class="quiz-card"><div class="quiz-q">What is Byte's investigation order?</div><div class="quiz-options"><button class="quiz-opt" onclick="checkQuiz(this,true,'Correct. Identify the type, find the pattern, then organize it clearly.')">Identify the type → Find the pattern → Organize it clearly</button><button class="quiz-opt" onclick="checkQuiz(this,false,'Organizing first can hide clues.')">Organize → Guess → Delete</button><button class="quiz-opt" onclick="checkQuiz(this,false,'Byte investigates before changing evidence.')">Change everything → Check the type</button></div><div class="quiz-feedback" id="qfb-4-1"></div></div>
-<div class="content-block" id="block-4-reflect" style="display:none">
-<div class="section-header">Reflect</div>
-<div class="section-sub">LESSON 04 · BYTE'S FINAL DEBRIEF</div>
-<div class="reflect-prompt">
-<div class="reflect-q">Describe Byte's approach to data in your own words. If a friend had a messy list of information, what would you tell them to do first?</div>
-<textarea class="reflect-input" id="ref-4-1" placeholder="Write your thoughts here..."></textarea>
-<div style="display:flex;align-items:center;gap:1rem;">
-<button class="reflect-save-btn" onclick="saveReflect('ref-4-1','saved-4-1')">Save</button>
-<span class="reflect-saved" id="saved-4-1">✓ Saved</span>
-</div>
-</div>
-<div class="lesson-complete" id="complete-4">
-<h3>◈ &nbsp; Byte's Code City Complete</h3>
-<p>All four lessons done. Data types, patterns, organization, and a real roster you built yourself. Nothing gets by you now.</p>
-<div class="lesson-joke" id="joke-4"></div>
-</div>
-</div>
-</div>
-</div>
-<div class="lesson-panel" id="lesson-cheat">
-<div class="lesson-content" style="max-width:900px;margin:0 auto;grid-column:1/-1;">
-<div class="locked-panel" id="lock-cheat">
-<div class="locked-icon"><span class="sidebar-badge">LOCKED</span></div>
-<h2>Byte's Cheat Sheet Requires Coders</h2>
-<p>Upgrade to Coders to unlock Byte's complete combined lesson reference.</p>
-<button class="gate-btn" onclick="goUpgrade()">Upgrade to Coders</button>
-</div>
-<div id="cheat-content" style="display:none;">
-<div class="section-header">Byte's Cheat Sheet</div>
-<div class="section-sub">ALL FOUR LESSONS · COMBINED REFERENCE</div>
-<div class="cheat-card">
-<h3>◈ Lesson 1 — Data Basics</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">String</div><div class="cheat-desc">Text in quotes, like "Byte".</div></div>
-<div class="cheat-item"><div class="cheat-term">Number</div><div class="cheat-desc">A numeric value, no quotes needed.</div></div>
-<div class="cheat-item"><div class="cheat-term">Boolean</div><div class="cheat-desc">Only ever true or false.</div></div>
-<div class="cheat-item"><div class="cheat-term">Variable</div><div class="cheat-desc">A labeled container that holds data. Read it as label → container → value.</div></div><div class="cheat-item"><div class="cheat-term">Data / Data type</div><div class="cheat-desc">Data is information a computer stores or uses. A data type is its category: string, number, or boolean.</div></div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>◈ Lesson 2 — Patterns &amp; Sequences</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">Array</div><div class="cheat-desc">An ordered list of values.</div></div>
-<div class="cheat-item"><div class="cheat-term">Index</div><div class="cheat-desc">Position in an array, starting at 0.</div></div>
-<div class="cheat-item"><div class="cheat-term">Pattern</div><div class="cheat-desc">A sequence that repeats or follows a rule.</div></div><div class="cheat-item"><div class="cheat-term">Sequence / Zero indexing</div><div class="cheat-desc">A sequence is ordered data. Arrays start at index 0: first item = 0, second = 1.</div></div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>◈ Lesson 3 — Organizing Information</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">Object</div><div class="cheat-desc">Key-value pairs, like { name: "Byte" }.</div></div>
-<div class="cheat-item"><div class="cheat-term">Key / Value</div><div class="cheat-desc">The key is the label; the value is the information connected to it.</div></div><div class="cheat-item"><div class="cheat-term">Property / Dot notation</div><div class="cheat-desc">A property is one key-value entry. Dot notation retrieves it, like profile.level.</div></div>
-<div class="cheat-item"><div class="cheat-term">Sort / Group</div><div class="cheat-desc">Arrange into order, or collect similar items together.</div></div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>◈ Lesson 4 — Byte's Data Challenge</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">Array of objects</div><div class="cheat-desc">A list where every item is its own organized profile.</div></div>
-<div class="cheat-item"><div class="cheat-term">Byte's method</div><div class="cheat-desc">Identify the type → Find the pattern → Organize it clearly.</div></div>
-</div>
-</div>
-<div class="cheat-card">
-<h3>◈ Symbols Reference</h3>
-<div class="cheat-items">
-<div class="cheat-item"><div class="cheat-term">[ ]</div><div class="cheat-desc">Square brackets — hold an array, or grab an item by index.</div></div>
-<div class="cheat-item"><div class="cheat-term">{ }</div><div class="cheat-desc">Curly braces — hold an object's key-value pairs.</div></div>
-<div class="cheat-item"><div class="cheat-term">:</div><div class="cheat-desc">Colon — connects a key to its value inside an object.</div></div>
-<div class="cheat-item"><div class="cheat-term">.</div><div class="cheat-desc">Dot — reaches into an object to grab one property.</div></div>
-<div class="cheat-item"><div class="cheat-term">' '</div><div class="cheat-desc">Quotes — wrap text values (strings).</div></div>
-</div>
-<div class="cheat-btn-row">
-<a href="byte-cheatsheet.pdf" download class="cheat-download-btn">⬇ Download Full PDF Cheat Sheet</a>
-</div>
-</div>
-</div>
-</div>
-</div>
-<button class="sound-toggle" id="soundToggle" onclick="toggleSound()">🔊</button>
-<div class="egg-popup" id="eggPopup">
-<h4>◈ Secret Found!</h4>
-<p id="eggText"></p>
-</div>
-<script type="module" src="auth-init.js"></script>
+
+<footer>
+  <a href="https://methodinmotion.org">← Back to methodinmotion.org</a>
+  <p>© 2026 Method in Motion</p>
+</footer>
+
 <script>
-let currentLesson = null;
-let currentTier = null;
-window.handleTierUnlock = function(tier) {
-  currentTier = tier;
-
-  const hasByteAccess =
-    typeof window.mimHasAccess === 'function' &&
-    window.mimHasAccess('byte', tier, 'lessons');
-
-  const hasGameAccess =
-    typeof window.mimHasAccess === 'function' &&
-    window.mimHasAccess('byte', tier, 'game');
-
-  const hasCheatAccess =
-    typeof window.mimHasAccess === 'function' &&
-    window.mimHasAccess('byte', tier, 'cheat');
-
-  if (hasByteAccess) {
-    [1, 2, 3, 4].forEach(lesson => {
-      const lock = document.getElementById('lock-' + lesson);
-
-      if (lock) {
-        lock.style.display = 'none';
-      }
-
-      ['read', 'terms', 'build', 'reflect'].forEach(block => {
-        const el = document.getElementById('block-' + lesson + '-' + block);
-
-        if (el) {
-          el.style.removeProperty('display');
-        }
-      });
-    });
-  }
-
-  document.querySelectorAll('.sidebar-game-link').forEach(link => {
-    if (hasGameAccess) {
-      if (link.tagName.toLowerCase() !== 'a') {
-        const anchor = document.createElement('a');
-        anchor.href = 'byte-game.html';
-        anchor.className = 'sidebar-game-link';
-        anchor.textContent = link.textContent;
-        link.replaceWith(anchor);
-      } else {
-        link.href = 'byte-game.html';
-      }
-    } else if (link.tagName.toLowerCase() === 'a') {
-      const textOnly = document.createElement('span');
-      textOnly.className = 'sidebar-game-link';
-      textOnly.textContent = link.textContent;
-      link.replaceWith(textOnly);
+  document.getElementById('notifyForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    var status = document.getElementById('formStatus');
+    var emailInput = document.getElementById('email');
+    if (emailInput.value) {
+      status.textContent = "You're on the list. ✦";
+      emailInput.value = '';
     }
   });
-
-  const cheatLock = document.getElementById('lock-cheat');
-  const cheatContent = document.getElementById('cheat-content');
-
-  if (hasCheatAccess) {
-    if (cheatLock) cheatLock.style.display = 'none';
-    if (cheatContent) cheatContent.style.display = 'block';
-  } else {
-    if (cheatLock) cheatLock.style.display = 'block';
-    if (cheatContent) cheatContent.style.display = 'none';
-  }
-
-  loadReflects();
-};
-function enterCity() {
-  const overlay = document.getElementById('discoveryOverlay');
-  const finishEntrance = () => {
-    overlay.classList.add('fading');
-    setTimeout(() => {
-      overlay.classList.add('hidden');
-      const st = document.getElementById('soundToggle');
-      if (st) st.classList.add('visible');
-      try { startAmbient(); } catch (e) { /* ambient audio optional */ }
-    }, 700);
-  };
-  try {
-    document.getElementById('discoveryEnterBtn').style.display = 'none';
-    document.querySelector('.byte-mark').style.display = 'none';
-    document.getElementById('discoveryTitle').style.display = 'none';
-    document.getElementById('discoverySub').style.display = 'none';
-    const stage = document.getElementById('hologramStage');
-    stage.style.display = 'block';
-  } catch (e) { /* hologram cosmetics optional, overlay must still dismiss */ }
-  setTimeout(finishEntrance, 3000);
-}
-function openLesson(n) {
-  document.querySelectorAll('.lesson-panel').forEach(p => p.classList.remove('open'));
-  document.querySelectorAll('.lesson-tab').forEach(t => t.classList.remove('active'));
-  const panel = document.getElementById('lesson-' + n);
-  const tab = document.getElementById('tab-' + n);
-  if (panel) panel.classList.add('open');
-  if (tab) tab.classList.add('active');
-  currentLesson = n;
-  panel?.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  if (n !== 'cheat') showBlock(n, 'read');
-  playUISound(330);
-  const wrapper = document.getElementById('icebreakerWrapper');
-  if (wrapper && wrapper.classList.contains('open')) wrapper.classList.remove('open');
-}
-function jumpToLesson(n) { openLesson(n); showBlock(n, 'read'); }
-function showBlock(lesson, block) {
-  const panel = document.getElementById('lesson-' + lesson);
-  if (!panel) return;
-  panel.querySelectorAll('.content-block').forEach(b => b.classList.remove('active'));
-  panel.querySelectorAll('.sidebar-nav-btn').forEach(b => b.classList.remove('active'));
-  const target = document.getElementById('block-' + lesson + '-' + block);
-  if (target) target.classList.add('active');
-  const btn = document.getElementById('sb-' + lesson + '-' + block);
-  if (btn) btn.classList.add('active');
-  playUISound(392);
-}
-function toggleTerm(card) { card.classList.toggle('open'); playUISound(440); }
-let uiAudioCtx = null;
-function playUISound(freq) {
-  try {
-    if (!uiAudioCtx) uiAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = uiAudioCtx.createOscillator();
-    const gain = uiAudioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.05, uiAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, uiAudioCtx.currentTime + 0.18);
-    osc.connect(gain); gain.connect(uiAudioCtx.destination);
-    osc.start(); osc.stop(uiAudioCtx.currentTime + 0.18);
-  } catch (e) { /* audio unavailable, silently continue */ }
-}
-function checkQuiz(btn, correct, feedback) {
-  const opts = btn.closest('.quiz-options');
-  if (opts.querySelector('.correct')) return;
-  const fb = btn.closest('.quiz-card').querySelector('.quiz-feedback');
-  if (correct) {
-    btn.classList.add('correct');
-    if (fb) { fb.textContent = '✓ ' + feedback; fb.className = 'quiz-feedback show correct'; }
-  } else {
-    btn.classList.add('wrong');
-    if (fb) { fb.textContent = '✗ ' + feedback; fb.className = 'quiz-feedback show wrong'; }
-    setTimeout(() => { btn.classList.remove('wrong'); if (fb) fb.classList.remove('show'); }, 1400);
-  }
-}
-function saveReflect(inputId, savedId) {
-  const val = document.getElementById(inputId)?.value;
-  if (val === undefined) return;
-  localStorage.setItem('byte_' + inputId, val);
-  const saved = document.getElementById(savedId);
-  if (saved) { saved.style.display = 'inline'; setTimeout(() => saved.style.display = 'none', 2000); }
-  const lessonNum = inputId.split('-')[1];
-  const complete = document.getElementById('complete-' + lessonNum);
-  if (complete) {
-    complete.classList.add('show');
-    const jokeEl = document.getElementById('joke-' + lessonNum);
-    if (jokeEl) jokeEl.textContent = JOKES[Math.floor(Math.random() * JOKES.length)];
-  }
-}
-function loadReflects() {
-  document.querySelectorAll('.reflect-input').forEach(el => {
-    const stored = localStorage.getItem('byte_' + el.id);
-    if (stored) el.value = stored;
-  });
-}
-function runDebug(id) {
-  const code = document.getElementById('debug-' + id)?.value || '';
-  const outputEl = document.getElementById('debug-out-' + id);
-  if (!outputEl) return;
-  const logs = [];
-  const fakeCon = { log: (...a) => logs.push(a.map(x => String(x)).join(' ')) };
-  try {
-    const fn = new Function('console', code);
-    fn(fakeCon);
-    outputEl.textContent = logs.join('\n') || '(no output)';
-    outputEl.style.color = '#c66bff';
-    outputEl.classList.add('show');
-  } catch(e) {
-    outputEl.textContent = (logs.length ? logs.join('\n') + '\n' : '') + 'Error: ' + e.message;
-    outputEl.style.color = '#ff6baa';
-    outputEl.classList.add('show');
-  }
-}
-
-function goUpgrade() {
-  if (currentTier) {
-    window.location.href = 'membership.html';
-  } else {
-    window.openAuthModal('signup');
-  }
-}
-function spawnParticle() {
-  const field = document.getElementById('particleField');
-  if (!field) return;
-  const p = document.createElement('div');
-  p.className = 'particle';
-  const startX = Math.random() * 100;
-  const duration = 8 + Math.random() * 10;
-  const delay = Math.random() * 2;
-  p.style.left = startX + '%'; p.style.bottom = '0';
-  p.style.animationDuration = duration + 's'; p.style.animationDelay = delay + 's';
-  field.appendChild(p);
-  setTimeout(() => p.remove(), (duration + delay) * 1000 + 500);
-}
-for (let i = 0; i < 14; i++) setTimeout(spawnParticle, i * 400);
-setInterval(spawnParticle, 900);
-const FACTS = [
-  "the word 'data' comes from the Latin word 'dare,' meaning 'to give' -- data is literally information given to you.",
-  "a single Google search touches thousands of pieces of organized data before you see any results.",
-  "arrays are called 'zero-indexed' because computer memory naturally counts positions starting from 0, not 1.",
-  "the average smartphone app stores dozens of different data types just to remember your preferences.",
-  "sorting algorithms are one of the most studied topics in computer science -- some can sort a million items in under a second.",
-  "spreadsheets are really just giant grids of organized data -- rows and columns are just a visual version of arrays and objects.",
-  "the first database systems were built in the 1960s to help track airline reservations.",
-  "JSON, one of the most common ways to store organized data today, is basically just nested objects and arrays."
-];
-let factIndex = 0;
-function cycleFacts() {
-  const el = document.getElementById('factTicker');
-  if (!el) return;
-  el.classList.remove('show');
-  setTimeout(() => { el.textContent = FACTS[factIndex % FACTS.length]; el.classList.add('show'); factIndex++; }, 400);
-}
-cycleFacts();
-setInterval(cycleFacts, 6500);
-const JOKES = [
-  "Why did the array go to therapy? It had too many unresolved indexes.",
-  "I asked my data if it had any plans this weekend. It said undefined.",
-  "Why do objects make great secret keepers? They only respond when you use the right key.",
-  "There are 10 types of people: those who understand binary, and those who don't.",
-  "Why did the boolean break up with the string? It just wasn't true anymore.",
-  "My favorite data type? Whatever one doesn't crash the console.",
-  "Why did Byte organize the sock drawer? Nothing gets by Byte -- not even mismatched socks."
-];
-let companionClicks = 0;
-function companionClick() {
-  companionClicks++;
-  if (companionClicks === 5 && !localStorage.getItem('byte_egg_found')) {
-    localStorage.setItem('byte_egg_found', '1');
-    showEgg("You found Byte's secret file! Hidden catchphrase unlocked: \"Every value has a place.\" ◈");
-  } else if (companionClicks % 5 === 0) {
-    showEgg("Byte tilts their head. You've already found this one -- but Byte is still glad you're here.");
-  }
-}
-function showEgg(text) {
-  const popup = document.getElementById('eggPopup');
-  document.getElementById('eggText').textContent = text;
-  popup.classList.add('show');
-  setTimeout(() => popup.classList.remove('show'), 5000);
-}
-let audioCtx = null, droneOsc = null, droneGain = null, soundOn = true;
-function startAmbient() {
-  try {
-    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    droneOsc = audioCtx.createOscillator(); droneGain = audioCtx.createGain();
-    droneOsc.type = 'sine'; droneOsc.frequency.value = 78; droneGain.gain.value = 0.015;
-    droneOsc.connect(droneGain); droneGain.connect(audioCtx.destination); droneOsc.start();
-  } catch (e) { console.warn('Ambient audio unavailable:', e); }
-}
-function toggleSound() {
-  const btn = document.getElementById('soundToggle');
-  if (!audioCtx) return;
-  soundOn = !soundOn;
-  droneGain.gain.value = soundOn ? 0.015 : 0;
-  btn.textContent = soundOn ? '🔊' : '🔇';
-  btn.classList.toggle('muted', !soundOn);
-}
-function toggleNavDrop(id) {
-  const drop = document.getElementById(id);
-  const isOpen = drop.classList.contains('open');
-  document.querySelectorAll('.nav-drop').forEach(d => d.classList.remove('open'));
-  if (!isOpen) drop.classList.add('open');
-}
-document.addEventListener('click', function(e) {
-  if (!e.target.closest('.nav-drop')) {
-    document.querySelectorAll('.nav-drop').forEach(d => d.classList.remove('open'));
-  }
-});
-function toggleMobileMenu() {
-  document.getElementById('navHamburger').classList.toggle('open');
-  document.getElementById('mobileMenu').classList.toggle('open');
-  const dashLink = document.getElementById('mobile-dashboard-link');
-  if (dashLink) dashLink.style.display = currentTier ? 'block' : 'none';
-}
-/* ══════════════════ ICEBREAKER — PATTERN MATCH GAME ══════════════════ */
-const IB_DATA_TYPES = [
-  { id: 'string', icon: '🔤', label: 'STRING', color: '#c66bff', def: "Text wrapped in quotes, like \"Byte\" or \"data\"." },
-  { id: 'number', icon: '🔢', label: 'NUMBER', color: '#ff6baa', def: "A numeric value, like 42 or 3.14 -- no quotes needed." },
-  { id: 'boolean', icon: '✅', label: 'BOOLEAN', color: '#00e5ff', def: "Only ever true or false -- nothing in between." },
-  { id: 'array', icon: '📋', label: 'ARRAY', color: '#b8ff3c', def: "An ordered list of values, like [1, 2, 3]." }
-];
-let ibPattern = [];
-let ibPlayerProgress = 0;
-let ibLives = 3;
-let ibAudioCtx = null;
-function ibPlayTone(freq, dur) {
-  try {
-    if (!ibAudioCtx) ibAudioCtx = new (window.AudioContext || window.webkitAudioContext)();
-    const osc = ibAudioCtx.createOscillator();
-    const gain = ibAudioCtx.createGain();
-    osc.type = 'sine'; osc.frequency.value = freq;
-    gain.gain.setValueAtTime(0.09, ibAudioCtx.currentTime);
-    gain.gain.exponentialRampToValueAtTime(0.001, ibAudioCtx.currentTime + (dur || 0.3));
-    osc.connect(gain); gain.connect(ibAudioCtx.destination);
-    osc.start(); osc.stop(ibAudioCtx.currentTime + (dur || 0.3));
-  } catch (e) { /* audio unavailable, silently continue */ }
-}
-function ibToggleWrapper() {
-  const hasAccess = typeof window.mimHasAccess === 'function' && window.mimHasAccess('byte', currentTier, 'lessons');
-  if (!hasAccess) {
-    if (currentTier) { window.location.href = 'membership.html'; } else { window.openAuthModal('signup'); }
-    return;
-  }
-  const wrapper = document.getElementById('icebreakerWrapper');
-  const opening = !wrapper.classList.contains('open');
-  wrapper.classList.toggle('open');
-  if (opening) wrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-}
-function ibRenderIntro() {
-  const grid = document.getElementById('ibTermsGrid');
-  if (!grid) return;
-  grid.innerHTML = IB_DATA_TYPES.map(t =>
-    '<div class="ib-term-card" style="border-color:' + t.color + '" onclick="this.classList.toggle(\'open\')">' +
-    '<div class="ib-term-bug-icon">' + t.icon + '</div>' +
-    '<div class="ib-term-code" style="color:' + t.color + '">' + t.label + '</div>' +
-    '<div class="ib-term-def">' + t.def + '</div>' +
-    '</div>'
-  ).join('');
-}
-function ibShowReaction(imgFile) {
-  const img = document.getElementById('ibReactionImg');
-  img.src = imgFile;
-  img.onerror = () => { img.classList.remove('show'); };
-  img.classList.add('show');
-  setTimeout(() => img.classList.remove('show'), 900);
-}
-function ibRenderBins() {
-  const bins = document.getElementById('ibBins');
-  bins.innerHTML = IB_DATA_TYPES.map((t, idx) =>
-    '<div class="ib-catch-bin" id="ibBin-' + idx + '" style="border-color:' + t.color + ';color:' + t.color + '" onclick="ibBinClick(' + idx + ')">' + t.icon + ' ' + t.label + '</div>'
-  ).join('');
-}
-function ibStartGame() {
-  document.getElementById('ib-intro').style.display = 'none';
-  document.getElementById('ib-game').style.display = 'block';
-  ibPattern = []; ibPlayerProgress = 0; ibLives = 3;
-  ibRenderBins();
-  ibUpdateLives();
-  ibNextRound();
-}
-function ibUpdateLives() {
-  document.getElementById('ibLivesLabel').textContent = '♥ '.repeat(ibLives).trim() || '—';
-}
-function ibNextRound() {
-  const nextStep = Math.floor(Math.random() * IB_DATA_TYPES.length);
-  ibPattern.push(nextStep);
-  ibPlayerProgress = 0;
-  document.getElementById('ibRoundLabel').textContent = 'ROUND ' + ibPattern.length;
-  ibPlayPattern();
-}
-function ibPlayPattern() {
-  const status = document.getElementById('ibCatchStatus');
-  status.textContent = 'Watch the pattern...';
-  let step = 0;
-  window.ibPlaying = true;
-  function playNext() {
-    if (step >= ibPattern.length) { window.ibPlaying = false; status.textContent = 'Your turn -- repeat it back!'; return; }
-    const idx = ibPattern[step];
-    const bin = document.getElementById('ibBin-' + idx);
-    if (bin) bin.classList.add('flash');
-    ibPlayTone(220 + idx * 60, 0.3);
-    setTimeout(() => { if (bin) bin.classList.remove('flash'); step++; setTimeout(playNext, 220); }, 420);
-  }
-  setTimeout(playNext, 500);
-}
-function ibBinClick(idx) {
-  if (window.ibPlaying) return;
-  const bin = document.getElementById('ibBin-' + idx);
-  if (bin) bin.classList.add('flash');
-  ibPlayTone(220 + idx * 60, 0.25);
-  setTimeout(() => { if (bin) bin.classList.remove('flash'); }, 220);
-  if (ibPattern[ibPlayerProgress] !== idx) {
-    ibPlayTone(120, 0.3);
-    ibShowReaction('byte-sad.png');
-    ibLives--;
-    ibUpdateLives();
-    document.getElementById('ibCatchStatus').textContent = 'Not quite -- watch the pattern again.';
-    if (ibLives <= 0) {
-      ibLives = 3; ibUpdateLives(); ibPattern = [];
-      setTimeout(() => ibNextRound(), 900);
-    } else {
-      setTimeout(() => ibPlayPattern(), 900);
-    }
-    return;
-  }
-  ibShowReaction('byte-happy.png');
-  ibPlayerProgress++;
-  if (ibPlayerProgress === ibPattern.length) {
-    document.getElementById('ibCatchStatus').textContent = '◈ Nice! Next round...';
-    if (ibPattern.length >= 6) {
-      setTimeout(() => ibComplete(), 900);
-    } else {
-      setTimeout(() => ibNextRound(), 900);
-    }
-  }
-}
-function ibSkipGame() { ibComplete(); }
-function ibComplete() {
-  document.getElementById('ib-game').style.display = 'none';
-  document.getElementById('ib-complete').style.display = 'block';
-}
-function ibReset() {
-  document.getElementById('ib-complete').style.display = 'none';
-  document.getElementById('ib-intro').style.display = 'block';
-  ibPattern = []; ibPlayerProgress = 0; ibLives = 3;
-}
-document.addEventListener('DOMContentLoaded', () => {
-  loadReflects();
-  ibRenderIntro();
-  handleTierUnlock(null);
-});
 </script>
+
 </body>
 </html>
