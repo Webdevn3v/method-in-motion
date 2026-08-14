@@ -227,7 +227,8 @@
     /* HERO */
     .hero{
       position:relative;
-      min-height:62vh;
+      min-height:calc(62vh + 78px);
+      padding-top:78px;
       display:grid;
       place-items:center;
       overflow:hidden;
@@ -235,11 +236,11 @@
     }
     .hero-img{
       position:absolute;
-      inset:0;
+      top:78px; right:0; bottom:0; left:0;
       z-index:-6;
       background-image:url('mim-underground-arcade.png');
       background-size:contain;
-      background-position:center;
+      background-position:center top;
       background-repeat:no-repeat;
       background-color:#0a0812;
       will-change:transform;
